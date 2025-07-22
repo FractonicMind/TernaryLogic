@@ -3,9 +3,9 @@
 > *"The world is not binary. And the future will not be either."* - Lev Goukassian
 
 ## 🌟 Quick Start
-**📊 [Interactive Presentation](https://fractonicmind.github.io/Sacred-Pause-Presentation/)** - Executive overview with live charts  
+**📊 <a href="https://fractonicmind.github.io/Sacred-Pause-Presentation/" target="_blank">Interactive Presentation</a>** - Executive overview with live charts  
 **💻 [Technical Framework](https://github.com/FractonicMind/TernaryLogic)** - Complete implementation code  
-**📖 [Medium Article](https://medium.com/@leogouk/the-third-option-why-economy-and-civilization-must-break-free-from-binary-0d69d2be14c6)** - Strategic vision
+**📖 <a href="https://medium.com/@leogouk/the-third-option-why-economy-and-civilization-must-break-free-from-binary-0d69d2be14c6" target="_blank">Medium Article</a>** - Strategic vision  
 
 ---
 
@@ -25,11 +25,10 @@
 ### 📄 Research & Documentation
 - **[Academic Paper](research/academic_papers/ternary_logic_economics_paper.md)** - Peer-review ready research
 - **[API Reference](docs/api/complete_api_reference.md)** - Complete technical documentation
-- **[Implementation Guide](docs/getting_started.md)** - Step-by-step setup instructions
 
 ### 🌐 Online Presence
-- **[Interactive Presentation](https://fractonicmind.github.io/Sacred-Pause-Presentation/)** - Visual framework overview
-- **[Strategic Vision](https://medium.com/@leogouk/the-third-option-why-economy-and-civilization-must-break-free-from-binary-0d69d2be14c6)** - Medium manifesto
+- **<a href="https://fractonicmind.github.io/Sacred-Pause-Presentation/" target="_blank">Interactive Presentation</a>** - Visual framework overview
+- **<a href="https://medium.com/@leogouk/the-third-option-why-economy-and-civilization-must-break-free-from-binary-0d69d2be14c6" target="_blank">Strategic Vision</a>** - Medium manifesto
 
 ---
 
