@@ -1,3 +1,6 @@
+<!-- Google Search Console Verification -->
+<meta name="google-site-verification" content="el5ahnK4IShOwZLv8YZb8Vw-LIaGD9sChnwkLYgUEc8" />
+
 # The Goukassian Framework
 ## Ternary Logic for Intelligent Decision-Making
 > *"The world is not binary. And the future will not be either."* - Lev Goukassian
