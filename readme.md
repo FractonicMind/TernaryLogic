@@ -3,6 +3,8 @@
 > *"The world is not binary. And the future will not be either."* - Lev Goukassian
 
 ## 🌟 Quick Start
+*💡 Tip: Right-click links and select "Open in new tab" to keep this page open*
+
 **📊 <a href="https://fractonicmind.github.io/Sacred-Pause-Presentation/" target="_blank">Interactive Presentation</a>** - Executive overview with live charts  
 **💻 [Technical Framework](https://github.com/FractonicMind/TernaryLogic)** - Complete implementation code  
 **📖 <a href="https://medium.com/@leogouk/the-third-option-why-economy-and-civilization-must-break-free-from-binary-0d69d2be14c6" target="_blank">Medium Article</a>** - Strategic vision  
