@@ -51,14 +51,6 @@
 
 ---
 
-## 🏆 Created by Lev Goukassian
-
-**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
-**Contact:** leogouk@gmail.com  
-**Manifesto:** [The Third Option: Why Economy and Civilization Must Break Free from Binary](https://medium.com/@leogouk/the-third-option-why-economy-and-civilization-must-break-free-from-binary-0d69d2be14c6)
-
----
-
 ## 🚀 What is the Goukassian Framework?
 
 The Goukassian Framework implements **Ternary Logic** for decision-making systems that need to handle uncertainty intelligently. Instead of forcing binary choices, it introduces a third option: **"I don't know yet, but I will find out."**
