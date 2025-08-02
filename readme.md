@@ -29,20 +29,8 @@
 
 ### 🌐 Online Presence
 - **<a href="https://fractonicmind.github.io/Sacred-Pause-Presentation/" target="_blank">Interactive Presentation</a>** - Visual framework overview
-- **<a href="https://medium.com/@leogouk/the-third-option-why-economy-and-civilization-must-break-free-from-binary-0d69d2be14c6" target="_blank">Strategic Vision</a>** - Medium manifesto
 
 ---
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![Framework](https://img.shields.io/badge/framework-ternary--logic-brightgreen.svg)](https://github.com/FractonicMind/TernaryLogic)
-
----
-
-## 🏆 Created by Lev Goukassian
-**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
-**Contact:** leogouk@gmail.com  
-**Manifesto:** [The Third Option: Why Economy and Civilization Must Break Free from Binary](https://medium.com/@leogouk/the-third-option-why-economy-and-civilization-must-break-free-from-binary-0d69d2be14c6)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
@@ -474,6 +462,17 @@ The above copyright notice and this permission notice shall be included in all c
 
 **The third option is here. The future is ternary.**
 
+---
+
+## 🏆 Created by Lev Goukassian
+**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
+**Contact:** leogouk@gmail.com  
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Framework](https://img.shields.io/badge/framework-ternary--logic-brightgreen.svg)](https://github.com/FractonicMind/TernaryLogic)
+
+**Manifesto:** [The Third Option: Why Economy and Civilization Must Break Free from Binary](https://medium.com/@leogouk/the-third-option-why-economy-and-civilization-must-break-free-from-binary-0d69d2be14c6)
 ---
 
 **⭐ Star this repository if the Goukassian Framework could benefit your work or research!**
