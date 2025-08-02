@@ -2,11 +2,6 @@
 
     "The world is not binary. And the future will not be either." - Lev Goukassian
 
-Creator: Lev Goukassian
-
-ORCID: 0009-0006-5966-1243
-
-Contact: leogouk@gmail.com
 Mission: To provide a comprehensive framework for decision-making that formally acknowledges and intelligently manages uncertainty, moving beyond the limitations of binary logic.
 
 The Ternary Logic framework introduces a third, or "indeterminate," state to every decision, enabling systems to perform a Sacred Pause rather than making an overconfident, potentially catastrophic choice.
@@ -185,7 +180,10 @@ A dedicated fund to support the future of Ternary Logic. This pillar ensures tha
 
 We welcome contributions from researchers, developers, and practitioners who share this vision. Please see the CONTRIBUTING.md file for guidelines.
 
-For all inquiries, contact Lev Goukassian at leogouk@gmail.com.
+Creator: Lev Goukassian
+ORCID: 0009-0006-5966-1243
+Contact: leogouk@gmail.com
+
 📜 License
 
 This project is licensed under the MIT License with Attribution Requirement. See LICENSE for details.
