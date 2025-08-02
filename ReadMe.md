@@ -1,13 +1,10 @@
 # **🧠 Ternary Logic: A Framework for Intelligent Uncertainty Management**
 
-*"The world is not binary. And the future will not be either."* \- Lev Goukassian  
-**Creator:** Lev Goukassian  
-**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
-**Contact:** [leogouk@gmail.com](mailto:leogouk@gmail.com)
+*"The world is not binary. And the future will not be either."* \- Lev Goukassian
 
 ### **Mission: To provide a comprehensive framework for decision-making that formally acknowledges and intelligently manages uncertainty, moving beyond the limitations of binary logic.**
 
-The **Ternary Logic** framework introduces a third, or "indeterminate," state to every decision, enabling systems to perform a **Sacred Pause** rather than making an overconfident, potentially catastrophic choice.  
+The **Ternary Logic** framework introduces a third, or "indeterminate," state to every decision, enabling systems to perform an **Epistemic Hold** rather than making an overconfident, potentially catastrophic choice.  
 This repository contains the complete technical, academic, and philosophical foundation for this paradigm shift.
 
 ### **📊 Proven Results**
@@ -20,7 +17,7 @@ This repository contains the complete technical, academic, and philosophical fou
 | **Capital Efficiency** | 📈 **40% Sharpe Ratio** | 📈 **22% optimization** | 📉 **19% volatility reduction** |
 | **Decision Errors** | 📉 **35% fewer** | 📉 **18% fewer** | N/A |
 | **Recovery Time** | N/A | 📉 **31% faster** | N/A |
-| **Sacred Pause Rate** | ✅ **23% of decisions** | ✅ **15% of decisions** | ✅ **17% of decisions** |
+| **Epistemic Hold Rate** | ✅ **23% of decisions** | ✅ **15% of decisions** | ✅ **17% of decisions** |
 
 ## **🧭 Repository Map**
 
@@ -34,7 +31,7 @@ This guide is your compass for navigating the complete Ternary Logic project.
 
 ## **📜 The Ternary Logic Manifesto**
 
-This framework is built on the belief that for economic and technological systems to become more resilient, they must first become more honest. The **Sacred Pause** is the architectural embodiment of epistemic humility, a deliberate choice to prioritize integrity over a rushed answer. It is designed to save portfolios from flash crashes, prevent policy mistakes, and build a more resilient foundation for humanity's future.  
+This framework is built on the belief that for economic and technological systems to become more resilient, they must first become more honest. The **Epistemic Hold** is the architectural embodiment of epistemic humility, a deliberate choice to prioritize integrity over a rushed answer. It is designed to save portfolios from flash crashes, prevent policy mistakes, and build a more resilient foundation for humanity's future.  
 This manifesto, in full, is available in the [**MANIFESTO.md**](http://docs.google.com/MANIFESTO.md) file.
 
 ## **🧠 Core Principles**
@@ -45,7 +42,7 @@ The Ternary Logic framework extends binary thinking with a third, crucial state.
 
 * ✅ **TRUE (1)**: High confidence to proceed (e.g., execute a trade, launch a product).  
 * ❌ **FALSE (0)**: High confidence to stop/reject (e.g., avoid a trade, cancel a project).  
-* ⚠️ **INDETERMINATE (-1)**: Insufficient data or contradictory signals. This triggers the **Sacred Pause** to gather more information.
+* ⚠️ **INDETERMINATE (-1)**: Insufficient data or contradictory signals. This triggers the **Epistemic Hold** to gather more information.
 
 This is not indecision; it is a higher form of intelligence that recognizes when a decision is not ready to be made.
 
@@ -103,7 +100,7 @@ To ensure the integrity, longevity, and ethical application of this work, the pr
 
 #### **Prevention 🛡️**
 
-This pillar establishes a formal, architectural safeguard against the misuse of Ternary Logic. It defines the **Sacred Pause** as a non-negotiable feature, making it technically and ethically difficult to weaponize the framework for overconfident or harmful decisions. Read more in [**ETHICAL\_GUIDELINES.md**](https://www.google.com/search?q=ETHICAL_GUIDELINES.md).
+This pillar establishes a formal, architectural safeguard against the misuse of Ternary Logic. It defines the **Epistemic Hold** as a non-negotiable feature, making it technically and ethically difficult to weaponize the framework for overconfident or harmful decisions. Read more in [**ETHICAL\_GUIDELINES.md**](https://www.google.com/search?q=ETHICAL_GUIDELINES.md).
 
 #### **Protection 📝**
 
@@ -119,9 +116,13 @@ A dedicated fund to support the future of Ternary Logic. This pillar ensures tha
 
 ## **🤝 Contribution & Support**
 
-We welcome contributions from researchers, developers, and practitioners who share this vision. Please see the [**CONTRIBUTING.md**](https://www.google.com/search?q=CONTRIBUTING.md) file for guidelines.  
-**For all inquiries, contact Lev Goukassian at [leogouk@gmail.com](mailto:leogouk@gmail.com).**
+We welcome contributions from researchers, developers, and practitioners who share this vision. Please see the [**CONTRIBUTING.md**](https://www.google.com/search?q=CONTRIBUTING.md) file for guidelines.
 
 ### **📜 License**
 
 This project is licensed under the MIT License with Attribution Requirement. See [**LICENSE**](https://www.google.com/search?q=LICENSE) for details.
+
+### **Creator: Lev Goukassian**
+
+ORCID: 0009-0006-5966-1243  
+Contact: leogouk@gmail.com
