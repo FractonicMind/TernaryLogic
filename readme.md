@@ -50,9 +50,9 @@
 
 ---
 
-## 🚀 What is the Goukassian Framework?
+## 🚀 What is the Ternary Logic?
 
-The Goukassian Framework implements **Ternary Logic** for decision-making systems that need to handle uncertainty intelligently. Instead of forcing binary choices, it introduces a third option: **"I don't know yet, but I will find out."**
+This framework implements **Ternary Logic** for decision-making systems that need to handle uncertainty intelligently. Instead of forcing binary choices, it introduces a third option: **"I don't know yet, but I will find out."**
 
 ### Three Decision States:
 - ✅ **TRUE (1)**: High confidence to proceed
@@ -60,7 +60,7 @@ The Goukassian Framework implements **Ternary Logic** for decision-making system
 - ⚠️ **INDETERMINATE (-1)**: Insufficient data - pause and investigate
 
 ### Why This Matters:
-Traditional binary systems force decisions even when data is incomplete or contradictory. The Goukassian Framework introduces intelligent hesitation - the ability to recognize uncertainty and gather more information before acting.
+Traditional binary systems force decisions even when data is incomplete or contradictory. The Ternary Logic introduces intelligent hesitation - the ability to recognize uncertainty and gather more information before acting.
 
 ---
 
