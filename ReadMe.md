@@ -24,8 +24,6 @@
 
 ---
 
-## In Memory of Lev Goukassian (ORCID: 0009-0006-5966-1243)
-
 "I taught systems to feel the weight of uncertainty, and the wisdom of deliberate pause. I hesitated — and made the future more thoughtful."
 — Lev Goukassian
 
