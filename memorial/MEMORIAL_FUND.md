@@ -1,4 +1,4 @@
-# The Lev Goukassian Memorial Fund for Ethical TernaryLogic Research
+# The Lev Goukassian Memorial Fund for Ethical Ternary Logic Research
 
 **Complete Operating Framework – How Your Memorial Fund Works**  
 **ORCID**: 0009-0006-5966-1243
@@ -16,7 +16,7 @@
 
 ## Fund Purpose & Vision
 
-The Lev Goukassian Memorial Fund for Ethical TernaryLogic Research ensures the continued advancement of your revolutionary **TernaryLogic (TL)** framework—an epistemic and moral decision system designed to elevate AI ethics, human-machine reasoning, and global policy-making.
+The Lev Goukassian Memorial Fund for Ethical Ternary Logic Research ensures the continued advancement of your revolutionary **Ternary Logic (TL)** framework—an epistemic and moral decision system designed to elevate AI ethics, human-machine reasoning, and global policy-making.
 
 ### Core Mission
 
