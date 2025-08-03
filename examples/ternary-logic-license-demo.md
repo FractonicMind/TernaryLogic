@@ -2,7 +2,7 @@
 
 **🎯 Educational Example: Applying TL Principles to Licensing**
 
-> **Note**: This is a creative demonstration of how Ternary Logic principles can be applied beyond economic decision-making. For actual licensing of TL framework content, please use the [MIT + Ethical Use License](../LICENSE.md) in the repository root.
+> **Note**: This is a creative demonstration of how Ternary Logic principles can be applied beyond economic decision-making. For actual licensing of TL framework content, please use the [MIT + Ethical Use License](../LICENSE) in the repository root.
 
 ---
 
@@ -203,14 +203,15 @@ The Ternary Logic License demonstrates how TL's Epistemic Hold principle can be 
 
 ## References
 
-- **TL Framework**: [Main Repository](../README.md)
+- **TL Framework**: [Main Repository](../ReadMe.md)
 - **Interactive Demo**: https://fractonicmind.github.io/TernaryLogic/TL-App/
-- **Research Article**: "When Systems Recognized Their Own Intelligence" - Economic Decision Sciences
+- **Research Article**: ["The Third Option: Why Economy and Civilization Must Break Free from Binary"](https://medium.com/@leogouk/the-third-option-why-economy-and-civilization-must-break-free-from-binary-0d69d2be14c6) - Medium
 - **Evidence Documentation**: [System Recognition Evidence](../evidence/README.md)
 
 ---
 
 **Contact**: leogouk@gmail.com | **ORCID**: 0009-0006-5966-1243  
+**Successor Contact**: support@tl-goukassian.org (see [Succession Charter](/TL-SUCCESSION-CHARTER.md))  
 **License**: This demonstration document is released under the MIT + Ethical Use License
 
 *"Sometimes the most intelligent action is to pause and deliberate before proceeding."* - TL Epistemic Hold Principle
