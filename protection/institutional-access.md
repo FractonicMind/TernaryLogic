@@ -125,7 +125,7 @@ The following institutions receive immediate access to the full TL framework bas
 - Requesting department and principal investigator details
 - Intended use case and research/application goals
 - Ethical review board approval (if applicable)
-- Track record in responsible AI or ethics research
+- Track record in responsible use or ethics research
 - Commitment to attribution and memorial recognition
 
 **Application Template:**
@@ -200,14 +200,14 @@ Applications are reviewed through a community-based process that may include:
 **Automatic Approval Indicators:**
 - Established academic institution with ethics focus
 - Clear beneficial use case aligned with TL principles
-- Strong track record in responsible AI research
+- Strong track record in responsible economics research
 - Commitment to open science and knowledge sharing
 - Appropriate memorial attribution and recognition
 
 **Automatic Rejection Indicators:**
 - Commercial use without clear public benefit
 - Military or surveillance applications
-- History of ethical violations or irresponsible AI
+- History of ethical violations or irresponsible use
 - Unwillingness to commit to ethical use requirements
 - Attempts to commercialize memorial aspects
 
@@ -376,7 +376,7 @@ Institutions are encouraged to support the Lev Goukassian Memorial Fund through:
 ### Memorial Legacy
 - Long-term preservation of Lev's vision and principles
 - Sustainable funding for ongoing development
-- Educational initiatives to spread TML principles
+- Educational initiatives to spread TL principles
 - Research network expansion and collaboration
 - Next-generation framework development
 
