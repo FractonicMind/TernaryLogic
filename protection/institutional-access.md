@@ -244,7 +244,7 @@ All uses must include: "Built using Ternary Logic framework created by Lev Gouka
 - Use only for beneficial purposes advancing human welfare
 - Maintain transparency about AI system capabilities and limitations
 - Ensure appropriate human oversight in consequential decisions
-- Respect the Sacred Pause principle in implementation
+- Respect the Epistemic Hold principle in implementation
 
 3. PROHIBITED USES
 - Mass surveillance or authoritarian control systems
