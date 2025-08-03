@@ -1,7 +1,6 @@
-MIT License with Attribution Requirement
+MIT License with Ethical Use Requirements
 
-Copyright (c) 2025 Lev Goukassian (ORCID: 0009-0006-5966-1243)
-Contact: leogouk@gmail.com
+Copyright (c) 2025 Lev Goukassian
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -10,15 +9,9 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-ATTRIBUTION REQUIREMENT:
-All use, distribution, or derivative works must include:
-- Attribution to Lev Goukassian as the original creator
-- Reference to ORCID: 0009-0006-5966-1243  
-- Contact information: leogouk@gmail.com
-- Link to original repository: https://github.com/FractonicMind/TernaryLogic
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice, this permission notice, and the ethical use 
+requirements below shall be included in all copies or substantial portions 
+of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -28,7 +21,115 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-SPECIAL NOTE:
-This framework was created by Lev Goukassian as a contribution to humanity's
-future. Please honor his memory and vision by using this work ethically and
-maintaining proper attribution.
+================================================================================
+
+ETHICAL USE REQUIREMENTS
+
+The Ternary Logic framework was created by Lev Goukassian as a 
+contribution to intelligent economic decision-making. In honor of his vision 
+and to protect his legacy, users of this software commit to the following 
+ethical principles:
+
+PROHIBITED USES:
+The Software shall NOT be used for:
+
+1. MARKET MANIPULATION AND EXPLOITATION
+   - Coordinated market manipulation or pump-and-dump schemes
+   - High-frequency trading designed to exploit retail investors
+   - Algorithmic front-running or insider trading activities
+   - Financial systems designed to systematically disadvantage vulnerable populations
+
+2. PREDATORY FINANCIAL PRACTICES
+   - Lending algorithms that intentionally target vulnerable borrowers
+   - Insurance pricing that discriminates based on protected characteristics
+   - Investment advice systems that prioritize fees over client welfare
+   - Credit scoring that perpetuates historical biases without corrective measures
+
+3. SYSTEMIC RISK AMPLIFICATION
+   - Trading strategies that could destabilize financial markets
+   - Risk management systems that hide or underestimate systemic dangers
+   - Automated decision-making that lacks appropriate circuit breakers
+   - Economic models that ignore interconnected system vulnerabilities
+
+4. ECONOMIC HARM AND DECEPTION
+   - Fraudulent financial reporting or accounting manipulation
+   - Misleading investment recommendations or financial advice
+   - Economic forecasting designed to benefit specific parties unfairly
+   - Price manipulation in essential goods or services
+
+5. PRIVACY AND DATA EXPLOITATION
+   - Unauthorized use of financial or personal data for profit
+   - Creation of invasive economic profiles without consent
+   - Circumventing financial privacy protections
+   - Selling personal economic data without appropriate authorization
+
+REQUIRED PRINCIPLES:
+Users of this Software commit to:
+
+1. ECONOMIC DIGNITY AND FAIRNESS
+   - Respect the financial autonomy and rights of all individuals
+   - Ensure human oversight in consequential economic decisions
+   - Protect vulnerable populations from algorithmic economic harm
+   - Maintain transparency about system capabilities and limitations
+
+2. BENEFICIAL PURPOSE IN MARKETS
+   - Use the Software to advance economic welfare and market efficiency
+   - Consider long-term economic impacts of implementations
+   - Prioritize sustainable economic growth over short-term exploitation
+   - Support equitable access to economic opportunities
+
+3. TRANSPARENCY AND MARKET ACCOUNTABILITY
+   - Provide clear explanations of economic decision-making processes
+   - Enable meaningful human review of automated financial decisions
+   - Accept responsibility for economic system outcomes and market impacts
+   - Maintain records for regulatory audit and improvement purposes
+
+4. THE EPISTEMIC HOLD PRINCIPLE
+   - Honor the core TL concept that complex economic decisions require deliberation
+   - Implement appropriate human consultation mechanisms for uncertain markets
+   - Resist pressure to automate decisions that require economic judgment
+   - Preserve space for human wisdom in algorithm-assisted economic decision-making
+
+ENFORCEMENT:
+Violation of these ethical requirements constitutes a breach of license terms.
+While legal enforcement may vary by jurisdiction, users who violate these
+principles:
+- Lose the moral authority to claim alignment with Lev Goukassian's vision
+- Damage the reputation and integrity of the TL framework
+- Betray the trust of the global economic research and development community
+- Dishonor the memory of the framework's creator
+
+COMMUNITY ACCOUNTABILITY:
+The TL community commits to:
+- Monitoring and reporting unethical uses of the framework
+- Supporting victims of algorithmic economic harm involving TL-based systems
+- Developing better safeguards against financial misuse
+- Preserving the ethical integrity of Lev Goukassian's economic legacy
+
+================================================================================
+
+FRAMEWORK PHILOSOPHY
+
+The Ternary Logic framework embodies Lev Goukassian's vision that
+economic systems should serve as intelligent partners with humans, not 
+replacements for human economic judgment. The Epistemic Hold represents the 
+computational equivalent of economic wisdom—the recognition that complex 
+market decisions require deliberation rather than immediate action.
+
+This framework was created as Lev's gift to humanity's economic future, 
+developed during his final months as a contribution to more thoughtful, 
+resilient economic decision-making worldwide.
+
+For questions regarding this license or ethical use compliance:
+
+**Current Contact**: leogouk@gmail.com | ORCID: 0009-0006-5966-1243  
+**Succession Contact**: support@tl-goukassian.org (see [Succession Charter](TL-SUCCESSION-CHARTER.md))
+For licensing, technical support, or collaboration inquiries.
+================================================================================
+
+"The world is not binary. And the future will not be either."
+
+— Lev Goukassian
+Creator of Ternary Logic
+
+In memory of a visionary who transformed his final chapter into humanity's economic gain.
