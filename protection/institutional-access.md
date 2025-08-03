@@ -130,7 +130,7 @@ The following institutions receive immediate access to the full TL framework bas
 
 **Application Template:**
 ```
-TERNARY MORAL LOGIC ACCESS REQUEST
+TERNARY LOGIC ACCESS REQUEST
 
 Institution: [Full Institution Name]
 Type: [Academic/Research/Government/NGO/Other]
