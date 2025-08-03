@@ -191,15 +191,15 @@ Applications are reviewed through a community-based process that may include:
 - Role: Evaluate complex ethical considerations
 - Composition: Ethics researchers and practitioners
 - Authority: Ethical review and guidance provision
-- Focus: Alignment with TML principles and Lev's vision
+- Focus: Alignment with TL principles and Lev's vision
 
-*Note: These review bodies will self-organize as the TML community grows. Initially, the framework operates on open access with community oversight.*
+*Note: These review bodies will self-organize as the TL community grows. Initially, the framework operates on open access with community oversight.*
 
 #### Step 3: Evaluation Criteria
 
 **Automatic Approval Indicators:**
 - Established academic institution with ethics focus
-- Clear beneficial use case aligned with TML principles
+- Clear beneficial use case aligned with TL principles
 - Strong track record in responsible AI research
 - Commitment to open science and knowledge sharing
 - Appropriate memorial attribution and recognition
@@ -345,7 +345,7 @@ All institutional users must include appropriate memorial attribution:
 ```
 
 **In Policy Documents:**
-"Based on Ternary Logic principles developed by Lev Goukassian, emphasizing the Epistemic Hold in economics ethics decision-making."
+"Based on Ternary Logic principles developed by Lev Goukassian, emphasizing the Epistemic Hold for moral and economic complexity"
 
 ### Memorial Fund Support
 Institutions are encouraged to support the Lev Goukassian Memorial Fund through:
