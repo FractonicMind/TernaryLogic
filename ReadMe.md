@@ -307,6 +307,58 @@ TL guides operational decisions by highlighting trade-offs between cost optimiza
 
 ---
 
+## Framework Testing & Validation
+
+### 🧪 Comprehensive Scenario Database
+
+The TL framework is rigorously tested against a comprehensive database of **25+ real-world economic scenarios** across 8 professional domains:
+
+**📊 Testing Domains:**
+- **Financial Trading**: High-frequency decisions with conflicting technical signals
+- **Monetary Policy**: Systemic decisions with competing economic mandates  
+- **Supply Chain**: Operational strategies balancing cost vs. risk
+- **Investment Banking**: High-stakes transactions with fiduciary considerations
+- **Corporate Finance**: Strategic capital allocation and financing decisions
+- **Risk Management**: Protecting downside while enabling business objectives
+- **Real Estate**: Illiquid, long-term capital deployment decisions
+- **International Finance**: Cross-border transactions with currency/regulatory complexity
+
+### Scenario Examples
+
+**🟢 Proceed (+1) Scenarios:**
+```python
+# Clear arbitrage opportunity
+"ETF trading at 2% discount to NAV with high liquidity"
+TL Response: +1 (Proceed) - Low uncertainty, clear opportunity
+```
+
+**⏸️ Epistemic Hold (0) Scenarios:**
+```python
+# Conflicting market signals  
+"Strong momentum indicators but negative volume divergence during earnings week"
+TL Response: 0 (Hold) - Conflicting signals require additional analysis
+```
+
+**🔴 Halt (-1) Scenarios:**
+```python
+# Market instability
+"Flash crash conditions with 5% decline in 10 minutes, no clear catalyst"
+TL Response: -1 (Halt) - Systematic instability requires defensive positioning
+```
+
+### Validation Metrics
+
+**Framework Performance Targets:**
+- **Epistemic Hold Rate**: 15-25% of decisions (optimal uncertainty management)
+- **State Prediction Accuracy**: >90% correct classification
+- **False Positive Rate**: <5% (unnecessary holds)
+- **False Negative Rate**: <2% (missed risk situations)
+
+**📁 [View Complete Scenario Database](research/datasets/tl-economic-scenario-database.md)** - 25+ scenarios with detailed TL reasoning and expected outcomes
+
+This systematic testing approach validates TL's ability to distinguish between clear decisions, uncertain situations requiring deliberation, and high-risk scenarios demanding protective action.
+
+
 ## Protection and Risk Management
 
 ### Economic Risk Assessment
