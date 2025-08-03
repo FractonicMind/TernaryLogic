@@ -155,9 +155,9 @@ Memorial Recognition:
 - Legacy Preservation: [Commitment to framework integrity]
 
 Previous Work:
-- Related Publications: [Relevant prior work in AI ethics]
+- Related Publications: [Relevant prior work in Economic Studies]
 - Ethics Training: [Team member ethics background]
-- Responsible AI: [Institutional commitment to responsible AI]
+- Responsible: [Institutional commitment to Economic Studies and Human-Centered Economic Research]
 
 Contact Information:
 - Primary Contact: [Name, email, phone]
@@ -242,7 +242,7 @@ All uses must include: "Built using Ternary Logic framework created by Lev Gouka
 
 2. ETHICAL COMMITMENTS
 - Use only for beneficial purposes advancing human welfare
-- Maintain transparency about AI system capabilities and limitations
+- Maintain transparency about system capabilities and limitations
 - Ensure appropriate human oversight in consequential decisions
 - Respect the Epistemic Hold principle in implementation
 
