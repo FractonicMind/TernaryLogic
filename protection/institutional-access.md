@@ -211,7 +211,7 @@ Applications are reviewed through a community-based process that may include:
 - Unwillingness to commit to ethical use requirements
 - Attempts to commercialize memorial aspects
 
-**Sacred Pause Required (Additional Review):**
+**Epistemic Hold Required (Additional Review):**
 - Novel use cases not previously considered
 - Cross-cultural applications requiring adaptation
 - Dual-use research with both beneficial and harmful potential
