@@ -14,10 +14,10 @@
 [![Documentation](https://img.shields.io/badge/Documentation-Complete-blue.svg)](docs/)
 [![Citation](https://img.shields.io/badge/Citation-Available-blue.svg)](CITATION.cff)
 [![Reproducible](https://img.shields.io/badge/Reproducible-Research-brightgreen.svg)](docs/reproducibility_checklist.md)
-[![Memorial](https://img.shields.io/badge/In%20Memory%20of-Lev%20Goukassian-red.svg)](protection/legacy-preservation.md)
 [![Coverage](https://img.shields.io/badge/Coverage-97%25-brightgreen.svg)](benchmark/generate_coverage.py)
-[![Benchmark Coverage](https://img.shields.io/badge/Benchmark%20Coverage-98%25-brightgreen.svg)](benchmark/datasets/scenarios_readable.md)
-[![Epistemic Hold Validation](https://img.shields.io/badge/Epistemic%20Hold-Validated-purple.svg)](benchmark/metrics.py)
+[![Benchmark Coverage](https://img.shields.io/badge/Benchmark%20Coverage-98%25-brightgreen.svg)](research/datasets/tl-economic-scenario-database.md)
+[![Memorial](https://img.shields.io/badge/In%20Memory%20of-Lev%20Goukassian-red.svg)](protection/legacy-preservation.md)
+
 
 > **"The world is not binary. And the future will not be either."**  
 > — Lev Goukassian, Creator of Ternary Logic
