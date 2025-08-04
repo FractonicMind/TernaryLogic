@@ -16,6 +16,10 @@
 [![Reproducible](https://img.shields.io/badge/Reproducible-Research-brightgreen.svg)](docs/reproducibility_checklist.md)
 [![Coverage](https://img.shields.io/badge/Coverage-97%25-brightgreen.svg)](benchmark/generate_coverage.py)
 [![Benchmark Coverage](https://img.shields.io/badge/Benchmark%20Coverage-98%25-brightgreen.svg)](research/datasets/tl-economic-scenario-database.md)
+[![Theory](https://img.shields.io/badge/Theory-Complete-success.svg)](theory/)
+[![Protection](https://img.shields.io/badge/Protection-Active-critical.svg)](protection/)
+[![Philosophy](https://img.shields.io/badge/Philosophy-Documented-informational.svg)](theory/philosophical-foundations.md)
+[![Case Studies](https://img.shields.io/badge/Case%20Studies-Available-blue.svg)](theory/case-studies.md)
 [![Memorial](https://img.shields.io/badge/In%20Memory%20of-Lev%20Goukassian-red.svg)](protection/legacy-preservation.md)
 
 
@@ -308,6 +312,89 @@ TL guides operational decisions by highlighting trade-offs between cost optimiza
 
 ---
 
+## Theoretical Foundation 📚
+
+The TL framework is built on a robust theoretical foundation that bridges economic philosophy with practical implementation:
+
+### **Core Theory Documents**
+
+#### 📖 **[Economic Foundations](theory/economic-foundations.md)**
+Comprehensive academic grounding connecting TL to established economic theories:
+- Knight's distinction between risk and uncertainty
+- Hayek's knowledge problem and spontaneous order
+- Keynesian radical uncertainty
+- Behavioral economics and bounded rationality
+- Modern market microstructure theory
+
+#### 🎯 **[Core Principles](theory/core-principles.md)**
+The fundamental principles that guide TL implementation:
+- The Three States: Proceed (+1), Epistemic Hold (0), Halt (-1)
+- Market complexity as information, not noise
+- Epistemic vs. aleatory uncertainty
+- Human-algorithm partnership over pure automation
+- Signal pluralism and context sensitivity
+
+#### 🤔 **[Philosophical Foundations](theory/philosophical-foundations.md)**
+Deep philosophical exploration of TL's intellectual roots:
+- Austrian economics and market process theory
+- Reflexivity and market philosophy (Soros)
+- Antifragility and black swan theory (Taleb)
+- Adaptive markets hypothesis (Lo)
+- Information theory and decision-making under uncertainty
+
+#### 📊 **[Case Studies](theory/case-studies.md)**
+Real-world applications demonstrating TL across economic domains:
+- High-frequency trading decisions
+- Central banking policy dilemmas
+- Supply chain optimization
+- Investment portfolio management
+- Risk assessment scenarios
+
+---
+
+## Protection and Risk Management 🛡️
+
+### Comprehensive Protection Architecture
+
+While TL is designed to enhance economic decision-making, we've built robust safeguards against potential misuse:
+
+#### 📋 **[Institutional Access Controls](protection/institutional-access.md)**
+- Pre-authorized financial institutions with ethical track records
+- Community review process for new access requests
+- Self-organizing governance structures
+- Annual ethical use reporting requirements
+- Transparent registry of authorized implementations
+
+#### 🔍 **[Integrity Monitoring](protection/integrity-monitoring.md)**
+- Real-time monitoring of TL implementations
+- Automated detection of framework violations
+- Community-driven oversight mechanisms
+- Regular audits of high-impact deployments
+- Whistleblower protections for reporting misuse
+
+#### 💝 **[Legacy Preservation](protection/legacy-preservation.md)**
+- Master coordination document for memorial preservation
+- Ensures Lev Goukassian's vision remains intact
+- Guidelines for respectful use of the framework
+- Memorial fund governance and oversight
+- Long-term sustainability planning
+
+#### 🚨 **[Misuse Prevention](protection/misuse-prevention.md)**
+- Active prevention of market manipulation
+- Safeguards against exploitative implementations
+- Education-first approach to violations
+- Graduated enforcement protocols
+- Public registry of revoked licenses
+
+### Our Prevention Philosophy
+
+**Education First**: We believe most violations stem from misunderstanding, not malice
+**Community Oversight**: Distributed governance prevents centralized control
+**Transparency**: All protection measures are public and auditable
+**Proportional Response**: From warnings to license revocation based on severity
+
+---
+
 ## Framework Testing & Validation
 
 ### 🧪 Comprehensive Scenario Database
@@ -358,37 +445,6 @@ TL Response: -1 (Halt) - Systematic instability requires defensive positioning
 **📁 [View Complete Scenario Database](research/datasets/tl-economic-scenario-database.md)** - 25+ scenarios with detailed TL reasoning and expected outcomes
 
 This systematic testing approach validates TL's ability to distinguish between clear decisions, uncertain situations requiring deliberation, and high-risk scenarios demanding protective action.
-
----
-
-## Protection and Risk Management
-
-### Economic Risk Assessment
-
-While TL is designed to enhance economic decision-making, we recognize potential risks and have built comprehensive safeguards:
-
-#### Identified Risks
-- **Misuse for Market Manipulation**: Bad actors attempting to use TL to legitimize exploitative trading systems
-- **Bias Amplification**: Improper implementation that reinforces existing market inequities
-- **Epistemic Hold Bypass**: Attempts to disable deliberative mechanisms for reckless speed
-- **Memorial Exploitation**: Commercial misuse of Lev Goukassian's legacy for profit
-- **Framework Corruption**: Modifications that violate core principles of uncertainty management
-
-#### Our Prevention Architecture
-
-**🚨 Active Prevention (`protection/misuse-prevention.md`)**
-- Financial industry monitoring and reporting systems
-- License revocation protocols for violations
-- Graduated response from education to enforcement
-- Recognition programs for exemplary implementations
-- Public registry of revoked access for violations
-
-**🏛️ Institutional Controls (`protection/institutional-access.md`)**
-- Pre-authorized financial institutions with ethical track records
-- Community review process for new access requests
-- Self-organizing governance structures
-- Ethical use agreements and annual reporting
-- Memorial committee oversight for framework integrity
 
 ---
 
@@ -453,8 +509,9 @@ This repository contains a comprehensive ecosystem for intelligent economic deci
 
 ### 📚 **Theoretical Foundation**
 - **`theory/economic-foundations.md`** - Deep academic grounding from classical to behavioral economics
-- **`theory/case-studies.md`** - Real-world applications across trading, policy, and risk management
+- **`theory/philosophical-foundations.md`** - Philosophical roots from Hayek to Taleb
 - **`theory/core-principles.md`** - Fundamental TL principles and Epistemic Hold implementation
+- **`theory/case-studies.md`** - Real-world applications across economic domains
 
 ### 💻 **Technical Implementation**
 - **`src/goukassian/core.py`** - Production-ready TL framework
@@ -466,6 +523,8 @@ This repository contains a comprehensive ecosystem for intelligent economic deci
 ### 🛡️ **Protection Architecture**
 - **`protection/institutional-access.md`** - Controls for authorized financial institutions
 - **`protection/misuse-prevention.md`** - Active safeguards against harmful use
+- **`protection/integrity-monitoring.md`** - Real-time framework monitoring systems
+- **`protection/legacy-preservation.md`** - Master coordination for memorial preservation
 
 ### 💝 **Memorial Preservation System**
 - **`memorial/MEMORIAL_FUND.md`** - Complete operational framework for economic research funding
