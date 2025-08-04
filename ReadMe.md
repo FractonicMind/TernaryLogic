@@ -61,7 +61,8 @@ Current economic systems force complex financial decisions into binary choices:
 
 ## 🚀 Interactive TL App - Experience Intelligent Uncertainty Management
 
-**[🔗 Try the TL Interactive Demonstrator](https://fractonicmind.github.io/TernaryLogic/TL-App/)**
+**[![Try Interactive Demo](https://img.shields.io/badge/🚀%20Try%20Interactive%20Demo-Live%20Now-blue?labelColor=yellow&color=0057B7&logoColor=white)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/)
+**
 
 Experience the Epistemic Hold in action! The world's first interactive economic uncertainty framework allows you to:
 
