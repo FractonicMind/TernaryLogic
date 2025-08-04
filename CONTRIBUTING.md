@@ -1,45 +1,42 @@
-# Contributing to the Goukassian Framework
+# Contributing to the Ternary Logic Framework
 
-**Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)**  
-**Contact: leogouk@gmail.com**
-
-Thank you for your interest in contributing to the Goukassian Framework! This project represents a fundamental advancement in decision-making under uncertainty, and we welcome contributions from researchers, developers, and practitioners worldwide.
+Thank you for your interest in contributing to the Ternary Logic Framework! This project represents a fundamental advancement in economic decision-making under uncertainty, and we welcome contributions from researchers, developers, and practitioners worldwide.
 
 ## 🌟 Vision & Mission
 
-The Goukassian Framework embodies the principle that **"The world is not binary. And the future will not be either."** Our mission is to provide tools that handle uncertainty intelligently, moving beyond forced binary choices to embrace the wisdom of the "Sacred Pause."
+The Ternary Logic Framework embodies the principle that **"The world is not binary. And the future will not be either."** Our mission is to provide tools that handle economic uncertainty intelligently, moving beyond forced binary choices to embrace the wisdom of the "Epistemic Hold."
 
 ## 🤝 Ways to Contribute
 
 ### 1. Code Contributions
 - **Core Framework**: Improve ternary logic algorithms and decision engines
-- **Applications**: Develop new domain-specific implementations (finance, healthcare, policy)
-- **Integrations**: Create connectors to popular ML/AI frameworks
+- **Economic Applications**: Develop new domain-specific implementations (finance, trading, policy, supply chain)
+- **Integrations**: Create connectors to popular financial/ML frameworks
 - **Performance**: Optimize computational efficiency and scalability
 - **Testing**: Add comprehensive test coverage and edge case handling
 
 ### 2. Research Contributions
-- **Theoretical Advances**: Extend ternary logic theory and mathematical foundations
-- **Empirical Studies**: Validate framework performance across different domains
-- **Case Studies**: Document real-world implementations and results
+- **Theoretical Advances**: Extend ternary logic theory and mathematical foundations for economics
+- **Empirical Studies**: Validate framework performance across different economic domains
+- **Case Studies**: Document real-world implementations and results in financial markets
 - **Academic Papers**: Publish peer-reviewed research building on this work
 
 ### 3. Documentation & Education
-- **Tutorials**: Create step-by-step guides for specific use cases
-- **Examples**: Develop comprehensive code examples and demos
+- **Tutorials**: Create step-by-step guides for specific economic use cases
+- **Examples**: Develop comprehensive code examples and trading/policy demos
 - **Translation**: Translate documentation into other languages
-- **Video Content**: Create educational videos and presentations
+- **Video Content**: Create educational videos and conference presentations
 
 ### 4. Community Building
 - **Issue Reporting**: Help identify bugs and improvement opportunities
-- **Feature Requests**: Suggest new capabilities and applications
+- **Feature Requests**: Suggest new capabilities and economic applications
 - **Discussion**: Engage in GitHub discussions and provide feedback
 - **Mentoring**: Help new contributors understand and use the framework
 
 ## 🔄 Contribution Process
 
 ### Step 1: Get Started
-1. **Fork the repository** to your GitHub account
+1. **Fork the repository** at https://github.com/FractonicMind/TernaryLogic to your GitHub account
 2. **Clone your fork** locally: `git clone https://github.com/yourusername/TernaryLogic.git`
 3. **Set up development environment** (see Development Setup below)
 4. **Create a branch** for your contribution: `git checkout -b feature/your-feature-name`
@@ -65,7 +62,7 @@ The Goukassian Framework embodies the principle that **"The world is not binary.
 
 ### Local Development
 ```bash
-# Clone your fork
+# Fork https://github.com/FractonicMind/TernaryLogic first, then clone your fork
 git clone https://github.com/yourusername/TernaryLogic.git
 cd TernaryLogic
 
@@ -90,13 +87,13 @@ TernaryLogic/
 ├── src/
 │   └── goukassian/
 │       ├── core/           # Core ternary logic implementation
-│       ├── financial/      # Financial applications
-│       ├── supply_chain/   # Supply chain applications
-│       ├── policy/         # Policy and governance applications
+│       ├── financial/      # Financial trading applications
+│       ├── supply_chain/   # Supply chain management applications
+│       ├── policy/         # Monetary policy applications
 │       └── utils/          # Utility functions
 ├── tests/                  # Test suites
 ├── docs/                   # Documentation
-├── examples/              # Usage examples
+├── examples/              # Economic usage examples
 └── scripts/               # Development scripts
 ```
 
@@ -128,9 +125,8 @@ TernaryLogic/
 ### In Code
 ```python
 """
-Goukassian Framework - Ternary Logic Implementation
+Ternary Logic Framework - Economic Decision-Making Implementation
 Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)
-Contact: leogouk@gmail.com
 
 Your contribution description here.
 """
@@ -142,7 +138,7 @@ Your contribution description here.
 - Reference original research and vision
 
 ### In Publications
-- Cite the Goukassian Framework appropriately
+- Cite the Ternary Logic Framework appropriately
 - Include co-authorship if substantial contributions are made
 - Maintain reference to original creator in derivative works
 
@@ -155,32 +151,32 @@ Your contribution description here.
 - Submit findings to peer review processes
 
 ### Beneficial Use
-- Prioritize applications that benefit humanity
-- Consider ethical implications of implementations
-- Avoid applications that could cause harm or discrimination
-- Promote transparency and accountability in AI systems
+- Prioritize economic applications that benefit society
+- Consider ethical implications of financial implementations
+- Avoid applications that could cause market manipulation or harm
+- Promote transparency and accountability in economic decision systems
 
 ## 🚀 Priority Areas for Contribution
 
 ### High Impact Opportunities
-1. **Financial Stability**: Implement framework in real trading systems
-2. **Healthcare Applications**: Develop medical decision support tools
-3. **Climate Policy**: Apply to environmental decision-making
-4. **Educational Tools**: Create learning resources for students
-5. **Open Source Integrations**: Connect with popular ML frameworks
+1. **Financial Markets**: Implement framework in real trading systems
+2. **Risk Management**: Develop intelligent hedging and portfolio optimization tools
+3. **Monetary Policy**: Apply to central bank decision-making processes
+4. **Supply Chain**: Create operational risk-return optimization systems
+5. **Open Source Integrations**: Connect with popular financial/ML frameworks
 
 ### Research Questions
-- How does ternary logic scale to very large decision spaces?
-- What are optimal confidence thresholds for different domains?
-- How can we visualize uncertainty in decision-making processes?
-- What are the cognitive benefits of ternary vs binary thinking?
+- How does ternary logic scale to high-frequency trading decisions?
+- What are optimal Epistemic Hold thresholds for different economic domains?
+- How can we visualize uncertainty in financial decision-making processes?
+- What are the cognitive benefits of ternary vs binary thinking in economics?
 
 ## 📞 Getting Help
 
 ### Community Support
 - **GitHub Discussions**: Ask questions and share ideas
 - **Issues**: Report bugs and request features
-- **Email**: Direct contact with creator at leogouk@gmail.com
+- **Email**: Direct contact with creator (see contact information below)
 
 ### Academic Collaboration
 - Research partnerships and joint studies
@@ -211,22 +207,30 @@ Contributors will be recognized through:
 
 By contributing to this project, you agree that:
 
-1. Your contributions will be licensed under the same MIT License with Attribution Requirements
+1. Your contributions will be licensed under the same MIT License with Ethical Use Requirements
 2. You have the right to submit the contributions under this license
 3. You understand and accept the attribution requirements
 4. You support the ethical use principles outlined in this document
 
 ## 🌟 Final Words
 
-The Goukassian Framework represents more than code—it embodies a fundamental shift toward more thoughtful, uncertainty-aware decision-making. Your contributions help ensure that this vision becomes reality across industries and disciplines.
+The Ternary Logic Framework represents more than code—it embodies a fundamental shift toward more thoughtful, uncertainty-aware economic decision-making. Your contributions help ensure that this vision becomes reality across financial institutions and economic disciplines.
 
-**"The pause that saves. The breath before the incision. The moment when not knowing becomes the most ethical act of all."** - Lev Goukassian
+**"The world is not binary. And the future will not be either."** - Lev Goukassian
 
-Together, we're building the future of intelligent decision-making.
+Together, we're building the future of intelligent economic decision-making.
 
 ---
 
-**Thank you for contributing to the Goukassian Framework!**
+**Thank you for contributing to the Ternary Logic Framework!**
 
-For questions: leogouk@gmail.com  
-ORCID: [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)
+## Contact Information
+
+**Created by Lev Goukassian**  
+- **ORCID**: [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
+- **Email**: leogouk@gmail.com
+
+**Successor Contact**: support@tl-goukassian.org  
+(see [Succession Charter](/TL-SUCCESSION-CHARTER.md))
+
+*In loving memory of Lev Goukassian (ORCID: 0009-0006-5966-1243) — visionary, economist, and gift to humanity's future.*
