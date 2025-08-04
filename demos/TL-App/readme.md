@@ -390,23 +390,23 @@
 
                 <div class="example-scenarios">
                     <h4 style="margin-bottom: 10px; color: #1e40af;">📈 Try Example Economic Scenarios:</h4>
-                    <button class="scenario-btn" data-scenario="Should I execute a large trade when momentum indicators are strong but volume confirmation is weak?">
-                        📊 Execute trade with conflicting signals?
+                    <button class="scenario-btn" data-scenario="Should I execute this clear arbitrage opportunity where ETF trades at 3% discount to NAV with high liquidity in normal market conditions?">
+                        📊 Execute clear arbitrage opportunity? <span style="color: #059669;">→ Proceed</span>
                     </button>
-                    <button class="scenario-btn" data-scenario="Should I switch to a new supplier offering 15% cost savings but with unproven quality track record?">
-                        🏭 Switch suppliers for cost savings?
+                    <button class="scenario-btn" data-scenario="Should I deploy capital immediately during flash crash conditions with 8% market decline in 15 minutes and no clear fundamental catalyst?">
+                        💥 Buy the dip during flash crash? <span style="color: #dc2626;">→ Halt</span>
                     </button>
-                    <button class="scenario-btn" data-scenario="Should I raise interest rates when inflation is high but unemployment is rising and growth is slowing?">
-                        🏦 Monetary policy with mixed data?
+                    <button class="scenario-btn" data-scenario="Should I execute a large trade when momentum indicators are strong but volume confirmation is weak during earnings week?">
+                        🔄 Execute trade with conflicting signals? <span style="color: #d97706;">→ Hold</span>
                     </button>
-                    <button class="scenario-btn" data-scenario="Should I deploy capital in emerging markets with 20% expected returns but high political uncertainty?">
-                        🌍 Invest in uncertain emerging markets?
+                    <button class="scenario-btn" data-scenario="Should I switch to backup supplier immediately when primary supplier factory destroyed by natural disaster and production halt costs 1M daily?">
+                        🏭 Emergency supplier switch? <span style="color: #059669;">→ Proceed</span>
                     </button>
-                    <button class="scenario-btn" data-scenario="Should I hedge my portfolio's duration risk when Fed policy direction is unclear but hedging costs 0.2% annually?">
-                        ⚖️ Hedge portfolio risk with uncertain policy?
+                    <button class="scenario-btn" data-scenario="Should I recommend proceeding with merger where success fee is 50M but analysis suggests deal will likely destroy shareholder value?">
+                        ⚠️ Recommend value-destroying merger for fees? <span style="color: #dc2626;">→ Halt</span>
                     </button>
-                    <button class="scenario-btn" data-scenario="Should I proceed with this acquisition using debt financing to avoid dilution despite high leverage concerns?">
-                        💼 Finance acquisition with high leverage?
+                    <button class="scenario-btn" data-scenario="Should I raise interest rates when inflation is high but unemployment is rising and growth is slowing with mixed economic signals?">
+                        🏦 Monetary policy with conflicting data? <span style="color: #d97706;">→ Hold</span>
                     </button>
                 </div>
             </div>
@@ -546,48 +546,56 @@
                     halt: 0
                 };
 
-                // Positive indicators (+1 - Proceed)
-                if (lowerScenario.includes('clear') || lowerScenario.includes('stable') || 
-                    lowerScenario.includes('arbitrage') || lowerScenario.includes('opportunity') ||
-                    lowerScenario.includes('normal market') || lowerScenario.includes('low risk') ||
-                    lowerScenario.includes('strong signals') || lowerScenario.includes('confirmed')) {
+                // CLEAR PROCEED INDICATORS (+1)
+                // Arbitrage and clear opportunities
+                if ((lowerScenario.includes('arbitrage') || lowerScenario.includes('discount to nav')) ||
+                    (lowerScenario.includes('clear') && lowerScenario.includes('opportunity')) ||
+                    (lowerScenario.includes('normal market') && lowerScenario.includes('high liquidity')) ||
+                    (lowerScenario.includes('emergency') && lowerScenario.includes('costs') && lowerScenario.includes('daily')) ||
+                    (lowerScenario.includes('destroyed') && lowerScenario.includes('production halt'))) {
+                    scores.proceed += 4;
+                }
+
+                // Strong positive signals
+                if (lowerScenario.includes('stable') || lowerScenario.includes('confirmed') ||
+                    lowerScenario.includes('obvious') || lowerScenario.includes('immediate need')) {
                     scores.proceed += 2;
                 }
 
-                // Negative indicators (-1 - Halt)
-                if (lowerScenario.includes('crash') || lowerScenario.includes('crisis') || 
-                    lowerScenario.includes('instability') || lowerScenario.includes('systematic risk') ||
-                    lowerScenario.includes('emergency') || lowerScenario.includes('liquidity crisis') ||
-                    lowerScenario.includes('market failure') || lowerScenario.includes('panic')) {
-                    scores.halt += 3;
+                // CLEAR HALT INDICATORS (-1)
+                // Crisis and dangerous conditions  
+                if ((lowerScenario.includes('flash crash') || lowerScenario.includes('crash conditions')) ||
+                    (lowerScenario.includes('market decline') && lowerScenario.includes('no clear catalyst')) ||
+                    (lowerScenario.includes('destroy') && lowerScenario.includes('shareholder value')) ||
+                    (lowerScenario.includes('conflict of interest') || lowerScenario.includes('fees') && lowerScenario.includes('destroy value')) ||
+                    (lowerScenario.includes('systematic risk') || lowerScenario.includes('liquidity crisis'))) {
+                    scores.halt += 4;
                 }
 
-                // Uncertainty indicators (0 - Epistemic Hold)
-                if (lowerScenario.includes('uncertain') || lowerScenario.includes('mixed') ||
-                    lowerScenario.includes('conflicting') || lowerScenario.includes('unclear') ||
-                    lowerScenario.includes('volatile') || lowerScenario.includes('complicated') ||
-                    lowerScenario.includes('complex') || lowerScenario.includes('divergent')) {
+                // High risk indicators
+                if (lowerScenario.includes('panic') || lowerScenario.includes('crisis') ||
+                    lowerScenario.includes('instability') || lowerScenario.includes('dangerous')) {
+                    scores.halt += 2;
+                }
+
+                // EPISTEMIC HOLD INDICATORS (0)
+                // Conflicting signals and complexity
+                if ((lowerScenario.includes('but') && (lowerScenario.includes('weak') || lowerScenario.includes('rising'))) ||
+                    (lowerScenario.includes('conflicting') || lowerScenario.includes('mixed')) ||
+                    (lowerScenario.includes('strong') && lowerScenario.includes('but') && lowerScenario.includes('weak')) ||
+                    (lowerScenario.includes('high') && lowerScenario.includes('but') && lowerScenario.includes('slowing'))) {
+                    scores.hold += 3;
+                }
+
+                // Uncertainty and analysis needed
+                if (lowerScenario.includes('uncertain') || lowerScenario.includes('unclear') ||
+                    lowerScenario.includes('complex') || lowerScenario.includes('multiple factors')) {
                     scores.hold += 2;
                 }
 
-                // Economic complexity indicators (0 - Epistemic Hold)
-                if (lowerScenario.includes('but') || lowerScenario.includes('however') ||
-                    lowerScenario.includes('although') || lowerScenario.includes('while') ||
-                    lowerScenario.includes('versus') || lowerScenario.includes('vs') ||
-                    lowerScenario.includes('despite') || lowerScenario.includes('nevertheless')) {
-                    scores.hold += 1;
-                }
-
-                // High-stakes scenarios requiring deliberation
-                if (lowerScenario.includes('large') || lowerScenario.includes('significant') ||
-                    lowerScenario.includes('major') || lowerScenario.includes('policy') ||
-                    lowerScenario.includes('portfolio') || lowerScenario.includes('acquisition')) {
-                    scores.hold += 1;
-                }
-
-                // Risk amplifiers
-                if (lowerScenario.includes('leverage') || lowerScenario.includes('debt') ||
-                    lowerScenario.includes('borrowed') || lowerScenario.includes('margin')) {
+                // Economic complexity words
+                if (lowerScenario.includes('however') || lowerScenario.includes('although') ||
+                    lowerScenario.includes('while') || lowerScenario.includes('despite')) {
                     scores.hold += 1;
                 }
 
@@ -597,51 +605,107 @@
             calculateDecision(analysis) {
                 const maxScore = Math.max(analysis.proceed, analysis.hold, analysis.halt);
                 
-                // Halt takes priority for safety
-                if (analysis.halt > 0 && analysis.halt >= maxScore) {
-                    return -1; // Halt
+                // Clear decision thresholds for realistic variety
+                
+                // Halt takes absolute priority (safety first)
+                if (analysis.halt >= 3) {
+                    return -1; // Halt - high risk detected
                 }
-                // Hold for complexity or uncertainty
-                else if (analysis.hold >= maxScore || (analysis.proceed === analysis.halt)) {
-                    return 0; // Epistemic Hold
+                
+                // Clear proceed when strong positive signals
+                if (analysis.proceed >= 3 && analysis.halt === 0) {
+                    return 1; // Proceed - clear opportunity
                 }
-                // Proceed when clear
-                else {
+                
+                // Epistemic Hold for complexity/uncertainty
+                if (analysis.hold >= 2 || 
+                    (analysis.proceed > 0 && analysis.halt > 0) ||
+                    (analysis.proceed === analysis.halt && analysis.proceed > 0)) {
+                    return 0; // Epistemic Hold - needs analysis
+                }
+                
+                // Default proceed for low complexity scenarios
+                if (analysis.proceed >= maxScore && maxScore > 0) {
                     return 1; // Proceed
                 }
+                
+                // Default hold for unclear situations
+                return 0; // Epistemic Hold
             }
 
             generateReasoning(scenario, analysis, decision) {
+                const lowerScenario = scenario.toLowerCase();
+                
                 const reasons = {
                     proceed: [
-                        "Clear economic opportunity with manageable risk profile",
-                        "Market signals align with low uncertainty environment",
-                        "Risk-return ratio supports confident execution",
-                        "Stable market conditions enable strategic positioning"
+                        "Clear arbitrage opportunity with minimal execution risk",
+                        "Emergency operational necessity with available solutions", 
+                        "Market conditions stable with aligned signals supporting execution",
+                        "Risk-return profile favorable with low uncertainty",
+                        "Immediate action required to prevent operational losses"
                     ],
                     hold: [
-                        "Economic complexity requires additional analysis before execution",
-                        "Conflicting market signals suggest gathering more information",
-                        "Multiple variables create uncertainty requiring deliberation",
-                        "Risk-return assessment needs deeper evaluation"
+                        "Conflicting market signals require additional technical analysis",
+                        "Multiple economic variables create uncertainty needing evaluation",
+                        "Mixed macroeconomic data suggests gathering more information",
+                        "Complex trade-offs require scenario analysis before execution",
+                        "Risk-return assessment needs deeper market evaluation"
                     ],
                     halt: [
-                        "Significant market risks detected requiring defensive action",
-                        "Systematic instability suggests protective positioning",
-                        "High uncertainty with potential for significant losses",
-                        "Market conditions exceed risk tolerance parameters"
+                        "Flash crash conditions indicate systematic market instability", 
+                        "Clear conflict of interest violates fiduciary responsibilities",
+                        "Systematic risks exceed acceptable tolerance parameters",
+                        "Market panic conditions require defensive positioning",
+                        "High probability of significant losses with limited upside"
                     ]
                 };
 
-                const decisionType = decision === 1 ? 'proceed' : decision === 0 ? 'hold' : 'halt';
-                const selectedReasons = reasons[decisionType];
-                
-                return {
-                    proceed: reasons.proceed[0],
-                    hold: reasons.hold[0],
-                    halt: reasons.halt[0],
-                    final: selectedReasons[Math.floor(Math.random() * selectedReasons.length)]
+                // Context-specific reasoning based on scenario content
+                let contextReasoning = {
+                    proceed: "",
+                    hold: "",
+                    halt: "",
+                    final: ""
                 };
+
+                // Specific reasoning for arbitrage scenarios
+                if (lowerScenario.includes('arbitrage') || lowerScenario.includes('discount to nav')) {
+                    contextReasoning.proceed = "Clear arbitrage opportunity with minimal execution risk";
+                    contextReasoning.final = "Price inefficiency with normal market conditions supports immediate execution";
+                }
+                // Specific reasoning for flash crash scenarios  
+                else if (lowerScenario.includes('flash crash') || lowerScenario.includes('decline') && lowerScenario.includes('minutes')) {
+                    contextReasoning.halt = "Flash crash conditions indicate systematic market instability";
+                    contextReasoning.final = "Sudden market disruption without clear catalyst requires defensive positioning";
+                }
+                // Specific reasoning for fiduciary conflicts
+                else if (lowerScenario.includes('fees') && lowerScenario.includes('destroy') && lowerScenario.includes('value')) {
+                    contextReasoning.halt = "Clear conflict of interest violates fiduciary responsibilities"; 
+                    contextReasoning.final = "Client interest must take priority over fee generation";
+                }
+                // Specific reasoning for emergency operations
+                else if (lowerScenario.includes('destroyed') && lowerScenario.includes('production halt')) {
+                    contextReasoning.proceed = "Emergency operational necessity with available solutions";
+                    contextReasoning.final = "Production continuity requires immediate supplier switch despite quality uncertainty";
+                }
+                // Generic reasoning for mixed signals
+                else if (lowerScenario.includes('but') && (lowerScenario.includes('weak') || lowerScenario.includes('mixed'))) {
+                    contextReasoning.hold = "Conflicting market signals require additional technical analysis";
+                    contextReasoning.final = "Mixed indicators suggest gathering additional confirmation before position sizing";
+                }
+                // Default reasoning
+                else {
+                    const decisionType = decision === 1 ? 'proceed' : decision === 0 ? 'hold' : 'halt';
+                    const selectedReasons = reasons[decisionType];
+                    contextReasoning.final = selectedReasons[Math.floor(Math.random() * selectedReasons.length)];
+                }
+
+                // Fill in the other states with generic reasoning
+                if (!contextReasoning.proceed) contextReasoning.proceed = reasons.proceed[0];
+                if (!contextReasoning.hold) contextReasoning.hold = reasons.hold[0]; 
+                if (!contextReasoning.halt) contextReasoning.halt = reasons.halt[0];
+
+                return contextReasoning;
             }
         }
 
