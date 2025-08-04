@@ -1,6 +1,5 @@
-# Goukassian Framework Dependencies
-# Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)
-# Contact: leogouk@gmail.com
+# Ternary Logic Framework Dependencies
+# For Intelligent Economic Decision-Making Under Uncertainty
 
 # Core Dependencies
 numpy>=1.19.0
@@ -8,7 +7,7 @@ pandas>=1.3.0
 scipy>=1.7.0
 
 # Optional Dependencies for Enhanced Functionality
-# Install with: pip install goukassian-framework[extra_name]
+# Install with: pip install ternary-logic[extra_name]
 
 # Financial Applications
 # yfinance>=0.1.70
@@ -32,3 +31,6 @@ scipy>=1.7.0
 # flake8>=3.8
 # mypy>=0.800
 # pre-commit>=2.0
+
+# Ternary Logic Framework - Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)
+# Contact: leogouk@gmail.com
