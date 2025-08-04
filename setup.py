@@ -1,5 +1,5 @@
 """
-Goukassian Framework - Ternary Logic for Intelligent Decision-Making
+Ternary Logic Framework - Intelligent Economic Decision-Making Under Uncertainty
 Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)
 Contact: leogouk@gmail.com
 """
@@ -13,11 +13,11 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
     requirements = [line.strip() for line in fh if line.strip() and not line.startswith("#")]
 
 setup(
-    name="goukassian-framework",
+    name="ternary-logic",
     version="1.0.0",
     author="Lev Goukassian",
     author_email="leogouk@gmail.com",
-    description="Ternary Logic for Intelligent Decision-Making Under Uncertainty",
+    description="Ternary Logic Framework for Intelligent Economic Decision-Making Under Uncertainty",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/FractonicMind/TernaryLogic",
@@ -36,6 +36,8 @@ setup(
         "Intended Audience :: Science/Research",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
         "Topic :: Office/Business :: Financial",
+        "Topic :: Office/Business :: Financial :: Investment",
+        "Topic :: Office/Business :: Financial :: Accounting",
         "Topic :: Scientific/Engineering :: Information Analysis",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
@@ -74,20 +76,21 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "goukassian=goukassian.cli:main",
+            "ternary-logic=ternary_logic.cli:main",
         ],
     },
     keywords=[
         "ternary-logic",
-        "decision-making", 
-        "uncertainty",
+        "economic-decision-making", 
+        "market-uncertainty",
         "finance",
         "economics",
-        "artificial-intelligence",
+        "intelligent-systems",
         "risk-management",
         "algorithmic-trading",
+        "epistemic-hold",
         "supply-chain",
-        "goukassian-framework"
+        "monetary-policy"
     ],
     license="MIT",
     zip_safe=False,
