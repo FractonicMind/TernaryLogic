@@ -142,8 +142,8 @@ Forecasting Error Reduction| 35%           | ✅ Verified
 Sharpe Ratio Improvement   | 40%           | ✅ Verified  
 Volatility Reduction       | 19%           | ✅ Verified
 Epistemic Hold Rate        | 23%           | ✅ Verified
-Test Coverage             | 97%           | ✅ Verified
-Decision Accuracy         | >90%          | ✅ Verified
+Test Coverage              | 97%           | ✅ Verified
+Decision Accuracy          | >90%          | ✅ Verified
 ```
 
 ---
