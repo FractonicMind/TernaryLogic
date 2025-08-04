@@ -136,8 +136,8 @@ The Ternary Logic framework adheres to the **highest standards of reproducible r
 
 #### ✅ **Benchmark Results**
 ```
-Performance Metric          | Reported Value | Reproducible
----------------------------|----------------|-------------
+Performance Metric         | Reported Value| Reproducible
+---------------------------|---------------|-------------
 Forecasting Error Reduction| 35%           | ✅ Verified
 Sharpe Ratio Improvement   | 40%           | ✅ Verified  
 Volatility Reduction       | 19%           | ✅ Verified
