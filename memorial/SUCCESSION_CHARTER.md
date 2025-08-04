@@ -324,7 +324,7 @@ Every economic system that pauses to consider uncertainty rather than forcing bi
 * **ORCID**: 0009-0006-5966-1243
 * **Email**: leogouk@gmail.com
 
-**Successor Contact**: support@tl-goukassian.org (see Succession Charter)
+**Successor Contact**: support@tl-goukassian.org
 
 **Repository Reference**: https://github.com/FractonicMind/TernaryLogic  
 **Framework Demo**: https://fractonicmind.github.io/TernaryLogic/demos/TL-App/  
