@@ -719,9 +719,6 @@ Annual Conference: "Beyond Binary Trading"
 
 ## Contact Information
 
-**Created by Lev Goukassian**
-
-- **ORCID**: 0009-0006-5966-1243
 - **Current**: Lev Goukassian (leogouk@gmail.com)  
 - **Succession**: support@tl-goukassian.org  
   (see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))  
