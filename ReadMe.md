@@ -2,7 +2,6 @@
 
 **Epistemic Hold Technology for Economic Decision-Making**
 
-[![License with Ethics](https://img.shields.io/badge/License%20with%20Ethics-MIT-yellow.svg)](LICENSE)
 [![Try Interactive Demo](https://img.shields.io/badge/🚀%20Try%20Interactive%20Demo-Live%20Now-blue?labelColor=yellow&color=0057B7&logoColor=white)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/)
 [![Examples](https://img.shields.io/badge/Examples-Updated-success.svg)](examples/)
 [![Economic Paper](https://img.shields.io/badge/Economic%20Paper-Published-blue.svg)](research/academic_papers/ternary_logic_economics_paper.md)
@@ -25,6 +24,8 @@
 [![Case Studies](https://img.shields.io/badge/Case%20Studies-Available-blue.svg)](theory/case-studies.md)
 [![Succession Plan](https://img.shields.io/badge/Succession%20Plan-Established-gold.svg)](memorial/SUCCESSION_CHARTER.md)
 [![Presentations](https://img.shields.io/badge/Presentations-Ready-blueviolet.svg)](demos/conference_presentation_materials.md)
+[![License with Ethics](https://img.shields.io/badge/License%20with%20Ethics-MIT-yellow.svg)](LICENSE)
+[![License Demo](https://img.shields.io/badge/License%20Demo-Ternary%20Logic-purple.svg)](examples/ternary-logic-license-demo.md)
 [![Memorial](https://img.shields.io/badge/In%20Memory%20of-Lev%20Goukassian-red.svg)](protection/legacy-preservation.md)
 
 
@@ -697,7 +698,17 @@ This project is licensed under the **MIT License with Ethical Use Requirements**
 - ❌ **Prohibited use** for market manipulation, exploitation, or systemic harm
 - 🤝 **Community accountability** for ethical implementation
 
-**License Inquiries**: leogouk@gmail.com
+### 🎨 Creative Innovation: Ternary Logic Applied to Licensing
+
+We've also created a **[Ternary Logic License Demo](examples/ternary-logic-license-demo.md)** that demonstrates how TL's three-state decision framework (+1/0/-1) can be creatively applied to software licensing itself. This educational example shows:
+- **Proceed (+1)**: Explicitly permitted actions
+- **Epistemic Hold (0)**: Actions requiring deliberation and community consultation
+- **Halt (-1)**: Prohibited uses that violate TL principles
+
+This demonstration illustrates the versatility of Ternary Logic beyond economic decision-making and serves as a thought experiment for conference presentations and academic discussions.
+
+**License Inquiries**: leogouk@gmail.com  
+**Successor Contact**: support@tl-goukassian.org (see [Succession Charter](memorial/SUCCESSION_CHARTER.md))
 
 See [LICENSE](LICENSE) for complete terms.
 
