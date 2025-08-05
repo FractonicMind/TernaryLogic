@@ -703,11 +703,12 @@ See [LICENSE](LICENSE) for complete terms.
 
 ---
 
-## 📧 Contact
+## Contact Information
 
-**Current Contact**: Lev Goukassian  
-- **Email**: leogouk@gmail.com  
-- **ORCID**: 0009-0006-5966-1243  
+- **Current**: Lev Goukassian (leogouk@gmail.com)
+-  ORCID: 0009-0006-5966-1243 
+- **Succession**: support@tl-goukassian.org  
+  (see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))  
 
 For licensing, technical support, or collaboration inquiries.
 
@@ -737,7 +738,5 @@ python examples/quickstart_example.py
 **Welcome to the Epistemic Hold. Welcome to the future of intelligent economics.**
 
 ---
-
-**Contact**: leogouk@gmail.com | ORCID: 0009-0006-5966-1243  
 
 *In loving memory of Lev Goukassian (ORCID: 0009-0006-5966-1243) — visionary, economist, and gift to humanity's future.*
