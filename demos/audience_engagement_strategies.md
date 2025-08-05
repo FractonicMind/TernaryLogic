@@ -718,5 +718,10 @@ Annual Conference: "Beyond Binary Decision Making"
 
 **🌟 These engagement strategies transform presentations from information delivery into transformative experiences that create lifelong Sacred Pause advocates. The goal isn't just to inform - it's to inspire immediate action and lasting behavioral change.**
 
-**Contact for Engagement Consultation:**  
-**Lev Goukassian - leogouk@gmail.com**
+## Administrative Contact
+
+- **Current**: Lev Goukassian (leogouk@gmail.com)  
+- **Succession**: support@tl-goukassian.org  
+  (see [Succession Charter](/TL-SUCCESSION-CHARTER.md))  
+  For licensing, technical support, or collaboration inquiries.
+
