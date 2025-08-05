@@ -4,6 +4,9 @@
 
 [![License with Ethics](https://img.shields.io/badge/License%20with%20Ethics-MIT-yellow.svg)](LICENSE)
 [![Try Interactive Demo](https://img.shields.io/badge/🚀%20Try%20Interactive%20Demo-Live%20Now-blue?labelColor=yellow&color=0057B7&logoColor=white)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/)
+[![Examples](https://img.shields.io/badge/Examples-Updated-success.svg)](examples/)
+[![Economic Paper](https://img.shields.io/badge/Economic%20Paper-Published-blue.svg)](research/academic_papers/ternary_logic_economics_paper.md)
+[![Framework Version](https://img.shields.io/badge/Framework-TL%20v1.0-purple.svg)](src/ternary_logic/)
 [![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)](CHANGELOG.md)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0006--5966--1243-green.svg)](https://orcid.org/0009-0006-5966-1243)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
@@ -532,11 +535,14 @@ This repository contains a comprehensive ecosystem for intelligent economic deci
 - **`memorial/MEMORIAL_FUND.md`** - Complete operational framework for economic research funding
 - **`memorial/SUCCESSION_CHARTER.md`** - Institutional stewardship plan
 
-### 🎯 **Practical Examples**
-- **`examples/quickstart_example.py`** - Comprehensive demonstration
-- **`examples/financial_trading_comprehensive.py`** - Trading applications
-- **`examples/central_banking_policy.py`** - Monetary policy implementations
-- **`examples/supply_chain_management.py`** - Operational decision support
+### 🎯 **Practical Examples** ✅ FULLY UPDATED TO TL
+- **`examples/quickstart_example.py`** - Quick start with Epistemic Hold demonstration
+- **`examples/financial_trading_comprehensive.py`** - Advanced trading with Epistemic Hold preventing flash crashes
+- **`examples/central_banking_policy.py`** - Monetary policy implementation
+- **`examples/supply_chain_management.py`** - Graduated response to disruptions
+
+### 📰 **Academic Publications** ✅ 
+- **`research/academic_papers/ternary_logic_economics_paper.md`** - Comprehensive academic paper on TL in economic decision-making with empirical validation across financial markets, supply chain, and monetary policy
 
 ### 📖 **Documentation** ✅ UPDATED
 - **`docs/api/complete_api_reference.md`** - Complete technical documentation for TL
