@@ -1,21 +1,19 @@
-# The Goukassian Framework - Executive Presentation
+# The Ternary Logic Framework - Executive Presentation
 
 **For: Corporate Leadership, Central Banks, Investment Institutions**  
 **Created by: Lev Goukassian (ORCID: 0009-0006-5966-1243)**  
-**Contact: leogouk@gmail.com**
 
 ---
 
 ## Slide 1: Title Slide
 ```
-THE GOUKASSIAN FRAMEWORK
-Ternary Logic for Intelligent Economic Decision-Making
+THE TERNARY LOGIC FRAMEWORK
+Intelligent Economic Decision-Making Under Uncertainty
 
 "The world is not binary. And the future will not be either."
 
 Presented by: Lev Goukassian
 ORCID: 0009-0006-5966-1243
-Contact: leogouk@gmail.com
 
 [Background: Subtle visualization of three-state decision tree]
 ```
@@ -71,40 +69,40 @@ COVID Supply Chains
 THE TERNARY SOLUTION
 
 Traditional Binary Logic:
-TRUE (1) | FALSE (0)
+PROCEED (1) | HALT (0)
 
-Goukassian Ternary Logic:
-TRUE (1) | FALSE (0) | INDETERMINATE (-1)
+Ternary Logic Framework:
+PROCEED (1) | HALT (0) | EPISTEMIC HOLD (-1)
 
 The Third State:
-⚠️ INDETERMINATE = "I don't know yet, but I will find out"
+⚠️ EPISTEMIC HOLD = "Insufficient data for confident decision"
 
 [Visual: Evolution animation from 2-state to 3-state system]
 
 This isn't indecision - it's intelligence
 The courage to acknowledge uncertainty
-The wisdom to pause before potential harm
+The wisdom to pause before potential losses
 ```
 
 ---
 
-## Slide 5: The Sacred Pause Principle
+## Slide 5: The Epistemic Hold Principle
 ```
-THE SACRED PAUSE
+THE EPISTEMIC HOLD
 
 When confidence falls below threshold:
 • PAUSE: Stop the decision process
 • ASSESS: Identify missing information  
-• GATHER: Collect additional data
+• GATHER: Collect additional market data
 • DECIDE: Act with improved confidence
 
 Mathematical Foundation:
 If Confidence(Data) < Threshold:
-    Return INDETERMINATE
+    Return EPISTEMIC_HOLD
 Else:
-    Return TRUE or FALSE based on signal
+    Return PROCEED or HALT based on signal
 
-[Visual: Flowchart showing Sacred Pause decision process]
+[Visual: Flowchart showing Epistemic Hold decision process]
 
 "The pause that saves portfolios"
 "The hesitation that prevents crashes"
@@ -259,8 +257,8 @@ ADDRESSING IMPLEMENTATION CONCERNS
 • Emergency override capabilities for crisis situations
 
 "Will this slow down our decision-making?"
-• Sacred Pause prevents costly errors (net time savings)
-• Parallel processing during pause periods
+• Epistemic Hold prevents costly errors (net time savings)
+• Parallel processing during hold periods
 • Faster decisions when confidence is high
 
 "How do we explain uncertainty to stakeholders?"
@@ -385,10 +383,8 @@ The Question: Will you lead or follow?
 "In an uncertain world, the most certain thing 
 you can do is acknowledge uncertainty."
 
-Ready to implement the Sacred Pause in your organization?
+Ready to implement the Epistemic Hold in your organization?
 
-Contact Information:
-📧 leogouk@gmail.com
 🔗 github.com/FractonicMind/TernaryLogic  
 📄 ORCID: 0009-0006-5966-1243
 
@@ -409,7 +405,7 @@ FORMAL MATHEMATICAL DEFINITION
 Ternary Decision Function:
 D(I, θ) = {
     sign(V(I))     if C(I) ≥ θ
-    INDETERMINATE  if C(I) < θ
+    EPISTEMIC_HOLD if C(I) < θ
 }
 
 Where:
@@ -465,7 +461,7 @@ System Components:
    • Confidence calculation
    • Threshold management
 
-3. Sacred Pause Controller
+3. Epistemic Hold Controller
    • Uncertainty detection
    • Information gathering protocols
    • Decision timing optimization
@@ -493,9 +489,13 @@ System Components:
 - **Success Metrics**: Number of pilot commitments, follow-up meetings scheduled
 - **Next Steps**: Clear action plan with specific timelines and responsibilities
 
-**Contact for Presentation Delivery:**
-Lev Goukassian  
-Email: leogouk@gmail.com  
-ORCID: 0009-0006-5966-1243
-
 *"This presentation transforms complex ternary logic concepts into compelling business value propositions for executive decision-makers."*
+
+## Contact Information
+
+**Created by Lev Goukassian**
+* **ORCID**: 0009-0006-5966-1243
+* **Email**: leogouk@gmail.com
+
+**Successor Contact**: support@tl-goukassian.org  
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
