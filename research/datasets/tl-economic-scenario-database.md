@@ -450,4 +450,4 @@ Each new domain should follow the same structured approach: clear scenarios, ide
 **Maintenance**: Regular updates based on evolving economic conditions and new decision scenarios encountered in practice.
 
 **Contact**: leogouk@gmail.com | **ORCID**: 0009-0006-5966-1243  
-**Successor Contact**: support@tl-goukassian.org (see [Succession Charter](/SUCCESSION_CHARTER.md))
+**Successor Contact**: support@tl-goukassian.org (see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
