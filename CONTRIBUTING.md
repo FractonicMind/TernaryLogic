@@ -70,8 +70,11 @@ cd TernaryLogic
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install development dependencies
-pip install -e ".[dev]"
+# Install as ternary-logic package
+pip install -e .
+
+# Install development dependencies if needed
+pip install pytest black flake8
 
 # Run tests
 pytest
@@ -85,16 +88,40 @@ black src/
 ```
 TernaryLogic/
 ├── src/
-│   └── goukassian/
-│       ├── core/           # Core ternary logic implementation
-│       ├── financial/      # Financial trading applications
-│       ├── supply_chain/   # Supply chain management applications
-│       ├── policy/         # Monetary policy applications
-│       └── utils/          # Utility functions
+│   └── goukassian/         # Core TL implementation (installs as ternary-logic)
+│       ├── __init__.py     # TL classes: TLState, TLValue, TLResult
+│       └── core.py         # PROCEED/HALT/EPISTEMIC_HOLD implementation
 ├── tests/                  # Test suites
 ├── docs/                   # Documentation
+│   ├── api/               # API reference
+│   └── presentations/     # Executive and conference materials
 ├── examples/              # Economic usage examples
-└── scripts/               # Development scripts
+│   ├── quickstart_example.py
+│   ├── financial_trading_comprehensive.py
+│   ├── central_banking_policy.py
+│   └── supply_chain_management.py
+├── theory/                # Theoretical foundations
+│   ├── economic-foundations.md
+│   ├── philosophical-foundations.md
+│   ├── core-principles.md
+│   └── case-studies.md
+├── protection/            # Safeguards and integrity
+│   ├── institutional-access.md
+│   ├── misuse-prevention.md
+│   ├── integrity-monitoring.md
+│   └── legacy-preservation.md
+├── memorial/              # Legacy preservation
+│   ├── SUCCESSION_CHARTER.md
+│   └── MEMORIAL_FUND.md
+├── demos/                 # Interactive demonstrations
+│   ├── TL-App/           # Live web demo
+│   ├── conference_presentation_materials.md
+│   └── audience_engagement_strategies.md
+├── research/              # Research materials
+│   ├── academic_papers/
+│   └── datasets/
+├── benchmark/             # Performance testing
+└── scripts/              # Development scripts
 ```
 
 ## 📝 Coding Standards
@@ -231,6 +258,6 @@ Together, we're building the future of intelligent economic decision-making.
 - **Email**: leogouk@gmail.com
 
 **Successor Contact**: support@tl-goukassian.org  
-(see [Succession Charter](/TL-SUCCESSION-CHARTER.md))
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
 
 *In loving memory of Lev Goukassian (ORCID: 0009-0006-5966-1243) — visionary, economist, and gift to humanity's future.*
