@@ -1,5 +1,5 @@
 """
-Goukassian Framework - Supply Chain Management Example
+Ternary Logic Framework - Supply Chain Management Example
 Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)
 Contact: leogouk@gmail.com
 
@@ -7,7 +7,7 @@ This example demonstrates how the Ternary Logic framework enables intelligent
 supply chain responses to disruptions by implementing graduated responses
 rather than binary reroute/don't-reroute decisions.
 
-"The Sacred Pause prevents supply chain overreactions."
+"The Epistemic Hold prevents supply chain overreactions."
 """
 
 import numpy as np
@@ -16,15 +16,15 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 import json
 
-# Import Goukassian Framework
-from goukassian import TernaryDecisionEngine, TernaryState
-from goukassian.core import TernaryResult
+# Import Ternary Logic Framework
+from ternary_logic import TLDecisionEngine, TLState
+from ternary_logic.core import TLResult
 
 class GlobalSupplyChainManager:
     """
     Global Supply Chain Management using Ternary Logic
     
-    This system demonstrates how the Sacred Pause principle prevents costly
+    This system demonstrates how the Epistemic Hold principle prevents costly
     overreactions to supply chain disruptions while ensuring adequate response
     to genuine threats.
     """
@@ -41,7 +41,7 @@ class GlobalSupplyChainManager:
             cost_sensitivity: Weight given to cost considerations (0-1)
             time_sensitivity: Weight given to time/speed considerations (0-1)
         """
-        self.engine = TernaryDecisionEngine(
+        self.engine = TLDecisionEngine(
             confidence_threshold=confidence_threshold,
             domain="supply_chain"
         )
@@ -135,7 +135,7 @@ class GlobalSupplyChainManager:
                                  disruption_event: Dict,
                                  route_info: Dict,
                                  market_conditions: Dict,
-                                 response_options: List[str] = None) -> TernaryResult:
+                                 response_options: List[str] = None) -> TLResult:
         """
         Make supply chain response decision using Ternary Logic
         
@@ -146,7 +146,7 @@ class GlobalSupplyChainManager:
             response_options: Available response strategies
             
         Returns:
-            TernaryResult with supply chain recommendation
+            TLResult with supply chain recommendation
         """
         
         # Analyze disruption signals
@@ -178,7 +178,7 @@ class GlobalSupplyChainManager:
         return decision
     
     def implement_response_strategy(self, 
-                                  decision: TernaryResult, 
+                                  decision: TLResult, 
                                   disruption_event: Dict,
                                   route_info: Dict) -> Dict:
         """
@@ -195,7 +195,7 @@ class GlobalSupplyChainManager:
             'monitoring_requirements': decision.next_steps
         }
         
-        if decision.state == TernaryState.TRUE:
+        if decision.state == TLState.PROCEED:
             # Implement major route change or disruption response
             implementation_plan.update({
                 'primary_action': 'IMPLEMENT_MAJOR_CHANGE',
@@ -205,7 +205,7 @@ class GlobalSupplyChainManager:
                 'customer_notifications': self._generate_customer_notifications(decision)
             })
             
-        elif decision.state == TernaryState.FALSE:
+        elif decision.state == TLState.HALT:
             # Maintain current operations with enhanced monitoring
             implementation_plan.update({
                 'primary_action': 'MAINTAIN_CURRENT_OPERATIONS',
@@ -214,11 +214,11 @@ class GlobalSupplyChainManager:
                 'stakeholder_updates': self._generate_stakeholder_updates(decision)
             })
             
-        else:  # INDETERMINATE - Sacred Pause
+        else:  # EPISTEMIC_HOLD - Epistemic Hold
             # Implement graduated response with continuous assessment
             implementation_plan.update({
                 'primary_action': 'GRADUATED_RESPONSE',
-                'sacred_pause_protocol': self._design_sacred_pause_protocol(decision),
+                'epistemic_hold_protocol': self._design_epistemic_hold_protocol(decision),
                 'data_gathering_plan': self._create_data_gathering_plan(decision),
                 'trigger_conditions': self._define_trigger_conditions(decision),
                 'escalation_procedures': self._design_escalation_procedures(decision)
@@ -495,8 +495,110 @@ class GlobalSupplyChainManager:
                     
         return risk_adjusted
     
-    def _design_sacred_pause_protocol(self, decision: TernaryResult) -> Dict:
-        """Design Sacred Pause protocol for supply chain"""
+    def _enhance_supply_chain_decision(self,
+                                     decision: TLResult,
+                                     disruption_event: Dict,
+                                     signals: Dict,
+                                     response_options: List[str] = None) -> TLResult:
+        """Enhance decision with supply chain specific guidance"""
+        
+        if decision.state == TLState.EPISTEMIC_HOLD:
+            # Add supply chain-specific guidance for Epistemic Hold
+            sc_steps = [
+                "Monitor disruption severity reports from multiple sources",
+                "Assess alternative route availability and costs",
+                "Evaluate current inventory buffer levels",
+                "Consult with key suppliers on flexibility options"
+            ]
+            decision.next_steps.extend(sc_steps)
+            
+        # Add supply chain metadata
+        if decision.metadata is None:
+            decision.metadata = {}
+            
+        decision.metadata.update({
+            'disruption_type': disruption_event.get('event_type', 'unknown'),
+            'missing_signals': [k for k, v in signals.items() if v is None],
+            'signal_count': len([v for v in signals.values() if v is not None])
+        })
+        
+        return decision
+    
+    def _determine_implementation_timeline(self, decision: TLResult) -> int:
+        """Determine implementation timeline in hours"""
+        if decision.state == TLState.PROCEED:
+            return 24  # Implement within 24 hours
+        elif decision.state == TLState.HALT:
+            return 72  # Monitor for 72 hours
+        else:  # EPISTEMIC_HOLD
+            return 48  # Graduated response over 48 hours
+    
+    def _calculate_resource_allocation(self, decision: TLResult) -> Dict:
+        """Calculate resource allocation based on decision"""
+        return {
+            'personnel': 'full_team' if decision.state == TLState.PROCEED else 'monitoring_team',
+            'budget': 'emergency' if decision.state == TLState.PROCEED else 'standard',
+            'priority': 'high' if decision.state == TLState.PROCEED else 'medium'
+        }
+    
+    def _design_route_modification(self, decision: TLResult, route_info: Dict) -> Dict:
+        """Design route modification plan"""
+        return {
+            'primary_route': 'alternative_route_1',
+            'backup_route': 'alternative_route_2',
+            'transition_plan': 'phased_over_48_hours'
+        }
+    
+    def _calculate_inventory_adjustments(self, decision: TLResult) -> Dict:
+        """Calculate inventory adjustments"""
+        return {
+            'safety_stock_increase': 0.3,  # 30% increase
+            'reorder_point_adjustment': 1.2,  # 20% earlier
+            'emergency_orders': 'approved'
+        }
+    
+    def _generate_supplier_communications(self, decision: TLResult) -> List[str]:
+        """Generate supplier communication templates"""
+        return [
+            "Notify primary suppliers of route change",
+            "Request flexibility in delivery schedules",
+            "Coordinate alternative sourcing options"
+        ]
+    
+    def _generate_customer_notifications(self, decision: TLResult) -> List[str]:
+        """Generate customer notification templates"""
+        return [
+            "Inform customers of potential delays",
+            "Provide updated delivery estimates",
+            "Offer alternative fulfillment options"
+        ]
+    
+    def _design_enhanced_monitoring(self, decision: TLResult) -> Dict:
+        """Design enhanced monitoring protocol"""
+        return {
+            'monitoring_frequency': 'hourly',
+            'key_metrics': ['route_status', 'inventory_levels', 'supplier_updates'],
+            'alert_thresholds': {'severity': 0.7, 'duration': 7}
+        }
+    
+    def _prepare_contingencies(self, decision: TLResult) -> List[str]:
+        """Prepare contingency plans"""
+        return [
+            "Identify backup suppliers",
+            "Prepare emergency route activation",
+            "Ready crisis communication plans"
+        ]
+    
+    def _generate_stakeholder_updates(self, decision: TLResult) -> List[str]:
+        """Generate stakeholder update templates"""
+        return [
+            "Situation stable - monitoring continues",
+            "No immediate action required",
+            "Will update if conditions change"
+        ]
+    
+    def _design_epistemic_hold_protocol(self, decision: TLResult) -> Dict:
+        """Design Epistemic Hold protocol for supply chain"""
         
         pause_duration_hours = max(4, min(48, (1 - decision.confidence) * 72))
         
@@ -517,8 +619,33 @@ class GlobalSupplyChainManager:
             ]
         }
     
+    def _create_data_gathering_plan(self, decision: TLResult) -> List[str]:
+        """Create data gathering plan"""
+        return [
+            "Request updated severity reports",
+            "Analyze alternative route costs",
+            "Survey supplier flexibility",
+            "Update demand forecasts"
+        ]
+    
+    def _define_trigger_conditions(self, decision: TLResult) -> Dict:
+        """Define trigger conditions for action"""
+        return {
+            'immediate_action': 'severity > 0.8 or inventory < 3 days',
+            'escalation': 'confidence increases above 0.7',
+            'stand_down': 'disruption resolved or alternatives confirmed'
+        }
+    
+    def _design_escalation_procedures(self, decision: TLResult) -> List[str]:
+        """Design escalation procedures"""
+        return [
+            "Alert senior management if triggers met",
+            "Activate crisis response team",
+            "Implement pre-approved contingencies"
+        ]
+    
     def _log_supply_chain_decision(self, 
-                                 decision: TernaryResult, 
+                                 decision: TLResult, 
                                  disruption_event: Dict,
                                  signals: Dict):
         """Log decision for supply chain analytics"""
@@ -541,12 +668,12 @@ def demonstrate_supply_chain_management():
     Demonstrate the Supply Chain Management system with realistic scenarios
     """
     
-    print("🚚 Global Supply Chain Management - Goukassian Framework")
+    print("🚚 Global Supply Chain Management - Ternary Logic Framework")
     print("=" * 60)
     print()
     print("Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)")
     print("Contact: leogouk@gmail.com")
-    print('"The Sacred Pause prevents supply chain overreactions."')
+    print('"The Epistemic Hold prevents supply chain overreactions."')
     print()
     
     # Initialize supply chain manager
@@ -652,9 +779,9 @@ def demonstrate_supply_chain_management():
     print(f"Action: {implementation['primary_action']}")
     print(f"Reasoning: {decision.reasoning}")
     
-    if decision.state == TernaryState.INDETERMINATE:
-        print("Sacred Pause Protocol:")
-        protocol = implementation['sacred_pause_protocol']
+    if decision.state == TLState.EPISTEMIC_HOLD:
+        print("Epistemic Hold Protocol:")
+        protocol = implementation['epistemic_hold_protocol']
         print(f"  Pause Duration: {protocol['pause_duration_hours']} hours")
         print(f"  Monitoring: {protocol['monitoring_frequency']}")
         print("  Escalation Triggers:")
@@ -709,16 +836,25 @@ def demonstrate_supply_chain_management():
     
     print("📊 Supply Chain Management Summary")
     print("-" * 34)
-    print("The Goukassian Framework enables supply chain managers to:")
+    print("The Ternary Logic Framework enables supply chain managers to:")
     print("• Avoid costly overreactions to uncertain disruptions")
     print("• Implement graduated responses based on confidence levels")
     print("• Maintain operational efficiency during minor disruptions")
     print("• Gather critical data before making major route changes")
     print("• Balance multiple competing priorities intelligently")
     print()
-    print("As Lev Goukassian noted: 'The Sacred Pause prevents")
+    print("As Lev Goukassian noted: 'The Epistemic Hold prevents")
     print("supply chain overreactions while ensuring adequate response")
     print("to genuine threats.'")
 
 if __name__ == "__main__":
     demonstrate_supply_chain_management()
+
+## Contact Information
+
+**Created by Lev Goukassian**
+* **ORCID**: 0009-0006-5966-1243
+* **Email**: leogouk@gmail.com
+
+**Successor Contact**: support@tl-goukassian.org  
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
