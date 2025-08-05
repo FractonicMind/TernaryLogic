@@ -1,25 +1,24 @@
-# Goukassian Framework - Complete API Reference
+# Ternary Logic Framework - Complete API Reference
 
 **Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)**  
-**Contact: leogouk@gmail.com**
 
-*Complete technical reference for implementing Ternary Logic in your systems*
+*Complete technical reference for implementing Ternary Logic in economic systems*
 
 ---
 
 ## Core Classes
 
-### TernaryState
+### TLState
 
 **Enumeration representing the three states of ternary logic**
 
 ```python
-from goukassian import TernaryState
+from ternary_logic import TLState
 
-class TernaryState(Enum):
-    TRUE = 1          # High confidence to proceed
-    FALSE = 0         # High confidence to stop/reject
-    INDETERMINATE = -1  # Insufficient data - Sacred Pause
+class TLState(Enum):
+    PROCEED = 1          # High confidence to proceed
+    HALT = -1            # High confidence to stop/reject
+    EPISTEMIC_HOLD = 0   # Insufficient data - Epistemic Hold
 ```
 
 **Methods:**
@@ -28,82 +27,82 @@ class TernaryState(Enum):
 
 **Example:**
 ```python
-state = TernaryState.INDETERMINATE
-print(state)  # Output: "INDETERMINATE"
-print(repr(state))  # Output: "TernaryState.INDETERMINATE"
+state = TLState.EPISTEMIC_HOLD
+print(state)  # Output: "EPISTEMIC_HOLD"
+print(repr(state))  # Output: "TLState.EPISTEMIC_HOLD"
 ```
 
 ---
 
-### TernaryValue
+### TLValue
 
-**Core ternary value with uncertainty handling**
+**Core ternary value with market uncertainty handling**
 
 ```python
-from goukassian.core import TernaryValue
+from ternary_logic.core import TLValue
 
-class TernaryValue:
+class TLValue:
     def __init__(self, value: Union[float, int, None], confidence: float = 1.0)
 ```
 
 **Parameters:**
-- `value` (float | int | None): The numeric value (None = missing/unknown data)
+- `value` (float | int | None): The numeric value (None = missing/unknown market data)
 - `confidence` (float): Confidence level between 0.0 and 1.0
 
 **Properties:**
 - `value`: The underlying numeric value
 - `confidence`: Confidence level (automatically clamped to [0,1])
-- `state`: Computed TernaryState based on value and confidence
+- `state`: Computed TLState based on value and confidence
 
 **Methods:**
 
 #### Logical Operations
 ```python
-def __and__(self, other: 'TernaryValue') -> 'TernaryValue'
-def __or__(self, other: 'TernaryValue') -> 'TernaryValue'  
-def __invert__(self) -> 'TernaryValue'
+def __and__(self, other: 'TLValue') -> 'TLValue'
+def __or__(self, other: 'TLValue') -> 'TLValue'  
+def __invert__(self) -> 'TLValue'
 ```
 
 **Truth Tables:**
 
 | A | B | A AND B | A OR B |
 |---|---|---------|--------|
-| T | T | T | T |
-| T | F | F | T |
-| T | I | I | T |
-| F | F | F | F |
-| F | I | F | I |
-| I | I | I | I |
+| P | P | P | P |
+| P | H | H | P |
+| P | E | E | P |
+| H | H | H | H |
+| H | E | H | E |
+| E | E | E | E |
 
-*Where T=TRUE, F=FALSE, I=INDETERMINATE*
+*Where P=PROCEED, H=HALT, E=EPISTEMIC_HOLD*
 
 **Example:**
 ```python
-high_confidence = TernaryValue(0.8, confidence=0.9)
-low_confidence = TernaryValue(0.6, confidence=0.4)
+high_confidence = TLValue(0.8, confidence=0.9)
+low_confidence = TLValue(0.6, confidence=0.4)
 
-print(high_confidence.state)  # TernaryState.TRUE
-print(low_confidence.state)   # TernaryState.INDETERMINATE
+print(high_confidence.state)  # TLState.PROCEED
+print(low_confidence.state)   # TLState.EPISTEMIC_HOLD
 
 combined = high_confidence & low_confidence
-print(combined.state)  # TernaryState.INDETERMINATE (weakest link)
+print(combined.state)  # TLState.EPISTEMIC_HOLD (weakest link)
 ```
 
 ---
 
-### TernaryResult
+### TLResult
 
-**Result container for ternary decisions with full context**
+**Result container for economic decisions with full market context**
 
 ```python
-from goukassian.core import TernaryResult
+from ternary_logic.core import TLResult
 
 @dataclass
-class TernaryResult:
-    state: TernaryState
+class TLResult:
+    state: TLState
     confidence: float
     reasoning: str
-    next_steps: Optional[List[str]] = None
+    clarifying_questions: Optional[List[str]] = None
     metadata: Optional[Dict[str, Any]] = None
 ```
 
@@ -111,124 +110,126 @@ class TernaryResult:
 - `state`: The ternary decision state
 - `confidence`: Numeric confidence level (0.0 to 1.0)
 - `reasoning`: Human-readable explanation of the decision
-- `next_steps`: Recommended actions (especially for INDETERMINATE states)
-- `metadata`: Additional context and debugging information
+- `clarifying_questions`: Recommended data gathering (especially for EPISTEMIC_HOLD states)
+- `metadata`: Additional context and market information
 
 **Example:**
 ```python
-result = TernaryResult(
-    state=TernaryState.INDETERMINATE,
+result = TLResult(
+    state=TLState.EPISTEMIC_HOLD,
     confidence=0.45,
     reasoning="Conflicting market signals require additional analysis",
-    next_steps=[
-        "Gather additional market sentiment data",
-        "Wait for earnings announcement",
-        "Re-evaluate in 2 hours"
+    clarifying_questions=[
+        "What is the current options flow?",
+        "Are there pending economic announcements?",
+        "What is the sector correlation?"
     ],
     metadata={
         "missing_data": ["volume_analysis", "sector_rotation"],
         "signal_count": 4,
-        "threshold": 0.7
+        "complexity_score": 0.8
     }
 )
 ```
 
 ---
 
-### TernaryLogicEngine
+### TLEvaluator
 
-**Main engine for ternary decision-making with Sacred Pause logic**
+**Main evaluator for economic decision-making with Epistemic Hold logic**
 
 ```python
-from goukassian.core import TernaryLogicEngine
+from ternary_logic.core import TLEvaluator
 
-class TernaryLogicEngine:
-    def __init__(self, confidence_threshold: float = 0.7)
+class TLEvaluator:
+    def __init__(self, 
+                halt_threshold: float = 0.3,
+                hold_threshold: float = 0.7)
 ```
 
 **Parameters:**
-- `confidence_threshold` (float): Minimum confidence for TRUE/FALSE decisions
+- `halt_threshold` (float): Below this confidence, strongly consider halting
+- `hold_threshold` (float): Below this confidence, engage epistemic hold
 
 **Methods:**
 
 #### evaluate()
 ```python
 def evaluate(self, 
-            criteria: Dict[str, Union[float, None]], 
-            weights: Optional[Dict[str, float]] = None) -> TernaryResult
+            request: str,
+            context: Optional[Dict[str, Any]] = None) -> TLResult
 ```
 
 **Parameters:**
-- `criteria`: Dictionary mapping criterion names to values (None = missing data)
-- `weights`: Optional importance weights for each criterion
+- `request`: Economic decision request in natural language
+- `context`: Market context and signals
 
 **Returns:**
-- `TernaryResult`: Complete decision result with reasoning and next steps
+- `TLResult`: Complete decision result with reasoning and questions
 
-**Sacred Pause Logic:**
-- If aggregate confidence ≥ threshold: Return TRUE/FALSE based on value
-- If aggregate confidence < threshold: Return INDETERMINATE (Sacred Pause)
+**Epistemic Hold Logic:**
+- If confidence < halt_threshold: Return HALT
+- If confidence < hold_threshold or complexity > 0.7: Return EPISTEMIC_HOLD
+- Otherwise: Return PROCEED based on signal direction
 
 **Example:**
 ```python
-engine = TernaryLogicEngine(confidence_threshold=0.75)
+evaluator = TLEvaluator(halt_threshold=0.3, hold_threshold=0.7)
 
-criteria = {
-    'market_sentiment': 0.6,    # Moderately positive
-    'technical_analysis': -0.3,  # Slightly negative
-    'volume_data': None,        # Missing!
-    'news_sentiment': 0.8       # Very positive
-}
+result = evaluator.evaluate(
+    "Should I execute this large block trade?",
+    context={
+        'market_volatility': 'elevated',
+        'liquidity_conditions': 'moderate',
+        'news_sentiment': 'mixed',
+        'technical_signals': 'bullish',
+        'position_size': 'large'
+    }
+)
 
-weights = {
-    'market_sentiment': 0.3,
-    'technical_analysis': 0.2,
-    'volume_data': 0.4,         # High weight but missing data
-    'news_sentiment': 0.1
-}
-
-result = engine.evaluate(criteria, weights)
-print(result.state)  # Likely INDETERMINATE due to missing volume_data
+print(result.state)  # Likely EPISTEMIC_HOLD due to elevated volatility
 ```
 
 ---
 
-### TernaryDecisionEngine
+### TLDecisionEngine
 
-**Enhanced decision engine with domain-specific features**
+**Enhanced decision engine with domain-specific trading features**
 
 ```python
-from goukassian.core import TernaryDecisionEngine
+from ternary_logic.core import TLDecisionEngine
 
-class TernaryDecisionEngine(TernaryLogicEngine):
+class TLDecisionEngine(TLEvaluator):
     def __init__(self, 
-                confidence_threshold: float = 0.7, 
+                halt_threshold: float = 0.3,
+                hold_threshold: float = 0.7, 
                 domain: str = "general")
 ```
 
 **Parameters:**
-- `confidence_threshold`: Minimum confidence for binary decisions
-- `domain`: Domain context ("financial", "medical", "policy", "general")
+- `halt_threshold`: Below this confidence, strongly consider halting
+- `hold_threshold`: Below this confidence, engage epistemic hold
+- `domain`: Domain context ("trading", "policy", "supply_chain", "general")
 
 **Additional Features:**
 - Domain-specific enhancement of results
 - Decision history tracking
 - Performance analytics
-- Specialized next-step recommendations
+- Specialized market recommendations
 
 **Methods:**
 
 #### decide()
 ```python
 def decide(self, 
-          criteria: Dict[str, Union[float, None]], 
-          weights: Optional[Dict[str, float]] = None,
-          context: Optional[str] = None) -> TernaryResult
+          request: str,
+          context: Optional[Dict[str, Any]] = None,
+          scenario: Optional[str] = None) -> TLResult
 ```
 
 **Enhanced version of evaluate() with:**
 - Domain-specific result enhancement
-- Context tracking for improved recommendations
+- Scenario tracking for improved recommendations
 - Decision logging for performance analysis
 
 #### get_decision_summary()
@@ -238,22 +239,22 @@ def get_decision_summary() -> Dict[str, Any]
 
 **Returns summary statistics:**
 - Total decisions made
-- State distribution (TRUE/FALSE/INDETERMINATE percentages)
+- State distribution (PROCEED/HALT/EPISTEMIC_HOLD percentages)
 - Average confidence levels
-- Sacred Pause frequency
+- Epistemic Hold frequency
 - Domain-specific metrics
 
 **Example:**
 ```python
-engine = TernaryDecisionEngine(domain="financial")
+engine = TLDecisionEngine(domain="trading")
 
-# Make several decisions...
+# Make several trading decisions...
 for scenario in trading_scenarios:
-    result = engine.decide(scenario['criteria'], context=scenario['context'])
+    result = engine.decide(scenario['request'], scenario['context'])
     
 # Get performance summary
 summary = engine.get_decision_summary()
-print(f"Sacred Pause Rate: {summary['indeterminate_rate']:.1%}")
+print(f"Epistemic Hold Rate: {summary['epistemic_hold_rate']:.1%}")
 print(f"Average Confidence: {summary['average_confidence']:.2f}")
 ```
 
@@ -265,17 +266,18 @@ print(f"Average Confidence: {summary['average_confidence']:.2f}")
 
 #### TradingAgent
 ```python
-from goukassian.financial import TradingAgent
+from ternary_logic.trading import TradingAgent
 
 class TradingAgent:
     def __init__(self, 
-                confidence_threshold: float = 0.75,
+                halt_threshold: float = 0.25,
+                hold_threshold: float = 0.75,
                 risk_tolerance: float = 0.3)
     
     def evaluate_trade_opportunity(self,
                                  symbol: str,
                                  market_data: Dict,
-                                 uncertainty_tolerance: float = 0.2) -> TernaryResult
+                                 uncertainty_tolerance: float = 0.2) -> TLResult
 ```
 
 **Market Data Structure:**
@@ -300,13 +302,13 @@ market_data = {
 
 #### PortfolioOptimizer
 ```python
-from goukassian.financial import PortfolioOptimizer
+from ternary_logic.trading import PortfolioOptimizer
 
 class PortfolioOptimizer:
     def optimize_portfolio(self,
                           assets: Dict[str, Dict],
                           target_return: float,
-                          max_risk: float) -> TernaryResult
+                          max_risk: float) -> TLResult
 ```
 
 **Asset Structure:**
@@ -331,12 +333,12 @@ assets = {
 
 #### DisruptionHandler
 ```python
-from goukassian.supply_chain import DisruptionHandler
+from ternary_logic.supply_chain import DisruptionHandler
 
 class DisruptionHandler:
     def evaluate_route_disruption(self,
                                 event_data: Dict,
-                                supply_chain_state: Dict) -> TernaryResult
+                                supply_chain_state: Dict) -> TLResult
 ```
 
 **Event Data Structure:**
@@ -358,13 +360,13 @@ event_data = {
 
 #### MonetaryPolicyEngine
 ```python
-from goukassian.policy import MonetaryPolicyEngine
+from ternary_logic.policy import MonetaryPolicyEngine
 
 class MonetaryPolicyEngine:
     def evaluate_policy_options(self,
                                economic_indicators: Dict,
                                policy_options: Dict,
-                               mandate_priorities: List[str]) -> TernaryResult
+                               mandate_priorities: List[str]) -> TLResult
 ```
 
 **Economic Indicators Structure:**
@@ -387,42 +389,55 @@ economic_indicators = {
 
 ```python
 RECOMMENDED_THRESHOLDS = {
-    'high_frequency_trading': 0.85,    # Low uncertainty tolerance
-    'strategic_planning': 0.65,        # Moderate uncertainty acceptable
-    'emergency_response': 0.45,        # Action required despite uncertainty
-    'research_decisions': 0.75,        # Scientific rigor required
-    'medical_diagnosis': 0.80,         # Patient safety priority
-    'financial_regulation': 0.70       # Balanced approach
+    'high_frequency_trading': {
+        'halt': 0.2,    # Conservative 
+        'hold': 0.85    # Low uncertainty tolerance
+    },
+    'portfolio_management': {
+        'halt': 0.3,
+        'hold': 0.7     # Balanced approach
+    },
+    'options_trading': {
+        'halt': 0.25,
+        'hold': 0.8     # Higher precision needed
+    },
+    'supply_chain': {
+        'halt': 0.35,
+        'hold': 0.65    # More tolerance for uncertainty
+    },
+    'monetary_policy': {
+        'halt': 0.4,
+        'hold': 0.6     # Policy flexibility important
+    }
 }
 ```
 
 ### Custom Confidence Functions
 
 ```python
-def custom_confidence_function(data_quality: float,
-                             source_reliability: float,
-                             temporal_relevance: float,
-                             cross_validation: float) -> float:
+def market_confidence_function(price_quality: float,
+                             volume_profile: float,
+                             news_clarity: float,
+                             technical_agreement: float) -> float:
     """
-    Custom confidence calculation for domain-specific needs
+    Custom confidence calculation for market decisions
     
     Args:
-        data_quality: Completeness and accuracy of data (0-1)
-        source_reliability: Historical accuracy of source (0-1)
-        temporal_relevance: How recent/relevant the data is (0-1)
-        cross_validation: Agreement with other sources (0-1)
+        price_quality: Price discovery efficiency (0-1)
+        volume_profile: Volume pattern reliability (0-1)
+        news_clarity: Information clarity (0-1)
+        technical_agreement: Technical indicator consensus (0-1)
     
     Returns:
         Overall confidence score (0-1)
     """
     weights = [0.3, 0.3, 0.2, 0.2]  # Customizable weights
-    factors = [data_quality, source_reliability, temporal_relevance, cross_validation]
+    factors = [price_quality, volume_profile, news_clarity, technical_agreement]
     
-    return sum(w * f for w, f in zip(weights, factors))
-
-# Use in TernaryLogicEngine
-engine = TernaryLogicEngine()
-engine.confidence_function = custom_confidence_function
+    # Apply uncertainty penalty for missing factors
+    penalty = sum(1 for f in factors if f < 0.1) * 0.1
+    
+    return max(0, sum(w * f for w, f in zip(weights, factors)) - penalty)
 ```
 
 ### Signal Aggregation Methods
@@ -430,19 +445,19 @@ engine.confidence_function = custom_confidence_function
 **Built-in Aggregation Methods:**
 
 ```python
-from goukassian.utils import AggregationMethods
+from ternary_logic.utils import MarketAggregation
 
 # Weighted average (default)
-result = AggregationMethods.weighted_average(values, weights, confidences)
+result = MarketAggregation.weighted_average(signals, weights, confidences)
 
-# Confidence-weighted geometric mean
-result = AggregationMethods.confidence_geometric_mean(values, confidences)
+# Volatility-adjusted mean
+result = MarketAggregation.volatility_adjusted(signals, volatilities)
 
-# Uncertainty-penalized average
-result = AggregationMethods.uncertainty_penalized(values, confidences, penalty=0.5)
+# Correlation-weighted aggregate
+result = MarketAggregation.correlation_weighted(signals, correlation_matrix)
 
 # Robust median with outlier detection
-result = AggregationMethods.robust_median(values, confidences, outlier_threshold=2.0)
+result = MarketAggregation.robust_median(signals, outlier_threshold=2.0)
 ```
 
 ---
@@ -452,48 +467,47 @@ result = AggregationMethods.robust_median(values, confidences, outlier_threshold
 ### Common Exceptions
 
 ```python
-from goukassian.exceptions import (
-    InsufficientDataError,
+from ternary_logic.exceptions import (
+    InsufficientMarketDataError,
     InvalidConfidenceError,
     ThresholdCalibrationError,
-    DomainMismatchError
+    MarketClosedError
 )
 
 try:
-    result = engine.evaluate(criteria)
-except InsufficientDataError as e:
-    print(f"Not enough data for decision: {e}")
+    result = evaluator.evaluate(request, context)
+except InsufficientMarketDataError as e:
+    print(f"Not enough market data: {e}")
     # Implement data gathering protocol
     
-except InvalidConfidenceError as e:
-    print(f"Confidence values out of range: {e}")
-    # Check confidence calculations
+except MarketClosedError as e:
+    print(f"Market closed: {e}")
+    # Queue for next trading session
     
 except ThresholdCalibrationError as e:
-    print(f"Confidence threshold needs adjustment: {e}")
-    # Recalibrate threshold for domain
+    print(f"Thresholds need adjustment: {e}")
+    # Recalibrate for current market regime
 ```
 
 ### Input Validation
 
 ```python
-from goukassian.utils import validate_criteria, validate_weights
+from ternary_logic.utils import validate_market_context
 
-# Validate input structure
+# Validate market context
 try:
-    validate_criteria(criteria)
-    validate_weights(weights, criteria.keys())
+    validate_market_context(context)
 except ValueError as e:
-    print(f"Input validation failed: {e}")
+    print(f"Invalid market context: {e}")
     
-# Check for required minimum data
-min_required_fields = ['market_sentiment', 'technical_analysis']
-missing_fields = [field for field in min_required_fields 
-                 if field not in criteria or criteria[field] is None]
+# Check for required market signals
+required_signals = ['price', 'volume', 'volatility']
+missing_signals = [signal for signal in required_signals 
+                  if signal not in context or context[signal] is None]
 
-if missing_fields:
-    print(f"Critical fields missing: {missing_fields}")
-    # Cannot proceed with decision
+if missing_signals:
+    print(f"Critical market data missing: {missing_signals}")
+    # Cannot proceed with trading decision
 ```
 
 ---
@@ -503,42 +517,43 @@ if missing_fields:
 ### Batch Processing
 
 ```python
-from goukassian.utils import BatchProcessor
+from ternary_logic.utils import BatchProcessor
 
-processor = BatchProcessor(engine)
+processor = BatchProcessor(evaluator)
 
-# Process multiple decisions efficiently
-scenarios = [scenario1, scenario2, scenario3, ...]
-results = processor.evaluate_batch(scenarios, parallel=True, max_workers=4)
+# Process multiple trading decisions efficiently
+trades = [trade1, trade2, trade3, ...]
+results = processor.evaluate_batch(trades, parallel=True, max_workers=4)
 
 # Get aggregated statistics
 batch_stats = processor.get_batch_statistics(results)
-print(f"Batch Sacred Pause Rate: {batch_stats['pause_rate']:.1%}")
+print(f"Batch Epistemic Hold Rate: {batch_stats['hold_rate']:.1%}")
 ```
 
 ### Caching and Memoization
 
 ```python
-from goukassian.utils import CachedTernaryEngine
+from ternary_logic.utils import CachedEvaluator
 
 # Enable intelligent caching for repeated similar decisions
-cached_engine = CachedTernaryEngine(
-    base_engine=engine,
+cached_evaluator = CachedEvaluator(
+    base_evaluator=evaluator,
     cache_size=1000,
-    similarity_threshold=0.95
+    similarity_threshold=0.95,
+    ttl_seconds=300  # 5-minute cache for market data
 )
 
-result = cached_engine.evaluate(criteria)  # May use cached result
+result = cached_evaluator.evaluate(request, context)  # May use cached result
 ```
 
 ### Memory Management
 
 ```python
-# Configure memory usage for large-scale applications
+# Configure memory usage for high-frequency applications
 engine.configure_memory(
     max_history_size=10000,     # Limit decision history
     cleanup_interval=3600,      # Cleanup old data hourly
-    confidence_cache_size=5000  # Cache confidence calculations
+    market_cache_size=5000      # Cache market calculations
 )
 ```
 
@@ -550,61 +565,68 @@ engine.configure_memory(
 
 ```python
 import pandas as pd
-from goukassian.integrations import pandas_integration
+from ternary_logic.integrations import pandas_integration
 
-# Apply ternary logic to DataFrame
+# Apply ternary logic to market data DataFrame
 df = pd.DataFrame({
-    'signal_1': [0.5, -0.3, None, 0.8],
-    'signal_2': [0.2, 0.7, -0.4, None],
-    'confidence_1': [0.9, 0.6, 0.0, 0.95],
-    'confidence_2': [0.8, 0.85, 0.7, 0.0]
+    'rsi': [30, 70, 50, 85],
+    'macd': [0.5, -0.3, None, 0.8],
+    'volume_ratio': [1.2, 0.8, 1.5, None],
+    'news_sentiment': [0.6, -0.4, 0.2, 0.7]
 })
 
-results = pandas_integration.apply_ternary_logic(df, engine)
+results = pandas_integration.evaluate_trades(df, evaluator)
 print(results[['decision', 'confidence', 'reasoning']])
 ```
 
-### Scikit-learn Integration
+### Trading Platform Integration
 
 ```python
-from goukassian.integrations import sklearn_integration
-from sklearn.ensemble import RandomForestClassifier
+from ternary_logic.integrations import trading_platforms
 
-# Combine traditional ML with ternary logic
-ml_model = RandomForestClassifier()
-ternary_classifier = sklearn_integration.TernaryClassifier(
-    base_model=ml_model,
-    confidence_method='prediction_proba',
-    threshold=0.75
-)
+# Interactive Brokers integration
+ib_integration = trading_platforms.IBIntegration(evaluator)
+ib_integration.connect()
 
-# Fit and predict with uncertainty awareness
-ternary_classifier.fit(X_train, y_train)
-predictions = ternary_classifier.predict(X_test)  # Includes INDETERMINATE class
+# Evaluate real-time trading opportunity
+market_data = ib_integration.get_market_data('AAPL')
+decision = ib_integration.evaluate_trade('AAPL', market_data)
+
+if decision.state == TLState.PROCEED:
+    ib_integration.place_order('AAPL', 100, 'BUY')
+elif decision.state == TLState.EPISTEMIC_HOLD:
+    print(f"Waiting for: {decision.clarifying_questions}")
 ```
 
 ### REST API Integration
 
 ```python
-from goukassian.integrations import rest_api
+from ternary_logic.integrations import rest_api
 
 # Create REST API endpoint for ternary decisions
-app = rest_api.create_ternary_api(engine)
+app = rest_api.create_trading_api(evaluator)
 
 # Example request:
-# POST /api/decide
+# POST /api/evaluate
 # {
-#   "criteria": {"signal_1": 0.5, "signal_2": null},
-#   "weights": {"signal_1": 0.7, "signal_2": 0.3},
-#   "context": "trading_decision"
+#   "request": "Should I buy TSLA?",
+#   "context": {
+#     "current_price": 750.50,
+#     "volatility": "high",
+#     "news": "mixed",
+#     "technicals": "bullish"
+#   }
 # }
 #
 # Response:
 # {
-#   "decision": "INDETERMINATE",
-#   "confidence": 0.45,
-#   "reasoning": "Missing critical signal_2 data",
-#   "next_steps": ["Gather signal_2 data", "Re-evaluate in 15 minutes"]
+#   "decision": "EPISTEMIC_HOLD",
+#   "confidence": 0.55,
+#   "reasoning": "High volatility with mixed news signals",
+#   "clarifying_questions": [
+#     "What is the options flow indicating?",
+#     "Are there upcoming catalysts?"
+#   ]
 # }
 ```
 
@@ -612,43 +634,43 @@ app = rest_api.create_ternary_api(engine)
 
 ## Monitoring and Analytics
 
-### Decision Quality Metrics
+### Trading Performance Metrics
 
 ```python
-from goukassian.analytics import DecisionAnalyzer
+from ternary_logic.analytics import TradingAnalyzer
 
-analyzer = DecisionAnalyzer(engine)
+analyzer = TradingAnalyzer(engine)
 
-# Analyze decision quality over time
-quality_metrics = analyzer.calculate_quality_metrics(
-    decisions=decision_history,
-    outcomes=actual_outcomes,
+# Analyze trading performance
+performance = analyzer.calculate_performance(
+    decisions=trading_history,
+    market_outcomes=actual_prices,
     time_window='30d'
 )
 
-print(f"Decision Accuracy: {quality_metrics['accuracy']:.2%}")
-print(f"Sacred Pause Effectiveness: {quality_metrics['pause_value']:.2%}")
-print(f"Optimal Threshold: {quality_metrics['optimal_threshold']:.2f}")
+print(f"Win Rate (excluding holds): {performance['win_rate']:.2%}")
+print(f"Epistemic Hold Value: {performance['hold_savings']:.2%}")
+print(f"Optimal Thresholds: {performance['optimal_thresholds']}")
 ```
 
 ### Real-time Monitoring
 
 ```python
-from goukassian.monitoring import TernaryMonitor
+from ternary_logic.monitoring import MarketMonitor
 
-monitor = TernaryMonitor(engine)
+monitor = MarketMonitor(engine)
 
 # Set up monitoring dashboards
 monitor.track_metrics([
     'decision_rate',
-    'pause_frequency', 
+    'hold_frequency', 
     'confidence_distribution',
-    'error_rates'
+    'profit_loss'
 ])
 
 # Real-time alerts
-monitor.set_alert('pause_rate_high', threshold=0.4, action='email_admin')
-monitor.set_alert('confidence_low', threshold=0.5, action='log_warning')
+monitor.set_alert('hold_rate_high', threshold=0.4, action='notify_trader')
+monitor.set_alert('confidence_low', threshold=0.5, action='pause_trading')
 ```
 
 ---
@@ -660,12 +682,15 @@ monitor.set_alert('confidence_low', threshold=0.5, action='log_warning')
 **Python Compatibility:** 3.8+  
 **Dependencies:** numpy>=1.19.0, pandas>=1.3.0, scipy>=1.7.0
 
-**Contact for Support:**  
-- **Creator:** Lev Goukassian
-- **Email:** leogouk@gmail.com  
-- **ORCID:** 0009-0006-5966-1243
-- **Repository:** https://github.com/FractonicMind/TernaryLogic
-
 ---
 
-*"This API reference provides the complete technical foundation for implementing the Sacred Pause in your decision-making systems. The future is ternary."*
+*"This API reference provides the complete technical foundation for implementing the Epistemic Hold in your economic decision-making systems. The future is ternary."*
+
+## Contact Information
+
+**Created by Lev Goukassian**
+* **ORCID**: 0009-0006-5966-1243
+* **Email**: leogouk@gmail.com
+
+**Successor Contact**: support@tl-goukassian.org  
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
