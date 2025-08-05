@@ -1,13 +1,11 @@
 """
-Goukassian Framework - Central Banking Policy Analysis
-Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)
-Contact: leogouk@gmail.com
+Ternary Logic Framework - Central Banking Policy Analysis
 
 This example demonstrates how the Ternary Logic framework can enhance
 Federal Reserve monetary policy decisions by formally recognizing uncertainty
 and implementing graduated policy responses.
 
-"The Sacred Pause guides monetary policy when data contradicts itself."
+"The Epistemic Hold guides monetary policy when data contradicts itself."
 """
 
 import numpy as np
@@ -16,33 +14,36 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 import json
 
-# Import Goukassian Framework
-from goukassian import TernaryDecisionEngine, TernaryState
-from goukassian.core import TernaryResult
+# Import Ternary Logic Framework
+from ternary_logic import TLDecisionEngine, TLState
+from ternary_logic.core import TLResult
 
 class FederalReservePolicyEngine:
     """
     Federal Reserve Policy Analysis using Ternary Logic
     
-    This engine demonstrates how the Sacred Pause principle applies to
+    This engine demonstrates how the Epistemic Hold principle applies to
     monetary policy decisions when economic indicators are contradictory
     or uncertain.
     """
     
     def __init__(self, 
-                 confidence_threshold: float = 0.70,
+                 halt_threshold: float = 0.30,
+                 hold_threshold: float = 0.70,
                  inflation_target: float = 0.02,
                  unemployment_target: float = 0.04):
         """
         Initialize the Fed Policy Engine
         
         Args:
-            confidence_threshold: Minimum confidence for policy changes
+            halt_threshold: Below this confidence, strongly consider halting
+            hold_threshold: Below this confidence, engage epistemic hold
             inflation_target: Fed's inflation target (2%)
             unemployment_target: Natural rate of unemployment estimate
         """
-        self.engine = TernaryDecisionEngine(
-            confidence_threshold=confidence_threshold,
+        self.engine = TLDecisionEngine(
+            halt_threshold=halt_threshold,
+            hold_threshold=hold_threshold,
             domain="policy"
         )
         self.inflation_target = inflation_target
@@ -51,7 +52,7 @@ class FederalReservePolicyEngine:
         # Policy state tracking
         self.current_fed_funds_rate = 0.05  # 5.0%
         self.policy_history = []
-        self.pause_history = []  # Track Sacred Pause activations
+        self.hold_history = []  # Track Epistemic Hold activations
         
         # Economic forecasting
         self.forecast_horizon = 8  # 8 quarters ahead
@@ -126,7 +127,7 @@ class FederalReservePolicyEngine:
     
     def make_policy_decision(self, 
                            economic_data: Dict,
-                           policy_options: Dict = None) -> TernaryResult:
+                           policy_options: Dict = None) -> TLResult:
         """
         Make monetary policy decision using Ternary Logic framework
         
@@ -135,7 +136,7 @@ class FederalReservePolicyEngine:
             policy_options: Available policy actions (optional)
             
         Returns:
-            TernaryResult with policy recommendation and reasoning
+            TLResult with policy recommendation and reasoning
         """
         
         # Analyze economic indicators
@@ -147,11 +148,20 @@ class FederalReservePolicyEngine:
         # Apply Fed mandate priorities (dual mandate focus)
         mandate_adjusted_indicators = self._apply_dual_mandate_focus(indicators, economic_data)
         
+        # Convert to request format for TL engine
+        request = "Should the Federal Reserve adjust interest rates?"
+        context = {
+            'indicators': mandate_adjusted_indicators,
+            'weights': weights,
+            'current_rate': self.current_fed_funds_rate,
+            'economic_regime': economic_data.get('inflation_regime', 'normal')
+        }
+        
         # Make decision using Ternary Logic
         decision = self.engine.decide(
-            criteria=mandate_adjusted_indicators,
-            weights=weights,
-            context="Federal Reserve monetary policy decision"
+            request=request,
+            context=context,
+            scenario="Federal Reserve monetary policy decision"
         )
         
         # Enhance decision with policy-specific information
@@ -163,7 +173,7 @@ class FederalReservePolicyEngine:
         return decision
     
     def generate_policy_statement(self, 
-                                decision: TernaryResult, 
+                                decision: TLResult, 
                                 economic_data: Dict) -> Dict:
         """
         Generate FOMC-style policy statement based on Ternary Logic decision
@@ -182,10 +192,10 @@ class FederalReservePolicyEngine:
             'uncertainty_acknowledgment': self._generate_uncertainty_statement(decision)
         }
         
-        if decision.state == TernaryState.INDETERMINATE:
+        if decision.state == TLState.EPISTEMIC_HOLD:
             statement.update({
-                'sacred_pause_explanation': self._explain_policy_pause(decision),
-                'data_monitoring_plan': decision.next_steps,
+                'epistemic_hold_explanation': self._explain_policy_hold(decision),
+                'data_monitoring_plan': decision.clarifying_questions,
                 'next_evaluation_timeline': self._determine_next_evaluation(decision)
             })
             
@@ -343,21 +353,24 @@ class FederalReservePolicyEngine:
         return dual_mandate_adjusted
     
     def _enhance_policy_decision(self, 
-                               decision: TernaryResult, 
+                               decision: TLResult, 
                                economic_data: Dict,
-                               indicators: Dict) -> TernaryResult:
+                               indicators: Dict) -> TLResult:
         """Enhance decision with Fed-specific context"""
         
-        if decision.state == TernaryState.INDETERMINATE:
-            # Add Fed-specific guidance for Sacred Pause
-            fed_steps = [
-                "Await additional employment and inflation data",
-                "Monitor financial market conditions for stability",
-                "Assess global economic developments and risks",
-                "Evaluate effectiveness of current policy stance",
-                "Consider communication strategy for uncertainty"
+        if decision.state == TLState.EPISTEMIC_HOLD:
+            # Add Fed-specific guidance for Epistemic Hold
+            fed_questions = [
+                "What are the latest employment and inflation data trends?",
+                "Are financial market conditions showing signs of stress?",
+                "How are global economic developments affecting the outlook?",
+                "Is current policy stance achieving desired effects?",
+                "What is the appropriate communication strategy for uncertainty?"
             ]
-            decision.next_steps.extend(fed_steps)
+            if decision.clarifying_questions:
+                decision.clarifying_questions.extend(fed_questions)
+            else:
+                decision.clarifying_questions = fed_questions
             
         # Add Fed metadata
         if decision.metadata is None:
@@ -384,42 +397,81 @@ class FederalReservePolicyEngine:
                 abs(inflation_signal) > 0.3 and 
                 abs(labor_signal) > 0.3)
     
-    def _translate_decision_to_action(self, decision: TernaryResult) -> str:
+    def _translate_decision_to_action(self, decision: TLResult) -> str:
         """Translate ternary decision to Fed policy action"""
         
-        if decision.state == TernaryState.TRUE:
+        if decision.state == TLState.PROCEED:
             if decision.confidence > 0.8:
                 return "Raise federal funds rate by 50 basis points"
             else:
                 return "Raise federal funds rate by 25 basis points"
-        elif decision.state == TernaryState.FALSE:
+        elif decision.state == TLState.HALT:
             if decision.confidence > 0.8:
                 return "Lower federal funds rate by 50 basis points"
             else:
                 return "Lower federal funds rate by 25 basis points"
-        else:  # INDETERMINATE
+        else:  # EPISTEMIC_HOLD
             return "Maintain current federal funds rate target"
     
-    def _generate_forward_guidance(self, decision: TernaryResult) -> str:
+    def _calculate_new_fed_funds_rate(self, decision: TLResult) -> float:
+        """Calculate new fed funds rate based on decision"""
+        if decision.state == TLState.PROCEED:
+            change = 0.005 if decision.confidence > 0.8 else 0.0025
+            return self.current_fed_funds_rate + change
+        elif decision.state == TLState.HALT:
+            change = -0.005 if decision.confidence > 0.8 else -0.0025
+            return self.current_fed_funds_rate + change
+        else:
+            return self.current_fed_funds_rate
+    
+    def _generate_committee_vote(self, decision: TLResult) -> str:
+        """Generate FOMC voting record"""
+        if decision.confidence > 0.8:
+            return "Unanimous"
+        elif decision.confidence > 0.6:
+            return "10-2"
+        else:
+            return "7-5"
+    
+    def _generate_economic_assessment(self, economic_data: Dict) -> str:
+        """Generate economic assessment for policy statement"""
+        return ("Economic activity has been expanding at a moderate pace. "
+                "Labor market conditions remain strong. Inflation has been running "
+                f"{'above' if economic_data.get('inflation_regime') == 'high' else 'below'} "
+                "the Committee's 2 percent objective.")
+    
+    def _generate_forward_guidance(self, decision: TLResult) -> str:
         """Generate forward guidance based on decision"""
         
-        if decision.state == TernaryState.INDETERMINATE:
+        if decision.state == TLState.EPISTEMIC_HOLD:
             return ("The Committee will continue to monitor economic developments " +
                    "and will adjust monetary policy as appropriate to achieve its " +
                    "dual mandate objectives. The timing and magnitude of future " +
                    "policy adjustments will depend on incoming data and their " +
                    "implications for the economic outlook.")
-        elif decision.state == TernaryState.TRUE:
+        elif decision.state == TLState.PROCEED:
             return ("The Committee expects that ongoing increases in the target range " +
                    "will be appropriate to achieve the dual mandate objectives, " +
                    "with the timing and magnitude dependent on economic developments.")
-        else:  # FALSE
+        else:  # HALT
             return ("The Committee expects that ongoing decreases in the target range " +
                    "may be appropriate to support employment and return inflation " +
                    "to the 2 percent objective over time.")
     
-    def _explain_policy_pause(self, decision: TernaryResult) -> str:
-        """Explain Sacred Pause in Fed communication style"""
+    def _generate_uncertainty_statement(self, decision: TLResult) -> str:
+        """Generate uncertainty acknowledgment"""
+        if decision.confidence < 0.5:
+            return ("The economic outlook remains highly uncertain, and the Committee "
+                   "will remain vigilant to risks on both sides of its dual mandate.")
+        elif decision.confidence < 0.7:
+            return ("The Committee recognizes that economic developments remain uncertain "
+                   "and will carefully monitor incoming data.")
+        else:
+            return ("The Committee will continue to monitor the implications of incoming "
+                   "information for the economic outlook.")
+    
+    def _explain_policy_hold(self, decision: TLResult) -> str:
+        """Explain Epistemic Hold in Fed communication style"""
         
         return ("The Committee determined that maintaining the current policy stance " +
                "is appropriate while assessing the cumulative effects of previous " +
@@ -428,8 +480,17 @@ class FederalReservePolicyEngine:
                "the Committee's commitment to data-dependent policymaking and " +
                "prudent risk management in the face of economic uncertainty.")
     
+    def _determine_next_evaluation(self, decision: TLResult) -> str:
+        """Determine timeline for next evaluation"""
+        if decision.confidence < 0.3:
+            return "Inter-meeting evaluation if conditions warrant"
+        elif decision.confidence < 0.5:
+            return "Enhanced monitoring with potential inter-meeting action"
+        else:
+            return "Next scheduled FOMC meeting"
+    
     def _log_policy_decision(self, 
-                           decision: TernaryResult, 
+                           decision: TLResult, 
                            indicators: Dict,
                            economic_data: Dict):
         """Log decision for FOMC records"""
@@ -452,17 +513,16 @@ def demonstrate_fed_policy_analysis():
     Demonstrate the Federal Reserve Policy Engine with realistic scenarios
     """
     
-    print("🏛️  Federal Reserve Policy Analysis - Goukassian Framework")
+    print("🏛️  Federal Reserve Policy Analysis - Ternary Logic Framework")
     print("=" * 65)
     print()
-    print("Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)")
-    print("Contact: leogouk@gmail.com")
-    print('"The Sacred Pause guides monetary policy when data contradicts itself."')
+    print('"The Epistemic Hold guides monetary policy when data contradicts itself."')
     print()
     
     # Initialize Fed policy engine
     fed_engine = FederalReservePolicyEngine(
-        confidence_threshold=0.70,
+        halt_threshold=0.30,
+        hold_threshold=0.70,
         inflation_target=0.02,
         unemployment_target=0.04
     )
@@ -493,8 +553,8 @@ def demonstrate_fed_policy_analysis():
     print()
     
     # Scenario 2: Conflicting Dual Mandate Signals
-    print("⚠️  Scenario 2: Dual Mandate Conflict - Sacred Pause Likely")
-    print("-" * 55)
+    print("⚠️  Scenario 2: Dual Mandate Conflict - Epistemic Hold Likely")
+    print("-" * 60)
     
     conflicting_data = {
         'core_pce_inflation': [0.015, 0.012, 0.011, 0.010],       # Below target, falling
@@ -516,12 +576,12 @@ def demonstrate_fed_policy_analysis():
     print(f"Action: {statement['policy_action']}")
     print(f"Reasoning: {decision.reasoning}")
     
-    if decision.state == TernaryState.INDETERMINATE:
-        print("Sacred Pause Explanation:")
-        print(f"  {statement['sacred_pause_explanation']}")
+    if decision.state == TLState.EPISTEMIC_HOLD:
+        print("Epistemic Hold Explanation:")
+        print(f"  {statement['epistemic_hold_explanation']}")
         print("Data Monitoring Plan:")
-        for i, step in enumerate(statement['data_monitoring_plan'][:3], 1):
-            print(f"  {i}. {step}")
+        for i, question in enumerate(statement['data_monitoring_plan'][:3], 1):
+            print(f"  {i}. {question}")
     print()
     
     # Scenario 3: Missing Critical Data
@@ -553,14 +613,16 @@ def demonstrate_fed_policy_analysis():
     print()
     print("📊 Federal Reserve Decision Summary")
     print("-" * 35)
-    print("The Goukassian Framework enables the Federal Reserve to:")
+    print("The Ternary Logic Framework enables the Federal Reserve to:")
     print("• Acknowledge uncertainty honestly in policy communications")
     print("• Avoid overconfident policy moves with insufficient data")
     print("• Implement graduated responses based on confidence levels")
-    print("• Maintain credibility by explaining the basis for policy pauses")
+    print("• Maintain credibility by explaining the basis for policy holds")
     print()
-    print("As Lev Goukassian noted: 'Central banking is ultimately about")
-    print("making the best possible decisions with imperfect information.'")
+    print("As economic systems evolve, central banking must embrace")
+    print("intelligent uncertainty management through the Epistemic Hold.")
 
 if __name__ == "__main__":
     demonstrate_fed_policy_analysis()
+    
+# Ternary Logic Framework - Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)
