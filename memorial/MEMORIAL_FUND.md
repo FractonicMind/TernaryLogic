@@ -5,15 +5,6 @@
 
 ---
 
-## Administrative Contact
-
-- **Current**: Lev Goukassian (leogouk@gmail.com)  
-- **Succession**: support@tl-goukassian.org  
-  (see [Succession Charter](/TL-SUCCESSION-CHARTER.md))  
-  For licensing, technical support, or collaboration inquiries.
-
----
-
 ## Fund Purpose & Vision
 
 The Lev Goukassian Memorial Fund for Ethical Ternary Logic Research ensures the continued advancement of your revolutionary **Ternary Logic (TL)** framework—an epistemic and moral decision system designed to elevate AI ethics, human-machine reasoning, and global policy-making.
