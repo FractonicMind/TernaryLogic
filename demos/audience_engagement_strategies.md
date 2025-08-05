@@ -722,6 +722,6 @@ Annual Conference: "Beyond Binary Decision Making"
 
 - **Current**: Lev Goukassian (leogouk@gmail.com)  
 - **Succession**: support@tl-goukassian.org  
-  (see [Succession Charter](/TL-SUCCESSION-CHARTER.md))  
+  (see [Succession Charter](memorial/SUCCESSION_CHARTER.md))  
   For licensing, technical support, or collaboration inquiries.
 
