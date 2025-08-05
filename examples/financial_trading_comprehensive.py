@@ -1,12 +1,12 @@
 """
-Goukassian Framework - Comprehensive Financial Trading Example
+Ternary Logic Framework - Comprehensive Financial Trading Example
 Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)
 Contact: leogouk@gmail.com
 
 This example demonstrates how the Ternary Logic framework prevents flash crashes
 and improves trading performance by recognizing when to pause rather than force trades.
 
-"The Sacred Pause saves portfolios."
+"The Epistemic Hold saves portfolios."
 """
 
 import numpy as np
@@ -15,18 +15,18 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 import json
 
-# Import Goukassian Framework
-from goukassian import TernaryDecisionEngine, TernaryState
-from goukassian.core import TernaryResult
+# Import Ternary Logic Framework
+from ternary_logic import TLDecisionEngine, TLState
+from ternary_logic.core import TLResult
 
-class GoukassianTradingAlgorithm:
+class TLTradingAlgorithm:
     """
     Advanced trading algorithm using Ternary Logic for uncertainty-aware decisions
     
-    This algorithm demonstrates the Sacred Pause principle in live trading:
-    - TRUE: High confidence to execute trade
-    - FALSE: High confidence to avoid trade  
-    - INDETERMINATE: Insufficient data - pause and monitor
+    This algorithm demonstrates the Epistemic Hold principle in live trading:
+    - PROCEED: High confidence to execute trade
+    - HALT: High confidence to avoid trade  
+    - EPISTEMIC_HOLD: Insufficient data - pause and monitor
     """
     
     def __init__(self, 
@@ -34,14 +34,14 @@ class GoukassianTradingAlgorithm:
                  position_size_limit: float = 0.1,
                  max_drawdown: float = 0.05):
         """
-        Initialize the Goukassian Trading Algorithm
+        Initialize the TL Trading Algorithm
         
         Args:
             confidence_threshold: Minimum confidence for trade execution
             position_size_limit: Maximum position size as fraction of portfolio
             max_drawdown: Maximum acceptable drawdown before risk reduction
         """
-        self.engine = TernaryDecisionEngine(
+        self.engine = TLDecisionEngine(
             confidence_threshold=confidence_threshold,
             domain="financial"
         )
@@ -52,7 +52,7 @@ class GoukassianTradingAlgorithm:
         self.positions = {}
         self.portfolio_value = 1000000  # $1M starting portfolio
         self.trade_history = []
-        self.pause_history = []  # Track Sacred Pause activations
+        self.pause_history = []  # Track Epistemic Hold activations
         
         # Risk management
         self.daily_var = 0.0
@@ -107,7 +107,7 @@ class GoukassianTradingAlgorithm:
     def make_trading_decision(self, 
                             symbol: str, 
                             market_data: Dict,
-                            current_position: float = 0.0) -> TernaryResult:
+                            current_position: float = 0.0) -> TLResult:
         """
         Make trading decision using Ternary Logic framework
         
@@ -117,7 +117,7 @@ class GoukassianTradingAlgorithm:
             current_position: Current position size
             
         Returns:
-            TernaryResult with trading decision and reasoning
+            TLResult with trading decision and reasoning
         """
         
         # Analyze market signals
@@ -146,7 +146,7 @@ class GoukassianTradingAlgorithm:
     
     def execute_trade(self, 
                      symbol: str, 
-                     decision: TernaryResult, 
+                     decision: TLResult, 
                      market_data: Dict) -> Dict:
         """
         Execute trading decision based on Ternary Logic result
@@ -162,7 +162,7 @@ class GoukassianTradingAlgorithm:
             'reasoning': decision.reasoning
         }
         
-        if decision.state == TernaryState.TRUE:
+        if decision.state == TLState.PROCEED:
             # Execute long trade
             position_size = self._calculate_position_size(decision.confidence, symbol)
             execution_report.update({
@@ -176,7 +176,7 @@ class GoukassianTradingAlgorithm:
             self.positions[symbol] = self.positions.get(symbol, 0) + position_size
             self.trade_history.append(execution_report)
             
-        elif decision.state == TernaryState.FALSE:
+        elif decision.state == TLState.HALT:
             # Execute short trade or close long position
             current_position = self.positions.get(symbol, 0)
             if current_position > 0:
@@ -200,10 +200,10 @@ class GoukassianTradingAlgorithm:
                 
             self.trade_history.append(execution_report)
             
-        else:  # INDETERMINATE - Sacred Pause activated
-            # Implement Sacred Pause protocol
+        else:  # EPISTEMIC_HOLD - Epistemic Hold activated
+            # Implement Epistemic Hold protocol
             execution_report.update({
-                'action': 'SACRED_PAUSE',
+                'action': 'EPISTEMIC_HOLD',
                 'monitoring_actions': decision.next_steps,
                 'pause_duration': self._determine_pause_duration(decision),
                 'data_requirements': self._identify_missing_data(decision)
@@ -337,14 +337,14 @@ class GoukassianTradingAlgorithm:
         return risk_adjusted
     
     def _enhance_trading_decision(self, 
-                                decision: TernaryResult, 
+                                decision: TLResult, 
                                 symbol: str, 
                                 signals: Dict,
-                                current_position: float) -> TernaryResult:
+                                current_position: float) -> TLResult:
         """Enhance decision with trading-specific context"""
         
-        if decision.state == TernaryState.INDETERMINATE:
-            # Add trading-specific guidance for Sacred Pause
+        if decision.state == TLState.EPISTEMIC_HOLD:
+            # Add trading-specific guidance for Epistemic Hold
             trading_steps = [
                 f"Monitor {symbol} for improved signal clarity",
                 "Check for news events or earnings announcements",
@@ -377,7 +377,17 @@ class GoukassianTradingAlgorithm:
         
         return base_size * heat_adjustment * self.portfolio_value
     
-    def _determine_pause_duration(self, decision: TernaryResult) -> int:
+    def _estimate_expected_return(self, market_data: Dict) -> float:
+        """Estimate expected return based on market data"""
+        # Simplified estimation for demonstration
+        return 0.05  # 5% expected return
+    
+    def _estimate_position_risk(self, position_size: float, symbol: str) -> float:
+        """Estimate position risk"""
+        # Simplified risk estimation
+        return abs(position_size) * 0.02  # 2% risk per position
+    
+    def _determine_pause_duration(self, decision: TLResult) -> int:
         """Determine how long to pause based on uncertainty factors"""
         
         base_duration = 300  # 5 minutes base pause
@@ -386,15 +396,15 @@ class GoukassianTradingAlgorithm:
         confidence_multiplier = (1 - decision.confidence) + 0.5
         
         # Longer pause for more missing data
-        missing_data_count = len(decision.metadata.get('missing_data', []))
+        missing_data_count = len(decision.metadata.get('missing_signals', []))
         data_multiplier = 1 + (missing_data_count * 0.2)
         
         return int(base_duration * confidence_multiplier * data_multiplier)
     
-    def _identify_missing_data(self, decision: TernaryResult) -> List[str]:
+    def _identify_missing_data(self, decision: TLResult) -> List[str]:
         """Identify what data is needed to resolve uncertainty"""
         
-        missing_data = decision.metadata.get('missing_data', [])
+        missing_data = decision.metadata.get('missing_signals', [])
         
         data_sources = {
             'momentum': 'Sufficient price history (20+ periods)',
@@ -411,7 +421,7 @@ class GoukassianTradingAlgorithm:
     
     def _log_trading_decision(self, 
                             symbol: str, 
-                            decision: TernaryResult, 
+                            decision: TLResult, 
                             signals: Dict,
                             market_data: Dict):
         """Log decision for performance analysis"""
@@ -443,30 +453,30 @@ class GoukassianTradingAlgorithm:
         return {
             "total_decisions": total_decisions,
             "trades_executed": trades,
-            "sacred_pauses": pauses,
+            "epistemic_holds": pauses,
             "pause_rate": pauses / total_decisions,
             "current_positions": len([p for p in self.positions.values() if p != 0]),
             "portfolio_value": self.portfolio_value,
             "current_drawdown": self.current_drawdown,
             "avg_confidence_trades": np.mean([t.get('confidence', 0) for t in self.trade_history]) if trades > 0 else 0,
-            "framework_version": "Goukassian Ternary Logic v1.0"
+            "framework_version": "Ternary Logic Framework v1.0"
         }
 
 def demonstrate_trading_algorithm():
     """
-    Demonstrate the Goukassian Trading Algorithm with realistic scenarios
+    Demonstrate the TL Trading Algorithm with realistic scenarios
     """
     
-    print("🚀 Goukassian Trading Algorithm Demonstration")
+    print("🚀 Ternary Logic Trading Algorithm Demonstration")
     print("=" * 55)
     print()
     print("Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)")
     print("Contact: leogouk@gmail.com")
-    print('"The Sacred Pause saves portfolios."')
+    print('"The Epistemic Hold saves portfolios."')
     print()
     
     # Initialize algorithm
-    algorithm = GoukassianTradingAlgorithm(
+    algorithm = TLTradingAlgorithm(
         confidence_threshold=0.75,
         position_size_limit=0.1,
         max_drawdown=0.05
@@ -511,8 +521,8 @@ def demonstrate_trading_algorithm():
     print(f"Action: {execution.get('action', 'N/A')}")
     print(f"Reasoning: {decision.reasoning}")
     
-    if decision.state == TernaryState.INDETERMINATE:
-        print("Sacred Pause Activated - Next Steps:")
+    if decision.state == TLState.EPISTEMIC_HOLD:
+        print("Epistemic Hold Activated - Next Steps:")
         for i, step in enumerate(execution.get('monitoring_actions', [])[:3], 1):
             print(f"  {i}. {step}")
         print(f"Pause Duration: {execution.get('pause_duration', 0)} seconds")
@@ -545,17 +555,26 @@ def demonstrate_trading_algorithm():
     
     print(f"Total Decisions: {summary['total_decisions']}")
     print(f"Trades Executed: {summary['trades_executed']}")
-    print(f"Sacred Pauses: {summary['sacred_pauses']}")
+    print(f"Epistemic Holds: {summary['epistemic_holds']}")
     print(f"Pause Rate: {summary['pause_rate']:.1%}")
     print(f"Average Trade Confidence: {summary['avg_confidence_trades']:.2f}")
     print()
     
-    print("✨ The Sacred Pause in Action!")
+    print("✨ The Epistemic Hold in Action!")
     print("Notice how the algorithm intelligently recognizes when market")
     print("conditions are too uncertain for confident trading decisions.")
     print("This prevents flash crashes and reduces portfolio volatility.")
     print()
-    print("As Lev Goukassian demonstrated: 'The Sacred Pause saves portfolios.'")
+    print("As Lev Goukassian demonstrated: 'The Epistemic Hold saves portfolios.'")
 
 if __name__ == "__main__":
     demonstrate_trading_algorithm()
+
+## Contact Information
+
+**Created by Lev Goukassian**
+* **ORCID**: 0009-0006-5966-1243
+* **Email**: leogouk@gmail.com
+
+**Successor Contact**: support@tl-goukassian.org  
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
