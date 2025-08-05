@@ -2,14 +2,13 @@
 
 **Author:** Lev Goukassian  
 **ORCID:** 0009-0006-5966-1243  
-**Contact:** leogouk@gmail.com  
 **Affiliation:** Independent Researcher  
 
 ---
 
 ## Abstract
 
-Traditional economic models rely on binary logic systems that force decisions even when information is incomplete or contradictory. This paper introduces a Ternary Logic (TL) framework for economic decision-making that formally recognizes uncertainty through a third decision state: "indeterminate." We demonstrate that incorporating explicit uncertainty management into economic systems can significantly improve decision quality and reduce systemic risks. Through empirical analysis across financial trading, supply chain management, and monetary policy domains, we show that ternary logic implementations achieve 35% reduction in forecasting errors, 20% improvement in capital allocation efficiency, and 15% decrease in system volatility compared to binary approaches. The framework's "Sacred Pause" principle—deferring decisions when confidence is insufficient—prevents overconfident actions that often lead to cascade failures in complex economic systems. This work provides both theoretical foundations and practical implementation guidelines for uncertainty-aware economic decision-making, with implications for algorithmic trading, central banking, supply chain optimization, and strategic planning.
+Traditional economic models rely on binary logic systems that force decisions even when information is incomplete or contradictory. This paper introduces a Ternary Logic (TL) framework for economic decision-making that formally recognizes uncertainty through a third decision state: "epistemic hold." We demonstrate that incorporating explicit uncertainty management into economic systems can significantly improve decision quality and reduce systemic risks. Through empirical analysis across financial trading, supply chain management, and monetary policy domains, we show that ternary logic implementations achieve 35% reduction in forecasting errors, 20% improvement in capital allocation efficiency, and 15% decrease in system volatility compared to binary approaches. The framework's "Epistemic Hold" principle—deferring decisions when confidence is insufficient—prevents overconfident actions that often lead to cascade failures in complex economic systems. This work provides both theoretical foundations and practical implementation guidelines for uncertainty-aware economic decision-making, with implications for algorithmic trading, central banking, supply chain optimization, and strategic planning.
 
 **Keywords:** ternary logic, economic decision-making, uncertainty modeling, financial markets, algorithmic trading, monetary policy, supply chain management
 
@@ -25,9 +24,9 @@ Real economic actors—from individual investors to central banks—regularly en
 
 ### 1.2 The Promise of Multi-Valued Logic
 
-Multi-valued logic systems, particularly ternary logic, offer a more nuanced approach to decision-making under uncertainty (Łukasiewicz, 1920; Kleene, 1938). By introducing a third truth value—commonly interpreted as "unknown" or "indeterminate"—ternary systems can formally represent states of insufficient information rather than forcing premature binary classifications.
+Multi-valued logic systems, particularly ternary logic, offer a more nuanced approach to decision-making under uncertainty (Łukasiewicz, 1920; Kleene, 1938). By introducing a third truth value—commonly interpreted as "unknown" or "epistemic hold"—ternary systems can formally represent states of insufficient information rather than forcing premature binary classifications.
 
-This paper presents the first comprehensive framework for applying ternary logic to economic decision-making, introducing what we term the "Sacred Pause" principle: the recognition that sometimes the most intelligent economic action is explicitly acknowledging uncertainty and deferring decisions until sufficient information becomes available.
+This paper presents the first comprehensive framework for applying ternary logic to economic decision-making, introducing what we term the "Epistemic Hold" principle: the recognition that sometimes the most intelligent economic action is explicitly acknowledging uncertainty and deferring decisions until sufficient information becomes available.
 
 ### 1.3 Research Contributions
 
@@ -50,18 +49,18 @@ Behavioral economics has documented systematic deviations from rational decision
 
 ### 2.2 Multi-Valued Logic Foundations
 
-Multi-valued logic systems extend classical binary logic by introducing additional truth values (Rescher, 1969; Gottwald, 2001). The most basic extension, ternary logic, introduces a third value typically interpreted as "unknown," "possible," or "indeterminate."
+Multi-valued logic systems extend classical binary logic by introducing additional truth values (Rescher, 1969; Gottwald, 2001). The most basic extension, ternary logic, introduces a third value typically interpreted as "unknown," "possible," or "epistemic hold."
 
 **Definition 2.1 (Ternary Logic States):**
-Let T = {-1, 0, 1} represent the three truth values:
-- T(1) = TRUE: High confidence in positive outcome
-- T(0) = FALSE: High confidence in negative outcome  
-- T(-1) = INDETERMINATE: Insufficient information for confident decision
+Let T = {1, 0, -1} represent the three truth values:
+- T(1) = PROCEED: High confidence in positive outcome
+- T(0) = EPISTEMIC_HOLD: Insufficient information for confident decision
+- T(-1) = HALT: High confidence in negative outcome  
 
-### 2.3 The Sacred Pause Principle
+### 2.3 The Epistemic Hold Principle
 
-**Definition 2.2 (Sacred Pause):**
-The Sacred Pause is a decision protocol that occurs when the confidence in available information falls below a predetermined threshold θ. Instead of forcing a binary choice, the system:
+**Definition 2.2 (Epistemic Hold):**
+The Epistemic Hold is a decision protocol that occurs when the confidence in available information falls below a predetermined threshold θ. Instead of forcing a binary choice, the system:
 1. Acknowledges the state of uncertainty
 2. Initiates information-gathering protocols
 3. Defers the decision until confidence exceeds θ or external constraints force action
@@ -69,9 +68,9 @@ The Sacred Pause is a decision protocol that occurs when the confidence in avail
 Formally, for a decision function D with confidence measure C(I) over information set I:
 ```
 D(I) = {
-    TRUE       if C(I) ≥ θ and V(I) > 0
-    FALSE      if C(I) ≥ θ and V(I) ≤ 0
-    INDETERMINATE  if C(I) < θ
+    PROCEED        if C(I) ≥ θ and V(I) > 0
+    HALT           if C(I) ≥ θ and V(I) ≤ 0
+    EPISTEMIC_HOLD if C(I) < θ
 }
 ```
 where V(I) represents the value signal from information I.
@@ -98,7 +97,7 @@ Implements the core decision logic using enhanced ternary operations:
 - Temporal decay functions for information aging
 - Multi-criteria decision synthesis
 
-**3.1.3 Sacred Pause Controller**
+**3.1.3 Epistemic Hold Controller**
 Manages the uncertainty acknowledgment process:
 - Confidence threshold calibration
 - Information gathering prioritization
@@ -127,8 +126,8 @@ The ternary decision function incorporates both value signals and confidence mea
 
 ```
 Decision(V, C, θ) = {
-    sign(V)    if C ≥ θ
-    INDETERMINATE  if C < θ
+    sign(V)        if C ≥ θ
+    EPISTEMIC_HOLD if C < θ
 }
 ```
 
@@ -157,13 +156,13 @@ The ternary implementation showed significant improvements:
 - **Sharpe Ratio**: 1.84 (ternary) vs. 1.31 (binary) — 40% improvement
 - **Maximum Drawdown**: 8.2% (ternary) vs. 12.7% (binary) — 35% reduction
 - **False Signal Rate**: 12.3% (ternary) vs. 18.9% (binary) — 35% reduction
-- **Sacred Pause Frequency**: 23.4% of potential trading opportunities
+- **Epistemic Hold Frequency**: 23.4% of potential trading opportunities
 
 **4.1.3 Flash Crash Analysis**
 During simulated flash crash events, the ternary system demonstrated superior stability:
 - Binary systems executed 847 trades during crash periods (avg loss: -2.3%)
 - Ternary system executed 203 trades during same periods (avg loss: -0.6%)
-- Sacred Pause activations: 76% during high-volatility periods
+- Epistemic Hold activations: 76% during high-volatility periods
 
 ### 4.2 Supply Chain Management
 
@@ -185,7 +184,7 @@ We simulated Federal Reserve interest rate decisions using ternary logic for 240
 - **Forecast Accuracy**: 28% improvement in 2-year inflation forecasting
 - **Financial Stability**: 19% reduction in asset price volatility
 - **Communication Clarity**: 42% improvement in forward guidance credibility scores
-- **Sacred Pause Utilization**: 17% of policy decisions deferred for additional data
+- **Epistemic Hold Utilization**: 17% of policy decisions deferred for additional data
 
 ---
 
@@ -214,7 +213,7 @@ When critical information is unavailable:
 3. Consider worst-case scenario weighting
 4. Implement graduated response protocols
 
-### 5.3 Sacred Pause Protocols
+### 5.3 Epistemic Hold Protocols
 
 **5.3.1 Pause Duration Optimization**
 Optimal pause duration depends on:
@@ -307,9 +306,9 @@ Explore applications in additional domains:
 
 ## 8. Conclusion
 
-This paper presents the first comprehensive framework for applying ternary logic to economic decision-making, introducing the Sacred Pause principle as a formal mechanism for uncertainty acknowledgment. Our empirical analysis across financial markets, supply chain management, and monetary policy demonstrates significant performance improvements over traditional binary approaches.
+This paper presents the first comprehensive framework for applying ternary logic to economic decision-making, introducing the Epistemic Hold principle as a formal mechanism for uncertainty acknowledgment. Our empirical analysis across financial markets, supply chain management, and monetary policy demonstrates significant performance improvements over traditional binary approaches.
 
-The key insight is that explicitly modeling uncertainty—rather than forcing premature binary decisions—leads to more robust and adaptive economic systems. The Sacred Pause prevents overconfident actions that often trigger cascade failures, while the ternary framework provides a mathematically rigorous foundation for uncertainty-aware decision-making.
+The key insight is that explicitly modeling uncertainty—rather than forcing premature binary decisions—leads to more robust and adaptive economic systems. The Epistemic Hold prevents overconfident actions that often trigger cascade failures, while the ternary framework provides a mathematically rigorous foundation for uncertainty-aware decision-making.
 
 As economic systems become increasingly complex and interconnected, the ability to recognize and respond appropriately to uncertainty becomes crucial for systemic stability and optimal resource allocation. The ternary logic framework offers a practical pathway toward more intelligent, adaptive, and resilient economic decision-making.
 
@@ -345,10 +344,14 @@ von Neumann, J., & Morgenstern, O. (1944). *Theory of Games and Economic Behavio
 
 ---
 
-**Corresponding Author:**  
-Lev Goukassian  
-Email: leogouk@gmail.com  
-ORCID: 0009-0006-5966-1243
+## Contact Information
+
+**Created by Lev Goukassian**
+* **ORCID**: 0009-0006-5966-1243
+* **Email**: leogouk@gmail.com
+
+**Successor Contact**: support@tl-goukassian.org  
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
 
 **Acknowledgments:**  
 The author acknowledges the potential societal impact of this research and dedicates this work to the advancement of more thoughtful, uncertainty-aware decision-making in service of human welfare.
