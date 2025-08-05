@@ -1,5 +1,5 @@
 """
-Goukassian Framework - Quick Start Example
+Ternary Logic Framework - Quick Start Example
 Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)
 Contact: leogouk@gmail.com
 
@@ -9,15 +9,15 @@ for intelligent decision-making under uncertainty.
 "The world is not binary. And the future will not be either."
 """
 
-from goukassian import TernaryDecisionEngine, TernaryState
+from ternary_logic import TLDecisionEngine, TLState
 
 def main():
-    print("🚀 Goukassian Framework - Ternary Logic Demo")
+    print("🚀 Ternary Logic Framework - Quick Start Demo")
     print("=" * 50)
     print()
     
     # Initialize the decision engine
-    engine = TernaryDecisionEngine(confidence_threshold=0.7, domain="financial")
+    engine = TLDecisionEngine(confidence_threshold=0.7, domain="financial")
     
     print("📊 Example 1: Clear Positive Decision")
     print("-" * 35)
@@ -85,7 +85,7 @@ def main():
     summary = engine.get_decision_summary()
     print(f"Total Decisions Made: {summary['total_decisions']}")
     print(f"Average Confidence: {summary['average_confidence']:.2f}")
-    print(f"Sacred Pause Rate: {summary['indeterminate_rate']:.1%}")
+    print(f"Epistemic Hold Rate: {summary['epistemic_hold_rate']:.1%}")
     print()
     print("Decision Distribution:")
     for state, count in summary['state_distribution'].items():
@@ -93,7 +93,7 @@ def main():
         print(f"  {state}: {count} ({percentage:.1f}%)")
     
     print()
-    print("✨ The Sacred Pause in Action!")
+    print("✨ The Epistemic Hold in Action!")
     print("Notice how the framework intelligently recognizes uncertainty")
     print("and recommends gathering more information rather than forcing")  
     print("a premature binary decision.")
@@ -106,9 +106,9 @@ def print_result(result):
     
     # State with emoji
     state_emoji = {
-        TernaryState.TRUE: "✅",
-        TernaryState.FALSE: "❌", 
-        TernaryState.INDETERMINATE: "⚠️"
+        TLState.PROCEED: "✅",
+        TLState.HALT: "❌", 
+        TLState.EPISTEMIC_HOLD: "⚠️"
     }
     
     print(f"Decision: {state_emoji[result.state]} {result.state.name}")
@@ -128,3 +128,12 @@ def print_result(result):
 
 if __name__ == "__main__":
     main()
+
+## Contact Information
+
+**Created by Lev Goukassian**
+* **ORCID**: 0009-0006-5966-1243
+* **Email**: leogouk@gmail.com
+
+**Successor Contact**: support@tl-goukassian.org  
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
