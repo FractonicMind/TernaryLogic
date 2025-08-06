@@ -852,4 +852,4 @@ def generate_institutional_compliance_report(institution_id: str,
 ---
 
 **Contact**: leogouk@gmail.com | **ORCID**: 0009-0006-5966-1243  
-**Successor Contact**: support@tl-goukassian.org (see [Succession Charter](/TL-SUCCESSION-CHARTER.md))
+**Successor Contact**: support@tl-goukassian.org (see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
