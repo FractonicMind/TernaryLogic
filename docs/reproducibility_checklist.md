@@ -444,7 +444,7 @@ Decision Accuracy          | >90%          | ✅ Verified
 - **Email**: leogouk@gmail.com
 
 **Technical Support**: support@tl-goukassian.org  
-(see [Succession Charter](/TL-SUCCESSION-CHARTER.md))
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
 
 ---
 
