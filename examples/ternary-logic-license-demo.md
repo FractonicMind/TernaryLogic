@@ -211,7 +211,7 @@ The Ternary Logic License demonstrates how TL's Epistemic Hold principle can be 
 ---
 
 **Contact**: leogouk@gmail.com | **ORCID**: 0009-0006-5966-1243  
-**Successor Contact**: support@tl-goukassian.org (see [Succession Charter](/TL-SUCCESSION-CHARTER.md))  
+**Successor Contact**: support@tl-goukassian.org (see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))  
 **License**: This demonstration document is released under the MIT + Ethical Use License
 
 *"Sometimes the most intelligent action is to pause and deliberate before proceeding."* - TL Epistemic Hold Principle
