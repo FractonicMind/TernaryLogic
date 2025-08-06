@@ -293,6 +293,6 @@ Transform how humanity and machines make decisions under uncertainty by funding 
 **Fund Headquarters**: Leading University TL Ethics Department (hosted)  
 **Primary Contact**: leogouk@gmail.com  
 **Successor Contact**: support@tl-goukassian.org  
-(see [Succession Charter](/TL-SUCCESSION-CHARTER.md))  
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))  
 **Website**: goukassian-memorial-fund.org  
 **Phone**:
