@@ -540,7 +540,7 @@ pytest tests/ --cov=. --cov-report=term-missing
 # Run specific category
 pytest tests/unit/
 
----
+```
 
 ## Complete Repository Overview
 
