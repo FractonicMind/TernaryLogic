@@ -508,7 +508,7 @@ If uncertainty > threshold → Epistemic Hold
 - **Email**: leogouk@gmail.com
 
 **Academic Collaboration**: support@tl-goukassian.org  
-(see [Succession Charter](/TL-SUCCESSION-CHARTER.md))
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
 
 ---
 
