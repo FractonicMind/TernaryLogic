@@ -472,15 +472,15 @@ If uncertainty > threshold → Epistemic Hold
 ## 📖 Bibliography & References
 
 ### Foundational Economic Theory
-- Hayek, F.A. (1945). "The Use of Knowledge in Society"
-- Keynes, J.M. (1936). "The General Theory of Employment, Interest and Money"
 - Knight, F.H. (1921). "Risk, Uncertainty and Profit"
+- Keynes, J.M. (1936). "The General Theory of Employment, Interest and Money"
+- Hayek, F.A. (1945). "The Use of Knowledge in Society"
 - Minsky, H.P. (1986). "Stabilizing an Unstable Economy"
 
 ### Decision Theory & Behavioral Economics
-- Kahneman, D. & Tversky, A. (1979). "Prospect Theory: An Analysis of Decision under Risk"
 - Savage, L.J. (1954). "The Foundations of Statistics"
 - Simon, H.A. (1956). "Rational Choice and the Structure of the Environment"
+- Kahneman, D. & Tversky, A. (1979). "Prospect Theory: An Analysis of Decision under Risk"
 - Thaler, R.H. (2008). "Nudge: Improving Decisions About Health, Wealth, and Happiness"
 
 ### Financial Theory & Risk Management
