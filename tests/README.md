@@ -483,7 +483,7 @@ pytest tests/scenarios/ --scenario-report=reports/scenarios.html
 - **Email**: leogouk@gmail.com
 
 **Testing Support**: support@tl-goukassian.org  
-(see [Succession Charter](/TL-SUCCESSION-CHARTER.md))
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
 
 ---
 
