@@ -350,6 +350,6 @@ TL extends traditional binary decision theory by:
 - **Email**: leogouk@gmail.com
 
 **Academic Succession**: support@tl-goukassian.org  
-(see [Succession Charter](/TL-SUCCESSION-CHARTER.md))
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
 
 *In loving memory of Lev Goukassian (ORCID: 0009-0006-5966-1243) — visionary, economist, and gift to humanity's future.*
