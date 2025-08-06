@@ -482,7 +482,7 @@ Every implementation of TL represents a step toward economic systems that serve 
 - **Email**: leogouk@gmail.com
 
 **Successor Contact**: support@tl-goukassian.org  
-(see [Succession Charter](/TL-SUCCESSION-CHARTER.md))
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
 
 ---
 
