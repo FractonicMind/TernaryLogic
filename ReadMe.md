@@ -57,10 +57,8 @@ Ternary Logic (TL) revolutionizes economic decision-making by introducing a thir
 
 # Ternary Logic Interview
 
-Welcome to my repository on Ternary Logic in Economics Research!
-
 <a href="https://fractonicmind.github.io/TernaryLogic/audio/audio-player.html" target="_blank" rel="noopener noreferrer">
-  <img src="https://placehold.co/600x150/0A9396/FFFFFF?text=Click+to+Listen+to+the+Ternary+Logic+Interview" alt="Click to Listen to Ternary Logic Interview" style="max-width: 100%;">
+<img src="https://www.google.com/url?sa=E&source=gmail&q=https://placehold.co/600x150/0A9396/FFFFFF?font=inter%26text=Click%20to%20Listen%20to%20the%20Ternary%20Logic%20Interview" alt="Click to Listen to Ternary Logic Interview" style="max-width: 100%;">
 </a>
 <br>
 <p>Listen to a detailed interview explaining the core concepts of Ternary Logic.</p>
