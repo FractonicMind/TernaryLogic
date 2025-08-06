@@ -55,7 +55,7 @@ Ternary Logic (TL) revolutionizes economic decision-making by introducing a thir
 - **0 (Epistemic Hold)**: Pause for deliberation when market complexity exceeds confidence thresholds
 - **-1 (Halt)**: Stop or reject when significant risks or contradictory signals are detected
 
-# Ternary Logic Interview
+## Ternary Logic Interview
 
 <a href="https://fractonicmind.github.io/TernaryLogic/audio/audio-player.html" target="_blank" rel="noopener noreferrer">
 <img src="https://www.google.com/url?sa=E&source=gmail&q=https://placehold.co/600x150/0A9396/FFFFFF?font=inter%26text=Click%20to%20Listen%20to%20the%20Ternary%20Logic%20Interview" alt="Click to Listen to Ternary Logic Interview" style="max-width: 100%;">
