@@ -97,7 +97,7 @@ class TestPolicyIntegration:
     def test_historical_policy_validation(self):
         """Test validation against historical policy decisions."""
         # Generate historical decisions
-        dates = pd.date_range('2020-01-01', '2024-01-01', freq='Q')
+        dates = pd.date_range('2020-01-01', '2024-01-01', freq='QE')
         historical_decisions = pd.DataFrame({
             'date': dates,
             'rate_decision': np.random.choice(['raise', 'hold', 'lower'], len(dates)),
