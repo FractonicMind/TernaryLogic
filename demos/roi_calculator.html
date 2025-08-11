@@ -594,11 +594,20 @@
             calculateROI();
         };
         
-        // Recalculate on any input change
-        document.querySelectorAll('input, select').forEach(element => {
-            element.addEventListener('change', calculateROI);
-            element.addEventListener('input', calculateROI);
-        });
+        // Only recalculate when user is done typing (not while typing)
+document.querySelectorAll('input, select').forEach(element => {
+    element.addEventListener('change', calculateROI);
+    // Removed 'input' event listener - now only calculates when field loses focus
+});
+
+// Also allow Enter key to calculate
+document.querySelectorAll('input').forEach(element => {
+    element.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            calculateROI();
+        }
+    });
+});
     </script>
 </body>
 </html>
