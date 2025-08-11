@@ -147,6 +147,7 @@ This interactive demo represents a breakthrough in economic decision education -
 - 🔬 **Research validation** - Proof-of-concept for TL deployment
 - 🌍 **Public engagement** - Making economic complexity accessible to everyone
 
+💰 **[Calculate Your ROI →](demos/roi_calculator.html)** - See what binary thinking costs you
 ---
 
 ## The Heart of TL: Productive Tension
