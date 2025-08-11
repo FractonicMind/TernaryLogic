@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.10', '3.11']  # Reduced to 3.10 and 3.11 for now
+        python-version: ['3.10', '3.11']
 
     steps:
     - uses: actions/checkout@v3
@@ -29,15 +29,6 @@ jobs:
         pip install numpy pandas
         pip install -e .
     
-    - name: Run tests with coverage
+    - name: Run tests
       run: |
-        pytest tests/ -v --cov=src/goukassian --cov-report=term-missing --cov-report=xml
-    
-    - name: Upload coverage reports
-      if: matrix.python-version == '3.10'
-      uses: codecov/codecov-action@v3
-      with:
-        file: ./coverage.xml
-        flags: unittests
-        name: codecov-umbrella
-        fail_ci_if_error: false
+        pytest tests/ -v --cov=src/goukassian --cov-report=term-missing
