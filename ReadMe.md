@@ -260,6 +260,8 @@ print(result.reasoning)
 
 ## Quick Start
 
+📚 **[Quick Start Guide →](docs/QUICK_START.md)** - Implement TL in 60 minutes
+
 ### Installation
 
 ```bash
