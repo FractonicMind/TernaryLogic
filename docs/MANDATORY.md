@@ -261,6 +261,9 @@ Before deploying the Ternary Logic Framework, verify:
 **Required materials**: This document + [core principles](../theory/core-principles.md) + domain examples  
 **Certification**: Pass framework comprehension test (80% minimum)
 
+### Ready to Implement?
+📚 **[Quick Start Guide →](QUICK_START.md)** - Get running in 60 minutes with working code
+
 ---
 
 ## 🔴 Compliance Verification
