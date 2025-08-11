@@ -2,6 +2,7 @@
 
 **Epistemic Hold Technology for Economic Decision-Making**
 
+[![Mandatory Reading](https://img.shields.io/badge/MANDATORY-Read%20First-red?style=for-the-badge&labelColor=darkred)](docs/MANDATORY.md)
 [![Try Interactive Demo](https://img.shields.io/badge/🚀%20Try%20Interactive%20Demo-Live%20Now-blue?labelColor=yellow&color=0057B7&logoColor=white)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/)
 [![Interview](https://img.shields.io/badge/🎙️%20Interview-6:40%20Audio-ff69b4.svg)](https://fractonicmind.github.io/TernaryLogic/audio/audio-player.html)
 [![Examples](https://img.shields.io/badge/Examples-Updated-success.svg)](examples/)
@@ -55,6 +56,24 @@ Ternary Logic (TL) revolutionizes economic decision-making by introducing a thir
 - **+1 (Proceed)**: Execute with confidence when signals align and uncertainty is manageable
 - **0 (Epistemic Hold)**: Pause for deliberation when market complexity exceeds confidence thresholds
 - **-1 (Halt)**: Stop or reject when significant risks or contradictory signals are detected
+
+---
+
+## ⚠️ Mandatory - Read First
+
+**CRITICAL**: Before implementing or using the Ternary Logic Framework, you **MUST** understand the fundamental principles and proper application of the three states. Misuse or misunderstanding can lead to significant economic decision errors.
+
+### 📋 [**Read the Mandatory Guidelines →**](docs/MANDATORY.md)
+
+This framework is designed for **critical economic decision-making** where incorrect implementation could result in:
+- Financial losses from improper state classification
+- Missed opportunities from incorrect Epistemic Hold activation  
+- Systematic risks from threshold miscalibration
+- Decision paralysis from misunderstanding the Hold state
+
+**The Epistemic Hold (0) is not indecision** - it is a deliberate, active choice to gather more information when uncertainty exceeds acceptable thresholds. This distinction is fundamental to the framework's success.
+
+> **Required Understanding Level**: Full comprehension before any implementation
 
 ---
 
