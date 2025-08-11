@@ -121,6 +121,8 @@ Current economic systems force complex financial decisions into binary choices:
 - Risk conflicts hidden rather than surfaced
 - No mechanism for systematic uncertainty acknowledgment
 
+💰 **[Calculate Your ROI →](demos/roi_calculator.html)** - See what binary thinking costs you
+
 # TL in Action: The Epistemic Hold at Work
 
 *Stepping into this repository feels like entering a trading floor—only now the algorithms are thinking twice.*
