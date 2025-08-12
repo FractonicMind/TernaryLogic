@@ -471,22 +471,6 @@ Target recruitment of 5 new faculty:
 - Consulting/Advisory: $30M
 - Spin-off Equity: $100M
 
-### Quantifiable Financial Impact
-
-Before reviewing our projections, we invite you to calculate your institution's specific opportunity cost from binary decision-making:
-
-**[→ Interactive ROI Calculator: See What Binary Thinking Costs You](https://fractonicmind.github.io/TernaryLogic/demos/roi_calculator.html)**
-
-This tool, developed by Lev Goukassian, demonstrates the immediate financial impact of implementing Epistemic Hold technology. Input your institution's decision volume, average transaction value, and error rates to see personalized savings projections.
-
-The calculator will show you:
-- Daily losses from forced binary decisions  
-- Epistemic Hold value for your transaction volume
-- Implementation payback period
-- 5-year net present value
-
-Every day without TL has a measurable cost. The calculator quantifies not just potential savings, but the compounding cost of delay—each day of binary thinking is value destroyed that cannot be recovered.
-
 ### ROI Analysis
 
 Based on conservative estimates similar to those from our calculator:
