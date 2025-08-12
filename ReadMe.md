@@ -130,7 +130,7 @@ Current economic systems force complex financial decisions into binary choices:
 
 ## ## 🧠 NEW: Epistemic Hold™ - Watch AI Think in Real-Time
 
-[![Epistemic Hold Demo](https://img.shields.io/badge/🧠%20Sacred%20Pause%20Demo-Watch%20AI%20Think-amber?style=for-the-badge&labelColor=ff9800&color=ffc107)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/epistemic-hold.html)
+[![Epistemic Hold Demo](https://img.shields.io/badge/🧠%20Epistemic%20Hold%20Demo-Watch%20AI%20Think-amber?style=for-the-badge&labelColor=ff9800&color=ffc107)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/epistemic-hold.html)
 
 **The world's first visualization of machine hesitation as a feature, not a bug.**
 
