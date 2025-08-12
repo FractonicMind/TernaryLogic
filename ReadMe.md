@@ -4,7 +4,7 @@
 
 [![Mandatory Reading](https://img.shields.io/badge/MANDATORY-Read%20First-red?style=for-the-badge&labelColor=darkred)](docs/MANDATORY.md)
 [![Try Interactive Demo](https://img.shields.io/badge/🚀%20Try%20Interactive%20Demo-Live%20Now-blue?labelColor=yellow&color=0057B7&logoColor=white)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/)
-[![Epistemic Hold Demo](https://img.shields.io/badge/🧠%20Epistemic%20Hold%20Demo-Watch%20AI%20Think-amber?style=for-the-badge&labelColor=ff9800&color=ffc107)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/Epistemic-Hold.html)
+[![Epistemic Hold Demo](https://img.shields.io/badge/🧠%20Epistemic%20Hold%20Demo-Watch%20AI%20Think-amber?style=for-the-badge&labelColor=ff9800&color=ffc107)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/epistemic-hold.html)
 [![Interview](https://img.shields.io/badge/🎙️%20Interview-6:40%20Audio-ff69b4.svg)](https://fractonicmind.github.io/TernaryLogic/audio/audio-player.html)
 [![Examples](https://img.shields.io/badge/Examples-Updated-success.svg)](examples/)
 [![Economic Paper](https://img.shields.io/badge/Economic%20Paper-Published-blue.svg)](research/academic_papers/ternary_logic_economics_paper.md)
@@ -130,7 +130,7 @@ Current economic systems force complex financial decisions into binary choices:
 
 ## ## 🧠 NEW: Epistemic Hold™ - Watch AI Think in Real-Time
 
-[![Epistemic Hold Demo](https://img.shields.io/badge/🧠%20Sacred%20Pause%20Demo-Watch%20AI%20Think-amber?style=for-the-badge&labelColor=ff9800&color=ffc107)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/Epistemic-Hold.html)
+[![Epistemic Hold Demo](https://img.shields.io/badge/🧠%20Sacred%20Pause%20Demo-Watch%20AI%20Think-amber?style=for-the-badge&labelColor=ff9800&color=ffc107)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/epistemic-hold.html)
 
 **The world's first visualization of machine hesitation as a feature, not a bug.**
 
@@ -144,7 +144,7 @@ Experience the revolutionary Epistemic Hold UI where you can actually **see** th
 
 This isn't just a demo—it's a glimpse into the future where AI systems are transparent partners, not black boxes. Every pause tells you: *"I detected something complex and I'm being careful with your decision."*
 
-**[🧠 Experience the Epistemic Hold →](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/Epistemic-Hold.html)**
+**[🧠 Experience the Epistemic Hold →](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/epistemic-hold.html)**
 
 > *"For the first time, uncertainty becomes beautiful."* — The Epistemic Hold makes machine thinking visible, trustworthy, and profoundly human.
 
