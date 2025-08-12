@@ -91,19 +91,5 @@
 
 ---
 
-*"Central banks have always practiced epistemic holds. TL makes it systematic."*
-
 ---
 
-## Summary for All Institutions
-
-| Institution | Focus | Key Strength | Time to Impact |
-|------------|-------|--------------|----------------|
-| **MIT** | Technical Implementation | Trading labs & entrepreneurship | 2 years |
-| **Stanford** | Commercialization | Silicon Valley ecosystem | 18 months |
-| **Chicago** | Theory | Nobel-level research | 3-5 years |
-| **LSE** | Global Policy | Regulatory frameworks | 2 years |
-
-| **BIS** | Central Banking | Systemic deployment | 3 years |
-
-Each institution gets TL for their unique strength. Together, they ensure Lev Goukassian's vision transforms economics globally.
