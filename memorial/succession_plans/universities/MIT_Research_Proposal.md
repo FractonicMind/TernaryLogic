@@ -502,19 +502,6 @@ Based on conservative estimates similar to those from our calculator:
 - Alumni giving increase: $500M
 - Industry partnerships: $1B value
 - Societal benefit: $10B+ in prevented losses
-### **ROI Analysis**
-
-**Direct Returns**:
-- Research funding: 3x multiplier
-- Patent revenue: $300M over 10 years
-- Education revenue: $100M
-- Startup exits: $1B+ value created
-
-**Indirect Impact**:
-- MIT reputation enhancement: Priceless
-- Alumni giving increase: $500M
-- Industry partnerships: $1B value
-- Societal benefit: $10B+ in prevented losses
 
 ---
 
