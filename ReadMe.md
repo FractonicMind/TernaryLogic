@@ -111,9 +111,9 @@ Current economic systems force complex financial decisions into binary choices:
 - Risk conflicts hidden rather than surfaced
 - No mechanism for systematic uncertainty acknowledgment
 
-💰 **[Calculate Your ROI →](https://fractonicmind.github.io/TernaryLogic/demos/roi_calculator.html)** - See what binary thinking costs you
+  # TL in Action: The Epistemic Hold at Work
 
-# TL in Action: The Epistemic Hold at Work
+💰 **[Calculate Your ROI →](https://fractonicmind.github.io/TernaryLogic/demos/roi_calculator.html)** - See what binary thinking costs you
 
 ---
 
