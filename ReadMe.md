@@ -80,6 +80,8 @@ We've created comprehensive documentation to help you understand and implement T
 
 ### 📋 [**Read the Mandatory Guidelines →**](docs/MANDATORY.md)
 
+### 📋 [**Read the Mandatory Researh Report →**](docs/Mandatory_Research_Report.md)
+
 **The Epistemic Hold (0) is not indecision** - it is a deliberate, active choice to gather more information when uncertainty exceeds acceptable thresholds. This distinction is fundamental to the framework's success.
 
 ---
