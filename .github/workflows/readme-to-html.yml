@@ -1,0 +1,72 @@
+name: Convert README to HTML
+
+on:
+  push:
+    paths: ['README.md', 'ReadMe.md']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  convert-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install markdown converter
+        run: npm install -g marked
+        
+      - name: Convert README to HTML
+        run: |
+          # Convert with GitHub Flavored Markdown support
+          marked -i ReadMe.md -o readme.html --gfm --breaks
+          
+          # Add basic HTML structure and meta tags for SEO
+          cat > temp.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Ternary Logic Framework - Intelligent Economic Decision-Making</title>
+              <meta name="description" content="TL Framework: Revolutionary three-state decision system (Proceed/Epistemic Hold/Halt) for economic uncertainty management by Lev Goukassian">
+              <meta name="keywords" content="ternary logic, economic decision making, epistemic hold, uncertainty management, financial AI, Lev Goukassian">
+              <meta name="author" content="Lev Goukassian">
+              <style>
+                  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+                  img { max-width: 100%; height: auto; }
+                  code { background: #f6f8fa; padding: 2px 4px; border-radius: 3px; }
+                  pre { background: #f6f8fa; padding: 16px; border-radius: 6px; overflow-x: auto; }
+                  blockquote { border-left: 4px solid #dfe2e5; padding-left: 16px; margin-left: 0; }
+                  table { border-collapse: collapse; width: 100%; }
+                  th, td { border: 1px solid #dfe2e5; padding: 8px 12px; text-align: left; }
+                  th { background: #f6f8fa; }
+              </style>
+          </head>
+          <body>
+          EOF
+          
+          # Combine header with converted content
+          cat temp.html readme.html > final.html
+          echo "</body></html>" >> final.html
+          mv final.html readme.html
+          rm temp.html
+          
+      - name: Commit and push HTML file
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add readme.html
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update readme.html from ReadMe.md"
+            git push
+          fi
