@@ -71,13 +71,10 @@ We've created comprehensive documentation to help you understand and implement T
 - Performance optimization and troubleshooting
 - Community, development, and contribution guidelines
 
+  *These resources answer virtually every question about using TL - from basic concepts to advanced implementation details.*
+
 #### **📖 [Quick Start Guide](docs/QUICK_START.md)**
 **Implement TL in 60 minutes** - from installation to first results
-
-#### **📑 [Mandatory Reading](docs/MANDATORY.md)**
-**Critical safety guidelines** for economic decision-making systems
-
-*These resources answer virtually every question about using TL - from basic concepts to advanced implementation details.*
 
 ---
 
