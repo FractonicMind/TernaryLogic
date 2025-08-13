@@ -74,11 +74,6 @@ We've created comprehensive documentation to help you understand and implement T
   *These resources answer virtually every question about using TL - from basic concepts to advanced implementation details.*
 ---
 
-#### **📖 [Quick Start Guide](docs/QUICK_START.md)**
-**Implement TL in 60 minutes** - from installation to first results
-
----
-
 ## ⚠️ Mandatory - Read First
 
 **CRITICAL**: Before implementing TL, you **MUST** understand the fundamental principles. Misuse in economic systems can cause significant financial losses, missed opportunities, or systematic risks.
