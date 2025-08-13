@@ -23,6 +23,15 @@ Economic decisions under uncertainty are where the framework provides maximum va
 ### 5. Is this just another AI/ML framework?
 No. TL is a **decision philosophy** that can be implemented in any system - from human protocols to algorithmic trading. The AI components are tools, not the core innovation.
 
+### 6. Why is reading the MANDATORY.md file required?
+Unlike typical open source frameworks, TL is designed for **critical economic decision-making** where misuse can cause:
+- **Financial losses** from improper state classification
+- **Missed opportunities** from incorrect Epistemic Hold activation
+- **Systematic risks** from threshold miscalibration  
+- **Decision paralysis** from misunderstanding the Hold state
+
+The mandatory reading ensures users understand that **Epistemic Hold is not indecision** - it's intelligent pause. This distinction is fundamental to successful implementation.
+
 ---
 
 ## Technical Implementation
@@ -113,6 +122,15 @@ The system:
 - False positives = unnecessary holds (inconvenient but safe)
 - False negatives = missed risks (minimized through conservative thresholds)
 - **Philosophy**: Better to pause unnecessarily than proceed dangerously
+
+### 19. What prevents malicious actors from using TL for harmful purposes?
+**Technical safeguards**:
+- TL's transparency requirements make hidden manipulation difficult
+- Epistemic Hold generates audit trails that expose suspicious patterns
+- The framework is designed for **stakeholder benefit**, not exploitation
+- Community monitoring can detect malicious implementations
+
+**However**: Like any tool, TL could theoretically be misused. The MIT + Ethical Use license creates legal/social pressure, but determined bad actors could ignore this. **The defense is transparency** - TL's explainable decisions make malicious use more detectable than black-box systems.
 
 ### 19. How do I measure TL performance?
 **Key metrics**:
