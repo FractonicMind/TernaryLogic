@@ -285,7 +285,7 @@ Before deploying the Ternary Logic Framework, verify:
 
 ---
 
-### 📋 [**Read the Mandatory Researh Report →**](/Mandatory_Research_Report.md)
+### 📋 [**Read the Mandatory Researh Report →**](Mandatory_Research_Report.md)
 
 ---
 ## 📞 Mandatory Support Protocol
