@@ -204,7 +204,7 @@ The Ternary Logic License demonstrates how TL's Epistemic Hold principle can be 
 ## References
 
 - **TL Framework**: [Main Repository](../ReadMe.md)
-- **Interactive Demo**: https://fractonicmind.github.io/TernaryLogic/TL-App/
+- **Interactive Demo**: https://fractonicmind.github.io/TernaryLogic/demos/TL-App/
 - **Research Article**: ["The Third Option: Why Economy and Civilization Must Break Free from Binary"](https://medium.com/@leogouk/the-third-option-why-economy-and-civilization-must-break-free-from-binary-0d69d2be14c6) - Medium
 - **Evidence Documentation**: [System Recognition Evidence](../evidence/README.md)
 
