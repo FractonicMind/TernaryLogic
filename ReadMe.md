@@ -42,7 +42,7 @@ Ternary Logic (TL) revolutionizes economic decision-making by introducing a thir
 ### The Three States of Economic Reasoning
 
 - **+1 (Proceed)**: Execute with confidence when signals align and uncertainty is manageable
-- **0 (Epistemic Hold)**: Pause for deliberation when market complexity exceeds confidence thresholds
+-  **0 (Epistemic Hold)**: Pause for deliberation when market complexity exceeds confidence thresholds
 - **-1 (Halt)**: Stop or reject when significant risks or contradictory signals are detected
 
 **"Epistemic Hold is the gatekeeper; nothing passes to Yes or No until it collects the toll of uncertainty."**
