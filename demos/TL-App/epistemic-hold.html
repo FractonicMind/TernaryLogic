@@ -537,6 +537,7 @@
     <script>
         let currentScenario = 'trading';
         let evaluationInProgress = false;
+        let research_log = []; // Array to store research data
 
         const scenarios = {
             trading: {
@@ -628,6 +629,18 @@
             
             // Calculate result
             const result = calculateTernaryResult(inputs);
+
+            // Create and store the research log entry
+            const log_entry = {
+                timestamp: new Date().toISOString(),
+                scenario_type: currentScenario,
+                input_parameters: inputs,
+                system_decision: result.state,
+                system_reasoning: result.reasoning,
+                recommendations: result.recommendations
+            };
+            research_log.push(log_entry);
+            console.log("New Research Log Entry:", JSON.stringify(log_entry, null, 2));
             
             // Show result
             showResult(result);
