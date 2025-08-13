@@ -2,7 +2,10 @@ name: Convert README to HTML
 
 on:
   push:
-    paths: ['README.md', 'ReadMe.md']
+    paths: 
+      - 'README.md'
+      - 'ReadMe.md' 
+      - 'readme.md'
   workflow_dispatch:
 
 permissions:
@@ -23,13 +26,28 @@ jobs:
       - name: Install markdown converter
         run: npm install -g marked
         
-      - name: Convert README to HTML
+      - name: Find and convert README to HTML
         run: |
-          # Convert with GitHub Flavored Markdown support
-          marked -i ReadMe.md -o readme.html --gfm --breaks
+          # Find the README file (handle different cases)
+          README_FILE=""
+          if [ -f "README.md" ]; then
+            README_FILE="README.md"
+          elif [ -f "ReadMe.md" ]; then
+            README_FILE="ReadMe.md"
+          elif [ -f "readme.md" ]; then
+            README_FILE="readme.md"
+          else
+            echo "Error: No README file found!"
+            exit 1
+          fi
           
-          # Add basic HTML structure and meta tags for SEO
-          cat > temp.html << 'EOF'
+          echo "Found README file: $README_FILE"
+          
+          # Convert markdown to HTML
+          marked -i "$README_FILE" -o readme_content.html --gfm --breaks
+          
+          # Create complete HTML file with SEO optimization
+          cat > readme.html << 'EOF'
           <!DOCTYPE html>
           <html lang="en">
           <head>
@@ -39,34 +57,113 @@ jobs:
               <meta name="description" content="TL Framework: Revolutionary three-state decision system (Proceed/Epistemic Hold/Halt) for economic uncertainty management by Lev Goukassian">
               <meta name="keywords" content="ternary logic, economic decision making, epistemic hold, uncertainty management, financial AI, Lev Goukassian">
               <meta name="author" content="Lev Goukassian">
+              <meta name="robots" content="index, follow">
+              <link rel="canonical" href="https://fractonicmind.github.io/TernaryLogic/readme.html">
               <style>
-                  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; line-height: 1.6; }
-                  img { max-width: 100%; height: auto; }
-                  code { background: #f6f8fa; padding: 2px 4px; border-radius: 3px; }
-                  pre { background: #f6f8fa; padding: 16px; border-radius: 6px; overflow-x: auto; }
-                  blockquote { border-left: 4px solid #dfe2e5; padding-left: 16px; margin-left: 0; }
-                  table { border-collapse: collapse; width: 100%; }
-                  th, td { border: 1px solid #dfe2e5; padding: 8px 12px; text-align: left; }
-                  th { background: #f6f8fa; }
+                  body { 
+                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; 
+                      max-width: 1200px; 
+                      margin: 0 auto; 
+                      padding: 20px; 
+                      line-height: 1.6; 
+                      color: #24292f;
+                  }
+                  img { 
+                      max-width: 100%; 
+                      height: auto; 
+                  }
+                  code { 
+                      background: #f6f8fa; 
+                      padding: 2px 4px; 
+                      border-radius: 3px; 
+                      font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+                  }
+                  pre { 
+                      background: #f6f8fa; 
+                      padding: 16px; 
+                      border-radius: 6px; 
+                      overflow-x: auto;
+                      border: 1px solid #d1d9e0;
+                  }
+                  pre code {
+                      background: none;
+                      padding: 0;
+                  }
+                  blockquote { 
+                      border-left: 4px solid #dfe2e5; 
+                      padding-left: 16px; 
+                      margin-left: 0; 
+                      color: #656d76;
+                  }
+                  table { 
+                      border-collapse: collapse; 
+                      width: 100%; 
+                      margin: 16px 0;
+                  }
+                  th, td { 
+                      border: 1px solid #dfe2e5; 
+                      padding: 8px 12px; 
+                      text-align: left; 
+                  }
+                  th { 
+                      background: #f6f8fa; 
+                      font-weight: 600;
+                  }
+                  h1, h2, h3, h4, h5, h6 {
+                      color: #24292f;
+                      margin-top: 24px;
+                      margin-bottom: 16px;
+                  }
+                  h1 {
+                      font-size: 2em;
+                      border-bottom: 1px solid #eaecf0;
+                      padding-bottom: 10px;
+                  }
+                  h2 {
+                      font-size: 1.5em;
+                      border-bottom: 1px solid #eaecf0;
+                      padding-bottom: 8px;
+                  }
+                  a {
+                      color: #0969da;
+                      text-decoration: none;
+                  }
+                  a:hover {
+                      text-decoration: underline;
+                  }
+                  .highlight {
+                      background: #fff8c4;
+                      padding: 2px 4px;
+                      border-radius: 3px;
+                  }
               </style>
           </head>
           <body>
           EOF
           
-          # Combine header with converted content
-          cat temp.html readme.html > final.html
-          echo "</body></html>" >> final.html
-          mv final.html readme.html
-          rm temp.html
+          # Append the converted content
+          cat readme_content.html >> readme.html
+          
+          # Close HTML tags
+          echo "</body></html>" >> readme.html
+          
+          # Clean up temporary file
+          rm readme_content.html
+          
+          echo "HTML file created successfully!"
+          echo "File size: $(wc -c < readme.html) bytes"
           
       - name: Commit and push HTML file
         run: |
           git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.name "GitHub Action [bot]"
           git add readme.html
+          
+          # Check if there are changes to commit
           if git diff --staged --quiet; then
-            echo "No changes to commit"
+            echo "No changes to commit - HTML file is already up to date"
           else
-            git commit -m "Auto-update readme.html from ReadMe.md"
+            git commit -m "🤖 Auto-update readme.html from $README_FILE"
             git push
+            echo "Successfully committed and pushed readme.html"
           fi
