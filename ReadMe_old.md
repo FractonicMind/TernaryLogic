@@ -2,9 +2,9 @@
 
 **Epistemic Hold Technology for Economic Decision-Making**
 
-[![Mandatory Reading](https://img.shields.io/badge/MANDATORY-Read%20First-red?style=for-the-badge&labelColor=darkred)](docs/MANDATORY.md)
-[![Try Interactive Demo](https://img.shields.io/badge/🚀%20Try%20Interactive%20Demo-Live%20Now-blue?labelColor=yellow&color=0057B7&logoColor=white)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/)
-[![Epistemic Hold Demo](https://img.shields.io/badge/🧠%20Epistemic%20Hold%20Demo-Watch%20AI%20Think-amber?style=for-the-badge&labelColor=ff9800&color=ffc107)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/epistemic-hold.html)
+[![Mandatory Reading](https://img.shields.io/badge/MANDATORY-Read%20First-red?style=flat-square&labelColor=darkred)](docs/MANDATORY.md)
+[![Try Interactive Demo](https://img.shields.io/badge/🚀%20Interactive%20Demo-Live%20Now-blue?style=flat-square&labelColor=yellow&color=0057B7)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/)
+[![Epistemic Hold Demo](https://img.shields.io/badge/🧠%20Epistemic%20Hold-Watch%20AI%20Think-amber?style=flat-square&labelColor=ff9800&color=ffc107)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/epistemic-hold.html)
 [![Interview](https://img.shields.io/badge/🎙️%20Interview-6:40%20Audio-ff69b4.svg)](https://fractonicmind.github.io/TernaryLogic/audio/audio-player.html)
 [![Examples](https://img.shields.io/badge/Examples-Updated-success.svg)](examples/)
 [![Economic Paper](https://img.shields.io/badge/Economic%20Paper-Published-blue.svg)](research/academic_papers/ternary_logic_economics_paper.md)
