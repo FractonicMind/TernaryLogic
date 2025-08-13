@@ -25,7 +25,9 @@ Implementing a mandatory **Epistemic Hold** requires a structured framework cent
 3. **The Structured Hold Response:** When the **Epistemic Hold** is activated, the system does not simply halt. Instead, it generates a structured, human-readable report. This report includes:
 
    * **Reason for the Hold:** A clear, natural language explanation of why the confidence threshold was not met (e.g., "Conflicting signals between technical indicators and fundamental data").  
+
    * **Conflicting Factors:** A list of the specific data points that contributed to the lack of confidence.  
+
    * **Recommended Next Steps:** A set of actions to resolve the hold, such as gathering more data, consulting a human expert, or initiating a contingent plan.
 
 ### 
