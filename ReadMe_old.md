@@ -84,7 +84,7 @@ This framework is designed for **critical economic decision-making** where incor
 
 <div align="center">
 
-[![Listen to TL Interview](https://img.shields.io/badge/▶%20Play%20Interview-6%20min%2040%20sec-0A9396?style=for-the-badge&logo=spotify&logoColor=white)](https://fractonicmind.github.io/TernaryLogic/audio/audio-player.html)
+[![Listen to TL Interview](https://img.shields.io/badge/%20Play%20Interview-6%20min%2040%20sec-0A9396?style=for-the-badge&logo=spotify&logoColor=white)](https://fractonicmind.github.io/TernaryLogic/audio/audio-player.html)
 
 **[ Click to Listen: The Ternary Logic Framework Interview](https://fractonicmind.github.io/TernaryLogic/audio/audio-player.html)**
 
@@ -95,7 +95,7 @@ This framework is designed for **critical economic decision-making** where incor
 In this **6-minute 40-second interview**, discover:
 
  **Core Concepts**: How the three states (PROCEED/EPISTEMIC_HOLD/HALT) revolutionize decision-making  
-⏸ **The Epistemic Hold**: Why pausing for deliberation creates superior outcomes  
+ **The Epistemic Hold**: Why pausing for deliberation creates superior outcomes  
  **Real Applications**: From high-frequency trading to monetary policy  
  **The Philosophy**: Moving beyond binary thinking in complex economic systems  
  **Global Impact**: How TL creates more resilient financial systems  
@@ -218,7 +218,7 @@ Market: "Strong GDP growth, low inflation, supportive Fed policy"
 TL: Proceeds with risk-on positioning
 ```
 
-### ⏸ Epistemic Hold (Uncertainty)
+###  Epistemic Hold (Uncertainty)
 Complex market situations requiring deliberation:
 ```
 Market: "Mixed employment data, geopolitical tensions, earnings season approaching"
@@ -494,7 +494,7 @@ The TL framework is rigorously tested against a comprehensive database of **25+ 
 TL Response: +1 (Proceed) - Low uncertainty, clear opportunity
 ```
 
-**⏸ Epistemic Hold (0) Scenarios:**
+** Epistemic Hold (0) Scenarios:**
 ```python
 # Conflicting market signals  
 "Strong momentum indicators but negative volume divergence during earnings week"
