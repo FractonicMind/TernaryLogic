@@ -168,7 +168,7 @@ if result.state == TLState.EPISTEMIC_HOLD:
 
 ## Repository Navigation and Documentation
 
-**[Complete Repository Map](repository-navigation.html)**: Interactive navigation with clickable links to all framework components
+**[Complete Repository Map](https://fractonicmind.github.io/TernaryLogic/repository-navigation.html)**: Interactive navigation with clickable links to all framework components
 
 ### Essential Documentation
 
