@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ternary Logic Framework - Repository Navigation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+            background-color: #ffffff;
+            color: #24292f;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        h1 {
+            color: #24292f;
+            font-size: 2.2em;
+            font-weight: 600;
+            border-bottom: 1px solid #d1d9e0;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .quick-start {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .quick-start h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 1.3em;
+        }
+        
+        .quick-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .quick-link {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .quick-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .tree-container {
+            background: #f8f9fa;
+            border: 1px solid #d1d9e0;
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 30px;
+            overflow-x: auto;
+        }
+        
+        .tree {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            white-space: nowrap;
+        }
+        
+        .tree-item {
+            display: block;
+            margin: 2px 0;
+            position: relative;
+        }
+        
+        .tree-icon {
+            color: #656d76;
+            margin-right: 8px;
+            font-weight: normal;
+        }
+        
+        .folder {
+            color: #0969da;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .folder:hover {
+            text-decoration: underline;
+        }
+        
+        .file {
+            color: #24292f;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .file:hover {
+            color: #0969da;
+            text-decoration: underline;
+            background: rgba(9, 105, 218, 0.1);
+            padding: 2px 4px;
+            border-radius: 3px;
+            margin: -2px -4px;
+        }
+        
+        .file-desc {
+            color: #656d76;
+            font-weight: normal;
+            margin-left: 15px;
+            font-style: italic;
+        }
+        
+        .essential {
+            color: #1f883d !important;
+            font-weight: 600;
+        }
+        
+        .essential:hover {
+            background: rgba(31, 136, 61, 0.1);
+        }
+        
+        .critical {
+            color: #d1242f !important;
+            font-weight: 600;
+        }
+        
+        .critical:hover {
+            background: rgba(209, 36, 47, 0.1);
+        }
+        
+        .demo {
+            color: #8250df !important;
+            font-weight: 600;
+        }
+        
+        .demo:hover {
+            background: rgba(130, 80, 223, 0.1);
+        }
+        
+        .academic {
+            color: #0550ae !important;
+            font-weight: 600;
+        }
+        
+        .academic:hover {
+            background: rgba(5, 80, 174, 0.1);
+        }
+        
+        .indent-0 { margin-left: 0; }
+        .indent-1 { margin-left: 20px; }
+        .indent-2 { margin-left: 40px; }
+        .indent-3 { margin-left: 60px; }
+        .indent-4 { margin-left: 80px; }
+        
+        .contact-info {
+            background: #f6f8fa;
+            border: 1px solid #d1d9e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 40px;
+        }
+        
+        .contact-info h3 {
+            margin-top: 0;
+            color: #24292f;
+            font-size: 1.2em;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .legend {
+            background: #fff;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .legend h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #24292f;
+            font-size: 0.9em;
+        }
+        
+        .legend-item {
+            display: inline-block;
+            margin-right: 20px;
+            margin-bottom: 5px;
+            font-size: 0.85em;
+        }
+        
+        .legend-color {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        
+        .color-critical { background: #d1242f; }
+        .color-essential { background: #1f883d; }
+        .color-demo { background: #8250df; }
+        .color-academic { background: #0550ae; }
+        .color-file { background: #24292f; }
+        .color-folder { background: #0969da; }
+    </style>
+</head>
+<body>
+    <h1>Ternary Logic Framework<br><small style="color: #656d76; font-size: 0.6em; font-weight: 400;">Complete Repository Navigation</small></h1>
+    
+    <div class="quick-start">
+        <h3>Academic Quick Start Path</h3>
+        <div class="quick-links">
+            <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/MANDATORY.md" class="quick-link" target="_blank">1. Safety Guidelines</a>
+            <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/readme.md" class="quick-link" target="_blank">2. Framework Overview</a>
+            <a href="https://fractonicmind.github.io/TernaryLogic/demos/TL-App/" class="quick-link" target="_blank">3. Interactive Demo</a>
+            <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/examples/quickstart_example.py" class="quick-link" target="_blank">4. Quick Start</a>
+            <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/research/academic_papers/ternary_logic_economics_paper.md" class="quick-link" target="_blank">5. Research Paper</a>
+        </div>
+    </div>
+
+    <div class="legend">
+        <h4>Color Guide:</h4>
+        <span class="legend-item"><span class="legend-color color-critical"></span>Critical (READ FIRST)</span>
+        <span class="legend-item"><span class="legend-color color-essential"></span>Essential Files</span>
+        <span class="legend-item"><span class="legend-color color-demo"></span>Interactive Demos</span>
+        <span class="legend-item"><span class="legend-color color-academic"></span>Academic Research</span>
+        <span class="legend-item"><span class="legend-color color-file"></span>Regular Files</span>
+        <span class="legend-item"><span class="legend-color color-folder"></span>Directories</span>
+    </div>
+
+    <div class="tree-container">
+        <div class="tree">
+            <div class="tree-item indent-0">
+                <span class="tree-icon">📁</span><span class="folder">Ternary Logic Framework</span>
+            </div>
+            
+            <!-- Root Files -->
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/CHANGELOG.md" class="file" target="_blank">CHANGELOG.md</a>
+                <span class="file-desc">Version history and updates</span>
+            </div>
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/CITATION.cff" class="file" target="_blank">CITATION.cff</a>
+                <span class="file-desc">Academic citation format</span>
+            </div>
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/CODE_OF_CONDUCT.md" class="file" target="_blank">CODE_OF_CONDUCT.md</a>
+                <span class="file-desc">Community standards and ethics</span>
+            </div>
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/CONTRIBUTING.md" class="file" target="_blank">CONTRIBUTING.md</a>
+                <span class="file-desc">Contribution guidelines and protocols</span>
+            </div>
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/LICENSE" class="file" target="_blank">LICENSE</a>
+                <span class="file-desc">MIT license with ethical use requirements</span>
+            </div>
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/MANIFESTO.md" class="file" target="_blank">MANIFESTO.md</a>
+                <span class="file-desc">Framework philosophy and vision</span>
+            </div>
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/Makefile" class="file" target="_blank">Makefile</a>
+                <span class="file-desc">Build and automation scripts</span>
+            </div>
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/readme.md" class="file essential" target="_blank">readme.md</a>
+                <span class="file-desc">Main framework documentation</span>
+            </div>
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/SECURITY.md" class="file" target="_blank">SECURITY.md</a>
+                <span class="file-desc">Security policies and reporting</span>
+            </div>
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/pyproject.toml" class="file" target="_blank">pyproject.toml</a>
+                <span class="file-desc">Modern Python packaging configuration</span>
+            </div>
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/requirements.txt" class="file" target="_blank">requirements.txt</a>
+                <span class="file-desc">Python dependencies</span>
+            </div>
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/setup.py" class="file" target="_blank">setup.py</a>
+                <span class="file-desc">Package installation configuration</span>
+            </div>
+            
+            <!-- Audio Directory -->
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><span class="folder">📁 audio/</span>
+                <span class="file-desc">Educational audio resources</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://fractonicmind.github.io/TernaryLogic/audio/audio-player.html" class="file demo" target="_blank">audio-player.html</a>
+                <span class="file-desc">6-minute 40-second framework interview</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/audio/ternary-logic-interview.mp3" class="file" target="_blank">ternary-logic-interview.mp3</a>
+                <span class="file-desc">Audio file</span>
+            </div>
+            
+            <!-- Benchmark Directory -->
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><span class="folder">📁 benchmark/</span>
+                <span class="file-desc">Performance evaluation tools</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/benchmark/generate_coverage.py" class="file" target="_blank">generate_coverage.py</a>
+                <span class="file-desc">Coverage analysis generation</span>
+            </div>
+            
+            <!-- Demos Directory -->
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><span class="folder">📁 demos/</span>
+                <span class="file-desc">Interactive demonstrations and presentations</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><span class="folder">📁 TL-App/</span>
+                <span class="file-desc">Interactive application suite</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   ├──</span><a href="https://fractonicmind.github.io/TernaryLogic/demos/TL-App/epistemic-hold.html" class="file demo" target="_blank">epistemic-hold.html</a>
+                <span class="file-desc">Watch AI think - Epistemic Hold visualization</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   ├──</span><a href="https://fractonicmind.github.io/TernaryLogic/demos/TL-App/" class="file demo" target="_blank">index.html</a>
+                <span class="file-desc">Main interactive demo application</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/demos/TL-App/readme.md" class="file" target="_blank">readme.md</a>
+                <span class="file-desc">Application documentation</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/demos/audience_engagement_strategies.md" class="file" target="_blank">audience_engagement_strategies.md</a>
+                <span class="file-desc">Presentation engagement techniques</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/demos/conference_presentation_materials.md" class="file" target="_blank">conference_presentation_materials.md</a>
+                <span class="file-desc">Conference presentation resources</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   └──</span><a href="https://fractonicmind.github.io/TernaryLogic/demos/roi_calculator.html" class="file demo" target="_blank">roi_calculator.html</a>
+                <span class="file-desc">ROI calculation tool for economic benefits</span>
+            </div>
+            
+            <!-- Docs Directory -->
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><span class="folder">📁 docs/</span>
+                <span class="file-desc">Comprehensive documentation</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/ACADEMIC_VALIDATION.md" class="file academic" target="_blank">ACADEMIC_VALIDATION.md</a>
+                <span class="file-desc">Peer review and validation protocols</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/EMERGENCY.md" class="file critical" target="_blank">EMERGENCY.md</a>
+                <span class="file-desc">Emergency procedures and crisis management</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/GENERAL_FAQ.md" class="file" target="_blank">GENERAL_FAQ.md</a>
+                <span class="file-desc">45 comprehensive questions and answers</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/LICENSE_FAQ.md" class="file" target="_blank">LICENSE_FAQ.md</a>
+                <span class="file-desc">30 licensing questions answered</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/MANDATORY.md" class="file critical" target="_blank">MANDATORY.md</a>
+                <span class="file-desc">CRITICAL: Safety guidelines (READ FIRST)</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/Mandatory_Research_Report.md" class="file critical" target="_blank">Mandatory_Research_Report.md</a>
+                <span class="file-desc">CRITICAL: Research validation report</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/QUICK_START.md" class="file essential" target="_blank">QUICK_START.md</a>
+                <span class="file-desc">60-minute implementation guide</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><span class="folder">📁 api/</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/api/complete_api_reference.md" class="file" target="_blank">complete_api_reference.md</a>
+                <span class="file-desc">Professional API documentation</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><span class="folder">📁 presentations/</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/presentations/executive_presentation.md" class="file" target="_blank">executive_presentation.md</a>
+                <span class="file-desc">Executive-level presentation materials</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/reproducibility_checklist.md" class="file" target="_blank">reproducibility_checklist.md</a>
+                <span class="file-desc">Research reproducibility guidelines</span>
+            </div>
+            
+            <!-- Examples Directory -->
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><span class="folder">📁 examples/</span>
+                <span class="file-desc">Implementation examples across economic domains</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/examples/central_banking_policy.py" class="file" target="_blank">central_banking_policy.py</a>
+                <span class="file-desc">Monetary policy decision support</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/examples/financial_trading_comprehensive.py" class="file" target="_blank">financial_trading_comprehensive.py</a>
+                <span class="file-desc">Advanced trading with Epistemic Hold</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/examples/quickstart_example.py" class="file essential" target="_blank">quickstart_example.py</a>
+                <span class="file-desc">Quick start implementation demonstration</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/examples/supply_chain_management.py" class="file" target="_blank">supply_chain_management.py</a>
+                <span class="file-desc">Operational decisions with uncertainty management</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/examples/ternary-logic-license-demo.md" class="file" target="_blank">ternary-logic-license-demo.md</a>
+                <span class="file-desc">Creative licensing demonstration</span>
+            </div>
+            
+            <!-- Memorial Directory -->
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><span class="folder">📁 memorial/</span>
+                <span class="file-desc">Legacy preservation and succession planning</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/MEMORIAL_FUND.md" class="file" target="_blank">MEMORIAL_FUND.md</a>
+                <span class="file-desc">Research fund and legacy continuation</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/SUCCESSION_CHARTER.md" class="file" target="_blank">SUCCESSION_CHARTER.md</a>
+                <span class="file-desc">Institutional stewardship framework</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   └──</span><span class="folder">📁 succession_plans/</span>
+                <span class="file-desc">Institutional partnership proposals</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│       ├──</span><span class="folder">📁 organizations/</span>
+                <span class="file-desc">International organization partnerships</span>
+            </div>
+            <div class="tree-item indent-4">
+                <span class="tree-icon">│       │   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/succession_plans/organizations/BIS_Implementation_Proposal.md" class="file academic" target="_blank">BIS_Implementation_Proposal.md</a>
+                <span class="file-desc">Bank for International Settlements proposal</span>
+            </div>
+            <div class="tree-item indent-4">
+                <span class="tree-icon">│       │   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/succession_plans/organizations/IMF_Implementation_Proposal.md" class="file academic" target="_blank">IMF_Implementation_Proposal.md</a>
+                <span class="file-desc">International Monetary Fund proposal</span>
+            </div>
+            <div class="tree-item indent-4">
+                <span class="tree-icon">│       │   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/succession_plans/organizations/World_Bank_Implementation_Proposal.md" class="file academic" target="_blank">World_Bank_Implementation_Proposal.md</a>
+                <span class="file-desc">World Bank implementation proposal</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│       └──</span><span class="folder">📁 universities/</span>
+                <span class="file-desc">University research partnerships</span>
+            </div>
+            <div class="tree-item indent-4">
+                <span class="tree-icon">│           ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/succession_plans/universities/Chicago_Research_Proposal.md" class="file academic" target="_blank">Chicago_Research_Proposal.md</a>
+                <span class="file-desc">University of Chicago research proposal</span>
+            </div>
+            <div class="tree-item indent-4">
+                <span class="tree-icon">│           ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/succession_plans/universities/LSE_Research_Proposal.md" class="file academic" target="_blank">LSE_Research_Proposal.md</a>
+                <span class="file-desc">London School of Economics proposal</span>
+            </div>
+            <div class="tree-item indent-4">
+                <span class="tree-icon">│           ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/succession_plans/universities/MIT_Research_Proposal.md" class="file academic" target="_blank">MIT_Research_Proposal.md</a>
+                <span class="file-desc">MIT research and implementation proposal</span>
+            </div>
+            <div class="tree-item indent-4">
+                <span class="tree-icon">│           └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/succession_plans/universities/Stanford_Research_Proposal.md" class="file academic" target="_blank">Stanford_Research_Proposal.md</a>
+                <span class="file-desc">Stanford commercialization proposal</span>
+            </div>
+            
+            <!-- Protection Directory -->
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><span class="folder">📁 protection/</span>
+                <span class="file-desc">Multi-layered protection architecture</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/protection/institutional-access.md" class="file" target="_blank">institutional-access.md</a>
+                <span class="file-desc">Controls for authorized financial institutions</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/protection/integrity-monitoring.md" class="file" target="_blank">integrity-monitoring.md</a>
+                <span class="file-desc">Real-time framework monitoring</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/protection/legacy-preservation.md" class="file" target="_blank">legacy-preservation.md</a>
+                <span class="file-desc">Memorial preservation coordination</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/protection/misuse-prevention.md" class="file" target="_blank">misuse-prevention.md</a>
+                <span class="file-desc">Active safeguards against harmful use</span>
+            </div>
+            
+            <!-- Research Directory -->
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><span class="folder">📁 research/</span>
+                <span class="file-desc">Academic research and validation</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><span class="folder">📁 academic_papers/</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/research/academic_papers/ternary_logic_economics_paper.md" class="file academic" target="_blank">ternary_logic_economics_paper.md</a>
+                <span class="file-desc">Comprehensive economic research paper</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   └──</span><span class="folder">📁 datasets/</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│       └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/research/datasets/tl-economic-scenario-database.md" class="file" target="_blank">tl-economic-scenario-database.md</a>
+                <span class="file-desc">25+ economic scenario test database</span>
+            </div>
+            
+            <!-- Src Directory -->
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><span class="folder">📁 src/</span>
+                <span class="file-desc">Core framework implementation</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   └──</span><span class="folder">📁 goukassian/</span>
+                <span class="file-desc">Goukassian framework package</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│       ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/src/goukassian/__init__.py" class="file" target="_blank">__init__.py</a>
+                <span class="file-desc">Package initialization</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│       ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/src/goukassian/core.py" class="file essential" target="_blank">core.py</a>
+                <span class="file-desc">Core framework engine</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│       ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/src/goukassian/engine.py" class="file essential" target="_blank">engine.py</a>
+                <span class="file-desc">Decision processing engine</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│       ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/src/goukassian/risk.py" class="file" target="_blank">risk.py</a>
+                <span class="file-desc">Risk assessment modules</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│       ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/src/goukassian/thresholds.py" class="file" target="_blank">thresholds.py</a>
+                <span class="file-desc">Threshold management system</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│       └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/src/goukassian/uncertainty.py" class="file" target="_blank">uncertainty.py</a>
+                <span class="file-desc">Uncertainty detection and analysis</span>
+            </div>
+            
+            <!-- Tests Directory -->
+            <div class="tree-item indent-1">
+                <span class="tree-icon">├──</span><span class="folder">📁 tests/</span>
+                <span class="file-desc">Comprehensive testing framework</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/tests/README.md" class="file" target="_blank">README.md</a>
+                <span class="file-desc">Testing documentation and metrics</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/tests/TEST_INDEX.md" class="file" target="_blank">TEST_INDEX.md</a>
+                <span class="file-desc">Complete test index and organization</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/tests/conftest.py" class="file" target="_blank">conftest.py</a>
+                <span class="file-desc">Test configuration and fixtures</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><span class="folder">📁 fixtures/</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/tests/fixtures/test_utilities.py" class="file" target="_blank">test_utilities.py</a>
+                <span class="file-desc">Testing utility functions</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><span class="folder">📁 integration/</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/tests/integration/test_financial_trading.py" class="file" target="_blank">test_financial_trading.py</a>
+                <span class="file-desc">Financial trading integration tests</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/tests/integration/test_monetary_policy.py" class="file" target="_blank">test_monetary_policy.py</a>
+                <span class="file-desc">Monetary policy integration tests</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><span class="folder">📁 performance/</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/tests/performance/test_execution_speed.py" class="file" target="_blank">test_execution_speed.py</a>
+                <span class="file-desc">Performance and speed benchmarks</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><span class="folder">📁 scenarios/</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/tests/scenarios/test_scenario_database.py" class="file" target="_blank">test_scenario_database.py</a>
+                <span class="file-desc">Economic scenario testing</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   ├──</span><span class="folder">📁 unit/</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/tests/unit/test_core_engine.py" class="file" target="_blank">test_core_engine.py</a>
+                <span class="file-desc">Core engine unit tests</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/tests/unit/test_risk_assessment.py" class="file" target="_blank">test_risk_assessment.py</a>
+                <span class="file-desc">Risk assessment testing</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/tests/unit/test_state_transitions.py" class="file" target="_blank">test_state_transitions.py</a>
+                <span class="file-desc">State transition logic tests</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/tests/unit/test_threshold_management.py" class="file" target="_blank">test_threshold_management.py</a>
+                <span class="file-desc">Threshold management tests</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│   │   └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/tests/unit/test_uncertainty_detection.py" class="file" target="_blank">test_uncertainty_detection.py</a>
+                <span class="file-desc">Uncertainty detection tests</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">│   └──</span><span class="folder">📁 validation/</span>
+            </div>
+            <div class="tree-item indent-3">
+                <span class="tree-icon">│       └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/tests/validation/test_backtesting_results.py" class="file" target="_blank">test_backtesting_results.py</a>
+                <span class="file-desc">Backtesting validation and results</span>
+            </div>
+            
+            <!-- Theory Directory -->
+            <div class="tree-item indent-1">
+                <span class="tree-icon">└──</span><span class="folder">📁 theory/</span>
+                <span class="file-desc">Theoretical foundations</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">    ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/theory/case-studies.md" class="file" target="_blank">case-studies.md</a>
+                <span class="file-desc">Real-world economic applications</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">    ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/theory/core-principles.md" class="file essential" target="_blank">core-principles.md</a>
+                <span class="file-desc">Fundamental TL principles and Epistemic Hold</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">    ├──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/theory/economic-foundations.md" class="file academic" target="_blank">economic-foundations.md</a>
+                <span class="file-desc">Deep academic grounding from classical to behavioral economics</span>
+            </div>
+            <div class="tree-item indent-2">
+                <span class="tree-icon">    └──</span><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/theory/philosophical-foundations.md" class="file academic" target="_blank">philosophical-foundations.md</a>
+                <span class="file-desc">From Hayek to modern decision theory</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-info">
+        <h3>Contact Information</h3>
+        <div class="contact-grid">
+            <div>
+                <strong>Creator:</strong><br>
+                Lev Goukassian<br>
+                ORCID: 0009-0006-5966-1243<br>
+                leogouk@gmail.com
+            </div>
+            <div>
+                <strong>Economic Research:</strong><br>
+                economic@tl-goukassian.org
+            </div>
+            <div>
+                <strong>Technical Support:</strong><br>
+                technical@tl-goukassian.org
+            </div>
+            <div>
+                <strong>Successor Contact:</strong><br>
+                support@tl-goukassian.org<br>
+                <em>See Succession Charter</em>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
