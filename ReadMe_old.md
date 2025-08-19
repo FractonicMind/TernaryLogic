@@ -3,9 +3,9 @@
 **Epistemic Hold Technology for Economic Decision-Making**
 
 [![Mandatory Reading](https://img.shields.io/badge/MANDATORY-Read%20First-red?style=flat-square&labelColor=darkred)](docs/MANDATORY.md)
-[![Try Interactive Demo](https://img.shields.io/badge/🚀%20Interactive%20Demo-Live%20Now-blue?style=flat-square&labelColor=yellow&color=0057B7)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/)
-[![Epistemic Hold Demo](https://img.shields.io/badge/🧠%20Epistemic%20Hold-Watch%20AI%20Think-amber?style=flat-square&labelColor=ff9800&color=ffc107)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/epistemic-hold.html)
-[![Interview](https://img.shields.io/badge/🎙️%20Interview-6:40%20Audio-ff69b4.svg)](https://fractonicmind.github.io/TernaryLogic/audio/audio-player.html)
+[![Try Interactive Demo](https://img.shields.io/badge/%20Interactive%20Demo-Live%20Now-blue?style=flat-square&labelColor=yellow&color=0057B7)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/)
+[![Epistemic Hold Demo](https://img.shields.io/badge/%20Epistemic%20Hold-Watch%20AI%20Think-amber?style=flat-square&labelColor=ff9800&color=ffc107)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/epistemic-hold.html)
+[![Interview](https://img.shields.io/badge/%20Interview-6:40%20Audio-ff69b4.svg)](https://fractonicmind.github.io/TernaryLogic/audio/audio-player.html)
 [![Examples](https://img.shields.io/badge/Examples-Updated-success.svg)](examples/)
 [![Economic Paper](https://img.shields.io/badge/Economic%20Paper-Published-blue.svg)](research/academic_papers/ternary_logic_economics_paper.md)
 [![Framework Version](https://img.shields.io/badge/Framework-TL%20v1.0-purple.svg)](src/goukassian/)
@@ -54,17 +54,17 @@ Ternary Logic (TL) revolutionizes economic decision-making by introducing a thir
 
 ### The Three States of Economic Reasoning
 
-- **+1 (Proceed)**: Execute with confidence when signals align and uncertainty is manageable
-- **0 (Epistemic Hold)**: Pause for deliberation when market complexity exceeds confidence thresholds
-- **-1 (Halt)**: Stop or reject when significant risks or contradictory signals are detected
+- __+1 (Proceed)__ Execute with confidence when signals align and uncertainty is manageable
+- __0 (Epistemic Hold)__ Pause for deliberation when market complexity exceeds confidence thresholds
+- __-1 (Halt)__ Stop or reject when significant risks or contradictory signals are detected
 
 ---
 
-## ⚠️ Mandatory - Read First
+##  Mandatory - Read First
 
 **CRITICAL**: Before implementing or using the Ternary Logic Framework, you **MUST** understand the fundamental principles and proper application of the three states. Misuse or misunderstanding can lead to significant economic decision errors.
 
-### 📋 [**Read the Mandatory Guidelines →**](docs/MANDATORY.md)
+###  [**Read the Mandatory Guidelines →**](docs/MANDATORY.md)
 
 This framework is designed for **critical economic decision-making** where incorrect implementation could result in:
 - Financial losses from improper state classification
@@ -78,7 +78,7 @@ This framework is designed for **critical economic decision-making** where incor
 
 ---
 
-## 🎙️ Listen: Ternary Logic Explained
+##  Listen: Ternary Logic Explained
 
 ### **Exclusive Interview: Understanding the Epistemic Hold**
 
@@ -86,7 +86,7 @@ This framework is designed for **critical economic decision-making** where incor
 
 [![Listen to TL Interview](https://img.shields.io/badge/▶%20Play%20Interview-6%20min%2040%20sec-0A9396?style=for-the-badge&logo=spotify&logoColor=white)](https://fractonicmind.github.io/TernaryLogic/audio/audio-player.html)
 
-**[🎧 Click to Listen: The Ternary Logic Framework Interview](https://fractonicmind.github.io/TernaryLogic/audio/audio-player.html)**
+**[ Click to Listen: The Ternary Logic Framework Interview](https://fractonicmind.github.io/TernaryLogic/audio/audio-player.html)**
 
 *A compelling conversation exploring how Ternary Logic transforms economic decision-making*
 
@@ -94,11 +94,11 @@ This framework is designed for **critical economic decision-making** where incor
 
 In this **6-minute 40-second interview**, discover:
 
-📊 **Core Concepts**: How the three states (PROCEED/EPISTEMIC_HOLD/HALT) revolutionize decision-making  
-⏸️ **The Epistemic Hold**: Why pausing for deliberation creates superior outcomes  
-💹 **Real Applications**: From high-frequency trading to monetary policy  
-🧠 **The Philosophy**: Moving beyond binary thinking in complex economic systems  
-🌍 **Global Impact**: How TL creates more resilient financial systems  
+ **Core Concepts**: How the three states (PROCEED/EPISTEMIC_HOLD/HALT) revolutionize decision-making  
+⏸ **The Epistemic Hold**: Why pausing for deliberation creates superior outcomes  
+ **Real Applications**: From high-frequency trading to monetary policy  
+ **The Philosophy**: Moving beyond binary thinking in complex economic systems  
+ **Global Impact**: How TL creates more resilient financial systems  
 
 > *"The world is not binary. And the future will not be either."* — Featured in the interview
 
@@ -117,65 +117,65 @@ In this **6-minute 40-second interview**, discover:
 ### The Problem with Binary Economic Decisions
 
 Current economic systems force complex financial decisions into binary choices:
-- ✅ Buy vs. ❌ Sell
+-  Buy vs.  Sell
 - Fast execution prioritized over thoughtful analysis
 - Risk conflicts hidden rather than surfaced
 - No mechanism for systematic uncertainty acknowledgment
 
-💰 **[Calculate Your ROI →](https://fractonicmind.github.io/TernaryLogic/demos/roi_calculator.html)** - See what binary thinking costs you
+ **[Calculate Your ROI →](https://fractonicmind.github.io/TernaryLogic/demos/roi_calculator.html)** - See what binary thinking costs you
 
 # TL in Action: The Epistemic Hold at Work
 
 *Stepping into this repository feels like entering a trading floor—only now the algorithms are thinking twice.*
 
-## ## 🧠 NEW: Epistemic Hold™ - Watch AI Think in Real-Time
+## ##  NEW: Epistemic Hold™ - Watch AI Think in Real-Time
 
-[![Epistemic Hold Demo](https://img.shields.io/badge/🧠%20Epistemic%20Hold%20Demo-Watch%20AI%20Think-amber?style=for-the-badge&labelColor=ff9800&color=ffc107)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/epistemic-hold.html)
+[![Epistemic Hold Demo](https://img.shields.io/badge/%20Epistemic%20Hold%20Demo-Watch%20AI%20Think-amber?style=for-the-badge&labelColor=ff9800&color=ffc107)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/epistemic-hold.html)
 
 **The world's first visualization of machine hesitation as a feature, not a bug.**
 
 Experience the revolutionary Epistemic Hold UI where you can actually **see** the Epistemic Hold in action. When faced with complexity, the system doesn't freeze or guess—it displays a gentle amber heartbeat, showing it's thinking, not lagging.
 
 ### What You'll See:
-- **🟡 The Amber Heartbeat**: A pulsing animation that says "I'm thinking carefully about your money"
-- **📊 Thought Trace**: Expandable panel showing exactly WHY the system paused
-- **✅⚪❌ Three-State Badges**: Visual outcomes (Proceed/Hold/Halt) with full reasoning
-- **💼 Real Scenarios**: Trading decisions, merger analysis, monetary policy, supply chain crises
+- __🟡 The Amber Heartbeat__ A pulsing animation that says "I'm thinking carefully about your money"
+- __Thought Trace__ Expandable panel showing exactly WHY the system paused
+- __Three-State Badges__ Visual outcomes (Proceed/Hold/Halt) with full reasoning
+- __Real Scenarios__ Trading decisions, merger analysis, monetary policy, supply chain crises
 
 This isn't just a demo—it's a glimpse into the future where AI systems are transparent partners, not black boxes. Every pause tells you: *"I detected something complex and I'm being careful with your decision."*
 
-**[🧠 Experience the Epistemic Hold →](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/epistemic-hold.html)**
+**[ Experience the Epistemic Hold →](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/epistemic-hold.html)**
 
 > *"For the first time, uncertainty becomes beautiful."* — The Epistemic Hold makes machine thinking visible, trustworthy, and profoundly human.
 
 **Perfect for:**
-- 🎓 **Academic presentations** - Live demos during conferences
-- 🏢 **Professional training** - Interactive decision education  
-- 🔬 **Research validation** - Proof-of-concept for TL deployment
-- 🌍 **Public engagement** - Making economic complexity accessible to everyone
+-  __Academic presentations__ - Live demos during conferences
+-  __Professional training__ - Interactive decision education  
+-  __Research validation__ - Proof-of-concept for TL deployment
+-  __Public engagement__ - Making economic complexity accessible to everyone
 
-💰 **[Calculate Your ROI →](demos/roi_calculator.html)** - See what binary thinking costs you
+ **[Calculate Your ROI →](demos/roi_calculator.html)** - See what binary thinking costs you
 ---
 
 ## The Heart of TL: Productive Tension
 
 At its core, TL transforms what most economic systems see as a bug into a feature: **hesitation**. Instead of rushing toward immediate resolution, TL embraces *productive tension* when facing market complexity. This isn't indecision—it's wisdom.
 
-## 🎯 BREAKTHROUGH: Proven Results
+##  BREAKTHROUGH: Proven Results
 
 Multiple backtesting studies have demonstrated TL's effectiveness across economic domains:
 
-**📊 Proven Results**
+** Proven Results**
 
 *Based on backtesting and simulation across multiple domains*
 
 | Metric | Financial Trading | Supply Chain Management | Monetary Policy |
 | :---- | :---- | :---- | :---- |
-| **Forecasting Errors** | 📉 **35% reduction** | N/A | 📈 **28% improvement** |
-| **Capital Efficiency** | 📈 **40% Sharpe Ratio** | 📈 **22% optimization** | 📉 **19% volatility reduction** |
-| **Decision Errors** | 📉 **35% fewer** | 📉 **18% fewer** | N/A |
-| **Recovery Time** | N/A | 📉 **31% faster** | N/A |
-| **Epistemic Hold Rate** | ✅ **23% of decisions** | ✅ **15% of decisions** | ✅ **17% of decisions** |
+| **Forecasting Errors** |  **35% reduction** | N/A |  **28% improvement** |
+| **Capital Efficiency** |  **40% Sharpe Ratio** |  **22% optimization** |  **19% volatility reduction** |
+| **Decision Errors** |  **35% fewer** |  **18% fewer** | N/A |
+| **Recovery Time** | N/A |  **31% faster** | N/A |
+| **Epistemic Hold Rate** |  **23% of decisions** |  **15% of decisions** |  **17% of decisions** |
 
 *This represents the first documented framework for measuring the quality of economic uncertainty management.*
 
@@ -218,14 +218,14 @@ Market: "Strong GDP growth, low inflation, supportive Fed policy"
 TL: Proceeds with risk-on positioning
 ```
 
-### ⏸️ Epistemic Hold (Uncertainty)
+### ⏸ Epistemic Hold (Uncertainty)
 Complex market situations requiring deliberation:
 ```
 Market: "Mixed employment data, geopolitical tensions, earnings season approaching"
 TL: Holds to gather additional confirmation signals
 ```
 
-### 🔴 Halt (High Risk)
+###  Halt (High Risk)
 Dangerous scenarios where protective action is appropriate:
 ```
 Market: "Flash crash conditions, liquidity crisis indicators, system failures"
@@ -270,7 +270,7 @@ print(result.reasoning)
 
 ## Quick Start
 
-📚 **[Quick Start Guide →](docs/QUICK_START.md)** - Implement TL in 60 minutes
+ **[Quick Start Guide →](docs/QUICK_START.md)** - Implement TL in 60 minutes
 
 ### Installation
 
@@ -330,7 +330,7 @@ Questions for analysis:
 
 ## Real-World Applications
 
-### 📈 Financial Trading
+###  Financial Trading
 
 ```python
 # Trading decision support
@@ -348,7 +348,7 @@ result = evaluator.evaluate(
 
 TL helps navigate complex trading decisions by surfacing tensions between momentum, risk management, and market conditions.
 
-### 🏦 Monetary Policy
+###  Monetary Policy
 
 ```python
 # Central banking decisions
@@ -366,7 +366,7 @@ result = evaluator.evaluate(
 
 TL balances competing economic objectives, recognizing when policymakers should gather additional data before major decisions.
 
-### 🚚 Supply Chain Management
+###  Supply Chain Management
 
 ```python
 # Operational decisions
@@ -386,13 +386,13 @@ TL guides operational decisions by highlighting trade-offs between cost optimiza
 
 ---
 
-## Theoretical Foundation 📚
+## Theoretical Foundation 
 
 The TL framework is built on a robust theoretical foundation that bridges economic philosophy with practical implementation:
 
 ### **Core Theory Documents**
 
-#### 📖 **[Economic Foundations](theory/economic-foundations.md)**
+####  **[Economic Foundations](theory/economic-foundations.md)**
 Comprehensive academic grounding connecting TL to established economic theories:
 - Knight's distinction between risk and uncertainty
 - Hayek's knowledge problem and spontaneous order
@@ -400,7 +400,7 @@ Comprehensive academic grounding connecting TL to established economic theories:
 - Behavioral economics and bounded rationality
 - Modern market microstructure theory
 
-#### 🎯 **[Core Principles](theory/core-principles.md)**
+####  **[Core Principles](theory/core-principles.md)**
 The fundamental principles that guide TL implementation:
 - The Three States: Proceed (+1), Epistemic Hold (0), Halt (-1)
 - Market complexity as information, not noise
@@ -408,7 +408,7 @@ The fundamental principles that guide TL implementation:
 - Human-algorithm partnership over pure automation
 - Signal pluralism and context sensitivity
 
-#### 🤔 **[Philosophical Foundations](theory/philosophical-foundations.md)**
+####  **[Philosophical Foundations](theory/philosophical-foundations.md)**
 Deep philosophical exploration of TL's intellectual roots:
 - Austrian economics and market process theory
 - Reflexivity and market philosophy (Soros)
@@ -416,7 +416,7 @@ Deep philosophical exploration of TL's intellectual roots:
 - Adaptive markets hypothesis (Lo)
 - Information theory and decision-making under uncertainty
 
-#### 📊 **[Case Studies](theory/case-studies.md)**
+####  **[Case Studies](theory/case-studies.md)**
 Real-world applications demonstrating TL across economic domains:
 - High-frequency trading decisions
 - Central banking policy dilemmas
@@ -426,34 +426,34 @@ Real-world applications demonstrating TL across economic domains:
 
 ---
 
-## Protection and Risk Management 🛡️
+## Protection and Risk Management 
 
 ### Comprehensive Protection Architecture
 
 While TL is designed to enhance economic decision-making, we've built robust safeguards against potential misuse:
 
-#### 📋 **[Institutional Access Controls](protection/institutional-access.md)**
+####  **[Institutional Access Controls](protection/institutional-access.md)**
 - Pre-authorized financial institutions with ethical track records
 - Community review process for new access requests
 - Self-organizing governance structures
 - Annual ethical use reporting requirements
 - Transparent registry of authorized implementations
 
-#### 🔍 **[Integrity Monitoring](protection/integrity-monitoring.md)**
+####  **[Integrity Monitoring](protection/integrity-monitoring.md)**
 - Real-time monitoring of TL implementations
 - Automated detection of framework violations
 - Community-driven oversight mechanisms
 - Regular audits of high-impact deployments
 - Whistleblower protections for reporting misuse
 
-#### 💝 **[Legacy Preservation](protection/legacy-preservation.md)**
+####  **[Legacy Preservation](protection/legacy-preservation.md)**
 - Master coordination document for memorial preservation
 - Ensures Lev Goukassian's vision remains intact
 - Guidelines for respectful use of the framework
 - Memorial fund governance and oversight
 - Long-term sustainability planning
 
-#### 🚨 **[Misuse Prevention](protection/misuse-prevention.md)**
+####  **[Misuse Prevention](protection/misuse-prevention.md)**
 - Active prevention of market manipulation
 - Safeguards against exploitative implementations
 - Education-first approach to violations
@@ -471,19 +471,19 @@ While TL is designed to enhance economic decision-making, we've built robust saf
 
 ## Framework Testing & Validation
 
-### 🧪 Comprehensive Scenario Database
+###  Comprehensive Scenario Database
 
 The TL framework is rigorously tested against a comprehensive database of **25+ real-world economic scenarios** across 8 professional domains:
 
-**📊 Testing Domains:**
-- **Financial Trading**: High-frequency decisions with conflicting technical signals
-- **Monetary Policy**: Systemic decisions with competing economic mandates  
-- **Supply Chain**: Operational strategies balancing cost vs. risk
-- **Investment Banking**: High-stakes transactions with fiduciary considerations
-- **Corporate Finance**: Strategic capital allocation and financing decisions
-- **Risk Management**: Protecting downside while enabling business objectives
-- **Real Estate**: Illiquid, long-term capital deployment decisions
-- **International Finance**: Cross-border transactions with currency/regulatory complexity
+** Testing Domains:**
+- __Financial Trading__ High-frequency decisions with conflicting technical signals
+- __Monetary Policy__ Systemic decisions with competing economic mandates  
+- __Supply Chain__ Operational strategies balancing cost vs. risk
+- __Investment Banking__ High-stakes transactions with fiduciary considerations
+- __Corporate Finance__ Strategic capital allocation and financing decisions
+- __Risk Management__ Protecting downside while enabling business objectives
+- __Real Estate__ Illiquid, long-term capital deployment decisions
+- __International Finance__ Cross-border transactions with currency/regulatory complexity
 
 ### Scenario Examples
 
@@ -494,14 +494,14 @@ The TL framework is rigorously tested against a comprehensive database of **25+ 
 TL Response: +1 (Proceed) - Low uncertainty, clear opportunity
 ```
 
-**⏸️ Epistemic Hold (0) Scenarios:**
+**⏸ Epistemic Hold (0) Scenarios:**
 ```python
 # Conflicting market signals  
 "Strong momentum indicators but negative volume divergence during earnings week"
 TL Response: 0 (Hold) - Conflicting signals require additional analysis
 ```
 
-**🔴 Halt (-1) Scenarios:**
+** Halt (-1) Scenarios:**
 ```python
 # Market instability
 "Flash crash conditions with 5% decline in 10 minutes, no clear catalyst"
@@ -511,12 +511,12 @@ TL Response: -1 (Halt) - Systematic instability requires defensive positioning
 ### Validation Metrics
 
 **Framework Performance Targets:**
-- **Epistemic Hold Rate**: 15-25% of decisions (optimal uncertainty management)
-- **State Prediction Accuracy**: >90% correct classification
-- **False Positive Rate**: <5% (unnecessary holds)
-- **False Negative Rate**: <2% (missed risk situations)
+- __Epistemic Hold Rate__ 15-25% of decisions (optimal uncertainty management)
+- __State Prediction Accuracy__ >90% correct classification
+- __False Positive Rate__ <5% (unnecessary holds)
+- __False Negative Rate__ <2% (missed risk situations)
 
-**📁 [View Complete Scenario Database](research/datasets/tl-economic-scenario-database.md)** - 25+ scenarios with detailed TL reasoning and expected outcomes
+** [View Complete Scenario Database](research/datasets/tl-economic-scenario-database.md)** - 25+ scenarios with detailed TL reasoning and expected outcomes
 
 This systematic testing approach validates TL's ability to distinguish between clear decisions, uncertain situations requiring deliberation, and high-risk scenarios demanding protective action.
 
@@ -576,24 +576,24 @@ class DomainSpecificDetector(RiskDetector):
 ```
 ---
 
-## 🧪 Comprehensive Testing Suite
+##  Comprehensive Testing Suite
 
 The TL framework includes a **rigorous testing suite** ensuring reliability across all economic decision-making domains:
 
 ### Testing Metrics
-- **✅ 53 Test Cases** - All passing (100% success rate)
-- **📊 81% Code Coverage** - Comprehensive validation across components
-- **⚡ 1.39s Execution** - Lightning-fast test suite
-- **🎯 6 Test Categories** - Unit, Integration, Scenarios, Performance, Validation
+- __53 Test Cases__ - All passing (100% success rate)
+- __81% Code Coverage__ - Comprehensive validation across components
+- __1.39s Execution__ - Lightning-fast test suite
+- __6 Test Categories__ - Unit, Integration, Scenarios, Performance, Validation
 
 ### Test Coverage by Domain
 | Domain | Tests | Coverage | Status |
 |--------|-------|----------|--------|
-| **Core Engine** | 31 | Decision logic, thresholds, states | ✅ Complete |
-| **Financial Trading** | 4 | Market data, position sizing, risk | ✅ Complete |
-| **Monetary Policy** | 4 | Economic indicators, optimization | ✅ Complete |
-| **Scenarios** | 3 | Real-world validation | ✅ Complete |
-| **Performance** | 3 | Speed benchmarks (<1ms decisions) | ✅ Exceeds |
+| **Core Engine** | 31 | Decision logic, thresholds, states |  Complete |
+| **Financial Trading** | 4 | Market data, position sizing, risk |  Complete |
+| **Monetary Policy** | 4 | Economic indicators, optimization |  Complete |
+| **Scenarios** | 3 | Real-world validation |  Complete |
+| **Performance** | 3 | Speed benchmarks (<1ms decisions) |  Exceeds |
 
 ### Running Tests
 ```bash
@@ -612,53 +612,53 @@ pytest tests/unit/
 
 This repository contains a comprehensive ecosystem for intelligent economic decision-making:
 
-### 📚 **Theoretical Foundation** ✅ COMPLETE
-- **`theory/economic-foundations.md`** - Deep academic grounding from classical to behavioral economics
-- **`theory/philosophical-foundations.md`** - Philosophical roots from Hayek to Taleb
-- **`theory/core-principles.md`** - Fundamental TL principles and Epistemic Hold implementation
-- **`theory/case-studies.md`** - Real-world applications across economic domains
+###  **Theoretical Foundation**  COMPLETE
+- __`theory/economic-foundations.md`__ - Deep academic grounding from classical to behavioral economics
+- __`theory/philosophical-foundations.md`__ - Philosophical roots from Hayek to Taleb
+- __`theory/core-principles.md`__ - Fundamental TL principles and Epistemic Hold implementation
+- __`theory/case-studies.md`__ - Real-world applications across economic domains
 
-### 💻 **Technical Implementation** ✅ UPDATED
-- **`src/goukassian/core.py`** - Production-ready TL framework with economic focus
-- **`src/goukassian/__init__.py`** - Package initialization
-- **`setup.py`** - Professional package installation as 'ternary-logic'
-- **`requirements.txt`** - Minimal dependencies for maximum accessibility
-- **`LICENSE`** - MIT License with strong ethical use requirements
+###  **Technical Implementation**  UPDATED
+- __`src/goukassian/core.py`__ - Production-ready TL framework with economic focus
+- __`src/goukassian/__init__.py`__ - Package initialization
+- __`setup.py`__ - Professional package installation as 'ternary-logic'
+- __`requirements.txt`__ - Minimal dependencies for maximum accessibility
+- __`LICENSE`__ - MIT License with strong ethical use requirements
 
-### 🛡️ **Protection Architecture** ✅ COMPLETE
-- **`protection/institutional-access.md`** - Controls for authorized financial institutions
-- **`protection/misuse-prevention.md`** - Active safeguards against harmful use
-- **`protection/integrity-monitoring.md`** - Real-time framework monitoring systems
-- **`protection/legacy-preservation.md`** - Master coordination for memorial preservation
+###  **Protection Architecture**  COMPLETE
+- __`protection/institutional-access.md`__ - Controls for authorized financial institutions
+- __`protection/misuse-prevention.md`__ - Active safeguards against harmful use
+- __`protection/integrity-monitoring.md`__ - Real-time framework monitoring systems
+- __`protection/legacy-preservation.md`__ - Master coordination for memorial preservation
 
-### 💝 **Memorial Preservation System** ✅ ENHANCED
-- **`memorial/MEMORIAL_FUND.md`** - Complete operational framework for economic research funding
-- **`memorial/SUCCESSION_CHARTER.md`** - Institutional stewardship plan
+###  **Memorial Preservation System**  ENHANCED
+- __`memorial/MEMORIAL_FUND.md`__ - Complete operational framework for economic research funding
+- __`memorial/SUCCESSION_CHARTER.md`__ - Institutional stewardship plan
 
-### 🎯 **Practical Examples** ✅ FULLY UPDATED TO TL
-- **`examples/quickstart_example.py`** - Quick start with Epistemic Hold demonstration
-- **`examples/financial_trading_comprehensive.py`** - Advanced trading with Epistemic Hold preventing flash crashes
-- **`examples/central_banking_policy.py`** - Monetary policy implementation
-- **`examples/supply_chain_management.py`** - Graduated response to disruptions
+###  **Practical Examples**  FULLY UPDATED TO TL
+- __`examples/quickstart_example.py`__ - Quick start with Epistemic Hold demonstration
+- __`examples/financial_trading_comprehensive.py`__ - Advanced trading with Epistemic Hold preventing flash crashes
+- __`examples/central_banking_policy.py`__ - Monetary policy implementation
+- __`examples/supply_chain_management.py`__ - Graduated response to disruptions
 
-### 📰 **Academic Publications** ✅ 
-- **`research/academic_papers/ternary_logic_economics_paper.md`** - Comprehensive academic paper on TL in economic decision-making with empirical validation across financial markets, supply chain, and monetary policy
+###  **Academic Publications**  
+- __`research/academic_papers/ternary_logic_economics_paper.md`__ - Comprehensive academic paper on TL in economic decision-making with empirical validation across financial markets, supply chain, and monetary policy
 
-### 📖 **Documentation** ✅ UPDATED
-- **`docs/api/complete_api_reference.md`** - Complete technical documentation for TL
-- **`docs/presentations/executive_presentation.md`** - Implementation patterns and best practices
+###  **Documentation**  UPDATED
+- __`docs/api/complete_api_reference.md`__ - Complete technical documentation for TL
+- __`docs/presentations/executive_presentation.md`__ - Implementation patterns and best practices
 
-### 🎤 **Presentation & Engagement** ✅ NEW
-- **`demos/conference_presentation_materials.md`** - Ready-to-use conference presentations
-- **`demos/audience_engagement_strategies.md`** - Techniques for creating advocates
-- **`demos/TL-App/`** - Live interactive demonstration
+###  **Presentation & Engagement**  NEW
+- __`demos/conference_presentation_materials.md`__ - Ready-to-use conference presentations
+- __`demos/audience_engagement_strategies.md`__ - Techniques for creating advocates
+- __`demos/TL-App/`__ - Live interactive demonstration
 
-### 📊 Executive Materials 
-- **[Executive Presentation](docs/presentations/executive_presentation.md)** - Complete C-suite presentation with ROI calculations, implementation roadmap, and compelling business case for Ternary Logic adoption
+###  Executive Materials 
+- __[Executive Presentation](docs/presentations/executive_presentation.md)__ - Complete C-suite presentation with ROI calculations, implementation roadmap, and compelling business case for Ternary Logic adoption
 
-### 🤝 **Community Resources**
-- **`CONTRIBUTING.md`** - Comprehensive contribution guidelines
-- **`GOVERNANCE.md`** - Project governance and decision-making processes
+###  **Community Resources**
+- __`CONTRIBUTING.md`__ - Comprehensive contribution guidelines
+- __`GOVERNANCE.md`__ - Project governance and decision-making processes
 
 ---
 
@@ -666,18 +666,18 @@ This repository contains a comprehensive ecosystem for intelligent economic deci
 
 ### Research Status
 This framework is documented in academic research:
-- **Paper**: "Ternary Logic: Implementing Epistemic Hesitation in Economic Systems"
-- **Author**: Lev Goukassian (ORCID: [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243))
-- **Domain**: Economic Decision Sciences
-- **Applications**: Financial markets, monetary policy, risk management
+- __Paper__ "Ternary Logic: Implementing Epistemic Hesitation in Economic Systems"
+- __Author__ Lev Goukassian (ORCID: [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243))
+- __Domain__ Economic Decision Sciences
+- __Applications__ Financial markets, monetary policy, risk management
 
 ### Philosophical Foundations
 
 TL draws from diverse economic traditions:
-- **Behavioral Economics**: Recognition of cognitive limitations and uncertainty
-- **Austrian Economics**: Emphasis on incomplete information and market process
-- **Keynesian Economics**: Importance of expectations and confidence in decisions
-- **Modern Portfolio Theory**: Quantitative risk management and optimization
+- __Behavioral Economics__ Recognition of cognitive limitations and uncertainty
+- __Austrian Economics__ Emphasis on incomplete information and market process
+- __Keynesian Economics__ Importance of expectations and confidence in decisions
+- __Modern Portfolio Theory__ Quantitative risk management and optimization
 
 ### Citation
 
@@ -702,47 +702,47 @@ TL draws from diverse economic traditions:
 
 ## Community and Collaboration
 
-### 🌍 Join the Movement
+###  Join the Movement
 
 We're building a global community around intelligent economic decision-making:
 
-- **⭐ Star this repository** to show support for thoughtful economics
-- **💬 Create discussions** via GitHub Issues for questions and ideas
-- **🐛 Report issues** to improve the framework
-- **🤝 Contribute** following our [contribution guidelines](CONTRIBUTING.md)
+- __⭐ Star this repository__ to show support for thoughtful economics
+- __Create discussions__ via GitHub Issues for questions and ideas
+- __Report issues__ to improve the framework
+- __Contribute__ following our [contribution guidelines](CONTRIBUTING.md)
 
-### 👥 Who's Using TL?
+###  Who's Using TL?
 
 **Researchers**: Studying economic decision-making and uncertainty management
 **Traders**: Building more intelligent trading systems  
 **Economists**: Exploring computational approaches to market analysis
 **Institutions**: Implementing systematic risk management
 
-## 🏛️ Pre-Authorized Institutional Partners
+##  Pre-Authorized Institutional Partners
 
 ### Global Implementation Network
 
 The TL framework has established **pre-authorized implementation partnerships** with leading academic and policy institutions worldwide:
 
-#### **🎓 Universities** (Research & Development)
-- **🇺🇸 MIT** - Technical implementation and computational methods
-- **🇺🇸 Stanford** - Commercialization and Silicon Valley integration  
-- **🇺🇸 University of Chicago** - Theoretical development and Nobel-track research
-- **🇬🇧 London School of Economics** - Global policy implementation and regulatory frameworks
+#### ** Universities** (Research & Development)
+- __MIT__ - Technical implementation and computational methods
+- __Stanford__ - Commercialization and Silicon Valley integration  
+- __University of Chicago__ - Theoretical development and Nobel-track research
+- __London School of Economics__ - Global policy implementation and regulatory frameworks
 
-#### **🌍 International Organizations** (Policy Implementation)
-- **🏦 Bank for International Settlements (BIS)** - Central bank coordination and crisis prevention
-- **🌐 World Bank** - Development finance and poverty reduction applications
-- **💱 International Monetary Fund (IMF)** - Adaptive programs and international stability
+#### ** International Organizations** (Policy Implementation)
+- __Bank for International Settlements (BIS)__ - Central bank coordination and crisis prevention
+- __World Bank__ - Development finance and poverty reduction applications
+- __International Monetary Fund (IMF)__ - Adaptive programs and international stability
 
 ### **Implementation Status**
 
 Each partner institution has **dedicated succession plans** outlining specific roles in advancing TL theory and practice:
-- **Academic Partners**: Research, education, and theoretical advancement
-- **Policy Partners**: Real-world implementation and international coordination
-- **Combined Network**: Ensuring TL's global adoption and responsible use
+- __Academic Partners__ Research, education, and theoretical advancement
+- __Policy Partners__ Real-world implementation and international coordination
+- __Combined Network__ Ensuring TL's global adoption and responsible use
 
-**📋 [View Complete Succession Plans →](memorial/succession_plans/)**
+** [View Complete Succession Plans →](memorial/succession_plans/)**
 
 > *These partnerships ensure the Ternary Logic Framework will continue advancing intelligent economic decision-making long into the future, honoring Lev Goukassian's vision of thoughtful, systematic approaches to uncertainty.*
 ---
@@ -766,9 +766,9 @@ This framework represents more than code—it embodies Lev Goukassian's final co
 
 Consider contributing to the **Lev Goukassian Memorial Fund for Economic Research**:
 
-- **Purpose**: Supporting continued research in intelligent economic decision-making
-- **Impact**: Scholarships, research grants, and educational initiatives
-- **Legacy**: Ensuring Lev's vision continues to benefit future generations
+- __Purpose__ Supporting continued research in intelligent economic decision-making
+- __Impact__ Scholarships, research grants, and educational initiatives
+- __Legacy__ Ensuring Lev's vision continues to benefit future generations
 
 [Learn more about the Memorial Fund →](memorial/MEMORIAL_FUND.md)
 
@@ -776,39 +776,39 @@ Consider contributing to the **Lev Goukassian Memorial Fund for Economic Researc
 
 ## Getting Help and Support
 
-### 📚 Documentation
+###  Documentation
 
-- **New Users**: Start with [Quick Start Guide](#quick-start)
-- **Developers**: Explore [API Reference](docs/api/complete_api_reference.md)  
-- **Researchers**: Read [Economic Foundations](theory/economic-foundations.md)
-- **Examples**: Study [Case Studies](examples/)
+- __New Users__ Start with [Quick Start Guide](#quick-start)
+- __Developers__ Explore [API Reference](docs/api/complete_api_reference.md)  
+- __Researchers__ Read [Economic Foundations](theory/economic-foundations.md)
+- __Examples__ Study [Case Studies](examples/)
 
-### 💬 Community Support
+###  Community Support
 
-- **Bug Reports**: Submit [GitHub Issues](https://github.com/FractonicMind/TernaryLogic/issues)
-- **Feature Requests**: Propose via GitHub Issues with "enhancement" label
-- **Academic Collaboration**: Contact maintainers for research partnerships
+- __Bug Reports__ Submit [GitHub Issues](https://github.com/FractonicMind/TernaryLogic/issues)
+- __Feature Requests__ Propose via GitHub Issues with "enhancement" label
+- __Academic Collaboration__ Contact maintainers for research partnerships
 
 ---
 
-### 🎓 Theory Documentation Complete
+###  Theory Documentation Complete
 All theoretical foundations have been fully documented:
-- ✅ **[Core Principles](theory/core-principles.md)** - The three states and Epistemic Hold principle
-- ✅ **[Philosophical Foundations](theory/philosophical-foundations.md)** - From Hayek to Taleb
-- ✅ **[Economic Foundations](theory/economic-foundations.md)** - Academic grounding
-- ✅ **[Case Studies](theory/case-studies.md)** - Real-world applications
+-  __[Core Principles](theory/core-principles.md)__ - The three states and Epistemic Hold principle
+-  __[Philosophical Foundations](theory/philosophical-foundations.md)__ - From Hayek to Taleb
+-  __[Economic Foundations](theory/economic-foundations.md)__ - Academic grounding
+-  __[Case Studies](theory/case-studies.md)__ - Real-world applications
 
-### 📜 Succession Planning Established
-- **[Succession Charter](memorial/SUCCESSION_CHARTER.md)** - Comprehensive plan ensuring TL's continuation
+###  Succession Planning Established
+- __[Succession Charter](memorial/SUCCESSION_CHARTER.md)__ - Comprehensive plan ensuring TL's continuation
 - Pre-authorized institutions include MIT, Stanford, Chicago, LSE, and BIS
 - Memorial trustees from distinguished economists
 - Clear process for framework stewardship
 
-### 🎤 Presentation Materials Ready
-- **[Conference Presentations](demos/conference_presentation_materials.md)** - From 5-minute lightning talks to 90-minute workshops
-- **[Audience Engagement](demos/audience_engagement_strategies.md)** - Proven techniques for creating Epistemic Hold advocates
+###  Presentation Materials Ready
+- __[Conference Presentations](demos/conference_presentation_materials.md)__ - From 5-minute lightning talks to 90-minute workshops
+- __[Audience Engagement](demos/audience_engagement_strategies.md)__ - Proven techniques for creating Epistemic Hold advocates
 
-### 💻 Core Implementation Updated
+###  Core Implementation Updated
 - All Python files transformed from TML to TL focus
 - `TLState`, `TLValue`, `TLResult`, `TLEvaluator` classes ready
 - Economic decision-making focus throughout
@@ -819,17 +819,17 @@ All theoretical foundations have been fully documented:
 ## License and Usage
 
 This project is licensed under the **MIT License with Ethical Use Requirements**. This ensures:
-- ✅ **Free use** for research, education, and beneficial applications
-- ✅ **Open source** development and modification
-- ❌ **Prohibited use** for market manipulation, exploitation, or systemic harm
-- 🤝 **Community accountability** for ethical implementation
+-  __Free use__ for research, education, and beneficial applications
+-  __Open source__ development and modification
+-  __Prohibited use__ for market manipulation, exploitation, or systemic harm
+-  __Community accountability__ for ethical implementation
 
-### 🎨 Creative Innovation: Ternary Logic Applied to Licensing
+###  Creative Innovation: Ternary Logic Applied to Licensing
 
 We've also created a **[Ternary Logic License Demo](examples/ternary-logic-license-demo.md)** that demonstrates how TL's three-state decision framework (+1/0/-1) can be creatively applied to software licensing itself. This educational example shows:
-- **Proceed (+1)**: Explicitly permitted actions
-- **Epistemic Hold (0)**: Actions requiring deliberation and community consultation
-- **Halt (-1)**: Prohibited uses that violate TL principles
+- __Proceed (+1)__ Explicitly permitted actions
+- __Epistemic Hold (0)__ Actions requiring deliberation and community consultation
+- __Halt (-1)__ Prohibited uses that violate TL principles
 
 This demonstration illustrates the versatility of Ternary Logic beyond economic decision-making and serves as a thought experiment for conference presentations and academic discussions.
 
@@ -842,9 +842,9 @@ See [LICENSE](LICENSE) for complete terms.
 
 ## Contact Information
 
-- **Current**: Lev Goukassian (leogouk@gmail.com)
+- __Current__ Lev Goukassian (leogouk@gmail.com)
 -  ORCID: 0009-0006-5966-1243 
-- **Succession**: support@tl-goukassian.org  
+- __Succession__ support@tl-goukassian.org  
   (see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))  
 
 For licensing, technical support, or collaboration inquiries.
@@ -863,7 +863,7 @@ Every time you use TL, you honor Lev Goukassian's memory and advance his vision 
 
 ---
 
-### 🚀 Ready to Begin?
+###  Ready to Begin?
 
 ```bash
 git clone https://github.com/FractonicMind/TernaryLogic.git
