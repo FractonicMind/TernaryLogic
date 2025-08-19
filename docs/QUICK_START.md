@@ -1,4 +1,4 @@
-# ⚡ Quick Start Guide - Ternary Logic in 60 Minutes
+#  Quick Start Guide - Ternary Logic in 60 Minutes
 
 **From Zero to Three-State Decision Making in 1 Hour**
 
@@ -8,7 +8,7 @@
 
 ---
 
-## 🎯 Why You're Here
+##  Why You're Here
 
 You've realized that forcing every decision into YES/NO is **costing you money, opportunities, and creating unnecessary risk**. You need the third option - the Epistemic Hold - and you need it **NOW**.
 
@@ -16,17 +16,17 @@ You've realized that forcing every decision into YES/NO is **costing you money, 
 
 ---
 
-## ⏱️ Timeline
+##  Timeline
 
-- **Minutes 0-5**: Install and verify
-- **Minutes 5-15**: First TL decision
-- **Minutes 15-30**: Calibrate for your domain
-- **Minutes 30-45**: Connect to your data
-- **Minutes 45-60**: Deploy and monitor
+- __Minutes 0-5__ Install and verify
+- __Minutes 5-15__ First TL decision
+- __Minutes 15-30__ Calibrate for your domain
+- __Minutes 30-45__ Connect to your data
+- __Minutes 45-60__ Deploy and monitor
 
 ---
 
-## 🚀 Minute 0-5: Installation
+##  Minute 0-5: Installation
 
 ### Step 1: Clone and Install
 
@@ -43,7 +43,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -e .
 
 # Verify installation
-python -c "from goukassian.core import TernaryLogicEngine; print('✅ TL Ready!')"
+python -c "from goukassian.core import TernaryLogicEngine; print(' TL Ready!')"
 ```
 
 ### Step 2: Run Tests (2 minutes)
@@ -53,11 +53,11 @@ python -c "from goukassian.core import TernaryLogicEngine; print('✅ TL Ready!'
 pytest tests/unit/test_core_engine.py -v
 ```
 
-**Expected**: 9 tests passing ✅
+**Expected**: 9 tests passing 
 
 ---
 
-## 🎮 Minute 5-15: Your First TL Decision
+##  Minute 5-15: Your First TL Decision
 
 ### Step 3: Create `my_first_tl.py`
 
@@ -86,17 +86,17 @@ class QuickTLEngine:
         
         # The THREE states
         if confidence > self.confidence_threshold and risk < self.risk_threshold:
-            return "PROCEED ✅"
+            return "PROCEED "
         elif risk > 0.7 or confidence < 0.3:
-            return "HALT 🛑"
+            return "HALT "
         else:
             self.holds_triggered += 1
-            return "HOLD ⏸️ (Epistemic uncertainty - need more information)"
+            return "HOLD  (Epistemic uncertainty - need more information)"
     
     def stats(self):
         """See the value of TL immediately."""
         hold_percentage = (self.holds_triggered / self.decisions_made * 100) if self.decisions_made > 0 else 0
-        print(f"\n📊 Statistics:")
+        print(f"\n Statistics:")
         print(f"Decisions made: {self.decisions_made}")
         print(f"Epistemic Holds: {self.holds_triggered} ({hold_percentage:.1f}%)")
         print(f"Binary would have forced {self.holds_triggered} premature decisions!")
@@ -114,7 +114,7 @@ if __name__ == "__main__":
         {"name": "High confidence, acceptable risk", "confidence": 0.8, "risk": 0.25},
     ]
     
-    print("🚀 TERNARY LOGIC QUICK START\n")
+    print(" TERNARY LOGIC QUICK START\n")
     
     for scenario in test_scenarios:
         decision = engine.decide(scenario)
@@ -133,7 +133,7 @@ python my_first_tl.py
 
 ---
 
-## 🎯 Minute 15-30: Calibrate for YOUR Domain
+##  Minute 15-30: Calibrate for YOUR Domain
 
 ### Step 5: Domain-Specific Configuration
 
@@ -190,7 +190,7 @@ class CalibratedTL:
         if self.hold_start:
             hold_duration = (datetime.now() - self.hold_start).seconds
             if hold_duration > self.config["hold_max"]:
-                print(f"⚠️ Maximum HOLD duration reached ({hold_duration}s)")
+                print(f" Maximum HOLD duration reached ({hold_duration}s)")
                 self.hold_start = None
                 return "FORCED DECISION: " + ("PROCEED" if confidence > 0.5 else "HALT")
         
@@ -210,7 +210,7 @@ class CalibratedTL:
 if __name__ == "__main__":
     # Try different domains
     for domain in ["trading", "policy", "operations"]:
-        print(f"\n📊 Domain: {domain.upper()}")
+        print(f"\n Domain: {domain.upper()}")
         engine = CalibratedTL(domain)
         
         test_data = {"confidence": 0.68, "risk": 0.32}
@@ -226,7 +226,7 @@ python calibrate_tl.py
 
 ---
 
-## 🔌 Minute 30-45: Connect Your Real Data
+##  Minute 30-45: Connect Your Real Data
 
 ### Step 7: Create `connect_tl.py`
 
@@ -297,13 +297,13 @@ if __name__ == "__main__":
         {"timestamp": "09:30:02", "rsi": 72, "macd": 1.2, "volatility": 15},
     ]
     
-    print("🔴 LIVE TL DECISIONS:\n")
+    print(" LIVE TL DECISIONS:\n")
     connection.process_stream(demo_stream)
 ```
 
 ---
 
-## 📊 Minute 45-60: Deploy and Monitor
+##  Minute 45-60: Deploy and Monitor
 
 ### Step 8: Create `monitor_tl.py`
 
@@ -332,7 +332,7 @@ class TLMonitor:
             self.stats['halt'] += 1
         else:
             self.stats['hold'] += 1
-            print(f"  💡 HOLD activated: Confidence={confidence:.2f}, Risk={risk:.2f}")
+            print(f"   HOLD activated: Confidence={confidence:.2f}, Risk={risk:.2f}")
             print(f"     Binary logic would have forced: {'PROCEED' if confidence > 0.5 else 'HALT'}")
             print(f"     Potential mistake avoided!")
     
@@ -341,7 +341,7 @@ class TLMonitor:
         runtime = (datetime.now() - self.start_time).seconds
         
         print("\n" + "="*50)
-        print("📊 TERNARY LOGIC DASHBOARD")
+        print(" TERNARY LOGIC DASHBOARD")
         print("="*50)
         print(f"Runtime: {runtime} seconds")
         print(f"Total Decisions: {self.stats['total']}")
@@ -351,26 +351,26 @@ class TLMonitor:
             hold_pct = self.stats['hold'] / self.stats['total'] * 100
             halt_pct = self.stats['halt'] / self.stats['total'] * 100
             
-            print(f"\n✅ PROCEED: {self.stats['proceed']} ({proceed_pct:.1f}%)")
-            print(f"⏸️  HOLD:    {self.stats['hold']} ({hold_pct:.1f}%)")
-            print(f"🛑 HALT:    {self.stats['halt']} ({halt_pct:.1f}%)")
+            print(f"\n PROCEED: {self.stats['proceed']} ({proceed_pct:.1f}%)")
+            print(f"  HOLD:    {self.stats['hold']} ({hold_pct:.1f}%)")
+            print(f" HALT:    {self.stats['halt']} ({halt_pct:.1f}%)")
             
-            print(f"\n💰 VALUE: Binary logic would have forced {self.stats['hold']} decisions")
+            print(f"\n VALUE: Binary logic would have forced {self.stats['hold']} decisions")
             print(f"          without sufficient information!")
             
             if hold_pct > 15 and hold_pct < 40:
-                print("\n✅ HEALTHY: Hold percentage in optimal range (15-40%)")
+                print("\n HEALTHY: Hold percentage in optimal range (15-40%)")
             elif hold_pct > 40:
-                print("\n⚠️  WARNING: High uncertainty - check data quality")
+                print("\n  WARNING: High uncertainty - check data quality")
             else:
-                print("\n⚠️  WARNING: Low holds - might be forcing decisions")
+                print("\n  WARNING: Low holds - might be forcing decisions")
 
 # Run monitoring demo
 if __name__ == "__main__":
     monitor = TLMonitor()
     engine = QuickTLEngine()
     
-    print("🚀 TERNARY LOGIC MONITOR - LIVE\n")
+    print(" TERNARY LOGIC MONITOR - LIVE\n")
     
     # Simulate 10 decisions
     for i in range(10):
@@ -394,25 +394,25 @@ python monitor_tl.py
 
 ---
 
-## ✅ CONGRATULATIONS! You're Running Ternary Logic!
+##  CONGRATULATIONS! You're Running Ternary Logic!
 
 ### What You've Accomplished in 60 Minutes:
 
-1. ✅ **Installed** the TL framework
-2. ✅ **Made** your first three-state decisions
-3. ✅ **Calibrated** for your domain
-4. ✅ **Connected** to data sources
-5. ✅ **Monitored** the value of Epistemic Hold
+1.  **Installed** the TL framework
+2.  **Made** your first three-state decisions
+3.  **Calibrated** for your domain
+4.  **Connected** to data sources
+5.  **Monitored** the value of Epistemic Hold
 
-### 📈 What You're Seeing:
+###  What You're Seeing:
 
-- **HOLD states** preventing forced decisions
-- **Uncertainty** being respected, not ignored
-- **Better decisions** through patient intelligence
+- __HOLD states__ preventing forced decisions
+- __Uncertainty__ being respected, not ignored
+- __Better decisions__ through patient intelligence
 
 ---
 
-## 🚀 Next Steps (After Your First Hour)
+##  Next Steps (After Your First Hour)
 
 ### Tomorrow - Hour 2: Production Readiness
 - Add persistence (save decisions to database)
@@ -431,7 +431,7 @@ python monitor_tl.py
 
 ---
 
-## 💡 The Moment of Realization
+##  The Moment of Realization
 
 **You've just experienced it**: That moment when the system says HOLD and you realize - *"Yes! We SHOULDN'T decide yet! We need more information!"*
 
@@ -450,7 +450,7 @@ Every HOLD is a potential mistake avoided. Every patient wait for clarity is wis
 
 ---
 
-## 📊 Share Your Results!
+##  Share Your Results!
 
 After your first hour, you'll have stats like:
 - "In 100 decisions, TL triggered HOLD 28 times"
@@ -464,8 +464,8 @@ After your first hour, you'll have stats like:
 ## Contact Information
 
 **Framework Creator**: Lev Goukassian  
-- **ORCID**: [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
-- **Email**: leogouk@gmail.com
+- __ORCID__ [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
+- __Email__ leogouk@gmail.com
 
 **Support**: support@tl-goukassian.org
 
@@ -479,4 +479,4 @@ After your first hour, you'll have stats like:
 
 ---
 
-**Time Check**: If you followed this guide, you're now at minute 60 with a working TL system. The Epistemic Hold is protecting your decisions. Well done. 🎯
+**Time Check**: If you followed this guide, you're now at minute 60 with a working TL system. The Epistemic Hold is protecting your decisions. Well done. 

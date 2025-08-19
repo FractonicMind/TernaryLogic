@@ -18,26 +18,26 @@ The International Monetary Fund's core mission—ensuring global monetary stabil
 ### **The Uncertainty Challenge**
 
 Every IMF decision involves massive uncertainty:
-- **Program Design**: Will reforms work? What's the political sustainability?
-- **Debt Sustainability**: Are projections realistic? What shocks might occur?
-- **Article IV Surveillance**: Are risks building? When to sound alarms?
-- **Crisis Response**: How deep? How long? What contagion risks?
+- __Program Design__ Will reforms work? What's the political sustainability?
+- __Debt Sustainability__ Are projections realistic? What shocks might occur?
+- __Article IV Surveillance__ Are risks building? When to sound alarms?
+- __Crisis Response__ How deep? How long? What contagion risks?
 
 ### **The Cost of Binary Frameworks**
 
 Current approve/reject, sustainable/unsustainable decisions have led to:
-- **Greece 2010**: Program based on over-optimistic assumptions
-- **Argentina (repeated)**: Multiple failed programs from forced certainty
-- **Asia 1997**: One-size-fits-all when uncertainty demanded flexibility
-- **COVID-19**: Binary lockdown/open decisions devastated economies
+- __Greece 2010__ Program based on over-optimistic assumptions
+- __Argentina (repeated)__ Multiple failed programs from forced certainty
+- __Asia 1997__ One-size-fits-all when uncertainty demanded flexibility
+- __COVID-19__ Binary lockdown/open decisions devastated economies
 
 ### **The TL Revolution for IMF**
 
 Epistemic Hold enables:
-- **Adaptive Programs**: That evolve as uncertainty resolves
-- **Graduated Engagement**: From monitoring to full programs
-- **Honest Uncertainty**: Countries appreciate transparency
-- **Better Outcomes**: Programs that actually work
+- __Adaptive Programs__ That evolve as uncertainty resolves
+- __Graduated Engagement__ From monitoring to full programs
+- __Honest Uncertainty__ Countries appreciate transparency
+- __Better Outcomes__ Programs that actually work
 
 ---
 
@@ -82,9 +82,9 @@ Epistemic Hold enables:
 ### **Phase 3: Global Architecture (Year 4-5)**
 
 **New Facilities**:
-- **Epistemic Hold Facility (EHF)**: For countries in uncertain transitions
-- **Adaptive Stand-By Arrangement**: With TL-triggered adjustments
-- **Uncertainty Buffer Fund**: Resources for hold-state countries
+- __Epistemic Hold Facility (EHF)__ For countries in uncertain transitions
+- __Adaptive Stand-By Arrangement__ With TL-triggered adjustments
+- __Uncertainty Buffer Fund__ Resources for hold-state countries
 
 **Global Standards**:
 - TL in DSA (Debt Sustainability Analysis)
@@ -100,17 +100,17 @@ Epistemic Hold enables:
 
 ```
 Country Situation Assessment
-            │
-            ▼
+            
+            
      TL Evaluation
-            │
-    ┌───────┼───────┐
-    │       │       │
-    ▼       ▼       ▼
+            
+    
+                  
+                  
 PROCEED   HOLD    HALT
   (+1)     (0)     (-1)
-    │       │       │
-    ▼       ▼       ▼
+                  
+                  
 Full     Partial   Enhanced
 Program  Support   Surveillance
 ```
@@ -193,17 +193,17 @@ Uncertainty ranges → Continuous monitoring → Three states:
 - Recommendation: Epistemic Hold Program
 
 **Program Structure**:
-- **Phase 1** (Months 1-6): 
+- __Phase 1__ (Months 1-6): 
   - 30% of financing
   - Focus on immediate stabilization
   - Gather data on reform capacity
   
-- **Phase 2** (Months 7-12):
+- __Phase 2__ (Months 7-12):
   - If uncertainty resolves positively → Full program
   - If still uncertain → Continue hold with 40% financing
   - If risks materialize → Shift to crisis management
 
-- **Adaptive Elements**:
+- __Adaptive Elements__
   - Fiscal targets adjust with growth outcomes
   - Monetary policy responds to inflation dynamics
   - Structural reforms sequence based on capacity
@@ -260,7 +260,7 @@ Uncertainty ranges → Continuous monitoring → Three states:
 - Program adapts as crisis evolves
 - Other countries pre-emptively enter hold
 - Shallow recession, faster recovery
-- **Estimated savings: $500B globally**
+- __Estimated savings: $500B globally__
 
 ### **Scenario 2: Climate Disaster in Small States**
 
@@ -275,7 +275,7 @@ Uncertainty ranges → Continuous monitoring → Three states:
 - Financing scales with damage assessment
 - Adaptive reconstruction planning
 - Build-back-better approach
-- **Estimated benefit: 50% faster recovery**
+- __Estimated benefit: 50% faster recovery__
 
 ### **Scenario 3: Global Uncertainty Shock**
 
@@ -290,7 +290,7 @@ Uncertainty ranges → Continuous monitoring → Three states:
 - Counter-cyclical support
 - Synchronized uncertainty resolution
 - Shallow, short downturn
-- **Estimated benefit: 2% higher global GDP**
+- __Estimated benefit: 2% higher global GDP__
 
 ---
 

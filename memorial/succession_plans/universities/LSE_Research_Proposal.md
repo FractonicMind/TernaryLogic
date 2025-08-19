@@ -40,10 +40,10 @@ TL isn't foreign to LSE—it's the culmination of a century of policy economics.
 
 ### **Why Not Other Institutions**
 
-- **Oxford**: Strong theory but limited policy influence
-- **Cambridge**: Traditional focus but less international reach
-- **Harvard Kennedy School**: US-centric policy focus
-- **Sciences Po**: European focus but limited economic rigor
+- __Oxford__ Strong theory but limited policy influence
+- __Cambridge__ Traditional focus but less international reach
+- __Harvard Kennedy School__ US-centric policy focus
+- __Sciences Po__ European focus but limited economic rigor
 
 Only LSE has the combination of theoretical sophistication, policy experience, and global networks to implement TL as the new international standard.
 
@@ -71,10 +71,10 @@ International policy coordination requires frameworks that can:
 - Empirical validation across monetary policy, financial regulation, and crisis response
 
 **International Precedents for LSE Policy Influence**:
-- **1940s**: Beveridge Report shapes welfare state globally
-- **1970s**: LSE economists design floating exchange rate systems
-- **1990s**: LSE graduates lead transition economics in Eastern Europe
-- **2000s**: LSE research shapes Basel II/III frameworks
+- __1940s__ Beveridge Report shapes welfare state globally
+- __1970s__ LSE economists design floating exchange rate systems
+- __1990s__ LSE graduates lead transition economics in Eastern Europe
+- __2000s__ LSE research shapes Basel II/III frameworks
 
 TL will be the next global framework originating from LSE.
 
@@ -345,14 +345,14 @@ LSE doesn't teach abstract theory. Students learn TL frameworks through real pol
 #### Core Curriculum Integration
 
 **Mandatory TL Components**:
-- **EC400**: Microeconomic Principles with Three-State Choice
-- **EC402**: Macroeconomic Policy with Epistemic Hold
-- **EC403**: Econometric Methods for Policy Evaluation
+- __EC400__ Microeconomic Principles with Three-State Choice
+- __EC402__ Macroeconomic Policy with Epistemic Hold
+- __EC403__ Econometric Methods for Policy Evaluation
 
 **Specialized Courses**:
-- **EC480**: Central Banking with Ternary Logic (new)
-- **EC481**: Financial Regulation Implementation (new)
-- **EC482**: International Economic Policy Coordination (new)
+- __EC480__ Central Banking with Ternary Logic (new)
+- __EC481__ Financial Regulation Implementation (new)
+- __EC482__ International Economic Policy Coordination (new)
 
 ### **The LSE Policy Practicum**
 

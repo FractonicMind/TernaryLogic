@@ -437,19 +437,19 @@
             <h2 style="margin-bottom: 20px; font-size: 20px;">Select Economic Scenario</h2>
             <div class="scenario-selector">
                 <button class="scenario-btn active" onclick="selectScenario('trading')">
-                    <div class="title">📈 High-Frequency Trading</div>
+                    <div class="title"> High-Frequency Trading</div>
                     <div class="desc">Large block trade with conflicting signals</div>
                 </button>
                 <button class="scenario-btn" onclick="selectScenario('merger')">
-                    <div class="title">🏢 Merger Decision</div>
+                    <div class="title"> Merger Decision</div>
                     <div class="desc">Complex acquisition with mixed indicators</div>
                 </button>
                 <button class="scenario-btn" onclick="selectScenario('policy')">
-                    <div class="title">🏦 Monetary Policy</div>
+                    <div class="title"> Monetary Policy</div>
                     <div class="desc">Interest rate decision under uncertainty</div>
                 </button>
                 <button class="scenario-btn" onclick="selectScenario('supply')">
-                    <div class="title">🚚 Supply Chain Crisis</div>
+                    <div class="title"> Supply Chain Crisis</div>
                     <div class="desc">Supplier disruption response strategy</div>
                 </button>
             </div>
@@ -480,7 +480,7 @@
                     <div class="thought-trace expanded" id="thoughtTrace">
                         <div class="thought-trace-header">
                             <h4>Thought Trace</h4>
-                            <span class="expand-icon">▼</span>
+                            <span class="expand-icon"></span>
                         </div>
                         <div class="thought-steps">
                             <div class="thought-step">
@@ -507,7 +507,7 @@
                 <!-- Result Section -->
                 <div class="result-section" id="resultSection">
                     <div class="outcome-badge" id="outcomeBadge" onclick="toggleReasoningCard()">
-                        <span class="icon">⚪</span>
+                        <span class="icon"></span>
                         <span class="state">Epistemic Hold</span>
                     </div>
 
@@ -751,11 +751,11 @@
             // Update badge
             badge.className = `outcome-badge ${result.state}`;
             if (result.state === 'proceed') {
-                badge.innerHTML = '<span class="icon">✅</span><span class="state">+1 Proceed</span>';
+                badge.innerHTML = '<span class="icon"></span><span class="state">+1 Proceed</span>';
             } else if (result.state === 'hold') {
-                badge.innerHTML = '<span class="icon">⚪</span><span class="state">0 Epistemic Hold</span>';
+                badge.innerHTML = '<span class="icon"></span><span class="state">0 Epistemic Hold</span>';
             } else {
-                badge.innerHTML = '<span class="icon">❌</span><span class="state">-1 Halt</span>';
+                badge.innerHTML = '<span class="icon"></span><span class="state">-1 Halt</span>';
             }
             
             // Update reasoning

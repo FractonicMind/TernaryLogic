@@ -39,10 +39,10 @@ TL isn't foreign to Chicago—it's coming home.
 
 ### **Why Not MIT or Stanford**
 
-- **MIT**: Will build impressive systems but miss the deeper theory
-- **Stanford**: Will commercialize quickly but lack theoretical foundations
-- **Harvard**: Too consensus-oriented for revolutionary theory
-- **Princeton**: Strong theory but lacks Chicago's economic focus
+- __MIT__ Will build impressive systems but miss the deeper theory
+- __Stanford__ Will commercialize quickly but lack theoretical foundations
+- __Harvard__ Too consensus-oriented for revolutionary theory
+- __Princeton__ Strong theory but lacks Chicago's economic focus
 
 Only Chicago has the combination of theoretical depth, intellectual courage, and economic focus to develop TL into Nobel-worthy theory.
 
@@ -69,10 +69,10 @@ The Nobel Committee recognizes work that "conferred the greatest benefit to huma
 - Empirical validation across financial markets, policy, and firms
 
 **Comparable Nobel Precedents**:
-- **2013 (Hansen)**: Empirical analysis of asset prices under uncertainty
-- **2017 (Thaler)**: Behavioral economics and bounded rationality
-- **2011 (Sargent/Sims)**: Cause and effect in macroeconomics
-- **2002 (Kahneman)**: Psychology of judgment and decision-making
+- __2013 (Hansen)__ Empirical analysis of asset prices under uncertainty
+- __2017 (Thaler)__ Behavioral economics and bounded rationality
+- __2011 (Sargent/Sims)__ Cause and effect in macroeconomics
+- __2002 (Kahneman)__ Psychology of judgment and decision-making
 
 TL synthesizes and extends all of these contributions.
 
@@ -326,14 +326,14 @@ Chicago doesn't teach simplified versions. Students learn real TL theory with fu
 #### PhD Core Curriculum Reform
 
 **First Year Sequence**:
-- **ECON 30100**: Price Theory with Ternary Logic
-- **ECON 30200**: Macroeconomics with Epistemic Hold
-- **ECON 30300**: Econometrics of Three-State Systems
+- __ECON 30100__ Price Theory with Ternary Logic
+- __ECON 30200__ Macroeconomics with Epistemic Hold
+- __ECON 30300__ Econometrics of Three-State Systems
 
 **Second Year Fields**:
-- **ECON 31700**: Ternary Choice Theory (new)
-- **ECON 32300**: Dynamic TL Models (new)
-- **ECON 33500**: Empirical TL Methods (new)
+- __ECON 31700__ Ternary Choice Theory (new)
+- __ECON 32300__ Dynamic TL Models (new)
+- __ECON 33500__ Empirical TL Methods (new)
 
 #### The TL Comprehensive Exam
 

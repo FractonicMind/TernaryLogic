@@ -207,16 +207,16 @@ The TL framework enhances human reasoning across moral, epistemic, and existenti
 ### Reflective Interval for Protection
 
 We distinguish:
-- **Immediate Threats**
-- **Complex Situations**
-- **Educational Opportunities**
+- __Immediate Threats__
+- __Complex Situations__
+- __Educational Opportunities__
 
 ### Proportional Response
 
-- **Education First**
-- **Community Pressure**
-- **Technical Safeguards**
-- **Legal Action**
+- __Education First__
+- __Community Pressure__
+- __Technical Safeguards__
+- __Legal Action__
 
 ## Prohibited Use Categories
 

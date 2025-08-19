@@ -8,7 +8,7 @@
 
 ---
 
-## 🏛️ Theoretical Overview
+##  Theoretical Overview
 
 The Ternary Logic (TL) framework represents a fundamental advancement in economic decision-making theory, extending traditional binary choice models with intelligent uncertainty management. This document establishes the comprehensive economic theoretical foundation supporting the framework's applications across financial markets, monetary policy, and business operations.
 
@@ -22,7 +22,7 @@ The Ternary Logic (TL) framework represents a fundamental advancement in economi
 
 ---
 
-## 📊 Mathematical Framework
+##  Mathematical Framework
 
 ### Ternary Decision Function
 
@@ -72,7 +72,7 @@ Where α + β + γ = 1 and weights are domain-calibrated
 
 ---
 
-## 🎓 Economic School Integration
+##  Economic School Integration
 
 ### Austrian School Economics
 
@@ -140,7 +140,7 @@ Where α + β + γ = 1 and weights are domain-calibrated
 
 ---
 
-## 💰 Financial Theory Integration
+##  Financial Theory Integration
 
 ### Modern Portfolio Theory
 
@@ -183,7 +183,7 @@ Where market_regime affects confidence and risk thresholds
 
 ---
 
-## 🏦 Monetary Policy Theory
+##  Monetary Policy Theory
 
 ### Central Banking Theory
 
@@ -215,7 +215,7 @@ Epistemic Hold when conflicting mandates create policy uncertainty
 
 ---
 
-## 🏭 Supply Chain & Operations Theory
+##  Supply Chain & Operations Theory
 
 ### Operations Research
 
@@ -244,7 +244,7 @@ If uncertainty > threshold → Epistemic Hold
 
 ---
 
-## 📈 Market Microstructure Theory
+##  Market Microstructure Theory
 
 ### Information Economics
 
@@ -268,7 +268,7 @@ If uncertainty > threshold → Epistemic Hold
 
 ---
 
-## 🌍 International Economics
+##  International Economics
 
 ### Exchange Rate Theory
 
@@ -292,7 +292,7 @@ If uncertainty > threshold → Epistemic Hold
 
 ---
 
-## 🔬 Empirical Economic Methods
+##  Empirical Economic Methods
 
 ### Econometric Foundations
 
@@ -316,7 +316,7 @@ If uncertainty > threshold → Epistemic Hold
 
 ---
 
-## 🎯 Decision Theory Integration
+##  Decision Theory Integration
 
 ### Classical Decision Theory
 
@@ -340,7 +340,7 @@ If uncertainty > threshold → Epistemic Hold
 
 ---
 
-## 📊 Statistical Foundations
+##  Statistical Foundations
 
 ### Uncertainty vs. Risk
 
@@ -365,7 +365,7 @@ If uncertainty > threshold → Epistemic Hold
 
 ---
 
-## 🏗️ Implementation Theory
+##  Implementation Theory
 
 ### Algorithm Design
 
@@ -389,7 +389,7 @@ If uncertainty > threshold → Epistemic Hold
 
 ---
 
-## 🌟 Theoretical Contributions
+##  Theoretical Contributions
 
 ### Novel Economic Insights
 
@@ -419,7 +419,7 @@ If uncertainty > threshold → Epistemic Hold
 
 ---
 
-## 📚 Academic Validation
+##  Academic Validation
 
 ### Peer Review Process
 
@@ -444,7 +444,7 @@ If uncertainty > threshold → Epistemic Hold
 
 ---
 
-## 🚀 Future Research Directions
+##  Future Research Directions
 
 ### Theoretical Extensions
 
@@ -469,7 +469,7 @@ If uncertainty > threshold → Epistemic Hold
 
 ---
 
-## 📖 Bibliography & References
+##  Bibliography & References
 
 ### Foundational Economic Theory
 - Knight, F.H. (1921). "Risk, Uncertainty and Profit"
@@ -504,8 +504,8 @@ If uncertainty > threshold → Epistemic Hold
 ## Contact Information
 
 **Theoretical Development**: Lev Goukassian  
-- **ORCID**: [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
-- **Email**: leogouk@gmail.com
+- __ORCID__ [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
+- __Email__ leogouk@gmail.com
 
 **Academic Collaboration**: support@tl-goukassian.org  
 (see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))

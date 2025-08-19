@@ -153,10 +153,10 @@ We implemented the ternary framework in simulated algorithmic trading environmen
 
 **4.1.2 Results**
 The ternary implementation showed significant improvements:
-- **Sharpe Ratio**: 1.84 (ternary) vs. 1.31 (binary) — 40% improvement
-- **Maximum Drawdown**: 8.2% (ternary) vs. 12.7% (binary) — 35% reduction
-- **False Signal Rate**: 12.3% (ternary) vs. 18.9% (binary) — 35% reduction
-- **Epistemic Hold Frequency**: 23.4% of potential trading opportunities
+- __Sharpe Ratio__ 1.84 (ternary) vs. 1.31 (binary) — 40% improvement
+- __Maximum Drawdown__ 8.2% (ternary) vs. 12.7% (binary) — 35% reduction
+- __False Signal Rate__ 12.3% (ternary) vs. 18.9% (binary) — 35% reduction
+- __Epistemic Hold Frequency__ 23.4% of potential trading opportunities
 
 **4.1.3 Flash Crash Analysis**
 During simulated flash crash events, the ternary system demonstrated superior stability:
@@ -170,10 +170,10 @@ During simulated flash crash events, the ternary system demonstrated superior st
 We analyzed supply chain responses to 156 historical disruption events across multiple industries.
 
 **4.2.2 Performance Metrics**
-- **Cost Efficiency**: 18% reduction in unnecessary rerouting costs
-- **Inventory Optimization**: 22% improvement in stock-out prevention
-- **Customer Satisfaction**: 15% improvement in on-time delivery during disruptions
-- **Recovery Time**: 31% faster return to normal operations
+- __Cost Efficiency__ 18% reduction in unnecessary rerouting costs
+- __Inventory Optimization__ 22% improvement in stock-out prevention
+- __Customer Satisfaction__ 15% improvement in on-time delivery during disruptions
+- __Recovery Time__ 31% faster return to normal operations
 
 ### 4.3 Monetary Policy Simulation
 
@@ -181,10 +181,10 @@ We analyzed supply chain responses to 156 historical disruption events across mu
 We simulated Federal Reserve interest rate decisions using ternary logic for 240 FOMC meetings (2000-2020).
 
 **4.3.2 Policy Effectiveness**
-- **Forecast Accuracy**: 28% improvement in 2-year inflation forecasting
-- **Financial Stability**: 19% reduction in asset price volatility
-- **Communication Clarity**: 42% improvement in forward guidance credibility scores
-- **Epistemic Hold Utilization**: 17% of policy decisions deferred for additional data
+- __Forecast Accuracy__ 28% improvement in 2-year inflation forecasting
+- __Financial Stability__ 19% reduction in asset price volatility
+- __Communication Clarity__ 42% improvement in forward guidance credibility scores
+- __Epistemic Hold Utilization__ 17% of policy decisions deferred for additional data
 
 ---
 
@@ -193,9 +193,9 @@ We simulated Federal Reserve interest rate decisions using ternary logic for 240
 ### 5.1 Confidence Threshold Calibration
 
 Optimal confidence thresholds vary by domain and risk tolerance:
-- **High-frequency trading**: θ = 0.85 (low tolerance for uncertainty)
-- **Strategic planning**: θ = 0.65 (moderate uncertainty acceptable)  
-- **Emergency response**: θ = 0.45 (action required despite uncertainty)
+- __High-frequency trading__ θ = 0.85 (low tolerance for uncertainty)
+- __Strategic planning__ θ = 0.65 (moderate uncertainty acceptable)  
+- __Emergency response__ θ = 0.45 (action required despite uncertainty)
 
 ### 5.2 Information Source Integration
 
@@ -236,26 +236,26 @@ Effective trigger conditions include:
 ### 6.1 Financial Regulation
 
 Ternary logic frameworks could enhance financial regulation through:
-- **Systemic Risk Monitoring**: Early detection of uncertain but potentially dangerous market conditions
-- **Algorithmic Trading Oversight**: Requirements for uncertainty acknowledgment in automated systems
-- **Stress Testing**: Incorporation of "unknown unknown" scenarios in bank stress tests
-- **Crisis Response**: Graduated response protocols for ambiguous warning signals
+- __Systemic Risk Monitoring__ Early detection of uncertain but potentially dangerous market conditions
+- __Algorithmic Trading Oversight__ Requirements for uncertainty acknowledgment in automated systems
+- __Stress Testing__ Incorporation of "unknown unknown" scenarios in bank stress tests
+- __Crisis Response__ Graduated response protocols for ambiguous warning signals
 
 ### 6.2 Monetary Policy
 
 Central banks could benefit from ternary approaches via:
-- **Forward Guidance**: Honest communication of policy uncertainty
-- **Decision Timing**: Strategic delay when economic signals are contradictory
-- **International Coordination**: Shared uncertainty acknowledgment among central banks
-- **Inflation Targeting**: Flexible approaches when underlying trends are unclear
+- __Forward Guidance__ Honest communication of policy uncertainty
+- __Decision Timing__ Strategic delay when economic signals are contradictory
+- __International Coordination__ Shared uncertainty acknowledgment among central banks
+- __Inflation Targeting__ Flexible approaches when underlying trends are unclear
 
 ### 6.3 Supply Chain Resilience
 
 Global supply chains could improve resilience through:
-- **Disruption Preparedness**: Graduated response protocols for uncertain threats
-- **Inventory Management**: Buffer optimization considering demand uncertainty
-- **Supplier Diversification**: Risk assessment incorporating unknown failure modes
-- **International Trade**: Uncertainty-aware agreements and contingencies
+- __Disruption Preparedness__ Graduated response protocols for uncertain threats
+- __Inventory Management__ Buffer optimization considering demand uncertainty
+- __Supplier Diversification__ Risk assessment incorporating unknown failure modes
+- __International Trade__ Uncertainty-aware agreements and contingencies
 
 ---
 

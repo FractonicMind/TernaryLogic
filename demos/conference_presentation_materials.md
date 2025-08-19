@@ -6,7 +6,7 @@
 
 ---
 
-## 🎤 Presentation Formats Available
+##  Presentation Formats Available
 
 ### 1. Lightning Talk (5 minutes) - "The Epistemic Hold"
 ### 2. Standard Session (20 minutes) - "Beyond Binary Economic Decision-Making" 
@@ -15,7 +15,7 @@
 
 ---
 
-## ⚡ Lightning Talk: "The Epistemic Hold" (5 minutes)
+##  Lightning Talk: "The Epistemic Hold" (5 minutes)
 
 ### Slide Structure
 
@@ -86,24 +86,24 @@ Framework: github.com/FractonicMind/TernaryLogic
 ```
 JOIN THE EPISTEMIC HOLD REVOLUTION
 
-✓ Download: github.com/FractonicMind/TernaryLogic
-✓ Implement: In your trading systems today
-✓ Connect: support@tl-goukassian.org
+ Download: github.com/FractonicMind/TernaryLogic
+ Implement: In your trading systems today
+ Connect: support@tl-goukassian.org
 
 "The pause that saves portfolios,
  prevents crashes, and protects policies."
 ```
 
 ### Speaker Notes for Lightning Talk
-- **Energy Level:** High intensity, enthusiastic delivery
-- **Timing:** Strict 5-minute limit, practice with timer
-- **Audience Interaction:** Eye contact, pause for emphasis
-- **Technical Demo:** Pre-loaded code, tested thoroughly
-- **Closing:** Strong call-to-action with contact information
+- __Energy Level:__ High intensity, enthusiastic delivery
+- __Timing:__ Strict 5-minute limit, practice with timer
+- __Audience Interaction:__ Eye contact, pause for emphasis
+- __Technical Demo:__ Pre-loaded code, tested thoroughly
+- __Closing:__ Strong call-to-action with contact information
 
 ---
 
-## 📊 Standard Session: "Beyond Binary Economic Decision-Making" (20 minutes)
+##  Standard Session: "Beyond Binary Economic Decision-Making" (20 minutes)
 
 ### Detailed Slide Outline
 
@@ -137,11 +137,11 @@ PROBLEM: Binary systems force decisions
 ```
 WHAT YOU'LL LEARN TODAY
 
-✓ Why binary logic fails in volatile markets
-✓ The mathematics of ternary decision-making
-✓ Real-world trading implementation examples
-✓ Quantified performance improvements
-✓ How to implement in your organization
+ Why binary logic fails in volatile markets
+ The mathematics of ternary decision-making
+ Real-world trading implementation examples
+ Quantified performance improvements
+ How to implement in your organization
 ```
 
 **Problem Definition Section (5 minutes)**
@@ -311,8 +311,8 @@ IMPLEMENT TODAY
 ```
 JOIN THE EPISTEMIC HOLD REVOLUTION
 
-🔗 github.com/FractonicMind/TernaryLogic  
-📝 medium.com/@leogouk
+ github.com/FractonicMind/TernaryLogic  
+ medium.com/@leogouk
 🆔 ORCID: 0009-0006-5966-1243
 
 "The world is not binary.
@@ -354,7 +354,7 @@ Questions?
 
 ---
 
-## 🎯 Keynote: "Ternary Logic: The Future of Economic Intelligence" (45 minutes)
+##  Keynote: "Ternary Logic: The Future of Economic Intelligence" (45 minutes)
 
 ### Extended Structure with Deep Dives
 
@@ -411,7 +411,7 @@ Questions?
 
 ---
 
-## 🛠️ Workshop: "Implementing Uncertainty-Aware Trading Systems" (90 minutes)
+##  Workshop: "Implementing Uncertainty-Aware Trading Systems" (90 minutes)
 
 ### Hands-On Learning Structure
 
@@ -464,7 +464,7 @@ Group Presentations:
 
 ---
 
-## 📈 Conference-Specific Customizations
+##  Conference-Specific Customizations
 
 ### Economics Conferences (AEA, European Economic Association)
 **Focus Areas:**
@@ -507,7 +507,7 @@ Group Presentations:
 
 ---
 
-## 🎬 Presentation Media Assets
+##  Presentation Media Assets
 
 ### Required Materials Checklist
 
@@ -550,7 +550,7 @@ Group Presentations:
 
 ---
 
-## 📞 Booking & Logistics
+##  Booking & Logistics
 
 ### Speaker Bio (Conference Programs)
 ```
@@ -572,15 +572,15 @@ to embrace the intelligent acknowledgment of market uncertainty.
 - "Implementing Intelligent Hesitation in Economic Systems"
 
 ### Technical Requirements
-- **AV Needs:** Projector/screen, wireless microphone, laptop connection
-- **Internet:** Reliable WiFi for live demonstrations
-- **Room Setup:** Theater-style for presentations, classroom for workshops
-- **Duration:** 5-90 minutes depending on format selected
-- **Audience Size:** 50-5000 (scalable content and interaction)
+- __AV Needs:__ Projector/screen, wireless microphone, laptop connection
+- __Internet:__ Reliable WiFi for live demonstrations
+- __Room Setup:__ Theater-style for presentations, classroom for workshops
+- __Duration:__ 5-90 minutes depending on format selected
+- __Audience Size:__ 50-5000 (scalable content and interaction)
 
 ---
 
-**🌟 These presentation materials establish the Ternary Logic Framework as essential knowledge for any economics, finance, or technology conference. The Epistemic Hold will soon be discussed in every major venue worldwide.**
+** These presentation materials establish the Ternary Logic Framework as essential knowledge for any economics, finance, or technology conference. The Epistemic Hold will soon be discussed in every major venue worldwide.**
 
 ## Contact Information
 

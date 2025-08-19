@@ -12,14 +12,14 @@ for intelligent decision-making under uncertainty.
 from ternary_logic import TLDecisionEngine, TLState
 
 def main():
-    print("🚀 Ternary Logic Framework - Quick Start Demo")
+    print(" Ternary Logic Framework - Quick Start Demo")
     print("=" * 50)
     print()
     
     # Initialize the decision engine
     engine = TLDecisionEngine(confidence_threshold=0.7, domain="financial")
     
-    print("📊 Example 1: Clear Positive Decision")
+    print(" Example 1: Clear Positive Decision")
     print("-" * 35)
     
     # Strong positive signals across all criteria
@@ -34,7 +34,7 @@ def main():
     print_result(result)
     print()
     
-    print("⚠️  Example 2: Uncertain Decision with Missing Data")
+    print("  Example 2: Uncertain Decision with Missing Data")
     print("-" * 48)
     
     # Mixed signals with missing critical data
@@ -49,7 +49,7 @@ def main():
     print_result(result)
     print()
     
-    print("❌ Example 3: Clear Negative Decision")
+    print(" Example 3: Clear Negative Decision")
     print("-" * 34)
     
     # Strong negative signals across all criteria
@@ -64,7 +64,7 @@ def main():
     print_result(result)
     print()
     
-    print("🔍 Example 4: Custom Weights")
+    print(" Example 4: Custom Weights")
     print("-" * 25)
     
     # Same data as Example 2, but with custom importance weights
@@ -80,7 +80,7 @@ def main():
     print_result(result)
     print()
     
-    print("📈 Decision History Summary")
+    print(" Decision History Summary")
     print("-" * 25)
     summary = engine.get_decision_summary()
     print(f"Total Decisions Made: {summary['total_decisions']}")
@@ -93,7 +93,7 @@ def main():
         print(f"  {state}: {count} ({percentage:.1f}%)")
     
     print()
-    print("✨ The Epistemic Hold in Action!")
+    print(" The Epistemic Hold in Action!")
     print("Notice how the framework intelligently recognizes uncertainty")
     print("and recommends gathering more information rather than forcing")  
     print("a premature binary decision.")
@@ -106,9 +106,9 @@ def print_result(result):
     
     # State with emoji
     state_emoji = {
-        TLState.PROCEED: "✅",
-        TLState.HALT: "❌", 
-        TLState.EPISTEMIC_HOLD: "⚠️"
+        TLState.PROCEED: "",
+        TLState.HALT: "", 
+        TLState.EPISTEMIC_HOLD: ""
     }
     
     print(f"Decision: {state_emoji[result.state]} {result.state.name}")

@@ -362,7 +362,7 @@
     <div class="container">
         <!-- Header Section -->
         <div class="header">
-            <h1>📊 TL Decision Demonstrator</h1>
+            <h1> TL Decision Demonstrator</h1>
             <div class="subtitle">Experience the Epistemic Hold - Intelligent Economic Reasoning in Real-Time</div>
             <div class="author-info">
                 By <strong>Lev Goukassian</strong> | 
@@ -376,7 +376,7 @@
             <!-- Input Section -->
             <div class="input-section">
                 <div class="section-title">
-                    💡 Enter Your Economic Scenario
+                     Enter Your Economic Scenario
                 </div>
                 <textarea 
                     id="scenarioInput" 
@@ -385,28 +385,28 @@
                 ></textarea>
                 
                 <button id="analyzeBtn" class="analyze-btn">
-                    🔍 Analyze with TL Framework
+                     Analyze with TL Framework
                 </button>
 
                 <div class="example-scenarios">
-                    <h4 style="margin-bottom: 10px; color: #1e40af;">📈 Try Example Economic Scenarios:</h4>
+                    <h4 style="margin-bottom: 10px; color: #1e40af;"> Try Example Economic Scenarios:</h4>
                     <button class="scenario-btn" data-scenario="Should I execute this clear arbitrage opportunity where ETF trades at 3% discount to NAV with high liquidity in normal market conditions?">
-                        📊 Execute clear arbitrage opportunity? <span style="color: #059669;">→ Proceed</span>
+                         Execute clear arbitrage opportunity? <span style="color: #059669;">→ Proceed</span>
                     </button>
                     <button class="scenario-btn" data-scenario="Should I deploy capital immediately during flash crash conditions with 8% market decline in 15 minutes and no clear fundamental catalyst?">
-                        💥 Buy the dip during flash crash? <span style="color: #dc2626;">→ Halt</span>
+                         Buy the dip during flash crash? <span style="color: #dc2626;">→ Halt</span>
                     </button>
                     <button class="scenario-btn" data-scenario="Should I execute a large trade when momentum indicators are strong but volume confirmation is weak during earnings week?">
-                        🔄 Execute trade with conflicting signals? <span style="color: #d97706;">→ Hold</span>
+                         Execute trade with conflicting signals? <span style="color: #d97706;">→ Hold</span>
                     </button>
                     <button class="scenario-btn" data-scenario="Should I switch to backup supplier immediately when primary supplier factory destroyed by natural disaster and production halt costs 1M daily?">
-                        🏭 Emergency supplier switch? <span style="color: #059669;">→ Proceed</span>
+                         Emergency supplier switch? <span style="color: #059669;">→ Proceed</span>
                     </button>
                     <button class="scenario-btn" data-scenario="Should I recommend proceeding with merger where success fee is 50M but analysis suggests deal will likely destroy shareholder value?">
-                        ⚠️ Recommend value-destroying merger for fees? <span style="color: #dc2626;">→ Halt</span>
+                         Recommend value-destroying merger for fees? <span style="color: #dc2626;">→ Halt</span>
                     </button>
                     <button class="scenario-btn" data-scenario="Should I raise interest rates when inflation is high but unemployment is rising and growth is slowing with mixed economic signals?">
-                        🏦 Monetary policy with conflicting data? <span style="color: #d97706;">→ Hold</span>
+                         Monetary policy with conflicting data? <span style="color: #d97706;">→ Hold</span>
                     </button>
                 </div>
             </div>
@@ -414,11 +414,11 @@
             <!-- Results Section -->
             <div class="results-section">
                 <div class="section-title">
-                    🤖 TL Reasoning Process
+                     TL Reasoning Process
                 </div>
                 
                 <div id="loadingState" class="loading" style="display: none;">
-                    <div class="loading-dots">⚡ Analyzing economic factors...</div>
+                    <div class="loading-dots"> Analyzing economic factors...</div>
                     <div style="margin-top: 10px; font-size: 0.9rem;">Evaluating uncertainty dimensions...</div>
                 </div>
 
@@ -433,7 +433,7 @@
                 </div>
 
                 <div id="defaultMessage" style="text-align: center; padding: 40px; color: #a0aec0;">
-                    <div style="font-size: 3rem; margin-bottom: 20px;">📈</div>
+                    <div style="font-size: 3rem; margin-bottom: 20px;"></div>
                     <h3>Ready to Analyze</h3>
                     <p>Enter your economic scenario above and watch TL reasoning in action!</p>
                 </div>
@@ -442,7 +442,7 @@
 
         <!-- Performance Metrics Section -->
         <div class="performance-metrics">
-            <h3 style="color: #1e40af; margin-bottom: 15px;">🎯 TL Framework Performance</h3>
+            <h3 style="color: #1e40af; margin-bottom: 15px;"> TL Framework Performance</h3>
             <p>Proven results across economic domains through comprehensive backtesting:</p>
             <div class="metrics-grid">
                 <div class="metric-item">
@@ -467,7 +467,7 @@
         <!-- Education Section -->
         <div class="education-section">
             <div class="section-title">
-                📖 Understanding Ternary Logic
+                 Understanding Ternary Logic
             </div>
             
             <div class="education-grid">
@@ -482,24 +482,24 @@
                 </div>
                 
                 <div class="education-card">
-                    <h3 style="color: #dc2626; margin-bottom: 10px;">🔴 -1: Halt</h3>
+                    <h3 style="color: #dc2626; margin-bottom: 10px;"> -1: Halt</h3>
                     <p>Significant economic risks present. Market instability, systematic concerns, or clear conflicts suggest defensive positioning.</p>
                 </div>
             </div>
 
             <div style="margin-top: 30px; padding: 20px; background: #f7fafc; border-radius: 15px; text-align: center;">
-                <h3 style="color: #1e40af; margin-bottom: 15px;">🚀 Explore the Research</h3>
+                <h3 style="color: #1e40af; margin-bottom: 15px;"> Explore the Research</h3>
                 <p>This interactive demo showcases the Ternary Logic framework developed by Lev Goukassian. The framework introduces intelligent uncertainty management (Epistemic Hold) to economic decision-making, moving beyond simple binary choices.</p>
                 <div style="margin-top: 15px;">
-                    <a href="https://github.com/FractonicMind/TernaryLogic" target="_blank" style="display: inline-block; margin: 5px 10px; padding: 8px 20px; background: #1e40af; color: white; text-decoration: none; border-radius: 20px; transition: all 0.3s ease;">📚 GitHub Repository</a>
-                    <a href="https://medium.com/@leogouk/the-third-option-why-economy-and-civilization-must-break-free-from-binary-0d69d2be14c6" target="_blank" style="display: inline-block; margin: 5px 10px; padding: 8px 20px; background: #059669; color: white; text-decoration: none; border-radius: 20px; transition: all 0.3s ease;">📖 Research Article</a>
+                    <a href="https://github.com/FractonicMind/TernaryLogic" target="_blank" style="display: inline-block; margin: 5px 10px; padding: 8px 20px; background: #1e40af; color: white; text-decoration: none; border-radius: 20px; transition: all 0.3s ease;"> GitHub Repository</a>
+                    <a href="https://medium.com/@leogouk/the-third-option-why-economy-and-civilization-must-break-free-from-binary-0d69d2be14c6" target="_blank" style="display: inline-block; margin: 5px 10px; padding: 8px 20px; background: #059669; color: white; text-decoration: none; border-radius: 20px; transition: all 0.3s ease;"> Research Article</a>
                 </div>
             </div>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <h3>📊 Ternary Logic Framework</h3>
+            <h3> Ternary Logic Framework</h3>
             <p>Developed by Lev Goukassian | ORCID: 0009-0006-5966-1243</p>
             <p>Experience intelligent economic reasoning with the Epistemic Hold</p>
             <div style="margin-top: 15px;">
@@ -765,11 +765,11 @@
                 let dots = 1;
                 const loadingInterval = setInterval(() => {
                     const texts = [
-                        '⚡ Analyzing economic factors...',
-                        '📊 Evaluating market signals...',
-                        '⚖️ Assessing risk-return profile...',
-                        '🔍 Applying Epistemic Hold logic...',
-                        '📈 Processing uncertainty dimensions...'
+                        ' Analyzing economic factors...',
+                        ' Evaluating market signals...',
+                        ' Assessing risk-return profile...',
+                        ' Applying Epistemic Hold logic...',
+                        ' Processing uncertainty dimensions...'
                     ];
                     
                     document.querySelector('.loading-dots').textContent = texts[dots % texts.length];
@@ -794,7 +794,7 @@
                 const states = [
                     { value: 1, label: 'Proceed', icon: '🟢', class: 'state-proceed', reasoning: result.reasoning.proceed },
                     { value: 0, label: 'Epistemic Hold', icon: '🟡', class: 'state-hold', reasoning: result.reasoning.hold },
-                    { value: -1, label: 'Halt', icon: '🔴', class: 'state-halt', reasoning: result.reasoning.halt }
+                    { value: -1, label: 'Halt', icon: '', class: 'state-halt', reasoning: result.reasoning.halt }
                 ];
 
                 states.forEach(state => {
@@ -819,10 +819,10 @@
 
                 // Final decision
                 const decisionLabels = { 1: 'Proceed', 0: 'Epistemic Hold', '-1': 'Halt' };
-                const decisionIcons = { 1: '🟢', 0: '🟡', '-1': '🔴' };
+                const decisionIcons = { 1: '🟢', 0: '🟡', '-1': '' };
                 
                 finalContainer.innerHTML = `
-                    <h3>🎯 TL Decision: ${result.decision > 0 ? '+' : ''}${result.decision} (${decisionLabels[result.decision]})</h3>
+                    <h3> TL Decision: ${result.decision > 0 ? '+' : ''}${result.decision} (${decisionLabels[result.decision]})</h3>
                     <div style="font-size: 2rem; margin: 10px 0;">
                         ${result.decision === 0 ? '<span class="epistemic-hold-animation">🟡</span>' : decisionIcons[result.decision]}
                     </div>

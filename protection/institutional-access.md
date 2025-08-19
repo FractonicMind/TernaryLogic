@@ -32,85 +32,85 @@ The following institutions receive immediate access to the full TL framework bas
 ### Tier 1: Leading Academic Institutions in Economics
 
 **Harvard University**
-- **Departments**: Economics, Kennedy School, Business School
-- **Access Level**: Full research and policy analysis
-- **Special Permissions**: Economic modeling, ethical policy frameworks
-- **Contact**: seas-research@harvard.edu
-- **Justification**: Leadership in economic ethics and public policy
+- __Departments__ Economics, Kennedy School, Business School
+- __Access Level__ Full research and policy analysis
+- __Special Permissions__ Economic modeling, ethical policy frameworks
+- __Contact__ seas-research@harvard.edu
+- __Justification__ Leadership in economic ethics and public policy
 
 **University of Chicago**
-- **Departments**: Booth School of Business, Economics Department
-- **Access Level**: Full research and educational use
-- **Special Permissions**: Behavioral economics integration, market ethics
-- **Contact**: econ-access@uchicago.edu
-- **Justification**: Pioneering work in economic theory and human behavior
+- __Departments__ Booth School of Business, Economics Department
+- __Access Level__ Full research and educational use
+- __Special Permissions__ Behavioral economics integration, market ethics
+- __Contact__ econ-access@uchicago.edu
+- __Justification__ Pioneering work in economic theory and human behavior
 
 **London School of Economics (LSE)**
-- **Departments**: Economics, Philosophy, Public Policy
-- **Access Level**: Full research and international collaboration
-- **Special Permissions**: Global policy modeling, ethical standards development
-- **Contact**: ethics-policy@lse.ac.uk
-- **Justification**: Global leader in economic policy and ethics
+- __Departments__ Economics, Philosophy, Public Policy
+- __Access Level__ Full research and international collaboration
+- __Special Permissions__ Global policy modeling, ethical standards development
+- __Contact__ ethics-policy@lse.ac.uk
+- __Justification__ Global leader in economic policy and ethics
 
 **Massachusetts Institute of Technology (MIT)**
-- **Departments**: Economics, Sloan School of Management
-- **Access Level**: Full research and technical development
-- **Special Permissions**: Framework integration into economic simulations
-- **Contact**: econ-sloan@mit.edu
-- **Justification**: Innovation in economic systems and responsible tech
+- __Departments__ Economics, Sloan School of Management
+- __Access Level__ Full research and technical development
+- __Special Permissions__ Framework integration into economic simulations
+- __Contact__ econ-sloan@mit.edu
+- __Justification__ Innovation in economic systems and responsible tech
 
 **Stanford University**
-- **Departments**: Economics, Center on Poverty and Inequality
-- **Access Level**: Full research and educational use
-- **Special Permissions**: Social impact analysis, inequality modeling
-- **Contact**: econ-ethics@stanford.edu
-- **Justification**: Strong focus on human-centered economic research
+- __Departments__ Economics, Center on Poverty and Inequality
+- __Access Level__ Full research and educational use
+- __Special Permissions__ Social impact analysis, inequality modeling
+- __Contact__ econ-ethics@stanford.edu
+- __Justification__ Strong focus on human-centered economic research
 
 ### Tier 2: Specialized Economic Research Institutes
 
 **Brookings Institution**
-- **Departments**: Economic Studies, Governance Studies
-- **Access Level**: Policy analysis and recommendation development
-- **Special Permissions**: Congressional testimony, economic ethics briefs
-- **Contact**: research@brookings.edu
-- **Justification**: Respected policy research and public service
+- __Departments__ Economic Studies, Governance Studies
+- __Access Level__ Policy analysis and recommendation development
+- __Special Permissions__ Congressional testimony, economic ethics briefs
+- __Contact__ research@brookings.edu
+- __Justification__ Respected policy research and public service
 
 **Peterson Institute for International Economics**
-- **Departments**: Global Economics, Trade Policy
-- **Access Level**: Research and global policy analysis
-- **Special Permissions**: International economic modeling, trade ethics
-- **Contact**: access@piie.com
-- **Justification**: Leadership in global economic policy
+- __Departments__ Global Economics, Trade Policy
+- __Access Level__ Research and global policy analysis
+- __Special Permissions__ International economic modeling, trade ethics
+- __Contact__ access@piie.com
+- __Justification__ Leadership in global economic policy
 
 **National Bureau of Economic Research (NBER)**
-- **Departments**: Economic Research Programs
-- **Access Level**: Research and data analysis
-- **Special Permissions**: Longitudinal studies, ethical economic forecasting
-- **Contact**: ethics@nber.org
-- **Justification**: Premier source of empirical economic research
+- __Departments__ Economic Research Programs
+- __Access Level__ Research and data analysis
+- __Special Permissions__ Longitudinal studies, ethical economic forecasting
+- __Contact__ ethics@nber.org
+- __Justification__ Premier source of empirical economic research
 
 ### Tier 3: International Economic Organizations
 
 **United Nations – Department of Economic and Social Affairs (UN DESA)**
-- **Departments**: Sustainable Development, Economic Policy
-- **Access Level**: Policy analysis and global standards
-- **Special Permissions**: Development economics, equitable growth frameworks
-- **Contact**: desa-access@un.org
-- **Justification**: Global mandate for inclusive economic development
+- __Departments__ Sustainable Development, Economic Policy
+- __Access Level__ Policy analysis and global standards
+- __Special Permissions__ Development economics, equitable growth frameworks
+- __Contact__ desa-access@un.org
+- __Justification__ Global mandate for inclusive economic development
 
 **World Bank Group**
-- **Departments**: Development Economics, Ethics in Finance
-- **Access Level**: Research and policy implementation
-- **Special Permissions**: Poverty reduction modeling, ethical finance standards
-- **Contact**: ethics@worldbank.org
-- **Justification**: Global leader in development economics
+- __Departments__ Development Economics, Ethics in Finance
+- __Access Level__ Research and policy implementation
+- __Special Permissions__ Poverty reduction modeling, ethical finance standards
+- __Contact__ ethics@worldbank.org
+- __Justification__ Global leader in development economics
 
 **OECD – Economics Department**
-- **Departments**: Economic Policy, Inclusive Growth
-- **Access Level**: Regulatory analysis and standards development
-- **Special Permissions**: International benchmarking, ethical policy guidance
-- **Contact**: access@oecd.org
-- **Justification**: Promoter of responsible economic governance
+- __Departments__ Economic Policy, Inclusive Growth
+- __Access Level__ Regulatory analysis and standards development
+- __Special Permissions__ International benchmarking, ethical policy guidance
+- __Contact__ access@oecd.org
+- __Justification__ Promoter of responsible economic governance
 
 ---
 

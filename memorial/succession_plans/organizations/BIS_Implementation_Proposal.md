@@ -35,15 +35,15 @@ The BIS exists to:
 
 ### **Historical Context**
 Every major financial crisis involved ignored uncertainty:
-- **2008 Financial Crisis**: "Subprime is contained" → Should have been Epistemic Hold
-- **European Debt Crisis**: Premature "whatever it takes" → Needed graduated response
-- **COVID-19 Response**: Binary lockdown decisions → TL could have optimized
+- __2008 Financial Crisis__ "Subprime is contained" → Should have been Epistemic Hold
+- __European Debt Crisis__ Premature "whatever it takes" → Needed graduated response
+- __COVID-19 Response__ Binary lockdown decisions → TL could have optimized
 
 ### **The TL Solution**
 Instead of forcing binary decisions during crises, TL enables:
-- **Coordinated Holds**: Multiple central banks pause together
-- **Graduated Responses**: From monitoring to intervention
-- **Transparent Uncertainty**: Markets understand the hesitation
+- __Coordinated Holds__ Multiple central banks pause together
+- __Graduated Responses__ From monitoring to intervention
+- __Transparent Uncertainty__ Markets understand the hesitation
 
 ---
 
@@ -106,24 +106,24 @@ Instead of forcing binary decisions during crises, TL enables:
 ```
 BIS TL System Architecture:
 
-┌─────────────────────────────────────┐
-│     Global Uncertainty Dashboard     │
-│  (Real-time Epistemic Hold Status)   │
-└────────────┬────────────────────────┘
-             │
-┌────────────▼────────────────────────┐
-│       TL Decision Engine             │
-│  ┌──────────┬─────────┬──────────┐  │
-│  │ Proceed  │  Hold    │   Halt   │  │
-│  │  (+1)    │   (0)    │   (-1)   │  │
-│  └──────────┴─────────┴──────────┘  │
-└────────────┬────────────────────────┘
-             │
-┌────────────▼────────────────────────┐
-│    Central Bank Data Feeds          │
-│  • Interest rates  • FX reserves    │
-│  • Inflation data  • Capital flows  │
-└─────────────────────────────────────┘
+
+     Global Uncertainty Dashboard     
+  (Real-time Epistemic Hold Status)   
+
+             
+
+       TL Decision Engine             
+    
+   Proceed    Hold       Halt     
+    (+1)       (0)       (-1)     
+    
+
+             
+
+    Central Bank Data Feeds          
+  • Interest rates  • FX reserves    
+  • Inflation data  • Capital flows  
+
 ```
 
 ### **Decision Protocol**
@@ -138,9 +138,9 @@ BIS TL System Architecture:
 ### **Communication Framework**
 
 When Epistemic Hold is triggered:
-- **Internal**: Secure BIS communication to central banks
-- **Market**: Standardized uncertainty acknowledgment
-- **Public**: Clear explanation of what additional data is needed
+- __Internal__ Secure BIS communication to central banks
+- __Market__ Standardized uncertainty acknowledgment
+- __Public__ Clear explanation of what additional data is needed
 
 ---
 
@@ -157,10 +157,10 @@ When Epistemic Hold is triggered:
 - 3 Central Bank Governors (rotating)
 
 **Implementation Team**:
-- **Technical Lead**: Innovation Hub specialist
-- **Economic Lead**: Senior economist from MED
-- **Policy Lead**: FSI representative
-- **Project Manager**: Dedicated TL coordinator
+- __Technical Lead__ Innovation Hub specialist
+- __Economic Lead__ Senior economist from MED
+- __Policy Lead__ FSI representative
+- __Project Manager__ Dedicated TL coordinator
 
 ### **Advisory Board**
 - Lev Goukassian Memorial Representative

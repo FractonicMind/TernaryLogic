@@ -2,38 +2,38 @@
 
 Thank you for your interest in contributing to the Ternary Logic Framework! This project represents a fundamental advancement in economic decision-making under uncertainty, and we welcome contributions from researchers, developers, and practitioners worldwide.
 
-## 🌟 Vision & Mission
+##  Vision & Mission
 
 The Ternary Logic Framework embodies the principle that **"The world is not binary. And the future will not be either."** Our mission is to provide tools that handle economic uncertainty intelligently, moving beyond forced binary choices to embrace the wisdom of the "Epistemic Hold."
 
-## 🤝 Ways to Contribute
+##  Ways to Contribute
 
 ### 1. Code Contributions
-- **Core Framework**: Improve ternary logic algorithms and decision engines
-- **Economic Applications**: Develop new domain-specific implementations (finance, trading, policy, supply chain)
-- **Integrations**: Create connectors to popular financial/ML frameworks
-- **Performance**: Optimize computational efficiency and scalability
-- **Testing**: Add comprehensive test coverage and edge case handling
+- __Core Framework__ Improve ternary logic algorithms and decision engines
+- __Economic Applications__ Develop new domain-specific implementations (finance, trading, policy, supply chain)
+- __Integrations__ Create connectors to popular financial/ML frameworks
+- __Performance__ Optimize computational efficiency and scalability
+- __Testing__ Add comprehensive test coverage and edge case handling
 
 ### 2. Research Contributions
-- **Theoretical Advances**: Extend ternary logic theory and mathematical foundations for economics
-- **Empirical Studies**: Validate framework performance across different economic domains
-- **Case Studies**: Document real-world implementations and results in financial markets
-- **Academic Papers**: Publish peer-reviewed research building on this work
+- __Theoretical Advances__ Extend ternary logic theory and mathematical foundations for economics
+- __Empirical Studies__ Validate framework performance across different economic domains
+- __Case Studies__ Document real-world implementations and results in financial markets
+- __Academic Papers__ Publish peer-reviewed research building on this work
 
 ### 3. Documentation & Education
-- **Tutorials**: Create step-by-step guides for specific economic use cases
-- **Examples**: Develop comprehensive code examples and trading/policy demos
-- **Translation**: Translate documentation into other languages
-- **Video Content**: Create educational videos and conference presentations
+- __Tutorials__ Create step-by-step guides for specific economic use cases
+- __Examples__ Develop comprehensive code examples and trading/policy demos
+- __Translation__ Translate documentation into other languages
+- __Video Content__ Create educational videos and conference presentations
 
 ### 4. Community Building
-- **Issue Reporting**: Help identify bugs and improvement opportunities
-- **Feature Requests**: Suggest new capabilities and economic applications
-- **Discussion**: Engage in GitHub discussions and provide feedback
-- **Mentoring**: Help new contributors understand and use the framework
+- __Issue Reporting__ Help identify bugs and improvement opportunities
+- __Feature Requests__ Suggest new capabilities and economic applications
+- __Discussion__ Engage in GitHub discussions and provide feedback
+- __Mentoring__ Help new contributors understand and use the framework
 
-## 🔄 Contribution Process
+##  Contribution Process
 
 ### Step 1: Get Started
 1. **Fork the repository** at https://github.com/FractonicMind/TernaryLogic to your GitHub account
@@ -53,7 +53,7 @@ The Ternary Logic Framework embodies the principle that **"The world is not bina
 3. **Create a Pull Request** with detailed description of changes
 4. **Respond to feedback** and iterate as needed
 
-## 🛠️ Development Setup
+##  Development Setup
 
 ### Prerequisites
 - Python 3.8 or higher
@@ -87,44 +87,44 @@ black src/
 ### Code Structure
 ```
 TernaryLogic/
-├── src/
-│   └── goukassian/         # Core TL implementation (installs as ternary-logic)
-│       ├── __init__.py     # TL classes: TLState, TLValue, TLResult
-│       └── core.py         # PROCEED/HALT/EPISTEMIC_HOLD implementation
-├── tests/                  # Test suites
-├── docs/                   # Documentation
-│   ├── api/               # API reference
-│   └── presentations/     # Executive and conference materials
-├── examples/              # Economic usage examples
-│   ├── quickstart_example.py
-│   ├── financial_trading_comprehensive.py
-│   ├── central_banking_policy.py
-│   └── supply_chain_management.py
-├── theory/                # Theoretical foundations
-│   ├── economic-foundations.md
-│   ├── philosophical-foundations.md
-│   ├── core-principles.md
-│   └── case-studies.md
-├── protection/            # Safeguards and integrity
-│   ├── institutional-access.md
-│   ├── misuse-prevention.md
-│   ├── integrity-monitoring.md
-│   └── legacy-preservation.md
-├── memorial/              # Legacy preservation
-│   ├── SUCCESSION_CHARTER.md
-│   └── MEMORIAL_FUND.md
-├── demos/                 # Interactive demonstrations
-│   ├── TL-App/           # Live web demo
-│   ├── conference_presentation_materials.md
-│   └── audience_engagement_strategies.md
-├── research/              # Research materials
-│   ├── academic_papers/
-│   └── datasets/
-├── benchmark/             # Performance testing
-└── scripts/              # Development scripts
+ src/
+    goukassian/         # Core TL implementation (installs as ternary-logic)
+        __init__.py     # TL classes: TLState, TLValue, TLResult
+        core.py         # PROCEED/HALT/EPISTEMIC_HOLD implementation
+ tests/                  # Test suites
+ docs/                   # Documentation
+    api/               # API reference
+    presentations/     # Executive and conference materials
+ examples/              # Economic usage examples
+    quickstart_example.py
+    financial_trading_comprehensive.py
+    central_banking_policy.py
+    supply_chain_management.py
+ theory/                # Theoretical foundations
+    economic-foundations.md
+    philosophical-foundations.md
+    core-principles.md
+    case-studies.md
+ protection/            # Safeguards and integrity
+    institutional-access.md
+    misuse-prevention.md
+    integrity-monitoring.md
+    legacy-preservation.md
+ memorial/              # Legacy preservation
+    SUCCESSION_CHARTER.md
+    MEMORIAL_FUND.md
+ demos/                 # Interactive demonstrations
+    TL-App/           # Live web demo
+    conference_presentation_materials.md
+    audience_engagement_strategies.md
+ research/              # Research materials
+    academic_papers/
+    datasets/
+ benchmark/             # Performance testing
+ scripts/              # Development scripts
 ```
 
-## 📝 Coding Standards
+##  Coding Standards
 
 ### Python Style Guide
 - Follow **PEP 8** style guidelines
@@ -145,7 +145,7 @@ TernaryLogic/
 - Aim for >90% test coverage
 - Test edge cases and error conditions
 
-## 🏷️ Attribution Requirements
+##  Attribution Requirements
 
 **IMPORTANT**: All contributions must maintain proper attribution to the original creator:
 
@@ -169,7 +169,7 @@ Your contribution description here.
 - Include co-authorship if substantial contributions are made
 - Maintain reference to original creator in derivative works
 
-## 🔬 Research Ethics
+##  Research Ethics
 
 ### Academic Integrity
 - Maintain scientific rigor in all research contributions
@@ -183,7 +183,7 @@ Your contribution description here.
 - Avoid applications that could cause market manipulation or harm
 - Promote transparency and accountability in economic decision systems
 
-## 🚀 Priority Areas for Contribution
+##  Priority Areas for Contribution
 
 ### High Impact Opportunities
 1. **Financial Markets**: Implement framework in real trading systems
@@ -198,12 +198,12 @@ Your contribution description here.
 - How can we visualize uncertainty in financial decision-making processes?
 - What are the cognitive benefits of ternary vs binary thinking in economics?
 
-## 📞 Getting Help
+##  Getting Help
 
 ### Community Support
-- **GitHub Discussions**: Ask questions and share ideas
-- **Issues**: Report bugs and request features
-- **Email**: Direct contact with creator (see contact information below)
+- __GitHub Discussions__ Ask questions and share ideas
+- __Issues__ Report bugs and request features
+- __Email__ Direct contact with creator (see contact information below)
 
 ### Academic Collaboration
 - Research partnerships and joint studies
@@ -211,26 +211,26 @@ Your contribution description here.
 - Conference presentations and workshops
 - Educational curriculum development
 
-## 🏆 Recognition
+##  Recognition
 
 Contributors will be recognized through:
 
 ### Code Contributors
-- **GitHub Contributors** page with profile links
-- **CONTRIBUTORS.md** file with detailed acknowledgments
-- **Release Notes** highlighting major contributions
+- __GitHub Contributors__ page with profile links
+- __CONTRIBUTORS.md__ file with detailed acknowledgments
+- __Release Notes__ highlighting major contributions
 
 ### Research Contributors
-- **Academic Paper** co-authorship for substantial contributions
-- **Research Credit** in publications and presentations
-- **Conference Speaking** opportunities at relevant events
+- __Academic Paper__ co-authorship for substantial contributions
+- __Research Credit__ in publications and presentations
+- __Conference Speaking__ opportunities at relevant events
 
 ### Community Contributors
-- **Community Leader** badges and recognition
-- **Mentorship Opportunities** for new contributors
-- **Advisory Roles** in project governance
+- __Community Leader__ badges and recognition
+- __Mentorship Opportunities__ for new contributors
+- __Advisory Roles__ in project governance
 
-## 📄 Legal Notes
+##  Legal Notes
 
 By contributing to this project, you agree that:
 
@@ -239,7 +239,7 @@ By contributing to this project, you agree that:
 3. You understand and accept the attribution requirements
 4. You support the ethical use principles outlined in this document
 
-## 🌟 Final Words
+##  Final Words
 
 The Ternary Logic Framework represents more than code—it embodies a fundamental shift toward more thoughtful, uncertainty-aware economic decision-making. Your contributions help ensure that this vision becomes reality across financial institutions and economic disciplines.
 
@@ -254,8 +254,8 @@ Together, we're building the future of intelligent economic decision-making.
 ## Contact Information
 
 **Created by Lev Goukassian**  
-- **ORCID**: [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
-- **Email**: leogouk@gmail.com
+- __ORCID__ [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
+- __Email__ leogouk@gmail.com
 
 **Successor Contact**: support@tl-goukassian.org  
 (see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))

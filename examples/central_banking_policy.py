@@ -513,7 +513,7 @@ def demonstrate_fed_policy_analysis():
     Demonstrate the Federal Reserve Policy Engine with realistic scenarios
     """
     
-    print("🏛️  Federal Reserve Policy Analysis - Ternary Logic Framework")
+    print("  Federal Reserve Policy Analysis - Ternary Logic Framework")
     print("=" * 65)
     print()
     print('"The Epistemic Hold guides monetary policy when data contradicts itself."')
@@ -528,7 +528,7 @@ def demonstrate_fed_policy_analysis():
     )
     
     # Scenario 1: Clear Tightening Signals
-    print("📈 Scenario 1: Clear Tightening Environment")
+    print(" Scenario 1: Clear Tightening Environment")
     print("-" * 42)
     
     tightening_data = {
@@ -553,7 +553,7 @@ def demonstrate_fed_policy_analysis():
     print()
     
     # Scenario 2: Conflicting Dual Mandate Signals
-    print("⚠️  Scenario 2: Dual Mandate Conflict - Epistemic Hold Likely")
+    print("  Scenario 2: Dual Mandate Conflict - Epistemic Hold Likely")
     print("-" * 60)
     
     conflicting_data = {
@@ -585,7 +585,7 @@ def demonstrate_fed_policy_analysis():
     print()
     
     # Scenario 3: Missing Critical Data
-    print("❓ Scenario 3: Missing Critical Economic Data")
+    print(" Scenario 3: Missing Critical Economic Data")
     print("-" * 44)
     
     incomplete_data = {
@@ -611,7 +611,7 @@ def demonstrate_fed_policy_analysis():
         print(f"Missing Critical Data: {', '.join(missing)}")
         
     print()
-    print("📊 Federal Reserve Decision Summary")
+    print(" Federal Reserve Decision Summary")
     print("-" * 35)
     print("The Ternary Logic Framework enables the Federal Reserve to:")
     print("• Acknowledge uncertainty honestly in policy communications")

@@ -29,11 +29,11 @@ Stanford's unique positioning offers advantages no other institution can match:
 ### **Why Stanford, Not MIT or Chicago**
 
 While MIT excels at technical depth and Chicago at theory, Stanford uniquely combines:
-- **Commercial velocity**: 18-month average from research to startup
-- **Risk capital access**: $300B+ in VC funding within 10 miles
-- **Industry pull**: Companies come to Stanford seeking innovation
-- **Cultural permission**: Professors routinely start billion-dollar companies
-- **Student entrepreneurs**: 1 in 3 undergrads starts a company
+- __Commercial velocity__ 18-month average from research to startup
+- __Risk capital access__ $300B+ in VC funding within 10 miles
+- __Industry pull__ Companies come to Stanford seeking innovation
+- __Cultural permission__ Professors routinely start billion-dollar companies
+- __Student entrepreneurs__ 1 in 3 undergrads starts a company
 
 Stanford doesn't just research—it ships products that change the world.
 
@@ -78,10 +78,10 @@ This isn't a research project—it's a market transformation strategy.
 
 #### Q3: Industry Pilots
 **Partner Deployments**:
-- **Sequoia Capital**: TL for investment decisions
-- **Robinhood**: Retail trading uncertainty display
-- **Stanford Hospital**: Medical decision support
-- **Tesla**: Autonomous vehicle uncertainty management
+- __Sequoia Capital__ TL for investment decisions
+- __Robinhood__ Retail trading uncertainty display
+- __Stanford Hospital__ Medical decision support
+- __Tesla__ Autonomous vehicle uncertainty management
 
 **Key Deliverable**: 4 industry pilots with real data
 
@@ -111,10 +111,10 @@ This isn't a research project—it's a market transformation strategy.
 
 #### Academic Integration
 **New Courses**:
-- **CS 347T**: "Ternary Systems at Scale"
-- **GSB 348**: "Venture Capital Under Uncertainty"
-- **MS&E 278T**: "Three-State Optimization"
-- **PHIL 171T**: "The Philosophy of Maybe"
+- __CS 347T__ "Ternary Systems at Scale"
+- __GSB 348__ "Venture Capital Under Uncertainty"
+- __MS&E 278T__ "Three-State Optimization"
+- __PHIL 171T__ "The Philosophy of Maybe"
 
 **Student Numbers**:
 - 500 students in TL courses
@@ -373,9 +373,9 @@ Not lectures about TL, but building with TL.
 **Enrollment Target**: 500 students/year by Year 3
 
 **Signature Programs**:
-- **Summer TL Bootcamp**: 8 weeks, 100 students, 10 startups created
-- **TL Hackathon**: Annual, $100K prizes, 1000 participants
-- **Epistemic Hold Day**: Campus-wide celebration of uncertainty
+- __Summer TL Bootcamp__ 8 weeks, 100 students, 10 startups created
+- __TL Hackathon__ Annual, $100K prizes, 1000 participants
+- __Epistemic Hold Day__ Campus-wide celebration of uncertainty
 
 ### **Graduate Programs**
 
@@ -392,9 +392,9 @@ Not lectures about TL, but building with TL.
 - Internships at TL companies required
 
 **Executive Education**:
-- **"TL for CEOs"**: 3-day, $15K, 100 executives/year
-- **"Implementing Epistemic Hold"**: 1-week, $25K, 50 CTOs/year
-- **"Board Governance with TL"**: 2-day, $10K, 200 directors/year
+- __"TL for CEOs"__ 3-day, $15K, 100 executives/year
+- __"Implementing Epistemic Hold"__ 1-week, $25K, 50 CTOs/year
+- __"Board Governance with TL"__ 2-day, $10K, 200 directors/year
 
 Revenue: $5M/year from executive education alone
 
@@ -623,11 +623,11 @@ The Epistemic Hold concept is powerful but not yet claimed. In 12 months, every 
 ### **The Decision Framework**
 
 This is not a decision requiring Epistemic Hold. The evidence is clear:
-- **Opportunity**: Massive and immediate
-- **Capability**: Stanford uniquely qualified
-- **Resources**: Available and eager
-- **Competition**: Moving quickly
-- **Impact**: Transformational
+- __Opportunity__ Massive and immediate
+- __Capability__ Stanford uniquely qualified
+- __Resources__ Available and eager
+- __Competition__ Moving quickly
+- __Impact__ Transformational
 
 **Decision: PROCEED with maximum speed and commitment**
 

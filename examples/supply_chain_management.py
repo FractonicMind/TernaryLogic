@@ -668,7 +668,7 @@ def demonstrate_supply_chain_management():
     Demonstrate the Supply Chain Management system with realistic scenarios
     """
     
-    print("🚚 Global Supply Chain Management - Ternary Logic Framework")
+    print(" Global Supply Chain Management - Ternary Logic Framework")
     print("=" * 60)
     print()
     print("Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)")
@@ -684,7 +684,7 @@ def demonstrate_supply_chain_management():
     )
     
     # Scenario 1: Major Route Disruption - Clear Action Needed
-    print("🌊 Scenario 1: Suez Canal Blockage - Major Disruption")
+    print(" Scenario 1: Suez Canal Blockage - Major Disruption")
     print("-" * 47)
     
     major_disruption = {
@@ -735,7 +735,7 @@ def demonstrate_supply_chain_management():
     print()
     
     # Scenario 2: Uncertain Geopolitical Situation
-    print("⚠️  Scenario 2: Geopolitical Tensions - Uncertain Impact")
+    print("  Scenario 2: Geopolitical Tensions - Uncertain Impact")
     print("-" * 53)
     
     uncertain_disruption = {
@@ -790,7 +790,7 @@ def demonstrate_supply_chain_management():
     print()
     
     # Scenario 3: Minor Disruption - Status Quo Appropriate
-    print("✅ Scenario 3: Minor Weather Delay - Maintain Operations")
+    print(" Scenario 3: Minor Weather Delay - Maintain Operations")
     print("-" * 54)
     
     minor_disruption = {
@@ -834,7 +834,7 @@ def demonstrate_supply_chain_management():
     print(f"Reasoning: {decision.reasoning}")
     print()
     
-    print("📊 Supply Chain Management Summary")
+    print(" Supply Chain Management Summary")
     print("-" * 34)
     print("The Ternary Logic Framework enables supply chain managers to:")
     print("• Avoid costly overreactions to uncertain disruptions")

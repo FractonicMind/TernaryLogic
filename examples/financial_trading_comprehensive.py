@@ -467,7 +467,7 @@ def demonstrate_trading_algorithm():
     Demonstrate the TL Trading Algorithm with realistic scenarios
     """
     
-    print("🚀 Ternary Logic Trading Algorithm Demonstration")
+    print(" Ternary Logic Trading Algorithm Demonstration")
     print("=" * 55)
     print()
     print("Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)")
@@ -483,7 +483,7 @@ def demonstrate_trading_algorithm():
     )
     
     # Test Scenario 1: Clear Bull Signal
-    print("📈 Scenario 1: Strong Bull Market Signals")
+    print(" Scenario 1: Strong Bull Market Signals")
     print("-" * 40)
     
     bull_market_data = {
@@ -503,7 +503,7 @@ def demonstrate_trading_algorithm():
     print()
     
     # Test Scenario 2: Uncertain Market with Missing Data
-    print("⚠️  Scenario 2: Uncertain Market - Missing Critical Data")
+    print("  Scenario 2: Uncertain Market - Missing Critical Data")
     print("-" * 52)
     
     uncertain_market_data = {
@@ -529,7 +529,7 @@ def demonstrate_trading_algorithm():
     print()
     
     # Test Scenario 3: Clear Bear Signal
-    print("📉 Scenario 3: Strong Bear Market Signals")
+    print(" Scenario 3: Strong Bear Market Signals")
     print("-" * 38)
     
     bear_market_data = {
@@ -549,7 +549,7 @@ def demonstrate_trading_algorithm():
     print()
     
     # Performance Summary
-    print("📊 Algorithm Performance Summary")
+    print(" Algorithm Performance Summary")
     print("-" * 32)
     summary = algorithm.get_performance_summary()
     
@@ -560,7 +560,7 @@ def demonstrate_trading_algorithm():
     print(f"Average Trade Confidence: {summary['avg_confidence_trades']:.2f}")
     print()
     
-    print("✨ The Epistemic Hold in Action!")
+    print(" The Epistemic Hold in Action!")
     print("Notice how the algorithm intelligently recognizes when market")
     print("conditions are too uncertain for confident trading decisions.")
     print("This prevents flash crashes and reduces portfolio volatility.")

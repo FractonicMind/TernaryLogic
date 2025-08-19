@@ -1,4 +1,4 @@
-# 🚨 EMERGENCY IMPLEMENTATION - Ternary Logic NOW
+#  EMERGENCY IMPLEMENTATION - Ternary Logic NOW
 
 **When Every Hour of Binary Decisions Costs You Thousands (or Millions)**
 
@@ -9,18 +9,18 @@
 
 ---
 
-## 🔴 YOU'RE HERE BECAUSE
+##  YOU'RE HERE BECAUSE
 
-- ✅ The ROI calculator showed daily losses you can't ignore
-- ✅ You realize forced binary decisions are happening RIGHT NOW
-- ✅ Every hour of delay is measurable loss
-- ✅ You need Ternary Logic running TODAY, not next quarter
+-  The ROI calculator showed daily losses you can't ignore
+-  You realize forced binary decisions are happening RIGHT NOW
+-  Every hour of delay is measurable loss
+-  You need Ternary Logic running TODAY, not next quarter
 
 **This guide gets you from crisis to control in 4 hours.**
 
 ---
 
-## ⚡ HOUR 0: Pre-Flight (15 minutes)
+##  HOUR 0: Pre-Flight (15 minutes)
 
 ### Immediate Assessment
 
@@ -29,7 +29,7 @@
 import json
 from datetime import datetime, timedelta
 
-print("🚨 EMERGENCY TL DEPLOYMENT - ASSESSMENT")
+print(" EMERGENCY TL DEPLOYMENT - ASSESSMENT")
 print("="*50)
 
 # Answer these NOW
@@ -39,12 +39,12 @@ can_modify_prod = input("Can you modify production code? (y/n): ")
 has_override_authority = input("Do you have override authority? (y/n): ")
 
 if current_loss_per_hour > 10000:
-    print("\n🔴 CRITICAL: Every 4-hour delay costs ${:,.0f}".format(current_loss_per_hour * 4))
-    print("🔴 PROCEED WITH EMERGENCY DEPLOYMENT")
+    print("\n CRITICAL: Every 4-hour delay costs ${:,.0f}".format(current_loss_per_hour * 4))
+    print(" PROCEED WITH EMERGENCY DEPLOYMENT")
 else:
-    print("\n⚠️ HIGH PRIORITY: Consider emergency deployment")
+    print("\n HIGH PRIORITY: Consider emergency deployment")
 
-print("\n✅ ASSESSMENT COMPLETE - PROCEED TO HOUR 1")
+print("\n ASSESSMENT COMPLETE - PROCEED TO HOUR 1")
 ```
 
 ### Emergency Kit Download
@@ -63,7 +63,7 @@ pip install numpy pandas
 
 ---
 
-## 🛑 HOUR 1: Stop the Bleeding (45 minutes)
+##  HOUR 1: Stop the Bleeding (45 minutes)
 
 ### Step 1.1: Emergency Hold Injector (15 minutes)
 
@@ -99,9 +99,9 @@ class EmergencyTernaryLogic:
         self.emergency_confidence_threshold = 0.65  # Lower than normal - we're in crisis
         self.emergency_risk_threshold = 0.35       # More conservative during emergency
         
-        print("🚨 EMERGENCY TL ACTIVATED")
-        print(f"⏰ Time: {self.start_time}")
-        print(f"📊 Thresholds: Confidence>{self.emergency_confidence_threshold}, Risk<{self.emergency_risk_threshold}")
+        print(" EMERGENCY TL ACTIVATED")
+        print(f" Time: {self.start_time}")
+        print(f" Thresholds: Confidence>{self.emergency_confidence_threshold}, Risk<{self.emergency_risk_threshold}")
         
     def emergency_decision(self, decision_data: Dict[str, Any]) -> str:
         """
@@ -143,7 +143,7 @@ class EmergencyTernaryLogic:
         runtime = (datetime.now() - self.start_time).seconds / 3600
         
         print("\n" + "="*50)
-        print("🚨 EMERGENCY TL STATUS REPORT")
+        print(" EMERGENCY TL STATUS REPORT")
         print("="*50)
         print(f"Runtime: {runtime:.2f} hours")
         print(f"Decisions prevented: {self.decisions_prevented}")
@@ -174,13 +174,13 @@ def emergency_wrapped_decision(data):
     
     if tl_decision == "HOLD":
         # LOG AND ALERT
-        print(f"🚨 HOLD TRIGGERED - Decision prevented at {datetime.now()}")
+        print(f" HOLD TRIGGERED - Decision prevented at {datetime.now()}")
         # Return None or your system's "wait" signal
         return None  # Or your system's delay mechanism
     
     elif tl_decision == "HALT":
         # EMERGENCY STOP
-        print(f"🔴 HALT TRIGGERED - Risk too high at {datetime.now()}")
+        print(f" HALT TRIGGERED - Risk too high at {datetime.now()}")
         return "NO"  # Safe default
     
     else:  # PROCEED
@@ -217,21 +217,21 @@ test_scenarios = [
     {"confidence": 0.8, "risk": 0.2, "value": 200000, "name": "Clear opportunity"},
 ]
 
-print("🧪 EMERGENCY TL VERIFICATION")
+print(" EMERGENCY TL VERIFICATION")
 print("="*50)
 
 for scenario in test_scenarios:
     decision = emergency_tl.emergency_decision(scenario)
     print(f"{scenario['name']}: {decision}")
     if decision == "HOLD":
-        print(f"  ✅ Would have prevented potential ${scenario['value']*0.15:,.0f} loss")
+        print(f"   Would have prevented potential ${scenario['value']*0.15:,.0f} loss")
 
 emergency_tl.status_report()
 ```
 
 ---
 
-## ⚡ HOUR 2: Rapid Integration (60 minutes)
+##  HOUR 2: Rapid Integration (60 minutes)
 
 ### Step 2.1: Critical Path Identification (15 minutes)
 
@@ -267,7 +267,7 @@ your_critical_points = [
     # ... etc
 ]
 
-print("🎯 INJECT TL AT THESE POINTS:")
+print(" INJECT TL AT THESE POINTS:")
 for point in your_critical_points:
     print(f"  - {point}()")
 ```
@@ -340,7 +340,7 @@ class ProductionEmergencyTL:
     def send_alert(self, message):
         """Send emergency alerts."""
         # Implement your alert mechanism
-        print(f"🚨 ALERT: {message}")
+        print(f" ALERT: {message}")
         # Email, Slack, PagerDuty, etc.
 
 # GLOBAL INSTANCE FOR PRODUCTION
@@ -371,7 +371,7 @@ class TLCircuitBreaker:
             
             if self.consecutive_halts >= self.halt_threshold:
                 self.circuit_open = True
-                print("🔴 CIRCUIT BREAKER ACTIVATED - SYSTEM HALT")
+                print(" CIRCUIT BREAKER ACTIVATED - SYSTEM HALT")
                 # Trigger your emergency procedures
                 self.trigger_emergency_protocol()
                 
@@ -392,7 +392,7 @@ circuit_breaker = TLCircuitBreaker()
 
 ---
 
-## ⚡ HOUR 3: Validation & Testing (60 minutes)
+##  HOUR 3: Validation & Testing (60 minutes)
 
 ### Step 3.1: Replay Today's Disasters (20 minutes)
 
@@ -409,7 +409,7 @@ recent_decisions = load_recent_decisions(
     start_time=datetime.now() - timedelta(hours=24)
 )
 
-print("🔍 REPLAYING RECENT DECISIONS WITH TL")
+print(" REPLAYING RECENT DECISIONS WITH TL")
 print("="*50)
 
 prevented_losses = 0
@@ -430,10 +430,10 @@ for decision in recent_decisions:
     if tl_decision == "HOLD" and decision['outcome'] == 'LOSS':
         prevented_losses += decision['loss_amount']
         decisions_that_would_be_held.append(decision)
-        print(f"✅ TL would have prevented: ${decision['loss_amount']:,.0f} loss")
+        print(f" TL would have prevented: ${decision['loss_amount']:,.0f} loss")
 
-print(f"\n💰 TOTAL PREVENTED LOSSES (24hr): ${prevented_losses:,.0f}")
-print(f"📊 Decisions that would be HELD: {len(decisions_that_would_be_held)}")
+print(f"\n TOTAL PREVENTED LOSSES (24hr): ${prevented_losses:,.0f}")
+print(f" Decisions that would be HELD: {len(decisions_that_would_be_held)}")
 ```
 
 ### Step 3.2: Stress Test (20 minutes)
@@ -445,7 +445,7 @@ print(f"📊 Decisions that would be HELD: {len(decisions_that_would_be_held)}")
 import time
 import random
 
-print("🏋️ STRESS TESTING EMERGENCY TL")
+print(" STRESS TESTING EMERGENCY TL")
 print("="*50)
 
 # Simulate high-frequency decisions
@@ -468,14 +468,14 @@ for i in range(10000):  # 10k rapid decisions
 
 elapsed = time.time() - start_time
 
-print(f"✅ Processed {decisions_made} decisions in {elapsed:.2f} seconds")
-print(f"📊 Rate: {decisions_made/elapsed:.0f} decisions/second")
-print(f"⏸️ HOLDs triggered: {holds_triggered} ({holds_triggered/decisions_made*100:.1f}%)")
+print(f" Processed {decisions_made} decisions in {elapsed:.2f} seconds")
+print(f" Rate: {decisions_made/elapsed:.0f} decisions/second")
+print(f" HOLDs triggered: {holds_triggered} ({holds_triggered/decisions_made*100:.1f}%)")
 
 if decisions_made/elapsed > 100:
-    print("✅ PERFORMANCE: Acceptable for production")
+    print(" PERFORMANCE: Acceptable for production")
 else:
-    print("⚠️ WARNING: May need optimization for high-frequency systems")
+    print(" WARNING: May need optimization for high-frequency systems")
 ```
 
 ### Step 3.3: Rollback Plan (20 minutes)
@@ -495,7 +495,7 @@ class TLKillSwitch:
     def disable_tl():
         """IMMEDIATE TL BYPASS"""
         os.environ['TL_DISABLED'] = '1'
-        print("🔴 TL DISABLED - Reverting to original logic")
+        print(" TL DISABLED - Reverting to original logic")
         
         # Log the emergency disable
         with open('/var/log/tl_disabled.log', 'a') as f:
@@ -505,25 +505,25 @@ class TLKillSwitch:
     def enable_tl():
         """Re-enable TL"""
         os.environ.pop('TL_DISABLED', None)
-        print("✅ TL RE-ENABLED")
+        print(" TL RE-ENABLED")
     
     @staticmethod
     def emergency_halt_all():
         """Force all decisions to HALT"""
         os.environ['TL_EMERGENCY_HALT'] = '1'
-        print("🔴 EMERGENCY HALT - All decisions will HALT")
+        print(" EMERGENCY HALT - All decisions will HALT")
 
 # TEST THE KILL SWITCH
 print("Testing kill switch...")
 TLKillSwitch.disable_tl()
 time.sleep(1)
 TLKillSwitch.enable_tl()
-print("✅ Kill switch operational")
+print(" Kill switch operational")
 ```
 
 ---
 
-## ⚡ HOUR 4: Deploy & Monitor (60 minutes)
+##  HOUR 4: Deploy & Monitor (60 minutes)
 
 ### Step 4.1: Deployment Checklist (10 minutes)
 
@@ -542,11 +542,11 @@ checklist = {
     "Executive briefed": False
 }
 
-print("📋 EMERGENCY DEPLOYMENT CHECKLIST")
+print(" EMERGENCY DEPLOYMENT CHECKLIST")
 print("="*50)
 
 for item, status in checklist.items():
-    status_icon = "✅" if status else "⬜"
+    status_icon = "" if status else "⬜"
     print(f"{status_icon} {item}")
     
     if not status:
@@ -555,9 +555,9 @@ for item, status in checklist.items():
             checklist[item] = True
 
 if all(checklist.values()):
-    print("\n✅ READY FOR DEPLOYMENT")
+    print("\n READY FOR DEPLOYMENT")
 else:
-    print("\n⚠️ WARNING: Incomplete checklist")
+    print("\n WARNING: Incomplete checklist")
 ```
 
 ### Step 4.2: Live Monitoring Dashboard (30 minutes)
@@ -585,26 +585,26 @@ class EmergencyDashboard:
             runtime = (datetime.now() - self.start_time).seconds
             
             print("="*60)
-            print("🚨 EMERGENCY TL DASHBOARD - LIVE")
+            print(" EMERGENCY TL DASHBOARD - LIVE")
             print("="*60)
-            print(f"⏰ Runtime: {runtime//3600}h {(runtime%3600)//60}m {runtime%60}s")
+            print(f" Runtime: {runtime//3600}h {(runtime%3600)//60}m {runtime%60}s")
             print("="*60)
             
             # Get latest stats from your TL instance
             stats = self.get_current_stats()
             
-            print(f"📊 DECISIONS PROCESSED: {stats['total']}")
-            print(f"   ✅ PROCEED: {stats['proceed']} ({stats['proceed']/max(stats['total'],1)*100:.1f}%)")
-            print(f"   ⏸️  HOLD:    {stats['hold']} ({stats['hold']/max(stats['total'],1)*100:.1f}%)")
-            print(f"   🛑 HALT:    {stats['halt']} ({stats['halt']/max(stats['total'],1)*100:.1f}%)")
+            print(f" DECISIONS PROCESSED: {stats['total']}")
+            print(f"    PROCEED: {stats['proceed']} ({stats['proceed']/max(stats['total'],1)*100:.1f}%)")
+            print(f"     HOLD:    {stats['hold']} ({stats['hold']/max(stats['total'],1)*100:.1f}%)")
+            print(f"    HALT:    {stats['halt']} ({stats['halt']/max(stats['total'],1)*100:.1f}%)")
             print("="*60)
             
-            print(f"💰 LOSSES PREVENTED: ${stats['losses_prevented']:,.0f}")
-            print(f"⚠️  HIGH RISK HALTS: {stats['high_risk_halts']}")
-            print(f"🔄 DECISIONS/HOUR: {stats['rate']:.0f}")
+            print(f" LOSSES PREVENTED: ${stats['losses_prevented']:,.0f}")
+            print(f"  HIGH RISK HALTS: {stats['high_risk_halts']}")
+            print(f" DECISIONS/HOUR: {stats['rate']:.0f}")
             
             if stats['hold'] / max(stats['total'], 1) > 0.5:
-                print("\n🔴 ALERT: High HOLD rate - check data quality")
+                print("\n ALERT: High HOLD rate - check data quality")
             
             print("\n[Press Ctrl+C to exit dashboard]")
             time.sleep(self.refresh_rate)
@@ -635,46 +635,46 @@ if __name__ == "__main__":
 #!/bin/bash
 # deploy_emergency_tl.sh
 
-echo "🚀 EMERGENCY TL DEPLOYMENT SCRIPT"
+echo " EMERGENCY TL DEPLOYMENT SCRIPT"
 echo "=================================="
 
 # 1. Backup current system
-echo "📦 Backing up current system..."
+echo " Backing up current system..."
 cp /path/to/production/decision_system.py /path/to/backup/decision_system_$(date +%Y%m%d_%H%M%S).py
 
 # 2. Deploy TL wrapper
-echo "🔧 Deploying TL wrapper..."
+echo " Deploying TL wrapper..."
 cp emergency_hold.py /path/to/production/
 cp production_injection.py /path/to/production/
 
 # 3. Update configuration
-echo "⚙️ Updating configuration..."
+echo " Updating configuration..."
 echo "TL_ENABLED=1" >> /path/to/production/.env
 echo "TL_MODE=EMERGENCY" >> /path/to/production/.env
 
 # 4. Restart services
-echo "🔄 Restarting services..."
+echo " Restarting services..."
 systemctl restart decision-service
 
 # 5. Verify
-echo "✅ Verifying deployment..."
+echo " Verifying deployment..."
 python3 verify_emergency.py
 
 echo "=================================="
-echo "✅ EMERGENCY TL DEPLOYED"
-echo "📊 Monitor at: http://localhost:8080/tl-dashboard"
-echo "🔴 Kill switch: export TL_DISABLED=1"
+echo " EMERGENCY TL DEPLOYED"
+echo " Monitor at: http://localhost:8080/tl-dashboard"
+echo " Kill switch: export TL_DISABLED=1"
 echo "=================================="
 ```
 
 ---
 
-## 🎯 YOU'RE LIVE! Now What?
+##  YOU'RE LIVE! Now What?
 
 ### First 24 Hours
-- **Every HOLD** = Potential loss prevented
-- **Every HALT** = Risk avoided
-- **Log everything** = Data for full implementation
+- __Every HOLD__ = Potential loss prevented
+- __Every HALT__ = Risk avoided
+- __Log everything__ = Data for full implementation
 
 ### Success Metrics
 ```python
@@ -696,7 +696,7 @@ kpis = {
 
 ---
 
-## 📞 Emergency Support
+##  Emergency Support
 
 ### If Things Go Wrong
 
@@ -716,17 +716,17 @@ export TL_DISABLED=1
 
 ---
 
-## ✅ Success Indicators
+##  Success Indicators
 
 You'll know it's working when:
-- 📉 Loss rate drops immediately
-- ⏸️ "Why didn't we wait?" moments disappear
-- 💡 Team says "That HOLD saved us!"
-- 📊 Dashboard shows prevented losses > implementation time cost
+-  Loss rate drops immediately
+-  "Why didn't we wait?" moments disappear
+-  Team says "That HOLD saved us!"
+-  Dashboard shows prevented losses > implementation time cost
 
 ---
 
-## 🎉 Congratulations!
+##  Congratulations!
 
 **You've just deployed Ternary Logic in emergency mode.**
 
@@ -760,8 +760,8 @@ Every HOLD is money saved. Every careful pause is wisdom in action.
 ## Contact Information
 
 **Framework Creator**: Lev Goukassian  
-- **ORCID**: [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
-- **Email**: leogouk@gmail.com
+- __ORCID__ [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
+- __Email__ leogouk@gmail.com
 
 **Emergency Support**: support@tl-goukassian.org
 
@@ -777,4 +777,4 @@ Every HOLD is money saved. Every careful pause is wisdom in action.
 
 **Deploy Time**: If you started when you opened this document, you're now LIVE with Ternary Logic.
 
-The world is no longer binary for your decisions. Neither is your future. 🚀
+The world is no longer binary for your decisions. Neither is your future. 

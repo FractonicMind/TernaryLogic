@@ -9,12 +9,12 @@
 This Charter establishes a voluntary succession framework for the Ternary Logic (TL) framework and Epistemic Hold methodology upon the incapacity or death of the original creator, Lev Goukassian. This document serves as an **invitation** to qualified institutions to assume stewardship responsibilities, not as an assignment of obligations.
 
 ### Framework Coverage
-- **Ternary Logic** economic decision-making framework
-- **Epistemic Hold** methodology and implementations
-- **TL Interactive Demonstration** system
-- **Associated research** and documentation
-- **Memorial Fund** structure and governance
-- **Domain and communication** infrastructure
+- __Ternary Logic__ economic decision-making framework
+- __Epistemic Hold__ methodology and implementations
+- __TL Interactive Demonstration__ system
+- __Associated research__ and documentation
+- __Memorial Fund__ structure and governance
+- __Domain and communication__ infrastructure
 
 ---
 
@@ -62,13 +62,13 @@ The following institutions are **invited** to consider TL stewardship, in order 
 
 Any institution accepting stewardship must demonstrate:
 
-- **Accredited university** status or established financial research institution
-- **Active economic research program** with tenured faculty in finance/economics
-- **Technical infrastructure** capable of hosting web applications and maintaining repositories
-- **Legal capacity** for intellectual property management and licensing
-- **Track record** of open-source contributions or public research tools
-- **Financial stability** for sustained stewardship (minimum 5-year commitment)
-- **Ethical standards** aligned with responsible financial innovation
+- __Accredited university__ status or established financial research institution
+- __Active economic research program__ with tenured faculty in finance/economics
+- __Technical infrastructure__ capable of hosting web applications and maintaining repositories
+- __Legal capacity__ for intellectual property management and licensing
+- __Track record__ of open-source contributions or public research tools
+- __Financial stability__ for sustained stewardship (minimum 5-year commitment)
+- __Ethical standards__ aligned with responsible financial innovation
 
 ---
 
@@ -105,7 +105,7 @@ Any institution accepting stewardship must demonstrate:
 
 2. **Educational Accessibility**
    - Maintain free access to TL framework for educational use
-   - **Preserve and enhance the TL Interactive Demo** as cornerstone educational tool
+   - __Preserve and enhance the TL Interactive Demo__ as cornerstone educational tool
    - Support academic research and publication
    - Provide implementation examples for students and researchers
    - Create educational materials explaining the Epistemic Hold principle
@@ -143,8 +143,8 @@ Any institution accepting stewardship must demonstrate:
 
 ### Communication During Process
 All communications regarding succession shall be directed to:
-- **GitHub Repository**: https://github.com/FractonicMind/TernaryLogic
-- **Backup Contact**: [To be designated by Lev Goukassian]
+- __GitHub Repository__ https://github.com/FractonicMind/TernaryLogic
+- __Backup Contact__ [To be designated by Lev Goukassian]
 
 ---
 
@@ -189,10 +189,10 @@ The Lev Goukassian Memorial Fund for Economic Research shall support:
 - Grants and sponsorships aligned with fund mission
 
 ### Allocation Guidelines
-- **50%** Direct research grants for economic decision theory
-- **25%** Educational programs and conferences  
-- **15%** Administrative costs and infrastructure
-- **10%** Emergency fund for framework protection
+- __50%__ Direct research grants for economic decision theory
+- __25%__ Educational programs and conferences  
+- __15%__ Administrative costs and infrastructure
+- __10%__ Emergency fund for framework protection
 
 ### Governance Requirements
 - Annual public reporting of fund activities
@@ -205,10 +205,10 @@ The Lev Goukassian Memorial Fund for Economic Research shall support:
 ## VIII. TECHNICAL INFRASTRUCTURE TRANSFER
 
 ### Digital Assets
-- **GitHub Repository**: https://github.com/FractonicMind/TernaryLogic
-- **Interactive Demo**: https://fractonicmind.github.io/TernaryLogic/demos/TL-App/
-- **Documentation and Evidence**: Complete framework materials
-- **Medium Articles**: Publication and promotion materials
+- __GitHub Repository__ https://github.com/FractonicMind/TernaryLogic
+- __Interactive Demo__ https://fractonicmind.github.io/TernaryLogic/demos/TL-App/
+- __Documentation and Evidence__ Complete framework materials
+- __Medium Articles__ Publication and promotion materials
 
 ### Domain and Email Setup
 ```
@@ -231,23 +231,23 @@ Redirects:
 ## IX. PROTECTION MECHANISMS
 
 ### Framework Integrity Safeguards
-- **Core Principle Lock**: The three states (+1/Proceed, 0/Epistemic Hold, -1/Halt) are immutable
-- **Attribution Requirement**: "Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)" mandatory in all uses
-- **Market Integrity Clause**: Prohibited uses include market manipulation, predatory trading, or systemic risk amplification
-- **Academic Freedom**: Research criticism and improvements welcomed with proper attribution
-- **Community Review**: Major framework changes require 30-day public comment period
+- __Core Principle Lock__ The three states (+1/Proceed, 0/Epistemic Hold, -1/Halt) are immutable
+- __Attribution Requirement__ "Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)" mandatory in all uses
+- __Market Integrity Clause__ Prohibited uses include market manipulation, predatory trading, or systemic risk amplification
+- __Academic Freedom__ Research criticism and improvements welcomed with proper attribution
+- __Community Review__ Major framework changes require 30-day public comment period
 
 ### Legal Protections
-- **Trademark Protection**: "Epistemic Hold" and "TL" terminology protection
-- **License Enforcement**: Authority to pursue violations of ethical use requirements
-- **Domain Security**: Multi-factor authentication and backup administration
-- **Archive Requirements**: Permanent preservation of original framework materials
+- __Trademark Protection__ "Epistemic Hold" and "TL" terminology protection
+- __License Enforcement__ Authority to pursue violations of ethical use requirements
+- __Domain Security__ Multi-factor authentication and backup administration
+- __Archive Requirements__ Permanent preservation of original framework materials
 
 ### Appeal and Dispute Resolution
-- **Community Input**: Public forum for framework governance discussions
-- **Expert Advisory**: Board including economists and market practitioners
-- **Arbitration Process**: Neutral dispute resolution for licensing conflicts
-- **Transparency Requirements**: Public documentation of all major decisions
+- __Community Input__ Public forum for framework governance discussions
+- __Expert Advisory__ Board including economists and market practitioners
+- __Arbitration Process__ Neutral dispute resolution for licensing conflicts
+- __Transparency Requirements__ Public documentation of all major decisions
 
 ---
 
@@ -283,22 +283,22 @@ Upon succession trigger:
 
 ### Modification Authority
 While Lev Goukassian retains capacity:
-- **Full modification rights** to this Charter
-- **Institution preference updates** as needed
-- **Process refinements** based on legal consultation
-- **Community feedback integration** for improvement
+- __Full modification rights__ to this Charter
+- __Institution preference updates__ as needed
+- __Process refinements__ based on legal consultation
+- __Community feedback integration__ for improvement
 
 After succession activation:
-- **Charter becomes binding** on accepting institution
-- **Modifications require community consultation** and legal review
-- **Core provisions protected** from material alteration
+- __Charter becomes binding__ on accepting institution
+- __Modifications require community consultation__ and legal review
+- __Core provisions protected__ from material alteration
 
 ### Legal Status
 This Charter constitutes:
-- **Intellectual property assignment** effective upon succession trigger
-- **Contractual offer** to qualified institutions
-- **Governance framework** for TL stewardship
-- **Legal foundation** for Memorial Fund establishment
+- __Intellectual property assignment__ effective upon succession trigger
+- __Contractual offer__ to qualified institutions
+- __Governance framework__ for TL stewardship
+- __Legal foundation__ for Memorial Fund establishment
 
 ### Governing Law
 This Charter shall be governed by the laws of the jurisdiction where the accepting institution is located, with international intellectual property law applying to cross-border enforcement.

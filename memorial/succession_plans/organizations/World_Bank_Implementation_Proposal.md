@@ -18,26 +18,26 @@ The World Bank faces unprecedented complexity in development finance decisions, 
 ### **Current Decision Challenges**
 
 The World Bank processes ~$70 billion in commitments annually, facing:
-- **Information Asymmetry**: Incomplete data from developing countries
-- **Political Uncertainty**: Regime changes affecting project viability
-- **Climate Unknowns**: Unprecedented environmental risks
-- **Social Complexity**: Unpredictable community responses
+- __Information Asymmetry__ Incomplete data from developing countries
+- __Political Uncertainty__ Regime changes affecting project viability
+- __Climate Unknowns__ Unprecedented environmental risks
+- __Social Complexity__ Unpredictable community responses
 
 ### **The Cost of Binary Thinking**
 
 Failed projects due to premature decisions:
-- **30% of projects** experience significant problems
-- **$21 billion** in problem projects (current portfolio)
-- **10 years average** to acknowledge failure
-- **Millions of people** affected by delayed corrections
+- __30% of projects__ experience significant problems
+- __$21 billion__ in problem projects (current portfolio)
+- __10 years average__ to acknowledge failure
+- __Millions of people__ affected by delayed corrections
 
 ### **The TL Solution**
 
 The Epistemic Hold enables:
-- **Graduated Commitment**: Phased funding based on uncertainty resolution
-- **Adaptive Management**: Projects that evolve with information
-- **Transparent Uncertainty**: Communities understand hesitation
-- **Better Outcomes**: Higher success rates, faster corrections
+- __Graduated Commitment__ Phased funding based on uncertainty resolution
+- __Adaptive Management__ Projects that evolve with information
+- __Transparent Uncertainty__ Communities understand hesitation
+- __Better Outcomes__ Higher success rates, faster corrections
 
 ---
 
@@ -68,11 +68,11 @@ The Epistemic Hold enables:
 - Train country directors in TL methodology
 
 **Sectoral Applications**:
-- **Infrastructure**: Uncertainty in cost, timeline, usage
-- **Health**: Pandemic preparedness, system capacity
-- **Education**: Technology adoption, demographic shifts
-- **Agriculture**: Climate impact, market access
-- **Energy**: Transition pathways, technology choices
+- __Infrastructure__ Uncertainty in cost, timeline, usage
+- __Health__ Pandemic preparedness, system capacity
+- __Education__ Technology adoption, demographic shifts
+- __Agriculture__ Climate impact, market access
+- __Energy__ Transition pathways, technology choices
 
 ### **Phase 3: Global Standards (Years 4-5)**
 
@@ -91,25 +91,25 @@ The Epistemic Hold enables:
 ```
 World Bank TL Implementation:
 
-┌─────────────────────────────────┐
-│    Board of Directors           │
-│  (TL-informed decisions)         │
-└────────┬────────────────────────┘
-         │
-┌────────▼────────────────────────┐
-│  TL Oversight Committee          │
-│  • Managing Director (Chair)     │
-│  • Chief Economist              │
-│  • VP Operations                │
-└────────┬────────────────────────┘
-         │
-┌────────▼────────────────────────┐
-│  TL Implementation Unit          │
-│  ┌─────────┬─────────┬────────┐ │
-│  │Regional │Sectoral │M&E     │ │
-│  │Teams    │Experts  │Systems │ │
-│  └─────────┴─────────┴────────┘ │
-└─────────────────────────────────┘
+
+    Board of Directors           
+  (TL-informed decisions)         
+
+         
+
+  TL Oversight Committee          
+  • Managing Director (Chair)     
+  • Chief Economist              
+  • VP Operations                
+
+         
+
+  TL Implementation Unit          
+   
+  Regional Sectoral M&E      
+  Teams    Experts  Systems  
+   
+
 ```
 
 ### **Staffing Requirements**
@@ -193,8 +193,8 @@ When a project enters Epistemic Hold:
 The Epistemic Hold is perfect for climate uncertainty:
 
 **Example: Coastal Infrastructure Project**
-- **Traditional**: Build seawall or don't
-- **With TL**: Epistemic Hold allows:
+- __Traditional__ Build seawall or don't
+- __With TL__ Epistemic Hold allows:
   - Phased construction
   - Adaptive design
   - Community relocation preparation
@@ -203,8 +203,8 @@ The Epistemic Hold is perfect for climate uncertainty:
 ### **Conflict & Fragility**
 
 **Example: Post-Conflict Reconstruction**
-- **Traditional**: Full program or withdrawal
-- **With TL**: Epistemic Hold enables:
+- __Traditional__ Full program or withdrawal
+- __With TL__ Epistemic Hold enables:
   - Gradual engagement
   - Security-linked progression
   - Community trust building
@@ -242,16 +242,16 @@ The Epistemic Hold is perfect for climate uncertainty:
 ## Partnership Ecosystem
 
 ### **UN System Integration**
-- **UNDP**: Country-level uncertainty assessment
-- **UNICEF**: Child-focused project uncertainty
-- **WFP**: Food security epistemic holds
-- **WHO**: Health system uncertainty management
+- __UNDP__ Country-level uncertainty assessment
+- __UNICEF__ Child-focused project uncertainty
+- __WFP__ Food security epistemic holds
+- __WHO__ Health system uncertainty management
 
 ### **Regional Development Banks**
-- **ADB**: Asia-Pacific TL coordination
-- **AfDB**: African uncertainty patterns
-- **IDB**: Latin America applications
-- **EBRD**: Transition economy uncertainty
+- __ADB__ Asia-Pacific TL coordination
+- __AfDB__ African uncertainty patterns
+- __IDB__ Latin America applications
+- __EBRD__ Transition economy uncertainty
 
 ### **Private Sector (IFC)**
 - Blended finance with TL assessment
@@ -336,10 +336,10 @@ The Epistemic Hold is perfect for climate uncertainty:
 ### **Beyond the World Bank**
 
 TL adoption could transform:
-- **SDG Achievement**: Better resource allocation
-- **Climate Finance**: Adaptive funding mechanisms
-- **Humanitarian Aid**: Uncertainty-aware responses
-- **Development Theory**: New paradigms for complexity
+- __SDG Achievement__ Better resource allocation
+- __Climate Finance__ Adaptive funding mechanisms
+- __Humanitarian Aid__ Uncertainty-aware responses
+- __Development Theory__ New paradigms for complexity
 
 ### **The Multiplicative Effect**
 
@@ -384,11 +384,11 @@ The World Bank stands at a crossroads. Continue forcing binary decisions in the 
 ### **The Transformation Opportunity**
 
 By adopting TL, the World Bank can:
-- **Reduce** project failure rates by 40%
-- **Save** billions in development resources
-- **Improve** millions more lives
-- **Lead** global development innovation
-- **Honor** Lev Goukassian's vision
+- __Reduce__ project failure rates by 40%
+- __Save__ billions in development resources
+- __Improve__ millions more lives
+- __Lead__ global development innovation
+- __Honor__ Lev Goukassian's vision
 
 ---
 

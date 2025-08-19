@@ -9,17 +9,17 @@
 
 ---
 
-## 🧪 Testing Overview
+##  Testing Overview
 
 ### Testing Philosophy
 
 The Ternary Logic framework requires **rigorous testing** due to its application in critical economic decision-making contexts. Our testing approach ensures:
 
-- **Decision Accuracy**: Correct +1/0/-1 state classification across scenarios
-- **Threshold Sensitivity**: Proper behavior at confidence and risk boundaries  
-- **Edge Case Handling**: Robust performance under extreme market conditions
-- **Performance Validation**: Consistent execution speed and memory usage
-- **Integration Stability**: Reliable operation with financial and policy systems
+- __Decision Accuracy__ Correct +1/0/-1 state classification across scenarios
+- __Threshold Sensitivity__ Proper behavior at confidence and risk boundaries  
+- __Edge Case Handling__ Robust performance under extreme market conditions
+- __Performance Validation__ Consistent execution speed and memory usage
+- __Integration Stability__ Reliable operation with financial and policy systems
 
 ### Test Coverage Metrics
 
@@ -34,116 +34,116 @@ Memory Usage:            < 50MB
 
 ---
 
-## 📁 Test Structure
+##  Test Structure
 
 ### Directory Organization
 
 ```
 tests/
-├── README.md                          # This file
-├── conftest.py                        # pytest configuration and fixtures
-├── requirements.txt                   # Testing dependencies
-├── TEST_INDEX.md                      # Auto-generated index of test files
-│
-├── unit/                              # Unit tests for individual components
-│   ├── test_core_engine.py           # Core TL decision engine tests (9 tests)
-│   ├── test_uncertainty_detection.py # Uncertainty measurement tests (6 tests)
-│   ├── test_risk_assessment.py       # Risk evaluation tests (7 tests)
-│   ├── test_threshold_management.py  # Dynamic threshold tests (7 tests)
-│   └── test_state_transitions.py     # State change logic tests (8 tests)
-│
-├── integration/                       # Integration tests
-│   ├── test_financial_trading.py     # Trading system integration (4 tests)
-│   └── test_monetary_policy.py       # Policy decision integration (4 tests)
-│
-├── scenarios/                         # Scenario-based testing
-│   └── test_scenario_database.py     # Scenario validation (3 tests)
-│
-├── performance/                       # Performance and stress testing
-│   └── test_execution_speed.py       # Speed benchmarks (3 tests)
-│
-├── validation/                        # Academic validation tests
-│   └── test_backtesting_results.py   # Historical performance validation (2 tests)
-│
-└── fixtures/                          # Test data and utilities
-    └── test_utilities.py              # Custom testing utilities
+ README.md                          # This file
+ conftest.py                        # pytest configuration and fixtures
+ requirements.txt                   # Testing dependencies
+ TEST_INDEX.md                      # Auto-generated index of test files
+
+ unit/                              # Unit tests for individual components
+    test_core_engine.py           # Core TL decision engine tests (9 tests)
+    test_uncertainty_detection.py # Uncertainty measurement tests (6 tests)
+    test_risk_assessment.py       # Risk evaluation tests (7 tests)
+    test_threshold_management.py  # Dynamic threshold tests (7 tests)
+    test_state_transitions.py     # State change logic tests (8 tests)
+
+ integration/                       # Integration tests
+    test_financial_trading.py     # Trading system integration (4 tests)
+    test_monetary_policy.py       # Policy decision integration (4 tests)
+
+ scenarios/                         # Scenario-based testing
+    test_scenario_database.py     # Scenario validation (3 tests)
+
+ performance/                       # Performance and stress testing
+    test_execution_speed.py       # Speed benchmarks (3 tests)
+
+ validation/                        # Academic validation tests
+    test_backtesting_results.py   # Historical performance validation (2 tests)
+
+ fixtures/                          # Test data and utilities
+     test_utilities.py              # Custom testing utilities
 ```
 
 ---
 
-## 🎯 Core Testing Components
+##  Core Testing Components
 
 ### 1. Unit Tests (`/unit/`) - 31 tests
 
 #### **Core Engine Testing** (`test_core_engine.py`)
-- ✅ PROCEED decision with clear positive signals
-- ✅ HALT decision with high risk detection
-- ✅ HOLD decision with conflicting information (Epistemic uncertainty)
-- ✅ Threshold boundary behavior testing
-- ✅ Decision matrix validation across confidence/risk combinations
+-  PROCEED decision with clear positive signals
+-  HALT decision with high risk detection
+-  HOLD decision with conflicting information (Epistemic uncertainty)
+-  Threshold boundary behavior testing
+-  Decision matrix validation across confidence/risk combinations
 
 #### **Uncertainty Detection** (`test_uncertainty_detection.py`)
-- ✅ Market volatility-based uncertainty calculation
-- ✅ Information asymmetry and gap detection
-- ✅ Regime change detection in time series
-- ✅ Noise-based uncertainty quantification
+-  Market volatility-based uncertainty calculation
+-  Information asymmetry and gap detection
+-  Regime change detection in time series
+-  Noise-based uncertainty quantification
 
 #### **Risk Assessment** (`test_risk_assessment.py`)
-- ✅ Market risk calculation from price data
-- ✅ Systemic risk identification from correlations
-- ✅ Operational risk scoring for supply chains
-- ✅ Value at Risk (VaR) calculations
-- ✅ Volatility-based risk classification
+-  Market risk calculation from price data
+-  Systemic risk identification from correlations
+-  Operational risk scoring for supply chains
+-  Value at Risk (VaR) calculations
+-  Volatility-based risk classification
 
 #### **Threshold Management** (`test_threshold_management.py`)
-- ✅ Dynamic threshold initialization and bounds
-- ✅ Adaptive threshold adjustment based on performance
-- ✅ Domain-specific threshold configurations
-- ✅ Volatility-adjusted threshold calibration
+-  Dynamic threshold initialization and bounds
+-  Adaptive threshold adjustment based on performance
+-  Domain-specific threshold configurations
+-  Volatility-adjusted threshold calibration
 
 #### **State Transitions** (`test_state_transitions.py`)
-- ✅ Valid state transition validation
-- ✅ Invalid transition detection and override
-- ✅ Transition probability calculations
-- ✅ Pattern detection in state sequences
+-  Valid state transition validation
+-  Invalid transition detection and override
+-  Transition probability calculations
+-  Pattern detection in state sequences
 
 ### 2. Integration Tests (`/integration/`) - 8 tests
 
 #### **Financial Trading Integration** (`test_financial_trading.py`)
-- ✅ Real-time market data processing simulation
-- ✅ Position sizing with TL state recommendations
-- ✅ Risk limit integration and enforcement
-- ✅ Backtesting framework integration
+-  Real-time market data processing simulation
+-  Position sizing with TL state recommendations
+-  Risk limit integration and enforcement
+-  Backtesting framework integration
 
 #### **Monetary Policy Integration** (`test_monetary_policy.py`)
-- ✅ Economic indicator processing for policy decisions
-- ✅ Multi-objective optimization under constraints
-- ✅ Forward guidance generation based on outlook
-- ✅ Historical policy decision validation
+-  Economic indicator processing for policy decisions
+-  Multi-objective optimization under constraints
+-  Forward guidance generation based on outlook
+-  Historical policy decision validation
 
 ### 3. Scenario Tests (`/scenarios/`) - 3 tests
 
 #### **Scenario Database Validation** (`test_scenario_database.py`)
-- ✅ Classification correctness across all scenarios
-- ✅ Balanced distribution of +1/0/-1 decisions
-- ✅ Complexity mapping to expected outcomes
+-  Classification correctness across all scenarios
+-  Balanced distribution of +1/0/-1 decisions
+-  Complexity mapping to expected outcomes
 
 ### 4. Performance Tests (`/performance/`) - 3 tests
 
 #### **Execution Speed Testing** (`test_execution_speed.py`)
-- ✅ Single decision speed: <1ms achieved
-- ✅ Batch processing: 1000+ decisions/second
-- ✅ High-frequency sustained: 600+ decisions/second
+-  Single decision speed: <1ms achieved
+-  Batch processing: 1000+ decisions/second
+-  High-frequency sustained: 600+ decisions/second
 
 ### 5. Validation Tests (`/validation/`) - 2 tests
 
 #### **Backtesting Results** (`test_backtesting_results.py`)
-- ✅ Trading strategy historical validation
-- ✅ Risk-adjusted return calculations
+-  Trading strategy historical validation
+-  Risk-adjusted return calculations
 
 ---
 
-## 🚀 Running Tests
+##  Running Tests
 
 ### Quick Start
 
@@ -194,7 +194,7 @@ pytest tests/ --cov=. --cov-fail-under=80 --junitxml=test-results.xml
 
 ---
 
-## 📊 Test Categories & Coverage
+##  Test Categories & Coverage
 
 ### Coverage Distribution
 
@@ -211,25 +211,25 @@ pytest tests/ --cov=. --cov-fail-under=80 --junitxml=test-results.xml
 
 | Metric | Target | Actual | Status |
 |--------|--------|--------|--------|
-| **Total Tests** | 50+ | 53 | ✅ Achieved |
-| **Pass Rate** | 100% | 100% | ✅ Perfect |
-| **Code Coverage** | >80% | 81% | ✅ Achieved |
-| **Execution Time** | <5s | 1.39s | ✅ Excellent |
-| **Single Decision** | <10ms | <1ms | ✅ Exceeds |
-| **Throughput** | >100/s | >600/s | ✅ Exceeds |
+| **Total Tests** | 50+ | 53 |  Achieved |
+| **Pass Rate** | 100% | 100% |  Perfect |
+| **Code Coverage** | >80% | 81% |  Achieved |
+| **Execution Time** | <5s | 1.39s |  Excellent |
+| **Single Decision** | <10ms | <1ms |  Exceeds |
+| **Throughput** | >100/s | >600/s |  Exceeds |
 
 ---
 
-## 🎯 Test Implementation Details
+##  Test Implementation Details
 
 ### Current Status
 
 All tests are currently implemented with **mock objects** to validate the framework structure and test suite functionality. The mock implementation:
 
-- ✅ Validates the three-state logic (PROCEED/HOLD/HALT)
-- ✅ Tests confidence and risk thresholds
-- ✅ Simulates realistic decision-making scenarios
-- ✅ Provides performance benchmarks
+-  Validates the three-state logic (PROCEED/HOLD/HALT)
+-  Tests confidence and risk thresholds
+-  Simulates realistic decision-making scenarios
+-  Provides performance benchmarks
 
 ### Migration to Production
 
@@ -253,17 +253,17 @@ When implementing the actual TL framework:
 
 ---
 
-## 📈 Performance Benchmarks
+##  Performance Benchmarks
 
 ### Execution Speed Targets
 
 | Test Category | Target Time | Current Performance | Status |
 |--------------|-------------|-------------------|---------|
-| **Unit Tests** | < 0.5s | 0.3s | ✅ Exceeds |
-| **Integration Tests** | < 2.0s | 0.1s | ✅ Exceeds |
-| **Scenario Tests** | < 1.5s | 0.1s | ✅ Exceeds |
-| **Performance Tests** | < 5.0s | 1.0s | ✅ Exceeds |
-| **Full Test Suite** | < 10.0s | 1.39s | ✅ Exceeds |
+| **Unit Tests** | < 0.5s | 0.3s |  Exceeds |
+| **Integration Tests** | < 2.0s | 0.1s |  Exceeds |
+| **Scenario Tests** | < 1.5s | 0.1s |  Exceeds |
+| **Performance Tests** | < 5.0s | 1.0s |  Exceeds |
+| **Full Test Suite** | < 10.0s | 1.39s |  Exceeds |
 
 ### Decision Processing Metrics
 
@@ -276,17 +276,17 @@ When implementing the actual TL framework:
 
 ---
 
-## 🔧 Testing Utilities
+##  Testing Utilities
 
 ### Custom Testing Framework (`fixtures/test_utilities.py`)
 
 The test suite includes custom utilities for:
 
-- **Scenario Generation**: Create test scenarios for different domains
-- **Decision Validation**: Validate TL state classifications
-- **Market Data Generation**: Generate realistic market conditions
-- **Performance Metrics**: Calculate comprehensive metrics
-- **Data Generators**: Create price series, correlation matrices
+- __Scenario Generation__ Create test scenarios for different domains
+- __Decision Validation__ Validate TL state classifications
+- __Market Data Generation__ Generate realistic market conditions
+- __Performance Metrics__ Calculate comprehensive metrics
+- __Data Generators__ Create price series, correlation matrices
 
 ### Fixtures Available
 
@@ -300,7 +300,7 @@ The test suite includes custom utilities for:
 
 ---
 
-## 🚀 Future Testing Enhancements
+##  Future Testing Enhancements
 
 ### Planned Additions
 
@@ -331,7 +331,7 @@ The test suite includes custom utilities for:
 
 ---
 
-## 🤝 Contributing to Testing
+##  Contributing to Testing
 
 ### Test Contribution Guidelines
 
@@ -342,44 +342,44 @@ The test suite includes custom utilities for:
 - Ensure tests are deterministic and repeatable
 
 #### **Test Categories for Contributors**
-- **Domain Expertise**: Tests for specific economic domains
-- **Edge Cases**: Unusual or extreme scenario testing
-- **Integration**: New system and API integration tests
-- **Performance**: Optimization and scaling tests
+- __Domain Expertise__ Tests for specific economic domains
+- __Edge Cases__ Unusual or extreme scenario testing
+- __Integration__ New system and API integration tests
+- __Performance__ Optimization and scaling tests
 
 ### Testing Standards
 
 #### **Code Quality Requirements**
-- **Coverage**: New features must maintain >80% coverage
-- **Performance**: Tests must complete in reasonable time
-- **Documentation**: All tests must include clear docstrings
-- **Independence**: Tests should not depend on execution order
+- __Coverage__ New features must maintain >80% coverage
+- __Performance__ Tests must complete in reasonable time
+- __Documentation__ All tests must include clear docstrings
+- __Independence__ Tests should not depend on execution order
 
 ---
 
-## 📞 Testing Support
+##  Testing Support
 
 ### Getting Help with Testing
 
 #### **Community Support**
-- **GitHub Issues**: Report testing problems and bugs
-- **Discussion Forum**: Ask questions about testing approaches
-- **Documentation**: Comprehensive testing guides
-- **Code Reviews**: Community feedback on test contributions
+- __GitHub Issues__ Report testing problems and bugs
+- __Discussion Forum__ Ask questions about testing approaches
+- __Documentation__ Comprehensive testing guides
+- __Code Reviews__ Community feedback on test contributions
 
 #### **Academic Collaboration**
-- **Research Validation**: Academic institution testing partnerships
-- **Student Projects**: University testing and validation projects
-- **Faculty Collaboration**: Joint testing research
-- **Peer Review**: Independent academic validation
+- __Research Validation__ Academic institution testing partnerships
+- __Student Projects__ University testing and validation projects
+- __Faculty Collaboration__ Joint testing research
+- __Peer Review__ Independent academic validation
 
 ---
 
 ## Contact Information
 
 **Created by**: Lev Goukassian  
-- **ORCID**: [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
-- **Email**: leogouk@gmail.com
+- __ORCID__ [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
+- __Email__ leogouk@gmail.com
 
 **Testing Support**: support@tl-goukassian.org  
 (see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))

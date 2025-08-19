@@ -25,10 +25,10 @@ No. TL is a **decision philosophy** that can be implemented in any system - from
 
 ### 6. Why is reading the MANDATORY.md file required?
 Unlike typical open source frameworks, TL is designed for **critical economic decision-making** where misuse can cause:
-- **Financial losses** from improper state classification
-- **Missed opportunities** from incorrect Epistemic Hold activation
-- **Systematic risks** from threshold miscalibration  
-- **Decision paralysis** from misunderstanding the Hold state
+- __Financial losses__ from improper state classification
+- __Missed opportunities__ from incorrect Epistemic Hold activation
+- __Systematic risks__ from threshold miscalibration  
+- __Decision paralysis__ from misunderstanding the Hold state
 
 The mandatory reading ensures users understand that **Epistemic Hold is not indecision** - it's intelligent pause. This distinction is fundamental to successful implementation.
 
@@ -126,7 +126,7 @@ The system:
 **Yes**, but TL **fails safely**:
 - False positives = unnecessary holds (inconvenient but safe)
 - False negatives = missed risks (minimized through conservative thresholds)
-- **Philosophy**: Better to pause unnecessarily than proceed dangerously
+- __Philosophy__ Better to pause unnecessarily than proceed dangerously
 
 ### 21. What prevents malicious actors from using TL for harmful purposes?
 **Technical safeguards**:
@@ -167,7 +167,7 @@ The system:
 - Integration tests (real scenarios)  
 - Performance tests (<1ms decisions)
 - Validation tests (economic accuracy)
-- **100% pass rate**, 81% code coverage
+- __100% pass rate__, 81% code coverage
 
 ### 26. What real scenarios are tested?
 **25+ scenarios** including:
@@ -288,32 +288,32 @@ TL provides **natural language explanations**:
 **Permanently.** The MIT + Ethical Use license ensures TL remains freely available for beneficial use while preventing harmful applications.
 
 ### 45. How can I stay updated on TL developments?
-- **Star the repository** for GitHub notifications
-- **Watch releases** for major updates
-- **Follow issues** for feature discussions
-- **Memorial fund updates** via succession trustees
+- __Star the repository__ for GitHub notifications
+- __Watch releases__ for major updates
+- __Follow issues__ for feature discussions
+- __Memorial fund updates__ via succession trustees
 
 ---
 
 ## Quick Reference
 
-### **🚀 Getting Started:**
+### ** Getting Started:**
 1. Read [MANDATORY.md](MANDATORY.md) 
 2. Try [Quick Start Guide](QUICK_START.md)
 3. Run `examples/quickstart_example.py`
 4. Explore interactive demos
 
-### **📚 Key Resources:**
-- **Theory**: [Economic Foundations](../theory/economic-foundations.md)
-- **API**: [Complete Reference](api/complete_api_reference.md)
-- **Examples**: [Case Studies](../examples/)
-- **Testing**: [53 Test Suite](../tests/)
+### ** Key Resources:**
+- __Theory__ [Economic Foundations](../theory/economic-foundations.md)
+- __API__ [Complete Reference](api/complete_api_reference.md)
+- __Examples__ [Case Studies](../examples/)
+- __Testing__ [53 Test Suite](../tests/)
 
-### **💬 Getting Help:**
-- **Technical Issues**: GitHub Issues
-- **License Questions**: [LICENSE FAQ](LICENSE_FAQ.md)
-- **Academic Collaboration**: succession trustees
-- **General Support**: support@tl-goukassian.org
+### ** Getting Help:**
+- __Technical Issues__ GitHub Issues
+- __License Questions__ [LICENSE FAQ](LICENSE_FAQ.md)
+- __Academic Collaboration__ succession trustees
+- __General Support__ support@tl-goukassian.org
 
 ---
 

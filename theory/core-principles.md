@@ -77,8 +77,8 @@ TL treats market tensions not as noise to be filtered but as valuable informatio
 
 TL distinguishes between two fundamentally different types of uncertainty:
 
-- **Epistemic Uncertainty** (knowable unknowns): "More information could resolve this"
-- **Aleatory Uncertainty** (unknowable unknowns): "Inherent market randomness exists here"
+- __Epistemic Uncertainty__ (knowable unknowns): "More information could resolve this"
+- __Aleatory Uncertainty__ (unknowable unknowns): "Inherent market randomness exists here"
 
 This distinction is crucial because they require different responses. Epistemic uncertainty calls for data gathering; aleatory uncertainty calls for risk management.
 
@@ -134,10 +134,10 @@ TL systems must be capable of identifying when multiple market signals are in te
 
 When experiencing the 0 state (Epistemic Hold), systems should clearly communicate:
 
-- **What signals are in conflict**
-- **Why the conflict matters economically**
-- **What additional information would help resolve the uncertainty**
-- **Suggestions for human analysis**
+- __What signals are in conflict__
+- __Why the conflict matters economically__
+- __What additional information would help resolve the uncertainty__
+- __Suggestions for human analysis__
 
 ### Temporal Dynamics
 

@@ -28,12 +28,12 @@ MIT's institutional DNA perfectly aligns with TL's requirements:
 ### **Institutional Synergies**
 
 The TL Framework connects multiple MIT strengths:
-- **MIT Sloan School of Management**: Financial markets expertise
-- **Computer Science & AI Laboratory (CSAIL)**: Implementation capabilities
-- **Laboratory for Financial Engineering**: Direct application domain
-- **MIT Digital Currency Initiative**: Financial innovation experience
-- **Operations Research Center**: Optimization under uncertainty
-- **Institute for Data, Systems, and Society (IDSS)**: Complex systems analysis
+- __MIT Sloan School of Management__ Financial markets expertise
+- __Computer Science & AI Laboratory (CSAIL)__ Implementation capabilities
+- __Laboratory for Financial Engineering__ Direct application domain
+- __MIT Digital Currency Initiative__ Financial innovation experience
+- __Operations Research Center__ Optimization under uncertainty
+- __Institute for Data, Systems, and Society (IDSS)__ Complex systems analysis
 
 ---
 
@@ -178,23 +178,23 @@ The TL Framework connects multiple MIT strengths:
 ### **Extended Faculty Network**
 
 **Finance & Economics Cluster**:
-- **Antoinette Schoar**: Entrepreneurial Finance (TL commercialization)
-- **Roberto Rigobon**: International Finance (global TL applications)
-- **Leonid Kogan**: Asset Pricing (TL in markets)
-- **Jiang Wang**: Market Microstructure (TL trading)
-- **Stephen Ross** (Emeritus): Option theory applications
+- __Antoinette Schoar__ Entrepreneurial Finance (TL commercialization)
+- __Roberto Rigobon__ International Finance (global TL applications)
+- __Leonid Kogan__ Asset Pricing (TL in markets)
+- __Jiang Wang__ Market Microstructure (TL trading)
+- __Stephen Ross__ (Emeritus): Option theory applications
 
 **Computer Science Cluster**:
-- **Constantinos Daskalakis**: Game theory and TL
-- **Silvio Micali**: Cryptographic TL verification
-- **Tommi Jaakkola**: Machine learning for uncertainty
-- **Manolis Kellis**: Computational biology parallels
+- __Constantinos Daskalakis__ Game theory and TL
+- __Silvio Micali__ Cryptographic TL verification
+- __Tommi Jaakkola__ Machine learning for uncertainty
+- __Manolis Kellis__ Computational biology parallels
 
 **Systems & Engineering Cluster**:
-- **Munther Dahleh**: Control theory for TL
-- **John Tsitsiklis**: Dynamic programming applications
-- **Patrick Jaillet**: Optimization under uncertainty
-- **Georgia Perakis**: Operations research applications
+- __Munther Dahleh__ Control theory for TL
+- __John Tsitsiklis__ Dynamic programming applications
+- __Patrick Jaillet__ Optimization under uncertainty
+- __Georgia Perakis__ Operations research applications
 
 ### **Rising Stars & New Hires**
 
@@ -280,16 +280,16 @@ Target recruitment of 5 new faculty:
 #### Undergraduate Program
 
 **New Courses**:
-- **6.S899**: "Computational Uncertainty" (EECS)
-- **15.S08**: "Finance Under Epistemic Hold" (Sloan)
-- **14.S01**: "Economic Theory of Ternary Logic" (Economics)
-- **18.S097**: "Mathematics of Three-Valued Logic" (Mathematics)
+- __6.S899__ "Computational Uncertainty" (EECS)
+- __15.S08__ "Finance Under Epistemic Hold" (Sloan)
+- __14.S01__ "Economic Theory of Ternary Logic" (Economics)
+- __18.S097__ "Mathematics of Three-Valued Logic" (Mathematics)
 
 **Integration into Core**:
-- **6.036**: Machine Learning (add TL module)
-- **15.401**: Finance Theory (include Epistemic Hold)
-- **14.01**: Microeconomics (ternary choice theory)
-- **18.05**: Probability (three-state systems)
+- __6.036__ Machine Learning (add TL module)
+- __15.401__ Finance Theory (include Epistemic Hold)
+- __14.01__ Microeconomics (ternary choice theory)
+- __18.05__ Probability (three-state systems)
 
 **UROP Opportunities**:
 - 50 undergraduate research positions/year
@@ -306,10 +306,10 @@ Target recruitment of 5 new faculty:
 - Industry internship
 
 **Master's Programs**:
-- **MEng in TL Systems**: 1-year professional degree
-- **MFin with TL**: Enhanced finance master's
-- **Executive MBA Module**: TL for leaders
-- **Online MicroMasters**: Global accessibility
+- __MEng in TL Systems__ 1-year professional degree
+- __MFin with TL__ Enhanced finance master's
+- __Executive MBA Module__ TL for leaders
+- __Online MicroMasters__ Global accessibility
 
 **PhD Course Sequence**:
 1. Foundations of Ternary Logic

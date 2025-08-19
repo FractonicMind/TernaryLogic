@@ -1189,7 +1189,7 @@ class TestBacktestingResults:
 }
 
 # Write all test files
-print("\n📝 Creating test files...\n")
+print("\n Creating test files...\n")
 
 for file_path, content in TEST_FILES.items():
     full_path = TEST_DIR / file_path
@@ -1198,7 +1198,7 @@ for file_path, content in TEST_FILES.items():
     with open(full_path, 'w') as f:
         f.write(content)
     
-    print(f"✅ Created: {full_path}")
+    print(f" Created: {full_path}")
 
 for file_path, content in MORE_TEST_FILES.items():
     full_path = TEST_DIR / file_path
@@ -1207,13 +1207,13 @@ for file_path, content in MORE_TEST_FILES.items():
     with open(full_path, 'w') as f:
         f.write(content)
     
-    print(f"✅ Created: {full_path}")
+    print(f" Created: {full_path}")
 
 print("\n" + "="*60)
-print("🎉 Test suite creation complete!")
+print(" Test suite creation complete!")
 print("="*60)
 
-print("\n📋 Next steps:")
+print("\n Next steps:")
 print("1. Install test dependencies:")
 print("   pip install -r tests/requirements.txt")
 print("\n2. Run tests:")
@@ -1227,6 +1227,6 @@ print("   pytest -m 'not slow'             # Skip slow tests")
 print("   pytest -m integration            # Only integration tests")
 print("   pytest -m performance            # Only performance tests")
 
-print("\n⚠️  Note: The test files use mock implementations.")
+print("\n  Note: The test files use mock implementations.")
 print("You'll need to update the imports in conftest.py to match")
 print("your actual module structure once you implement the TL framework.")

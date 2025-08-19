@@ -147,7 +147,7 @@ Every ethical use advances the vision of economic systems that are **intelligent
 
 ## Quick Reference
 
-### ✅ **Always Permitted:**
+###  **Always Permitted:**
 - Academic research and education
 - Internal prototyping and R&D
 - Legitimate financial services
@@ -155,14 +155,14 @@ Every ethical use advances the vision of economic systems that are **intelligent
 - Open source contributions
 - Commercial products with ethical end-use
 
-### ❌ **Never Permitted:**
+###  **Never Permitted:**
 - Market manipulation schemes
 - Predatory financial products
 - Information asymmetry exploitation
 - Algorithmic trading designed to harm retail investors
 - Any use that violates fiduciary responsibilities
 
-### ⚠️ **Requires Careful Consideration:**
+###  **Requires Careful Consideration:**
 - High-frequency trading systems
 - Automated credit decisions
 - Risk assessment tools

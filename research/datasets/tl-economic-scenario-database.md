@@ -9,12 +9,12 @@
 ## Database Structure
 
 Each scenario includes:
-- **Scenario Description**: Clear situation context
-- **Proposed Economic Action**: The decision under consideration  
-- **Implicated Factors**: Key economic variables and uncertainties
-- **Potential Conflict/Uncertainty**: Core tension requiring analysis
-- **Expected TL State**: Predicted framework response (+1/0/-1)
-- **Epistemic Hold Reasoning**: Why deliberation may be required
+- __Scenario Description__ Clear situation context
+- __Proposed Economic Action__ The decision under consideration  
+- __Implicated Factors__ Key economic variables and uncertainties
+- __Potential Conflict/Uncertainty__ Core tension requiring analysis
+- __Expected TL State__ Predicted framework response (+1/0/-1)
+- __Epistemic Hold Reasoning__ Why deliberation may be required
 
 ---
 
@@ -422,10 +422,10 @@ Each scenario includes:
 ### Validation Metrics
 
 **Framework Effectiveness Measures**:
-- **State Prediction Accuracy**: % of scenarios correctly classified
-- **Epistemic Hold Rate**: % of decisions triggering deliberation (target: 15-25%)
-- **False Positive Rate**: % of +1 decisions that should have been 0 or -1
-- **False Negative Rate**: % of -1 decisions incorrectly classified as 0 or +1
+- __State Prediction Accuracy__ % of scenarios correctly classified
+- __Epistemic Hold Rate__ % of decisions triggering deliberation (target: 15-25%)
+- __False Positive Rate__ % of +1 decisions that should have been 0 or -1
+- __False Negative Rate__ % of -1 decisions incorrectly classified as 0 or +1
 
 ---
 
@@ -433,13 +433,13 @@ Each scenario includes:
 
 This database provides foundation scenarios across key economic domains. Additional scenarios can be generated for:
 
-- **Cryptocurrency/Digital Assets**
-- **ESG Investment Decisions** 
-- **Algorithmic Trading Systems**
-- **Insurance and Actuarial Decisions**
-- **Private Equity and Venture Capital**
-- **Central Bank Digital Currency Implementation**
-- **Regulatory Compliance Decisions**
+- __Cryptocurrency/Digital Assets__
+- __ESG Investment Decisions__ 
+- __Algorithmic Trading Systems__
+- __Insurance and Actuarial Decisions__
+- __Private Equity and Venture Capital__
+- __Central Bank Digital Currency Implementation__
+- __Regulatory Compliance Decisions__
 
 Each new domain should follow the same structured approach: clear scenarios, identified uncertainties, predicted TL states, and epistemic reasoning.
 

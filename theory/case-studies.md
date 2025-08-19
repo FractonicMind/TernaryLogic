@@ -30,11 +30,11 @@ This document presents detailed case studies demonstrating how Ternary Logic (TL
 ### TL Analysis Process
 
 **Step 1: Economic Factor Detection**
-- **Market Momentum**: Strong technical signals support execution
-- **Risk Management**: Large position size during high volatility period
-- **Information Asymmetry**: Earnings announcement creates uncertainty
-- **Liquidity Conditions**: Below-average volume suggests execution risk
-- **Opportunity Cost**: Missing momentum vs. preserving capital
+- __Market Momentum__ Strong technical signals support execution
+- __Risk Management__ Large position size during high volatility period
+- __Information Asymmetry__ Earnings announcement creates uncertainty
+- __Liquidity Conditions__ Below-average volume suggests execution risk
+- __Opportunity Cost__ Missing momentum vs. preserving capital
 
 **Step 2: Uncertainty Identification**
 Primary uncertainty:
@@ -90,11 +90,11 @@ This Epistemic Hold prevented a potentially costly trade during uncertain condit
 ### TL Analysis Process
 
 **Step 1: Economic Factor Detection**
-- **Inflation Control**: Above-target inflation supports rate increase
-- **Employment Stability**: Low unemployment suggests economic strength
-- **Growth Sustainability**: Slowing growth argues against rate increase
-- **Financial Stability**: Banking stress suggests caution needed
-- **International Coordination**: Global recession creates policy complexity
+- __Inflation Control__ Above-target inflation supports rate increase
+- __Employment Stability__ Low unemployment suggests economic strength
+- __Growth Sustainability__ Slowing growth argues against rate increase
+- __Financial Stability__ Banking stress suggests caution needed
+- __International Coordination__ Global recession creates policy complexity
 
 **Step 2: Policy Uncertainty Identification**
 Critical tensions:
@@ -154,11 +154,11 @@ Critical tensions:
 ### TL Analysis Process
 
 **Step 1: Economic Factor Detection**
-- **Cost Efficiency**: Current supplier offers significant cost advantages
-- **Risk Management**: Geopolitical tensions threaten supply continuity
-- **Operational Complexity**: Supplier diversification increases management overhead
-- **Strategic Resilience**: Supply chain resilience vs. immediate profitability
-- **Market Competitiveness**: Cost structure affects competitive position
+- __Cost Efficiency__ Current supplier offers significant cost advantages
+- __Risk Management__ Geopolitical tensions threaten supply continuity
+- __Operational Complexity__ Supplier diversification increases management overhead
+- __Strategic Resilience__ Supply chain resilience vs. immediate profitability
+- __Market Competitiveness__ Cost structure affects competitive position
 
 **Step 2: Uncertainty Identification**
 Core uncertainties:
@@ -217,11 +217,11 @@ After major supply route closure:
 ### TL Analysis Process
 
 **Step 1: Economic Factor Detection**
-- **Fiduciary Duty**: Obligation to provide objective advice to client
-- **Fee Generation**: Significant revenue opportunity for investment bank
-- **Client Relationship**: Long-term relationship vs. single transaction
-- **Market Reputation**: Professional credibility and future business
-- **Shareholder Value**: Client shareholders' financial interests
+- __Fiduciary Duty__ Obligation to provide objective advice to client
+- __Fee Generation__ Significant revenue opportunity for investment bank
+- __Client Relationship__ Long-term relationship vs. single transaction
+- __Market Reputation__ Professional credibility and future business
+- __Shareholder Value__ Client shareholders' financial interests
 
 **Step 2: Conflict Identification**
 Fundamental conflicts:
@@ -278,11 +278,11 @@ Fundamental conflicts:
 ### TL Analysis Process
 
 **Step 1: Economic Factor Detection**
-- **Earnings Stability**: Reducing currency volatility impact on results
-- **Cost Management**: Avoiding certain hedging costs if favorable movement expected
-- **Policy Uncertainty**: Central bank policy transitions create unpredictability
-- **Competitive Position**: Currency movements affect competitive pricing
-- **Stakeholder Expectations**: Investor preference for earnings predictability
+- __Earnings Stability__ Reducing currency volatility impact on results
+- __Cost Management__ Avoiding certain hedging costs if favorable movement expected
+- __Policy Uncertainty__ Central bank policy transitions create unpredictability
+- __Competitive Position__ Currency movements affect competitive pricing
+- __Stakeholder Expectations__ Investor preference for earnings predictability
 
 **Step 2: Uncertainty Identification**
 Key uncertainties:
@@ -478,8 +478,8 @@ Every implementation of TL represents a step toward economic systems that serve 
 ## Contact Information
 
 **Framework Creator**: Lev Goukassian  
-- **ORCID**: [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
-- **Email**: leogouk@gmail.com
+- __ORCID__ [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)  
+- __Email__ leogouk@gmail.com
 
 **Successor Contact**: support@tl-goukassian.org  
 (see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
