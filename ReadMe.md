@@ -368,7 +368,7 @@ The future of economic systems lies not merely in computational efficiency, but 
 
 ---
 
-### *“The world will eventually understand the line I drew: between speed and meaning,between brilliance and wisdom.”* **— Lev Goukassian**
+### *“The world will eventually understand the line I drew: between speed and meaning, between brilliance and wisdom.”* **— Lev Goukassian**
 
 ---
 
