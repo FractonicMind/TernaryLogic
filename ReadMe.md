@@ -204,36 +204,7 @@ if result.state == TLState.EPISTEMIC_HOLD:
 
 ---
 
-## Academic Resources and Institutional Framework
 
-### Research Status and Publication
-
-**Current Research Status**: Published in Economic Decision Sciences  
-**Research Domain**: Economic Decision Sciences and Uncertainty Management  
-**Author**: Lev Goukassian (ORCID: 0009-0006-5966-1243)  
-**Applications**: Financial markets, monetary policy, operational risk management
-
-### Pre-Authorized Institutional Partners
-
-The TL framework has established pre-authorized implementation partnerships with leading academic and policy institutions:
-
-**Academic Institutions**: MIT (technical implementation), Stanford (commercialization), University of Chicago (theoretical development), London School of Economics (policy implementation)
-
-**International Organizations**: Bank for International Settlements (central bank coordination), World Bank (development finance), International Monetary Fund (adaptive programs and stability)
-
-### Citation Format
-
-```bibtex
-@article{goukassian2025tl,
-  title={Ternary Logic: Implementing Epistemic Hesitation in Economic Systems},
-  author={Goukassian, Lev},
-  journal={Economic Decision Sciences},
-  year={2025},
-  url={https://tl-goukassian.org}
-}
-```
-
----
 
 ## Security and Risk Management
 
