@@ -1,0 +1,471 @@
+<!-- Chosen Palette: Calm Harmony -->
+<!-- Application Structure Plan: The SPA is designed as a single-page, thematic scrolling experience to guide a user through the complex argument of the report. The structure is not a 1:1 of the report sections, but rather a logical flow: 1. Thesis (The core argument), 2. Frameworks (Defining the two entities, BIS and TL, with an interactive drill-down for TL's 8 pillars), 3. Comparison (A direct visual and tabular comparison, highlighting key differences like 'Temporal Mode' with a chart), 4. Coexistence (Interactive tabs to explore the 3 potential integration models), 5. Conclusion (A final summary). This structure was chosen to make the dense, conceptual information digestible, using interaction (modals, tabs) to manage complexity and focus the user's attention, which is more user-friendly than the linear report. -->
+<!-- Visualization & Content Choices: 1. Thesis (Exec Summary) -> Goal: Inform -> Viz: HTML/CSS Diagram -> Interaction: Static -> Justification: Clearly visualizes the core complementary loop (Rules/Proof) without data -> Method: HTML/Tailwind. 2. TL Pillars (Sec II) -> Goal: Organize/Inform -> Viz: Interactive List/Modals -> Interaction: Click-to-reveal-detail -> Justification: Manages information density of 8 pillars; user can explore without being overwhelmed -> Method: HTML/JS Click events. 3. Comparative Dimensions (Sec III Table) -> Goal: Compare -> Viz: HTML Table -> Interaction: Static -> Justification: The report's table is the clearest format -> Method: HTML/Tailwind. 4. Temporal Mode (Sec III) -> Goal: Compare -> Viz: Bar Chart -> Interaction: Hover tooltip -> Justification: Visually dramatizes the "Periodic" vs. "Continuous" difference, the most data-like concept -> Method: Chart.js/Canvas. 5. Coexistence Models (Sec IV) -> Goal: Organize/Inform -> Viz: Tabbed Interface -> Interaction: Click-to-switch-content -> Justification: Standard, intuitive UI for exploring distinct options -> Method: HTML/JS Click events. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIS & Ternary Logic: An Interactive Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5;
+            color: #333;
+        }
+        .nav-link {
+            @apply px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-200 transition-colors;
+        }
+        .nav-link.active {
+            @apply bg-gray-300 text-black;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .tab-button {
+            @apply px-4 py-2 font-semibold text-gray-600 border-b-2 border-transparent hover:border-gray-400 hover:text-black;
+        }
+        .tab-button.active {
+            @apply border-[#648B9E] text-black;
+        }
+        .tab-content {
+            @apply hidden p-4 bg-white rounded-lg shadow;
+        }
+        .tab-content.active {
+            @apply block;
+        }
+        .modal-overlay {
+            @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 transition-opacity duration-300;
+        }
+        .modal-content {
+            @apply bg-white rounded-lg shadow-xl p-6 max-w-lg w-full transform transition-all duration-300 scale-95;
+        }
+    </style>
+</head>
+<body data-section="home">
+
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <nav class="container mx-auto px-6 py-3 flex items-center justify-between">
+            <h1 class="text-xl font-bold text-[#648B9E]">BIS & TL: Analysis</h1>
+            <div class="hidden md:flex space-x-2">
+                <a href="#home" class="nav-link" data-nav="home">Thesis</a>
+                <a href="#frameworks" class="nav-link" data-nav="frameworks">Frameworks</a>
+                <a href="#comparison" class="nav-link" data-nav="comparison">Comparison</a>
+                <a href="#models" class="nav-link" data-nav="models">Models</a>
+                <a href="#conclusion" class="nav-link" data-nav="conclusion">Conclusion</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute top-full left-0 w-full z-30">
+            <a href="#home" class="block px-6 py-3 text-gray-700 hover:bg-gray-100 nav-link" data-nav="home">Thesis</a>
+            <a href="#frameworks" class="block px-6 py-3 text-gray-700 hover:bg-gray-100 nav-link" data-nav="frameworks">Frameworks</a>
+            <a href="#comparison" class="block px-6 py-3 text-gray-700 hover:bg-gray-100 nav-link" data-nav="comparison">Comparison</a>
+            <a href="#models" class="block px-6 py-3 text-gray-700 hover:bg-gray-100 nav-link" data-nav="models">Models</a>
+            <a href="#conclusion" class="block px-6 py-3 text-gray-700 hover:bg-gray-100 nav-link" data-nav="conclusion">Conclusion</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-6">
+
+        <section id="home" class="my-16 text-center scroll-mt-20">
+            <h2 class="text-4xl font-bold text-[#333]">The Rules and The Proof</h2>
+            <p class="text-xl text-gray-600 mt-4 max-w-3xl mx-auto">
+                This application explores the relationship between the Bank for International Settlements (BIS) and Ternary Logic (TL). The core thesis is simple:
+            </p>
+            <div class="mt-8 p-6 bg-white rounded-lg shadow-xl max-w-2xl mx-auto">
+                <p class="text-2xl font-semibold text-gray-800">
+                    "BIS provides the <span class="text-[#648B9E]">rules</span> of prudence;
+                    TL supplies the <span class="text-[#8BAA8B]">proofs</span> of prudence."
+                </p>
+            </div>
+            <div class="mt-12 flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
+                <div class="p-6 bg-white rounded-lg shadow-lg text-center w-60">
+                    <div class="text-5xl mb-2">🏛️</div>
+                    <h3 class="text-xl font-bold text-[#648B9E]">The Rules (BIS)</h3>
+                    <p class="text-gray-600 mt-2">Institutional & Regulatory Frameworks</p>
+                </div>
+                <div class="text-4xl font-bold text-gray-400 transform md:rotate-90">↓</div>
+                <div class="p-6 bg-white rounded-lg shadow-lg text-center w-60">
+                    <div class="text-5xl mb-2">⚙️</div>
+                    <h3 class="text-xl font-bold text-gray-700">Financial System</h3>
+                    <p class="text-gray-600 mt-2">Executes Decisions</p>
+                </div>
+                <div class="text-4xl font-bold text-gray-400 transform md:rotate-0">↑</div>
+                <div class="p-6 bg-white rounded-lg shadow-lg text-center w-60">
+                    <div class="text-5xl mb-2">🧾</div>
+                    <h3 class="text-xl font-bold text-[#8BAA8B]">The Proof (TL)</h3>
+                    <p class="text-gray-600 mt-2">Evidentiary & Architectural Verification</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="frameworks" class="my-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-4">The Two Frameworks</h2>
+            <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">
+                BIS and TL operate as distinct but convergent systems. BIS provides institutional guidance, while TL provides an evidentiary architecture for verifying that guidance. Explore the 8 Pillars of TL to understand its foundation.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg border-t-4 border-[#648B9E]">
+                    <h3 class="text-2xl font-bold text-[#648B9E] mb-4">BIS: Institutional Mandate</h3>
+                    <p class="text-gray-700 mb-6">BIS fosters stability and central bank cooperation through four core objectives:</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-green-600 mr-3 mt-1">✔</span>
+                            <span><strong>Coordination:</strong> A forum for central banks and supervisory authorities.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-600 mr-3 mt-1">✔</span>
+                            <span><strong>Supervisory Convergence:</strong> Home of the Basel Committee (Basel III/IV).</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-600 mr-3 mt-1">✔</span>
+                            <span><strong>Payment Safety:</strong> Hosts the CPMI for payment and settlement systems.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-600 mr-3 mt-1">✔</span>
+                            <span><strong>Research:</strong> The BIS Innovation Hub explores new financial technologies.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg border-t-4 border-[#8BAA8B]">
+                    <h3 class="text-2xl font-bold text-[#8BAA8B] mb-4">TL: Evidentiary Architecture</h3>
+                    <p class="text-gray-700 mb-6">TL is an open-source framework built on 8 pillars to encode and prove prudence. Click each pillar for details.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button class="pillar-btn p-3 bg-gray-50 rounded-md shadow-sm hover:bg-gray-100 text-left" data-title="Epistemic Hold" data-text="A hesitation mechanism that enforces a pause before an irreversible capital or risk transfer is executed, allowing for verification.">
+                            <span class="font-semibold">1. Epistemic Hold</span>
+                        </button>
+                        <button class="pillar-btn p-3 bg-gray-50 rounded-md shadow-sm hover:bg-gray-100 text-left" data-title="Immutable Ledger" data-text="A tamper-evident, verifiable record of all systemic decisions, states, and their consequences.">
+                            <span class="font-semibold">2. Immutable Ledger</span>
+                        </button>
+                        <button class="pillar-btn p-3 bg-gray-50 rounded-md shadow-sm hover:bg-gray-100 text-left" data-title="Goukassian Principle" data-text="Ensures the continuity of institutional memory in all economic reasoning, preventing the loss of context.">
+                            <span class="font-semibold">3. Goukassian Principle</span>
+                        </button>
+                        <button class="pillar-btn p-3 bg-gray-50 rounded-md shadow-sm hover:bg-gray-100 text-left" data-title="Economic Rights & Transparency" data-text="Integrates mandatory disclosures (e.g., SEC, IFRS, FATF) directly into the evidentiary chain.">
+                            <span class="font-semibold">4. Economic Rights</span>
+                        </button>
+                        <button class="pillar-btn p-3 bg-gray-50 rounded-md shadow-sm hover:bg-gray-100 text-left" data-title="Sustainable Capital Allocation" data-text="A mandate that aligns financial decisions and capital allocation with planetary stability and ESG goals.">
+                            <span class="font-semibold">5. Sustainable Capital</span>
+                        </button>
+                        <button class="pillar-btn p-3 bg-gray-50 rounded-md shadow-sm hover:bg-gray-100 text-left" data-title="Decision Logs" data-text="The verifiable audit trail of all triadic states (intention, action, and consequence) for every decision.">
+                            <span class="font-semibold">6. Decision Logs</span>
+                        </button>
+                        <button class="pillar-btn p-3 bg-gray-50 rounded-md shadow-sm hover:bg-gray-100 text-left" data-title="Hybrid Shield" data-text="A dual-oversight mechanism combining mathematical proof (TL) with institutional law (BIS/regulatory).">
+                            <span class="font-semibold">7. Hybrid Shield</span>
+                        </button>
+                        <button class="pillar-btn p-3 bg-gray-50 rounded-md shadow-sm hover:bg-gray-100 text-left" data-title="Anchors" data-text="Multi-chain cryptographic verification used to prove the state of interbank and sovereign-level events.">
+                            <span class="font-semibold">8. Anchors</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparison" class="my-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-4">Comparative Analysis</h2>
+            <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">
+                While their objectives converge on stability, their nature, methods, and scope differ significantly. The most critical distinction is the temporal mode: BIS relies on periodic reporting, whereas TL provides continuous, real-time evidence.
+            </p>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Core Dimensions</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Dimension</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">BIS</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">TL</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Relationship</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-4 py-4 text-sm font-medium">Nature</td>
+                                    <td class="px-4 py-4 text-sm">Institutional & Regulatory</td>
+                                    <td class="px-4 py-4 text-sm">Evidentiary & Architectural</td>
+                                    <td class="px-4 py-4 text-sm">Complementary</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-4 text-sm font-medium">Core Objective</td>
+                                    <td class="px-4 py-4 text-sm">Promote stability</td>
+                                    <td class="px-4 py-4 text-sm">Encode & prove prudence</td>
+                                    <td class="px-4 py-4 text-sm">Complementary</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-4 text-sm font-medium">Temporal Mode</td>
+                                    <td class="px-4 py-4 text-sm">Periodic supervision</td>
+                                    <td class="px-4 py-4 text-sm">Continuous, real-time</td>
+                                    <td class="px-4 py-4 text-sm">Reinforcing</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-4 text-sm font-medium">Proof Mechanism</td>
+                                    <td class="px-4 py-4 text-sm">Reports, compliance statements</td>
+                                    <td class="px-4 py-4 text-sm">Immutable logs & Anchors</td>
+                                    <td class="px-4 py-4 text-sm">TL verifies BIS statements</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-4 text-sm font-medium">Moral Scope</td>
+                                    <td class="px-4 py-4 text-sm">Financial stability</td>
+                                    <td class="px-4 py-4 text-sm">Ethical-evidentiary accountability</td>
+                                    <td class="px-4 py-4 text-sm">TL extends scope</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Temporal Mode: Evidence Frequency</h3>
+                    <p class="text-sm text-gray-600 text-center mb-4">This chart visualizes the gap between periodic reporting and continuous verification.</p>
+                    <div class="chart-container" style="height: 280px;">
+                        <canvas id="temporalChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="models" class="my-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-4">Models of Coexistence</h2>
+            <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">
+                TL does not replace BIS; it reinforces it. This section explores three potential pathways for integrating evidentiary proof (TL) with institutional policy (BIS). Click each tab to explore a model.
+            </p>
+            <div class="max-w-4xl mx-auto">
+                <div class="flex border-b border-gray-300">
+                    <button class="tab-button active" data-tab="model1">1. Complementary Governance</button>
+                    <button class="tab-button" data-tab="model2">2. Evidentiary Integration</button>
+                    <button class="tab-button" data-tab="model3">3. Parallel System</button>
+                </div>
+                <div class="mt-4">
+                    <div id="model1" class="tab-content active">
+                        <h4 class="text-xl font-semibold text-[#648B9E] mb-2">Model 1: Complementary Governance</h4>
+                        <p class="text-gray-700">This is the most direct model: BIS continues to define the high-level norms and principles of prudence (e.g., Basel IV frameworks). TL's architecture is voluntarily adopted by institutions to provide the independent, guaranteed, and auditable evidence that they are adhering to those norms. BIS defines "what," and TL proves "that."</p>
+                    </div>
+                    <div id="model2" class="tab-content">
+                        <h4 class="text-xl font-semibold text-[#648B9E] mb-2">Model 2: Evidentiary Integration</h4>
+                        <p class="text-gray-700">In this model, BIS and associated bodies (like the Basel Committee) formally recognize TL-based Decision Logs as a valid "proof of compliance" layer. Supervisory reporting would evolve from static, periodic PDF filings to a continuous, automated, and cryptographically verifiable data stream. This reduces regulatory burden while increasing supervisory confidence.</p>
+                    </div>
+                    <div id="model3" class="tab-content">
+                        <h4 class="text-xl font-semibold text-[#648B9E] mb-2">Model 3: Parallel System</h4>
+                        <p class="text-gray-700">BIS continues its role of high-level policy coordination and institutional guidance, remaining unchanged. In parallel, TL emerges as a separate civic system adopted by market participants who demand higher levels of memory, transparency, and accountability. This system would operate alongside the traditional one, offering a verifiable alternative for transactions and agreements.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="my-24 scroll-mt-20 text-center">
+            <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-2xl border-t-8 border-[#C0A080]">
+                <h2 class="text-3xl font-bold text-gray-800">The Financial Conscience: Mind & Memory</h2>
+                <p class="text-xl text-gray-600 mt-6">
+                    BIS governs <span class="font-bold text-[#648B9E]">prudence</span>. TL governs <span class="font-bold text-[#8BAA8B]">proof</span>.
+                </p>
+                <p class="text-xl text-gray-600 mt-4">
+                    They are not competitors but two essential halves of a single, verifiable financial conscience. TL strengthens the legitimacy of BIS by transforming its abstract principles into an enforceable, immutable history.
+                </p>
+                <p class="text-2xl font-bold text-gray-900 mt-8">
+                    If BIS is the <span class="text-[#648B9E]">Mind</span>,
+                    TL is the <span class="text-[#8BAA8B]">Memory</span>.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 py-8 mt-16">
+        <div class="container mx-auto px-6 text-center text-sm">
+            <p>This interactive application is a conceptual analysis based on the "TL × BIS Alignment Report" prompt.</p>
+            <p class="mt-2">All content is for informational and policy-technical discussion purposes.</p>
+        </div>
+    </footer>
+
+    <div id="pillar-modal" class="modal-overlay hidden opacity-0" aria-modal="true" role="dialog">
+        <div class="modal-content opacity-0">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modal-title" class="text-xl font-bold text-[#8BAA8B]"></h3>
+                <button id="modal-close-btn" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <p id="modal-text" class="text-gray-700"></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                return Array.isArray(label) ? label.join(' ') : label;
+            };
+
+            const sharedTooltipOptions = {
+                callbacks: {
+                    title: tooltipTitleCallback
+                }
+            };
+            
+            const colors = {
+                bis: '#648B9E',
+                tl: '#8BAA8B',
+                accent: '#C0A080',
+                bg: '#F5F5F5',
+                text: '#333'
+            };
+
+            const ctx = document.getElementById('temporalChart');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['BIS', 'TL'],
+                        datasets: [{
+                            label: 'Evidence Frequency',
+                            data: [2, 10],
+                            backgroundColor: [colors.bis, colors.tl],
+                            borderColor: [colors.bis, colors.tl],
+                            borderWidth: 1,
+                            barPercentage: 0.6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        if (value === 2) return 'Periodic';
+                                        if (value === 10) return 'Continuous';
+                                        return '';
+                                    },
+                                    color: colors.text
+                                },
+                                grid: {
+                                    display: false
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: colors.text,
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: sharedTooltipOptions
+                        }
+                    }
+                });
+            }
+
+            const tabs = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    const target = tab.getAttribute('data-tab');
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === target) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+            const pillarBtns = document.querySelectorAll('.pillar-btn');
+            const modal = document.getElementById('pillar-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalText = document.getElementById('modal-text');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            
+            pillarBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    modalTitle.textContent = btn.getAttribute('data-title');
+                    modalText.textContent = btn.getAttribute('data-text');
+                    modal.classList.remove('hidden');
+                    setTimeout(() => {
+                        modal.classList.remove('opacity-0');
+                        modal.querySelector('.modal-content').classList.remove('opacity-0', 'scale-95');
+                        modal.querySelector('.modal-content').classList.add('opacity-100', 'scale-100');
+                    }, 10);
+                });
+            });
+
+            const closeModal = () => {
+                modal.querySelector('.modal-content').classList.add('opacity-0', 'scale-95');
+                modal.classList.add('opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            };
+
+            modalCloseBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            const sections = document.querySelectorAll('section[id]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        document.body.dataset.section = id;
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.dataset.nav === id);
+                        });
+                    }
+                });
+            }, { rootMargin: '-20% 0px -80% 0px', threshold: 0.1 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
