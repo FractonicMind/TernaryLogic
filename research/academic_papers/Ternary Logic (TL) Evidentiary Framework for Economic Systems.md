@@ -70,7 +70,7 @@ The legal layer of the shield is constructed through the use of an advanced open
 
 #### **2.2.3. Governance as a Bastion**
 
-The final layer of defense is institutional. The long-term integrity of the Goukassian Principle would be entrusted to a decentralized and independent governance body, such as a Ternary Logic Foundation structured as a Decentralized Autonomous Organization (DAO).16 This body, composed of a diverse set of stakeholders, would act as the ultimate human guardian of the protocol. It would hold the authority to oversee protocol upgrades, ensuring that no changes are introduced that would weaken the principle. By distributing control among many independent participants, a DAO structure protects the framework from being captured or co-opted by a single powerful corporation or government entity seeking to disable its safeguards for its own benefit.15
+The final layer of defense is institutional. The long-term integrity of the Goukassian Principle would be entrusted to a decentralized and independent governance body, such as a Ternary Logic Foundation structured as a Decentralized Autonomous Organization (DAO).16 This body, composed of a diverse set of custodians, would act as the ultimate human guardian of the protocol. It would hold the authority to oversee protocol upgrades, ensuring that no changes are introduced that would weaken the principle. By distributing control among many independent participants, a DAO structure protects the framework from being captured or co-opted by a single powerful corporation or government entity seeking to disable its safeguards for its own benefit.15
 
 **Table 1: The Hybrid Shield \- A Multi-Layered Protection Matrix for the Goukassian Principle**
 
@@ -79,7 +79,7 @@ The final layer of defense is institutional. The long-term integrity of the Gouk
 | **Political Co-option** | Public, permissionless audit trail of all actions prevents secret directives or overrides. | "No Spy" clause in the license creates legal friction against use for state surveillance. | DAO veto power over protocol changes prevents weakening of safeguards under political pressure. |
 | **Malicious Technical Forking** | Embedded, non-removable "Signature" ensures provenance, preventing anonymous rebranding of a compromised version. | License terms apply to all derivative works, making a stripped-down fork a clear license violation. | Foundation controls official branding and certification, marginalizing non-compliant forks. |
 | **Legal Circumvention** | Smart contract-based auto-revocation of certification provides immediate, non-litigious consequences for violations. | Explicit prohibitions ("No Weapon") create clear grounds for legal challenges and injunctions. | Governance body can publicly decertify and sanction entities attempting to exploit legal loopholes. |
-| **Institutional Capture** | Decentralized nature of the verification anchor (public blockchain) prevents a single entity from controlling the historical record. | Licensing framework is universal and cannot be selectively waived for powerful actors. | Distributed voting rights (e.g., quadratic voting) in the DAO prevent a single stakeholder from seizing control. |
+| **Institutional Capture** | Decentralized nature of the verification anchor (public blockchain) prevents a single entity from controlling the historical record. | Licensing framework is universal and cannot be selectively waived for powerful actors. | Distributed voting rights (e.g., quadratic voting) in the DAO prevent a single custodian from seizing control. |
 
 ### 
 
@@ -117,7 +117,7 @@ A cornerstone of TL's institutional legitimacy is the absolute mandate: "No Log 
 
 This mandate ensures perfect and non-repudiable auditability. It makes it impossible for an institution to conceal its decision-making process, claim an action was a "glitch," or retroactively justify a choice.10 The log itself must contain a comprehensive trace of the inputs, the uncertainty metrics that were evaluated, and the final state transition. By making the log a precondition for action, TL transforms transparency from a desirable policy goal into a mandatory, machine-enforced operational reality.
 
-This architecture functions as a powerful institutional pre-commitment device. An organization that adopts TL voluntarily binds itself to an unchangeable standard of transparency. The technical design makes it prohibitively difficult to later circumvent this commitment, as any attempt to do so would be immediately obvious to auditors and regulators. This credible and costly signal of commitment to accountability can significantly enhance trust with stakeholders, potentially lowering regulatory burdens or improving access to capital over the long term. It is a strategic choice to lock in a culture of evidentiary integrity.
+This architecture functions as a powerful institutional pre-commitment device. An organization that adopts TL voluntarily binds itself to an unchangeable standard of transparency. The technical design makes it prohibitively difficult to later circumvent this commitment, as any attempt to do so would be immediately obvious to auditors and regulators. This credible and costly signal of commitment to accountability can significantly enhance trust with custodians, potentially lowering regulatory burdens or improving access to capital over the long term. It is a strategic choice to lock in a culture of evidentiary integrity.
 
 ### **3.3. The Verification Anchor: Leveraging Public Blockchains for Unimpeachable Time-stamping**
 
@@ -133,7 +133,7 @@ An auditor can later verify the integrity of any Decision Log by re-computing it
 ### **3.4. The Succession Architecture: Ensuring Protocol Continuity**
 
 For TL to achieve the status of a long-term institutional standard, it must be able to outlive its original creators and withstand changes in its maintenance organization. A robust Succession Architecture is therefore essential for its long-term gravity. This architecture, to be managed by the TL governance body, would provide a clear, transparent, and constitutionally-defined process for the evolution of the core protocol.  
-Drawing from best practices in decentralized system governance, this architecture would include formal procedures for proposing, debating, testing, and ratifying protocol upgrades.17 Proposals for changes would need to be submitted publicly, accompanied by rigorous technical specifications and security audits. A multi-stage approval process, involving both a technical council and a broader stakeholder assembly, would ensure that changes are both sound and aligned with the community's interests. This structured process prevents protocol stagnation while simultaneously protecting against hostile or ill-conceived modifications that could compromise the framework's core principles.23  
+Drawing from best practices in decentralized system governance, this architecture would include formal procedures for proposing, debating, testing, and ratifying protocol upgrades.17 Proposals for changes would need to be submitted publicly, accompanied by rigorous technical specifications and security audits. A multi-stage approval process, involving both a Technical Council and a broader Stewardship Custodians, would ensure that changes are both sound and aligned with the community's interests. This structured process prevents protocol stagnation while simultaneously protecting against hostile or ill-conceived modifications that could compromise the framework's core principles.23  
 
 ---
 
@@ -165,7 +165,7 @@ The retention of these prohibitions fundamentally alters the strategic nature of
 
 ## **5\. Governance and Institutional Sustainability**
 
-The long-term success and credibility of Ternary Logic as a global standard depend on the establishment of an independent, resilient, and trustworthy governance body. This institution, tentatively named the Ternary Logic Foundation, must be designed to resist capture, ensure technical excellence, and represent the interests of a diverse stakeholder community. Its funding must be sustainable and insulated from undue influence.
+The long-term success and credibility of Ternary Logic as a global standard depend on the establishment of an independent, resilient, and trustworthy governance body. This institution, tentatively named the Ternary Logic Foundation, must be designed to resist capture, ensure technical excellence, and represent the interests of a diverse custodian community. Its funding must be sustainable and insulated from undue influence.
 
 ### **5.1. A Proposed Hybrid Governance Model**
 
@@ -175,13 +175,13 @@ A hybrid governance model, drawing on the strengths of both traditional standard
 
 This body would be the custodian of the core TL protocol. It would be composed of a select group of vetted technical experts from academia, industry, and the open-source community. Membership would be reputation-based, earned through significant and verifiable contributions to the framework's development, security, and implementation.27 The Council's responsibilities would be narrowly defined: to review and approve technical upgrades, maintain the core codebase, publish official documentation, and oversee security audits. All of its proceedings and decisions would be conducted transparently.
 
-#### **5.1.2. A Stakeholder Assembly**
+#### **5.1.2. A Stewardship Custodians**
 
-This would be the primary policy-making and oversight body of the Foundation. It would represent the broad community of TL users and stakeholders, including licensed institutions, academic research partners, regulatory bodies (in an observational capacity), and public interest advocacy groups. To prevent domination by a few wealthy actors—a common failure mode in token-based governance—the Assembly would employ a more equitable voting mechanism, such as quadratic voting, where the cost of additional votes increases quadratically, giving smaller stakeholders a proportionally larger voice.26 This Assembly would be responsible for approving the Foundation's budget, setting licensing policies, ratifying changes to the governing charter, and electing members to oversight committees.
+This would be the primary policy-making and oversight body of the Foundation. It would represent the broad community of TL users and custodians, including licensed institutions, academic research partners, regulatory bodies (in an observational capacity), and public interest advocacy groups. To prevent domination by a few wealthy actors—a common failure mode in token-based governance—the stewardship would employ a more equitable voting mechanism, such as quadratic voting, where the cost of additional votes increases quadratically, giving smaller custodians a proportionally larger voice.26 This stewardship would be responsible for approving the Foundation's budget, setting licensing policies, ratifying changes to the governing charter, and electing members to oversight committees.
 
 #### **5.1.3. A Smart Contract-Managed Treasury**
 
-To ensure maximum transparency and efficiency, the Foundation's finances would be managed through a treasury controlled by smart contracts on a public blockchain.16 Funds would be disbursed automatically based on the successful passage of proposals in the Stakeholder Assembly. This would apply to all expenditures, including operational costs, research grants, and payments for development bounties. This on-chain treasury provides a real-time, publicly auditable record of all financial activities, drastically reducing administrative overhead and eliminating opportunities for mismanagement or corruption.
+To ensure maximum transparency and efficiency, the Foundation's finances would be managed through a treasury controlled by smart contracts on a public blockchain.16 Funds would be disbursed automatically based on the successful passage of proposals in the Stewardship Custodians. This would apply to all expenditures, including operational costs, research grants, and payments for development bounties. This on-chain treasury provides a real-time, publicly auditable record of all financial activities, drastically reducing administrative overhead and eliminating opportunities for mismanagement or corruption.
 
 ### **5.2. Sustainable Funding Mechanisms: A Multi-Strata Approach**
 
@@ -260,8 +260,8 @@ The Foundation and all its activities shall be governed by the Goukassian Princi
 The Foundation shall be governed by a hybrid model comprising:
 
 1. **A Technical Council:** A body of appointed experts responsible for the technical stewardship of the TL protocol.  
-2. **A Stakeholder Assembly:** A representative body of all licensed members and affiliated organizations, responsible for policy, budget, and oversight, operating on a principle of weighted or quadratic voting to ensure fair representation.  
-3. **An Executive Office:** Responsible for the day-to-day operations of the Foundation, accountable to the Stakeholder Assembly.
+2. **A Stewardship Custodians:** A representative body of all licensed members and affiliated organizations, responsible for policy, budget, and oversight, operating on a principle of weighted or quadratic voting to ensure fair representation.  
+3. **An Executive Office:** Responsible for the day-to-day operations of the Foundation, accountable to the Stewardship Custodians.
 
 **Article IV: Responsibilities**  
 The core responsibilities of the Foundation shall include:
@@ -276,7 +276,7 @@ The core responsibilities of the Foundation shall include:
 The Foundation's finances shall be managed in a transparent Treasury, preferably utilizing smart contracts for auditable fund disbursement. Funding will be derived from a multi-strata model including institutional licensing fees, research grants, and returns from a permanent endowment fund.
 
 **Article VI: Amendments**  
-This Charter may be amended only by a supermajority vote of the Stakeholder Assembly, following a public comment period and a positive technical review by the Technical Council to ensure any changes do not compromise the Goukassian Principle.
+This Charter may be amended only by a supermajority vote of the Stewardship Custodians, following a public comment period and a positive technical review by the Technical Council to ensure any changes do not compromise the Goukassian Principle.
 
 #### **Works cited**
 
