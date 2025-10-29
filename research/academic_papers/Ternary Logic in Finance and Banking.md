@@ -211,7 +211,9 @@ The Economic Rights & Transparency Mandate provides a powerful infrastructure to
 * **SEC Disclosure Requirements:** Recent U.S. Securities and Exchange Commission (SEC) rules mandate rapid disclosure (within four business days) of material cybersecurity incidents. The TL framework's immutable Decision Logs would provide a definitive, time-stamped record of an incident's detection, escalation, and the process of determining its materiality, greatly strengthening a firm's ability to comply and to justify its disclosure timeline to regulators.
 
 This pillar represents a paradigm shift from "regulation by enforcement" to "regulation by architecture." By embedding compliance rules directly into the financial plumbing, the system makes non-compliance architecturally difficult, if not impossible, dramatically reducing the potential for human error, oversight, or willful evasion.  
+
 ---
+
 
 **Table 3: Mapping TL Framework Features to International Transparency Standards**
 
