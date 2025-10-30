@@ -12,8 +12,7 @@
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License-MIT%20with%20Ethics-yellow?style=flat-square)](LICENSE)
 
-> **"The world is not binary. And the future will not be either."**  
-> — Lev Goukassian, Creator of Ternary Logic
+#### *"The world is not binary. And the future will not be either."* — Lev Goukassian, Creator of Ternary Logic
 
 ---
 
