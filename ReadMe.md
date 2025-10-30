@@ -25,29 +25,9 @@ The framework has been validated through comprehensive backtesting across multip
 
 ---
 
-## Research Problem
+## **The Evidentiary Architecture of Ternary Logic**
 
-### Limitations of Binary Economic Decision-Making
-
-Contemporary economic systems impose artificial constraints on inherently complex financial decisions through binary classification frameworks. This approach produces several critical limitations in modern financial markets and economic policy:
-
-**Oversimplification of Market Complexity**: Multi-dimensional economic scenarios involving competing signals, incomplete information, and uncertain outcomes are forced into binary proceed/halt categories, obscuring nuanced risk-return considerations that require sophisticated analysis.
-
-**Absence of Systematic Uncertainty Acknowledgment**: Current systems prioritize execution speed over analytical thoroughness, providing no mechanism for systematic uncertainty recognition when market complexity exceeds analytical confidence thresholds.
-
-**Hidden Risk Conflicts**: Competing economic objectives and conflicting market signals are resolved through predetermined algorithmic weights rather than transparent uncertainty acknowledgment, concealing the decision-making process from human oversight and risk management.
-
-**Lack of Human-System Partnership**: Existing frameworks position automated systems as autonomous economic arbiters rather than collaborative tools that enhance human economic reasoning and decision-making capabilities.
-
-### The Need for Ternary Economic Logic
-
-TL addresses these limitations by introducing computational structures that systematically acknowledge economic uncertainty and complexity. Rather than forcing premature conclusions in uncertain environments, the framework creates space for additional information gathering and human consultation when economic complexity is detected.
-
----
-
-## Methodology: The Epistemic Hold Framework
-
-### Theoretical Foundation
+Modern economic systems still think in binaries. They rush to act or refuse, leaving no structured space for uncertainty, no mechanism for intelligent hesitation. **Ternary Logic (TL)** introduces that missing third state: the **Epistemic Hold (0)**, a formalized pause that transforms ambiguity into verifiable prudence.
 
 TL implements a three-state computational model for economic decision-making based on epistemological principles of uncertainty management:
 
@@ -56,6 +36,31 @@ TL implements a three-state computational model for economic decision-making bas
 **0 (Epistemic Hold)**: Initiate deliberative pause when economic complexity, conflicting signals, or uncertainty levels exceed predetermined confidence thresholds, requiring additional analysis, information gathering, or human consultation.
 
 **-1 (Halt)**: Stop or reject when significant risks, contradictory signals, or unacceptable uncertainty levels are detected, while maintaining systematic documentation of rejection rationale.
+
+When a TL-compliant system receives a prompt, a proposed action (+1), it immediately enters an evidentiary lifecycle governed by its eight architectural pillars. Every event must generate a **Decision Log** before execution. This log captures the data inputs, algorithms, authorizations, and justification for intent, satisfying the inviolable covenant **“No Log = No Action.”**
+
+Once the log exists, the action faces its constitutional boundaries under the **Goukassian Principle**, the foundational clause binding every TL instance to the prohibitions **No Spy** and **No Weapon**. Only when these are honored does the system advance to the **Epistemic Hold**, where judgment meets evidence.
+
+The **Epistemic Hold** is automatically triggered whenever uncertainty, incompleteness, or conflict arises in the data. It also activates if two key mandates fail their verifications:
+
+* **Economic Rights & Transparency**, which examines ownership, consent, data provenance, and regulatory access.
+* **Sustainable Capital Allocation**, which tests sustainability claims, emissions data, and ESG veracity.
+
+If these datasets are missing, stale, or unverifiable, the Hold enforces a structured delay, a computational “0” state, until confidence is restored or the action is refused (−1).
+
+Once validated, the system records the full causal chain on the **Immutable Ledger**: the initial +1 intent, the 0 Hold deliberation, and the final +1 or −1 outcome. This ledger, a tamper-proof write-once structure, ensures that even aborted actions remain part of institutional memory. Every entry is then protected by the **Hybrid Shield**, whose cryptographic and legal layers automatically revoke certification upon any breach, and anchored to public blockchains through **Anchors**, providing decentralized, time-stamped verification.
+
+Governance completes the circuit. Three entities preserve the framework’s integrity:
+
+* The **Technical Council**, which maintains cryptographic standards and protocol updates;
+* The **Stewardship Custodians**, who safeguard the Goukassian Principle and institutional ethics;
+* The **Smart Contract Treasury**, which automates enforcement and transparent funding.
+
+Through this orchestration, TL transforms every action from a single decision into a complete evidentiary event, a narrative containing intent, justification, verification, and immutable proof.
+
+#### *In binary systems, a transaction ends with execution. In Ternary Logic, it ends with understanding.*
+
+---
 
 ### Implementation Architecture
 
