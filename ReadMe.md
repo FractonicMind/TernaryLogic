@@ -38,7 +38,7 @@ Error Handling	Requires new, reversing transactions; complex and costly reconcil
 Finality	Immediate but potentially erroneous commitment.	Deliberate, verifiable finality after checks are passed.
 Trust Model	Trust in system operators and post-facto auditors.	Evidentiary trust in a verifiable, pre-audited process.
 
-**Table 1: The Hybrid Shield \- A Multi-Layered Protection Matrix for the Goukassian Principle**
+**The Hybrid Shield \- A Multi-Layered Protection Matrix for the Goukassian Principle**
 
 | Threat Vector | Cryptographic Layer | Legal Layer | Governance Layer |
 | :---- | :---- | :---- | :---- |
