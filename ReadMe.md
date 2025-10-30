@@ -286,8 +286,7 @@ Similarly, the enforcement process is clear:
 2. **Investigation & Ruling:** The Stewardship Custodians investigate the claim. If the violation is confirmed, they rule to revoke the operator's certification.  
 3. **Execution:** The ruling is executed technically, with the operator's credentials being added to a revocation list, severing them from the network.
 
-The specific procedures for voting, quorum, and appeals within these bodies are MISSING FROM SOURCE, but the division of responsibilities provides a clear and resilient governance framework.
-
+The specific procedures for voting, quorum, and appeals are defined in the Governance charter. What matters at the top level is clear separation of duties: the Technical Council maintains the protocol, the Stewardship Custodians enforce the foundational principles, and the Smart Contract Treasury funds approved work. No single group or unanimous vote can suspend or terminate TL; governance exists to guide evolution, not grant an off-switch.
 
 ---
 ## **Systemic Impact and Synthesis**
