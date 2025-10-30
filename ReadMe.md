@@ -30,14 +30,6 @@ The core objective of TL is to ensure that every committed action is not only fi
 
 By internalizing the verification step, TL transforms the nature of trust in digital systems. Instead of trusting system operators or relying on post-facto auditors to reconstruct events, participants can place their trust in a verifiable process. This evidentiary trust is the foundation upon which more resilient, transparent, and accountable economic systems can be built, from national payment infrastructures to global supply chains.
 
-Attribute	Bivalent System (e.g., Traditional Database, Standard Blockchain)	Ternary Logic System
-Core States	Commit / Reject (True / False)	Pending -> Held -> Committed / Aborted
-Verification	Pre-processing or post-facto; external to core transaction logic.	Intrinsic; mandatory Epistemic Hold for in-flight verification.
-Audit Trail	Primarily post-facto analysis of committed states.	Real-time observability of process; Decision Logs capture causality.
-Error Handling	Requires new, reversing transactions; complex and costly reconciliation.	Pre-emptive abortion from Held state; prevents erroneous commitment.
-Finality	Immediate but potentially erroneous commitment.	Deliberate, verifiable finality after checks are passed.
-Trust Model	Trust in system operators and post-facto auditors.	Evidentiary trust in a verifiable, pre-audited process.
-
 **The Hybrid Shield \- A Multi-Layered Protection Matrix for the Goukassian Principle**
 
 | Threat Vector | Cryptographic Layer | Legal Layer | Governance Layer |
