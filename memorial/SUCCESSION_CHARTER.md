@@ -100,6 +100,7 @@ Any institution accepting stewardship must demonstrate:
 
 1. **Framework Integrity Protection**
    - Maintain core TL principles: +1/0/-1 logic and Epistemic Hold
+   - Preserve the Eight Pillars of TL architecture
    - Prevent commercial misuse that undermines market integrity
    - Ensure proper attribution to Lev Goukassian in all materials
 
@@ -232,6 +233,15 @@ Redirects:
 
 ### Framework Integrity Safeguards
 - __Core Principle Lock__ The three states (+1/Proceed, 0/Epistemic Hold, -1/Halt) are immutable
+- __Eight Pillars Preservation__ The architectural pillars must be maintained:
+  1. **Epistemic Hold** - The intelligent pause mechanism
+  2. **Immutable Ledger** - Cryptographic verification system
+  3. **Decision Logs** - Complete audit trails
+  4. **Goukassian Principle** - Systemic oversight framework
+  5. **Economic Rights & Transparency** - Rights management
+  6. **Anchors** - Blockchain verification points
+  7. **Hybrid Shield** - Privacy-transparency balance
+  8. **Sustainable Capital Allocation** - ESG verification
 - __Attribution Requirement__ "Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)" mandatory in all uses
 - __Market Integrity Clause__ Prohibited uses include market manipulation, predatory trading, or systemic risk amplification
 - __Academic Freedom__ Research criticism and improvements welcomed with proper attribution
@@ -313,9 +323,6 @@ The Epistemic Hold principle that defines TL—the wisdom to pause and acknowled
 
 Every economic system that pauses to consider uncertainty rather than forcing binary decisions carries forward Lev Goukassian's vision. In a world of microsecond trading and algorithmic decisions, the Epistemic Hold reminds us that true market wisdom often lies in knowing when not to act.
 
-*"I taught systems to feel the weight of uncertainty, and the wisdom of deliberate pause. The world is not binary. And the future will not be either."*  
-— Lev Goukassian, Creator of Ternary Logic
-
 ---
 
 ## Contact Information
@@ -323,14 +330,12 @@ Every economic system that pauses to consider uncertainty rather than forcing bi
 **Created by Lev Goukassian**
 * **ORCID**: 0009-0006-5966-1243
 * **Email**: leogouk@gmail.com
-
 **Successor Contact**: support@tl-goukassian.org
-
 **Repository Reference**: https://github.com/FractonicMind/TernaryLogic  
-**Framework Demo**: https://fractonicmind.github.io/TernaryLogic/demos/TL-App/  
+ 
+---
 
-**Signature and Date**
+#### *"I taught systems to feel the weight of uncertainty, and the wisdom of deliberate pause. The world is not binary. And the future will not be either."* **— Lev Goukassian**
 
-Lev Goukassian  
-Creator, Ternary Logic Framework  
-January 29, 2025
+
+
