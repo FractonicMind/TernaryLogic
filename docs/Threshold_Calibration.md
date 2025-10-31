@@ -75,7 +75,7 @@ The Ternary Logic Framework operates with three distinct states:
 **Purpose:** Engineers ethical accountability through "moral trace logs" during deliberation.
 
 **Mechanism:**
-- Creates "Always Memory Logs" during Sacred Pause (Epistemic Hold)
+- Creates "Decision Logs" during Sacred Pause (Epistemic Hold)
 - Documents reasoning, alternatives considered, risk assessments
 - Cryptographically sealed and immutable
 
@@ -475,7 +475,7 @@ proceeds_check = verify_smart_contract_track()   # ✓ Pass
 
 **What Happens:**
 - **Pillar 1 (Epistemic Hold):** Activated automatically
-- **Pillar 3 (Goukassian Principle):** Creates "Always Memory Log" documenting:
+- **Pillar 3 (Goukassian Principle):** Creates "Decision Log" documenting:
   - Intent: Approve $10M trade financing
   - Deliberation: ESG verification failed - third-party audit missing
   - Options considered: Wait for audit, request additional verification, reject
@@ -514,7 +514,7 @@ confidence = 0.25 × (0.90 + 0.88 + 0.85 + 0.92) = 0.89
 
 **What Happens:**
 - **Pillar 1 (Epistemic Hold):** Resolved with PROCEED state
-- **Pillar 3 (Goukassian Principle):** Updates Always Memory Log:
+- **Pillar 3 (Goukassian Principle):** Updates Decision Log:
   - Resolution: ESG audit obtained and verified
   - Final decision: PROCEED with transaction
   - Justification: All mandates now satisfied, confidence = 0.89
@@ -601,7 +601,7 @@ if sustainability_result.state == TLState.EPISTEMIC_HOLD:
     # → This will trigger because esg_verified = False
     
     # Pillar 1: Epistemic Hold activated
-    # Pillar 3: Create Always Memory Log
+    # Pillar 3: Create Decision Log
     # Pillar 4: Record in Decision Logs
     # Pillar 2: Write to Immutable Ledger
     
