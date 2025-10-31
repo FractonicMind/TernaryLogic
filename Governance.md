@@ -1,305 +1,312 @@
-# Ternary Logic Governance Structure
+# Ternary Logic Governance Framework
 
-## I. CONSTITUTIONAL FRAMEWORK
+## Constitutional Foundation
 
-The Ternary Logic (TL) governance model implements a tripartite structure designed to ensure technical integrity, ethical oversight, and economic sustainability. This governance framework operates under strict constitutional limitations: no governance body, individually or collectively, possesses authority to cease, suspend, or fundamentally alter the TL framework's core principles.
+Ternary Logic (TL) is a permanent evidentiary infrastructure for economic decision-making. Governance exists to maintain integrity, enforce foundational mandates, and ensure no single actor or institution can compromise the system. 
 
-### Fundamental Constraints
-
-1. **Inviolability Principle**: No human authority within the governance structure may terminate TL operations
-2. **Separation of Powers**: Each body operates within defined jurisdictional boundaries
-3. **Immutable Core**: The Eight Pillars and three-state logic remain unalterable
-4. **No Off-Switch**: Unanimous consent cannot override constitutional protections
+**Non-Extinguishability Clause**: TL cannot be terminated, suspended, privatized, or subordinated. This applies to all councils, contracts, jurisdictions, and participants. There is no lawful mechanism to delete or disable TL. Attempts to alter this clause are invalid and must be anchored as violations.
 
 ---
 
-## II. THE TECHNICAL COUNCIL
+## I. TECHNICAL COUNCIL
+
+### Purpose
+Maintain the technical health, security, and forward evolution of the TL protocol.
 
 ### Composition
-
-The Technical Council consists of qualified technologists meeting the following criteria:
-
+Nine members meeting qualification criteria:
 - Doctoral degree or equivalent expertise in computer science, cryptography, or financial engineering
-- Minimum 10 years experience in distributed systems or financial infrastructure
-- Published research in peer-reviewed journals relevant to TL domain
-- No concurrent employment with organizations having conflicts of interest
+- Minimum 10 years experience in distributed systems or financial infrastructure  
+- Published research in peer-reviewed journals
+- No concurrent employment creating conflicts of interest
 
-### Jurisdiction
-
-The Technical Council maintains exclusive authority over:
-
-1. **Protocol Standards**
-   - Core technical specifications and documentation
-   - Cryptographic algorithm selection and updates
-   - Performance optimization parameters
-   - Interoperability standards
+### Responsibilities
+1. **Core Technical Standards**
+   - Maintain specifications and reference implementations
+   - Approve cryptographic improvements and protocol upgrades
+   - Oversee independent security audits
+   - Ensure compatibility, stability, and resilience
 
 2. **Technical Evolution**
-   - Protocol improvement proposals (PIPs)
+   - Protocol improvement proposals
    - Security vulnerability patches
-   - Scalability enhancements
-   - API versioning
-
-3. **Security Auditing**
-   - Commissioning third-party security assessments
-   - Publishing vulnerability disclosure reports
-   - Maintaining security best practices documentation
+   - Performance optimization
+   - API versioning and standards
 
 ### Limitations
-
-The Technical Council explicitly lacks authority to:
-
-- Modify the three-state logic structure (+1/0/-1)
-- Alter the Eight Pillars architecture
-- Suspend Epistemic Hold functionality
-- Grant exemptions from logging requirements
-- Override Stewardship Custodian ethical determinations
+- No authority to modify constitutional mandates
+- No authority to grant or revoke network participation
+- No authority to suspend TL operations
+- Cannot alter three-state logic or Eight Pillars
+- Cannot bypass logging requirements
 
 ### Decision Process
-
-- Quorum: 60% of council members
 - Standard decisions: Simple majority
-- Protocol changes: 67% supermajority
-- Emergency patches: 40% with subsequent ratification
+- Protocol changes: Two-thirds supermajority
+- Minimum two-thirds participation for quorum
+- All votes produce signed Decision Logs and are anchored
 
 ---
 
-## III. STEWARDSHIP CUSTODIANS
+## II. STEWARDSHIP CUSTODIANS
+
+### Purpose
+Guard the foundational principles of TL and ensure all operators uphold licensing, No Spy, and No Weapon prohibitions.
 
 ### Composition
-
-Stewardship Custodians represent diverse stakeholder perspectives:
-
-- One representative from academic economics
-- One representative from regulatory compliance
-- One representative from institutional finance
-- One representative from technology ethics
-- One representative from international law
+Seven members representing diverse perspectives:
+- Academic economics representative
+- Regulatory compliance representative
+- Institutional finance representative
+- Technology ethics representative
+- International law representative
 - Two at-large positions elected by certified operators
 
-### Jurisdiction
-
-Stewardship Custodians maintain authority over:
-
+### Responsibilities
 1. **Principle Enforcement**
-   - Interpreting Goukassian Principle applications
-   - Adjudicating violation claims
-   - Maintaining ethical guidelines documentation
+   - Interpret and enforce TL constitutional mandates
+   - Review and ratify Technical Council upgrade proposals
+   - Maintain ethical and structural integrity
 
 2. **Operator Certification**
-   - Establishing certification requirements
-   - Reviewing certification applications
-   - Maintaining operator registry
+   - Certify operator compliance with TL mandates
+   - Investigate and adjudicate violation claims
+   - Revoke credentials for confirmed violations
 
-3. **Dispute Resolution**
-   - Final arbitration for unresolved disputes
-   - Interpretation of ambiguous policy matters
-   - Appeal hearings for revocation decisions
-
-### Revocation Authority
-
-Custodians may revoke operator certification for:
-
-- Violation of No Spy prohibition
-- Violation of No Weapon prohibition
+### Authority on Violations
+Automatic revocation for:
+- No Spy prohibition violation
+- No Weapon prohibition violation
+- Immutable Ledger tampering
+- Anchoring interference
 - Systematic logging failures
-- Manipulation of Epistemic Hold thresholds
-- Material misrepresentation in certification
+
+### Emergency Suspension
+- Temporary suspension allowed for clear and immediate violations
+- Auto-expiry if not confirmed by supermajority within 24 hours
+- Automatic reinstatement if quorum not met
 
 ### Limitations
-
-Stewardship Custodians explicitly lack authority to:
-
-- Modify technical protocol specifications
-- Override Technical Council security determinations
-- Suspend framework operations
-- Grant blanket exemptions from core principles
-- Access operator proprietary data without cause
+- Cannot dissolve or suspend TL
+- Cannot modify core pillars or triadic logic
+- Cannot interfere with technical standards absent constitutional breach
 
 ### Decision Process
-
-- Quorum: 70% of custodians
-- Certification decisions: Simple majority
-- Revocation decisions: 60% majority
-- Principle interpretations: 67% supermajority
-- Emergency suspensions: Any two custodians (72-hour duration)
+- Standard decisions: Two-thirds supermajority
+- Revocation decisions: Two-thirds supermajority
+- Minimum three-fourths participation for quorum
+- All actions logged and anchored
 
 ---
 
-## IV. SMART CONTRACT TREASURY
+## III. SMART CONTRACT TREASURY
+
+### Purpose
+Provide transparent, automatic, and accountable funding for TL infrastructure and development.
 
 ### Architecture
-
-The Smart Contract Treasury operates as an autonomous, deterministic system:
+Autonomous smart contract system with immutable core rules:
 
 1. **Revenue Collection**
-   - Network transaction fees (0.01% of transaction value)
-   - Certification fees (annual operator assessments)
-   - Violation penalties (enforced through smart contracts)
-   - Voluntary contributions (tax-deductible donations)
+   - Certification fees from operators
+   - Network transaction fees (parameter-band model)
+   - Violation penalties
+   - Research grants and donations
 
-2. **Disbursement Rules**
-   - Technical development: 40% allocation
-   - Security auditing: 20% allocation
-   - Governance operations: 15% allocation
-   - Research grants: 15% allocation
-   - Emergency reserve: 10% allocation
+2. **Disbursement Allocation**
+   - Technical development: 40%
+   - Security auditing: 20%
+   - Governance operations: 15%
+   - Research grants: 15%
+   - Emergency reserve: 10%
 
 ### Funding Triggers
+Disbursements occur only upon:
+1. Technical Council proposal
+2. Stewardship Custodian ratification
+3. Verified deployment or audit completion
 
-Automated disbursements occur upon:
-
-- Technical Council approved development proposals
-- Scheduled security audit contracts
-- Quarterly governance operation allocations
-- Research grant approval by joint committee
-- Emergency authorization (requires both Council and Custodian approval)
-
-### Transparency Requirements
-
-All Treasury operations are:
-
-- Recorded on public blockchain
-- Subject to quarterly public reporting
-- Auditable by any stakeholder
-- Protected against single-point manipulation
-
-### Constitutional Safeguards
-
-The Treasury smart contract includes immutable provisions:
-
+### Safeguards
+- Treasury changes require dual supermajority (Council + Custodians)
+- 90-day public notice before parameter updates
 - Cannot fund activities violating core principles
-- Cannot be modified without 90-day public notice
-- Cannot exceed defined allocation percentages
-- Cannot be drained beyond emergency reserve threshold
-- Cannot fund framework termination activities
+- Cannot fund framework termination
+- All movements auditable, anchored, and transparent
+
+### Shutdown Authority
+The Smart Contract Treasury contains the only mechanism capable of system shutdown, triggered exclusively under these conditions:
+
+1. **Gross Violation of Goukassian Principle**
+   - Verified autonomous weaponry deployment
+   - Confirmed pervasive surveillance implementation
+   - Requires cryptographic evidence from independent audit
+   - Dual supermajority confirmation from both governance bodies
+
+2. **Systemic Integrity Breach**
+   - Evidence of widespread Immutable Ledger tampering
+   - Coordinated attack on Anchoring infrastructure
+   - Requires forensic verification by three independent auditors
+
+3. **Certificate Revocation Protocol**
+   - System fails periodic cryptographic heartbeat check
+   - Refusal to comply with mandatory audit
+   - Internal logic altered to bypass Epistemic Hold
+
+Shutdown mechanism operates via certificate revocation on public ledger, causing:
+- Internal halt of high-risk operations
+- External isolation from compliant systems
+- Permanent anchoring of violation evidence
 
 ---
 
-## V. INTER-BODY PROCEDURES
+## IV. GOVERNANCE INTEGRITY REQUIREMENTS
 
-### Change Management Workflow
+### Decision Logs & Anchoring
+Every governance action must:
+- Produce a Decision Log with full rationale
+- Carry cryptographic signatures of voting members
+- Anchor to public blockchain within 24 hours
+- Remain permanently auditable
 
-1. **Proposal Initiation**
-   - Technical proposals: Technical Council
-   - Policy proposals: Stewardship Custodians
-   - Funding proposals: Either body
+**No log = no action** applies to all governance decisions.
 
-2. **Review Process**
-   - Technical review: 30-day minimum
-   - Ethical review: 45-day minimum
-   - Public comment: 21-day minimum
+### Conflict of Interest
+- Full disclosure required before appointment
+- Mandatory recusal when conflicted
+- Recusals logged and anchored
+- Violation triggers automatic removal
 
-3. **Ratification Requirements**
-   - Technical changes: Council approval + Custodian non-objection
-   - Policy changes: Custodian approval + Council feasibility confirmation
-   - Funding changes: Both bodies approval
+### Appeals Process
+1. Internal appeals permitted with new evidence only
+2. Technical disputes: Technical Council review
+3. Policy disputes: Stewardship Custodian review
+4. External review limited to evidence integrity verification
+5. External bodies cannot override TL mandates
 
-4. **Implementation**
-   - 90-day notice for major changes
-   - 30-day notice for minor updates
-   - Immediate deployment for security patches
-
-### Dispute Resolution Hierarchy
-
-1. Operator-level resolution attempt
-2. Technical Council mediation (technical disputes)
-3. Stewardship Custodian arbitration (policy disputes)
-4. Joint committee final determination
-5. No external appeal beyond governance structure
-
-### Emergency Procedures
-
-Emergency actions permitted only for:
-
-- Active security exploits
-- Imminent system failure
-- Regulatory compliance orders
-- Protection of user funds
-
-Emergency authorities:
-
-- Technical: 40% of Council may deploy patches
-- Ethical: Two Custodians may suspend operators
-- Financial: Automated circuit breakers in Treasury
-- Duration: Maximum 72 hours without full ratification
+### Emergency Powers
+- Minimal scope and reversible actions only
+- Auto-expiration after 72 hours unless ratified
+- Logged and anchored at creation and resolution
+- Cannot suspend core operations or principles
 
 ---
 
-## VI. ACCOUNTABILITY MECHANISMS
+## V. CERTIFICATION & REVOCATION
+
+### Certification Process
+1. Application review by Stewardship Custodians
+2. Technical compliance verification by Council
+3. Independent audit of implementation
+4. Public registry entry upon approval
+5. Annual compliance attestation required
+
+### Revocation Triggers
+Immediate revocation for:
+- No Spy violation
+- No Weapon violation
+- Immutable Ledger tampering
+- Anchoring interference
+- Epistemic Hold bypass
+- Refusal of mandatory audit
+
+### Revocation Process
+1. Evidence collection and verification
+2. Notice to operator with evidence disclosure
+3. 30-day response period (except emergencies)
+4. Stewardship Custodian ruling
+5. Anchoring of complete proceedings
+6. Certificate marked invalid on public ledger
+
+---
+
+## VI. INTER-BODY COORDINATION
+
+### Change Management
+1. **Technical Changes**
+   - Proposed by Technical Council
+   - Reviewed by Stewardship Custodians for principle alignment
+   - 30-day public comment period
+   - Implementation upon dual approval
+
+2. **Policy Changes**
+   - Proposed by Stewardship Custodians
+   - Technical feasibility confirmed by Council
+   - 45-day public comment period
+   - Implementation upon dual approval
+
+3. **Treasury Changes**
+   - Proposed by either body
+   - Requires dual supermajority
+   - 90-day public notice period
+   - Automatic implementation via smart contract
+
+### Dispute Resolution
+1. Direct negotiation between bodies
+2. Joint committee mediation
+3. Independent arbitrator if deadlocked
+4. Arbitrator cannot alter constitutional principles
+5. All proceedings anchored
+
+---
+
+## VII. ACCOUNTABILITY & TRANSPARENCY
 
 ### Public Reporting
-
-Mandatory quarterly reports including:
-
-- Technical Council: Protocol changes, security assessments
+Quarterly reports required:
+- Technical Council: Changes, audits, vulnerabilities
 - Stewardship Custodians: Certifications, revocations, disputes
 - Smart Contract Treasury: Revenue, disbursements, reserves
 
 ### Audit Requirements
-
 Annual independent audits of:
-
 - Technical infrastructure security
-- Governance process compliance
+- Governance compliance
 - Treasury smart contract integrity
-- Operator certification accuracy
+- Certification process accuracy
+- Decision Log completeness
 
-### Term Limits and Rotation
-
+### Term Limits
 - Technical Council: 4-year terms, maximum two consecutive
 - Stewardship Custodians: 3-year terms, maximum two consecutive
-- Staggered rotation to ensure continuity
-- Mandatory 1-year cooling period before reappointment
+- Staggered rotation for continuity
+- One-year cooling period before reappointment
 
-### Recall Provisions
-
-Members may be removed for:
-
-- Violation of conflict of interest policies
-- Failure to maintain qualification requirements
-- Absence from 3 consecutive meetings
-- Breach of confidentiality agreements
-
-Recall process:
-
-- Petition by 30% of certified operators
-- Investigation by independent panel
-- Confirmation by 67% of remaining governance members
+### Member Removal
+Automatic removal for:
+- Conflict of interest violation
+- Loss of qualification criteria
+- Three consecutive meeting absences
+- Breach of confidentiality
+- Failure to sign Decision Logs
 
 ---
 
-## VII. EVOLUTIONARY CAPACITY
+## VIII. EVOLUTIONARY CAPACITY
 
-### Permitted Evolution
-
-The governance structure may evolve to:
-
+### Permitted Modifications
+Governance may evolve to:
 - Improve technical efficiency
 - Enhance security measures
-- Expand geographic representation
-- Clarify ambiguous procedures
+- Clarify procedures
 - Adapt to regulatory requirements
+- Expand geographic representation
 
 ### Prohibited Modifications
-
-The governance structure cannot:
-
+Governance cannot:
 - Grant authority to terminate TL
-- Modify the Eight Pillars
-- Eliminate the Epistemic Hold
+- Modify Eight Pillars architecture
+- Eliminate Epistemic Hold
 - Remove logging requirements
-- Bypass the Goukassian Principle
+- Bypass Goukassian Principle
+- Alter Non-Extinguishability Clause
 
 ### Amendment Process
-
-Governance charter amendments require:
-
-1. Proposal by either governance body
-2. 90-day public comment period
-3. Independent impact assessment
-4. 75% approval from both bodies
+1. Proposal by governance body or 20% of certified operators
+2. Independent impact assessment
+3. 90-day public comment period
+4. Three-fourths approval from both bodies
 5. 180-day implementation period
+6. Anchoring of complete amendment record
 
 ---
 
@@ -308,4 +315,3 @@ Governance charter amendments require:
 **Primary Contact**: leogouk@gmail.com  
 **Successor Contact**: support@tl-goukassian.org  
 (see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
-
