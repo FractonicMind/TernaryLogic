@@ -136,7 +136,7 @@ Any institution accepting stewardship must demonstrate:
 - Acceptance must include stewardship plan and resource commitment
 - Legal review period for institutional approval processes
 
-### Phase 3: Selection and Transfer (30 days)
+### Phase 3: Selection and Transfer (90 days)
 - If multiple institutions accept: selection based on stewardship plan quality
 - If single acceptance: automatic selection
 - If no acceptances: proceed to Alternative Succession (Section VI)
@@ -207,7 +207,7 @@ The Lev Goukassian Memorial Fund for Economic Research shall support:
 
 ### Digital Assets
 - __GitHub Repository__ https://github.com/FractonicMind/TernaryLogic
-- __Interactive Demo__ https://fractonicmind.github.io/TernaryLogic/demos/TL-App/
+- __Interactive Demo__ https://fractonicmind.github.io/TernaryLogic/demos/roi_calculator.html
 - __Documentation and Evidence__ Complete framework materials
 - __Medium Articles__ Publication and promotion materials
 
@@ -232,16 +232,21 @@ Redirects:
 ## IX. PROTECTION MECHANISMS
 
 ### Framework Integrity Safeguards
+
+#### Inviolability Clause
+**No human authority, including but not limited to the Technical Council, Stewardship Custodians, accepting institution, government entity, or unanimous vote of any governance body, possesses the right to cease, suspend, or terminate the Ternary Logic framework.** The framework's existence and core principles transcend human governance structures. Only the **Smart Contract Treasury**, under strictly defined and pre-coded conditions, may initiate cessation protocols. The Goukassian Principle's prohibitions are designed to be more fundamental than human law - no CEO, government, or unanimous vote can install an "off-switch" or suspend its operation.
+
+#### Immutable Core Principles
 - __Core Principle Lock__ The three states (+1/Proceed, 0/Epistemic Hold, -1/Halt) are immutable
 - __Eight Pillars Preservation__ The architectural pillars must be maintained:
   1. **Epistemic Hold** - The intelligent pause mechanism
   2. **Immutable Ledger** - Cryptographic verification system
-  3. **Decision Logs** - Complete audit trails
-  4. **Goukassian Principle** - Systemic oversight framework
+  3. **Goukassian Principle** - Systemic oversight framework
+  4. **Decision Logs** - Complete audit trails
   5. **Economic Rights & Transparency** - Rights management
-  6. **Anchors** - Blockchain verification points
+  6. **Sustainable Capital Allocation** - ESG verification
   7. **Hybrid Shield** - Privacy-transparency balance
-  8. **Sustainable Capital Allocation** - ESG verification
+  8. **Anchors** - Blockchain verification points
 - __Attribution Requirement__ "Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)" mandatory in all uses
 - __Market Integrity Clause__ Prohibited uses include market manipulation, predatory trading, or systemic risk amplification
 - __Academic Freedom__ Research criticism and improvements welcomed with proper attribution
@@ -317,25 +322,19 @@ This Charter shall be governed by the laws of the jurisdiction where the accepti
 
 ## XII. CONCLUSION
 
-This Succession Charter ensures the continuation of the Ternary Logic framework and Epistemic Hold methodology beyond the lifetime of its creator. By inviting qualified institutions to voluntarily assume stewardship rather than imposing obligations, this framework respects institutional autonomy while protecting the integrity and accessibility of TL for future generations.
+This Succession Charter establishes the institutional framework for continuity of the Ternary Logic economic decision-making system. The document provides a structured process for voluntary institutional stewardship, maintaining framework integrity while enabling continued academic development.
 
-The Epistemic Hold principle that defines TL—the wisdom to pause and acknowledge market complexity before acting—extends to this succession framework itself. Rather than rushing to assign responsibilities, this Charter creates space for thoughtful consideration and voluntary commitment from institutions that share the vision of intelligent economic decision-making.
+The Charter's design reflects the TL framework's core principle: structured deliberation in the face of uncertainty. Rather than mandating immediate succession, the framework provides a 120-day evaluation period for institutional assessment and voluntary commitment.
 
-Every economic system that pauses to consider uncertainty rather than forcing binary decisions carries forward Lev Goukassian's vision. In a world of microsecond trading and algorithmic decisions, the Epistemic Hold reminds us that true market wisdom often lies in knowing when not to act.
+The preservation requirements for the Eight Pillars ensure architectural consistency across institutional transitions. The Memorial Fund structure provides sustainable funding for continued research in economic decision theory and uncertainty management.
 
 ---
 
-## Contact Information
+## Contact & Engagement
 
-**Created by Lev Goukassian**
-* **ORCID**: 0009-0006-5966-1243
-* **Email**: leogouk@gmail.com
-**Successor Contact**: support@tl-goukassian.org
+**Author**: Lev Goukassian (ORCID: 0009-0006-5966-1243)   
+**Primary Contact**: leogouk@gmail.com  
+**Successor Contact**: support@tl-goukassian.org  
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))   
+
 **Repository Reference**: https://github.com/FractonicMind/TernaryLogic  
- 
----
-
-#### *"I taught systems to feel the weight of uncertainty, and the wisdom of deliberate pause. The world is not binary. And the future will not be either."* **— Lev Goukassian**
-
-
-
