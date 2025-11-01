@@ -31,7 +31,7 @@ The Economic Rights & Transparency Mandate provides a powerful infrastructure to
 
 This pillar represents a paradigm shift from "regulation by enforcement" to "regulation by architecture." By embedding compliance rules directly into the financial plumbing, the system makes non-compliance architecturally difficult, if not impossible, dramatically reducing the potential for human error, oversight, or willful evasion.  
 
-**Table Mapping TL Framework Features to International Transparency Standards**
+**Table: Mapping TL Framework Features to International Transparency Standards**
 
 | International Standard | Core Requirement | Corresponding TL Pillar/Feature | Implementation Example |
 | :---- | :---- | :---- | :---- |
