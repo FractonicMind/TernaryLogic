@@ -79,19 +79,19 @@ The immutability and continuous chaining accelerate **supervisory forensics**. I
 
 The integrity and ultimate utility of the Immutable Ledger are not standalone features but derive from the functional interdependence within the Ternary Logic framework. The Ledger’s assurance of integrity is a system-wide achievement secured by preceding and supporting pillars.
 
-### **Integrity Secured by Pre-Emption (Pillar 1: Epistemic Hold)**
+### **Integrity Secured by Pre-Emption (Pillar Epistemic Hold)**
 
 The durability of the Immutable Ledger’s "write-once" constraint is only possible because the system is designed to prevent bad data from ever achieving finality. The Ledger's immutability is fundamentally supported by the **Epistemic Hold**, which ensures that only vetted, clean transactions ever reach the Committed state.
 
 This pre-emptive mechanism shifts risk management from reactive post-facto remediation (such as reversals, clawbacks, or costly legal unwinding) to proactive prevention. Every request for a state change triggers an entry into the Held state, which lasts approximately 300 milliseconds. During this time-bounded window, automated checks—including those for liquidity, Anti-Money Laundering/Combating the Financing of Terrorism (AML/CFT), and supervisory risk caps—are executed. If any check fails, the transaction is instantly Aborted, and no record is made on the Immutable Ledger, creating an immutable log of the failed attempt in the Decision Logs instead. The Ledger, therefore, does not require complex reversal mechanisms precisely because the architecture forces upstream diligence. The Ledger's inherent inability to be altered or reversed imposes a necessary discipline on all preceding pillars: the Epistemic Hold *must* function effectively because the immutable record provides no recourse if a risky or erroneous transaction is accidentally committed. This reliance on guaranteed clean input defines the high-integrity, forward-looking nature of TL.
 
-### **Integrity Secured by Causality (Pillar 6: Decision Logs)**
+### **Integrity Secured by Causality (Pillar Decision Logs)**
 
 The Immutable Ledger is inherently tied to **Decision Logs**, which provide the crucial causal context—the "why"—behind every committed transaction. This link is enforced by a fundamental protocol-level constraint: **No Log \= No Action**. The Immutable Ledger will only accept a transaction if it is cryptographically linked to a pre-existing Decision Log that records the data inputs, specific rules or algorithms applied, and the identity of the authorizing agent (human or machine).
 
 This linkage is vital for **algorithmic accountability**. As modern financial systems delegate complex decision-making to artificial intelligence, the "black box" problem poses a major source of operational and legal risk. The combination of the Immutable Ledger and Decision Logs ensures that every recorded action has a transparent, auditable justification. This permanent, linked record dramatically simplifies supervisory forensics and provides a clear basis for assigning liability when automated systems fail, ensuring that structural transparency is enforced on the Ledger itself.
 
-### **Integrity Secured by Decentralized Proof (Pillars 7 & 8: Hybrid Shield and Anchors)**
+### **Integrity Secured by Decentralized Proof (Pillars Hybrid Shield and Anchors)**
 
 While the Immutable Ledger itself typically resides on the high-speed, confidential **Permissioned Execution Layer** to satisfy commercial needs for privacy and throughput , its integrity is guaranteed through external, decentralized mechanisms: the Hybrid Shield and Anchors.
 
