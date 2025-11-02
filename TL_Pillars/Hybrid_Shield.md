@@ -1,4 +1,4 @@
-# **TL_PILLAR_7: THE HYBRID SHIELD**  
+# **THE HYBRID SHIELD**  
 **The Constitutional Defense System**
 
 ## **I. Constitutional Foundation**
