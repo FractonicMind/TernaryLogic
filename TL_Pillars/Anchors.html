@@ -1,0 +1,358 @@
+<!-- Chosen Palette: Brilliant Blues -->
+<!-- Application Structure Plan: The infographic is structured as a single-page, top-to-bottom scrollable narrative. This linear structure was chosen to match the source material's constitutional and technical tone, guiding the user logically from the foundational 'Why' (Core Purpose), to the 'What' (The Three Classes), to the 'How' (The Operational Pipeline & Key Properties), and finally to 'Proof' (Scenarios & Governance). This step-by-step flow is the most effective way to "teach" this complex, non-quantitative subject, ensuring each concept builds on the last for maximum clarity and institutional-grade communication. -->
+<!-- Visualization & Content Choices:
+- Source: Core Purpose -> Goal: Inform -> Viz: 3-column HTML/CSS cards w/ Unicode icons. -> Justification: Breaks down the "why" into digestible, non-quantitative points. (NO SVG).
+- Source: Three Anchor Classes -> Goal: Compare/Relationships -> Viz: Chart.js Radar Chart (Canvas) & 3-column text descriptions. -> Justification: The Radar chart is the mandatory Chart.js element, used to visualize how each of the three classes addresses a different set of systemic risks (e.g., Tampering, Capture, Auditability). This is more informative than a simple pie chart. (Chart.js/Canvas, NO SVG).
+- Source: Operational Pipeline -> Goal: Organize (Process) -> Viz: HTML/CSS/Tailwind Flowchart Diagram. -> Justification: Visually represents the critical `+1 -> 0 -> -1` state change process which is central to the source. (HTML/CSS, NO SVG/Mermaid).
+- Source: Latency Model -> Goal: Compare/Organize -> Viz: HTML/CSS/Tailwind "Dual Lane" Diagram. -> Justification: Clearly illustrates the parallel processing concept (no delay) without SVG. (HTML/CSS, NO SVG/Mermaid).
+- Source: Scenarios -> Goal: Organize (Example) -> Viz: Two side-by-side HTML/CSS Flowchart diagrams. -> Justification: Applies the main process flow to concrete examples. (HTML/CSS, NO SVG/Mermaid).
+- Source: Governance Linkage -> Goal: Organize (Relationship) -> Viz: HTML/CSS/Tailwind Hierarchy Diagram. -> Justification: Shows the oversight structure. (HTML/CSS, NO SVG/Mermaid).
+-->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ternary Logic: The Anchors Pillar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+            color: #1E1B18;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 500px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+        .card {
+            background-color: #FFFFFF;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #E0E0E0;
+        }
+        .flow-step {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            border: 2px solid;
+            min-width: 150px;
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3E92CC;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="text-white p-8 md:p-12" style="background-color: #0A2463;">
+        <div class="container mx-auto max-w-6xl text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">The Ternary Logic Anchors Pillar</h1>
+            <p class="text-xl md:text-2xl text-gray-300">Ensuring External Verifiability, Integrity, and Institutional Trust</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto max-w-6xl p-4 md:p-8 space-y-12">
+
+        <section class="card p-6 md:p-8">
+            <h2 class="text-3xl font-bold mb-6 text-center" style="color: #0A2463;">Core Purpose: A Mandate for Durable Proof</h2>
+            <p class="text-lg text-gray-700 mb-8 max-w-4xl mx-auto text-center">The Anchors pillar is a constitutional mandate for institutional survival. It ensures that critical financial and governance systems maintain permanent, external verifiability. This prevents quiet tampering, private rewrites, or institutional capture by requiring immutable, anchored proof of all significant actions, linked to multiple independent, external sources of truth.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gray-50 rounded-lg p-6 text-center border-b-4" style="border-color: #3E92CC;">
+                    <span class="text-5xl">🛡️</span>
+                    <h3 class="text-xl font-bold mt-4 mb-2">Preserve Integrity</h3>
+                    <p class="text-gray-600">Protects against rollbacks, erasure, or data tampering by anchoring cryptographic commitments to external, independent chains.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-6 text-center border-b-4" style="border-color: #3E92CC;">
+                    <span class="text-5xl">🏛️</span>
+                    <h3 class="text-xl font-bold mt-4 mb-2">Prevent Capture</h3>
+                    <p class="text-gray-600">Uses off-chain governance and multi-chain anchoring to prevent any single entity from unilaterally altering the protocol or its history.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-6 text-center border-b-4" style="border-color: #3E92CC;">
+                    <span class="text-5xl">🔎</span>
+                    <h3 class="text-xl font-bold mt-4 mb-2">Ensure Auditability</h3>
+                    <p class="text-gray-600">Guarantees a permanent, reproducible audit trail, allowing future generations to verify the authenticity of all historical decisions and data.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card p-6 md:p-8">
+            <h2 class="text-3xl font-bold mb-6 text-center" style="color: #0A2463;">The Three Anchor Classes</h2>
+            <p class="text-lg text-gray-700 mb-8 max-w-4xl mx-auto text-center">The mandate is enforced by three distinct, mutually-reinforcing anchor classes. The radar chart below visualizes the primary risks each class is designed to mitigate, while the descriptions explain their function.</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                    <div class="chart-container">
+                        <canvas id="anchorRadarChart"></canvas>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2" style="color: #3E92CC;">1. Governance Anchors</h3>
+                        <p class="text-gray-700">These are the formal, off-chain human institutions (e.g., Technical Council, Stewardship Custodians) with the authority to ensure protocol continuity and enforce rule changes. They are the ultimate check against unilateral power and institutional capture.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2" style="color: #0A2463;">2. Integrity Anchors</h3>
+                        <p class="text-gray-700">These are hash-based cryptographic commitments (e.g., Merkle roots) of the internal ledger's state. They are anchored to multiple, independent, external blockchains to provide durable, mathematical proof of the ledger's history, protecting it from rollbacks.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2" style="color: #D8315B;">3. Veracity Anchors</h3>
+                        <p class="text-gray-700">These are timestamped hash proofs of *external evidence* (e.g., legal documents, regulatory filings). By notarizing the hash of off-chain data *before* it's used, they mitigate "garbage-in, garbage-out" and prove the authenticity of the sources used in a decision.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card p-6 md:p-8">
+            <h2 class="text-3xl font-bold mb-8 text-center" style="color: #0A2463;">The Operational Pipeline: From Intent to Anchor</h2>
+            <p class="text-lg text-gray-700 mb-8 max-w-4xl mx-auto text-center">All significant actions follow a mandatory, auditable lifecycle. An "Epistemic Hold" (0-State) is the system's primary enforcement mechanism, automatically pausing any action that lacks the required proof, forcing a review before a final, anchored commitment is made.</p>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                <div class="flow-step" style="border-color: #3E92CC; background-color: #F0F8FF;">+1 Propose</div>
+                <div class="flow-arrow hidden md:block">→</div>
+                <div class="flow-arrow md:hidden">↓</div>
+                <div class="flow-step" style="border-color: #D8315B; background-color: #FFF0F5;">0 Epistemic Hold</div>
+                <div class="flow-arrow hidden md:block">→</div>
+                <div class="flow-arrow md:hidden">↓</div>
+                <div class="flow-step" style="border-color: #3E92CC; background-color: #F0F8FF;">+1 Commit / -1 Refuse</div>
+                <div class="flow-arrow hidden md:block">→</div>
+                <div class="flow-arrow md:hidden">↓</div>
+                <div class="flow-step" style="border-color: #0A2463; background-color: #E6EBFF;">Ledger Write</div>
+                <div class="flow-arrow hidden md:block">→</div>
+                <div class="flow-arrow md:hidden">↓</div>
+                <div class="flow-step" style="border-color: #0A2463; background-color: #E6EBFF;">Multi-Chain Anchor</div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="card p-6 md:p-8">
+                <h2 class="text-2xl font-bold mb-6 text-center" style="color: #0A2463;">Key Properties: Privacy & Latency</h2>
+                <p class="text-gray-700 mb-6">The system is designed to enforce trust without compromising performance or privacy.</p>
+                
+                <h3 class="text-xl font-bold mb-4">Dual-Lane Execution (No Delay)</h3>
+                <p class="text-gray-700 mb-6">Anchoring runs in a parallel lane. Economic actions are confirmed instantly on the internal ledger, while the external anchoring process runs in the background to provide long-term proof without adding latency.</p>
+                <div class="space-y-4">
+                    <div class="p-4 rounded-lg border-2" style="border-color: #3E92CC; background-color: #F0F8FF;">
+                        <h4 class="font-bold text-lg" style="color: #0A2463;">LANE 1: Economic Action (Instant)</h4>
+                        <p class="text-gray-700">Action is proposed, validated, and written to the internal ledger immediately.</p>
+                    </div>
+                    <div class="p-4 rounded-lg border-2" style="border-color: #0A2463; background-color: #E6EBFF;">
+                        <h4 class="font-bold text-lg" style="color: #0A2463;">LANE 2: Anchoring (Parallel)</h4>
+                        <p class="text-gray-700">The ledger state is batched, hashed (Merkleized), and anchored to external chains for durable proof.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-6 md:p-8">
+                <h2 class="text-2xl font-bold mb-6 text-center" style="color: #0A2463;">Privacy by Design (GDPR-Aligned)</h2>
+                <p class="text-gray-700 mb-6">Anchors store commitments, not contents. No raw business data or personal information ever leaves the system or is written to an external chain.</p>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-3">🚫</span>
+                        <div>
+                            <h4 class="font-semibold">No Raw Data On-Chain</h4>
+                            <p class="text-gray-600">Only cryptographic hashes (proofs) are anchored externally.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-3">🔒</span>
+                        <div>
+                            <h4 class="font-semibold">Irreversible Pseudonymization</h4>
+                            <p class="text-gray-600">All personal data is pseudonymized *before* hashing, in alignment with GDPR.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-3">💨</span>
+                        <div>
+                            <h4 class="font-semibold">Ephemeral Key Rotation (ERK)</h4>
+                            <p class="text-gray-600">Proprietary data is protected; it vanishes after verification, leaving only the proof of its existence and content.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="card p-6 md:p-8">
+            <h2 class="text-3xl font-bold mb-8 text-center" style="color: #0A2463;">Example Scenarios in Practice</h2>
+            <p class="text-lg text-gray-700 mb-8 max-w-4xl mx-auto text-center">The following examples demonstrate how the pipeline applies to high-impact institutional events, forcing review and creating a permanent, anchored record.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-6 rounded-lg" style="background-color: #F8F9FA; border: 1px solid #DEE2E6;">
+                    <h3 class="text-xl font-bold mb-6 text-center">Scenario 1: Regulatory Bank Event</h3>
+                    <div class="flex flex-col items-center space-y-3">
+                        <div class="flow-step" style="border-color: #3E92CC; background-color: #F0F8FF;">+1 Report Event</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step" style="border-color: #D8315B; background-color: #FFF0F5;">0 Hold (Awaiting Veracity Proof)</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step" style="border-color: #3E92CC; background-color: #F0F8FF;">+1 Commit (Proof Verified)</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step" style="border-color: #0A2463; background-color: #E6EBFF;">Ledger Write & Anchor</div>
+                    </div>
+                </div>
+                <div class="p-6 rounded-lg" style="background-color: #F8F9FA; border: 1px solid #DEE2E6;">
+                    <h3 class="text-xl font-bold mb-6 text-center">Scenario 2: Capital Allocation</h3>
+                    <div class="flex flex-col items-center space-y-3">
+                        <div class="flow-step" style="border-color: #3E92CC; background-color: #F0F8FF;">+1 Propose Investment</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step" style="border-color: #D8315B; background-color: #FFF0F5;">0 Hold (Risk Flag)</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step" style="border-color: #D8315B; background-color: #FFF0F5; color: #D8315B;">-1 Refuse (Non-Compliant)</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step" style="border-color: #0A2463; background-color: #E6EBFF;">Ledger Write & Anchor</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card p-6 md:p-8">
+            <h2 class="text-3xl font-bold mb-8 text-center" style="color: #0A2463;">Governance Linkage: The Human Anchor</h2>
+            <p class="text-lg text-gray-700 mb-8 max-w-4xl mx-auto text-center">The technical anchors are the tools used by the off-chain Governance Anchors to perform their oversight duties. This creates a closed loop of technical proof and human accountability.</p>
+            <div class="flex flex-col items-center">
+                <div class="p-4 rounded-lg text-white font-bold text-xl" style="background-color: #0A2463;">The Anchors Pillar (Technical Proofs)</div>
+                <div class="h-12 w-1 bg-gray-300 my-4"></div>
+                <div class="text-gray-500 mb-4 font-semibold">PROVIDES AUDITABILITY TO</div>
+                <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="text-center p-4 rounded-lg" style="background-color: #E6EBFF;">
+                        <h4 class="font-bold text-lg" style="color: #0A2463;">Technical Council</h4>
+                        <p class="text-gray-700">Verifies protocol correctness and cryptographic agility.</p>
+                    </div>
+                    <div class="text-center p-4 rounded-lg" style="background-color: #E6EBFF;">
+                        <h4 class="font-bold text-lg" style="color: #0A2463;">Stewardship Custodians</h4>
+                        <p class="text-gray-700">Audits for ethical, legal, and constitutional compliance.</p>
+                    </div>
+                    <div class="text-center p-4 rounded-lg" style="background-color: #E6EBFF;">
+                        <h4 class="font-bold text-lg" style="color: #0A2463;">Smart Contract Treasury</h4>
+                        <p class="text-gray-700">Ensures funds integrity and validates cryptographic upgrades.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center p-8 mt-12 text-white" style="background-color: #0A2463;">
+        <p class="text-gray-300">Ternary Logic: Enforcing Institutional Memory Against Capture and Quiet Tampering.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('anchorRadarChart')?.getContext('2d');
+            if (ctx) {
+                const chartData = {
+                    labels: [
+                        ['Prevent', 'Tampering'],
+                        ['Prevent', 'Capture'],
+                        ['Ensure', 'Auditability'],
+                        ['Verify', 'Evidence'],
+                        ['Protocol', 'Continuity']
+                    ],
+                    datasets: [
+                        {
+                            label: 'Governance',
+                            data: [0, 5, 2, 1, 5],
+                            fill: true,
+                            backgroundColor: 'rgba(62, 146, 204, 0.4)',
+                            borderColor: 'rgb(62, 146, 204)',
+                            pointBackgroundColor: 'rgb(62, 146, 204)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(62, 146, 204)'
+                        },
+                        {
+                            label: 'Integrity',
+                            data: [5, 1, 5, 2, 2],
+                            fill: true,
+                            backgroundColor: 'rgba(10, 36, 99, 0.4)',
+                            borderColor: 'rgb(10, 36, 99)',
+                            pointBackgroundColor: 'rgb(10, 36, 99)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(10, 36, 99)'
+                        },
+                        {
+                            label: 'Veracity',
+                            data: [1, 1, 4, 5, 1],
+                            fill: true,
+                            backgroundColor: 'rgba(216, 49, 91, 0.4)',
+                            borderColor: 'rgb(216, 49, 91)',
+                            pointBackgroundColor: 'rgb(216, 49, 91)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(216, 49, 91)'
+                        }
+                    ]
+                };
+
+                new Chart(ctx, {
+                    type: 'radar',
+                    data: chartData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    title: function(tooltipItems) {
+                                        const item = tooltipItems[0];
+                                        let label = item.chart.data.labels[item.dataIndex];
+                                        if (Array.isArray(label)) {
+                                            return label.join(' ');
+                                        } else {
+                                            return label;
+                                        }
+                                    }
+                                }
+                            },
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: {
+                                        size: 14
+                                    },
+                                    color: '#1E1B18'
+                                }
+                            }
+                        },
+                        scales: {
+                            r: {
+                                angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                                grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                                pointLabels: {
+                                    font: {
+                                        size: 12,
+                                        weight: '600'
+                                    },
+                                    color: '#1E1B18'
+                                },
+                                ticks: {
+                                    backdropColor: 'rgba(255, 255, 255, 0.75)',
+                                    color: '#666',
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
+
