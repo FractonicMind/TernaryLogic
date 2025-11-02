@@ -157,3 +157,11 @@ The resulting anchored refusal trace serves as non-repudiable proof for regulato
 The Decision Logs (Logica Evidentia) represent the mathematical realization of the Ternary Logic Vow—a self-enforcing covenant between code and conscience. By mandating write-once, append-only, and tamper-evident storage, secured by Merkle-batched cryptographic anchoring across distributed networks, the historical record of computational activity is rendered unalterable and universally verifiable.  
 This architectural immutability is the prerequisite for establishing long-horizon institutional trust in autonomous systems. By rigorously documenting the necessary hesitation (0 Sacred Pause) and the mandated ethical restraint (-1 Refusal, especially in the context of the No Spy and No Weapon prohibitions), the Decision Logs provide the only viable foundation for verifiable system integrity. This perpetual memory, symbolized by the **Lantern (\\clubsuit)**, ensures that the trail of responsibility is perpetually preserved, thereby serving as the definitive architecture of computational transparency.
 
+---
+
+## Contact & Engagement
+
+**Primary Contact**: leogouk@gmail.com  
+**Successor Contact**: support@tl-goukassian.org  
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
+
