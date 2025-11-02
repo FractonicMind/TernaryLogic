@@ -1,4 +1,4 @@
-# **The Ternary Logic Constitutional Framework: The Anchors Specification**
+# **The Anchors**
 
 ## **I. The Anchors Pillar: Definition and Constitutional Mandate**
 
@@ -231,3 +231,12 @@ The following scenarios demonstrate the end-to-end flow and interplay of the anc
 The Anchors Pillar is the mechanism that provides the Ternary Logic system with an immutable, externally verifiable institutional memory. This memory is composed of three parts: the Governance Anchors as the *memory of the law* (why a rule exists), the Veracity Anchors as the *memory of the context* (what external facts were known and when), and the Integrity Anchors as the *memory of the action* (what the system did as a result).  
 This distributed, multi-faceted memory is the system's ultimate defense against institutional capture and quiet tampering. The constitutional separation of powers, enforced by the separation of anchor classes, makes it impossible for a single compromised component to corrupt the whole. A captured operator *cannot* change the law (Governance Anchors). A captured council *cannot* falsify the ledger (Integrity Anchors) or invent new facts (Veracity Anchors) without immediate and public cryptographic detection.  
 Critical financial and institutional systems cannot be "black boxes" that operate on "trust us." They demand *durable, external, and non-repudiable proof*. The Anchors Pillar is the mechanism that provides this. It definitively moves the TL system from a *trust-based* model to a *verification-based* model. These anchors are the *enduring proof structures* that guarantee the system's integrity, and the integrity of its operators, to all present and future stakeholders.
+
+---
+
+## Contact & Engagement
+
+**Primary Contact**: leogouk@gmail.com  
+**Successor Contact**: support@tl-goukassian.org  
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
+
