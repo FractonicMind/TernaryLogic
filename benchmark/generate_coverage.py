@@ -50,7 +50,7 @@ class TLCoverageGenerator:
     
     def __init__(self, project_root: Path):
         self.project_root = project_root
-        self.src_dir = project_root / "src" / "goukassian"
+        self.src_dir = project_root / "src"  # Changed to src/ only
         self.tests_dir = project_root / "tests"
         self.coverage_dir = project_root / "coverage_reports"
         self.benchmark_dir = project_root / "benchmark"
@@ -59,7 +59,7 @@ class TLCoverageGenerator:
         self.coverage_dir.mkdir(exist_ok=True)
         self.benchmark_dir.mkdir(exist_ok=True)
         
-        # Coverage configuration
+        # Coverage configuration - pointing to src/ only
         self.coverage_config = {
             'source': [str(self.src_dir)],
             'omit': [
@@ -73,12 +73,12 @@ class TLCoverageGenerator:
             'precision': 2,
             'show_missing': True,
             'skip_covered': False,
-            'include_paths': [str(self.src_dir / "**" / "*.py")]
+            'include_paths': [str(self.src_dir / "*.py")]  # All .py files directly in src/
         }
     
     def run_tests_with_coverage(self) -> Tuple[float, Dict]:
         """Run test suite with coverage measurement."""
-        print(" Running test suite with coverage measurement...")
+        print("🔍 Running test suite with coverage measurement...")
         
         # Initialize coverage
         cov = coverage.Coverage(
@@ -128,9 +128,9 @@ class TLCoverageGenerator:
                 'timestamp': datetime.now().isoformat()
             }
             
-            print(f" Tests completed in {execution_time:.2f}s")
-            print(f" Coverage: {coverage_report['total_coverage']:.2f}%")
-            print(f" Memory usage: {memory_usage:.1f}MB")
+            print(f"✅ Tests completed in {execution_time:.2f}s")
+            print(f"📊 Coverage: {coverage_report['total_coverage']:.2f}%")
+            print(f"💾 Memory usage: {memory_usage:.1f}MB")
             
             return coverage_report['total_coverage'], {
                 'coverage': coverage_report,
@@ -138,7 +138,7 @@ class TLCoverageGenerator:
             }
             
         except Exception as e:
-            print(f" Error running tests: {e}")
+            print(f"❌ Error running tests: {e}")
             return 0.0, {}
     
     def _generate_coverage_data(self, cov: coverage.Coverage) -> Dict:
@@ -153,20 +153,24 @@ class TLCoverageGenerator:
         file_coverage = {}
         
         for filename in coverage_data.measured_files():
-            if self.src_dir.name in filename:
-                analysis = cov._analyze(filename)
-                statements = len(analysis.statements)
-                missing = len(analysis.missing)
-                
-                total_statements += statements
-                total_missing += missing
-                
-                file_coverage[filename] = {
-                    'statements': statements,
-                    'missing': missing,
-                    'coverage': round((statements - missing) / statements * 100, 2) if statements > 0 else 0,
-                    'missing_lines': sorted(analysis.missing)
-                }
+            # Only include files from src/ directory (not subdirectories)
+            if str(self.src_dir) in filename and filename.endswith('.py'):
+                # Check if file is directly in src/ (not in subdirectory)
+                rel_path = Path(filename).relative_to(self.src_dir)
+                if len(rel_path.parts) == 1:  # File is directly in src/
+                    analysis = cov._analyze(filename)
+                    statements = len(analysis.statements)
+                    missing = len(analysis.missing)
+                    
+                    total_statements += statements
+                    total_missing += missing
+                    
+                    file_coverage[filename] = {
+                        'statements': statements,
+                        'missing': missing,
+                        'coverage': round((statements - missing) / statements * 100, 2) if statements > 0 else 0,
+                        'missing_lines': sorted(analysis.missing)
+                    }
         
         total_coverage = round((total_statements - total_missing) / total_statements * 100, 2) if total_statements > 0 else 0
         
@@ -181,7 +185,7 @@ class TLCoverageGenerator:
     
     def generate_html_report(self, coverage_data: Dict) -> Path:
         """Generate HTML coverage report."""
-        print(" Generating HTML coverage report...")
+        print("📝 Generating HTML coverage report...")
         
         html_dir = self.coverage_dir / "html"
         html_dir.mkdir(exist_ok=True)
@@ -203,7 +207,7 @@ class TLCoverageGenerator:
         # Create enhanced HTML index
         self._create_enhanced_html_index(html_dir, coverage_data)
         
-        print(f" HTML report generated: {html_dir / 'index.html'}")
+        print(f"✅ HTML report generated: {html_dir / 'index.html'}")
         return html_dir / "index.html"
     
     def _create_enhanced_html_index(self, html_dir: Path, coverage_data: Dict):
@@ -228,7 +232,7 @@ class TLCoverageGenerator:
 </head>
 <body>
     <div class="header">
-        <h1> Ternary Logic Framework - Coverage Report</h1>
+        <h1>📊 Ternary Logic Framework - Coverage Report</h1>
         <p>Comprehensive code coverage analysis for economic decision-making system</p>
         <p><strong>Generated:</strong> {coverage_data.get('timestamp', 'Unknown')}</p>
     </div>
@@ -252,7 +256,7 @@ class TLCoverageGenerator:
         </div>
     </div>
     
-    <h2> Performance Metrics</h2>
+    <h2>⚡ Performance Metrics</h2>
     <div class="metrics">
         <div class="metric">
             <div class="metric-value">{coverage_data.get('performance', {}).get('execution_time', 0):.2f}s</div>
@@ -264,11 +268,11 @@ class TLCoverageGenerator:
         </div>
     </div>
     
-    <h2> Detailed Coverage by File</h2>
+    <h2>📁 Detailed Coverage by File</h2>
     <p><a href="index_original.html">View Detailed Coverage Report →</a></p>
     
     <div style="margin-top: 40px; padding: 20px; background: #f3f4f6; border-radius: 8px;">
-        <h3> Coverage Targets</h3>
+        <h3>🎯 Coverage Targets</h3>
         <ul>
             <li><strong>Minimum Target:</strong> 90% code coverage</li>
             <li><strong>Current Achievement:</strong> {coverage_data['coverage']['total_coverage']:.1f}% </li>
@@ -289,7 +293,7 @@ class TLCoverageGenerator:
     
     def generate_xml_report(self, coverage_data: Dict) -> Path:
         """Generate XML coverage report for CI/CD integration."""
-        print(" Generating XML coverage report...")
+        print("📄 Generating XML coverage report...")
         
         xml_file = self.coverage_dir / "coverage.xml"
         
@@ -303,12 +307,12 @@ class TLCoverageGenerator:
         # Generate XML report
         cov.xml_report(outfile=str(xml_file))
         
-        print(f" XML report generated: {xml_file}")
+        print(f"✅ XML report generated: {xml_file}")
         return xml_file
     
     def generate_json_report(self, coverage_data: Dict) -> Path:
         """Generate JSON coverage report for programmatic access."""
-        print(" Generating JSON coverage report...")
+        print("📋 Generating JSON coverage report...")
         
         json_file = self.coverage_dir / "coverage.json"
         
@@ -340,12 +344,12 @@ class TLCoverageGenerator:
         with open(json_file, 'w') as f:
             json.dump(json_report, f, indent=2)
         
-        print(f" JSON report generated: {json_file}")
+        print(f"✅ JSON report generated: {json_file}")
         return json_file
     
     def generate_badge_data(self, coverage_percentage: float) -> Path:
         """Generate badge data for coverage shields."""
-        print(" Generating coverage badge data...")
+        print("🛡️ Generating coverage badge data...")
         
         badge_file = self.benchmark_dir / "coverage_badge.json"
         
@@ -383,7 +387,7 @@ class TLCoverageGenerator:
         with open(badge_file, 'w') as f:
             json.dump(badge_data, f, indent=2)
         
-        print(f" Badge data generated: {badge_file}")
+        print(f"✅ Badge data generated: {badge_file}")
         return badge_file
     
     def _get_coverage_grade(self, coverage: float) -> str:
@@ -407,7 +411,7 @@ class TLCoverageGenerator:
     
     def generate_detailed_analysis(self, coverage_data: Dict) -> Path:
         """Generate detailed coverage analysis report."""
-        print(" Generating detailed coverage analysis...")
+        print("📊 Generating detailed coverage analysis...")
         
         analysis_file = self.coverage_dir / "detailed_analysis.md"
         
@@ -417,7 +421,7 @@ class TLCoverageGenerator:
 **Framework Version:** 1.0.0  
 **Total Coverage:** {coverage_data['coverage']['total_coverage']:.2f}%
 
-##  Coverage Summary
+## 📊 Coverage Summary
 
 | Metric | Value |
 |--------|-------|
@@ -428,12 +432,12 @@ class TLCoverageGenerator:
 | **Coverage Grade** | {self._get_coverage_grade(coverage_data['coverage']['total_coverage'])} |
 | **Files Analyzed** | {coverage_data['coverage']['files_covered']} |
 
-##  Coverage Analysis
+## 🎯 Coverage Analysis
 
 ### Overall Assessment
-- __Status:__ {' Excellent' if coverage_data['coverage']['total_coverage'] >= 95 else ' Good' if coverage_data['coverage']['total_coverage'] >= 90 else ' Needs Improvement'}
-- __Quality:__ {self._get_coverage_grade(coverage_data['coverage']['total_coverage'])} Grade
-- __Compliance:__ {'Meets' if coverage_data['coverage']['total_coverage'] >= 90 else 'Below'} industry standards (90%+)
+- **Status:** {'✅ Excellent' if coverage_data['coverage']['total_coverage'] >= 95 else '👍 Good' if coverage_data['coverage']['total_coverage'] >= 90 else '⚠️ Needs Improvement'}
+- **Quality:** {self._get_coverage_grade(coverage_data['coverage']['total_coverage'])} Grade
+- **Compliance:** {'Meets' if coverage_data['coverage']['total_coverage'] >= 90 else 'Below'} industry standards (90%+)
 
 ### File-by-File Coverage
 
@@ -443,12 +447,12 @@ class TLCoverageGenerator:
         for filepath, file_data in coverage_data['coverage']['file_details'].items():
             filename = Path(filepath).name
             coverage_pct = file_data['coverage']
-            status_emoji = "" if coverage_pct >= 90 else "" if coverage_pct >= 75 else ""
+            status_emoji = "✅" if coverage_pct >= 90 else "⚠️" if coverage_pct >= 75 else "❌"
             
             analysis_content += f"""#### {status_emoji} {filename}
-- __Coverage:__ {coverage_pct:.1f}%  
-- __Statements:__ {file_data['statements']}  
-- __Missing:__ {file_data['missing']}  
+- **Coverage:** {coverage_pct:.1f}%  
+- **Statements:** {file_data['statements']}  
+- **Missing:** {file_data['missing']}  
 """
             
             if file_data['missing_lines']:
@@ -460,238 +464,141 @@ class TLCoverageGenerator:
         if 'performance' in coverage_data:
             perf = coverage_data['performance']
             analysis_content += f"""
-##  Performance Metrics
+## ⚡ Performance Metrics
 
 | Metric | Value |
 |--------|-------|
 | **Test Execution Time** | {perf.get('execution_time', 0):.2f} seconds |
 | **Memory Usage** | {perf.get('memory_usage', 0):.1f} MB |
-| **Tests Status** | {' Passed' if perf.get('test_exit_code', 1) == 0 else ' Failed'} |
+| **Tests Status** | {'✅ Passed' if perf.get('test_exit_code', 1) == 0 else '❌ Failed'} |
 
-##  Recommendations
+## 📝 Recommendations
 
 ### Immediate Actions
 """
             
             if coverage_data['coverage']['total_coverage'] < 90:
-                analysis_content += "-  **Increase coverage to 90%+** for production readiness\n"
+                analysis_content += "- 🔴 **Increase coverage to 90%+** for production readiness\n"
             
             if coverage_data['coverage']['total_coverage'] < 95:
                 analysis_content += "- ⭐ **Target 95%+ coverage** for excellent quality standards\n"
             
-            analysis_content += """-  **Focus on untested edge cases** and error handling
--  __Add integration tests__ for complete workflow coverage  
--  __Implement continuous coverage monitoring__ in CI/CD pipeline
+            analysis_content += """
+### Testing Focus Areas
+- Core TL state transitions (PROCEED/EPISTEMIC_HOLD/HALT)
+- Eight Pillars integration points
+- Regulatory compliance modules (FATF, IOSCO, Basel III)
+- ESG verification accuracy
+- Edge cases in Epistemic Hold triggers
 
-### Long-term Improvements
--  __Establish coverage gates__ in deployment pipeline
--  __Track coverage trends__ over time
--  __Set per-module coverage targets__ 
--  __Regular coverage audits__ and quality reviews
+## 🏆 Coverage Standards
+
+| Grade | Coverage | Status |
+|-------|----------|---------|
+| A+ | 95%+ | Excellent - Production Ready |
+| A | 90-94% | Good - Acceptable for Production |
+| B+ | 85-89% | Above Average - Minor Improvements Needed |
+| B | 80-84% | Average - Significant Improvements Needed |
+| C+ | 75-79% | Below Average - Major Gaps |
+| C | 70-74% | Poor - Extensive Work Required |
+| D | 60-69% | Very Poor - Critical Gaps |
+| F | <60% | Failing - Not Production Ready |
+
+---
+
+## Contact & Engagement
+
+**Primary Contact**: leogouk@gmail.com  
+**Successor Contact**: support@tl-goukassian.org  
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
 """
         
         with open(analysis_file, 'w') as f:
             f.write(analysis_content)
         
-        print(f" Detailed analysis generated: {analysis_file}")
+        print(f"✅ Detailed analysis generated: {analysis_file}")
         return analysis_file
     
-    def run_benchmark_tests(self) -> Dict:
-        """Run performance benchmarks alongside coverage."""
-        print(" Running performance benchmarks...")
+    def generate_all_reports(self) -> Dict[str, Path]:
+        """Generate all coverage report types."""
+        print("\n" + "="*60)
+        print("   TERNARY LOGIC FRAMEWORK - COVERAGE ANALYSIS")
+        print("="*60 + "\n")
         
-        benchmark_results = {
-            'timestamp': datetime.now().isoformat(),
-            'system_info': {
-                'cpu_count': psutil.cpu_count(),
-                'memory_total': round(psutil.virtual_memory().total / 1024 / 1024 / 1024, 1),  # GB
-                'python_version': sys.version
-            },
-            'benchmarks': {}
-        }
+        # Run tests with coverage
+        coverage_percentage, coverage_data = self.run_tests_with_coverage()
         
-        # Test framework import speed
-        start_time = time.time()
-        try:
-            from src.goukassian.core import TLDecisionEngine
-            import_time = time.time() - start_time
-            benchmark_results['benchmarks']['import_time'] = round(import_time * 1000, 2)
-        except ImportError:
-            benchmark_results['benchmarks']['import_time'] = None
+        if coverage_percentage == 0:
+            print("❌ Coverage generation failed. No reports generated.")
+            return {}
         
-        # Test decision processing speed
-        try:
-            engine = TLDecisionEngine()
-            scenarios = [
-                "Execute arbitrage trade with 2% spread",
-                "Deploy capital during market volatility",
-                "Complex monetary policy decision with mixed signals"
-            ]
-            
-            decision_times = []
-            for scenario in scenarios:
-                start_time = time.time()
-                # Simulate decision processing
-                result = {"state": 0, "confidence": 0.75}  # Mock result
-                decision_time = time.time() - start_time
-                decision_times.append(decision_time)
-            
-            benchmark_results['benchmarks']['avg_decision_time'] = round(sum(decision_times) / len(decision_times) * 1000, 2)
-            benchmark_results['benchmarks']['max_decision_time'] = round(max(decision_times) * 1000, 2)
-            
-        except Exception as e:
-            print(f" Benchmark test failed: {e}")
-            benchmark_results['benchmarks']['decision_processing'] = "Failed"
+        # Generate all report types
+        reports = {}
+        reports['html'] = self.generate_html_report(coverage_data)
+        reports['xml'] = self.generate_xml_report(coverage_data)
+        reports['json'] = self.generate_json_report(coverage_data)
+        reports['badge'] = self.generate_badge_data(coverage_percentage)
+        reports['analysis'] = self.generate_detailed_analysis(coverage_data)
         
-        return benchmark_results
-    
-    def generate_summary_report(self, coverage_data: Dict, benchmark_data: Dict = None) -> Path:
-        """Generate executive summary report."""
-        print(" Generating executive summary report...")
+        print("\n" + "="*60)
+        print(f"   ✅ ALL REPORTS GENERATED SUCCESSFULLY")
+        print(f"   📊 Overall Coverage: {coverage_percentage:.1f}%")
+        print(f"   📈 Grade: {self._get_coverage_grade(coverage_percentage)}")
+        print("="*60 + "\n")
         
-        summary_file = self.coverage_dir / "summary_report.md"
-        
-        coverage_pct = coverage_data['coverage']['total_coverage']
-        grade = self._get_coverage_grade(coverage_pct)
-        
-        summary_content = f"""# TL Framework Coverage & Quality Report
-
-**Report Date:** {datetime.now().strftime('%Y-%m-%d')}  
-**Framework:** Ternary Logic for Economic Decision-Making  
-**Version:** 1.0.0
-
-##  Executive Summary
-
-**Overall Status:** {'🟢 EXCELLENT' if coverage_pct >= 95 else '🟡 GOOD' if coverage_pct >= 90 else ' NEEDS ATTENTION'}
-
-- __Code Coverage:__ {coverage_pct:.1f}% (Grade: {grade})
-- __Quality Level:__ {'Production Ready' if coverage_pct >= 90 else 'Development Phase'}
-- __Test Execution:__ {coverage_data.get('performance', {}).get('execution_time', 0):.1f}s
-- __Memory Efficiency:__ {coverage_data.get('performance', {}).get('memory_usage', 0):.1f}MB
-
-##  Key Metrics
-
-| Category | Target | Current | Status |
-|----------|--------|---------|--------|
-| **Code Coverage** | ≥90% | {coverage_pct:.1f}% | {'' if coverage_pct >= 90 else ''} |
-| **Test Speed** | <10s | {coverage_data.get('performance', {}).get('execution_time', 0):.1f}s | {'' if coverage_data.get('performance', {}).get('execution_time', 10) < 10 else ''} |
-| **Memory Usage** | <50MB | {coverage_data.get('performance', {}).get('memory_usage', 0):.1f}MB | {'' if coverage_data.get('performance', {}).get('memory_usage', 50) < 50 else ''} |
-
-##  Recommendations
-
-{'###  Ready for Production' if coverage_pct >= 95 else '###  Action Items Required'}
-
-"""
-        
-        if coverage_pct < 90:
-            summary_content += "- **Priority 1:** Increase test coverage to minimum 90%\n"
-        if coverage_pct < 95:
-            summary_content += "- **Priority 2:** Target 95%+ coverage for excellent quality\n"
-        
-        summary_content += """
-- __Maintain__ current high standards with continuous monitoring
-- __Implement__ automated coverage gates in CI/CD pipeline  
-- __Track__ coverage trends and quality metrics over time
-
----
-
-*Generated by TL Framework Coverage Analysis System*  
-*Contact: leogouk@gmail.com | ORCID: 0009-0006-5966-1243*
-"""
-        
-        with open(summary_file, 'w') as f:
-            f.write(summary_content)
-        
-        print(f" Executive summary generated: {summary_file}")
-        return summary_file
+        return reports
 
 
 def main():
     """Main entry point for coverage generation."""
     parser = argparse.ArgumentParser(
-        description="Generate comprehensive coverage reports for TL Framework"
+        description="Generate coverage reports for Ternary Logic Framework",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+    python benchmark/generate_coverage.py --all
+    python benchmark/generate_coverage.py --html --json
+    python benchmark/generate_coverage.py --detailed
+        """
     )
-    parser.add_argument("--html", action="store_true", help="Generate HTML report")
-    parser.add_argument("--xml", action="store_true", help="Generate XML report")
-    parser.add_argument("--json", action="store_true", help="Generate JSON report")
-    parser.add_argument("--badge", action="store_true", help="Generate badge data")
-    parser.add_argument("--detailed", action="store_true", help="Generate detailed analysis")
-    parser.add_argument("--benchmark", action="store_true", help="Include benchmarking")
-    parser.add_argument("--all", action="store_true", help="Generate all reports")
-    parser.add_argument("--summary", action="store_true", help="Generate executive summary")
+    
+    parser.add_argument('--html', action='store_true', help='Generate HTML coverage report')
+    parser.add_argument('--xml', action='store_true', help='Generate XML coverage report')
+    parser.add_argument('--json', action='store_true', help='Generate JSON coverage report')
+    parser.add_argument('--badge', action='store_true', help='Generate coverage badge data')
+    parser.add_argument('--detailed', action='store_true', help='Generate detailed analysis')
+    parser.add_argument('--all', action='store_true', help='Generate all report types')
     
     args = parser.parse_args()
     
-    # Default to all reports if no specific options
-    if not any([args.html, args.xml, args.json, args.badge, args.detailed, args.benchmark]):
+    # Default to --all if no options specified
+    if not any([args.html, args.xml, args.json, args.badge, args.detailed, args.all]):
         args.all = True
-    
-    if args.all:
-        args.html = args.xml = args.json = args.badge = args.detailed = args.benchmark = args.summary = True
-    
-    print(" Ternary Logic Framework - Coverage Generation")
-    print("=" * 50)
     
     # Initialize generator
     generator = TLCoverageGenerator(project_root)
     
-    # Run tests with coverage
-    coverage_percentage, coverage_data = generator.run_tests_with_coverage()
-    
-    if not coverage_data:
-        print(" Failed to generate coverage data")
-        return 1
-    
-    # Generate reports based on arguments
-    reports_generated = []
-    
-    if args.html:
-        html_report = generator.generate_html_report(coverage_data)
-        reports_generated.append(f"HTML: {html_report}")
-    
-    if args.xml:
-        xml_report = generator.generate_xml_report(coverage_data)
-        reports_generated.append(f"XML: {xml_report}")
-    
-    if args.json:
-        json_report = generator.generate_json_report(coverage_data)
-        reports_generated.append(f"JSON: {json_report}")
-    
-    if args.badge:
-        badge_data = generator.generate_badge_data(coverage_percentage)
-        reports_generated.append(f"Badge: {badge_data}")
-    
-    if args.detailed:
-        detailed_analysis = generator.generate_detailed_analysis(coverage_data)
-        reports_generated.append(f"Analysis: {detailed_analysis}")
-    
-    if args.benchmark:
-        benchmark_data = generator.run_benchmark_tests()
-        benchmark_file = generator.benchmark_dir / "performance_benchmarks.json"
-        with open(benchmark_file, 'w') as f:
-            json.dump(benchmark_data, f, indent=2)
-        reports_generated.append(f"Benchmarks: {benchmark_file}")
-    
-    if args.summary:
-        summary_report = generator.generate_summary_report(
-            coverage_data, 
-            benchmark_data if args.benchmark else None
-        )
-        reports_generated.append(f"Summary: {summary_report}")
-    
-    # Final summary
-    print("\n" + "=" * 50)
-    print(" Coverage Generation Complete!")
-    print(f" Total Coverage: {coverage_percentage:.1f}%")
-    print(f" Reports Generated: {len(reports_generated)}")
-    
-    for report in reports_generated:
-        print(f"    {report}")
-    
-    print("\n All coverage reports successfully generated!")
-    
-    return 0 if coverage_percentage >= 90 else 1
+    # Generate requested reports
+    if args.all:
+        generator.generate_all_reports()
+    else:
+        coverage_percentage, coverage_data = generator.run_tests_with_coverage()
+        
+        if coverage_percentage > 0:
+            if args.html:
+                generator.generate_html_report(coverage_data)
+            if args.xml:
+                generator.generate_xml_report(coverage_data)
+            if args.json:
+                generator.generate_json_report(coverage_data)
+            if args.badge:
+                generator.generate_badge_data(coverage_percentage)
+            if args.detailed:
+                generator.generate_detailed_analysis(coverage_data)
+        else:
+            print("❌ No coverage data generated.")
+            sys.exit(1)
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
