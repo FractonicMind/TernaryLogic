@@ -2,18 +2,6 @@
 
 ## FOUNDATIONAL ARCHITECTURE
 
-### The Goukassian Vow: Core Axioms
-
-The Goukassian Principle is the technical manifestation of three fundamental axioms that define Ternary Logic:
-
-**"Pause when truth is uncertain"** → The '0' state (Epistemic Hold), made immutable by the ledger
-
-**"Refuse when harm is clear"** → The validated '-1' outcome, enforced by systemic constraints
-
-**"Proceed where truth is"** → The justified '+1' outcome, taken only after deliberation
-
-These axioms transform abstract ethical reasoning into concrete computational practice, establishing the philosophical foundation upon which all TL operations rest.
-
 ### Definition and Purpose
 
 The Goukassian Principle establishes the cryptographic and evidentiary foundation for all Ternary Logic (TL) operations. It transforms the ethical compact of the Goukassian Vow into verifiable engineering constraint through mandatory cryptographic attestation of decision processes.
