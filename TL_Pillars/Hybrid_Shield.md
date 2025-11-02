@@ -494,3 +494,12 @@ The Hybrid Shield matters because it ensures that Ternary Logic remains:
 The Hybrid Shield provides the defensive spine required for a constitutional system expected to outlast administrations, corporations, and technological paradigm shifts. Ternary Logic operates under constitutional law, not brute force, and the Shield guarantees the continuity of that constitutional order through mathematical certainty and institutional integrity.
 
 This pillar represents the ultimate guarantee that the promises of Ternary Logic will be kept, not through goodwill or policy, but through unbreakable cryptographic and institutional constraints that ensure the system remains faithful to its founding principles across time and against all adversaries.  
+
+---
+
+## Contact & Engagement
+
+**Primary Contact**: leogouk@gmail.com  
+**Successor Contact**: support@tl-goukassian.org  
+(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
+
