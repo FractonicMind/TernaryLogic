@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ternary Logic Framework - Economic Impact Assessment.</title>
+    <title>Ternary Logic Framework - Economic Impact Assessment</title>
     <style>
         * {
             margin: 0;
@@ -734,9 +734,55 @@
             const domain = document.getElementById('domain').value;
             const employees = parseFloat(document.getElementById('employees').value);
             
+            // Input validation - check for out of bounds scenarios
+            const totalDailyValue = decisions * avgValue;
+            const maxSupportedValue = 1000000000000; // $1 trillion daily
+            
+            if (totalDailyValue > maxSupportedValue || isNaN(totalDailyValue)) {
+                // Show graceful error state
+                document.getElementById('currentExposure').textContent = '—';
+                document.getElementById('annualBenefit').textContent = '—';
+                document.getElementById('qualityImprovement').textContent = 'Model out of range';
+                document.getElementById('uncertainDecisions').textContent = '—';
+                document.getElementById('totalInvestment').textContent = '—';
+                document.getElementById('year1Net').textContent = '—';
+                document.getElementById('roi1').textContent = 'Not applicable';
+                document.getElementById('payback').textContent = 'Not applicable';
+                document.getElementById('npv3').textContent = '—';
+                document.getElementById('dailyOpp').textContent = '—';
+                
+                // Show error message in breakdown table
+                const tbody = document.getElementById('breakdownTable');
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 30px; color: #e67e22;">
+                            <strong>Scenario exceeds stability limits</strong><br>
+                            <span style="font-size: 0.9em; color: #7f8c8d;">
+                                Please adjust parameters. Daily transaction value exceeds supported range.<br>
+                                Current: ${formatCurrency(totalDailyValue)} | Maximum: ${formatCurrency(maxSupportedValue)}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+                
+                // Update sector insights with warning
+                const container = document.getElementById('sectorInsights');
+                container.innerHTML = `
+                    <div class="insight-item" style="color: #e67e22;">
+                        When inputs exceed operational bounds, the framework maintains integrity by refusing to compute.
+                    </div>
+                    <div class="insight-item">
+                        Please normalize assumptions to realistic institutional parameters.
+                    </div>
+                `;
+                
+                // Show results section but with error state
+                document.getElementById('results').classList.add('show');
+                return;
+            }
+            
             // Sanity checks to prevent astronomical numbers
-            const maxDailyValue = decisions * avgValue;
-            const maxReasonableExposure = maxDailyValue * 0.05; // Cap at 5% of daily volume
+            const maxReasonableExposure = totalDailyValue * 0.05; // Cap at 5% of daily volume
             
             // Calculate uncertain decisions
             const uncertainDecisions = decisions * uncertainty;
@@ -752,6 +798,17 @@
             // Calculate current exposure (WITH PROPER MATH)
             const dailyExposure = uncertainDecisions * avgValue * errorCost * currentErrorRate;
             const annualExposure = Math.min(dailyExposure * workingDays, maxReasonableExposure * workingDays);
+            
+            // Check for calculation validity
+            if (isNaN(annualExposure) || annualExposure < 0 || !isFinite(annualExposure)) {
+                // Graceful fallback for edge cases
+                document.getElementById('currentExposure').textContent = '—';
+                document.getElementById('annualBenefit').textContent = '—';
+                document.getElementById('qualityImprovement').textContent = 'Insufficient data';
+                document.getElementById('roi1').textContent = 'Not calculable';
+                document.getElementById('results').classList.add('show');
+                return;
+            }
             
             // Implementation costs based on REAL enterprise deployment
             const baseCost = Math.max(250000, employees * 150); // $150 per employee minimum
@@ -825,7 +882,7 @@
             
             // Calculate totals
             let totalCosts = costs.epistemic;
-            let totalBenefits = benefits.epistemic;
+            let totalBenefits = benefits.epistemic || 0;
             
             Object.keys(pillars).forEach(key => {
                 const pillarNum = key.replace('pillar', '');
@@ -836,10 +893,19 @@
                 }
             });
             
+            // Validate final calculations
+            if (!isFinite(totalBenefits) || !isFinite(totalCosts) || totalCosts === 0) {
+                document.getElementById('currentExposure').textContent = '—';
+                document.getElementById('annualBenefit').textContent = '—';
+                document.getElementById('roi1').textContent = 'Not calculable';
+                document.getElementById('results').classList.add('show');
+                return;
+            }
+            
             // Financial calculations
             const year1Net = totalBenefits - totalCosts;
             const roi1 = (year1Net / totalCosts) * 100;
-            const paybackMonths = totalCosts / (totalBenefits / 12);
+            const paybackMonths = totalBenefits > 0 ? (totalCosts / (totalBenefits / 12)) : 999;
             
             // 3-year NPV at 10% discount
             let npv3 = -totalCosts;
@@ -847,7 +913,7 @@
                 npv3 += totalBenefits / Math.pow(1.10, year);
             }
             
-            // Update display
+            // Update display with validated values
             document.getElementById('currentExposure').textContent = formatCurrency(annualExposure);
             document.getElementById('annualBenefit').textContent = formatCurrency(totalBenefits);
             document.getElementById('qualityImprovement').textContent = (errorReduction * 100).toFixed(0) + '%';
@@ -859,10 +925,12 @@
             // Update ROI summary
             document.getElementById('totalInvestment').textContent = formatCurrency(totalCosts);
             document.getElementById('year1Net').textContent = formatCurrency(year1Net);
-            document.getElementById('roi1').textContent = roi1.toFixed(0) + '%';
+            document.getElementById('roi1').textContent = isFinite(roi1) ? roi1.toFixed(0) + '%' : 'Not applicable';
             document.getElementById('roi1').className = roi1 > 0 ? 'roi-metric-value good' : 'roi-metric-value warning';
-            document.getElementById('payback').textContent = paybackMonths > 24 ? '>24 months' : paybackMonths.toFixed(1) + ' months';
-            document.getElementById('npv3').textContent = formatCurrency(npv3);
+            document.getElementById('payback').textContent = paybackMonths < 999 ? 
+                (paybackMonths > 24 ? '>24 months' : paybackMonths.toFixed(1) + ' months') : 
+                'Not applicable';
+            document.getElementById('npv3').textContent = isFinite(npv3) ? formatCurrency(npv3) : '—';
             document.getElementById('dailyOpp').textContent = formatCurrency(annualExposure / workingDays);
             
             // Update sector insights
