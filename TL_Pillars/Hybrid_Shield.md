@@ -8,12 +8,6 @@ The Hybrid Shield stands as the seventh pillar of Ternary Logic, serving as the 
 
 The Hybrid Shield exists to defend the guarantees of TL, not to manage them. It does not introduce discretionary power or expand system capabilities. It exclusively enforces constraints that are already constitutionally established within the TL framework.
 
-This pillar operates under the authority of the three constitutional artifacts:
-
-· The Lantern: The Shield ensures the light of transparency and accountability cannot be extinguished  
-· The Signature: The Shield protects the protocol's identity from forgery or unauthorized modification  
-· The License: The Shield enforces the absolute prohibitions of "No Spy" and "No Weapon"
-
 II. Purpose and Constitutional Mandate
 
 The Hybrid Shield protects the integrity of the Ternary Logic framework across time and against all adversaries through six core defensive functions:
