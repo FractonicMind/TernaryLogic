@@ -482,14 +482,34 @@
                 
                 <div class="input-row">
                     <div class="input-group">
-                        <label for="domain">Primary Sector</label>
+                        <label for="domain">Institutional Category</label>
                         <select id="domain">
-                            <option value="retail_banking">Retail Banking</option>
-                            <option value="investment_banking">Investment Banking</option>
-                            <option value="insurance">Insurance</option>
-                            <option value="asset_management">Asset Management</option>
-                            <option value="payments">Payments & Processing</option>
-                            <option value="trading">Trading & Markets</option>
+                            <optgroup label="Systemic / Public Sector">
+                                <option value="central_banking">Central Banking & Monetary Authority</option>
+                                <option value="prudential_regulation">Prudential Regulation & Supervision</option>
+                                <option value="sovereign_treasury">Sovereign Treasury & Fiscal Institutions</option>
+                                <option value="market_infrastructure">Public Market Infrastructure (RTGS/CLS/SWIFT)</option>
+                            </optgroup>
+                            <optgroup label="Private Sector Financial">
+                                <option value="investment_banking">Investment Banking</option>
+                                <option value="retail_banking">Commercial / Retail Banking</option>
+                                <option value="asset_management">Asset Management & Institutional Funds</option>
+                                <option value="hedge_funds">Hedge Funds & Quant Funds</option>
+                                <option value="insurance">Insurance & Reinsurance</option>
+                                <option value="market_utilities">Financial Market Utilities</option>
+                                <option value="payments">Payments & Cross-Border Infrastructure</option>
+                                <option value="trading" selected>Trading & Markets</option>
+                            </optgroup>
+                            <optgroup label="Digital Asset Markets">
+                                <option value="digital_exchanges">Digital Asset Exchanges & Custodians</option>
+                                <option value="cbdc_operators">Stablecoin / CBDC Operators</option>
+                                <option value="tokenized_securities">Tokenized Securities Networks</option>
+                            </optgroup>
+                            <optgroup label="Critical Real Economy">
+                                <option value="energy_infrastructure">Energy & Critical Infrastructure</option>
+                                <option value="supply_chain">Global Supply Chain & Logistics</option>
+                                <option value="healthcare">Pharma & Healthcare Systems</option>
+                            </optgroup>
                         </select>
                     </div>
                     <div class="input-group">
@@ -923,45 +943,117 @@
         function updateSectorInsights(domain, errorReduction, employees) {
             const container = document.getElementById('sectorInsights');
             const insights = {
+                central_banking: [
+                    `Monetary policy decision accuracy: +${(errorReduction * 100).toFixed(0)}%`,
+                    `Systemic risk identification: 30-40% earlier detection`,
+                    `Cross-border supervision coordination improvement`,
+                    `Crisis response decision quality enhancement`
+                ],
+                prudential_regulation: [
+                    `Supervisory action accuracy: +${(errorReduction * 100).toFixed(0)}%`,
+                    `Basel III/IV compliance automation`,
+                    `Risk-weighted asset calculation precision`,
+                    `Regulatory arbitrage detection improvement`
+                ],
+                sovereign_treasury: [
+                    `Fiscal policy decision quality: +${(errorReduction * 100).toFixed(0)}%`,
+                    `Debt issuance optimization`,
+                    `Budget allocation efficiency improvement`,
+                    `Inter-agency coordination enhancement`
+                ],
+                market_infrastructure: [
+                    `Settlement finality assurance: 99.99%`,
+                    `Systemic risk propagation prevention`,
+                    `Cross-system reconciliation automation`,
+                    `Critical infrastructure resilience: +${(errorReduction * 100).toFixed(0)}%`
+                ],
                 retail_banking: [
                     `Credit decision quality improvement: ${(errorReduction * 100).toFixed(0)}%`,
-                    `AML/KYC false positive reduction potential: 20-30%`,
+                    `AML/KYC false positive reduction: 20-30%`,
                     `Regulatory reporting automation: 40% effort reduction`,
-                    `Customer dispute resolution: 50% faster with Decision Logs`
+                    `Customer dispute resolution: 50% faster`
                 ],
                 investment_banking: [
-                    `Due diligence efficiency improvement: 25-35%`,
-                    `Deal structuring error reduction: ${(errorReduction * 100).toFixed(0)}%`,
-                    `Regulatory capital optimization through Basel III automation`,
-                    `ESG verification for sustainable finance mandates`
-                ],
-                insurance: [
-                    `Claims processing accuracy improvement: ${(errorReduction * 100).toFixed(0)}%`,
-                    `Underwriting decision quality enhancement: 20-25%`,
-                    `Fraud detection improvement: 15-20%`,
-                    `Regulatory compliance automation (Solvency II)`
+                    `Due diligence accuracy: +${(errorReduction * 100).toFixed(0)}%`,
+                    `Deal structuring risk reduction`,
+                    `Regulatory capital optimization`,
+                    `Cross-border transaction compliance`
                 ],
                 asset_management: [
-                    `Portfolio rebalancing decision quality: +${(errorReduction * 100).toFixed(0)}%`,
-                    `ESG compliance verification for sustainable funds`,
-                    `Risk-adjusted performance improvement: 10-15%`,
-                    `Client reporting automation through Decision Logs`
+                    `Portfolio decision quality: +${(errorReduction * 100).toFixed(0)}%`,
+                    `Sustainability risk verification`,
+                    `Liquidity management improvement`,
+                    `Client mandate compliance assurance`
+                ],
+                hedge_funds: [
+                    `Alpha generation consistency: +${(errorReduction * 100).toFixed(0)}%`,
+                    `Risk limit breach prevention`,
+                    `Regulatory reporting accuracy`,
+                    `Counterparty risk management`
+                ],
+                insurance: [
+                    `Underwriting accuracy: +${(errorReduction * 100).toFixed(0)}%`,
+                    `Claims processing precision improvement`,
+                    `Solvency II compliance automation`,
+                    `Catastrophe modeling enhancement`
+                ],
+                market_utilities: [
+                    `Clearing reliability: 99.99%`,
+                    `Margin calculation precision`,
+                    `Default management improvement`,
+                    `Netting efficiency: +${(errorReduction * 100).toFixed(0)}%`
                 ],
                 payments: [
-                    `Transaction fraud reduction: 20-25%`,
-                    `Real-time decision accuracy: +${(errorReduction * 100).toFixed(0)}%`,
-                    `Regulatory compliance (PSD2, AML) automation`,
-                    `Dispute resolution efficiency: 60% improvement`
+                    `Transaction integrity: 99.99%`,
+                    `Fraud prevention: +${(errorReduction * 100).toFixed(0)}%`,
+                    `Cross-border compliance automation`,
+                    `Real-time settlement assurance`
                 ],
                 trading: [
-                    `Execution quality improvement: ${(errorReduction * 100).toFixed(0)}%`,
-                    `Market manipulation detection: 40% better`,
-                    `MiFID II compliance automation`,
-                    `Position risk management enhancement: 15-20%`
+                    `Execution quality: +${(errorReduction * 100).toFixed(0)}%`,
+                    `Market manipulation detection improvement`,
+                    `Best execution compliance`,
+                    `Liquidity provision optimization`
+                ],
+                digital_exchanges: [
+                    `Digital asset custody security: 99.99%`,
+                    `Smart contract verification accuracy`,
+                    `Cross-chain settlement reliability`,
+                    `Regulatory compliance: +${(errorReduction * 100).toFixed(0)}%`
+                ],
+                cbdc_operators: [
+                    `Monetary transmission precision: 99.99%`,
+                    `Privacy-transparency balance optimization`,
+                    `Cross-border CBDC interoperability`,
+                    `Programmable money accuracy: +${(errorReduction * 100).toFixed(0)}%`
+                ],
+                tokenized_securities: [
+                    `Settlement finality: T+0 achievement`,
+                    `Corporate action automation: 99.99%`,
+                    `Regulatory compliance embedding`,
+                    `Fractional ownership accuracy`
+                ],
+                energy_infrastructure: [
+                    `Grid stability decision quality: +${(errorReduction * 100).toFixed(0)}%`,
+                    `Critical asset protection improvement`,
+                    `Supply chain resilience enhancement`,
+                    `Regulatory compliance assurance`
+                ],
+                supply_chain: [
+                    `Disruption response time: -40%`,
+                    `Inventory optimization accuracy: +${(errorReduction * 100).toFixed(0)}%`,
+                    `Vendor risk assessment improvement`,
+                    `Trade finance verification`
+                ],
+                healthcare: [
+                    `Clinical trial integrity: 99.99%`,
+                    `Supply chain verification accuracy`,
+                    `Regulatory compliance (FDA/EMA) automation`,
+                    `Patient data governance: +${(errorReduction * 100).toFixed(0)}%`
                 ]
             };
             
-            const sectorInsights = insights[domain] || insights.retail_banking;
+            const sectorInsights = insights[domain] || insights.trading;
             let html = '';
             for (const insight of sectorInsights) {
                 html += `<div class="insight-item">${insight}</div>`;
