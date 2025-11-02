@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ternary Logic - Sustainable Capital Allocation Mandate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Calm Neutrals (Gray-50 bg, Gray-800 text, Blue-900 headings, Blue-800 accents) -->
+    <!-- Application Structure Plan: The SPA uses a persistent left-nav to switch between thematic sections (Overview, Mandate, Pipeline, Hold, Scenarios, Privacy). This is better than a linear report, allowing users to reference specific rules or processes quickly. The core user flow is centered on understanding the *process*. This is achieved by first presenting a static visual 'Procedural Pipeline', then allowing the user to *experience* that flow in the 'Interactive Scenarios' section, which simulates the `+1 -> 0 -> +1/-1` logic. This interactive simulation is the most effective way to teach the systemic logic described in the report. -->
+    <!-- Visualization & Content Choices: Report is purely qualitative and procedural; no quantitative data provided. Therefore, no charts (Chart.js/Plotly) are used. Focus is on process visualization. | Report Info: Procedural Pipeline -> Goal: Organize/Change -> Viz/Presentation: Clickable HTML/Tailwind flowchart diagram -> Interaction: Click step to see details -> Justification: Clearly visualizes the multi-step process without SVG/Mermaid. | Report Info: Example Scenarios -> Goal: Compare/Change -> Viz/Presentation: Interactive JS-driven UI -> Interaction: User clicks buttons (Start, Toggle Risk, Resolve) to dynamically change the UI and simulate the transaction flow (`+1 -> 0 -> +1/-1`) -> Justification: Makes the abstract core logic of the mandate tangible and understandable. | Report Info: Epistemic Hold Triggers -> Goal: Organize -> Viz/Presentation: Grid of 'alert' cards (HTML/Tailwind) -> Interaction: None -> Justification: Clearly categorizes the different risk flags. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        .nav-link.active {
+            background-color: #1e3a8a; 
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .nav-link:not(.active):hover {
+            background-color: #eef2ff; 
+            color: #1e3a8a;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .flow-step {
+            @apply text-center p-4 bg-white rounded-lg shadow border border-gray-200;
+        }
+        .flow-arrow {
+            @apply text-2xl font-bold text-gray-400 flex items-center justify-center;
+        }
+        .scenario-step {
+            @apply p-4 rounded-lg border-2;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="flex min-h-screen">
+        <nav class="w-64 bg-white shadow-lg p-4 sticky top-0 h-screen">
+            <div class="flex items-center mb-8">
+                <span class="text-3xl font-bold text-blue-900">TL</span>
+                <span class="ml-2 text-xl font-semibold text-gray-700">Mandate</span>
+            </div>
+            <ul>
+                <li>
+                    <a href="#" data-page="overview" class="nav-link active flex items-center p-3 rounded-lg mb-2">
+                        <span class="mr-3">►</span> Overview
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-page="mandate" class="nav-link flex items-center p-3 rounded-lg mb-2">
+                        <span class="mr-3">►</span> The Mandate
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-page="pipeline" class="nav-link flex items-center p-3 rounded-lg mb-2">
+                        <span class="mr-3">►</span> Procedural Pipeline
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-page="hold" class="nav-link flex items-center p-3 rounded-lg mb-2">
+                        <span class="mr-3">►</span> Epistemic Hold (0-State)
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-page="scenarios" class="nav-link flex items-center p-3 rounded-lg mb-2">
+                        <span class="mr-3">►</span> Interactive Scenarios
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-page="privacy" class="nav-link flex items-center p-3 rounded-lg mb-2">
+                        <span class="mr-3">►</span> Data & Privacy
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-page="rationale" class="nav-link flex items-center p-3 rounded-lg mb-2">
+                        <span class="mr-3">►</span> Institutional Rationale
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="flex-1 p-8 md:p-12 overflow-y-auto">
+            
+            <section id="overview" class="content-section active">
+                <h1 class="text-4xl font-bold text-blue-900 mb-6">Sustainable Capital Allocation Mandate</h1>
+                <p class="text-lg text-gray-700 mb-8">
+                    This mandate defines the doctrine for sustainable capital allocation within Ternary Logic (TL). It is not a set of preferences but a technical framework for institutional resilience and long-term financial survival. It establishes non-negotiable requirements for linking capital actions to auditable proof of systemic sustainability.
+                </p>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <h2 class="text-2xl font-semibold text-blue-900 mb-4">Core Objectives: A Doctrine of Survival</h2>
+                    <p class="text-gray-600 mb-6">The inclusion of sustainability is based on systemic financial logic, not charity or branding. The objectives are to ensure the long-horizon viability of the systems TL supports.</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-blue-800 font-bold text-xl mr-3">✔</span>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Long-Term System Stability & Fiduciary Duty</h3>
+                                <p class="text-gray-600">To ensure capital deployment supports, rather than undermines, the stability of the systems upon which all value depends.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-800 font-bold text-xl mr-3">✔</span>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Prevention of Hidden Systemic Risks</h3>
+                                <p class="text-gray-600">To identify and halt capital flows that generate unaccounted-for systemic risks (externalities) which threaten macro stability.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-800 font-bold text-xl mr-3">✔</span>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Auditability & Institutional Trust</h3>
+                                <p class="text-gray-600">To create an immutable, auditable record of compliance, building inter-generational trust in the institution's governance.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-800 font-bold text-xl mr-3">✔</span>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Alignment with Durable Productive Value</h3>
+                                <p class="text-gray-600">To ensure capital is allocated to activities that create durable value, not those based on extraction or systemic decay.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="mandate" class="content-section">
+                <h1 class="text-4xl font-bold text-blue-900 mb-6">The Mandate: Proof Precedes Action</h1>
+                <p class="text-lg text-gray-700 mb-8">
+                    This section details the core requirements of the mandate and the types of auditable proof necessary for compliance. The system operates on a "guilty until proven innocent" principle; capital actions are not permitted until compliance is demonstrated via the Decision Log.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-blue-200">
+                        <h2 class="text-2xl font-semibold text-blue-900 mb-4">Mandatory Requirements</h2>
+                        <ul class="space-y-3 list-disc list-inside text-gray-700">
+                            <li>Capital deployment must not create externalized systemic risk.</li>
+                            <li>Resource allocation must respect long-horizon sustainability indicators.</li>
+                            <li>Verifiable evidence must precede capital movement via a Decision Log.</li>
+                            <li>An hash-anchored, immutable proof of compliance is mandatory for all major actions.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h2 class="text-2xl font-semibold text-blue-900 mb-4">Risk Governance, Not Virtue</h2>
+                        <p class="text-gray-700">
+                            The mandate's language is intentionally technical. It avoids moral or virtue-based framing. Compliance is a matter of risk governance and institutional resilience, not a reflection of political or social alignment.
+                        </p>
+                    </div>
+                </div>
+
+                <h2 class="text-3xl font-semibold text-blue-900 mb-6">Required Datasets & Proof Inputs</h2>
+                <p class="text-lg text-gray-700 mb-8">
+                    The system validates proof, not raw data. All inputs must be auditable, non-personal, proof-based data categories, supplied as hash-anchored documents. TL does not store the raw business data.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                        <h3 class="font-semibold text-gray-800">Externality Risk Indicators</h3>
+                        <p class="text-sm text-gray-600">Proofs quantifying potential systemic costs (e.g., pollution, resource depletion) not covered by the transaction.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                        <h3 class="font-semibold text-gray-800">Emissions & Energy Attestations</h3>
+                        <p class="text-sm text-gray-600">Verifiable reports of energy consumption profiles and emissions impact, where relevant to the asset class.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                        <h3 class="font-semibold text-gray-800">Counterparty Sustainability Attestations</h3>
+                        <p class="text-sm text-gray-600">Proofs that all entities in the capital chain also comply with baseline sustainability and risk-disclosure standards.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                        <h3 class="font-semibold text-gray-800">Climate-Stress & Supply-Chain Disclosures</h3>
+                        <p class="text-sm text-gray-600">Analysis of the project's resilience to climate-related stresses and supply-chain vulnerabilities.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                        <h3 class="font-semibold text-gray-800">Lifecycle Impact Reports</h3>
+                        <p class="text-sm text-gray-600">For relevant projects, a full lifecycle analysis from resource extraction to disposal, attesting to durability.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                        <h3 class="font-semibold text-gray-800">Source Attestations</h3>
+                        <p class="text-sm text-gray-600">Verifiable proof of origin for raw materials or financial flows to prevent disguised extraction or arbitrage.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="pipeline" class="content-section">
+                <h1 class="text-4xl font-bold text-blue-900 mb-6">Procedural Pipeline</h1>
+                <p class="text-lg text-gray-700 mb-8">
+                    This is the mandatory enforcement cycle for all major capital actions. The process is deterministic and proof-driven. Human review is only triggered by uncertainty, and its conclusions are bound by the same proof requirements.
+                </p>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <h2 class="text-2xl font-semibold text-blue-900 mb-8 text-center">The Enforcement Cycle</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-center">
+                        <div class="flow-step">
+                            <h3 class="font-semibold text-blue-800">1. Decision Log</h3>
+                            <p class="text-sm text-gray-600">A capital action is proposed (+1) and a log is created, awaiting proof inputs.</p>
+                        </div>
+                        <div class="flow-arrow hidden lg:flex">→</div>
+                        <div class="flow-step">
+                            <h3 class="font-semibold text-blue-800">2. Proof Validation</h3>
+                            <p class="text-sm text-gray-600">System automatically validates submitted attestations (hashes) against mandate rules.</p>
+                        </div>
+                        <div class="flow-arrow hidden lg:flex">→</div>
+                        <div class="flow-step col-span-1 md:col-span-3 lg:col-span-1 border-2 border-red-300 bg-red-50">
+                            <h3 class="font-semibold text-red-800">3. Epistemic Hold (0)</h3>
+                            <p class="text-sm text-gray-600">IF uncertain, incomplete, or high-risk, transaction is pushed to 0-state. Halt.</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-center my-4 lg:hidden">
+                        <span class="text-2xl font-bold text-gray-400">↓</span>
+                    </div>
+                    <div class="hidden lg:flex justify-end my-4">
+                        <span class="text-2xl font-bold text-gray-400">↓</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-center">
+                        <div class="flow-step col-span-1 lg:col-start-5">
+                            <h3 class="font-semibold text-blue-800">4. Compliance Review</h3>
+                            <p class="text-sm text-gray-600">A proof-driven review (not political) resolves the hold by demanding new evidence.</p>
+                        </div>
+                        <div class="flow-arrow hidden lg:flex lg:col-start-4 lg:row-start-1">←</div>
+                        <div class="flow-step col-span-1 lg:col-start-3 lg:row-start-1">
+                            <h3 class="font-semibold text-blue-800">5. Commit / Refuse</h3>
+                            <p class="text-sm text-gray-600">Review concludes with a commit (+1) or refusal (-1) based on final proof.</p>
+                        </div>
+                        <div class="flow-arrow hidden lg:flex lg:col-start-2 lg:row-start-1">←</div>
+                         <div class="flow-step col-span-1 lg:col-start-1 lg:row-start-1">
+                            <h3 class="font-semibold text-blue-800">6. Ledger Write</h3>
+                            <p class="text-sm text-gray-600">The final, irreversible decision (+1 or -1) is written to the immutable ledger.</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-center my-4 lg:hidden">
+                        <span class="text-2xl font-bold text-gray-400">↓</span>
+                    </div>
+                    <div class="flex justify-start my-4 lg:mt-8">
+                        <span class="text-2xl font-bold text-gray-400">↓</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-center">
+                        <div class="flow-step col-span-1 md:col-span-3 lg:col-span-1 border-2 border-green-300 bg-green-50">
+                            <h3 class="font-semibold text-green-800">7. Anchor</h3>
+                            <p class="text-sm text-gray-600">The ledger entry (approval, refusal, or escalation) is anchored, completing the audit trail.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="hold" class="content-section">
+                <h1 class="text-4xl font-bold text-blue-900 mb-6">Epistemic Hold (0-State)</h1>
+                <p class="text-lg text-gray-700 mb-8">
+                    An "Epistemic Hold" is an automatic, non-political halt on a transaction. It is triggered when the system's certainty about compliance falls below a mandatory threshold. The transaction is moved to a 0-state, where no capital can move until the uncertainty is resolved with further proof.
+                </p>
+
+                <h2 class="text-3xl font-semibold text-blue-900 mb-6">Objective Triggers for Epistemic Hold</h2>
+                <p class="text-gray-700 mb-8">A hold is not a rejection. It is a mandatory pause for further validation. Triggers include:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-red-200">
+                        <h3 class="font-semibold text-red-800">Missing Attestations</h3>
+                        <p class="text-sm text-gray-600">Required sustainability proofs are absent from the Decision Log.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-red-200">
+                        <h3 class="font-semibold text-red-800">Material Risk Uncertainty</h3>
+                        <p class="text-sm text-gray-600">Submitted proofs are incomplete or fail to resolve uncertainty about systemic risk.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-red-200">
+                        <h3 class="font-semibold text-red-800">Exceeds Risk Tolerance</h3>
+                        <p class="text-sm text-gray-600">Project flows exceed defined environmental or externality risk tolerance bands.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-red-200">
+                        <h3 class="font-semibold text-red-800">Conflicting Disclosures</h3>
+                        <p class="text-sm text-gray-600">Disclosures within the proof chain contradict each other, indicating data unreliability.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-red-200">
+                        <h3 class="font-semibold text-red-800">Disguised Extraction / Arbitrage</h3>
+                        <p class="text-sm text-gray-600">Signals suggest the transaction is structured to hide resource extraction or avoid regulation.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-red-200">
+                        <h3 class="font-semibold text-red-800">High Impact Scale</h3>
+                        <p class="text-sm text-gray-600">The scale of capital or time horizon automatically requires an extended review period.</p>
+                    </div>
+                </div>
+                
+                <h2 class="text-3xl font-semibold text-blue-900 mb-6">Baseline Thresholds</h2>
+                <p class="text-gray-700 mb-8">Triggers are evaluated against objective thresholds set by the mandate. These define the sensitivity of the hold mechanism.</p>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Factor</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Risk Sensitivity</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">Capital Scale</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-600">The total value of the transaction or asset.</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-red-700 font-medium">High</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">Time Horizon</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-600">The duration of the project or capital lock-up.</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-red-700 font-medium">High</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">Regulatory Exposure</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-600">Jurisdictional complexity or exposure to regulatory arbitrage.</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-yellow-700 font-medium">Medium</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">Systemic Externality Risk</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-600">Level of uncompensated systemic risk (e.g., environmental).</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-red-700 font-medium">Very High</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="scenarios" class="content-section">
+                <h1 class="text-4xl font-bold text-blue-900 mb-6">Interactive Scenarios</h1>
+                <p class="text-lg text-gray-700 mb-8">
+                    Explore how the procedural pipeline functions in practice. Select a scenario and observe how the system responds. Introduce a risk factor (e.g., a missing attestation) to see the Epistemic Hold (0-State) triggered in real-time.
+                </p>
+
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <div class="md:flex justify-between items-center mb-6">
+                        <div class="mb-4 md:mb-0">
+                            <h2 class="text-2xl font-semibold text-blue-900 mb-2">Scenario Control Panel</h2>
+                            <fieldset class="flex space-x-6">
+                                <label class="flex items-center">
+                                    <input type="radio" name="scenario" id="scenario1" value="scenario1" class="form-radio text-blue-800" checked>
+                                    <span class="ml-2 text-gray-700">1: Corporate Capital Investment</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="scenario" id="scenario2" value="scenario2" class="form-radio text-blue-800">
+                                    <span class="ml-2 text-gray-700">2: High-Impact Infrastructure</span>
+                                </label>
+                            </fieldset>
+                        </div>
+                        <div class="flex items-center">
+                            <label for="riskToggle" class="mr-3 font-medium text-gray-700">Introduce Risk Factor:</label>
+                            <button id="riskToggle" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-300" role="switch" aria-checked="false">
+                                <span class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button id="startScenario" class="w-full bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-lg text-lg transition-colors">
+                        Start Proposed Action (+1)
+                    </button>
+
+                    <div id="scenarioOutput" class="mt-8 space-y-4">
+                        <p class="text-center text-gray-500" id="scenarioPlaceholder">Click "Start" to run the simulation.</p>
+                        
+                        <div id="stepProposal" class="scenario-step border-gray-300 bg-gray-50 hidden">
+                            <h3 class="font-semibold text-gray-800">1. Proposal (+1)</h3>
+                            <p class="text-sm text-gray-600" id="proposalText">A new proposal for Corporate Capital Investment has been logged. Awaiting proof validation...</p>
+                        </div>
+
+                        <div id="stepValidation" class="scenario-step border-gray-300 bg-gray-50 hidden">
+                            <h3 class="font-semibold text-gray-800">2. Validating Proofs...</h3>
+                            <ul class="list-disc list-inside text-sm text-gray-600" id="validationList">
+                                <li>Emissions Attestation: [HASH_VALID]</li>
+                                <li>Counterparty Attestations: [HASH_VALID]</li>
+                                <li id="riskItem">Lifecycle Impact Report: [HASH_VALID]</li>
+                            </ul>
+                        </div>
+
+                        <div id="stepHold" class="scenario-step border-red-500 bg-red-50 hidden">
+                            <h3 class="font-semibold text-red-800">3. Epistemic Hold (0-State) Triggered!</h3>
+                            <p class="text-sm text-gray-700 mb-4" id="holdReason">
+                                Risk detected: The 'Lifecycle Impact Report' attestation is missing. The transaction is halted pending review. No capital can move.
+                            </p>
+                            <div class="flex space-x-4">
+                                <button id="resolveButton" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">Resolve (Submit Missing Proof)</button>
+                                <button id="rejectButton" class="flex-1 bg-red-700 hover:bg-red-800 text-white font-semibold py-2 px-4 rounded-lg transition-colors">Reject (Cancel Transaction)</button>
+                            </div>
+                        </div>
+                        
+                        <div id="stepReview" class="scenario-step border-yellow-500 bg-yellow-50 hidden">
+                            <h3 class="font-semibold text-yellow-800">4. Compliance Review</h3>
+                            <p class="text-sm text-gray-700" id="reviewText">The hold was resolved. The missing 'Lifecycle Impact Report' [HASH_NEW] was submitted and validated. Proceeding to final decision.</p>
+                        </div>
+                        
+                        <div id="stepDecision" class="scenario-step border-gray-300 bg-gray-50 hidden">
+                            <h3 class="font-semibold text-gray-800">5. Final Decision</h3>
+                            <p class="text-sm text-gray-600" id="decisionText">The transaction has been committed (+1).</p>
+                        </div>
+
+                        <div id="stepLedger" class="scenario-step hidden">
+                            <h3 class="font-semibold" id="ledgerTitle">6. Ledger Write & Anchor (Complete)</h3>
+                            <p class="text-sm" id="ledgerText">The decision has been immutably written to the ledger and anchored. The audit trail is complete.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="privacy" class="content-section">
+                <h1 class="text-4xl font-bold text-blue-900 mb-6">Privacy & Trade Secrets</h1>
+                <p class="text-lg text-gray-700 mb-8">
+                    The mandate is designed to function without compromising proprietary business data or personal privacy. TL's architecture ensures that trade secrets are protected while compliance is enforced, adhering to strict data minimization principles.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <div class="text-3xl text-blue-800 mb-3">🛡️</div>
+                        <h2 class="text-xl font-semibold text-blue-900 mb-3">No Raw Data On-Chain</h2>
+                        <p class="text-gray-700">The ledger only anchors hash commitments and final decisions (+1 / -1). The sensitive, raw business data (e.g., specific financials, trade secrets) never touches the ledger.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <div class="text-3xl text-blue-800 mb-3">🤫</div>
+                        <h2 class="text-xl font-semibold text-blue-900 mb-3">Ephemeral Reveal Keys (ERK)</h2>
+                        <p class="text-gray-700">Proprietary data is verified using mechanisms like ERK, where the data can be proven to an auditor and then verifiably vanishes, leaving only the proof of compliance.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <div class="text-3xl text-blue-800 mb-3">👤</div>
+                        <h2 class="text-xl font-semibold text-blue-900 mb-3">GDPR-Aligned Pseudonymization</h2>
+                        <p class="text-gray-700">All data required for validation is pseudonymized before hashing, ensuring compliance with data privacy frameworks like GDPR. No personal data is stored.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="rationale" class="content-section">
+                <h1 class="text-4xl font-bold text-blue-900 mb-6">Institutional Rationale</h1>
+                <p class="text-lg text-gray-700 mb-8">
+                    This mandate is the logical extension of fiduciary duty into the 21st century. It provides the technical and institutional framework necessary to ensure that capital allocation contributes to, rather than erodes, long-term systemic stability.
+                </p>
+                <div class="bg-white p-8 rounded-lg shadow-lg border border-gray-200">
+                    <ul class="space-y-6">
+                        <li class="flex items-start">
+                            <span class="text-blue-800 font-bold text-2xl mr-4">1</span>
+                            <div>
+                                <h3 class="font-semibold text-xl text-blue-900">Preventing Systemic Collapse</h3>
+                                <p class="text-gray-700">Unsustainable capital allocation is not a moral failure; it is a technical one. It creates hidden, compounding risks (externalities) that threaten the entire macro-structure. This mandate forces those risks to be accounted for *before* they become systemic.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-800 font-bold text-2xl mr-4">2</span>
+                            <div>
+                                <h3 class="font-semibold text-xl text-blue-900">Building Macro Stability</h3>
+                                <p class="text-gray-700">By anchoring all major capital actions to verifiable proof of sustainability, TL builds a more stable, predictable, and resilient economic foundation. It aligns individual institutional incentives with long-term collective survival.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-800 font-bold text-2xl mr-4">3</span>
+                            <div>
+                                <h3 class="font-semibold text-xl text-blue-900">Forcing Discipline Without Ideology</h3>
+                                <p class="text-gray-700">The system is proof-driven, not political. It does not dictate *what* to invest in; it dictates that *whatever* is invested in must *prove* it is not systemically destructive. This is a mechanism of discipline, not ideology.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-800 font-bold text-2xl mr-4">4</span>
+                            <div>
+                                <h3 class="font-semibold text-xl text-blue-900">Long-Horizon Trust</h3>
+                                <p class="text-gray-700">A financial infrastructure that cannot provide an immutable, auditable guarantee of its own systemic integrity cannot be trusted across generations. This mandate is a fundamental requirement for building that long-horizon trust.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.getAttribute('data-page');
+
+                    navLinks.forEach(navLink => navLink.classList.remove('active'));
+                    link.classList.add('active');
+
+                    contentSections.forEach(section => {
+                        if (section.id === page) {
+                            section.classList.add('active');
+                        } else {
+                            section.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            const scenarioState = {
+                scenario: 'scenario1',
+                risk: false
+            };
+
+            const riskToggle = document.getElementById('riskToggle');
+            const riskToggleSpan = riskToggle.querySelector('span');
+            const scenarioRadios = document.querySelectorAll('input[name="scenario"]');
+            const startButton = document.getElementById('startScenario');
+
+            const proposalText = document.getElementById('proposalText');
+            const validationList = document.getElementById('validationList');
+            const riskItem = document.getElementById('riskItem');
+            const holdReason = document.getElementById('holdReason');
+            const reviewText = document.getElementById('reviewText');
+            const decisionText = document.getElementById('decisionText');
+            const ledgerTitle = document.getElementById('ledgerTitle');
+            const ledgerText = document.getElementById('ledgerText');
+
+            const scenarioPlaceholder = document.getElementById('scenarioPlaceholder');
+            const stepProposal = document.getElementById('stepProposal');
+            const stepValidation = document.getElementById('stepValidation');
+            const stepHold = document.getElementById('stepHold');
+            const stepReview = document.getElementById('stepReview');
+            const stepDecision = document.getElementById('stepDecision');
+            const stepLedger = document.getElementById('stepLedger');
+            
+            const resolveButton = document.getElementById('resolveButton');
+            const rejectButton = document.getElementById('rejectButton');
+
+            function hideAllSteps() {
+                scenarioPlaceholder.classList.add('hidden');
+                stepProposal.classList.add('hidden');
+                stepValidation.classList.add('hidden');
+                stepHold.classList.add('hidden');
+                stepReview.classList.add('hidden');
+                stepDecision.classList.add('hidden');
+                stepLedger.classList.add('hidden');
+                startButton.classList.remove('hidden');
+            }
+
+            riskToggle.addEventListener('click', () => {
+                scenarioState.risk = !scenarioState.risk;
+                riskToggle.setAttribute('aria-checked', scenarioState.risk);
+                if (scenarioState.risk) {
+                    riskToggle.classList.remove('bg-gray-300');
+                    riskToggle.classList.add('bg-red-600');
+                    riskToggleSpan.classList.remove('translate-x-1');
+                    riskToggleSpan.classList.add('translate-x-6');
+                } else {
+                    riskToggle.classList.remove('bg-red-600');
+                    riskToggle.classList.add('bg-gray-300');
+                    riskToggleSpan.classList.remove('translate-x-6');
+                    riskToggleSpan.classList.add('translate-x-1');
+                }
+            });
+
+            scenarioRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    scenarioState.scenario = e.target.value;
+                    hideAllSteps();
+                    scenarioPlaceholder.classList.remove('hidden');
+                });
+            });
+
+            function getScenarioText(part) {
+                const isScenario1 = scenarioState.scenario === 'scenario1';
+                switch(part) {
+                    case 'proposal':
+                        return isScenario1 
+                            ? "A new proposal for Corporate Capital Investment has been logged. Awaiting proof validation..."
+                            : "A new proposal for High-Impact Infrastructure Finance has been logged. Awaiting proof validation...";
+                    case 'riskItemText':
+                        return isScenario1
+                            ? "Lifecycle Impact Report"
+                            : "Climate-Stress & Supply-Chain Disclosure";
+                    case 'riskItemValid':
+                        return isScenario1
+                            ? "Lifecycle Impact Report: [HASH_VALID]"
+                            : "Climate-Stress & Supply-Chain Disclosure: [HASH_VALID]";
+                    case 'riskItemInvalid':
+                        return isScenario1
+                            ? "Lifecycle Impact Report: [MISSING]"
+                            : "Climate-Stress & Supply-Chain Disclosure: [MISSING]";
+                    case 'holdReason':
+                        return isScenario1
+                            ? "Risk detected: The 'Lifecycle Impact Report' attestation is missing. The transaction is halted pending review."
+                            : "Risk detected: The 'Climate-Stress & Supply-Chain Disclosure' is missing. The transaction is halted pending review.";
+                    case 'reviewText':
+                        return isScenario1
+                            ? "The hold was resolved. The missing 'Lifecycle Impact Report' [HASH_NEW] was submitted and validated. Proceeding to final decision."
+                            : "The hold was resolved. The missing 'Climate-Stress & Supply-Chain Disclosure' [HASH_NEW] was submitted and validated. Proceeding to final decision.";
+                }
+            }
+
+            function runScenario() {
+                hideAllSteps();
+                
+                proposalText.textContent = getScenarioText('proposal');
+                stepProposal.classList.remove('hidden');
+
+                setTimeout(() => {
+                    if (scenarioState.risk) {
+                        riskItem.textContent = getScenarioText('riskItemInvalid');
+                        riskItem.classList.add('text-red-600', 'font-semibold');
+                        riskItem.classList.remove('text-gray-600');
+                    } else {
+                        riskItem.textContent = getScenarioText('riskItemValid');
+                        riskItem.classList.remove('text-red-600', 'font-semibold');
+                        riskItem.classList.add('text-gray-600');
+                    }
+                    stepValidation.classList.remove('hidden');
+
+                    setTimeout(() => {
+                        if (scenarioState.risk) {
+                            holdReason.textContent = getScenarioText('holdReason');
+                            stepHold.classList.remove('hidden');
+                        } else {
+                            decisionText.textContent = "All proofs validated. The transaction has been committed (+1).";
+                            stepDecision.classList.remove('hidden');
+                            setTimeout(showLedger, 1500, true);
+                        }
+                    }, 2000);
+                }, 1500);
+            }
+
+            function resolveHold(isApproved) {
+                stepHold.classList.add('hidden');
+                
+                if (isApproved) {
+                    reviewText.textContent = getScenarioText('reviewText');
+                    stepReview.classList.remove('hidden');
+                    setTimeout(() => {
+                        stepReview.classList.add('hidden');
+                        decisionText.textContent = "Review complete. The transaction has been committed (+1).";
+                        stepDecision.classList.remove('hidden');
+                        setTimeout(showLedger, 1500, true);
+                    }, 2000);
+                } else {
+                    decisionText.textContent = "Review complete. The transaction has been refused (-1) due to unresolved risks.";
+                    stepDecision.classList.remove('hidden');
+                    setTimeout(showLedger, 1500, false);
+                }
+            }
+            
+            function showLedger(isSuccess) {
+                stepDecision.classList.add('hidden');
+                if (isSuccess) {
+                    ledgerTitle.textContent = "6. Ledger Write & Anchor (Committed +1)";
+                    ledgerText.textContent = "The approval (+1) has been immutably written to the ledger and anchored. The audit trail is complete.";
+                    stepLedger.classList.add('border-green-500', 'bg-green-50');
+                    stepLedger.classList.remove('border-red-500', 'bg-red-50');
+                    ledgerTitle.classList.add('text-green-800');
+                    ledgerTitle.classList.remove('text-red-800');
+                    ledgerText.classList.add('text-green-700');
+                    ledgerText.classList.remove('text-red-700');
+                } else {
+                    ledgerTitle.textContent = "6. Ledger Write & Anchor (Refused -1)";
+                    ledgerText.textContent = "The refusal (-1) has been immutably written to the ledger and anchored. The audit trail is complete.";
+                    stepLedger.classList.add('border-red-500', 'bg-red-50');
+                    stepLedger.classList.remove('border-green-500', 'bg-green-50');
+                    ledgerTitle.classList.add('text-red-800');
+                    ledgerTitle.classList.remove('text-green-800');
+                    ledgerText.classList.add('text-red-700');
+                    ledgerText.classList.remove('text-green-700');
+                }
+                stepLedger.classList.remove('hidden');
+                startButton.classList.remove('hidden');
+            }
+
+            startButton.addEventListener('click', runScenario);
+            resolveButton.addEventListener('click', () => resolveHold(true));
+            rejectButton.addEventListener('click', () => resolveHold(false));
+
+        });
+    </script>
+</body>
+</html>
