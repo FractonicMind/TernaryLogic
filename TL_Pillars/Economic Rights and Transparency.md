@@ -1,4 +1,4 @@
-# Ternary Logic Mandates: Economic Rights & Transparency
+# Economic Rights & Transparency
 
 ### FOUNDATIONAL ARCHITECTURE
 
