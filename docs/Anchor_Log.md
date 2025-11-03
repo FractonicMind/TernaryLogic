@@ -10,3 +10,10 @@ This file records cryptographic proofs, timestamps, and custody points for TL ar
 **Location:** Repo, SSRN (pending DOI), OSF (next), Zenodo (planned)  
 **Notes:** First public TL civicsystems submission
 
+### 2025-11-03 — Zenodo Release Copy
+**Artifact:** research/academic_papers/Ternary Logic for Global Civicsystems.pdf  
+**SHA-256:** 7146e7e3484a7869b2c0e65725089e17200862ada2c1d6fb11cf16b7b8821491  
+**Location:** Repo, Zenodo DOI: 10.5281/zenodo.17517643  
+**Notes:** Zenodo-archived version; verified match to original anchor hash
+
+
