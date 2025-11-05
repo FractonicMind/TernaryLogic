@@ -170,7 +170,8 @@ This is the system's *lawful access* mechanism, explicitly designed to *prevent*
 ## **7\. Governance, Oversight, and Resilience**
 
 The resilience of TL is not based on technology alone, but on a robust governance framework designed for *separation of powers*. This structure ensures no single entity can control, censor, or terminate the network, mirroring the principles of segregated custody found in regulations like the SEC's proposed Safeguarding Rule.  
-\#\#\# Technical Council
+
+### Technical Council
 
 * **Role:** The "Engineers". Comprised of expert cryptographers, system architects, and domain specialists.  
 * **Responsibilities:** Maintaining the core protocol's technical health; managing the cryptographic agility policy (e.g., planning for post-quantum migration); approving technical upgrades; and commissioning third-party security audits.  
