@@ -133,29 +133,104 @@
     </a>
   </section>
      <br><br>   
-        <section id="pillars" class="content-section">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">The Eight Pillars of TL</h2>
-                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                    The TL framework is founded on eight core principles that create a robust, verifiable, and accountable system. Click each pillar to explore its institutional role.
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="md:col-span-1">
-                    <div id="pillar-nav" class="space-y-3 sticky top-24">
-                        <button class="pillar-button active" data-pillar="1">1. Epistemic Hold</button><br>
-                        <button class="pillar-button" data-pillar="2">2. Immutable Ledger</button><br>
-                        <button class="pillar-button" data-pillar="3">3. Goukassian Principle</button><br>
-                        <button class="pillar-button" data-pillar="4">4. Decision Logs</button><br>
-                        <button class="pillar-button" data-pillar="5">5. Economic Rights & Transparency</button><br>
-                        <button class="pillar-button" data-pillar="6">6. Sustainable Capital Allocation</button><br>
-                        <button class="pillar-button" data-pillar="7">7. Hybrid Shield</button><br>
-                        <button class="pillar-button" data-pillar="8">8. Anchors</button><br>
+        <!-- Problem Section -->
+        <section id="problem" class="bg-slate-100 py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                        Structural Failures in Current Systems
+                    </h2>
+                    <p class="mt-4 text-lg leading-8 text-slate-600 max-w-3xl mx-auto">
+                        TL is designed to address specific, critical failure modes where current audit and compliance structures are insufficient.
+                        These failures exist across financial, health, and logistical systems, often due to fragmented data and a lack of non-repudiable evidence.
+                    </p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 class="text-lg font-semibold text-slate-900">Financial & State Systems</h3>
+                        <ul class="mt-2 text-slate-600 list-disc list-inside space-y-1">
+                            <li>Trade-based money laundering</li>
+                            <li>Insider collusion and model gaming</li>
+                            <li>Rapid routing theft & spoofing</li>
+                            <li>Ineffective post-hoc SAR auditing</li>
+                            <li>CBDC and RTGS vulnerability</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 class="text-lg font-semibold text-slate-900">Human Safety & Public Welfare</h3>
+                        <ul class="mt-2 text-slate-600 list-disc list-inside space-y-1">
+                            <li>Compromised clinical device approvals</li>
+                            <li>Pharmaceutical supply-chain forgery</li>
+                            <li>AI diagnostic model opacity</li>
+                            <li>Procurement & emergency response fraud</li>
+                            <li>Critical infrastructure (energy, telecom) gaps</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 class="text-lg font-semibold text-slate-900">Global Supply & Environment</h3>
+                        <ul class="mt-2 text-slate-600 list-disc list-inside space-y-1">
+                            <li>Cross-border supply-chain forgery</li>
+                            <li>Falsified bills of lading and invoices</li>
+                            <li>ESG & environmental compliance gaps</li>
+                            <li>Public record and registry tampering</li>
+                            <li>Institutional AI governance failures</li>
+                        </ul>
                     </div>
                 </div>
-                
-                <div id="pillar-content" class="md:col-span-2 bg-white p-6 md:p-8 rounded-lg shadow-lg border border-gray-200 min-h-[400px]">
+            </div>
+        </section>
+
+        <!-- Pillars Section -->
+        <section id="pillars" class="py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                        TL Core Architecture: The Eight Pillars
+                    </h2>
+                    <p class="mt-4 text-lg leading-8 text-slate-600 max-w-3xl mx-auto">
+                        The TL framework is built on eight interdependent principles that form a complete evidentiary system. 
+                        Click on any pillar to understand its specific institutional role.
+                    </p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="grid grid-cols-2 gap-4">
+                        <button data-pillar="p1" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
+                            <span class="font-semibold block text-blue-700">1. Epistemic Hold</span>
+                            <span class="text-sm text-slate-500">Enforced pause on uncertainty</span>
+                        </button>
+                        <button data-pillar="p2" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
+                            <span class="font-semibold block text-blue-700">2. Immutable Ledger</span>
+                            <span class="text-sm text-slate-500">Verifiable decision chain</span>
+                        </button>
+                        <button data-pillar="p3" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
+                            <span class="font-semibold block text-blue-700">3. Goukassian Principle</span>
+                            <span class="text-sm text-slate-500">Proof of knowledge</span>
+                        </button>
+                        <button data-pillar="p4" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
+                            <span class="font-semibold block text-blue-700">4. Decision Logs</span>
+                            <span class="text-sm text-slate-500">Forensic trace of reasoning</span>
+                        </button>
+                        <button data-pillar="p5" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
+                            <span class="font-semibold block text-blue-700">5. Economic Rights Mandate</span>
+                            <span class="text-sm text-slate-500">Aligned transparency</span>
+                        </button>
+                        <button data-pillar="p6" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
+                            <span class="font-semibold block text-blue-700">6. Sustainable Capital Mandate</span>
+                            <span class="text-sm text-slate-500">Evidence-bound obligations</span>
+                        </button>
+                        <button data-pillar="p7" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
+                            <span class="font-semibold block text-blue-700">7. Hybrid Shield</span>
+                            <span class="text-sm text-slate-500">Cryptographic & human protection</span>
+                        </button>
+                        <button data-pillar="p8" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
+                            <span class="font-semibold block text-blue-700">8. Anchors</span>
+                            <span class="text-sm text-slate-500">Sovereign-grade permanence</span>
+                        </button>
+                    </div>
+                    <div id="pillar-details-container" class="lg:col-span-2 bg-white p-8 rounded-lg shadow-xl min-h-[300px] flex flex-col justify-center">
+                        <h3 class="text-xl font-bold text-slate-900">Click a Pillar to View Details</h3>
+                        <p class="mt-2 text-slate-600">Select one of the eight pillars to the left to read its full institutional definition and operational role in the TL system.</p>
+                    </div>
                 </div>
             </div>
         </section>
