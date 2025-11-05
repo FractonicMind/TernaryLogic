@@ -10,36 +10,7 @@
     <!-- Application Structure Plan: A single-page application with a top navigation bar (Overview, Pillars, Applications, Governance, Technical). This non-linear, thematic structure was chosen over a linear report layout to allow users (e.g., regulators, architects) to explore TL's complex concepts in a self-directed way. Key interactions include a master-detail view for the 8 Pillars, tabbed content for Applications, and visual flow diagrams (HTML/CSS) for AML/Fraud scenarios. This design prioritizes conceptual understanding and explorability. -->
     <!-- Visualization & Content Choices: Report Info: 8 TL Pillars -> Goal: Organize/Inform -> Presentation: Clickable master-detail list -> Interaction: Click to show/hide details -> Justification: Breaks down complex concepts into manageable, explorable chunks. | Report Info: AML/Fraud Workflows -> Goal: Explain Process -> Presentation: HTML/CSS flow diagram (Divs + Arrows) -> Interaction: Static visual flow -> Justification: Visually demonstrates the 'Hold' and 'Review' process. | Report Info: Governance Structure -> Goal: Organize -> Presentation: 3-column flex layout -> Interaction: Simple layout -> Justification: Clearly separates the roles of the three governance bodies. | NO CHARTS USED: The source brief is a technical specification/blueprint with no quantitative data, only *proposals* for KPIs. Inventing data for charts would be misleading. KPIs are presented as a list. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'slate': {
-                            50: '#f8fafc',
-                            100: '#f1f5f9',
-                            200: '#e2e8f0',
-                            300: '#cbd5e1',
-                            400: '#94a3b8',
-                            500: '#64748b',
-                            600: '#475569',
-                            700: '#334155',
-                            800: '#1e293b',
-                            900: '#0f172a',
-                        },
-                        'blue': {
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                        }
-                    }
-                },
-            },
-        };
-    </script>
-    <style>
+        <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
@@ -208,9 +179,8 @@
                 </div>
             </div>
         </section>
-
-        <!-- Pillars Section -->
-        <section id="pillars" class="py-16 sm:py-24">
+        
+       <section id="pillars" class="py-16 sm:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
                     <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
