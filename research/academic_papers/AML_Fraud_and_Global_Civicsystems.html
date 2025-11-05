@@ -1,740 +1,410 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ternary Logic (TL) Evidentiary Infrastructure</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Chosen Palette: Sovereign Neutral -->
-    <!-- Application Structure Plan: The application transforms the 15-section linear report into a 6-part thematic, interactive exploration. The goal is to guide a user (regulator, architect) from the "Why" (The Problem) to the "What" (The Pillars), the "How" (Use Cases), the "Who" (Governance), and finally the "What's Next" (Implementation). This structure prioritizes user-driven exploration of core concepts (like the interactive 8 Pillars) and applied examples (the dynamic workflow selector) over a passive, linear read. This design choice is to make the dense, technical information more accessible and digestible. -->
-    <!-- Visualization & Content Choices: 
-        1. Report Info: 8 Pillars (Sec 3). Goal: Organize/Explore. Method: Interactive 8-card grid (HTML/JS). Interaction: onClick updates a central details pane. Justification: Turns a static list into the core interactive element, allowing users to focus on one concept at a time.
-        2. Report Info: Workflows (Sec 4) & Scenarios (Sec 11). Goal: Demonstrate Process. Method: Dropdown selector (HTML) updating multiple dynamic content areas (JS). Interaction: onChange on dropdown updates a dynamic HTML/CSS flowchart and a "Required Evidence" list. Justification: Directly connects abstract mechanisms to concrete, "worked examples" from the report.
-        3. Report Info: Latency Budget (Sec 8). Goal: Inform (Quantitative). Method: Chart.js Horizontal Bar Chart. Interaction: Static chart, dynamically rendered by Chart.js. Justification: Visualizes a key technical, non-functional requirement (latency) mentioned in the report, making it tangible. Library: Chart.js (Canvas).
-        4. Report Info: Governance (Sec 7) & Threats (Sec 10). Goal: Organize. Method: HTML/Tailwind 3-column layout + an HTML `<details>` accordion. Interaction: Click to expand/collapse threats. Justification: Presents the primary governance structure clearly, while tucking complex "what-if" scenarios (threats) into an optional-view element.
-        5. Report Info: Annexes (Sec 15). Goal: Inform (Technical). Method: Tabbed interface (HTML/JS). Interaction: onClick to switch tabs. Justification: Hides extremely dense, technical data (JSON schemas) behind a click to maintain a clean UI, but keeps it accessible.
-    -->
+    <!-- Chosen Palette: Calm Neutrals with Teal Accent (BG: neutral-50, Text: neutral-800, Accent: teal-600/700) -->
+    <!-- Application Structure Plan: A single-page application with a top navigation bar (Overview, Pillars, Applications, Governance, Technical). This non-linear, thematic structure was chosen over a linear report layout to allow users (e.g., regulators, architects) to explore TL's complex concepts in a self-directed way. Key interactions include a master-detail view for the 8 Pillars, tabbed content for Applications, and visual flow diagrams (HTML/CSS) for AML/Fraud scenarios. This design prioritizes conceptual understanding and explorability. -->
+    <!-- Visualization & Content Choices: Report Info: 8 TL Pillars -> Goal: Organize/Inform -> Presentation: Clickable master-detail list -> Interaction: Click to show/hide details -> Justification: Breaks down complex concepts into manageable, explorable chunks. | Report Info: AML/Fraud Workflows -> Goal: Explain Process -> Presentation: HTML/CSS flow diagram (Divs + Arrows) -> Interaction: Static visual flow -> Justification: Visually demonstrates the 'Hold' and 'Review' process. | Report Info: Governance Structure -> Goal: Organize -> Presentation: 3-column flex layout -> Interaction: Simple layout -> Justification: Clearly separates the roles of the three governance bodies. | NO CHARTS USED: The source brief is a technical specification/blueprint with no quantitative data, only *proposals* for KPIs. Inventing data for charts would be misleading. KPIs are presented as a list. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'slate': {
-                            50: '#f8fafc',
-                            100: '#f1f5f9',
-                            200: '#e2e8f0',
-                            300: '#cbd5e1',
-                            400: '#94a3b8',
-                            500: '#64748b',
-                            600: '#475569',
-                            700: '#334155',
-                            800: '#1e293b',
-                            900: '#0f172a',
-                        },
-                        'blue': {
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                        }
-                    }
-                },
-            },
-        };
-    </script>
     <style>
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1f2937;
         }
-
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
+        .nav-button {
+            @apply px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-teal-100 hover:text-teal-700 transition-colors cursor-pointer;
         }
-
-        .flow-step {
-            position: relative;
-            padding: 0.75rem 1.5rem;
-            background-color: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            text-align: center;
-            margin-bottom: 1.5rem;
-            transition: all 0.2s ease-in-out;
+        .nav-button.active {
+            @apply bg-teal-600 text-white hover:bg-teal-700 hover:text-white;
         }
-
-        .flow-step:not(:last-child)::after {
-            content: '↓';
-            position: absolute;
-            bottom: -1.3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1.5rem;
-            color: #94a3b8;
+        .content-section {
+            @apply hidden;
         }
-
+        .content-section.active {
+            @apply block;
+        }
         .pillar-button {
-            transition: all 0.2s ease-in-out;
+            @apply w-full text-left p-4 rounded-lg border border-gray-200 bg-white hover:bg-teal-50 hover:border-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all cursor-pointer;
         }
-
         .pillar-button.active {
-            background-color: #1d4ed8;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            @apply bg-teal-100 border-teal-400 shadow-md;
         }
-        
+        .flow-step {
+            @apply flex flex-col items-center justify-center p-4 bg-white border border-gray-300 rounded-lg shadow-sm text-center min-h-[100px];
+        }
+        .flow-arrow {
+            @apply flex items-center justify-center text-3xl font-light text-teal-500 mx-2;
+        }
         .tab-button {
-            transition: all 0.2s ease-in-out;
+            @apply px-4 py-2 font-medium text-sm rounded-t-lg border-b-2 border-transparent hover:border-teal-500 hover:text-teal-600 cursor-pointer;
         }
-
         .tab-button.active {
-            border-color: #1d4ed8;
-            color: #1d4ed8;
-            background-color: white;
+            @apply border-teal-600 text-teal-700;
+        }
+        .tab-content {
+            @apply hidden;
+        }
+        .tab-content.active {
+            @apply block;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed">
+<body class="antialiased">
 
-    <!-- Header & Navigation -->
-    <header class="sticky top-0 z-50 bg-white shadow-md">
+    <header class="bg-white shadow-sm sticky top-0 z-50">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0">
-                    <h1 class="text-xl font-bold text-slate-900">Ternary Logic (TL) Report</h1>
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-teal-700">Ternary Logic (TL)</span>
                 </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#home" class="text-slate-600 hover:text-blue-700 px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                        <a href="#problem" class="text-slate-600 hover:text-blue-700 px-3 py-2 rounded-md text-sm font-medium">The Problem</a>
-                        <a href="#pillars" class="text-slate-600 hover:text-blue-700 px-3 py-2 rounded-md text-sm font-medium">Core Architecture</a>
-                        <a href="#use-cases" class="text-slate-600 hover:text-blue-700 px-3 py-2 rounded-md text-sm font-medium">Use Cases</a>
-                        <a href="#governance" class="text-slate-600 hover:text-blue-700 px-3 py-2 rounded-md text-sm font-medium">Governance</a>
-                        <a href="#implementation" class="text-slate-600 hover:text-blue-700 px-3 py-2 rounded-md text-sm font-medium">Implementation</a>
-                    </div>
+                <div class="flex items-center space-x-2">
+                    <button class="nav-button active" data-target="overview">Overview</button>
+                    <button class="nav-button" data-target="pillars">Core Pillars</button>
+                    <button class="nav-button" data-target="applications">Applications</button>
+                    <button class="nav-button" data-target="governance">Governance</button>
+                    <button class="nav-button" data-target="technical">Technical</button>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main>
-        <!-- Home Section -->
-        <section id="home" class="py-16 sm:py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                        Ternary Logic (TL) as Sovereign-Grade Evidentiary Infrastructure
-                    </h2>
-                    <p class="mt-4 text-lg leading-8 text-slate-600 max-w-3xl mx-auto">
-                        This interactive application explores the architecture, governance, and application of Ternary Logic (TL)
-                        for establishing sovereign-grade accountability across global civicsystems, with a focus on AML, fraud, and public safety.
-                    </p>
-                </div>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
 
-                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h3 class="text-lg font-semibold text-slate-900">What is TL?</h3>
-                        <p class="mt-2 text-slate-600">
-                            TL is a neutral audit infrastructure, not a policy. It establishes a verifiable, immutable, and auditable
-                            decision-chain for high-risk systemic actions, ensuring any institution can prove what it knew when it acted.
-                        </p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h3 class="text-lg font-semibold text-slate-900">Why is it Needed?</h3>
-                        <p class="mt-2 text-slate-600">
-                            Current post-hoc auditing systems fail to prevent sophisticated financial crime, supply-chain forgery, and 
-                            regulatory failures. They lack the real-time evidentiary framework to enforce accountability *before* irreversible harm occurs.
-                        </p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h3 class="text-lg font-semibold text-slate-900">How does it Work?</h3>
-                        <p class="mt-2 text-slate-600">
-                            By enforcing core principles like the "Epistemic Hold" (a pause on uncertainty) and the "Goukassian Principle" (proof of knowledge),
-                            TL creates an evidentiary packet for every material decision, protected by a hybrid cryptographic and human-governance shield.
-                        </p>
-                    </div>
+        <section id="overview" class="content-section active">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Sovereign-Grade Evidentiary Infrastructure</h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                    An interactive exploration of the Ternary Logic (TL) framework, designed to establish rigorous, evidentiary accountability across global civicsystems.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <h3 class="text-2xl font-semibold text-teal-700 mb-3">The Problem: Structural Failures</h3>
+                    <p class="text-gray-700 mb-4">
+                        Current high-risk civicsystems suffer from critical vulnerabilities. Post-hoc auditing fails to prevent sophisticated financial crimes and systemic failures.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600">
+                        <li>Trade-based money laundering (TBML)</li>
+                        <li>Insider collusion and routing theft</li>
+                        <li>AI model gaming and procurement fraud</li>
+                        <li>Compromised supply-chain and medical device approvals</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <h3 class="text-2xl font-semibold text-teal-700 mb-3">The Solution: Ternary Logic</h3>
+                    <p class="text-gray-700">
+                        TL provides a neutral audit infrastructure, not a policy. It enforces transparency and accountability by creating an immutable, verifiable record of *what* a system knew and *when* it acted, enabling sovereign-grade forensic analysis *before* irreversible commitment.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <!-- Problem Section -->
-        <section id="problem" class="bg-slate-100 py-16 sm:py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                        Structural Failures in Current Systems
-                    </h2>
-                    <p class="mt-4 text-lg leading-8 text-slate-600 max-w-3xl mx-auto">
-                        TL is designed to address specific, critical failure modes where current audit and compliance structures are insufficient.
-                        These failures exist across financial, health, and logistical systems, often due to fragmented data and a lack of non-repudiable evidence.
-                    </p>
-                </div>
-                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h3 class="text-lg font-semibold text-slate-900">Financial & State Systems</h3>
-                        <ul class="mt-2 text-slate-600 list-disc list-inside space-y-1">
-                            <li>Trade-based money laundering</li>
-                            <li>Insider collusion and model gaming</li>
-                            <li>Rapid routing theft & spoofing</li>
-                            <li>Ineffective post-hoc SAR auditing</li>
-                            <li>CBDC and RTGS vulnerability</li>
-                        </ul>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h3 class="text-lg font-semibold text-slate-900">Human Safety & Public Welfare</h3>
-                        <ul class="mt-2 text-slate-600 list-disc list-inside space-y-1">
-                            <li>Compromised clinical device approvals</li>
-                            <li>Pharmaceutical supply-chain forgery</li>
-                            <li>AI diagnostic model opacity</li>
-                            <li>Procurement & emergency response fraud</li>
-                            <li>Critical infrastructure (energy, telecom) gaps</li>
-                        </ul>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h3 class="text-lg font-semibold text-slate-900">Global Supply & Environment</h3>
-                        <ul class="mt-2 text-slate-600 list-disc list-inside space-y-1">
-                            <li>Cross-border supply-chain forgery</li>
-                            <li>Falsified bills of lading and invoices</li>
-                            <li>ESG & environmental compliance gaps</li>
-                            <li>Public record and registry tampering</li>
-                            <li>Institutional AI governance failures</li>
-                        </ul>
-                    </div>
-                </div>
+        <section id="pillars" class="content-section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">The Eight Pillars of TL</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    The TL framework is founded on eight core principles that create a robust, verifiable, and accountable system. Click each pillar to explore its institutional role.
+                </p>
             </div>
-        </section>
-
-        <!-- Pillars Section -->
-        <section id="pillars" class="py-16 sm:py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                        TL Core Architecture: The Eight Pillars
-                    </h2>
-                    <p class="mt-4 text-lg leading-8 text-slate-600 max-w-3xl mx-auto">
-                        The TL framework is built on eight interdependent principles that form a complete evidentiary system. 
-                        Click on any pillar to understand its specific institutional role.
-                    </p>
-                </div>
-                <div class="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="grid grid-cols-2 gap-4">
-                        <button data-pillar="p1" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
-                            <span class="font-semibold block text-blue-700">1. Epistemic Hold</span>
-                            <span class="text-sm text-slate-500">Enforced pause on uncertainty</span>
-                        </button>
-                        <button data-pillar="p2" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
-                            <span class="font-semibold block text-blue-700">2. Immutable Ledger</span>
-                            <span class="text-sm text-slate-500">Verifiable decision chain</span>
-                        </button>
-                        <button data-pillar="p3" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
-                            <span class="font-semibold block text-blue-700">3. Goukassian Principle</span>
-                            <span class="text-sm text-slate-500">Proof of knowledge</span>
-                        </button>
-                        <button data-pillar="p4" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
-                            <span class="font-semibold block text-blue-700">4. Decision Logs</span>
-                            <span class="text-sm text-slate-500">Forensic trace of reasoning</span>
-                        </button>
-                        <button data-pillar="p5" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
-                            <span class="font-semibold block text-blue-700">5. Economic Rights Mandate</span>
-                            <span class="text-sm text-slate-500">Aligned transparency</span>
-                        </button>
-                        <button data-pillar="p6" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
-                            <span class="font-semibold block text-blue-700">6. Sustainable Capital Mandate</span>
-                            <span class="text-sm text-slate-500">Evidence-bound obligations</span>
-                        </button>
-                        <button data-pillar="p7" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
-                            <span class="font-semibold block text-blue-700">7. Hybrid Shield</span>
-                            <span class="text-sm text-slate-500">Cryptographic & human protection</span>
-                        </button>
-                        <button data-pillar="p8" class="pillar-button text-left p-4 bg-white rounded-lg shadow-lg hover:shadow-xl hover:bg-slate-50 border border-slate-200">
-                            <span class="font-semibold block text-blue-700">8. Anchors</span>
-                            <span class="text-sm text-slate-500">Sovereign-grade permanence</span>
-                        </button>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="md:col-span-1">
+                    <div id="pillar-nav" class="space-y-3 sticky top-24">
+                        <button class="pillar-button active" data-pillar="1">1. Epistemic Hold</button>
+                        <button class="pillar-button" data-pillar="2">2. Immutable Ledger</button>
+                        <button class="pillar-button" data-pillar="3">3. Goukassian Principle</button>
+                        <button class="pillar-button" data-pillar="4">4. Decision Logs</button>
+                        <button class="pillar-button" data-pillar="5">5. Economic Rights & Transparency</button>
+                        <button class="pillar-button" data-pillar="6">6. Sustainable Capital Allocation</button>
+                        <button class="pillar-button" data-pillar="7">7. Hybrid Shield</button>
+                        <button class="pillar-button" data-pillar="8">8. Anchors</button>
                     </div>
-                    <div id="pillar-details-container" class="lg:col-span-2 bg-white p-8 rounded-lg shadow-xl min-h-[300px] flex flex-col justify-center">
-                        <h3 class="text-xl font-bold text-slate-900">Click a Pillar to View Details</h3>
-                        <p class="mt-2 text-slate-600">Select one of the eight pillars to the left to read its full institutional definition and operational role in the TL system.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Use Cases Section -->
-        <section id="use-cases" class="bg-slate-100 py-16 sm:py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                        Applied Workflows & Technical Performance
-                    </h2>
-                    <p class="mt-4 text-lg leading-8 text-slate-600 max-w-3xl mx-auto">
-                        Explore how the TL framework applies to specific high-risk scenarios. Select a use case to see its
-                        detection-to-resolution flow and the minimum evidence required.
-                    </p>
-                </div>
-
-                <div class="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                    <!-- Left Column: Interactive Workflow -->
-                    <div class="bg-white p-8 rounded-lg shadow-lg">
-                        <label for="workflow-selector" class="block text-sm font-medium text-slate-700">Select Use Case:</label>
-                        <select id="workflow-selector" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-slate-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                            <option value="aml">Trade-Based Money Laundering</option>
-                            <option value="device">Medical Device Approval</option>
-                            <option value="theft">Cross-Chain Asset Theft</option>
-                        </select>
-
-                        <div id="workflow-details" class="mt-6">
-                            <h4 id="workflow-title" class="text-lg font-semibold text-slate-900"></h4>
-                            
-                            <div class="mt-4">
-                                <h5 class="font-medium text-slate-700">Workflow Steps:</h5>
-                                <div id="workflow-flowchart" class="mt-3 p-4 bg-slate-50 rounded-md overflow-hidden">
-                                    <!-- JS will populate this -->
-                                </div>
-                            </div>
-
-                            <div class="mt-4">
-                                <h5 class="font-medium text-slate-700">Minimum Required Evidence:</h5>
-                                <ul id="workflow-evidence-list" class="mt-3 list-disc list-inside text-slate-600 space-y-1">
-                                    <!-- JS will populate this -->
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Column: Latency Chart -->
-                    <div class="bg-white p-8 rounded-lg shadow-lg">
-                        <h3 class="text-lg font-semibold text-slate-900">Key Performance: Dual-Lane Latency Budget</h3>
-                        <p class="mt-2 text-sm text-slate-600">
-                            TL uses a dual-lane architecture to maintain high throughput. The "visible" lane (human/operator) has a sub-300ms budget for holds, while the "deferred" lane handles batch anchoring. This chart shows an illustrative budget for a real-time hold check.
-                        </p>
-                        <div class="chart-container mt-6">
-                            <canvas id="latencyChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Governance Section -->
-        <section id="governance" class="py-16 sm:py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                        Governance, Oversight, and Resilience
-                    </h2>
-                    <p class="mt-4 text-lg leading-8 text-slate-600 max-w-3xl mx-auto">
-                        TL's governance is designed to prevent institutional capture and guarantee continuity. It separates technical evolution, human oversight,
-                        and autonomous enforcement into three distinct bodies.
-                    </p>
                 </div>
                 
-                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h3 class="text-lg font-semibold text-slate-900">Technical Council</h3>
-                        <p class="mt-2 text-slate-600">
-                            Responsible for the evolution of the TL specification, cryptography, interoperability, and anchoring standards.
-                            They manage the technical roadmap and ensure cryptographic agility.
-                        </p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h3 class="text-lg font-semibold text-slate-900">Stewardship Custodians</h3>
-                        <p class="mt-2 text-slate-600">
-                            Independent, multi-national human guardians preventing institutional capture. They oversee key rotation,
-                            quorum logic for critical changes, and act as the ultimate human failsafe.
-                        </d>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h3 class="text-lg font-semibold text-slate-900">Smart Contract Safeguard</h3>
-                        <p class="mt-2 text-slate-600">
-                            Autonomous guardrails that enforce the non-alterability of TL's core principles. This layer guarantees continuity and 
-                            ensures no council or operator can "vote TL out of existence."
-                        </p>
-                    </div>
-                </div>
-
-                <div class="mt-16 max-w-4xl mx-auto">
-                     <details class="bg-white shadow-lg rounded-lg overflow-hidden">
-                        <summary class="font-semibold text-lg p-6 cursor-pointer flex justify-between items-center text-slate-900">
-                            Adversarial Threat Model & Mitigations
-                            <span class="text-2xl text-slate-400">+</span>
-                        </summary>
-                        <div class="p-6 border-t border-slate-200">
-                            <p class="text-slate-600">TL is designed to be adversarially-aware. Key threats and their mitigations include:</p>
-                            <ul class="mt-4 list-disc list-inside space-y-2 text-slate-600">
-                                <li><strong>Threat: Flooding/Spam Attestations.</strong><br>
-                                    <strong>Mitigation:</strong> Rate limiting, ensemble checks for anomaly detection, and economic staking (where applicable) for oracles.</li>
-                                <li><strong>Threat: Oracle/Attestator Corruption.</strong><br>
-                                    <strong>Mitigation:</strong> Use of diverse, multi-party oracles. Requiring attestations from multiple independent sources before resolving a hold.</li>
-                                <li><strong>Threat: Custodian Collusion or Coercion.</strong><br>
-                                    <strong>Mitigation:</strong> Geographically and jurisdictionally diverse custodians. Multi-party ERK (Ephemeral Key) escrow. Quorum logic requiring super-majority.</li>
-                                <li><strong>Threat: Cryptographic Break.</strong><br>
-                                    <strong>Mitigation:</strong> Cryptographic agility policy managed by the Technical Council, allowing for protocol-level upgrades. Re-anchoring procedures for existing ledgers.</li>
-                            </ul>
-                        </div>
-                    </details>
+                <div id="pillar-content" class="md:col-span-2 bg-white p-6 md:p-8 rounded-lg shadow-lg border border-gray-200 min-h-[400px]">
                 </div>
             </div>
         </section>
 
-        <!-- Implementation Section -->
-        <section id="implementation" class="bg-slate-100 py-16 sm:py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                        Implementation & Technical Annexes
-                    </h2>
-                    <p class="mt-4 text-lg leading-8 text-slate-600 max-w-3xl mx-auto">
-                        Review the phased pilot plan, integration pathways for existing systems, and key technical artifacts
-                        like the Decision Log schema.
-                    </p>
+        <section id="applications" class="content-section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Applied Scenarios & Workflows</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    TL provides concrete mechanisms to detect, hold, and review high-risk activities. This section demonstrates how the TL flow applies to critical domains.
+                </p>
+            </div>
+
+            <div class="border-b border-gray-300 mb-6">
+                <nav id="app-tabs" class="flex -mb-px space-x-6" aria-label="Tabs">
+                    <button class="tab-button active" data-target="app-aml">AML, Fraud & Theft</button>
+                    <button class="tab-button" data-target="app-health">Public Health & Safety</button>
+                    <button class="tab-button" data-target="app-supply">Supply Chain & Procurement</button>
+                </nav>
+            </div>
+
+            <div id="app-aml" class="tab-content active">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Workflow: AML, Fraud & Theft</h3>
+                <p class="text-gray-700 mb-8 max-w-4xl">
+                    For banking payments, trade finance, and on-chain asset movements, TL introduces a critical verification step. Instead of immediate settlement, high-risk transactions are placed in an Epistemic Hold for review, based on ensemble checks of metadata, attestations, and behavioral anomalies.
+                </p>
+                
+                <h4 class="text-xl font-semibold text-gray-700 mb-4">Example: Trade-Based Money Laundering (TBML)</h4>
+                <div class="overflow-x-auto p-4">
+                    <div class="flex items-stretch min-w-[800px]">
+                        <div class="flow-step w-1/5">
+                            <h5 class="font-bold text-teal-700">1. Detection</h5>
+                            <p class="text-sm text-gray-600">Transaction initiated. Ensemble check flags mismatched invoice data, anomalous shipping routes, and sanctioned entity proximity.</p>
+                        </div>
+                        <div class="flow-arrow w-1/12">→</div>
+                        <div class="flow-step w-1/5 border-red-400 bg-red-50">
+                            <h5 class="font-bold text-red-700">2. Epistemic Hold</h5>
+                            <p class="text-sm text-gray-600">Transaction is paused. SLAs initiated. All parties notified of review status. Funds are secured but not committed.</p>
+                        </div>
+                        <div class="flow-arrow w-1/12">→</div>
+                        <div class="flow-step w-1/5">
+                            <h5 class="font-bold text-teal-700">3. Human Review</h5>
+                            <p class="text-sm text-gray-600">Operator reviews the full Decision Log, attestations (BoL, customs), and AI risk score. Request for Information (RFI) may be issued.</p>
+                        </div>
+                        <div class="flow-arrow w-1/12">→</div>
+                        <div class="flow-step w-1/5">
+                            <h5 class="font-bold text-teal-700">4. Outcome</h5>
+                            <p class="text-sm text-gray-600">Operator commits (releases funds) or refuses (files SAR, freezes). Decision is cryptographically signed.</p>
+                        </div>
+                        <div class="flow-arrow w-1/12">→</div>
+                        <div class="flow-step w-1/5 border-gray-500">
+                            <h5 class="font-bold text-gray-700">5. Forensic Packet</h5>
+                            <p class="text-sm text-gray-600">Immutable record of the entire process is Anchored, providing admissible evidence for regulators.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="app-health" class="tab-content">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Workflow: Public Health & Safety</h3>
+                <p class="text-gray-700 mb-8 max-w-4xl">
+                    For medical device approvals (e.g., by FDA, EMA) or AI diagnostics, TL ensures the provenance and integrity of clinical trial data and software attestations. It can enforce an Epistemic Hold on an approval if underlying data signatures are missing, trial attestations are incomplete, or software bill of materials (SBOM) shows known vulnerabilities. This prevents compromised devices or unsafe AI from reaching the public.
+                </p>
+            </div>
+
+            <div id="app-supply" class="tab-content">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Workflow: Supply Chain & Procurement</h3>
+                <p class="text-gray-700 mb-8 max-w-4xl">
+                    In public procurement and critical supply chains, TL verifies the authenticity of goods and vendor attestations. It can detect procurement fraud by flagging collusive bidding patterns or forged certifications. An Epistemic Hold on a payment allows verification that goods were received as specified (matching customs data, IoT sensor readings, and invoices) *before* public funds are disbursed.
+                </p>
+            </div>
+        </section>
+
+        <section id="governance" class="content-section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Governance & Resilience</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    TL's governance is a hybrid model designed for neutrality and resilience, preventing institutional capture and guaranteeing core principles.
+                </p>
+            </div>
+
+            <div class="text-center bg-teal-50 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md mb-12" role="alert">
+                <p class="font-bold">Human Conscience + Cryptographic Memory + Autonomous Guardrails</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <h3 class="text-xl font-semibold text-teal-700 mb-3">1. Technical Council</h3>
+                    <p class="text-gray-700">Responsible for the evolution of the TL specification, cryptographic standards, interoperability, and anchoring protocols. Ensures technical robustness.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <h3 class="text-xl font-semibold text-teal-700 mb-3">2. Stewardship Custodians</h3>
+                    <p class="text-gray-700">Independent, multi-national human guardians tasked with preventing institutional capture. They oversee emergency procedures and safeguard the system's neutrality.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <h3 class="text-xl font-semibold text-teal-700 mb-3">3. Smart Contract Safeguard</h3>
+                    <p class="text-gray-700">Autonomously enforces the non-alterability of TL's core principles. Manages quorum logic, key rotation, and guarantees continuity. No council can vote TL out of existence.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="technical" class="content-section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Technical Criteria & Architecture</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Key architectural components designed for high-performance, secure, and compliant operation in sovereign contexts.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <h3 class="text-xl font-semibold text-teal-700 mb-4">Core Architecture</h3>
+                    <dl class="space-y-4">
+                        <div>
+                            <dt class="font-semibold text-gray-800">Latency</dt>
+                            <dd class="text-gray-600">Dual-lane architecture designed for &lt;300ms visible delay for holds, accommodating HFT and critical ops via deferred anchoring.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-gray-800">Storage</dt>
+                            <dd class="text-gray-600">Merkle-batched logs with encrypted off-chain custody for sensitive data, balancing verifiability with storage efficiency.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-gray-800">Anchoring</dt>
+                            <dd class="text-gray-600">Deferred anchoring to multi-chain public ledgers for sovereign-grade, cost-effective, and permanent notarization.</dd>
+                        </div>
+                    </dl>
                 </div>
 
-                <div class="mt-16">
-                    <!-- Tab Buttons -->
-                    <div class="mb-4 flex flex-wrap justify-center border-b border-slate-300">
-                        <button data-tab="roadmap" class="tab-button active text-slate-600 font-medium py-3 px-6 border-b-2 border-transparent -mb-px">Phased Roadmap</button>
-                        <button data-tab="integration" class="tab-button text-slate-600 font-medium py-3 px-6 border-b-2 border-transparent -mb-px">Integration Points</button>
-                        <button data-tab="schemas" class="tab-button text-slate-600 font-medium py-3 px-6 border-b-2 border-transparent -mb-px">Technical Schemas</button>
-                    </div>
-
-                    <!-- Tab Content -->
-                    <div id="tabs-content-container" class="bg-white p-8 rounded-lg shadow-lg">
-                        <!-- Roadmap Tab -->
-                        <div id="tab-content-roadmap" class="tab-content">
-                            <h3 class="text-xl font-semibold text-slate-900">Phased Implementation Roadmap</h3>
-                            <p class="mt-2 text-slate-600">A gradual rollout is recommended to validate, calibrate, and build institutional acceptance.</p>
-                            <ol class="mt-4 list-decimal list-inside space-y-3 text-slate-600">
-                                <li><strong>Phase 1: Proof of Concept (PoC) & Calibration.</strong><br>
-                                    Deploy TL in a sandboxed environment against historical datasets (e.g., past SARs, trade invoices) to calibrate hold-triggers and ensemble models.
-                                    <span class="block text-sm text-slate-500">KPIs: Trigger accuracy, false positive rate vs. existing models.</span></li>
-                                <li><strong>Phase 2: Corridor Pilot.</strong><br>
-                                    Deploy TL on a single, live, high-risk corridor (e.g., a specific trade route, one payment rail between two institutions) in parallel with existing systems.
-                                    <span class="block text-sm text-slate-500">KPIs: Mean time to resolution for holds, SAR quality score, operator feedback.</span></li>
-                                <li><strong>Phase 3: Regional / Sovereign Adoption.</strong><br>
-                                    Scale to a full regional system or national-level infrastructure (e.g., national FIU, trade-finance platform, or RTGS system).
-                                    <span class="block text-sm text-slate-500">KPIs: Audit completeness, regulator acceptance time, system-wide reduction in fraud.</span></li>
-                            </ol>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <h3 class="text-xl font-semibold text-teal-700 mb-4">Privacy & Security</h3>
+                    <dl class="space-y-4">
+                        <div>
+                            <dt class="font-semibold text-gray-800">GDPR & Privacy</dt>
+                            <dd class="text-gray-600">Pseudonymization of all PII on-ledger. Supports "Right to Erasure" by deleting encrypted off-chain data, breaking the link.</dd>
                         </div>
-                        <!-- Integration Tab -->
-                        <div id="tab-content-integration" class="tab-content hidden">
-                            <h3 class="text-xl font-semibold text-slate-900">Integration with Existing Systems</h3>
-                            <p class="mt-2 text-slate-600">TL is an overlay, not a replacement. It integrates via APIs and message queues with existing infrastructure.</p>
-                            <ul class="mt-4 list-disc list-inside space-y-2 text-slate-600">
-                                <li><strong>SIEM/AML Engines:</strong> TL triggers (holds) feed into existing case management systems as high-fidelity alerts. TL Decision Logs become admissible evidence attached to the case.</li>
-                                <li><strong>Payment Switches (SWIFT, RTGS):</strong> TL sits as a pre-processing gateway or post-transaction auditor for high-value payments, enforcing holds *before* settlement where latency budgets permit.</li>
-                                <li><strong>Trade-Finance Platforms:</strong> Integrates to receive and hash trade documents (B/L, invoices), using oracles to cross-validate data with customs and shipping manifests.</li>
-                                <li><strong>National FIUs & Regulators:</strong> Provides a "Regulator UI" for lawfully accessing (via ERK) and auditing forensic packets related to investigations.</li>
-                            </ul>
+                        <div>
+                            <dt class="font-semibold text-gray-800">Trade Secrets (EKR)</dt>
+                            <dd class="text-gray-600">Ephemeral Key Rotation (EKR) and gated disclosure protocols protect sensitive commercial data. Selective decryptability requires multi-party quorum.</dd>
                         </div>
-                        <!-- Schemas Tab -->
-                        <div id="tab-content-schemas" class="tab-content hidden">
-                            <h3 class="text-xl font-semibold text-slate-900">Annex: Illustrative Decision Log Schema</h3>
-                            <p class="mt-2 text-slate-600">The following is a simplified JSON schema for a "Decision Log," the core evidentiary artifact created by TL.</p>
-                            <pre class="mt-4 p-4 bg-slate-900 text-slate-100 rounded-md text-sm overflow-x-auto">
-{
-  "logVersion": "1.0",
-  "logID": "urn:uuid:123e4567-e89b-12d3-a456-426614174000",
-  "timestamp": "2025-11-03T17:23:00Z",
-  "systemID": "urn:system:fed:rtgs-01",
-  "decisionType": "PAYMENT_HOLD",
-  "status": "HOLD_TRIGGERED",
-  "goukassianProof": {
-    "lanternHash": "b10a8db164e0... (Hash of all known data)",
-    "signature": "3045022100... (System's signature)",
-    "license": "urn:license:tl-node-001"
-  },
-  "inputs": [
-    { "type": "paymentInstruction", "hash": "a1b2...", "source": "system:core-banking" },
-    { "type": "kycRecord", "hash": "c3d4...", "source": "oracle:kyc-db" },
-    { "type": "watchlistHit", "data": "Entity ABC", "source": "oracle:sanctions-list" }
-  ],
-  "reasoning": {
-    "model": "EnsembleModel-v3.1",
-    "score": 0.92,
-    "triggers": ["SANCTION_HIT", "ANOMALOUS_AMOUNT"]
-  },
-  "holdContext": {
-    "holdID": "urn:hold:h-778899",
-    "slaMs": 300,
-    "escalationTarget": "urn:operator:team-aml-high-risk"
-  },
-  "anchorProof": null
-}
-</pre>
+                        <div>
+                            <dt class="font-semibold text-gray-800">Adversarial Mitigations</dt>
+                            <dd class="text-gray-600">Includes diverse anchors, multi-party ERK escrow, operator rotation, and anomaly detection ensembles to counter collusion, coercion, and oracle corruption.</dd>
                         </div>
-                    </div>
+                    </dl>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-slate-800 text-slate-300">
+    <footer class="bg-gray-800 text-gray-400 mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
-            <p class="text-sm">
-                Interactive Policy-Technical Report | Ternary Logic (TL) Evidentiary Infrastructure
-            </p>
-            <p class="text-xs mt-1 text-slate-400">
-                This application is an interactive visualization based on the provided technical report.
-            </p>
+            <p class="text-sm">This application is an interactive representation of the Ternary Logic (TL) technical framework. It is for informational and analysis purposes only.</p>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-
-            // --- Data Store ---
             const pillarData = {
-                p1: {
-                    title: "1. Epistemic Hold",
-                    description: "An enforced, time-bound pause on a transaction or decision when material uncertainty or a systemic risk threshold is breached. This is the core 'circuit-breaker' mechanism. It defines clear SLAs, trigger logic (based on ensemble checks), and human/operator escalation rules, moving the system from 'fail-safe' to 'safe-fail' by pausing for verification."
+                '1': {
+                    title: '1. Epistemic Hold',
+                    text: 'Enforces a mandatory pause on a transaction or process when material uncertainty or a systemic-risk threshold is met. This is not a final rejection, but a "timeout" for verification. It allows human operators or advanced AI to review evidence *before* an irreversible action (like fund settlement or system approval) is committed. Trigger logic is based on pre-defined ensemble checks.'
                 },
-                p2: {
-                    title: "2. Immutable Ledger",
-                    description: "A verifiable, cross-jurisdiction decision chain of 'what happened.' Unlike a typical blockchain, its primary role is 'proof-only' anchoring, not asset transfer. It ensures that the final 'Forensic Packet' of a decision (especially one released from a hold) is non-repudiable and can be verified by any authorized party, even across sovereign borders."
+                '2': {
+                    title: '2. Immutable Ledger',
+                    text: 'Provides a verifiable, cross-jurisdictional decision chain. Every hold, review, and final decision is cryptographically signed and recorded. This creates a "proof-only" ledger focused on evidentiary quality, ensuring that an audit trail cannot be tampered with after the fact.'
                 },
-                p3: {
-                    title: "3. Goukassian Principle",
-                    description: "The core philosophical and technical rule: the system must be able to prove *what it knew, and when it knew it.* This is implemented via 'Lantern' (a hash of all available data inputs at time T), 'Signature' (the system's non-repudiable sign-off), and 'License' (proof of the system's authority to act)."
+                '3': {
+                    title: '3. Goukassian Principle',
+                    text: 'A core tenet: the system must be able to forensically prove *what it knew, and when it knew it*. This is achieved through signed attestations (Lanterns, Signatures, Licenses) that provide non-repudiation and verifiable provenance for all data and authorities involved in a decision.'
                 },
-                p4: {
-                    title: "4. Decision Logs",
-                    description: "The granular, machine-readable forensic trace of *why* a decision was made. This log includes all model inputs, risk scores, ensemble check results, and the specific reasoning (e.g., 'watchilist hit + anomalous amount'). This is the primary artifact reviewed by an auditor or an operator during an Epistemic Hold."
+                '4': {
+                    title: '4. Decision Logs',
+                    text: 'A detailed, forensic trace of all model inputs, AI risk scoring, human operator actions, and the final reasoning for a decision. This log is the primary evidence packet used during an Epistemic Hold review and subsequent audits by regulators.'
                 },
-                p5: {
-                    title: "5. Economic Rights & Transparency Mandate",
-                    description: "Aligns TL's function with existing institutional transparency regimes (e.g., FATF, SEC, IFRS, Basel, FDA). It mandates that the *evidence* of compliance (not just the claim) is available to authorized auditors, creating a 'show, don't tell' framework for regulatory reporting and economic rights."
+                '5': {
+                    title: '5. Economic Rights & Transparency Mandate',
+                    text: 'Aligns the system\'s evidentiary output with existing global transparency regimes, such as those from FATF (AML), SEC/IFRS (Financials), Basel (Banking Risk), and the FDA (Health Safety). TL provides the "how-to" for their "must-do" transparency requirements.'
                 },
-                p6: {
-                    title: "6. Sustainable Capital Allocation Mandate",
-                    description: "Applies TL's evidentiary proof to non-financial but systemically critical data, such as planetary and societal obligations. This is crucial in crime detection (e.g., proving the 'green' in a green bond) and capital flows (e.g., verifying ESG claims or supply chain provenance)."
+                '6': {
+                    title: '6. Sustainable Capital Allocation Mandate',
+                    text: 'Requires that evidence-bound proofs related to planetary and societal obligations (e.g., ESG verification, environmental compliance) are included in decision-making for capital flows, preventing "greenwashing" and linking finance to verified real-world outcomes.'
                 },
-                p7: {
-                    title: "7. Hybrid Shield",
-                    description: "A dual-layer protection model. Layer 1 (Cryptographic): Uses Ephemeral Key Rotation (EKR) and pseudonymization to protect trade secrets and data privacy. Layer 2 (Institutional): Gated disclosure protocols ensure that decrypted data is only revealed via lawful warrant or multi-party quorum, with all access attempts logged."
+                '7': {
+                    title: '7. Hybrid Shield',
+                    text: 'A dual protection mechanism combining cryptography and institutional safeguards. It uses Ephemeral Key Rotation (EKR) and pseudonymization to protect trade secrets and privacy, with gated disclosure protocols requiring multi-party approval for lawful investigation.'
                 },
-                p8: {
-                    title: "8. Anchors",
-                    description: "A multi-chain notarization strategy for sovereign-grade permanence. Instead of one chain, TL batches and anchors Merkle roots of Decision Logs across multiple, diverse, high-security public ledgers. This makes the evidence trail as permanent as the most secure public record, resilient to any single point of failure."
+                '8': {
+                    title: '8. Anchors',
+                    text: 'Utilizes multi-chain notarization to achieve sovereign-grade permanence. Merkle roots of the decision logs are "anchored" to diverse, high-security public ledgers, making the evidence log as immutable as the public chains themselves.'
                 }
             };
 
-            const workflowData = {
-                aml: {
-                    title: "Trade-Based Money Laundering",
-                    flowchart: [
-                        "Transaction Ingested (Invoice, B/L, Customs Data)",
-                        "Ensemble Check (Price, Quantity, Route, Vessel, Counterparty)",
-                        "Anomaly Detected (e.g., 5x Price Variance) -> Epistemic Hold",
-                        "Human Review (FIU/Compliance Officer)",
-                        "Decision: Commit (Release) or Refuse (Block/Report)",
-                        "Forensic Packet (Decision Log) Logged & Anchored"
-                    ],
-                    evidence: [
-                        "Transaction Metadata (SWIFT MT103)",
-                        "Hashed KYC Record",
-                        "Scanned Invoice (Hashed)",
-                        "Bill of Lading (Hashed)",
-                        "Customs Declaration (Oracle Attestation)",
-                        "Vessel Location (Oracle Attestation)"
-                    ]
-                },
-                device: {
-                    title: "Medical Device Approval (AI Diagnostic)",
-                    flowchart: [
-                        "Submission Ingested (Clinical Trial Data, Model, Attestations)",
-                        "Ensemble Check (Dataset Provenance, Model Bias, Statistical Significance)",
-                        "Uncertainty Detected (e.g., Biased Trial Dataset) -> Epistemic Hold",
-                        "Human Review (Regulatory Committee)",
-                        "Decision: Approve, Reject, or Request for Information (RFI)",
-                        "Forensic Packet (Decision Log) Logged & Anchored"
-                    ],
-                    evidence: [
-                        "Manufacturer Attestation",
-                        "Clinical Trial Dataset (Hashed)",
-                        "AI Model (Hashed)",
-                        "3rd Party Validator Report (Attestation)",
-                        "Patient Cohort Demographics (Pseudonymized)"
-                    ]
-                },
-                theft: {
-                    title: "Cross-Chain Asset Theft",
-                    flowchart: [
-                        "Bridge Transaction Ingested (Burn/Lock Event)",
-                        "Ensemble Check (Volume, Velocity, Address Age, Origin Chain)",
-                        "High-Risk Anomaly (e.g., Known Exploiter Address) -> Epistemic Hold",
-                        "Autonomous Hold on Mint/Unlock (e.g., 10 min)",
-                        "Hold Expires (Commit) or Human Intervention (Freeze)",
-                        "Forensic Packet (Decision Log) Logged & Anchored"
-                    ],
-                    evidence: [
-                        "Origin Chain Txn Hash",
-                        "Destination Chain Address",
-                        "Address Risk Score (Oracle Attestation)",
-                        "Asset Type & Amount",
-                        "Cross-Chain Message Packet (Hashed)"
-                    ]
-                }
-            };
+            const pillarNav = document.getElementById('pillar-nav');
+            const pillarContent = document.getElementById('pillar-content');
 
-            // --- Smooth Scrolling ---
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth'
-                        });
+            function updatePillarContent(pillarId) {
+                const content = pillarData[pillarId];
+                if (content) {
+                    pillarContent.innerHTML = `
+                        <h3 class="text-2xl font-semibold text-teal-700 mb-4">${content.title}</h3>
+                        <p class="text-gray-700 leading-relaxed">${content.text}</p>
+                    `;
+                }
+                
+                pillarNav.querySelectorAll('.pillar-button').forEach(btn => {
+                    if (btn.dataset.pillar === pillarId) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
                     }
                 });
+            }
+
+            pillarNav.addEventListener('click', (e) => {
+                const button = e.target.closest('.pillar-button');
+                if (button) {
+                    updatePillarContent(button.dataset.pillar);
+                }
             });
 
-            // --- Pillar Interaction ---
-            const pillarButtons = document.querySelectorAll('.pillar-button');
-            const detailsContainer = document.getElementById('pillar-details-container');
-            
-            pillarButtons.forEach(button => {
+            updatePillarContent('1');
+
+            const navButtons = document.querySelectorAll('.nav-button');
+            const sections = document.querySelectorAll('.content-section');
+
+            navButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    const pillarKey = button.dataset.pillar;
-                    const data = pillarData[pillarKey];
+                    const targetId = button.dataset.target;
                     
-                    detailsContainer.innerHTML = `
-                        <h3 class="text-2xl font-bold text-slate-900 mb-2">${data.title}</h3>
-                        <p class="text-slate-700">${data.description}</p>
-                    `;
-                    
-                    pillarButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                });
-            });
-            
-            if (pillarButtons.length > 0) {
-                pillarButtons[0].click();
-            }
-
-            // --- Workflow Interaction ---
-            const workflowSelector = document.getElementById('workflow-selector');
-            const workflowTitle = document.getElementById('workflow-title');
-            const flowchartContainer = document.getElementById('workflow-flowchart');
-            const evidenceList = document.getElementById('workflow-evidence-list');
-
-            function updateWorkflow(workflowKey) {
-                const data = workflowData[workflowKey];
-                if (!data) return;
-
-                workflowTitle.innerText = data.title;
-                
-                flowchartContainer.innerHTML = data.flowchart
-                    .map(step => `<div class="flow-step">${step}</div>`)
-                    .join('');
-
-                evidenceList.innerHTML = data.evidence
-                    .map(item => `<li class="relative pl-2"><span class="absolute left-[-1.25rem] top-1.5 text-blue-700">▪</span>${item}</li>`)
-                    .join('');
-            }
-
-            if (workflowSelector) {
-                workflowSelector.addEventListener('change', (e) => updateWorkflow(e.target.value));
-                updateWorkflow(workflowSelector.value);
-            }
-
-            // --- Tab Interaction ---
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
-
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const tabId = button.dataset.tab;
-
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-
-                    tabContents.forEach(content => {
-                        if (content.id === `tab-content-${tabId}`) {
-                            content.classList.remove('hidden');
+                    sections.forEach(section => {
+                        if (section.id === targetId) {
+                            section.classList.add('active');
                         } else {
-                            content.classList.add('hidden');
+                            section.classList.remove('active');
                         }
                     });
+
+                    navButtons.forEach(btn => {
+                        if (btn === button) {
+                            btn.classList.add('active');
+                        } else {
+                            btn.classList.remove('active');
+                        }
+                    });
+                    
+                    window.scrollTo(0, 0);
                 });
             });
+            
+            const appTabs = document.getElementById('app-tabs');
+            const tabContents = document.querySelectorAll('.tab-content');
 
-            // --- Chart.js Latency Chart ---
-            const ctx = document.getElementById('latencyChart');
-            if (ctx) {
-                new Chart(ctx.getContext('2d'), {
-                    type: 'bar',
-                    data: {
-                        labels: ['Ensemble Check', 'Hold Logic', 'Signing', 'Validation'],
-                        datasets: [{
-                            label: 'Latency (ms)',
-                            data: [75, 40, 50, 60],
-                            backgroundColor: [
-                                'rgba(59, 130, 246, 0.7)',
-                                'rgba(239, 68, 68, 0.7)',
-                                'rgba(16, 185, 129, 0.7)',
-                                'rgba(245, 158, 11, 0.7)'
-                            ],
-                            borderColor: [
-                                'rgba(59, 130, 246, 1)',
-                                'rgba(239, 68, 68, 1)',
-                                'rgba(16, 185, 129, 1)',
-                                'rgba(245, 158, 11, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        indexAxis: 'y',
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: false
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        return `${context.dataset.label}: ${context.raw} ms`;
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: {
-                                beginAtZero: true,
-                                title: {
-                                    display: true,
-                                    text: 'Time (ms)'
-                                },
-                                stacked: true,
-                            },
-                            y: {
-                                stacked: true
-                            }
+            appTabs.addEventListener('click', (e) => {
+                const button = e.target.closest('.tab-button');
+                if (button) {
+                    const targetId = button.dataset.target;
+
+                    tabContents.forEach(content => {
+                        if (content.id === targetId) {
+                            content.classList.add('active');
+                        } else {
+                            content.classList.remove('active');
                         }
-                    }
-                });
-            }
+                    });
+
+                    appTabs.querySelectorAll('.tab-button').forEach(btn => {
+                        if (btn === button) {
+                            btn.classList.add('active');
+                        } else {
+                            btn.classList.remove('active');
+                        }
+                    });
+                }
+            });
+
         });
     </script>
+
 </body>
 </html>
