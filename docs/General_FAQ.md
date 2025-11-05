@@ -23,7 +23,7 @@ Economic decisions under uncertainty are where the framework provides maximum va
 ### 5. Is this just another AI/ML framework?
 No. TL is a **decision philosophy** that can be implemented in any system - from human protocols to algorithmic trading. The AI components are tools, not the core innovation.
 
-### 6. Why is reading the MANDATORY.md file required?
+### 6. Why is reading the Mandatory.md file required?
 Unlike typical open source frameworks, TL is designed for **critical economic decision-making** where misuse can cause:
 - __Financial losses__ from improper state classification
 - __Missed opportunities__ from incorrect Epistemic Hold activation
@@ -298,7 +298,7 @@ TL provides **natural language explanations**:
 ## Quick Reference
 
 ### ** Getting Started:**
-1. Read [MANDATORY.md](MANDATORY.md) 
+1. Read [Mandatory.md](Mandatory.md) 
 2. Try [Quick Start Guide](QUICK_START.md)
 3. Run `examples/quickstart_example.py`
 4. Explore interactive demos
