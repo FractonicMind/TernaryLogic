@@ -145,7 +145,8 @@ This model creates a chain of accountability, as demonstrated in Table 1\.
 ## **6\. Privacy, GDPR, Trade Secrets, and ERK Disclosure Protocol**
 
 TL is architected to resolve the conflict between an immutable ledger and data privacy rights, such as the EU's General Data Protection Regulation (GDPR).  
-\#\#\# Pseudonymization and Right to Erasure The Hybrid Shield and "proof-only" ledger are the primary mechanisms.
+
+### Pseudonymization and Right to Erasure The Hybrid Shield and "proof-only" ledger are the primary mechanisms.
 
 1. **No PII On-Chain:** No PII, trade secrets, or other sensitive data is ever stored on the public Immutable Ledger. Only pseudonymous identifiers and data hashes are recorded.  
 2. **Right to Erasure (GDPR Art. 17\) Compatibility:** When a data subject exercises their "right to be forgotten," the erasure is performed on the *off-chain, private* database where the raw PII is stored. The on-chain hash associated with that data becomes an "orphaned proof." This orphaned hash is superior to simple deletion, as it provides regulators with a non-repudiable, auditable record that *data existed*, *was attested to*, and *was lawfully deleted* upon request.
