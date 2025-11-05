@@ -2,6 +2,8 @@
 
 ## **1\. Executive Summary**
 
+#### **[Interactive Audio Overview: How TL's The Epistemic Hold Stops Global Financial Crime in Real-Time](https://fractonicmind.github.io/TernaryLogic/research/academic_papers/AML_Fraud_and_Global_Civicsystems.html)**
+
 Current systems for financial crime prevention and high-risk civic oversight are structurally inadequate, operating on a post-hoc, reactive basis. This model generates high volumes of low-quality alerts, consumes vast investigative resources, and consistently fails to prevent sophisticated financial crime or data falsification. By the time an audit occurs or a suspicious activity report (SAR) is filed, illicit value has been transferred, and falsified data has been accepted as fact.  
 Ternary Logic (TL) provides a new sovereign-grade infrastructure for evidentiary accountability. It is not a replacement for existing Anti-Money Laundering (AML) engines or regulatory systems; it is a cryptographic overlay that provides a non-repudiable, contemporaneous audit trail of *every* decision, attestation, and transaction. TL’s primary value is shifting accountability from *post-hoc* forensics to *ante-hoc* and *contemporaneous* proof.  
 The system's core mechanism is the introduction of a third logical state: $0$ (Epistemic Hold). This state is triggered when uncertainty or risk exceeds a calibrated threshold, pausing an event for mandatory human or automated review. The resulting decision ($+1$ Proceed, $-1$ Halt), the evidence used, and the signature of the deciding entity are sealed in an immutable Decision Log.  
