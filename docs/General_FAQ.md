@@ -218,7 +218,7 @@ TL bridges **multiple economic traditions**:
 ### 32. Are there published papers?
 **Research paper**: "Ternary Logic: Implementing Epistemic Hesitation in Economic Systems" by Lev Goukassian  
 **ORCID**: 0009-0006-5966-1243  
-**Citation format** available in [CITATION.cff](../CITATION.cff)
+**Citation format** available in [Citation.cff](../Citation.cff)
 
 ### 33. Can I use TL in my research?
 **Highly encouraged!** The framework is designed for academic use. Contact information for research collaboration available in succession charter.
@@ -311,7 +311,7 @@ TL provides **natural language explanations**:
 
 ### ** Getting Help:**
 - __Technical Issues__ GitHub Issues
-- __License Questions__ [LICENSE FAQ](LICENSE_FAQ.md)
+- __License Questions__ [License FAQ](License_FAQ.md)
 - __Academic Collaboration__ succession trustees
 - __General Support__ support@tl-goukassian.org
 
