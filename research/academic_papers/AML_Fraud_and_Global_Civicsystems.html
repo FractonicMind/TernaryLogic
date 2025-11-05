@@ -537,6 +537,245 @@
 
         });
     </script>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
 
+            // --- Data Store ---
+            const pillarData = {
+                p1: {
+                    title: "1. Epistemic Hold",
+                    description: "An enforced, time-bound pause on a transaction or decision when material uncertainty or a systemic risk threshold is breached. This is the core 'circuit-breaker' mechanism. It defines clear SLAs, trigger logic (based on ensemble checks), and human/operator escalation rules, moving the system from 'fail-safe' to 'safe-fail' by pausing for verification."
+                },
+                p2: {
+                    title: "2. Immutable Ledger",
+                    description: "A verifiable, cross-jurisdiction decision chain of 'what happened.' Unlike a typical blockchain, its primary role is 'proof-only' anchoring, not asset transfer. It ensures that the final 'Forensic Packet' of a decision (especially one released from a hold) is non-repudiable and can be verified by any authorized party, even across sovereign borders."
+                },
+                p3: {
+                    title: "3. Goukassian Principle",
+                    description: "The core philosophical and technical rule: the system must be able to prove *what it knew, and when it knew it.* This is implemented via 'Lantern' (a hash of all available data inputs at time T), 'Signature' (the system's non-repudiable sign-off), and 'License' (proof of the system's authority to act)."
+                },
+                p4: {
+                    title: "4. Decision Logs",
+                    description: "The granular, machine-readable forensic trace of *why* a decision was made. This log includes all model inputs, risk scores, ensemble check results, and the specific reasoning (e.g., 'watchilist hit + anomalous amount'). This is the primary artifact reviewed by an auditor or an operator during an Epistemic Hold."
+                },
+                p5: {
+                    title: "5. Economic Rights & Transparency Mandate",
+                    description: "Aligns TL's function with existing institutional transparency regimes (e.g., FATF, SEC, IFRS, Basel, FDA). It mandates that the *evidence* of compliance (not just the claim) is available to authorized auditors, creating a 'show, don't tell' framework for regulatory reporting and economic rights."
+                },
+                p6: {
+                    title: "6. Sustainable Capital Allocation Mandate",
+                    description: "Applies TL's evidentiary proof to non-financial but systemically critical data, such as planetary and societal obligations. This is crucial in crime detection (e.g., proving the 'green' in a green bond) and capital flows (e.g., verifying ESG claims or supply chain provenance)."
+                },
+                p7: {
+                    title: "7. Hybrid Shield",
+                    description: "A dual-layer protection model. Layer 1 (Cryptographic): Uses Ephemeral Key Rotation (EKR) and pseudonymization to protect trade secrets and data privacy. Layer 2 (Institutional): Gated disclosure protocols ensure that decrypted data is only revealed via lawful warrant or multi-party quorum, with all access attempts logged."
+                },
+                p8: {
+                    title: "8. Anchors",
+                    description: "A multi-chain notarization strategy for sovereign-grade permanence. Instead of one chain, TL batches and anchors Merkle roots of Decision Logs across multiple, diverse, high-security public ledgers. This makes the evidence trail as permanent as the most secure public record, resilient to any single point of failure."
+                }
+            };
+
+            const workflowData = {
+                aml: {
+                    title: "Trade-Based Money Laundering",
+                    flowchart: [
+                        "Transaction Ingested (Invoice, B/L, Customs Data)",
+                        "Ensemble Check (Price, Quantity, Route, Vessel, Counterparty)",
+                        "Anomaly Detected (e.g., 5x Price Variance) -> Epistemic Hold",
+                        "Human Review (FIU/Compliance Officer)",
+                        "Decision: Commit (Release) or Refuse (Block/Report)",
+                        "Forensic Packet (Decision Log) Logged & Anchored"
+                    ],
+                    evidence: [
+                        "Transaction Metadata (SWIFT MT103)",
+                        "Hashed KYC Record",
+                        "Scanned Invoice (Hashed)",
+                        "Bill of Lading (Hashed)",
+                        "Customs Declaration (Oracle Attestation)",
+                        "Vessel Location (Oracle Attestation)"
+                    ]
+                },
+                device: {
+                    title: "Medical Device Approval (AI Diagnostic)",
+                    flowchart: [
+                        "Submission Ingested (Clinical Trial Data, Model, Attestations)",
+                        "Ensemble Check (Dataset Provenance, Model Bias, Statistical Significance)",
+                        "Uncertainty Detected (e.g., Biased Trial Dataset) -> Epistemic Hold",
+                        "Human Review (Regulatory Committee)",
+                        "Decision: Approve, Reject, or Request for Information (RFI)",
+                        "Forensic Packet (Decision Log) Logged & Anchored"
+                    ],
+                    evidence: [
+                        "Manufacturer Attestation",
+                        "Clinical Trial Dataset (Hashed)",
+                        "AI Model (Hashed)",
+                        "3rd Party Validator Report (Attestation)",
+                        "Patient Cohort Demographics (Pseudonymized)"
+                    ]
+                },
+                theft: {
+                    title: "Cross-Chain Asset Theft",
+                    flowchart: [
+                        "Bridge Transaction Ingested (Burn/Lock Event)",
+                        "Ensemble Check (Volume, Velocity, Address Age, Origin Chain)",
+                        "High-Risk Anomaly (e.g., Known Exploiter Address) -> Epistemic Hold",
+                        "Autonomous Hold on Mint/Unlock (e.g., 10 min)",
+                        "Hold Expires (Commit) or Human Intervention (Freeze)",
+                        "Forensic Packet (Decision Log) Logged & Anchored"
+                    ],
+                    evidence: [
+                        "Origin Chain Txn Hash",
+                        "Destination Chain Address",
+                        "Address Risk Score (Oracle Attestation)",
+                        "Asset Type & Amount",
+                        "Cross-Chain Message Packet (Hashed)"
+                    ]
+                }
+            };
+
+            // --- Smooth Scrolling ---
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // --- Pillar Interaction ---
+            const pillarButtons = document.querySelectorAll('.pillar-button');
+            const detailsContainer = document.getElementById('pillar-details-container');
+            
+            pillarButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const pillarKey = button.dataset.pillar;
+                    const data = pillarData[pillarKey];
+                    
+                    detailsContainer.innerHTML = `
+                        <h3 class="text-2xl font-bold text-slate-900 mb-2">${data.title}</h3>
+                        <p class="text-slate-700">${data.description}</p>
+                    `;
+                    
+                    pillarButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                });
+            });
+            
+            if (pillarButtons.length > 0) {
+                pillarButtons[0].click();
+            }
+
+            // --- Workflow Interaction ---
+            const workflowSelector = document.getElementById('workflow-selector');
+            const workflowTitle = document.getElementById('workflow-title');
+            const flowchartContainer = document.getElementById('workflow-flowchart');
+            const evidenceList = document.getElementById('workflow-evidence-list');
+
+            function updateWorkflow(workflowKey) {
+                const data = workflowData[workflowKey];
+                if (!data) return;
+
+                workflowTitle.innerText = data.title;
+                
+                flowchartContainer.innerHTML = data.flowchart
+                    .map(step => `<div class="flow-step">${step}</div>`)
+                    .join('');
+
+                evidenceList.innerHTML = data.evidence
+                    .map(item => `<li class="relative pl-2"><span class="absolute left-[-1.25rem] top-1.5 text-blue-700">▪</span>${item}</li>`)
+                    .join('');
+            }
+
+            if (workflowSelector) {
+                workflowSelector.addEventListener('change', (e) => updateWorkflow(e.target.value));
+                updateWorkflow(workflowSelector.value);
+            }
+
+            // --- Tab Interaction ---
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.dataset.tab;
+
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    tabContents.forEach(content => {
+                        if (content.id === `tab-content-${tabId}`) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            // --- Chart.js Latency Chart ---
+            const ctx = document.getElementById('latencyChart');
+            if (ctx) {
+                new Chart(ctx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['Ensemble Check', 'Hold Logic', 'Signing', 'Validation'],
+                        datasets: [{
+                            label: 'Latency (ms)',
+                            data: [75, 40, 50, 60],
+                            backgroundColor: [
+                                'rgba(59, 130, 246, 0.7)',
+                                'rgba(239, 68, 68, 0.7)',
+                                'rgba(16, 185, 129, 0.7)',
+                                'rgba(245, 158, 11, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgba(59, 130, 246, 1)',
+                                'rgba(239, 68, 68, 1)',
+                                'rgba(16, 185, 129, 1)',
+                                'rgba(245, 158, 11, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.dataset.label}: ${context.raw} ms`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Time (ms)'
+                                },
+                                stacked: true,
+                            },
+                            y: {
+                                stacked: true
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
