@@ -544,6 +544,416 @@ This list specifies the public reports and data sources required to calibrate th
   * National Customs and Trade datasets (per-jurisdiction).  
   * Relevant synthetic datasets for model training, such as "SAML-D: A Novel Synthetic AML Transaction Generation Dataset" or "AMLNet: A Knowledge-Based Multi-Agent Framework".
 
-#### **Works cited**
+#### Works cited
 
-1\. Why Your AML Model Should Evolve Faster Than Financial Crime Does \- Consilient, https://consilient.com/aml-model-evolve-faster 2\. How to Reduce False Positives in AML Screening with AI Forensics \- Flagright, https://www.flagright.com/post/how-to-minimize-false-positives-in-aml-screening 3\. SWIFT: The next frontier in countering dirty money \- Tax Justice Network, https://taxjustice.net/2023/03/28/swift-the-next-frontier-in-countering-dirty-money/ 4\. FDA Takes Action to Address Data Integrity Concerns with Two Chinese Third-Party Testing Firms, https://www.fda.gov/news-events/press-announcements/fda-takes-action-address-data-integrity-concerns-two-chinese-third-party-testing-firms 5\. Fraudulent and Unreliable Laboratory Testing Data in Premarket Submissions: FDA Reminds Medical Device Manufacturers to Scrutinize Third-Party-Generated Data | FDA, https://www.fda.gov/medical-devices/industry-medical-devices/fraudulent-and-unreliable-laboratory-testing-data-premarket-submissions-fda-reminds-medical-device 6\. FractonicMind/TernaryLogic: Ternary Logic Economic ... \- GitHub, https://github.com/FractonicMind/TernaryLogic 7\. FractonicMind/TernaryMoralLogic: Implementing Ethical ... \- GitHub, https://github.com/FractonicMind/TernaryMoralLogic 8\. OPPORTUNITIES AND CHALLENGES OF NEW TECHNOLOGIES FOR AML/CFT \- FATF, https://www.fatf-gafi.org/content/dam/fatf-gafi/guidance/Opportunities-Challenges-of-New-Technologies-for-AML-CFT.pdf 9\. Can a blockchain-based ledger for experimental data provenance \- ResearchCollab.ai, https://researchcollab.ai/can-a-blockchain-based-ledger-for-experimental-data-provenance-significantly-reduce-fraudulent-results-in-high-stakes-clinical-trials/ 10\. TRADE-BASED MONEY LAUNDERING \- FATF, https://www.fatf-gafi.org/content/dam/fatf/documents/Handout-Trade-Based-Money-Laundering-Private-Sector.pdf 11\. Concealment of Beneficial Ownership | Egmont Group, https://egmontgroup.org/wp-content/uploads/2021/09/2018\_Concealment\_of\_Beneficial\_Ownership.pdf 12\. Financial Analysis Cases 2014–2020 \- Egmont Group, https://egmontgroup.org/wp-content/uploads/2022/01/2021-Financial.Analysis.Cases\_.2014-2020-3.pdf 13\. FATF/Egmont Trade-based Money Laundering: Trends and Developments, https://www.fatf-gafi.org/en/publications/Methodsandtrends/Trade-based-money-laundering-trends-and-developments.html 14\. Publication of the Joint EG-FATF Trade-Based Money Laundering Report \- Egmont Group, https://egmontgroup.org/news/publication-of-the-joint-eg-fatf-trade-based-money-laundering-report/ 15\. Finding-Fraud-GovTech-and-Fraud-Detection-in-Public-Administration.txt \- World Bank Documents & Reports, https://documents1.worldbank.org/curated/en/887311603104832916/txt/Finding-Fraud-GovTech-and-Fraud-Detection-in-Public-Administration.txt 16\. Bribery in Public Procurement | OECD, https://www.oecd.org/investment/anti-bribery/anti-briberyconvention/44956834.pdf 17\. COLLUSION IN PUBLIC PROCUREMENT CONTRACTS \- Transparency International Knowledge Hub, https://knowledgehub.transparency.org/assets/uploads/helpdesk/Collusion\_in\_procurement\_2016.pdf 18\. FDA accuses Mid-Link of copying or falsifying medical device test data | MedTech Dive, https://www.medtechdive.com/news/fda-mid-link-false-test-data-warning-letter/742261/ 19\. Substandard and falsified medical products \- World Health Organization (WHO), https://www.who.int/news-room/fact-sheets/detail/substandard-and-falsified-medical-products 20\. Smarter AML Triage: How Ranked Scoring Boosts Risk Prioritization \- Consilient, https://consilient.com/aml-triage 21\. BlockA2A: Towards Secure and Verifiable Agent-to-Agent Interoperability \- arXiv, https://www.arxiv.org/pdf/2508.01332 22\. On the Road to Reconciling GDPR and Blockchain \- Blank Rome LLP, https://www.blankrome.com/publications/road-reconciling-gdpr-and-blockchain 23\. The Goukassian Promise. A self-enforcing covenant between… \- Medium, https://medium.com/@leogouk/the-goukassian-promise-7abde4bd81ec 24\. How a Dying Man Taught AI to Think Before It Acts | by Lev Goukassian \- Medium, https://medium.com/@leogouk/how-a-dying-man-taught-ai-to-think-before-it-acts-a9191f42a429 25\. Audit Log JSON Schema \- Mattermost documentation, https://docs.mattermost.com/administration-guide/comply/embedded-json-audit-log-schema.html 26\. Changes to FATF Standards on Recommendation 16 on Payment Transparency \- YouTube, https://www.youtube.com/watch?v=hPSnUll2g-o 27\. FATF/MONEYVAL Plenary Outcomes & EU Commission High-Risk Country List Changes, https://www.clever-soft.com/aml-fatf-moneyval-outcomes-eu-high-risk-country-changes/ 28\. FDA's “Radical Transparency” Arrives: Real-Time Publication of CRLs Poses New Exposures for Innovative Pharmaceutical Companies \- Orrick, https://www.orrick.com/en/Insights/2025/09/FDA-Radical-Transparency-Arrives-Poses-New-Exposures-for-Innovative-Pharmaceutical-Companies 29\. Platform on Sustainable Finance report: Monitoring capital flows to sustainable investments, https://finance.ec.europa.eu/publications/platform-sustainable-finance-report-monitoring-capital-flows-sustainable-investments\_en 30\. Monitoring Capital Flows to Sustainable Investments: Intermediate report April 2024 \- Finance \- European Commission, https://finance.ec.europa.eu/system/files/2024-04/240404-sf-platform-report-monitoring-capital-flows\_en.pdf 31\. (PDF) ESG-LINKED TRADE FINANCE IN DLT: TRACEABILITY AND CLAIMS OF PROOF OF SUSTAINABILITY \- ResearchGate, https://www.researchgate.net/publication/396815804\_ESG-LINKED\_TRADE\_FINANCE\_IN\_DLT\_TRACEABILITY\_AND\_CLAIMS\_OF\_PROOF\_OF\_SUSTAINABILITY 32\. What is Key Escrow \- Risks, Benefits, and Enterprise Use Cases \- Castler, https://castler.com/learning-hub/what-is-key-escrow-risks-benefits-and-enterprise-use-cases 33\. API Channel \- Swift, https://www.swift.com/products/swift-apis 34\. Experimenting with a multi-CBDC platform for cross-border payments, https://www.hkma.gov.hk/media/eng/doc/key-functions/financial-infrastructure/mBridge\_publication.pdf 35\. Project mBridge reached minimum viable product stage \- Bank for International Settlements, https://www.bis.org/about/bisih/topics/cbdc/mcbdc\_bridge.htm 36\. How to Build a Secure dApp with AML and CFT Compliance | QuickNode Guides, https://www.quicknode.com/guides/ethereum-development/dapps/how-to-build-a-secure-dapp-with-aml-and-cft-compliance 37\. eDATA Verifiable Credentials for Cross Border Trade \- UNECE, https://unece.org/sites/default/files/2023-08/WhitePaper\_VerifiableCredentials-CrossBorderTrade\_September2022.pdf 38\. Prototype of running clinical trials in an untrustworthy environment using blockchain \- PMC, https://pmc.ncbi.nlm.nih.gov/articles/PMC6384889/ 39\. Blockchain Platform \- Cloud and On Premise \- Oracle, https://www.oracle.com/blockchain/ 40\. Reducing False Positives: A Smarter Approach to Compliance Efficiency \- AMLYZE, https://amlyze.com/reducing-false-positives/ 41\. Spatio-Temporal Directed Graph Learning for Account Takeover Fraud Detection \- arXiv, https://arxiv.org/abs/2509.20339 42\. Account Takeover Attack (ATO) | Types, Detection & Protection \- Imperva, https://www.imperva.com/learn/application-security/account-takeover-ato/ 43\. public/bill-of-lading-example.json · ff708ae813a74c7859d50198956f75e4d3b72c19 · United Nations / UNECE / UNCEFACT / UN Verifiable Trade Documents \- Explore groups \- UNICC, https://opensource.unicc.org/un/unece/uncefact/spec-unvtd/-/blob/ff708ae813a74c7859d50198956f75e4d3b72c19/public/bill-of-lading-example.json 44\. Trade-Based Money Laundering Techniques to Know \- International Finance Corporation, https://www.ifc.org/content/dam/ifc/doclink/2023/tmbl-tipsheets.pdf 45\. XML Schema 2.0 \- BSA E-Filing System, https://bsaefiling.fincen.gov/resources/XMLUserGuide\_FinCENSAR.pdf 46\. Track and Trace: Automatically Uncovering Cross-chain Transactions in the Multi-blockchain Ecosystems \- arXiv, https://arxiv.org/html/2504.01822v1 47\. Trade-based Money Laundering: Trends and Developments \- FATF, https://www.fatf-gafi.org/content/dam/fatf-gafi/reports/Trade-Based-Money-Laundering-Trends-and-Developments.pdf 48\. BEST EGMONT CASES, https://egmontgroup.org/wp-content/uploads/2024/09/EGMONT\_2021-2023-BECA-III\_FINAL.pdf 49\. swiftinstitute \- swift institute working paper, https://www.swift.com/swift-resource/252235/download 50\. Risk and Compliance | Swift, https://www.swift.com/risk-and-compliance 51\. Swift Compliance Analytics, https://www.swift.com/products/compliance-analytics 52\. AML input data model | Anti Money Laundering AI \- Google Cloud, https://cloud.google.com/financial-services/anti-money-laundering/docs/reference/schemas/aml-input-data-model 53\. The essential guide to AML data: 9 key data types that drive smarter decision-making, https://complyadvantage.com/insights/aml-data-types-every-solution-must-offer/ 54\. A Permissioned Blockchain-Based Clinical Trial Service Platform to Improve Trial Data Transparency \- PMC \- PubMed Central, https://pmc.ncbi.nlm.nih.gov/articles/PMC8346314/ 55\. Everything You Need To Know About Decentralized Oracles: Podcast Ep. 126 \- Chainalysis, https://www.chainalysis.com/blog/decentralized-oracles-ep-126/ 56\. When decentralisation meets regulation: how blockchain and GDPR can coexist, https://www.slaughterandmay.com/insights/new-insights/when-decentralisation-meets-regulation-how-blockchain-and-gdpr-can-coexist/ 57\. The tension between GDPR and the rise of blockchain technologies | CMS, https://cms.law/content/download/370453/file/The%20tension%20between%20GDPR%20and%20the%20rise%20of%20blockchain%20technologies.pdf 58\. The Importance of Key Escrow in Cybersecurity \- Blue Goat Cyber, https://bluegoatcyber.com/blog/the-importance-of-key-escrow-in-cybersecurity/ 59\. The Risks of Key Recovery, Key Escrow, and Trusted Third-Party Encryption \- CS@Columbia, https://www.cs.columbia.edu/\~smb/papers/paper-key-escrow.pdf 60\. Key Escrow Encryption Policies and Technologies \- Villanova University Charles Widger School of Law, https://digitalcommons.law.villanova.edu/cgi/viewcontent.cgi?referer=\&httpsredir=1\&article=2950\&context=vlr 61\. Full article: A milestone in encryption control – what sank the US key-escrow policy?, https://www.tandfonline.com/doi/full/10.1080/02684527.2024.2304933 62\. 4 Key Takeaways from the SEC's Proposed “Safeguarding Rule”, https://silverregulatoryassociates.com/4-key-takeaways-from-the-secs-proposed-safeguarding-rule/ 63\. Blockchain Compliance Audits & Regulatory Fines 2025: Complete Guide, https://www.compliancehub.wiki/blockchain-compliance-audits-regulatory-fines-2025-complete-guide/ 64\. Ultimate Smart Contract Audit Checklist \- 2024 \- Rapid Innovation, https://www.rapidinnovation.io/post/complete-checklist-for-smart-contract-audit 65\. Failure mode analysis \- Azure Architecture Center \- Microsoft Learn, https://learn.microsoft.com/en-us/azure/architecture/resiliency/failure-mode-analysis 66\. Surviving Regional and DNS Failures in the Cloud | maa \- Oracle Blogs, https://blogs.oracle.com/maa/surviving-regional-and-dns-failures-in-the-cloud 67\. Add Failure Diagnostics Information to Asset Incidents and Anomalies \- Oracle Help Center, https://docs.oracle.com/en/cloud/saas/iot-asset-cloud/iotaa/add-failure-diagnostics-information-asset-incidents-and-anomalies.html 68\. Remediation for Database Service Events \- Oracle Help Center, https://docs.oracle.com/en/cloud/paas/base-database/remediations/index.html 69\. The Role of Blockchain in AML Compliance \- RKN Global, https://www.rknglobal.info/2025/09/05/the-role-of-blockchain-in-aml-compliance/ 70\. Integrating Modern AML Software with Legacy Systems: Challenges and Solutions \- Lucinity, https://lucinity.com/blog/integrating-modern-aml-software-with-legacy-systems-challenges-and-solutions 71\. How Blockchain Enhances SIEM for Comprehensive Threat Detection \- SearchInform, https://searchinform.com/articles/cybersecurity/measures/siem/use-cases/blockchain/ 72\. Integrating Artificial Intelligence and Blockchain for Enhanced AML Compliance: A Cross-Jurisdictional Perspective \- ResearchGate, https://www.researchgate.net/publication/391678501\_Integrating\_Artificial\_Intelligence\_and\_Blockchain\_for\_Enhanced\_AML\_Compliance\_A\_Cross-Jurisdictional\_Perspective 73\. Distributed Ledger Technology (DLT) \- Swift, https://www.swift.com/distributed-ledger-technology-dlt 74\. Cross-Border Payments with Retail Central Bank Digital Currencies: Design and Policy Considerations \- International Monetary Fund (IMF), https://www.imf.org/-/media/Files/Publications/FTN063/2024/English/FTNEA2024002.ashx 75\. Central bank digital currencies for cross-border payments, https://www.bis.org/publ/othp38.pdf 76\. Interoperability and Standardization in Financial Services in the Digital Age, https://www.boj.or.jp/en/research/brp/psr/data/psrb220427.pdf 77\. 'Next-Generation' FIU.net \- Finance \- European Commission, https://finance.ec.europa.eu/news/next-generation-fiunet-2025-02-04\_en 78\. Enterprise Blockchain Roadmap: From Initial Exploration to Seamless Integration in Modern Business Processes. \- Paromint, https://paromint.com/Blockchain 79\. Enterprise Blockchain Development Implementation: From Strategy to Deployment, https://vegavid.com/blog/enterprise-blockchain-development-implementation-from-strategy-to-deployment 80\. Enterprise Blockchain Adoption in 2025: Architecting Scalable, Compliant, and Real-World Solutions | by Ancilar Technologies | Medium, https://medium.com/@ancilartech/enterprise-blockchain-adoption-in-2025-architecting-scalable-compliant-and-real-world-solutions-4a7992a4db3c 81\. MediLedger DSCSA Pilot Project \- FDA, https://www.fda.gov/media/168283/download 82\. FDA DSCSA Blockchain Interoperability Pilot Project Report, https://www.fda.gov/media/169883/download 83\. The Last Mile: DSCSA Solution Through Blockchain Technology: Drug Tracking, Tracing, and Verification at the Last Mile of the Pharmaceutical Supply Chain with BRUINchain \- PubMed Central, https://pmc.ncbi.nlm.nih.gov/articles/PMC9907423/ 84\. The FATF Recommendations, https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Fatf-recommendations.html 85\. FATF publishes new Guidance on Financial Inclusion and Anti-Money Laundering and Terrorist Financing Measures, https://www.fatf-gafi.org/en/publications/Financialinclusionandnpoissues/guidance-financial-inclusion-aml-tf-measures.html 86\. Anti-money laundering and countering the financing of terrorism at international level, https://finance.ec.europa.eu/financial-crime/anti-money-laundering-and-countering-financing-terrorism-international-level\_en 87\. Full article: The New EU Authority for Anti-Money Laundering and Countering the Financing of Terrorism: A Paradigm Shift in EU Efforts to Combat Terrorist Financing? \- Taylor & Francis Online, https://www.tandfonline.com/doi/full/10.1080/1057610X.2025.2460594 88\. Global surveillance and monitoring system for substandard and falsified medical products: activity report, August 2017-December 2021 \- World Health Organization (WHO), https://www.who.int/publications/i/item/9789240097513 89\. What You Need In Your Vendor Compliance Checklist \- BitSight Technologies, https://www.bitsight.com/blog/know-about-vendor-compliance 90\. Vendor Compliance Checklist: Steps, Audits & Best Practices \- Network Intelligence, https://www.networkintelligence.ai/blogs/vendor-compliance-checklist/ 91\. Checklist for Deploying a Blockchain-Powered Solution \- New America, https://www.newamerica.org/digital-impact-governance-inititiative/blockchain-trust-accelerator/reports/blueprint-blockchain-and-social-innovation/checklist-for-deploying-a-blockchain-powered-solution 92\. Blockchain Deployment Toolkit \- Tools and Resources \- The World Economic Forum, https://widgets.weforum.org/blockchain-toolkit/excel/deployment-toolkit-tools-and-resources.xlsx 93\. Sovereign cloud on a global scale: Designing for resilience, trust and innovation \- IBM, https://www.ibm.com/think/insights/sovereign-cloud-on-a-global-scale 94\. Cloud Cover: Price, Sovereignty Demands, and Waste | BCG, https://www.bcg.com/publications/2025/cloud-cover-price-sovereignty-demands-waste 95\. Central bank digital currency (CBDC) information security and operational risks to central banks \- Bank for International Settlements, https://www.bis.org/publ/othp81.pdf 96\. Impact of Distributed Ledger Technology \- Global Financial Markets Association, https://www.gfma.org/wp-content/uploads/2023/05/impact-of-dlt-on-global-capital-markets-full-report.pdf 97\. The Ultimate DORA Compliance Checklist for Crypto Businesses \- Legal Nodes, https://legalnodes.com/article/dora-compliance-checklist 98\. Crypto Audit Checklist: Step-by-Step for Accountants \- Cryptoworth, https://www.cryptoworth.com/blog/crypto-audit-checklist 99\. The Ultimate 2025 Crypto Compliance Checklist for Developers \- Blockchain App Factory, https://www.blockchainappfactory.com/blog/2025-compliance-checklist-for-crypto-project-developers/ 100\. The Fed \- Security Considerations for a Central Bank Digital Currency, https://www.federalreserve.gov/econres/notes/feds-notes/security-considerations-for-a-central-bank-digital-currency-20220203.html 101\. Money Laundering from Fentanyl and Synthetic Opioids \- FATF, https://www.fatf-gafi.org/content/dam/fatf-gafi/reports/Money-Laundering-Fentanyl-Synthetic-Opioids.pdf.coredownload.inline.pdf 102\. FATF Annual Report \- 2022-2023, https://www.fatf-gafi.org/content/dam/fatf-gafi/publications/FATF-Annual-Report-2022-2023.pdf.coredownload.pdf 103\. Statement by Under Secretary Brian Nelson on the FATF Report on Money Laundering from Fentanyl and Synthetic Opioids | U.S. Department of the Treasury, https://home.treasury.gov/news/press-releases/jy1131 104\. Supplemental Advisory on the Procurement of Precursor Chemicals and Manufacturing Equipment Used for the Synthesis of Illicit Fentanyl and Other Synthetic Opioids \- FinCEN, https://www.fincen.gov/system/files/advisory/2024-06-20/FinCEN-Supplemental-Advisory-on-Fentanyl-508C.pdf 105\. Swift to Launch AI Fraud Detection for Global Banking in 2025, https://www.corporatecomplianceinsights.com/swift-ai-fraud-detection-launch/ 106\. Global Surveillance and Monitoring System for substandard and falsified medical products, https://www.who.int/publications/b/65518 107\. Global Surveillance of Substandard and Falsified Medical Products: 2017-2021 Activity Report | Policy Commons, https://policycommons.net/artifacts/17851687/global-surveillance-and-monitoring-system-for-substandard-and-falsified-medical-products/18747251/ 108\. Fraud and Corruption Awareness Handbook \- Documents & Reports \- World Bank, https://documents1.worldbank.org/curated/en/309511468156866119/pdf/877290PUB0Frau00Box382147B00PUBLIC0.pdf 109\. Curbing Fraud, Corruption, and Collusion in the Roads Sector \- The World Bank, https://thedocs.worldbank.org/en/doc/5f1f9ec0b2cdf78b0b083e0981e0854c-0090012011/original/Curbing-FC-in-Roads-Sector.pdf 110\. Anti Money Laundering Transaction Data (SAML-D) \- Kaggle, https://www.kaggle.com/datasets/berkanoztas/synthetic-transaction-monitoring-dataset-aml 111\. AMLNet: A Knowledge-Based Multi-Agent Framework to Generate and Detect Realistic Money Laundering Transactions \- arXiv, https://arxiv.org/html/2509.11595v1
+1. Why Your AML Model Should Evolve Faster Than Financial Crime Does -
+Consilient, accessed November 3, 2025,
+https://consilient.com/aml-model-evolve-faster
+2. How to Reduce False Positives in AML Screening with AI Forensics - Flagright,
+accessed November 3, 2025,
+https://www.flagright.com/post/how-to-minimize-false-positives-in-aml-screening
+3. SWIFT: The next frontier in countering dirty money - Tax Justice Network,
+accessed November 3, 2025,
+https://taxjustice.net/2023/03/28/swift-the-next-frontier-in-countering-dirty-money/
+4. FDA Takes Action to Address Data Integrity Concerns with Two Chinese
+Third-Party Testing Firms, accessed November 3, 2025,
+https://www.fda.gov/news-events/press-announcements/fda-takes-action-address-
+data-integrity-concerns-two-chinese-third-party-testing-firms
+5. Fraudulent and Unreliable Laboratory Testing Data in Premarket Submissions:
+FDA Reminds Medical Device Manufacturers to Scrutinize Third-Party-Generated
+Data | FDA, accessed November 3, 2025,
+https://www.fda.gov/medical-devices/industry-medical-devices/fraudulent-and-unre
+liable-laboratory-testing-data-premarket-submissions-fda-reminds-medical-device
+6. FractonicMind/TernaryLogic: Ternary Logic Economic ... - GitHub, accessed
+November 3, 2025, https://github.com/FractonicMind/TernaryLogic
+7. FractonicMind/TernaryMoralLogic: Implementing Ethical ... - GitHub, accessed
+November 3, 2025, https://github.com/FractonicMind/TernaryMoralLogic
+8. OPPORTUNITIES AND CHALLENGES OF NEW TECHNOLOGIES FOR
+AML/CFT - FATF, accessed November 3, 2025,
+https://www.fatf-gafi.org/content/dam/fatf-gafi/guidance/Opportunities-Challenges-
+of-New-Technologies-for-AML-CFT.pdf
+9. Can a blockchain-based ledger for experimental data provenance -
+ResearchCollab.ai, accessed November 3, 2025,
+https://researchcollab.ai/can-a-blockchain-based-ledger-for-experimental-data-pro
+venance-significantly-reduce-fraudulent-results-in-high-stakes-clinical-trials/
+10. TRADE-BASED MONEY LAUNDERING - FATF, accessed November 3, 2025,
+https://www.fatf-gafi.org/content/dam/fatf/documents/Handout-Trade-Based-Mone
+y-Laundering-Private-Sector.pdf
+11. Concealment of Beneficial Ownership | Egmont Group, accessed November 3,
+2025,
+https://egmontgroup.org/wp-content/uploads/2021/09/2018_Concealment_of_Ben
+eficial_Ownership.pdf
+12. Financial Analysis Cases 2014–2020 - Egmont Group, accessed November 3,
+2025,
+https://egmontgroup.org/wp-content/uploads/2022/01/2021-Financial.Analysis.Cas
+es_.2014-2020-3.pdf
+13. FATF/Egmont Trade-based Money Laundering: Trends and Developments,
+accessed November 3, 2025,
+https://www.fatf-gafi.org/en/publications/Methodsandtrends/Trade-based-money-la
+undering-trends-and-developments.html
+14. Publication of the Joint EG-FATF Trade-Based Money Laundering Report -
+Egmont Group, accessed November 3, 2025,
+https://egmontgroup.org/news/publication-of-the-joint-eg-fatf-trade-based-money-l
+aundering-report/
+15. Finding-Fraud-GovTech-and-Fraud-Detection-in-Public-Administration.txt - World
+Bank Documents & Reports, accessed November 3, 2025,
+https://documents1.worldbank.org/curated/en/887311603104832916/txt/Finding-Fr
+aud-GovTech-and-Fraud-Detection-in-Public-Administration.txt
+16. Bribery in Public Procurement | OECD, accessed November 3, 2025,
+https://www.oecd.org/investment/anti-bribery/anti-briberyconvention/44956834.pdf
+17. COLLUSION IN PUBLIC PROCUREMENT CONTRACTS - Transparency
+International Knowledge Hub, accessed November 3, 2025,
+https://knowledgehub.transparency.org/assets/uploads/helpdesk/Collusion_in_pro
+curement_2016.pdf
+18. FDA accuses Mid-Link of copying or falsifying medical device test data | MedTech
+Dive, accessed November 3, 2025,
+https://www.medtechdive.com/news/fda-mid-link-false-test-data-warning-letter/742
+261/
+19. Substandard and falsified medical products - World Health Organization (WHO),
+accessed November 3, 2025,
+https://www.who.int/news-room/fact-sheets/detail/substandard-and-falsified-medic
+al-products
+20. Smarter AML Triage: How Ranked Scoring Boosts Risk Prioritization - Consilient,
+accessed November 3, 2025, https://consilient.com/aml-triage
+21. BlockA2A: Towards Secure and Verifiable Agent-to-Agent Interoperability - arXiv,
+accessed November 3, 2025, https://www.arxiv.org/pdf/2508.01332
+22. On the Road to Reconciling GDPR and Blockchain - Blank Rome LLP, accessed
+November 3, 2025,
+https://www.blankrome.com/publications/road-reconciling-gdpr-and-blockchain
+23. The Goukassian Promise. A self-enforcing covenant between… - Medium,
+accessed November 3, 2025,
+https://medium.com/@leogouk/the-goukassian-promise-7abde4bd81ec
+24. How a Dying Man Taught AI to Think Before It Acts | by Lev Goukassian -
+Medium, accessed November 3, 2025,
+https://medium.com/@leogouk/how-a-dying-man-taught-ai-to-think-before-it-acts-a
+9191f42a429
+25. Audit Log JSON Schema - Mattermost documentation, accessed November 3,
+2025,
+https://docs.mattermost.com/administration-guide/comply/embedded-json-audit-lo
+g-schema.html
+26. Changes to FATF Standards on Recommendation 16 on Payment Transparency -
+YouTube, accessed November 3, 2025,
+https://www.youtube.com/watch?v=hPSnUll2g-o
+27. FATF/MONEYVAL Plenary Outcomes & EU Commission High-Risk Country List
+Changes, accessed November 3, 2025,
+https://www.clever-soft.com/aml-fatf-moneyval-outcomes-eu-high-risk-country-cha
+nges/
+28. FDA's “Radical Transparency” Arrives: Real-Time Publication of CRLs Poses New
+Exposures for Innovative Pharmaceutical Companies - Orrick, accessed
+November 3, 2025,
+https://www.orrick.com/en/Insights/2025/09/FDA-Radical-Transparency-Arrives-Po
+ses-New-Exposures-for-Innovative-Pharmaceutical-Companies
+29. Platform on Sustainable Finance report: Monitoring capital flows to sustainable
+investments, accessed November 3, 2025,
+https://finance.ec.europa.eu/publications/platform-sustainable-finance-report-monit
+oring-capital-flows-sustainable-investments_en
+30. Monitoring Capital Flows to Sustainable Investments: Intermediate report April
+2024 - Finance - European Commission, accessed November 3, 2025,
+https://finance.ec.europa.eu/system/files/2024-04/240404-sf-platform-report-monit
+oring-capital-flows_en.pdf
+31. (PDF) ESG-LINKED TRADE FINANCE IN DLT: TRACEABILITY AND CLAIMS OF
+PROOF OF SUSTAINABILITY - ResearchGate, accessed November 3, 2025,
+https://www.researchgate.net/publication/396815804_ESG-LINKED_TRADE_FIN
+ANCE_IN_DLT_TRACEABILITY_AND_CLAIMS_OF_PROOF_OF_SUSTAINABIL
+ITY
+32. What is Key Escrow - Risks, Benefits, and Enterprise Use Cases - Castler,
+accessed November 3, 2025,
+https://castler.com/learning-hub/what-is-key-escrow-risks-benefits-and-enterprise-
+use-cases
+33. API Channel - Swift, accessed November 3, 2025,
+https://www.swift.com/products/swift-apis
+34. Experimenting with a multi-CBDC platform for cross-border payments, accessed
+November 3, 2025,
+https://www.hkma.gov.hk/media/eng/doc/key-functions/financial-infrastructure/mBri
+dge_publication.pdf
+35. Project mBridge reached minimum viable product stage - Bank for International
+Settlements, accessed November 3, 2025,
+https://www.bis.org/about/bisih/topics/cbdc/mcbdc_bridge.htm
+36. How to Build a Secure dApp with AML and CFT Compliance | QuickNode Guides,
+accessed November 3, 2025,
+https://www.quicknode.com/guides/ethereum-development/dapps/how-to-build-a-s
+ecure-dapp-with-aml-and-cft-compliance
+37. eDATA Verifiable Credentials for Cross Border Trade - UNECE, accessed
+November 3, 2025,
+https://unece.org/sites/default/files/2023-08/WhitePaper_VerifiableCredentials-Cro
+ssBorderTrade_September2022.pdf
+38. Prototype of running clinical trials in an untrustworthy environment using
+blockchain - PMC, accessed November 3, 2025,
+https://pmc.ncbi.nlm.nih.gov/articles/PMC6384889/
+39. Blockchain Platform - Cloud and On Premise - Oracle, accessed November 3,
+2025, https://www.oracle.com/blockchain/
+40. Reducing False Positives: A Smarter Approach to Compliance Efficiency -
+AMLYZE, accessed November 3, 2025,
+https://amlyze.com/reducing-false-positives/
+41. Spatio-Temporal Directed Graph Learning for Account Takeover Fraud Detection -
+arXiv, accessed November 3, 2025, https://arxiv.org/abs/2509.20339
+42. Account Takeover Attack (ATO) | Types, Detection & Protection - Imperva,
+accessed November 3, 2025,
+https://www.imperva.com/learn/application-security/account-takeover-ato/
+43. public/bill-of-lading-example.json ·
+ff708ae813a74c7859d50198956f75e4d3b72c19 · United Nations / UNECE /
+UNCEFACT / UN Verifiable Trade Documents - Explore groups - UNICC,
+accessed November 3, 2025,
+https://opensource.unicc.org/un/unece/uncefact/spec-unvtd/-/blob/ff708ae813a74c
+7859d50198956f75e4d3b72c19/public/bill-of-lading-example.json
+44. Trade-Based Money Laundering Techniques to Know - International Finance
+Corporation, accessed November 3, 2025,
+https://www.ifc.org/content/dam/ifc/doclink/2023/tmbl-tipsheets.pdf
+45. Track and Trace: Automatically Uncovering Cross-chain Transactions in the
+Multi-blockchain Ecosystems - arXiv, accessed November 3, 2025,
+https://arxiv.org/html/2504.01822v1
+46. Trade-based Money Laundering: Trends and Developments - FATF, accessed
+November 3, 2025,
+https://www.fatf-gafi.org/content/dam/fatf-gafi/reports/Trade-Based-Money-Launde
+ring-Trends-and-Developments.pdf
+47. BEST EGMONT CASES, accessed November 3, 2025,
+https://egmontgroup.org/wp-content/uploads/2024/09/EGMONT_2021-2023-BEC
+A-III_FINAL.pdf
+48. swiftinstitute - swift institute working paper, accessed November 3, 2025,
+https://www.swift.com/swift-resource/252235/download
+49. Risk and Compliance | Swift, accessed November 3, 2025,
+https://www.swift.com/risk-and-compliance
+50. Swift Compliance Analytics, accessed November 3, 2025,
+https://www.swift.com/products/compliance-analytics
+51. AML input data model | Anti Money Laundering AI - Google Cloud, accessed
+November 3, 2025,
+https://cloud.google.com/financial-services/anti-money-laundering/docs/reference/
+schemas/aml-input-data-model
+52. The essential guide to AML data: 9 key data types that drive smarter
+decision-making, accessed November 3, 2025,
+https://complyadvantage.com/insights/aml-data-types-every-solution-must-offer/
+53. A Permissioned Blockchain-Based Clinical Trial Service Platform to Improve Trial
+Data Transparency - PMC - PubMed Central, accessed November 3, 2025,
+https://pmc.ncbi.nlm.nih.gov/articles/PMC8346314/
+54. Everything You Need To Know About Decentralized Oracles: Podcast Ep. 126 -
+Chainalysis, accessed November 3, 2025,
+https://www.chainalysis.com/blog/decentralized-oracles-ep-126/
+55. When decentralisation meets regulation: how blockchain and GDPR can coexist,
+accessed November 3, 2025,
+https://www.slaughterandmay.com/insights/new-insights/when-decentralisation-me
+ets-regulation-how-blockchain-and-gdpr-can-coexist/
+56. The tension between GDPR and the rise of blockchain technologies | CMS,
+accessed November 3, 2025,
+https://cms.law/content/download/370453/file/The%20tension%20between%20GD
+PR%20and%20the%20rise%20of%20blockchain%20technologies.pdf
+57. The Importance of Key Escrow in Cybersecurity - Blue Goat Cyber, accessed
+November 3, 2025,
+https://bluegoatcyber.com/blog/the-importance-of-key-escrow-in-cybersecurity/
+58. The Risks of Key Recovery, Key Escrow, and Trusted Third-Party Encryption -
+CS@Columbia, accessed November 3, 2025,
+https://www.cs.columbia.edu/~smb/papers/paper-key-escrow.pdf
+59. Key Escrow Encryption Policies and Technologies - Villanova University Charles
+Widger School of Law, accessed November 3, 2025,
+https://digitalcommons.law.villanova.edu/cgi/viewcontent.cgi?referer=&httpsredir=
+1&article=2950&context=vlr
+60. Full article: A milestone in encryption control – what sank the US key-escrow
+policy?, accessed November 3, 2025,
+https://www.tandfonline.com/doi/full/10.1080/02684527.2024.2304933
+61. 4 Key Takeaways from the SEC's Proposed “Safeguarding Rule”, accessed
+November 3, 2025,
+https://silverregulatoryassociates.com/4-key-takeaways-from-the-secs-proposed-s
+afeguarding-rule/
+62. Blockchain Compliance Audits & Regulatory Fines 2025: Complete Guide,
+accessed November 3, 2025,
+https://www.compliancehub.wiki/blockchain-compliance-audits-regulatory-fines-20
+25-complete-guide/
+63. Ultimate Smart Contract Audit Checklist - 2024 - Rapid Innovation, accessed
+November 3, 2025,
+https://www.rapidinnovation.io/post/complete-checklist-for-smart-contract-audit
+64. Failure mode analysis - Azure Architecture Center - Microsoft Learn, accessed
+November 3, 2025,
+https://learn.microsoft.com/en-us/azure/architecture/resiliency/failure-mode-analys
+is
+65. Surviving Regional and DNS Failures in the Cloud | maa - Oracle Blogs, accessed
+November 3, 2025,
+https://blogs.oracle.com/maa/surviving-regional-and-dns-failures-in-the-cloud
+66. Add Failure Diagnostics Information to Asset Incidents and Anomalies - Oracle
+Help Center, accessed November 3, 2025,
+https://docs.oracle.com/en/cloud/saas/iot-asset-cloud/iotaa/add-failure-diagnostics
+-information-asset-incidents-and-anomalies.html
+67. Remediation for Database Service Events - Oracle Help Center, accessed
+November 3, 2025,
+https://docs.oracle.com/en/cloud/paas/base-database/remediations/index.html
+68. The Role of Blockchain in AML Compliance - RKN Global, accessed November 3,
+2025,
+https://www.rknglobal.info/2025/09/05/the-role-of-blockchain-in-aml-compliance/
+69. Integrating Modern AML Software with Legacy Systems: Challenges and
+Solutions - Lucinity, accessed November 3, 2025,
+https://lucinity.com/blog/integrating-modern-aml-software-with-legacy-systems-cha
+llenges-and-solutions
+70. How Blockchain Enhances SIEM for Comprehensive Threat Detection -
+SearchInform, accessed November 3, 2025,
+https://searchinform.com/articles/cybersecurity/measures/siem/use-cases/blockch
+ain/
+71. Integrating Artificial Intelligence and Blockchain for Enhanced AML Compliance: A
+Cross-Jurisdictional Perspective - ResearchGate, accessed November 3, 2025,
+https://www.researchgate.net/publication/391678501_Integrating_Artificial_Intellig
+ence_and_Blockchain_for_Enhanced_AML_Compliance_A_Cross-Jurisdictional_
+Perspective
+72. Distributed Ledger Technology (DLT) - Swift, accessed November 3, 2025,
+https://www.swift.com/distributed-ledger-technology-dlt
+73. Cross-Border Payments with Retail Central Bank Digital Currencies: Design and
+Policy Considerations - International Monetary Fund (IMF), accessed November 3,
+2025,
+https://www.imf.org/-/media/Files/Publications/FTN063/2024/English/FTNEA20240
+02.ashx
+74. Central bank digital currencies for cross-border payments, accessed November 3,
+2025, https://www.bis.org/publ/othp38.pdf
+75. Interoperability and Standardization in Financial Services in the Digital Age,
+accessed November 3, 2025,
+https://www.boj.or.jp/en/research/brp/psr/data/psrb220427.pdf
+76. SWIFT Tests API for CBDCs & Other News, accessed November 3, 2025,
+https://www.ftfnews.com/swift-tests-api-for-cbdcs-other-news/
+77. Connecting digital islands: Swift CBDC sandbox project – phase 2, accessed
+November 3, 2025,
+https://www.swift.com/sites/default/files/files/swift_cbdc_sandbox_project_results_
+report_phase2_final_220324.pdf
+78. 'Next-Generation' FIU.net - Finance - European Commission, accessed November
+3, 2025, https://finance.ec.europa.eu/news/next-generation-fiunet-2025-02-04_en
+79. The Fed - Security Considerations for a Central Bank Digital Currency, accessed
+November 3, 2025,
+https://www.federalreserve.gov/econres/notes/feds-notes/security-considerations-f
+or-a-central-bank-digital-currency-20220203.html
+80. Sequence diagram for cross bridge - ResearchGate, accessed November 3, 2025,
+https://www.researchgate.net/figure/Sequence-diagram-for-cross-bridge_fig4_375
+454613
+81. Enterprise Blockchain Roadmap: From Initial Exploration to Seamless Integration
+in Modern Business Processes. - Paromint, accessed November 3, 2025,
+https://paromint.com/Blockchain
+82. Enterprise Blockchain Development Implementation: From Strategy to
+Deployment, accessed November 3, 2025,
+https://vegavid.com/blog/enterprise-blockchain-development-implementation-from-
+strategy-to-deployment
+83. Enterprise Blockchain Adoption in 2025: Architecting Scalable, Compliant, and
+Real-World Solutions | by Ancilar Technologies | Medium, accessed November 3,
+2025,
+https://medium.com/@ancilartech/enterprise-blockchain-adoption-in-2025-architec
+ting-scalable-compliant-and-real-world-solutions-4a7992a4db3c
+84. MediLedger DSCSA Pilot Project - FDA, accessed November 3, 2025,
+https://www.fda.gov/media/168283/download
+85. FDA DSCSA Blockchain Interoperability Pilot Project Report, accessed November
+3, 2025, https://www.fda.gov/media/169883/download
+86. The Last Mile: DSCSA Solution Through Blockchain Technology: Drug Tracking,
+Tracing, and Verification at the Last Mile of the Pharmaceutical Supply Chain with
+BRUINchain - PubMed Central, accessed November 3, 2025,
+https://pmc.ncbi.nlm.nih.gov/articles/PMC9907423/
+87. What is True Positive Rate | Iguazio, accessed November 3, 2025,
+https://www.iguazio.com/glossary/true-positive-rate/
+88. True positive rate: What it is and why it matters in testing - Statsig, accessed
+November 3, 2025,
+https://www.statsig.com/perspectives/true-positive-rate-importance-testing
+89. Understanding true positive rate in software testing - Statsig, accessed November
+3, 2025, https://www.statsig.com/perspectives/true-positive-rate-software-testing
+90. The FATF Recommendations, accessed November 3, 2025,
+https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Fatf-recommendati
+ons.html
+91. FATF publishes new Guidance on Financial Inclusion and Anti-Money Laundering
+and Terrorist Financing Measures, accessed November 3, 2025,
+https://www.fatf-gafi.org/en/publications/Financialinclusionandnpoissues/guidance-
+financial-inclusion-aml-tf-measures.html
+92. Anti-money laundering and countering the financing of terrorism at international
+level, accessed November 3, 2025,
+https://finance.ec.europa.eu/financial-crime/anti-money-laundering-and-countering
+-financing-terrorism-international-level_en
+93. Full article: The New EU Authority for Anti-Money Laundering and Countering the
+Financing of Terrorism: A Paradigm Shift in EU Efforts to Combat Terrorist
+Financing? - Taylor & Francis Online, accessed November 3, 2025,
+https://www.tandfonline.com/doi/full/10.1080/1057610X.2025.2460594
+94. Global surveillance and monitoring system for substandard and falsified medical
+products: activity report, August 2017-December 2021 - World Health
+Organization (WHO), accessed November 3, 2025,
+https://www.who.int/publications/i/item/9789240097513
+95. What You Need In Your Vendor Compliance Checklist - BitSight Technologies,
+accessed November 3, 2025,
+https://www.bitsight.com/blog/know-about-vendor-compliance
+96. Vendor Compliance Checklist: Steps, Audits & Best Practices - Network
+Intelligence, accessed November 3, 2025,
+https://www.networkintelligence.ai/blogs/vendor-compliance-checklist/
+97. Checklist for Deploying a Blockchain-Powered Solution - New America, accessed
+November 3, 2025,
+https://www.newamerica.org/digital-impact-governance-inititiative/blockchain-trust-
+accelerator/reports/blueprint-blockchain-and-social-innovation/checklist-for-deployi
+ng-a-blockchain-powered-solution
+98. Blockchain Deployment Toolkit - Tools and Resources - The World Economic
+Forum, accessed November 3, 2025,
+https://widgets.weforum.org/blockchain-toolkit/excel/deployment-toolkit-tools-and-r
+esources.xlsx
+99. Sovereign cloud on a global scale: Designing for resilience, trust and innovation -
+IBM, accessed November 3, 2025,
+https://www.ibm.com/think/insights/sovereign-cloud-on-a-global-scale
+100. Cloud Cover: Price, Sovereignty Demands, and Waste | BCG, accessed
+November 3, 2025,
+https://www.bcg.com/publications/2025/cloud-cover-price-sovereignty-demands-w
+aste
+101. Central bank digital currency (CBDC) information security and operational risks
+to central banks - Bank for International Settlements, accessed November 3,
+2025, https://www.bis.org/publ/othp81.pdf
+102. Impact of Distributed Ledger Technology - Global Financial Markets
+Association, accessed November 3, 2025,
+https://www.gfma.org/wp-content/uploads/2023/05/impact-of-dlt-on-global-capital-
+markets-full-report.pdf
+103. Learn about the monitoring and health activity log schemas - Microsoft Entra
+ID, accessed November 3, 2025,
+https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-activity-l
+og-schemas
+104. XML Schema 2.0 - BSA E-Filing System, accessed November 3, 2025,
+https://bsaefiling.fincen.gov/resources/XMLUserGuide_FinCENSAR.pdf
+105. Sequence Diagram Tutorial - Complete Guide with Examples - Creately,
+accessed November 3, 2025,
+https://creately.com/guides/sequence-diagram-tutorial/
+106. Explore the UML sequence diagram - IBM Developer, accessed November 3,
+2025, https://developer.ibm.com/articles/the-sequence-diagram/
+107. The Ultimate DORA Compliance Checklist for Crypto Businesses - Legal
+Nodes, accessed November 3, 2025,
+https://legalnodes.com/article/dora-compliance-checklist
+108. Crypto Audit Checklist: Step-by-Step for Accountants - Cryptoworth, accessed
+November 3, 2025, https://www.cryptoworth.com/blog/crypto-audit-checklist
+109. The Ultimate 2025 Crypto Compliance Checklist for Developers - Blockchain
+App Factory, accessed November 3, 2025,
+https://www.blockchainappfactory.com/blog/2025-compliance-checklist-for-crypto-
+project-developers/
+110. Money Laundering from Fentanyl and Synthetic Opioids - FATF, accessed
+November 3, 2025,
+https://www.fatf-gafi.org/en/publications/Methodsandtrends/Money-laundering-fent
+anyl-synthetic-opioids.html
+111. FATF Annual Report - 2022-2023, accessed November 3, 2025,
+https://www.fatf-gafi.org/content/dam/fatf-gafi/publications/FATF-Annual-Report-20
+22-2023.pdf.coredownload.pdf
+112. Money Laundering from Fentanyl and Synthetic Opioids - FATF, accessed
+November 3, 2025,
+https://www.fatf-gafi.org/content/dam/fatf-gafi/reports/Money-Laundering-Fentanyl-
+Synthetic-Opioids.pdf.coredownload.inline.pdf
+113. Statement by Under Secretary Brian Nelson on the FATF Report on Money
+Laundering from Fentanyl and Synthetic Opioids | U.S. Department of the
+Treasury, accessed November 3, 2025,
+https://home.treasury.gov/news/press-releases/jy1131
+114. Supplemental Advisory on the Procurement of Precursor Chemicals and
+Manufacturing Equipment Used for the Synthesis of Illicit Fentanyl and Other
+Synthetic Opioids - FinCEN, accessed November 3, 2025,
+https://www.fincen.gov/system/files/advisory/2024-06-20/FinCEN-Supplemental-A
+dvisory-on-Fentanyl-508C.pdf
+115. Swift to Launch AI Fraud Detection for Global Banking in 2025, accessed
+November 3, 2025,
+https://www.corporatecomplianceinsights.com/swift-ai-fraud-detection-launch/
+116. Global Surveillance and Monitoring System for substandard and falsified
+medical products, accessed November 3, 2025,
+https://www.who.int/publications/b/65518
+117. Global Surveillance of Substandard and Falsified Medical Products: 2017-2021
+Activity Report | Policy Commons, accessed November 3, 2025,
+https://policycommons.net/artifacts/17851687/global-surveillance-and-monitoring-s
+ystem-for-substandard-and-falsified-medical-products/18747251/
+118. Fraud and Corruption Awareness Handbook - Documents & Reports - World
+Bank, accessed November 3, 2025,
+https://documents1.worldbank.org/curated/en/309511468156866119/pdf/877290P
+UB0Frau00Box382147B00PUBLIC0.pdf
+119. Curbing Fraud, Corruption, and Collusion in the Roads Sector - The World
+Bank, accessed November 3, 2025,
+https://thedocs.worldbank.org/en/doc/5f1f9ec0b2cdf78b0b083e0981e0854c-0090
+012011/original/Curbing-FC-in-Roads-Sector.pdf
+120. Anti Money Laundering Transaction Data (SAML-D) - Kaggle, accessed
+November 3, 2025,
+https://www.kaggle.com/datasets/berkanoztas/synthetic-transaction-monitoring-dat
+aset-aml
+121. AMLNet: A Knowledge-Based Multi-Agent Framework to Generate and Detect
+Realistic Money Laundering Transactions - arXiv, accessed November 3, 2025,
+https://arxiv.org/html/2509.11595v1
