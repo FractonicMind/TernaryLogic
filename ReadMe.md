@@ -430,35 +430,35 @@ if result.state == TLState.EPISTEMIC_HOLD:
 
 ### Essential Documentation
 
-**[Mandatory Reading](docs/MANDATORY.md)**: Critical safety guidelines for economic system implementation  
-**[Quick Start Guide](docs/QUICK_START.md)**: 60-minute implementation tutorial for academic and institutional applications  
-**[Complete API Reference](docs/api/complete_api_reference.md)**: Professional documentation with comprehensive examples and integration patterns  
-**[Academic Validation Framework](docs/ACADEMIC_VALIDATION.md)**: Peer review and validation protocols for research applications
+**[Mandatory Reading](docs/Mandatory.md)**: Critical safety guidelines for economic system implementation  
+**[Quick Start Guide](docs/Quick_Start.md)**: 60-minute implementation tutorial for academic and institutional applications  
+**[Complete API Reference](docs/api/Complete_Api_Reference.md)**: Professional documentation with comprehensive examples and integration patterns  
+**[Academic Validation Framework](docs/Academic_Validation.md)**: Peer review and validation protocols for research applications
 
 ### Theoretical Foundations
 
-**[Economic Foundations](theory/economic-foundations.md)**: Deep academic grounding from classical to behavioral economics  
-**[Philosophical Foundations](theory/philosophical-foundations.md)**: From Hayek to modern decision theory  
-**[Core Principles](theory/core-principles.md)**: Fundamental TL principles and Epistemic Hold implementation  
-**[Case Studies](theory/case-studies.md)**: Real-world applications across economic domains
+**[Economic Foundations](theory/Economic-Foundations.md)**: Deep academic grounding from classical to behavioral economics  
+**[Philosophical Foundations](theory/Philosophical-Foundations.md)**: From Hayek to modern decision theory  
+**[Core Principles](theory/Core-Principles.md)**: Fundamental TL principles and Epistemic Hold implementation  
+**[Case Studies](theory/Case-Studies.md)**: Real-world applications across economic domains
 
 ### Implementation Resources
 
-**[Financial Trading](examples/financial_trading_comprehensive.py)**: Advanced trading decisions with Epistemic Hold  
-**[Monetary Policy](examples/central_banking_policy.py)**: Central bank decision support implementation  
-**[Supply Chain Management](examples/supply_chain_management.py)**: Operational decisions with uncertainty management  
+**[Financial Trading](examples/Financial_Trading_Comprehensive.py)**: Advanced trading decisions with Epistemic Hold  
+**[Monetary Policy](examples/Central_Banking_Policy.py)**: Central bank decision support implementation  
+**[Supply Chain Management](examples/Supply_Chain_Management.py)**: Operational decisions with uncertainty management  
 **[Complete Examples Directory](examples/)**: Comprehensive implementations across economic domains
 
 ### Testing and Validation
 
 **[Test Suite](tests/)**: 53 passing test cases with 81% code coverage  
-**[Performance Validation](tests/README.md)**: Comprehensive testing metrics and validation protocols  
-**[Economic Scenario Database](research/datasets/tl-economic-scenario-database.md)**: 25+ tested economic scenarios
+**[Performance Validation](tests/Readme.md)**: Comprehensive testing metrics and validation protocols  
+**[Economic Scenario Database](research/datasets/TL-Economic-Scenario-Database.md)**: 25+ tested economic scenarios
 
 ### Frequently Asked Questions
 
-**[License FAQ](docs/LICENSE_FAQ.md)**: 30 questions covering legal use and economic ethics licensing  
-**[General FAQ](docs/GENERAL_FAQ.md)**: 45 questions addressing technical implementation, philosophical foundations, and practical applications
+**[License FAQ](docs/License_FAQ.md)**: 30 questions covering legal use and economic ethics licensing  
+**[General FAQ](docs/General_FAQ.md)**: 45 questions addressing technical implementation, philosophical foundations, and practical applications
 
 ---
 
@@ -615,4 +615,4 @@ The future of economic systems lies not merely in computational efficiency, but 
 **Creator**: Lev Goukassian (ORCID: 0009-0006-5966-1243)  
 **Email**: leogouk@gmail.com  
 **Successor Contact**: support@tl-goukassian.org  
-**Succession Charter**: [memorial/SUCCESSION_CHARTER.md](memorial/SUCCESSION_CHARTER.md)
+**Succession Charter**: [memorial/Succession_Charter.md](memorial/Succession_Charter.md)
