@@ -96,7 +96,7 @@ The Ternary Logic framework adheres to international standards of reproducible r
 - **Full**: 4GB RAM, 10GB disk (All Eight Pillars)
 - **Performance**: Benchmarks on reference hardware
 
-**Setup Documentation**: Complete specifications in `README.md`
+**Setup Documentation**: Complete specifications in `Readme.md`
 
 ---
 
