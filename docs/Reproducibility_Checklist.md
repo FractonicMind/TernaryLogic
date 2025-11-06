@@ -72,7 +72,7 @@ The Ternary Logic framework adheres to international standards of reproducible r
 - **Pillar 7**: Privacy preservation test scenarios
 - **Pillar 8**: Blockchain anchor verification data
 
-**Data Location**: `research/datasets/` and `tests/fixtures/`
+**Data Location**: [research/datasets](/research/datasets/) and [tests/fixtures](/tests/fixtures/)
 
 ---
 
@@ -96,7 +96,7 @@ The Ternary Logic framework adheres to international standards of reproducible r
 - **Full**: 4GB RAM, 10GB disk (All Eight Pillars)
 - **Performance**: Benchmarks on reference hardware
 
-**Setup Documentation**: Complete specifications in `Readme.md`
+**Setup Documentation**: Complete specifications in [ReadMe.md](/ReadMe.md)
 
 ---
 
