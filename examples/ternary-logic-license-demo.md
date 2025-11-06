@@ -206,12 +206,12 @@ The Ternary Logic License demonstrates how TL's Epistemic Hold principle can be 
 - __TL Framework__ [Main Repository](../ReadMe.md)
 - __Interactive Demo__ https://fractonicmind.github.io/TernaryLogic/demos/TL-App/
 - __Research Article__ ["The Third Option: Why Economy and Civilization Must Break Free from Binary"](https://medium.com/@leogouk/the-third-option-why-economy-and-civilization-must-break-free-from-binary-0d69d2be14c6) - Medium
-- __Evidence Documentation__ [System Recognition Evidence](../evidence/README.md)
+- __Evidence Documentation__ [System Recognition Evidence](../evidence/Readme.md)
 
 ---
 
 **Contact**: leogouk@gmail.com | **ORCID**: 0009-0006-5966-1243  
-**Successor Contact**: support@tl-goukassian.org (see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))  
+**Successor Contact**: support@tl-goukassian.org (see [Succession Charter](/memorial/Succession_Charter.md))  
 **License**: This demonstration document is released under the MIT + Ethical Use License
 
 *"Sometimes the most intelligent action is to pause and deliberate before proceeding."* - TL Epistemic Hold Principle
