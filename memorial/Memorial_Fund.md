@@ -353,4 +353,4 @@ Advance economic decision theory through research, education, and implementation
 
 **Primary Contact**: leogouk@gmail.com  
 **Successor Contact**: support@tl-goukassian.org  
-(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
+(see [Succession Charter](/memorial/Succession_Charter.md))
