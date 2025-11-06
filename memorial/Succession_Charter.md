@@ -335,6 +335,5 @@ The preservation requirements for the Eight Pillars ensure architectural consist
 **Author**: Lev Goukassian (ORCID: 0009-0006-5966-1243)   
 **Primary Contact**: leogouk@gmail.com  
 **Successor Contact**: support@tl-goukassian.org  
-(see [Succession Charter](/memorial/Succession_Charter.md))   
 
 **Repository Reference**: https://github.com/FractonicMind/TernaryLogic  
