@@ -128,7 +128,7 @@ Pillar | Algorithm | Complexity | Verification
 - **Validation**: Backtesting on historical data
 - **Statistical Analysis**: Significance testing with corrections
 
-**Documentation**: `Docs/` directory with complete specifications
+**Documentation**: `docs/` directory with complete specifications
 
 ---
 
