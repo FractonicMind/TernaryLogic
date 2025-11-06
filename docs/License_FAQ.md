@@ -173,8 +173,8 @@ Every ethical use advances the vision of economic systems that are **intelligent
 ## Contact Information
 
 **License Questions**: support@tl-goukassian.org  
-**Ethics Board**: Listed in [Succession Charter](../memorial/SUCCESSION_CHARTER.md)  
-**Full License Text**: [LICENSE](../LICENSE)  
+**Ethics Board**: Listed in [Succession Charter](../memorial/Succession_Charter.md)  
+**Full License Text**: [License](../License)  
 **Reporting Misuse**: support@tl-goukassian.org
 
 ---
