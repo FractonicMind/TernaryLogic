@@ -333,7 +333,7 @@ assert results.hold_rate_optimal == True
 - MIT, Stanford, University of Chicago, LSE
 - Bank for International Settlements
 - World Bank, IMF
-- Detailed in [SUCCESSION_CHARTER.md](../memorial/SUCCESSION_CHARTER.md)
+- Detailed in [Succession_Charter.md](../memorial/Succession_Charter.md)
 
 ### 32. How do I report security issues?
 **Responsible disclosure process**:
