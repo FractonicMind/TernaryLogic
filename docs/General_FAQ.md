@@ -184,7 +184,7 @@ pip install -e .
 python examples/quickstart_example.py
 ```
 **Implementation steps**:
-1. Read MANDATORY.md for critical concepts
+1. Read Mandatory.md for critical concepts
 2. Run quickstart example to see Epistemic Hold in action
 3. Study the Eight Pillars architecture
 4. Configure for your specific domain
@@ -448,7 +448,7 @@ TL provides the **accountability infrastructure** for AI safety:
 ## 📖 Quick Reference
 
 ### 🚀 Getting Started:
-1. Read [MANDATORY.md](MANDATORY.md) - **Required**
+1. Read [Mandatory.md](Mandatory.md) - **Required**
 2. Understand [Eight Pillars](../theory/eight-pillars.md)
 3. Run quickstart example
 4. Configure for your domain
