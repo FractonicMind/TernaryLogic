@@ -687,7 +687,7 @@ Configuration parameters should be adjusted based on implementation domain:
 ## Additional Resources
 
 ### Documentation
-- Core theory: See `Theory/Core_Principles.md`
+- Core theory: See `theory/Core_Principles.md`
 - Eight Pillars details: Visit folder `TL_Pillars/` for individual pillar documentation
 - Implementation examples: See `examples/` directory
 - Test scenarios: Review `tests/scenarios/`
