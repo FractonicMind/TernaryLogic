@@ -383,7 +383,7 @@ TL extends traditional binary decision theory by:
 - **Email**: leogouk@gmail.com
 
 **Academic Succession**: support@tl-goukassian.org  
-(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
+(see [Succession Charter](/memorial/Succession_Charter.md))
 
 ---
 
