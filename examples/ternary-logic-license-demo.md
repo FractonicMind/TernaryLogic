@@ -2,7 +2,7 @@
 
 ** Educational Example: Applying TL Principles to Licensing**
 
-> **Note**: This is a creative demonstration of how Ternary Logic principles can be applied beyond economic decision-making. For actual licensing of TL framework content, please use the [MIT + Ethical Use License](../LICENSE) in the repository root.
+> **Note**: This is a creative demonstration of how Ternary Logic principles can be applied beyond economic decision-making. For actual licensing of TL framework content, please use the [MIT + Ethical Use License](../License) in the repository root.
 
 ---
 
