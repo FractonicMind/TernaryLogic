@@ -434,20 +434,6 @@ pytest tests/ --cov=ternary_logic --cov-fail-under=80
 
 ---
 
-## Contact & Engagement
-
-**Primary Contact**: leogouk@gmail.com  
-**Successor Contact**: support@tl-goukassian.org  
-(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
-
----
-
-*Last Updated: November 2025*  
-*Version: 2.1.0*  
-*Status: MANDATORY READING*
-
----
-
 ## Critical Requirements
 
 ### 1. State Classification Requirements
@@ -790,7 +776,7 @@ pytest tests/ --cov=ternary_logic --cov-fail-under=80
 
 **Primary Contact**: leogouk@gmail.com  
 **Successor Contact**: support@tl-goukassian.org  
-(see [Succession Charter](/memorial/SUCCESSION_CHARTER.md))
+(see [Succession Charter](/memorial/Succession_Charter.md))
 
 ---
 
