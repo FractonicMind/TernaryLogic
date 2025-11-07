@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TL Pillar: Economic Rights & Transparency</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals (Stone/Gray background, Indigo/Blue accent) -->
+    <!-- Application Structure Plan: The report is a dense, doctrinal document. A linear scroll is bad for usability. This SPA design reorganizes the content into four thematic, interactive sections (Principles, Mandate Details, Enforcement, Examples) navigated by tabs. This allows a user to explore the 'Why', 'What', 'How', and 'In Practice' in any order. Interactions like clickable lists for rights/triggers and a step-by-step diagram for the enforcement path make the complex connections easier to understand than static text. -->
+    <!-- Visualization & Content Choices: Report is 100% qualitative/doctrinal, no quantitative data. Therefore, NO CHARTS (Chart.js/Plotly.js) are used. Focus is on interactive presentation of text and processes.
+    * Rights/Datasets/Triggers: Report Info (Lists) -> Goal (Organize/Inform) -> Viz (Interactive HTML list/grid with a master-detail view) -> Interaction (Click to show details) -> Justification (Breaks down dense lists) -> Library (Vanilla JS).
+    * Enforcement Path: Report Info (6-step list) -> Goal (Organize/Show Change) -> Viz (HTML/CSS/Tailwind flow-diagram) -> Interaction (Click on step to highlight and get details) -> Justification (Visualizes the process flow) -> Library (Vanilla JS).
+    * Example Cases: Report Info (2 scenarios) -> Goal (Compare/Inform) -> Viz (Tabs/Buttons to toggle content) -> Interaction (Click to switch visible case) -> Justification (Easy comparison) -> Library (Vanilla JS). -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+        }
+        [role="tab"] {
+            transition: all 0.2s ease-in-out;
+        }
+        [role="tab"][aria-selected="true"] {
+            border-color: #4f46e5; /* border-indigo-600 */
+            background-color: #eef2ff; /* bg-indigo-50 */
+            color: #4f46e5; /* text-indigo-600 */
+            font-weight: 600;
+        }
+        .interactive-list-item {
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .interactive-list-item[aria-selected="true"] {
+            background-color: #eef2ff; /* bg-indigo-50 */
+            border-color: #4f46e5; /* border-indigo-600 */
+            transform: scale(1.02);
+        }
+        .enforcement-step {
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .enforcement-step[aria-selected="true"] {
+            background-color: #eef2ff; /* bg-indigo-50 */
+            border-color: #4f46e5; /* border-indigo-600 */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .arrow {
+            font-size: 2rem;
+            color: #94a3b8; /* text-slate-400 */
+            line-height: 1;
+        }
+    </style>
+</head>
+<body class="text-slate-900">
+
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="mb-6 md:mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-800">Economic Rights & Transparency Mandate</h1>
+            <p class="mt-2 text-lg text-slate-600">An interactive explorer for the Ternary Logic (TL) pillar.</p>
+        </header>
+
+        <nav class="mb-6" role="tablist" aria-label="Pillar Navigation">
+            <div class="flex flex-wrap gap-2">
+                <button role="tab" aria-selected="true" id="tab-principles" class="px-4 py-2 text-sm sm:text-base rounded-md border-b-4 border-transparent text-slate-700 hover:bg-slate-200">
+                    Core Principles
+                </button>
+                <button role="tab" aria-selected="false" id="tab-mandate" class="px-4 py-2 text-sm sm:text-base rounded-md border-b-4 border-transparent text-slate-700 hover:bg-slate-200">
+                    Mandate in Detail
+                </button>
+                <button role="tab" aria-selected="false" id="tab-enforcement" class="px-4 py-2 text-sm sm:text-base rounded-md border-b-4 border-transparent text-slate-700 hover:bg-slate-200">
+                    Enforcement & Risk
+                </button>
+                <button role="tab" aria-selected="false" id="tab-examples" class="px-4 py-2 text-sm sm:text-base rounded-md border-b-4 border-transparent text-slate-700 hover:bg-slate-200">
+                    Application Examples
+                </button>
+            </div>
+        </nav>
+
+        <main>
+            <div role="tabpanel" id="panel-principles" class="space-y-6">
+                <p class="text-base text-slate-600">This section explains the foundational purpose and rationale of the mandate. It answers *why* auditable economic agency and transparency are non-negotiable components of the Ternary Logic framework, essential for protecting both participants and institutions.</p>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h2 class="text-2xl font-semibold text-slate-800 mb-4">Fundamental Principle</h2>
+                    <div class="space-y-4 text-slate-700">
+                        <p>The purpose of the Economic Rights & Transparency Mandate is to establish <strong>auditable economic agency</strong> for all participants within the Ternary Logic system.</p>
+                        <p>Ternary Logic must guarantee the <strong>Right to Fairness</strong> in economic outcomes and the <strong>Right to Epistemic Access</strong> to the facts and rationales underpinning decisions. These rights are necessary to manage the complexity and inherent uncertainty that the TL framework addresses, particularly in automated and algorithmic environments.</p>
+                        <p><strong>Transparency</strong> in institutional finance is mandated because opacity enables systemic risk and creates zones of <strong>plausible deniability</strong>. By requiring the immutable, anchored logging of all decision inputs, processing paths, and authority signatures, TL systems ensure that the institutional entity is fully accountable for the emergent properties of its economic actions.</p>
+                        <p>This pillar protects fairness and prevents abuse by making every economic decision, whether human or algorithmic, subject to immediate and subsequent machine-checkable validation against a predetermined set of rights, effectively preventing the formation of informational and decisional asymmetries.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h2 class="text-2xl font-semibold text-slate-800 mb-4">Closing Rationale</h2>
+                    <div class="space-y-4 text-slate-700">
+                        <p>Economic rights are foundational to TL because they establish a canonical basis for <strong>economic agency</strong> and <strong>trust</strong> within increasingly complex, algorithmic financial ecosystems. They shift the focus from simple legal compliance to proactive, auditable, and machine-checkable ethical integrity.</p>
+                        <p>Transparency protects both institutions and participants by eliminating zones of opacity that could otherwise conceal systemic failures or individual abuses. By mandating the anchoring of all decisions, TL makes the hidden visible, thereby preventing the dangerous phenomenon of plausible deniability.</p>
+                        <p>This mandate supports <strong>market confidence</strong> by providing verifiable, non-repudiable proof of action, and it reinforces <strong>legal accountability</strong> by establishing an immutable, standardized, and immediately auditable record for regulatory oversight and legal contestation. The pillar ensures that complexity is managed through certainty of evidence.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" id="panel-mandate" class="space-y-8 hidden">
+                <p class="text-base text-slate-600">This section provides the explicit definitions of the mandate. Explore the specific, machine-checkable rights guaranteed to all participants and the minimum datasets required to validate fairness and transparency. Click on any item to see its full definition and mechanism.</p>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h2 class="text-2xl font-semibold text-slate-800 mb-4">Mandated Protections</h2>
+                    <p class="text-slate-600 mb-4">TL enforces the following explicit, machine-checkable economic rights. Click one to learn more.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                        <div class="md:col-span-2">
+                            <div id="mandate-list" class="flex flex-col space-y-3">
+                            </div>
+                        </div>
+                        <div class="md:col-span-3">
+                            <div id="mandate-details" class="p-4 bg-slate-50 rounded-lg border border-slate-200 min-h-[200px]">
+                                <p class="text-slate-500">Please select a mandated protection from the list.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h2 class="text-2xl font-semibold text-slate-800 mb-4">Required Datasets (Proof Structures)</h2>
+                    <p class="text-slate-600 mb-4">To validate fairness, TL systems must record the following minimum proof structures (not raw data). Click one to learn more.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                        <div class="md:col-span-2">
+                            <div id="dataset-list" class="flex flex-col space-y-3">
+                            </div>
+                        </div>
+                        <div class="md:col-span-3">
+                            <div id="dataset-details" class="p-4 bg-slate-50 rounded-lg border border-slate-200 min-h-[150px]">
+                                <p class="text-slate-500">Please select a required dataset from the list.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" id="panel-enforcement" class="space-y-8 hidden">
+                <p class="text-base text-slate-600">This section details *how* the mandate is enforced. It covers the mandatory pipeline for all economic actions and the objective conditions that trigger an "Epistemic Hold" (a 0-state pause) to resolve uncertainty or prevent violations.</p>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h2 class="text-2xl font-semibold text-slate-800 mb-4">Enforcement & Proof Path</h2>
+                    <p class="text-slate-600 mb-6">Enforcement is a mandatory, auditable pipeline for all economic actions. Click any step to see its description.</p>
+                    <div class="flex flex-col space-y-4 md:space-y-0 md:flex-row md:items-center md:space-x-2 overflow-x-auto pb-4">
+                        <div id="step-1" class="enforcement-step flex-shrink-0 w-full md:w-48 p-4 border-2 border-slate-300 rounded-lg text-center">
+                            <span class="font-semibold">1. Decision Log Created</span>
+                        </div>
+                        <div class="arrow text-center transform md:rotate-0">↓</div>
+                        <div id="step-2" class="enforcement-step flex-shrink-0 w-full md:w-48 p-4 border-2 border-slate-300 rounded-lg text-center">
+                            <span class="font-semibold">2. Rights Checks Applied</span>
+                        </div>
+                        <div class="arrow text-center transform md:rotate-0">↓</div>
+                        <div id="step-3" class="enforcement-step flex-shrink-0 w-full md:w-48 p-4 border-2 border-red-300 rounded-lg text-center bg-red-50">
+                            <span class="font-semibold">3. Violation/Uncertainty?</span><br><span class="text-red-700">→ Epistemic Hold (0)</span>
+                        </div>
+                        <div class="arrow text-center transform md:rotate-0">↓</div>
+                        <div id="step-4" class="enforcement-step flex-shrink-0 w-full md:w-48 p-4 border-2 border-slate-300 rounded-lg text-center">
+                            <span class="font-semibold">4. Verified Commit (+1) / Reject (-1)</span>
+                        </div>
+                        <div class="arrow text-center transform md:rotate-0">↓</div>
+                        <div id="step-5" class="enforcement-step flex-shrink-0 w-full md:w-48 p-4 border-2 border-slate-300 rounded-lg text-center">
+                            <span class="font-semibold">5. Immutable Ledger Entry</span>
+                        </div>
+                        <div class="arrow text-center transform md:rotate-0">↓</div>
+                        <div id="step-6" class="enforcement-step flex-shrink-0 w-full md:w-48 p-4 border-2 border-slate-300 rounded-lg text-center">
+                            <span class="font-semibold">6. Anchor State & Justification</span>
+                        </div>
+                    </div>
+                    <div id="enforcement-details" class="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200 min-h-[100px]">
+                        <p class="text-slate-500">Please select a step from the enforcement path.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h2 class="text-2xl font-semibold text-slate-800 mb-4">Trigger Thresholds for Epistemic Hold (0-state)</h2>
+                    <p class="text-slate-600 mb-4">An Epistemic Hold is a mandatory pause. The following objective conditions trigger this 0-state. Click one to learn more.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                        <div class="md:col-span-2">
+                            <div id="trigger-list" class="flex flex-col space-y-3">
+                            </div>
+                        </div>
+                        <div class="md:col-span-3">
+                            <div id="trigger-details" class="p-4 bg-slate-50 rounded-lg border border-slate-200 min-h-[150px]">
+                                <p class="text-slate-500">Please select a trigger threshold from the list.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" id="panel-examples" class="space-y-6 hidden">
+                <p class="text-base text-slate-600">This section provides precise, real-world institutional scenarios showing the mandate in action. Use the buttons to toggle between a retail participant protection case and a systemic-risk institutional action.</p>
+                
+                <div class="flex flex-wrap gap-3 mb-4">
+                    <button id="btn-case-retail" class="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Case 1: Retail Participant Protection
+                    </button>
+                    <button id="btn-case-systemic" class="px-4 py-2 bg-white text-slate-700 font-semibold rounded-md shadow-sm border border-slate-300 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Case 2: Systemic-Risk Institutional Action
+                    </button>
+                </div>
+
+                <div id="case-content">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const tabs = document.querySelectorAll('[role="tab"]');
+            const panels = document.querySelectorAll('[role="tabpanel"]');
+
+            const tabLogic = {
+                init() {
+                    tabs.forEach(tab => {
+                        tab.addEventListener('click', (e) => this.selectTab(e.target));
+                    });
+                },
+                selectTab(selectedTab) {
+                    tabs.forEach(tab => {
+                        const panel = document.getElementById(tab.id.replace('tab-', 'panel-'));
+                        if (tab === selectedTab) {
+                            tab.setAttribute('aria-selected', 'true');
+                            panel.classList.remove('hidden');
+                        } else {
+                            tab.setAttribute('aria-selected', 'false');
+                            panel.classList.add('hidden');
+                        }
+                    });
+                }
+            };
+
+            const mandateData = [
+                { id: 'mandate-1', icon: '📝', title: 'Right to verifiable records',
+                  content: `<strong>Definition:</strong> Every decision impacting a participant's economic state must produce a <strong>Decision Log</strong> detailing inputs, algorithmic versions, and the final state change.<br><br><strong>Mechanism:</strong> Required cryptographic anchor of the <strong>Decision Log</strong> to the <strong>Immutable Ledger</strong>.` },
+                { id: 'mandate-2', icon: '🛡️', title: 'Right to transparency of risk',
+                  content: `<strong>Definition:</strong> Institutional systems must use a mandated risk model (e.g., the <strong>Hybrid Shield</strong>) and must record the participant's exposure context *before* any high-impact action.<br><br><strong>Mechanism:</strong> Check for the presence and validity of the signed <strong>Risk Exposure Attestation</strong> proof structure within the Decision Log.` },
+                { id: 'mandate-3', icon: '🔍', title: 'Right to trace algorithms',
+                  content: `<strong>Definition:</strong> The Decision Log must immutably record the full <strong>Algorithmic Execution Path (AEP)</strong>, including all sub-routines and external dependencies invoked.<br><br><strong>Mechanism:</strong> Validation that the AEP hash is chronologically and logically consistent with the outcome; AEP must include versioning and authority signature.` },
+                { id: 'mandate-4', icon: '⚖️', title: 'Right to contest and audit',
+                  content: `<strong>Definition:</strong> Participants must be granted access to the non-personal, anchored proof structures necessary to validate or challenge a decision (<strong>Goukassian Principle</strong>).<br><br><strong>Mechanism:</strong> System must successfully pass the <strong>Audit Proof Completeness Check</strong> upon a formal contestation request.` },
+                { id: 'mandate-5', icon: '🔒', title: 'Right to privacy (GDPR-aligned)',
+                  content: `<strong>Definition:</strong> Raw personal or sensitive data is forbidden from the Immutable Ledger. Privacy is maintained by storing only <strong>cryptographic proof structures</strong> of consent, compliance, and necessary facts.<br><br><strong>Mechanism:</strong> Enforcement of zero-knowledge proofs (ZKPs), pseudonymized hashes, and data minimization techniques to ensure only proof, not data, is retained in the record.` }
+            ];
+
+            const datasetData = [
+                { id: 'dataset-1', icon: '🎯', title: 'Risk Exposure Context',
+                  content: `Cryptographic attestation of the participant's risk profile and the decision's impact on mandated tolerance parameters, signed by the system's risk oracle.` },
+                { id: 'dataset-2', icon: '🔗', title: 'Input Data Source Attestations',
+                  content: `Immutable proofs (e.g., Merkle proofs or provenance hashes) verifying the origin, integrity, and timestamp of all external data feeds used to inform the decision.` },
+                { id: 'dataset-3', icon: '✅', title: 'Compliance Checks Applied',
+                  content: `Signed results of pre-execution regulatory and institutional compliance validations, confirming a \`+1\` (Proceed) or flagging a \`0\` (Uncertainty).` },
+                { id: 'dataset-4', icon: '✍️', title: 'Authority Signatures',
+                  content: `Multi-signature cryptographic proof verifying the identity and authorized access level of the entity (human or automated system) that initiated or validated the final decision.` },
+                { id: 'dataset-5', icon: '⏱️', title: 'Proof of Consent or Impact',
+                  content: `Pseudonymized hash or ZKP confirming valid consent for the action, or in the case of a systemic action, a detailed record of the intended impact scope.` }
+            ];
+
+            const triggerData = [
+                { id: 'trigger-1', icon: '📈', title: 'High-Impact Economic Decisions',
+                  content: `Any decision (trade, allocation, transfer) that exceeds a pre-defined material threshold (e.g., a volume/value constituting 0.5% or more of the institution's total daily flow) must trigger an internal 0-state check for extraordinary risk or market impact.` },
+                { id: 'trigger-2', icon: '⚠️', title: 'Divergence from Risk Parameters',
+                  content: `A decision's calculated outcome pushes the institutional or participant <strong>Hybrid Shield</strong> exposure beyond its allowed tolerance bandwidth, even if the primary decision logic returned a \`+1\`.` },
+                { id: 'trigger-3', icon: '🚫', title: 'Data Anomalies / Missing Attestations',
+                  content: `Failure of the <strong>Input Data Source Attestations</strong> check, indicating compromised provenance, missing signatures, or a conflict in the data timestamp.` },
+                { id: 'trigger-4', icon: '⏳', title: 'Incomplete Audit Proof',
+                  content: `Any failure in the Decision Log to cryptographically anchor to the Immutable Ledger, or the detection of an expired/invalid cryptographic signature on a critical authority component.` },
+                { id: 'trigger-5', icon: '📉', title: 'Requests Reducing Transparency',
+                  content: `Any decision, automated or manual, attempting to suppress, delete, or modify a Decision Log prior to its required retention period and full anchoring.` }
+            ];
+
+            const enforcementData = {
+                'step-1': `A temporary, complete record of the proposed action, inputs, and algorithmic path is generated.`,
+                'step-2': `The decision is validated against all Mandated Protections (Section 2) and institutional risk policies.`,
+                'step-3': `If checks return a negative or a \`0\` (Uncertainty), the action is suspended, pending mandatory resolution and auditing. This is the Epistemic Hold.`,
+                'step-4': `The resolution process or the initial non-held outcome results in a verifiable commitment (\`+1\`) or rejection (\`−1\`).`,
+                'step-5': `The final action state (\`+1\` or \`−1\`) is recorded permanently on the ledger.`,
+                'step-6': `The cryptographic hash of the complete Decision Log and all associated proof structures is anchored to the Immutable Ledger, providing the immutable justification for the final outcome.`
+            };
+
+            const caseData = {
+                retail: `
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 animate-fade-in">
+                        <h3 class="text-2xl font-semibold text-indigo-700 mb-4">Case 1: Retail Participant Protection</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Trigger Condition:</h4>
+                                <p class="text-slate-700">A TL-certified Robo-Advisor executes a high-frequency asset purchase for a retail participant. The participant later contests the trade, alleging the price was manipulated by a momentary information advantage held by the institution.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Rights Invoked:</h4>
+                                <p class="text-slate-700"><strong>Right to verifiable records of decisions</strong> and <strong>Right to contest and audit decisions with evidence</strong>.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Hold Evaluation:</h4>
+                                <p class="text-slate-700">The participant's audit request triggers an <strong>Epistemic Hold (0-state)</strong> on the decision record. The system validates the <strong>Input Data Source Attestation</strong> in the Decision Log. It is discovered that the asset price was informed by a proprietary institutional data feed that failed the \`Data Fairness and Timing\` compliance check, resulting in a temporary <strong>Information Asymmetry Amplification</strong> risk to the participant. The compliance check returned a mandatory \`0\` that was bypassed in the execution.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Final Disposition with Log and Anchor:</h4>
+                                <p class="text-slate-700">The trade is immediately reversed/rejected (<strong>−1 reject</strong>). The original Decision Log, the failed compliance check proof, and the record of the reversal are anchored to the Ledger as justification for violating the <strong>Right to Fairness</strong>.</p>
+                            </div>
+                        </div>
+                    </div>`,
+                systemic: `
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 animate-fade-in">
+                        <h3 class="text-2xl font-semibold text-indigo-700 mb-4">Case 2: Systemic-Risk Institutional Action</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Trigger Condition:</h4>
+                                <p class="text-slate-700">An institution's high-volume algorithmic trading strategy (e.g., Flow-Based Coordination) initiates a series of trades that, in conjunction with other market activity, creates an emergent, unmodeled risk signal ("volatility farming") that pushes the institutional <strong>Hybrid Shield</strong> exposure beyond its mandated tolerance.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Rights Invoked:</h4>
+                                <p class="text-slate-700"><strong>Right to Transparency of Risk Conditions</strong> and <strong>Right to Trace Algorithmic Economic Decisions</strong>.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Hold Evaluation:</h4>
+                                <p class="text-slate-700">The systemic risk threshold breach triggers a mandatory, institution-wide <strong>Epistemic Hold (0-state)</strong> on all trading activities related to the strategy. The audit verifies the <strong>Algorithmic Execution Path (AEP)</strong>. It confirms the AEP operated as programmed (\`+1\` on execution logic), but the consequence of the execution violated the <strong>Sustainable Capital Mandate</strong> due to the unmodeled systemic outcome. The hold is maintained until a manual override or system patch is cryptographically signed and validated.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Final Disposition with Log and Anchor:</h4>
+                                <p class="text-slate-700">Manual intervention is approved and signed by the Chief Risk Officer, permanently suspending the specific algorithm (<strong>−1 reject</strong>). The Decision Log, the AEP, and the signed human override are immutably anchored to the Ledger as justification for halting the systemic risk exposure.</p>
+                            </div>
+                        </div>
+                    </div>`
+            };
+
+            const interactiveListLogic = {
+                init(containerId, data, detailsId) {
+                    const listContainer = document.getElementById(containerId);
+                    const detailsContainer = document.getElementById(detailsId);
+                    
+                    data.forEach((item, index) => {
+                        const itemEl = document.createElement('div');
+                        itemEl.className = 'interactive-list-item p-4 border-2 border-slate-300 rounded-lg hover:border-indigo-400 hover:bg-indigo-50';
+                        itemEl.innerHTML = `<span class="text-xl mr-3">${item.icon}</span><span class="font-semibold">${item.title}</span>`;
+                        itemEl.dataset.id = item.id;
+                        itemEl.setAttribute('role', 'button');
+                        itemEl.setAttribute('aria-selected', 'false');
+                        
+                        itemEl.addEventListener('click', () => {
+                            listContainer.querySelectorAll('.interactive-list-item').forEach(el => {
+                                el.setAttribute('aria-selected', 'false');
+                                el.classList.remove('border-indigo-600', 'bg-indigo-50');
+                            });
+                            itemEl.setAttribute('aria-selected', 'true');
+                            itemEl.classList.add('border-indigo-600', 'bg-indigo-50');
+                            detailsContainer.innerHTML = `<h3 class="text-lg font-semibold text-indigo-700 mb-2">${item.title}</h3><p class="text-slate-700">${item.content}</p>`;
+                        });
+                        listContainer.appendChild(itemEl);
+                    });
+
+                    if (data.length > 0) {
+                        listContainer.querySelector('.interactive-list-item').click();
+                    }
+                }
+            };
+            
+            const enforcementLogic = {
+                init() {
+                    const steps = document.querySelectorAll('.enforcement-step');
+                    const detailsContainer = document.getElementById('enforcement-details');
+                    
+                    steps.forEach(step => {
+                        step.addEventListener('click', () => {
+                            steps.forEach(s => s.setAttribute('aria-selected', 'false'));
+                            step.setAttribute('aria-selected', 'true');
+                            detailsContainer.innerHTML = `<p class="text-slate-700">${enforcementData[step.id]}</p>`;
+                        });
+                    });
+
+                    document.getElementById('step-1').click();
+                }
+            };
+
+            const caseLogic = {
+                init() {
+                    this.btnRetail = document.getElementById('btn-case-retail');
+                    this.btnSystemic = document.getElementById('btn-case-systemic');
+                    this.contentContainer = document.getElementById('case-content');
+                    
+                    this.btnRetail.addEventListener('click', () => this.showCase('retail'));
+                    this.btnSystemic.addEventListener('click', () => this.showCase('systemic'));
+                    
+                    this.showCase('retail');
+                },
+                showCase(caseName) {
+                    if (caseName === 'retail') {
+                        this.contentContainer.innerHTML = caseData.retail;
+                        this.btnRetail.classList.replace('bg-white', 'bg-indigo-600');
+                        this.btnRetail.classList.replace('text-slate-700', 'text-white');
+                        this.btnSystemic.classList.replace('bg-indigo-600', 'bg-white');
+                        this.btnSystemic.classList.replace('text-white', 'text-slate-700');
+                    } else {
+                        this.contentContainer.innerHTML = caseData.systemic;
+                        this.btnSystemic.classList.replace('bg-white', 'bg-indigo-600');
+                        this.btnSystemic.classList.replace('text-slate-700', 'text-white');
+                        this.btnRetail.classList.replace('bg-indigo-600', 'bg-white');
+                        this.btnRetail.classList.replace('text-white', 'text-slate-700');
+                    }
+                }
+            };
+
+            tabLogic.init();
+            interactiveListLogic.init('mandate-list', mandateData, 'mandate-details');
+            interactiveListLogic.init('dataset-list', datasetData, 'dataset-details');
+            interactiveListLogic.init('trigger-list', triggerData, 'trigger-details');
+            enforcementLogic.init();
+            caseLogic.init();
+        });
+    </script>
+</body>
+</html>
