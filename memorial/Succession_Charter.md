@@ -140,33 +140,20 @@ This defines the precise, reproducible workflow for succession.
 
 #### **Governance Diagram: Succession Protocol Flow**
 
-*(Text-based diagram description)*
+Phase 1 — Trigger Logged
+• Vacancy event recorded in Immutable Ledger
+• Automatic notification to Nominating Committee
 
-[1] Trigger Event
-    • Vacancy detected (death, resignation, misconduct ruling)
-    • Logged to Immutable Ledger
+Phase 2 — Human Vetting
+• Eligibility screening and integrity checks
+• Conflict-of-interest review
+• Shortlist finalized and entered into Ledger
 
-          │
-          ▼
-
-[2] Human Vetting Phase
-    • Nominating Committee reviews eligible candidates
-    • Integrity screening, conflict check, credential verification
-    • Shortlist produced
-    • Logged to Immutable Ledger
-
-          │
-          ▼
-
-[3] Selection & Smart-Contract Finalization
-    • Council or Custodian body votes (75% quorum)
-    • Smart Contract validates:
-         – Proper quorum reached
-         – No conflicts lodged
-         – Ledger entries complete
-    • Appointment activated on-chain
-    • Role keys rotated to new member
-
+Phase 3 — Appointment Activation
+• Council or Custodian vote (75% quorum)
+• Smart Contract verifies quorum + Ledger completeness
+• Appointment executed on-chain
+• Role keys transferred to new member
 
 ### **ARTICLE VIII: WORKED SCENARIOS (CRISIS SIMULATION)**
 
