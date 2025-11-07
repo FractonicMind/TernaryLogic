@@ -65,7 +65,7 @@ Governance may maintain, extend, and optimize TL. It cannot mutate TL. Any propo
 
 1. The Eight Pillars of Ternary Logic.  
 2. The triadic logic structure ($+1, 0, \-1$).  
-3. The causal sequence: (Epistemic Hold $\\rightarrow$ Immutable Ledger $\\rightarrow$ Decision Logs $\\rightarrow$ Governance).  
+3. The causal sequence: Epistemic Hold → Immutable Ledger → Goukassian Principle → Decision Logs → Hybrid Shield → Anchors → Governance   
 4. The Three Mandates: **No Spy**, **No Weapon**, **No Switch Off**.  
 5. The foundational Goukassian Principle.
 
