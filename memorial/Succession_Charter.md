@@ -128,10 +128,10 @@ This Charter is designed to make capture and coercion technically and economical
 This defines the precise, reproducible workflow for succession.
 
 * Stage 1: Trigger Event  
-  A role is declared Role\_Vacant by one of the three triggers defined in Article IV, Section 4.2 (Voluntary, Incapacity, or For-Cause). This is an autonomous, on-chain event.  
+  A role is declared Role\_Vacant by one of the three triggers defined in Article IV, Section 4.2 (Voluntary, Incapacity, or For-Cause). This is an autonomous, on-chain event.   
 * Stage 2: Verification and Nomination  
-  The vacancy is immutably logged. The standing, independent Nominating Committee (composed of outgoing members and external experts) activates to source and vet qualified candidates based on the criteria in Article II.  
-* Stage 3: Assignment of Authority (The Vote)  
+  The vacancy is immutably logged. The standing, independent Nominating Committee (composed of outgoing members and external experts) activates to source and vet qualified candidates based on the criteria in Article II.     
+* Stage 3: Assignment of Authority (The Vote)   
   The Nominating Committee presents a slate of 3-5 vetted candidates. The relevant body (Council or Custodians) votes. A new member is confirmed upon receiving a Type 2 (≥66%) Qualified Majority vote.  
 * Stage 4: Handoff of Signing Keys  
   The new member generates a key pair and submits the public key. The "guardians" of that role (as defined in the Social Recovery Contract) execute a multi-signature transaction to map the vacant Role\_ID in the Role Registry Contract to the new member's key.  
@@ -140,20 +140,20 @@ This defines the precise, reproducible workflow for succession.
 
 #### **Governance Diagram: Succession Protocol Flow**
 
-Phase 1 — Trigger Logged
-• Vacancy event recorded in Immutable Ledger
-• Automatic notification to Nominating Committee
+* Phase 1 — Trigger Logged   
+• Vacancy event recorded in Immutable Ledger   
+• Automatic notification to Nominating Committee   
 
-Phase 2 — Human Vetting
-• Eligibility screening and integrity checks
-• Conflict-of-interest review
-• Shortlist finalized and entered into Ledger
+* Phase 2 — Human Vetting   
+• Eligibility screening and integrity checks   
+• Conflict-of-interest review    
+• Shortlist finalized and entered into Ledger   
 
-Phase 3 — Appointment Activation
-• Council or Custodian vote (75% quorum)
-• Smart Contract verifies quorum + Ledger completeness
-• Appointment executed on-chain
-• Role keys transferred to new member
+* Phase 3 — Appointment Activation   
+• Council or Custodian vote (75% quorum)   
+• Smart Contract verifies quorum + Ledger completeness   
+• Appointment executed on-chain   
+• Role keys transferred to new member   
 
 ### **ARTICLE VIII: WORKED SCENARIOS (CRISIS SIMULATION)**
 
