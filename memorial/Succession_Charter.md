@@ -97,13 +97,13 @@ Succession is an on-chain, automated process managed by a dedicated suite of sma
 A Role in the Registry is declared **Role\_Vacant** by one of three triggers:
 
 1. **Trigger 1 (Voluntary):** The incumbent key-holder signs a "Voluntary Resignation" message.  
-2. **Trigger 2 (Incapacity/Disappearance):** The **DMS Contract** fails to receive a 90-day liveness ping from a key-holder. The contract *autonomously* and *immediately* calls the Role Registry to declare that role Role\_Vacant.  
+2. **Trigger 2 (Incapacity/Disappearance):** The **DMS Contract** fails to receive a 90-day liveness ping from a key-holder. The contract *autonomously* and *immediately* calls the Role Registry to declare that role Role\_Vacant. The DMS interval may be adjusted by joint Type 2 vote, but may not exceed 180 days or fall below 30 days.   
 3. **Trigger 3 (For-Cause Removal):** A joint Type 3 (≥75%) Supermajority vote of *both* the Technical Council and the Stewardship Custodians to declare a role vacant due to gross mandate violation, proven coercion, or loss of faculties.
 
 #### **Section 4.3: Key Rotation and Global Redundancy**
 
 1. **Handoff:** When a new member is confirmed (per Article VII), they generate a new public key. The "guardians" of that role (per Section 4.1) execute a multi-signature transaction on the **Social Recovery Contract** to assign the Role\_ID to the new member's key. The former member's key becomes powerless. *The original key is never needed or transferred.*  
-2. **Anchoring:** This entire suite of succession contracts is deployed as an "Anchor" on a minimum of **five (5)** distinct, high-security, and jurisdictionally diverse public blockchains. Governance remains operational as long as **one** Anchor chain is live, enforcing the No Switch Off mandate through profound redundancy.
+2. **Anchoring:** This entire suite of succession contracts is deployed as an "Anchor" on a minimum of **five (5)** distinct, high-security, and jurisdictionally diverse public blockchains. Governance remains operational as long as **one** Anchor chain is live, enforcing the No Switch Off mandate through profound redundancy. Anchors must be deployed on chains spanning at least three distinct legal jurisdictions.
 
 ### **ARTICLE V: CUSTODY OF INSTITUTIONAL MEMORY**
 
@@ -182,4 +182,8 @@ This Charter achieves the trifecta of resilience by shifting the locus of power 
 1. **Sovereignty:** Sovereignty is vested in the **Pillars** and the **Constitution**, not in the governance bodies. The bodies are servants of the protocol, and this Charter is their binding employment contract.  
 2. **Incorruptibility:** The "Three-Body Equilibrium" (Technical, Ethical, Economic) and the Joint-Approval (Type 3\) voting mechanism make unilateral capture impossible. It forces a "conspiracy of consensus" that is too public, too slow, and too complex to execute.  
 3. **Immortality:** The system is rendered immortal by solving for human mortality. By separating the *role* from the *person* and implementing automated, on-chain succession triggers (DMS Contract) and key recovery (Social Recovery Contract), the Charter ensures that TL can survive the loss of *any* individual, or even its entire founding cohort, without interruption. It is designed, by default, to **No Switch Off**.
+
+---
+
+#### *Governance may guide TL, but no hand may rewrite its bones.* **-Lev Goukassian**
 
