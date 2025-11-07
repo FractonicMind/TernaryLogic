@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ternary Logic - 4th Pillar: Decision Logs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 
+    Chosen Palette: Brilliant Blues (#004AAD, #008DFF, #80D4FF, #D9F2FF)
+    Application Structure Plan: A single, scrollable page divided into thematic sections using Material Design cards. The narrative follows the report: 1. Header/Hook (What is a DL?), 2. Purpose (The "Why"), 3. Core Mandates (The Rules), 4. Core Function (The "How" - +1/0/-1 lifecycle & Structure), 5. Ecosystem (The "Connections" - Pillars/Governance), 6. Architecture (The "Build" - Dual-Lane/Privacy), 7. Use Cases, 8. Conclusion. This linear flow is ideal for an infographic telling a coherent story.
+    Visualization & Content Choices:
+    - Report Info: Core Mandates (No Log = No Action) -> Goal: Inform -> Viz/Method: "Big Concept" cards (styled HTML/Tailwind) -> Justification: Highlights core rules as standalone facts. -> Library/Method: HTML/CSS.
+    - Report Info: DL Lifecycle (+1/0/-1) -> Goal: Organize (Process) -> Viz/Method: HTML/CSS Flow Chart -> Justification: Visually represents the core process flow clearly in a static format. -> Library/Method: HTML/CSS (NO SVG/Mermaid).
+    - Report Info: DL Structure -> Goal: Organize (Groupings) -> Viz/Method: HTML/CSS Grid List -> Justification: Clearly lists the 6 components of a log. -> Library/Method: HTML/CSS.
+    - Report Info: Pillar Interactions -> Goal: Organize (Groupings) -> Viz/Method: Two-column HTML list -> Justification: Presents relational data clearly. -> Library/Method: HTML/CSS.
+    - Report Info: Dual-Lane Architecture -> Goal: Compare -> Viz/Method: Two-column HTML diagram -> Justification: Visually compares the two lanes. -> Library/Method: HTML/CSS.
+    - Note on Chart.js/Plotly.js: These libraries were not used as the source material iurely conceptual and contains no quantitative data, statistics, or numerical trends, making charts (bar, line, pie, etc.) inappropriate. All visualizations are process- or relationship-based, implemented with styled HTML/CSS per the Infographic Guide.
+    CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <style>
+        body {
+            background-color: #f1f5f9; /* slate-100 */
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+        }
+        .header-title {
+            color: #004AAD; /* Deep Blue */
+        }
+        .section-title {
+            color: #004AAD; /* Deep Blue */
+            border-bottom: 2px solid #80D4FF; /* Light Blue */
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .subsection-title {
+            color: #008DFF; /* Bright Blue */
+        }
+        .diagram-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            overflow-x: auto;
+        }
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .flowchart-item {
+            background-color: #D9F2FF; /* Pale Blue */
+            color: #004AAD; /* Deep Blue */
+            border: 2px solid #80D4FF; /* Light Blue */
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 150px;
+            margin: 0.5rem;
+        }
+        .flowchart-arrow {
+            font-size: 2rem;
+            color: #008DFF; /* Bright Blue */
+            transform: rotate(90deg);
+        }
+
+        @media (min-width: 768px) {
+            .flowchart {
+                flex-direction: row;
+                justify-content: center;
+            }
+            .flowchart-arrow {
+                transform: rotate(0deg);
+                margin: 0 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-700">
+
+    <main class="max-w-5xl mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold header-title mb-2">Ternary Logic Pillar 4: Decision Logs</h1>
+            <p class="text-xl md:text-2xl text-slate-600">The Operational Forensic Substrate & Verifiable "Why"</p>
+        </header>
+
+        <!-- Section 1: Purpose -->
+        <section>
+            <h2 class="text-3xl font-bold section-title">1. The Purpose of Decision Logs</h2>
+            <p class="text-lg mb-6">In any economic or safety-critical system, every action must have a verifiable "why." Decision Logs (DLs) are not passive records; they are active components that create causality, binding an action to the precise evidence and reasoning present at its initiation.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="card">
+                    <h3 class="text-xl font-semibold subsection-title mb-2">Causality & Accountability</h3>
+                    <p>A DL provides the verifiable "why" *before* an action is finalized. This enables true accountability across borders and jurisdictions by answering the core question: "What did the system know, and when did it act?"</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold subsection-title mb-2">Preventing Manipulation</h3>
+                    <p>By creating an immutable record at the moment of intent, DLs prevent retrospective reconstruction games, memory-holing (deleting history), and policy laundering (inventing reasons after the fact).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Core Mandates -->
+        <section>
+            <h2 class="text-3xl font-bold section-title">2. The Three Core Mandates</h2>
+            <p class="text-lg mb-6">DLs enforce non-negotiable operational mandates that are central to Ternary Logic's governance. These rules are absolute.</p>
+            <div class="grid md:grid-cols-3 gap-6 text-center">
+                <div class="card border-t-4 border-blue-950">
+                    <h3 class="text-xl font-bold header-title mb-2">No Log = No Action</h3>
+                    <p>An operation cannot be initiated or committed to the ledger without a corresponding, valid Decision Log. The log is a prerequisite for action.</p>
+                </div>
+                <div class="card border-t-4 border-blue-950">
+                    <h3 class="text-xl font-bold header-title mb-2">No Spy, No Weapon</h3>
+                    <p>The system mandates that DLs cannot be used to log or facilitate actions related to unauthorized surveillance or offensive weaponization.</p>
+                </div>
+                <div class="card border-t-4 border-blue-950">
+                    <h3 class="text-xl font-bold header-title mb-2">No Switch Off</h3>
+                    <p>The core logging function cannot be disabled by any operator or governance body to obscure an action. The system will halt operations rather than execute them without logging.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Core Function -->
+        <section>
+            <h2 class="text-3xl font-bold section-title">3. Core Function: Lifecycle & Structure</h2>
+            <p class="text-lg mb-6">The DL is the fourth pillar, invoked at the start of an operation. It follows a strict, immutable `+1 / 0 / -1` lifecycle.</p>
+            
+            <!-- Lifecycle Flowchart -->
+            <div class="card">
+                <h3 class="text-xl font-semibold subsection-title mb-4 text-center">The Decision Log Lifecycle</h3>
+                <div class="diagram-container">
+                    <div class="flowchart">
+                        <div class="flowchart-item">+1 Intent<br/><span class="text-sm font-normal">(DL Created)</span></div>
+                        <div class="flowchart-arrow">→</div>
+                        <div class="flowchart-item">0 Epistemic Hold<br/><span class="text-sm font-normal">(DL Frozen)</span></div>
+                        <div class="flowchart-arrow">→</div>
+                        <div class="flowchart-item">±1 Resolution<br/><span class="text-sm font-normal">(Commit/Refuse)</span></div>
+                        <div class="flowchart-arrow">→</div>
+                        <div class="flowchart-item">Ledger<br/><span class="text-sm font-normal">(DL Anchored)</span></div>
+                    </div>
+                </div>
+                <div class="mt-6 space-y-2">
+                    <p><strong>+1 Intent:</strong> An actor initiates an operation. The DL is instantly created *before* the Hold, capturing all inputs and reasoning.</p>
+                    <p><strong>0 Hold:</strong> The system enters a verification window. The DL is frozen and *cannot be edited or deleted*.</p>
+                    <p><strong>±1 Resolution:</strong> After the Hold, a final outcome (Commit +1 or Refuse -1) is bound to the original DL.</p>
+                    <p><strong>Ledger:</strong> The entire package (DL + Outcome) is sealed, hashed, and anchored to the Immutable Ledger.</p>
+                </div>
+            </div>
+
+            <!-- Structure -->
+            <div class="card mt-6">
+                <h3 class="text-xl font-semibold subsection-title mb-4">Decision Log Structure</h3>
+                <p class="mb-4">Each log is an immutable data object containing the precise forensic components of the "why."</p>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-50 p-3 rounded border"><strong class="header-title">Inputs:</strong> The specific data (e.g., transaction details, sensor readings) used.</div>
+                    <div class="bg-slate-50 p-3 rounded border"><strong class="header-title">Actors:</strong> Pseudonymous identifiers of the human, AI, or process initiating.</div>
+                    <div class="bg-slate-50 p-3 rounded border"><strong class="header-title">Models:</strong> A reference to the specific risk model, rule, or business logic invoked.</div>
+                    <div class="bg-slate-50 p-3 rounded border"><strong class="header-title">Risk Flags:</strong> Any compliance, safety, or economic risk flags raised.</div>
+                    <div class="bg-slate-50 p-3 rounded border"><strong class="header-title">Reasoning:</strong> A human- or machine-readable statement of the explicit reason.</div>
+                    <div class="bg-slate-50 p-3 rounded border"><strong class="header-title">Timestamp:</strong> Cryptographic timestamp and signature proving when and by whom.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Ecosystem -->
+        <section>
+            <h2 class="text-3xl font-bold section-title">4. Ecosystem Integration</h2>
+            <p class="text-lg mb-6">DLs do not exist in isolation. They are the central pillar that activates and is verified by the other components of the Ternary Logic framework.</p>
+
+            <!-- Pillar Interactions -->
+            <div class="card">
+                <h3 class="text-xl font-semibold subsection-title mb-4">Interaction with the Other Seven Pillars</h3>
+                <div class="space-y-4">
+                    <div><strong class="header-title">Epistemic Hold:</strong> The DL is the object that is *evaluated* inside the Hold window.</div>
+                    <div><strong class="header-title">Immutable Ledger:</strong> The DL is the *proof* that is sealed, hashed, and anchored to the Ledger.</div>
+                    <div><strong class="header-title">Goukassian Principle:</strong> The DL is the *technical implementation* of the principle, providing "what they knew and when."</div>
+                    <div><strong class="header-title">Economic Rights & Transparency:</strong> The DL provides the *mandatory evidence* for regulatory transparency (e.g., FATF, SEC).</div>
+                    <div><strong class="header-title">Sustainable Capital Allocation:</strong> The DL *proves* alignment with sustainability mandates by logging the models used.</div>
+                    <div><strong class="header-title">Hybrid Shield:</strong> The Shield *protects* the DL's reasoning from tampering during the Hold.</div>
+                    <div><strong class="header-title">Anchors:</strong> The DL's hash is *notarized* across anchors, making its existence globally verifiable.</div>
+                </div>
+            </div>
+
+            <!-- Governance Interactions -->
+            <div class="card">
+                <h3 class="text-xl font-semibold subsection-title mb-4">Support for the Governance Triad</h3>
+                <p class="mb-4">DLs provide the verifiable evidence for all three branches of governance. No governance body may alter DL content.</p>
+                <div class="space-y-4">
+                    <div><strong class="header-title">Technical Council:</strong> Uses DLs for compliance verification, automated auditing, and protocol testing.</div>
+                    <div><strong class="header-title">Stewardship Custodians:</strong> Use DLs as the primary evidence for ethical reviews and dispute determinations.</div>
+                    <div><strong class="header-title">Smart Contract Treasury:</strong> Automates release of funds based on the verification of specific DL milestones.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Architecture -->
+        <section>
+            <h2 class="text-3xl font-bold section-title">5. Architecture & Security</h2>
+            <p class="text-lg mb-6">The system is designed for high-performance logging without sacrificing security, privacy, or the integrity of trade secrets.</p>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Dual-Lane Architecture -->
+                <div class="card">
+                    <h3 class="text-xl font-semibold subsection-title mb-4">Dual-Lane Architecture</h3>
+                    <p class="mb-4">This parallel design ensures immutable logging (Evidence Lane) does not slow down high-performance execution (Action Lane).</p>
+                    <div class="space-y-3">
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-3 rounded">
+                            <strong class="header-title">Action Lane (Sub-300ms):</strong> Performs the operation, triggers the DL, and enters the Hold state.
+                        </div>
+                        <div class="bg-slate-50 border-l-4 border-slate-400 p-3 rounded">
+                            <strong class="text-slate-700">Evidence Lane:</strong> Creates and freezes the DL, facilitates verification, and seals the final log.
+                        </div>
+                    </div>
+                </div>
+                <!-- Privacy -->
+                <div class="card">
+                    <h3 class="text-xl font-semibold subsection-title mb-4">GDPR, Privacy & Trade Secrets</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <strong class="header-title">Pseudonymization (GDPR):</strong> Personal data (PII) is removed *before* hashing. The log only contains commitments and pseudonymous IDs, preserving evidentiary continuity while allowing PII erasure.
+                        </div>
+                        <div>
+                            <strong class="header-title">Ephemeral Key Rotation (EKR):</strong> To protect trade secrets (e.g., a proprietary AI model), the DL only references the model. The model's logic is only decryptable during the Hold window, after which the keys vanish.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Use Cases -->
+        <section>
+            <h2 class="text-3xl font-bold section-title">6. Detailed Examples Across Sectors</h2>
+            <p class="text-lg mb-6">The `+1 → DL → 0 → ±1 → Ledger` flow is universal. Here is how it applies in critical sectors.</p>
+            <div class="space-y-6">
+                <!-- Finance -->
+                <div class="card">
+                    <h3 class="text-xl font-semibold subsection-title mb-3">Finance / AML</h3>
+                    <p>A high-risk transaction is flagged (+1). The DL logs the inputs, risk flags, and AI model used. The transaction enters a Hold (0). A compliance officer reviews the frozen DL, confirms the risk, and applies a Refuse (-1) decision. The DL + Refusal is anchored to the ledger as an audit record.</p>
+                </div>
+                <!-- Supply Chain -->
+                <div class="card">
+                    <h3 class="text-xl font-semibold subsection-title mb-3">Supply Chain</h3>
+                    <p>A logistics AI proposes rerouting a shipment due to weather (+1). The DL logs sensor data, vendor risk, and customs checks. The action enters a Hold (0). A human operator verifies the DL's reasoning and approves the reroute (+1). The DL + Approval is anchored.</p>
+                </div>
+                <!-- Healthcare -->
+                <div class="card">
+                    <h3 class="text-xl font-semibold subsection-title mb-3">Healthcare / Medical AI</h3>
+                    <p>A diagnostic AI flags a borderline case (+1). The DL logs the pseudonymous scan, contraindications, and reasoning ("specialist review required"). The system enters a mandatory Hold (0). A specialist reviews the DL, confirms, and binds their own decision (+1) to the log, creating a verifiable diagnostic path.</p>
+                </div>
+                <!-- Robotics -->
+                <div class="card">
+                    <h3 class="text-xl font-semibold subsection-title mb-3">Autonomous Robotics</h3>
+                    <p>A robot detects a sensor inconsistency during a high-risk operation (+1). Its AI triggers a protective stop, creating a DL with all sensor data and the reasoning. The robot enters a fail-safe Hold (0). The resolution is Halt (-1) and alert a human operator. The DL provides a perfect forensic record of the failure.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Conclusion -->
+        <section>
+            <h2 class="text-3xl font-bold section-title">7. Conclusion</h2>
+            <div class="card bg-blue-950 text-white">
+                <p class="text-xl md:text-2xl font-semibold text-center leading-relaxed">Decision Logs are the difference between systems humans must *trust* and systems humans can *verify*.</p>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
