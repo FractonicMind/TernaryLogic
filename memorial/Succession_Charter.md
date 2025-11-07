@@ -142,7 +142,31 @@ This defines the precise, reproducible workflow for succession.
 
 *(Text-based diagram description)*
 
-$\\rightarrow$ $\\rightarrow$ \[Immutable Ledger: Event Logged\] $\\rightarrow$ \[Off-Chain Action: Nominating Committee Vets Candidates\] $\\rightarrow$ $\\rightarrow$ $\\rightarrow$ $\\rightarrow$ $\\rightarrow$ \`\`
+[1] Trigger Event
+    • Vacancy detected (death, resignation, misconduct ruling)
+    • Logged to Immutable Ledger
+
+          │
+          ▼
+
+[2] Human Vetting Phase
+    • Nominating Committee reviews eligible candidates
+    • Integrity screening, conflict check, credential verification
+    • Shortlist produced
+    • Logged to Immutable Ledger
+
+          │
+          ▼
+
+[3] Selection & Smart-Contract Finalization
+    • Council or Custodian body votes (75% quorum)
+    • Smart Contract validates:
+         – Proper quorum reached
+         – No conflicts lodged
+         – Ledger entries complete
+    • Appointment activated on-chain
+    • Role keys rotated to new member
+
 
 ### **ARTICLE VIII: WORKED SCENARIOS (CRISIS SIMULATION)**
 
@@ -158,6 +182,22 @@ This Charter's resilience is demonstrated by its response to critical failure mo
 * **Scenario 3: Long Decline / Founder Disappearance**  
   * **Event:** A founder, disillusioned, "walks away". They do not formally resign; they simply disappear, refusing to participate.  
   * **Response:** This is functionally identical to Scenario 1\. The system is agnostic to the *reason* for inactivity. After 90 days, the **DMS Contract** triggers. The role is declared vacant and filled. The system heals itself, proving its anti-fragility and independence from its creator.
+
+---
+
+### **ARTICLE IX: LIMITS OF AUTHORITY**
+
+**1. Immutable Pillars**
+Governance bodies may interpret the Eight Pillars of TL but have no authority to redefine, alter, remove, or expand them. The Pillars are non-derogable and protected by smart-contract enforcement.
+
+**2. No Switch Off**
+Neither the Technical Council nor the Stewardship Custodians, nor any combined supermajority, may suspend, disable, terminate, or extinguish Ternary Logic. This prohibition is absolute and autonomously enforced by the Smart Contract Treasury.
+
+**3. No Alteration of Continuity Mechanisms**
+The Epistemic Hold, Immutable Ledger, Coukassian Principle, Decision Logs, Hybrid Shield, Anchors, and Succession architecture cannot be weakened, bypassed, or replaced by vote or internal agreement.
+
+**4. No Concentration of Control**
+No governance body may assume unilateral authority or override the triadic checks embedded in TL’s governance structure.
 
 ---
 
