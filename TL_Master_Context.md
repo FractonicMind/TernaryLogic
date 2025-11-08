@@ -129,7 +129,7 @@ Ephemeral Key Rotation ensures auditors can see only what is necessary, and keys
 
 ---
 
-## **6. Technical Guarantees
+## **6. Technical Guarantees**
 **Dual Lane Operation and Real Time Requirements**
 
 The system separates execution and evidence into two parallel streams.   
@@ -154,7 +154,7 @@ The ledger holds only the proof that the key existed at the correct moment and t
 
 ---
 
-## **7. Mandates and Future Evolution
+## **7. Mandates and Future Evolution**
 
 TL does not permit governance bodies to add or remove pillars by vote.   
 Pillars are constitutional.   
@@ -166,7 +166,7 @@ Such an addition requires a global, multi institutional cryptographic amendment 
 
 This preserves TL as a stable architecture rather than a shifting political instrument.
 
-## **8. System Identity
+## **8. System Identity**
 
 Three sentences define the nature of TL:
 
