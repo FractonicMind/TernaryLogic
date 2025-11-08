@@ -1,0 +1,26 @@
+TL_Notarized_Manifest.txt
+
+This manifest lists all TL documents requiring notarization, anchoring,  
+and inclusion in the permanent evidence chain of the Ternary Logic framework.
+
+These files represent the constitutional backbone of TL.  
+Each must be notarized, timestamped, and anchored across multiple public chains  
+(Bitcoin, Ethereum, Polygon) using OpenTimestamps or equivalent proofs.
+
+No document on this list may be removed, altered, or superseded without  
+recorded
+
+TL_Succession_Declaration_Notarized.md <Hash>
+TL_Succession_Declaration_Notarized.pdf <Hash>
+TL_Governance_Notarized.md <Hash>
+TL_Governance_Notarized.pdf <Hash>
+TL_Sync_Protocol_Notarized.md <Hash>
+TL_Sync_Protocol_Notarized.pdf <Hash>
+TL_Goukassian_Principle_Notarized.md <Hash>
+TL_Goukassian_Principle_Notarized.pdf <Hash>
+TL_Anchoring_Standards_Notarized.md <Hash>
+TL_Anchoring_Standards_Notarized.pdf <Hash>
+TL_Succession_Charter_Notarized.md <Hash>
+TL_Succession_Charter_Notarized.pdf <Hash>
+TL_Memorial_Fund_Notarized.md <Hash>
+TL_Memorial_Fund_Notarized.pdf <Hash>
