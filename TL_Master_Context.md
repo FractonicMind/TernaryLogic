@@ -81,14 +81,14 @@ Only smart contracts enforce existential boundaries.
 
 ## **3. Succession Charter**
 
-If Lev is gone, TL must continue without pause.
+If Lev is gone, TL must continue without pause.   
 Order of succession: Technical Council first, Stewardship Custodians next, Treasury as the unalterable guard.   
 
-Limits of authority:
+**Limits of authority:**   
 No council or human group may remove pillars, add pillars, rewrite the fundamental mechanism, or weaken Anchors.   
 Only additive clarifications to strengthen protections are allowed.
 
-Dead Man’s Switch:   
+**Dead Man’s Switch:**      
 If custodians vanish, smart contracts automatically preserve TL in locked state, no modification allowed, but continuity remains intact.
 
 ---
@@ -120,7 +120,7 @@ Buffers and Merkle cascades reconcile after load stabilizes.
 
 ### **Privacy**
 
-User data erased or pseudonymized before hashing.
+User data erased or pseudonymized before hashing.   
 Anchors hold proofs without revealing identity.
 
 ### **Trade Secrets**
@@ -147,9 +147,9 @@ Anchors store only commitments and signatures.
 
 **Privacy and Data Rights**
 
-User identifying data is erased or transformed before hashing in full compliance with GDPR.
-No private information appears in any anchor.
-Trade secrets are protected through Ephemeral Key Rotation, which permits temporary verification and then self expires.
+User identifying data is erased or transformed before hashing in full compliance with GDPR.   
+No private information appears in any anchor.   
+Trade secrets are protected through Ephemeral Key Rotation, which permits temporary verification and then self expires.   
 The ledger holds only the proof that the key existed at the correct moment and then disappeared.
 
 ---
@@ -158,10 +158,11 @@ The ledger holds only the proof that the key existed at the correct moment and t
 
 TL does not permit governance bodies to add or remove pillars by vote.   
 Pillars are constitutional.   
+
 If an additional mandate is ever required, it must satisfy three conditions:   
 
 It must be universal, non ideological, and tied to evidentiary harm that cannot be mitigated by the existing framework.   
-Such an addition requires a global, multi institutional cryptographic amendment and cannot originate from a standard governance vote.
+Such an addition requires a global, multi institutional cryptographic amendment and cannot originate from a standard governance vote.   
 
 This preserves TL as a stable architecture rather than a shifting political instrument.
 
