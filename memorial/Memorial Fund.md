@@ -1,10 +1,4 @@
-### **AUTHORITATIVE DRAFT: MEMORIAL\_FUND.MD**
-
-DOCUMENT ID: TL-CONST-MEM-FUND-V1
-
-STATUS: FINAL DRAFT
-
-CLASSIFICATION: CONSTITUTIONAL INFRASTRUCTURE
+## The Lev Goukassian Memorial Fund for Economic Decision Research
 
 ### **Executive Summary**
 
@@ -60,18 +54,23 @@ To ensure perpetuity, the **Smart Contract Treasury** (the autonomous execution 
 
 #### **2.3. Funding Architecture Diagram (Text-Based)**
 
-|  
-             v
-
-|  
-|--\> (Immutable Endowment \- Non-Expendable)  
-|  
-|--\> (Expendable Capital for Permitted Uses)  
-|  
-             v
-
-|  
-             v
+                      (Immutable Layer)
+                ┌───────────────────────────┐
+                │     Endowment Reserve     │
+                │   Non-Expendable Capital  │
+                └─────────────┬─────────────┘
+                              │
+                      (Operational Layer)
+                ┌─────────────▼─────────────┐
+                │   Operational Allocation  │
+                │  Expendable for Mandated  │
+                │         Purposes          │
+                └─────────────┬─────────────┘
+                              │
+                     (Enforcement Layer)
+                              ▼
+                    Smart Contract Treasury
+                     (Rules, Ceilings, Logs)
 
 ### **3\. Jurisprudence of Expenditures**
 
