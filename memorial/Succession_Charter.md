@@ -1,6 +1,6 @@
-## **TERNARY LOGIC SUCCESSION CHARTER.**
+## **Ternary Logic Succession Charter.**
 
-## **A PROTOCOL FOR INSTITUTIONAL IMMORTALITY.**
+## **A Protocol For Institutional Immortality.**
 
 ### **ARTICLE I: CHARTER PURPOSE AND SOVEREIGN MANDATE**
 
