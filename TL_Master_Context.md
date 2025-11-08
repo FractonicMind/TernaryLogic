@@ -2,22 +2,43 @@
 
 ## **1. Core Identity of Ternary Logic**
 
-Ternary Logic is an economic governance framework built on triadic decision states: plus one proceed, zero Epistemic Hold, minus one refusal.
-It is not policy, not ideology, not a platform, and not software.
-It is a constitutional protocol that binds economic systems to evidence, memory, auditable reasoning, and immutable record.
+Ternary Logic is an economic governance framework built on triadic decision states: plus one proceed, zero Epistemic Hold, minus one refusal.   
+It is not policy, not ideology, not a platform, and not software.   
+It is a constitutional protocol that binds economic systems to evidence, memory, auditable reasoning, and immutable record.   
 
-Eight pillars define the framework, always in this order:
+Eight pillars define the framework, always in this order:   
 
-1. Epistemic Hold
+**1. Epistemic Hold**
+The system enters a measured pause whenever uncertainty or risk thresholds are triggered.   
+It asks whether the proposed action is supported by evidence and aligned with mandated checks.   
+
 2. Immutable Ledger
-3. Goukassian Principle
-4. Decision Logs
-5. Economic Rights and Transparency Mandate
-6. Sustainable Capital Allocation Mandate
-7. Hybrid Shield
-8. Anchors
+A write once, tamper evident record of every final state outcome.
+Committed actions and refusals are sealed and preserved.
 
-The order is causal, not aesthetic.
+3. Goukassian Principle
+Identity, authority, and use obligations expressed through Lantern, Signature, and License.
+Confirms who acted, under which rights, and with what duties.
+
+4. Decision Logs
+The explicit reasoning behind every proposed action.
+Inputs, thresholds, contextual evidence, and author identity are recorded before commitment.
+
+5. Economic Rights and Transparency Mandate
+Ensures decisions that affect resources, access, fairness, or exposure are supported by evidence.
+Applies universally, including healthcare, robotics, procurement, and public systems.
+
+6. Sustainable Capital Allocation Mandate
+Requires acknowledgment and proof of long horizon societal and ecological impacts where decisions influence resource flow or safety.
+Passes immediately when not applicable, yet prevents domain blind spots.
+
+7. Hybrid Shield
+Cryptographic enforcement combined with human stewardship.
+Prevents misuse, institutional capture, or unauthorized modification.
+
+8. Anchors
+Public and multi chain anchoring of proofs for sovereign grade permanence.
+Anchors act as witnesses rather than consensus mechanisms and make TL reconstructible from evidence alone.
 
 ---
 
@@ -76,43 +97,43 @@ Anchors prevent erasure, revision, or backdating.
 
 ### **Technical Council**
 
-Nine members, global, rotating, non political.
-Mandate: protect protocol correctness, review updates, maintain cryptography, preserve Ledger standards.
-Quorum seventy five percent, seven of nine.
+Nine members, global, rotating, non political.   
+Mandate: protect protocol correctness, review updates, maintain cryptography, preserve Ledger standards.   
+Quorum seventy five percent, seven of nine.   
 
 ### **Stewardship Custodians**
 
-Eleven members, independent, multinational.
-Mandate: ethical oversight, anti capture, continuity of human conscience.
-Quorum seventy five percent, nine of eleven.
+Eleven members, independent, multinational.   
+Mandate: ethical oversight, anti capture, continuity of human conscience.   
+Quorum seventy five percent, nine of eleven.   
 
 ### **Smart Contract Treasury**
 
-Enforces immutability of pillars, manages funding flows according to the Memorial Fund Charter, and guarantees the No Switch Off rule.
-No one can shut TL down, not regulators, not corporations, not councils.
-Only smart contracts enforce existential boundaries.
+Enforces immutability of pillars, manages funding flows according to the Memorial Fund Charter, and guarantees the No Switch Off rule.   
+No one can shut TL down, not regulators, not corporations, not councils.   
+Only smart contracts enforce existential boundaries.   
 
 ---
 
 ## **4. Succession Charter**
 
 If Lev is gone, TL must continue without pause.
-Order of succession: Technical Council first, Stewardship Custodians next, Treasury as the unalterable guard.
+Order of succession: Technical Council first, Stewardship Custodians next, Treasury as the unalterable guard.   
 
 Limits of authority:
-No council or human group may remove pillars, add pillars, rewrite the fundamental mechanism, or weaken Anchors.
+No council or human group may remove pillars, add pillars, rewrite the fundamental mechanism, or weaken Anchors.   
 Only additive clarifications to strengthen protections are allowed.
 
-Dead Man’s Switch:
+Dead Man’s Switch:   
 If custodians vanish, smart contracts automatically preserve TL in locked state, no modification allowed, but continuity remains intact.
 
 ---
 
 ## **5. Memorial Fund Structure**
 
-Two pools: immutable endowment that cannot be spent, and expendable capital for permitted uses.
-Permitted uses include audits, security, research, governance continuity, technical maintenance, and public anchoring.
-Forbidden uses include salaries, private enrichment, political activity, lobbying, or commercial capture.
+Two pools: immutable endowment that cannot be spent, and expendable capital for permitted uses.   
+Permitted uses include audits, security, research, governance continuity, technical maintenance, and public anchoring.   
+Forbidden uses include salaries, private enrichment, political activity, lobbying, or commercial capture.   
 
 ---
 
@@ -120,17 +141,17 @@ Forbidden uses include salaries, private enrichment, political activity, lobbyin
 
 ### **No Switch Off**
 
-TL cannot be disabled, paused, privatized, swallowed, or buried.
+TL cannot be disabled, paused, privatized, swallowed, or buried.   
 Any attempt triggers Epistemic Hold plus governance intervention and is recorded as existential tampering.
 
 ### **Always Memory**
 
-Every decision, risk score, and governance action writes to the Ledger.
+Every decision, risk score, and governance action writes to the Ledger.   
 Evidence must catch up before system rest.
 
 ### **Deferred Anchoring**
 
-High frequency environments can defer anchoring temporarily, but no event is lost.
+High frequency environments can defer anchoring temporarily, but no event is lost.   
 Buffers and Merkle cascades reconcile after load stabilizes.
 
 ### **Privacy**
@@ -147,18 +168,18 @@ Ephemeral Key Rotation ensures auditors can see only what is necessary, and keys
 ## **7. Technical Guarantees
 **Dual Lane Operation and Real Time Requirements**
 
-The system separates execution and evidence into two parallel streams.
-Lane one executes the action.
-Lane two creates and seals the proofs.
-Execution is never delayed.
-Evidence must always catch up.
-The target real time budget for verification is less than three hundred milliseconds for high performance systems.
+The system separates execution and evidence into two parallel streams.   
+Lane one executes the action.   
+Lane two creates and seals the proofs.   
+Execution is never delayed.   
+Evidence must always catch up.   
+The target real time budget for verification is less than three hundred milliseconds for high performance systems.   
 
 **Cryptographic Storage**
 
-Proofs are aggregated through Merkle batching.
-All sensitive logs remain in encrypted off chain custody.
-Anchors store only commitments and signatures.
+Proofs are aggregated through Merkle batching.   
+All sensitive logs remain in encrypted off chain custody.   
+Anchors store only commitments and signatures.   
 
 **Privacy and Data Rights**
 
@@ -169,24 +190,24 @@ The ledger holds only the proof that the key existed at the correct moment and t
 
 ---
 
-## **8. Mandates and Future Evolution
+## 8. Mandates and Future Evolution
 
-TL does not permit governance bodies to add or remove pillars by vote.
-Pillars are constitutional.
-If an additional mandate is ever required, it must satisfy three conditions:
+TL does not permit governance bodies to add or remove pillars by vote.   
+Pillars are constitutional.   
+If an additional mandate is ever required, it must satisfy three conditions:   
 
-It must be universal, non ideological, and tied to evidentiary harm that cannot be mitigated by the existing framework.
+It must be universal, non ideological, and tied to evidentiary harm that cannot be mitigated by the existing framework.   
 Such an addition requires a global, multi institutional cryptographic amendment and cannot originate from a standard governance vote.
 
 This preserves TL as a stable architecture rather than a shifting political instrument.
 
-## **9. System Identity
+## 9. System Identity
 
 Three sentences define the nature of TL:
 
-**Evidence Must Always Catch Up.**
-**No Log means No Sction.**
-**There is no Switch Off.**
+**Evidence Must Always Catch Up.**   
+**No Log means No Sction.**   
+**There is no Switch Off.**   
 
 These statements form the covenant between TL and the world.
 
