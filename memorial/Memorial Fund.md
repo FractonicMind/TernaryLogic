@@ -1,8 +1,8 @@
-## The Lev Goukassian Memorial Fund for Economic Decision Research
+## The Lev Goukassian Memorial Fund
 
 ### **Executive Summary**
 
-The Ternary Logic Memorial Fund (hereafter "the Fund") is a constitutional financial mechanism established to ensure the perpetual, incorruptible, and autonomous operation of the Ternary Logic (TL) protocol. Its sole mandate is the financial enforcement of the **No Switch Off** principle.
+The Lev Goukassian Memorial Fund (hereafter "the Fund") is a constitutional financial mechanism established to ensure the perpetual, incorruptible, and autonomous operation of the Ternary Logic (TL) protocol. Its sole mandate is the financial enforcement of the **No Switch Off** principle.
 
 The Fund is not a discretionary treasury, a grant-maker, or an investment vehicle. It is a non-speculative, restricted-use endowment, architected to guarantee the long-term survivability of TL's core governance and anchoring infrastructure, independent of any founder or external organization.
 
@@ -177,4 +177,8 @@ These core services are funded automatically from the Operational Vault (within 
 The Fund is the guarantor of the **Succession Charter**. If governance members become incapacitated or abandon their roles (triggering the DMS), the Fund automatically provides the capital required for the succession workflow. It pays for the vetting and onboarding of new Council and Custodian members, ensuring the human governance layer can be perpetually and autonomously reconstituted.
 
 The Fund, therefore, does not just *support* the protocol; it is the autonomous financial engine that *enforces* its immortality.
+
+---
+
+#### **“Governance can argue over anchors, cryptography, or fees; the Fund argues only with death—and always wins by paying exact change in immutable time.”** *-Lev Goukassian*
 
