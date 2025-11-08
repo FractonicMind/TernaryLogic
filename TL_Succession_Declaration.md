@@ -4,9 +4,9 @@
 
 ### Formal Declaration by Lev Goukassian
 
-**I, Lev Goukassian (ORCID: 0009-0006-5966-1243), creator of the Ternary Moral Logic (TML) framework, hereby declare my voluntary succession of stewardship responsibilities for the TML project, effective immediately upon signing and witnessing of this declaration.**
+**I, Lev Goukassian (ORCID: 0009-0006-5966-1243), creator of the Ternary Logic (TL) framework, hereby declare my voluntary succession of stewardship responsibilities for the TL project, effective immediately upon signing and witnessing of this declaration.**
 
-Ternary Logic is a constitutional economic protocol built on the triadic model. Its identity is defined by the Eight Pillars:
+**Ternary Logic is a constitutional economic protocol built on the triadic model. Its identity is defined by the Eight Pillars:**
 
 1.  Epistemic Hold   
 2.  Immutable Ledger   
