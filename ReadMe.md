@@ -347,19 +347,6 @@ Comprehensive evaluation was conducted through systematic backtesting across mul
 **Methodology**: Comparative analysis against binary decision-making baselines using standardized economic scenarios  
 **Statistical Framework**: Robust performance metrics with significance testing and confidence intervals
 
-### Performance Results
-
-| Economic Domain | Forecasting Accuracy | Capital Efficiency | Decision Quality | Epistemic Hold Rate |
-|-----------------|---------------------|-------------------|------------------|-------------------|
-| Financial Trading | 35% error reduction | 40% Sharpe improvement | 35% fewer errors | 23% of decisions |
-| Supply Chain Management | N/A | 22% optimization | 18% fewer errors | 15% of decisions |
-| Monetary Policy | 28% improvement | 19% volatility reduction | N/A | 17% of decisions |
-
-**Key Findings**: TL implementation achieved statistically significant improvements across all evaluated economic domains, with particular excellence in uncertainty recognition (15-23% Epistemic Hold activation rates) and systematic decision quality improvement. The framework's ability to balance economic efficiency with uncertainty management represents a substantial advancement in automated economic decision-making.
-
-### Statistical Significance
-
-Results demonstrate consistent superiority of Epistemic Hold methodology across diverse economic scenarios, with effect sizes indicating practical significance for real-world economic system deployment. The framework's systematic uncertainty management capabilities provide measurable value in complex economic environments.
 
 ---
 
