@@ -327,14 +327,6 @@ The system's momentum begins with the **Immutable Ledger**, which establishes a 
 The **Hybrid Shield** then intelligently manages access to this high-integrity data, balancing the public's right to verify with the institution's need to protect sensitive information. The **Anchors** connect this trusted digital realm to the complexities of the real world, ensuring the system is well-governed, interoperable with existing infrastructure, and grounded in verifiable off-chain facts. Finally, the **Mandates**—for both Economic Rights & Transparency and Sustainable Capital Allocation—apply intelligent, programmable policy to this trusted data, automating compliance and directing capital towards desired outcomes with high confidence.  
 This integrated system creates a high-trust financial environment. When all participants—banks, regulators, investors, and the public—can rely on a single, verifiable source of truth, the friction and costs associated with doubt and mistrust diminish. This enhanced market discipline reduces systemic risk, lowers transaction and compliance costs, and fosters a more stable and efficient financial system.
 
-### **Redefining the Role of Central Banks**
-
-For central banks, the TL framework is more than an infrastructure upgrade; it is a powerful toolkit that enhances their ability to execute their core mandates of financial and price stability. The framework provides:
-
-* **Supervision 2.0:** A shift from periodic, sample-based auditing to continuous, comprehensive, real-time oversight through direct access to immutable Decision Logs.  
-* **A Resilient Platform for CBDCs:** A robust, secure, and privacy-preserving architecture for issuing and managing both wholesale and retail Central Bank Digital Currencies, addressing key public policy concerns from the outset.  
-* **Effective Tools for Modern Policy Challenges:** The data integrity provided by the Sustainable Capital Allocation Mandate gives central banks the confidence to integrate climate risk and other sustainability factors into their monetary policy and prudential frameworks, tackling 21st-century challenges with 21st-century tools.
-
 ### **Impact on Financial Crime and Illicit Flows**
 
 The framework's architectural transparency presents a systemic and formidable challenge to the multi-trillion-dollar global industry of money laundering, terrorist financing, and corruption. By making beneficial ownership verifiable and transaction pathways immutable, it dismantles the opacity that illicit actors rely on to operate. Anonymous shell companies, complex layering schemes, and falsified records become exponentially more difficult to create and maintain within a system designed for verifiable integrity. This makes the formal financial system a far more hostile environment for illicit capital, forcing criminal activity to the fringes and significantly enhancing the effectiveness of global AML/CFT efforts.
@@ -342,6 +334,14 @@ The framework's architectural transparency presents a systemic and formidable ch
 ### **A New Social Contract for Finance**
 
 Ultimately, the Ternary Logic framework is an architecture of trust. The global financial crisis of 2008, along with subsequent scandals, severely eroded public confidence in the financial industry and its regulators. The TL framework's foundational emphasis on verifiable integrity, inescapable ethical accountability, and programmatic alignment with societal goals—such as financial stability and environmental sustainability—represents a pathway to rebuilding that trust. It proposes a new "social contract" for finance, one in which technology is used not merely for speed and profit, but to create a system that is demonstrably fair, transparent, and accountable to the public it serves.
+
+### **Redefining the Role of Central Banks**
+
+For central banks, the TL framework is more than an infrastructure upgrade; it is a powerful toolkit that enhances their ability to execute their core mandates of financial and price stability. The framework provides:
+
+* **Supervision 2.0:** A shift from periodic, sample-based auditing to continuous, comprehensive, real-time oversight through direct access to immutable Decision Logs.  
+* **A Resilient Platform for CBDCs:** A robust, secure, and privacy-preserving architecture for issuing and managing both wholesale and retail Central Bank Digital Currencies, addressing key public policy concerns from the outset.  
+* **Effective Tools for Modern Policy Challenges:** The data integrity provided by the Sustainable Capital Allocation Mandate gives central banks the confidence to integrate climate risk and other sustainability factors into their monetary policy and prudential frameworks, tackling 21st-century challenges with 21st-century tools.
 
 ### Implementation Architecture
 
@@ -362,19 +362,6 @@ The Epistemic Hold operates through a systematic evaluation process incorporatin
 **Tamper Resistance**: Framework integrity is protected through cryptographic mechanisms preventing unauthorized modification or bypass of uncertainty management safeguards.
 
 **Human Override**: Maintenance of ultimate human authority over economic decisions while leveraging computational capabilities for enhanced uncertainty analysis and decision support.
-
----
-
-## Empirical Validation
-
-### Experimental Design
-
-Comprehensive evaluation was conducted through systematic backtesting across multiple economic domains using historical market data and controlled scenario analysis. The evaluation framework assessed multiple dimensions of economic decision-making performance through rigorous statistical analysis.
-
-**Backtesting Period**: Historical analysis across market cycles including volatility regimes and crisis periods  
-**Methodology**: Comparative analysis against binary decision-making baselines using standardized economic scenarios  
-**Statistical Framework**: Robust performance metrics with significance testing and confidence intervals
-
 
 ---
 
