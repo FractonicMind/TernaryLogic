@@ -6,85 +6,49 @@ Ternary Logic is an economic governance framework built on triadic decision stat
 It is not policy, not ideology, not a platform, and not software.   
 It is a constitutional protocol that binds economic systems to evidence, memory, auditable reasoning, and immutable record.   
 
-Eight pillars define the framework, always in this order:   
+## Eight pillars define the framework, always in this order:   
 
-**1. Epistemic Hold**   
-The system enters a measured pause whenever uncertainty or risk thresholds are triggered.   
-It asks whether the proposed action is supported by evidence and aligned with mandated checks.   
-
-**2. Immutable Ledger**   
-A write once, tamper evident record of every final state outcome.   
-Committed actions and refusals are sealed and preserved.   
- 
-**3. Goukassian Principle**   
-Identity, authority, and use obligations expressed through Lantern, Signature, and License.   
-Confirms who acted, under which rights, and with what duties.   
-
-**4. Decision Logs**    
-The explicit reasoning behind every proposed action.   
-Inputs, thresholds, contextual evidence, and author identity are recorded before commitment.   
-
-**5. Economic Rights and Transparency Mandate**   
-Ensures decisions that affect resources, access, fairness, or exposure are supported by evidence.   
-Applies universally, including healthcare, robotics, procurement, and public systems.   
-
-**6. Sustainable Capital Allocation Mandate**   
-Requires acknowledgment and proof of long horizon societal and ecological impacts where decisions influence resource flow or safety.   
-Passes immediately when not applicable, yet prevents domain blind spots.   
-
-**7. Hybrid Shield**    
-Cryptographic enforcement combined with human stewardship.   
-Prevents misuse, institutional capture, or unauthorized modification.   
-
-**8. Anchors**   
-Public and multi chain anchoring of proofs for sovereign grade permanence.   
-Anchors act as witnesses rather than consensus mechanisms and make TL reconstructible from evidence alone.   
-
----
-
-## **2. Pillar Summaries**
-
-### **Epistemic Hold**
+### 1. **Epistemic Hold**
 
 Pauses execution whenever material uncertainty or risk thresholds arise.   
 Allows systems to gather evidence before acting.
 Does not add user facing latency, the pause runs in parallel lanes.
 
-### **Immutable Ledger**
+### 2. **Immutable Ledger**
 
 Write once, append only, tamper evident.
 Proofs on chain, data off chain, user privacy protected through pseudonymization and erasure before hashing.
 Anchored through multi chain commitments.
 
-### **Goukassian Principle**
+### 3. **Goukassian Principle**
 
 Every system must prove what it knew when it acted.
 No action without evidence of knowledge, no knowledge without a signature, no signature without a trace.
 
-### **Decision Logs**
+### 4. **Decision Logs**
 
 A forensic record of reasoning, not just outcomes.
 Captures inputs, context, uncertainty state, risk evaluation, and final triadic result.
 Signed, sealed, and committed through the Ledger and Anchors.
 
-### **Economic Rights and Transparency**
+### 5. **Economic Rights and Transparency**
 
 Aligns TL with regulatory regimes such as FATF, IOSCO, Basel, SEC, IFRS.
 Protects economic stakeholders from opacity, hidden manipulation, or undocumented systemic risk.
 
-### **Sustainable Capital Allocation**
+### 6. **Sustainable Capital Allocation**
 
 Ensures capital flows obey planetary and societal constraints.
 Every investment must carry evidence of ecological and social impact.
 
-### **Hybrid Shield**
+### 7. **Hybrid Shield**
 
 Two layer protection, cryptographic and institutional.
 Pseudonymization plus erasure for privacy.
 Ephemeral Key Rotation for trade secrets.
 Custodial human oversight for ethical boundaries.
 
-### **Anchors**
+### 8. **Anchors**
 
 Multi chain anchoring of proofs, timestamps, metadata, and commitments.
 Only proofs get anchored, not data.
@@ -93,7 +57,7 @@ Anchors prevent erasure, revision, or backdating.
 
 ---
 
-## **3. Governance Triad**
+## **2. Governance Triad**
 
 ### **Technical Council**
 
@@ -115,7 +79,7 @@ Only smart contracts enforce existential boundaries.
 
 ---
 
-## **4. Succession Charter**
+## **3. Succession Charter**
 
 If Lev is gone, TL must continue without pause.
 Order of succession: Technical Council first, Stewardship Custodians next, Treasury as the unalterable guard.   
@@ -129,7 +93,7 @@ If custodians vanish, smart contracts automatically preserve TL in locked state,
 
 ---
 
-## **5. Memorial Fund Structure**
+## **4. Memorial Fund Structure**
 
 Two pools: immutable endowment that cannot be spent, and expendable capital for permitted uses.   
 Permitted uses include audits, security, research, governance continuity, technical maintenance, and public anchoring.   
@@ -137,7 +101,7 @@ Forbidden uses include salaries, private enrichment, political activity, lobbyin
 
 ---
 
-## **6. Critical Architectural Principles**
+## **5. Critical Architectural Principles**
 
 ### **No Switch Off**
 
@@ -165,7 +129,7 @@ Ephemeral Key Rotation ensures auditors can see only what is necessary, and keys
 
 ---
 
-## **7. Technical Guarantees
+## **6. Technical Guarantees
 **Dual Lane Operation and Real Time Requirements**
 
 The system separates execution and evidence into two parallel streams.   
@@ -190,7 +154,7 @@ The ledger holds only the proof that the key existed at the correct moment and t
 
 ---
 
-## 8. Mandates and Future Evolution
+## **7. Mandates and Future Evolution
 
 TL does not permit governance bodies to add or remove pillars by vote.   
 Pillars are constitutional.   
@@ -201,7 +165,7 @@ Such an addition requires a global, multi institutional cryptographic amendment 
 
 This preserves TL as a stable architecture rather than a shifting political instrument.
 
-## 9. System Identity
+## **8. System Identity
 
 Three sentences define the nature of TL:
 
