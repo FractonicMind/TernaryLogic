@@ -2,15 +2,15 @@
 
 **Epistemic Hold Technology for Economic Decision-Making**
 
-[![Mandatory Reading](https://img.shields.io/badge/MANDATORY-Read%20First-red?style=flat-square&labelColor=darkred)](docs/MANDATORY.md)
+[![Mandatory Reading](https://img.shields.io/badge/MANDATORY-Read%20First-red?style=flat-square&labelColor=darkred)](docs/Mandatory.md)
 [![Interactive Demo](https://img.shields.io/badge/Interactive%20Demo-Live%20Application-blue?style=flat-square)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/)
 [![Research Paper](https://img.shields.io/badge/Research%20Paper-Published-blue?style=flat-square)](research/academic_papers/ternary_logic_economics_paper.md)
-[![Academic Validation](https://img.shields.io/badge/Academic%20Validation-Complete-brightgreen?style=flat-square)](docs/ACADEMIC_VALIDATION.md)
+[![Academic Validation](https://img.shields.io/badge/Academic%20Validation-Complete-brightgreen?style=flat-square)](docs/Academic_Validation.md)
 [![Test Coverage](https://img.shields.io/badge/Test%20Coverage-81%25-brightgreen?style=flat-square)](tests/)
-[![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square)](Changelog.md)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0006--5966--1243-green?style=flat-square)](https://orcid.org/0009-0006-5966-1243)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square)](https://www.python.org/downloads/)
-[![License](https://img.shields.io/badge/License-MIT%20with%20Ethics-yellow?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT%20with%20Ethics-yellow?style=flat-square)](License)
 
 #### *"The world is not binary. And the future will not be either."* — Lev Goukassian, Creator of Ternary Logic
 
@@ -57,13 +57,11 @@ Through this orchestration, TL transforms every action from a single decision in
 
 ---
 
-## **The Architectural Pillars of the Ternary Logic Framework**
+## **The Architectural 8 Pillars of the Ternary Logic Framework**
 
 The Ternary Logic framework is composed of eight interdependent architectural pillars. This section provides an in-depth analysis of each pillar, synthesizing its technical architecture with its profound policy implications for the global financial system.
 
 ### **1. The Epistemic Hold: Codifying Uncertainty in Financial Decision-Making**
-
-#### **Technical Architecture**
 
 The Epistemic Hold is the operational implementation of the ternary '0' state, representing a fundamental shift in how automated systems handle uncertainty. It is an active, intelligent pause, not a passive failure state. The mechanism is triggered automatically when predefined uncertainty or complexity thresholds are breached within the system's decision-making process.  
 These thresholds are not static but are dynamically calibrated based on a continuous, multi-factor analysis that includes:
@@ -216,12 +214,7 @@ The "Anchors" pillar serves as the framework's critical interface with the exter
 
 #### **Governance Anchors**
 
-A mission-critical financial infrastructure cannot be governed by volatile, purely code-based mechanisms. The framework requires a robust and stable governance model to manage protocol upgrades, rule changes, access control, and dispute resolution. This is achieved through a **hybrid governance model**, which balances decentralized efficiency with institutional stability. This model combines:
-
-* **Off-Chain Governance:** High-level policy and strategic decisions are made by a designated governing body (e.g., a consortium board composed of central bank officials and representatives from member institutions). This structure mirrors the established, deliberative decision-making processes of central bank boards and international committees, ensuring that the system's evolution aligns with public policy objectives and financial stability mandates.  
-* **On-Chain Governance:** Certain technical parameters or pre-approved operational rules can be subject to on-chain voting mechanisms, where authorized stakeholders can vote on proposals that are then automatically executed via smart contracts. This provides a transparent and efficient way to manage routine system updates.
-
-This anchored, multi-layered approach avoids the risks of purely on-chain governance, which can be susceptible to plutocracy (where voting power is concentrated with large token holders) and short-termism, making it unsuitable for critical financial infrastructure.
+A mission-critical financial infrastructure cannot be governed by volatile, purely code-based mechanisms. The framework requires a robust and stable governance model to manage protocol upgrades, rule changes, access control, and dispute resolution. This is achieved through a **hybrid governance model**, which balances decentralized efficiency with institutional stability. 
 
 #### **Interoperability Anchors**
 
@@ -239,56 +232,91 @@ Together, these three anchors ensure the Ternary Logic framework is governable, 
 
 ## **Governance**
 
-Technology alone is insufficient to guarantee the long-term stability and integrity of critical infrastructure. Ternary Logic mandates a specific, tripartite governance model designed to provide checks and balances, ensure responsible evolution of the protocol, and enforce the system's core mandates.
+Ternary Logic does not trust any single human, institution, or machine with control. Its governance is triadic by design: three bodies, three distinct duties, no overlap, no supremacy. And none of them can turn the system off.
 
-### **The Technical Council**
 
-The Technical Council is composed of expert technologists, cryptographers, and system architects. Its mandate is narrow and focused exclusively on the technical health and evolution of the TL protocol.
+### **Technical Council**
 
-* **Responsibilities:**  
-  * Maintaining and publishing the core technical standards and specifications.  
-  * Reviewing and approving proposed changes or upgrades to the protocol (e.g., improvements to cryptographic algorithms, performance optimizations).  
-  * Commissioning third-party security audits of the core software.  
-* **Function:** This body acts as the guardian of the system's technical integrity, ensuring it remains secure, robust, and fit for purpose. Its decision-making process is focused on technical merit, analogous to the role of the Internet Engineering Task Force (IETF) in governing internet protocols.
+**(9 members, 75% quorum → 7 votes)**
+
+The Council maintains the technical spine of TL. Its remit is narrow by intent.
+
+**Responsibilities**
+
+* Preserve and update core specifications and cryptographic standards
+* Approve protocol-level improvements and performance changes
+* Commission external security audits and correctness reviews
+
+**Function**
+They guard the machinery, not the meaning.
+Their judgment is technical, evidence-based, and non-political.
 
 ### **Stewardship Custodians**
 
-The Stewardship Custodians form the human oversight and ethical guardianship layer of the governance structure. This body is composed of trusted individuals from diverse backgrounds, likely including legal experts, ethicists, economists, and industry representatives.
+**(11 members, 75% quorum → 9 votes)**
 
-* **Responsibilities:**  
-  * Defining and upholding the principles and policies of the network.  
-  * Acting as the final arbiter in dispute resolution cases that cannot be resolved at the protocol level.  
-  * Managing the process of certifying new node operators to join the network.  
-  * The crucial function of **revoking certification** for any operator found to be in violation of the system's core mandates (No Spy, No Weapon) or license terms.  
-* **Function:** The Custodians provide the essential "human-in-the-loop" judgment that pure code cannot. They are the ultimate enforcers of the system's rules and the protectors of its foundational principles.
+The Custodians are the ethical and legal counterweight to the Council.
+They ensure that TL is not captured, misused, or bent toward secrecy or harm.
 
-### **The Smart Contract Treasury**
+**Responsibilities**
 
-The Smart Contract Treasury is an autonomous and transparent funding mechanism designed to ensure the long-term economic sustainability of the TL ecosystem.
+* Enforce the **No Spy** and **No Weapon** prohibitions
+* Certify compliant operators
+* Revoke certification for violations
+* Arbitrate escalated disputes and ensure license integrity
 
-* **Responsibilities:**  
-  * Collecting network fees or other forms of revenue generated by the system's operation.  
-  * Disbursing funds to support activities essential for the health of the ecosystem.  
-* **Function:** The Treasury operates based on rules encoded in smart contracts. For example, funding for a protocol upgrade proposed by the Technical Council and ratified by the Stewardship Custodians could be automatically released from the Treasury upon the successful deployment of the new code. This creates a transparent, auditable, and self-sustaining economic engine to fund ongoing development, security, and governance activities without relying on a single corporate sponsor.
+**Function**
+They hold the moral and civic line.
+Where the Council protects correctness, the Custodians protect purpose.
 
-### **Change Control, Certification, and Revocation Processes**
+### **Smart Contract Treasury**
 
-The three governance bodies work together to create a robust process for managing change and enforcing rules. A typical workflow might be:
+(autonomous, incorruptible, transparent)
 
-1. **Proposal:** The Technical Council proposes a technical upgrade to the protocol.  
-2. **Ratification:** The Stewardship Custodians review the proposal not just for its technical merit but also for its alignment with the system's principles. They ratify the proposal.  
-3. **Funding:** The ratified proposal triggers a disbursement from the Smart Contract Treasury to fund the development and testing work.  
-4. **Deployment:** The upgrade is deployed across the network.
+The Treasury funds the work that keeps TL alive—audits, maintenance, continuity, and upgrades.
 
-Similarly, the enforcement process is clear:
+**Responsibilities**
 
-1. **Detection:** A potential violation of the license (e.g., a No Spy infraction) is detected and reported.  
-2. **Investigation & Ruling:** The Stewardship Custodians investigate the claim. If the violation is confirmed, they rule to revoke the operator's certification.  
-3. **Execution:** The ruling is executed technically, with the operator's credentials being added to a revocation list, severing them from the network.
+* Receive ecosystem revenue or designated endowment funds
+* Release funds only when governance conditions are met
+* Maintain perpetual financial continuity through programmed allocation
 
-The specific procedures for voting, quorum, and appeals are defined in the Governance charter. What matters at the top level is clear separation of duties: the Technical Council maintains the protocol, the Stewardship Custodians enforce the foundational principles, and the Smart Contract Treasury funds approved work. No single group or unanimous vote can suspend or terminate TL; governance exists to guide evolution, not grant an off-switch.
+**Function**
+It is the system’s financial backbone.
+No single person can redirect or freeze it; its rules are locked in code.
+
+### **How Decisions Flow**
+
+#### **Upgrades**
+
+1. **Proposal (Council)** — A technical change or improvement is drafted.
+2. **Ratification (Custodians)** — Reviewed for alignment with TL’s principles.
+3. **Funding (Treasury)** — Automatically released once conditions are met.
+4. **Deployment (Network)** — Implemented across certified operators.
+
+### **Enforcement**
+
+1. **Detection** — A violation of license or prohibitions is reported.
+2. **Investigation (Custodians)** — Evidence reviewed, decision logged.
+3. **Revocation** — Certification removed; credentials placed on revocation list.
+4. **Propagation** — Network rejects future actions from the revoked operator.
+
+### **Structural Limits**
+
+Governance exists to **maintain** TL, not mutate it.
+
+* They **cannot** add or remove Pillars.
+* They **cannot** change the causal sequence.
+* They **cannot** terminate or suspend TL.
+* They **cannot** weaken the Goukassian Principle.
+* They **cannot** bypass Anchors or the Immutable Ledger.
+* They **cannot** create an off-switch—**No Switch Off is binding.**
+
+Their authority is large but bounded.
+Their job is continuity, not control.
 
 ---
+
 ## **Systemic Impact and Synthesis**
 
 The eight architectural pillars of the Ternary Logic framework are not isolated features but components of a cohesive, self-reinforcing system. Their integration creates a virtuous cycle—a "flywheel effect"—that has the potential to fundamentally reshape the landscape of global finance, enhancing stability, integrity, and public trust.
@@ -422,13 +450,6 @@ if result.state == TLState.EPISTEMIC_HOLD:
 **[Complete API Reference](docs/api/Complete_Api_Reference.md)**: Professional documentation with comprehensive examples and integration patterns  
 **[Academic Validation Framework](docs/Academic_Validation.md)**: Peer review and validation protocols for research applications
 
-### Theoretical Foundations
-
-**[Economic Foundations](theory/Economic-Foundations.md)**: Deep academic grounding from classical to behavioral economics  
-**[Philosophical Foundations](theory/Philosophical-Foundations.md)**: From Hayek to modern decision theory  
-**[Core Principles](theory/Core-Principles.md)**: Fundamental TL principles and Epistemic Hold implementation  
-**[Case Studies](theory/Case-Studies.md)**: Real-world applications across economic domains
-
 ### Implementation Resources
 
 **[Financial Trading](examples/Financial_Trading_Comprehensive.py)**: Advanced trading decisions with Epistemic Hold  
@@ -436,141 +457,10 @@ if result.state == TLState.EPISTEMIC_HOLD:
 **[Supply Chain Management](examples/Supply_Chain_Management.py)**: Operational decisions with uncertainty management  
 **[Complete Examples Directory](examples/)**: Comprehensive implementations across economic domains
 
-### Testing and Validation
-
-**[Test Suite](tests/)**: 53 passing test cases with 81% code coverage  
-**[Performance Validation](tests/Readme.md)**: Comprehensive testing metrics and validation protocols  
-**[Economic Scenario Database](research/datasets/TL-Economic-Scenario-Database.md)**: 25+ tested economic scenarios
-
 ### Frequently Asked Questions
 
-**[License FAQ](docs/License_FAQ.md)**: 30 questions covering legal use and economic ethics licensing  
-**[General FAQ](docs/General_FAQ.md)**: 45 questions addressing technical implementation, philosophical foundations, and practical applications
-
----
-
-
-
-## Security and Risk Management
-
-### Economic Risk Assessment
-
-While TL enhances economic decision-making quality, comprehensive safeguards address potential misuse in financial markets:
-
-**Market Manipulation Prevention**: Community-based monitoring, license revocation protocols, and graduated response systems for violations of market integrity standards.
-
-**Institutional Access Controls**: Pre-authorized institution frameworks with track record requirements and community review processes for financial market applications.
-
-**Technical Integrity Protection**: Cryptographic integrity verification, automated compliance checking, and real-time monitoring systems for market deployment.
-
-**Attribution Enforcement**: Creator recognition systems and succession planning to preserve framework integrity and theoretical foundations in economic applications.
-
----
-
-## Technical Architecture and Quality Assurance
-
-### Repository Structure
-
-**Theoretical Foundation**: Comprehensive economic grounding from classical decision theory to modern behavioral economics with complete academic documentation.
-
-**Technical Implementation**: Production-ready Python framework supporting comprehensive economic uncertainty management and decision support capabilities.
-
-**Protection Architecture**: Multi-layered security system including institutional access controls, market integrity monitoring, and regulatory compliance frameworks.
-
-**Testing and Validation**: 81% test coverage with comprehensive economic scenario validation across 53 test cases and systematic performance evaluation.
-
-**Documentation Framework**: Complete academic documentation including implementation guides, API references, and institutional validation protocols.
-
-### Quality Assurance
-
-**Reproducible Research**: Comprehensive evaluation framework with documented methodology and statistical validation across multiple economic domains.
-
-**Academic Standards**: Peer review processes, citation protocols, and academic validation frameworks for economic research applications.
-
-**Regulatory Compliance**: Professional compliance with financial regulatory standards including transparency, auditability, and risk management protocols.
-
-**Market Integrity**: Built-in safeguards preventing market manipulation while supporting beneficial economic research and institutional applications.
-
----
-
-## Installation and Quick Start
-
-### System Requirements
-
-**Python Version**: 3.8 or higher for optimal compatibility across academic and institutional environments  
-**Dependencies**: Minimal requirements designed for broad accessibility and integration with existing financial systems  
-**Documentation**: Comprehensive installation guides for various deployment scenarios
-
-### Basic Installation
-
-```bash
-# Clone repository
-git clone https://github.com/FractonicMind/TernaryLogic.git
-cd TernaryLogic
-
-# Install framework
-pip install -e .
-
-# Verify installation
-python examples/quickstart_example.py
-```
-
-### Institutional Research Installation
-
-```bash
-# Complete institutional environment setup
-pip install -r requirements.txt
-
-# Run comprehensive validation
-python -m pytest tests/ -v --cov=ternary_logic
-
-# Access interactive demonstration
-python -m http.server 8000
-# Navigate to localhost:8000/demos/TL-App/
-```
-
----
-
-## Future Research Directions
-
-### Theoretical Development
-
-**Formal Economic Theory Extensions**: Mathematical formalization of Epistemic Hold principles and game-theoretic analysis of uncertainty management in multi-agent economic systems.
-
-**Cross-Market Validation**: Expansion of framework applicability across diverse financial markets and economic systems with empirical validation studies across international markets.
-
-**Computational Complexity Analysis**: Optimization of Epistemic Hold implementation for high-frequency trading environments with performance and scalability studies for institutional deployment.
-
-### Practical Applications
-
-**Regulatory Framework Development**: Development of compliance frameworks and regulatory guidance for TL implementation in various jurisdictions and financial regulatory environments.
-
-**Institutional Integration Studies**: Empirical research on optimal integration of TL frameworks with existing institutional decision-making processes and risk management systems.
-
-**Systemic Risk Applications**: Application of uncertainty management principles to systemic risk assessment and financial stability monitoring in complex financial systems.
-
----
-
-## Legacy and Continued Development
-
-### Preserving Economic Research Vision
-
-This framework represents the culmination of Lev Goukassian's research into intelligent economic decision-making systems, created during his final months as a contribution to humanity's future relationship with automated economic systems. The work embodies the principle that economic systems should enhance rather than replace human analytical capabilities in complex financial environments.
-
-### Succession Planning and Institutional Stewardship
-
-**Research Continuity**: Comprehensive succession charter ensuring continued development and maintenance of framework integrity through institutional partnerships and academic stewardship.
-
-**Academic Preservation**: Archive systems and institutional partnerships preserving research contributions and enabling future scholarly development in economic decision sciences.
-
-**Community Governance**: Established protocols for community-driven development while maintaining theoretical foundations and economic research standards.
-
-### Supporting Continued Economic Research
-
-**Lev Goukassian Fund for Economic Research**: Endowment supporting continued research in intelligent economic decision-making with focus on beneficial applications and academic advancement in economic uncertainty management.
-
-**Research Priorities**: Fellowship programs for economic decision sciences, implementation projects for beneficial economic applications, educational initiatives, and archive preservation supporting continued development of intelligent economic systems.
-
+**[License FAQ](docs/License_FAQ.md)**: Questions covering legal use and economic ethics licensing  
+**[General FAQ](docs/General_FAQ.md)**: Questions addressing technical implementation, philosophical foundations, and practical applications
 
 ---
 
