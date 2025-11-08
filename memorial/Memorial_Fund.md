@@ -182,5 +182,5 @@ The Fund, therefore, does not just *support* the protocol; it is the autonomous 
 
 ---
 
-#### **“Governance can argue over anchors, cryptography, or fees; the Fund argues only with death—and always wins by paying exact change in immutable time.”** *-Lev Goukassian*
+#### **“Governance can argue over anchors, cryptography, or fees; the Fund argues only with death, and always wins by paying exact change in immutable time.”** *-Lev Goukassian*
 
