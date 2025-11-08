@@ -104,7 +104,8 @@ This workflow makes capture impossible:
 * The Treasury (machine) cannot be forced to execute a "Prohibited Use" transaction, even if all human governors approve it.
 
 #### **4.1. Governance Flow Diagram (Text-Based)**
-(Initiation Layer)
+
+                    (Initiation Layer)
                 ┌──────────────────────────┐
                 │   Funding Proposal       │
                 │   Submitted to Council   │
@@ -133,6 +134,7 @@ This workflow makes capture impossible:
                             ▼
                  Anchored to Immutable Ledger
           (Decision Logs, Proofs, and Audit Trail Recorded)
+
 
 ### **5\. Evidence, Auditing, and Anti-Capture**
 
