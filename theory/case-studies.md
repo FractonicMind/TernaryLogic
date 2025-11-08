@@ -399,17 +399,6 @@ Proceed happens when:
 4. **Risk Culture**: Integration of uncertainty acknowledgment in organization
 5. **Strategic Alignment**: Consistency between decisions and long-term objectives
 
-### TL Performance Validation
-
-**Backtesting Results Across Domains:**
-
-| Domain | Error Reduction | Performance Improvement | Epistemic Hold Rate |
-|---------|----------------|------------------------|-------------------|
-| **Financial Trading** | 35% | 40% Sharpe Ratio | 23% |
-| **Monetary Policy** | 28% | 19% Volatility Reduction | 17% |
-| **Supply Chain** | 18% | 22% Cost Optimization | 15% |
-| **Risk Management** | 31% | 25% Risk-Adjusted Returns | 20% |
-
 ---
 
 ## Future Case Study Priorities
