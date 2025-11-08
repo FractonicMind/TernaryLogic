@@ -316,9 +316,24 @@ assert results.hold_rate_optimal == True
 
 ### 29. How is TL governed?
 **Tri-cameral governance model**:
-1. **Technical Council**: Protocol development and standards
-2. **Stewardship Custodians**: Long-term vision and ethics
-3. **Smart Contract Safeguard**: Automated governance execution
+### **Technical Council**
+
+Nine members, global, rotating, non political.   
+Mandate: protect protocol correctness, review updates, maintain cryptography, preserve Ledger standards.   
+Quorum seventy five percent, seven of nine.   
+
+### **Stewardship Custodians**
+
+Eleven members, independent, multinational.   
+Mandate: ethical oversight, anti capture, continuity of human conscience.   
+Quorum seventy five percent, nine of eleven.   
+
+### **Smart Contract Treasury**
+
+Enforces immutability of pillars, manages funding flows according to the Memorial Fund Charter, and guarantees the No Switch Off rule.   
+No one can shut TL down, not regulators, not corporations, not councils.   
+Only smart contracts enforce existential boundaries.   
+
 
 ### 30. How can I contribute?
 **Multiple paths**:
