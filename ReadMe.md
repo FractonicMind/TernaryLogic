@@ -3,14 +3,14 @@
 **Epistemic Hold Technology for Economic Decision-Making**
 
 [![Mandatory Reading](https://img.shields.io/badge/MANDATORY-Read%20First-red?style=flat-square&labelColor=darkred)](docs/Mandatory.md)
-[![Interactive Demo](https://img.shields.io/badge/Interactive%20Demo-Live%20Application-blue?style=flat-square)](https://fractonicmind.github.io/TernaryLogic/demos/TL-App/)
-[![Research Paper](https://img.shields.io/badge/Research%20Paper-Published-blue?style=flat-square)](research/academic_papers/ternary_logic_economics_paper.md)
+[![Interactive Demo](https://img.shields.io/badge/Interactive%20Demo-Live%20Application-blue?style=flat-square)](https://fractonicmind.github.io/TernaryLogic/demos/ROI_Calculator.html)
 [![Academic Validation](https://img.shields.io/badge/Academic%20Validation-Complete-brightgreen?style=flat-square)](docs/Academic_Validation.md)
 [![Test Coverage](https://img.shields.io/badge/Test%20Coverage-81%25-brightgreen?style=flat-square)](tests/)
 [![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square)](Changelog.md)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0006--5966--1243-green?style=flat-square)](https://orcid.org/0009-0006-5966-1243)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License-MIT%20with%20Ethics-yellow?style=flat-square)](License)
+
 
 #### *"The world is not binary. And the future will not be either."* — Lev Goukassian, Creator of Ternary Logic
 
