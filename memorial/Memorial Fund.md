@@ -104,14 +104,35 @@ This workflow makes capture impossible:
 * The Treasury (machine) cannot be forced to execute a "Prohibited Use" transaction, even if all human governors approve it.
 
 #### **4.1. Governance Flow Diagram (Text-Based)**
-
-\-\> \`Submits "Funding Proposal"\` \-\>
-
-\-\> \`Review & Vote on Proposal\` \-\>
-
-\-\> \`IF VOTE='PASS' AND USE='PERMITTED'\` \-\>
-
-\`\` \-\> Recorded in \-\> \`Secured by\`
+(Initiation Layer)
+                ┌──────────────────────────┐
+                │   Funding Proposal       │
+                │   Submitted to Council   │
+                └─────────────┬────────────┘
+                              │
+                    (Review & Deliberation)
+                ┌─────────────▼────────────┐
+                │   Technical Council       │
+                │  Stewardship Custodians   │
+                │   Joint Evaluation & Vote │
+                └─────────────┬────────────┘
+                              │
+     ┌────────────────────────┴──────────────────────────┐
+     │ IF Vote = PASS  AND  Purpose = Permitted Use       │
+     └─────────────┬──────────────────────────────────────┘
+                   │
+                   ▼
+                 (Execution Layer)
+        ┌──────────────────────────────────────┐
+        │  Smart Contract Treasury              │
+        │  - Release of Funds                  │
+        │  - Enforcement of Ceilings           │
+        │  - Immutable Record of Action        │
+        └───────────────────┬──────────────────┘
+                            │
+                            ▼
+                 Anchored to Immutable Ledger
+          (Decision Logs, Proofs, and Audit Trail Recorded)
 
 ### **5\. Evidence, Auditing, and Anti-Capture**
 
