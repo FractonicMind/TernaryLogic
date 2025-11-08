@@ -7,8 +7,8 @@ These files represent the constitutional backbone of TL.
 Each must be notarized, timestamped, and anchored across multiple public chains  
 (Bitcoin, Ethereum, Polygon) using OpenTimestamps or equivalent proofs.
 
-No document on this list may be removed, altered, or superseded without  
-recorded
+No document on this list may be removed, altered, or superseded without
+a recorded, hashed, and publicly anchored event in the permanent TL audit trail.
 
 TL_Succession_Declaration_Notarized.md <Hash>
 TL_Succession_Declaration_Notarized.pdf <Hash>
