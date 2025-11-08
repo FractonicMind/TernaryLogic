@@ -91,9 +91,7 @@ The Ternary Logic framework adheres to international standards of reproducible r
 - **Cloud Deployment**: Specifications for cloud environments
 
 #### **Hardware Requirements**
-- **Minimum**: 256MB RAM, 100MB disk space (Pillar 1 only)
-- **Standard**: 1GB RAM, 1GB disk (Pillars 1-4)
-- **Full**: 4GB RAM, 10GB disk (All Eight Pillars)
+- **Full**: 4GB RAM, 10GB disk
 - **Performance**: Benchmarks on reference hardware
 
 **Setup Documentation**: Complete specifications in [ReadMe.md](/ReadMe.md)
