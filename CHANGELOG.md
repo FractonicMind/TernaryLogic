@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - __TL-App__ Complete web-based interactive demo (`/demos/TL-App/`)
 - __Real-time Analysis__ Experience Epistemic Hold reasoning with economic scenarios
 - __Ukrainian Flag Badge__ Tribute to Ukraine with blue and yellow styling
-- __Performance Metrics__ Display of proven backtesting results (35% error reduction, 40% Sharpe improvement)
+
 
 ####  **Comprehensive Testing**
 - __Scenario Database__ 25+ professional economic scenarios across 8 domains (`/research/datasets/`)
@@ -44,11 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - __Attribution Requirements__ Ensuring creator recognition in all derivative works
 - __Community Guidelines__ Ethical use and contribution standards
 
-###  **Proven Performance Metrics**
-- __35% Reduction__ in forecasting errors (Financial Trading domain)
-- __40% Improvement__ in Sharpe Ratio (Risk-adjusted returns)
-- __19% Volatility Reduction__ (Monetary Policy applications)
-- __23% Epistemic Hold Rate__ (Optimal uncertainty management)
 
 ###  **Protection Architecture**
 - __Misuse Prevention__ Active safeguards against market manipulation
