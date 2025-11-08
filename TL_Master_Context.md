@@ -8,37 +8,37 @@ It is a constitutional protocol that binds economic systems to evidence, memory,
 
 Eight pillars define the framework, always in this order:   
 
-**1. Epistemic Hold**
+**1. Epistemic Hold**   
 The system enters a measured pause whenever uncertainty or risk thresholds are triggered.   
 It asks whether the proposed action is supported by evidence and aligned with mandated checks.   
 
-2. Immutable Ledger
-A write once, tamper evident record of every final state outcome.
-Committed actions and refusals are sealed and preserved.
+**2. Immutable Ledger**   
+A write once, tamper evident record of every final state outcome.   
+Committed actions and refusals are sealed and preserved.   
+ 
+**3. Goukassian Principle**   
+Identity, authority, and use obligations expressed through Lantern, Signature, and License.   
+Confirms who acted, under which rights, and with what duties.   
 
-3. Goukassian Principle
-Identity, authority, and use obligations expressed through Lantern, Signature, and License.
-Confirms who acted, under which rights, and with what duties.
+**4. Decision Logs**    
+The explicit reasoning behind every proposed action.   
+Inputs, thresholds, contextual evidence, and author identity are recorded before commitment.   
 
-4. Decision Logs
-The explicit reasoning behind every proposed action.
-Inputs, thresholds, contextual evidence, and author identity are recorded before commitment.
+**5. Economic Rights and Transparency Mandate**   
+Ensures decisions that affect resources, access, fairness, or exposure are supported by evidence.   
+Applies universally, including healthcare, robotics, procurement, and public systems.   
 
-5. Economic Rights and Transparency Mandate
-Ensures decisions that affect resources, access, fairness, or exposure are supported by evidence.
-Applies universally, including healthcare, robotics, procurement, and public systems.
+**6. Sustainable Capital Allocation Mandate**   
+Requires acknowledgment and proof of long horizon societal and ecological impacts where decisions influence resource flow or safety.   
+Passes immediately when not applicable, yet prevents domain blind spots.   
 
-6. Sustainable Capital Allocation Mandate
-Requires acknowledgment and proof of long horizon societal and ecological impacts where decisions influence resource flow or safety.
-Passes immediately when not applicable, yet prevents domain blind spots.
+**7. Hybrid Shield**    
+Cryptographic enforcement combined with human stewardship.   
+Prevents misuse, institutional capture, or unauthorized modification.   
 
-7. Hybrid Shield
-Cryptographic enforcement combined with human stewardship.
-Prevents misuse, institutional capture, or unauthorized modification.
-
-8. Anchors
-Public and multi chain anchoring of proofs for sovereign grade permanence.
-Anchors act as witnesses rather than consensus mechanisms and make TL reconstructible from evidence alone.
+**8. Anchors**   
+Public and multi chain anchoring of proofs for sovereign grade permanence.   
+Anchors act as witnesses rather than consensus mechanisms and make TL reconstructible from evidence alone.   
 
 ---
 
@@ -46,7 +46,7 @@ Anchors act as witnesses rather than consensus mechanisms and make TL reconstruc
 
 ### **Epistemic Hold**
 
-Pauses execution whenever material uncertainty or risk thresholds arise.
+Pauses execution whenever material uncertainty or risk thresholds arise.   
 Allows systems to gather evidence before acting.
 Does not add user facing latency, the pause runs in parallel lanes.
 
