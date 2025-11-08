@@ -1,4 +1,4 @@
-# **TL_Succession_Declaration.md**
+# **TL Succession Declaration**
 
 ## **Voluntary Succession Declaration for Ternary Logic**
 
