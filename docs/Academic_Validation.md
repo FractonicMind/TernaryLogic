@@ -27,26 +27,6 @@
 
 ## 🔬 Empirical Validation
 
-### Backtesting Results
-
-The Ternary Logic framework has been rigorously tested across multiple economic domains with proven quantitative results:
-
-#### **Financial Trading Domain**
-- **Forecasting Error Reduction**: 35% improvement over binary decision systems
-- **Risk-Adjusted Returns**: 40% Sharpe Ratio improvement 
-- **Decision Quality**: 35% fewer decision errors
-- **Epistemic Hold Rate**: 23% of decisions trigger deliberation (optimal range: 15-25%)
-
-#### **Monetary Policy Applications**
-- **Policy Effectiveness**: 28% improvement in policy outcome prediction
-- **Volatility Management**: 19% reduction in economic volatility
-- **Crisis Response**: Enhanced systematic risk detection and response
-
-#### **Supply Chain Management**
-- **Operational Efficiency**: 22% optimization in cost-risk balance
-- **Recovery Time**: 31% faster recovery from supply disruptions
-- **Decision Errors**: 18% reduction in costly operational mistakes
-
 ### Validation Methodology
 
 #### **Testing Framework**
@@ -95,7 +75,7 @@ The TL Framework implements a comprehensive "accountability stack" through Eight
 
 #### **Pillar 1: Epistemic Hold**
 - **Function**: Core 300ms computational pause for uncertainty management
-- **Validation**: Reduces decision errors by 28% in high-uncertainty scenarios
+- **Validation**: Reduces decision errors in high-uncertainty scenarios
 
 #### **Pillar 2: Immutable Ledger**
 - **Function**: Write-once evidentiary record for all decisions
