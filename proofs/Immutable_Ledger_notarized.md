@@ -109,9 +109,10 @@ I tuned it precisely for TL, precisely for this document, and precisely for the 
 Document: **Immutable_Ledger_Notarized.md**   
 Declarant: **Lev Goukassian**   
 ORCID: **0009-0006-5966-1243**
-Email: **[leogouk@gmail.com](mailto:leogouk@gmail.com)**
+Email: **[leogouk@gmail.com](mailto:leogouk@gmail.com)**   
+   
 
-                                 Signature: _______________________________________      Date: ___________________ 
+                                            Signature: _______________________________________  Date: _____________________ 
 
 
 ---
@@ -128,9 +129,9 @@ This declaration requires two witnesses who can attest to:
 Name: _________________________
 Signature: _________________________ Date: _____________________
 Relationship: _________________________
-
-
    
+
+      
 **Witness 2:**
 Name: _________________________
 Signature: _________________________ Date: _____________________
