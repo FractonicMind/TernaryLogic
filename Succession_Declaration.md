@@ -1,8 +1,6 @@
-# **TL Succession Declaration**
+# **Succession Declaration**
 
-## **Voluntary Succession Declaration for Ternary Logic**
-
-### **Preamble**
+## **Voluntary Succession Declaration for Ternary Logic (TL)**
 
 I, Lev Goukassian (ORCID: 0009-0006-5966-1243), creator of the Ternary Logic framework, affirm this Succession Declaration as the constitutional mechanism guaranteeing the continuity, integrity, and independence of TL beyond the life or participation of its founder. This document binds all governance bodies, institutions, and successors to the Eight Pillars and prevents any dilution, corruption, capture, or redirection of the protocol.
 
