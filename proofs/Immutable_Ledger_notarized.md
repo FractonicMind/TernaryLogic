@@ -115,25 +115,23 @@ Signature: _______________________________               Date: _________________
 
 ---
 
-## **Witness Requirements**
+### **Witness Requirements**
 
-Two witnesses attest that:
+This declaration requires two witnesses who can attest to:
 
-1. The declarant possessed full mental capacity.
-2. The execution was voluntary.
-3. The identity of the declarant was verified.
+1. The mental capacity of Lev Goukassian at the time of signing.
+2. The voluntary nature of this declaration.
+3. The identity of the declarant.
 
-**Witness 1**
-Name: __________________________________
-Signature: _______________________________
-Date: __________________
-Relationship: _____________________________
+**Witness 1:**
+Name: _________________________
+Signature: _________________________ Date: _____________
+Relationship: _________________________
 
-**Witness 2**
-Name: __________________________________
-Signature: _______________________________
-Date: __________________
-Relationship: _____________________________
+**Witness 2:**
+Name: _________________________
+Signature: _________________________ Date: _____________
+Relationship: _________________________
 
 ---
 
@@ -154,7 +152,7 @@ Paste exactly as below. Only fill in the hash and timestamp after signing.
 chain_of_custody:
   document: Immutable_Ledger_Notarized.md
   created_by: Lev Goukassian (ORCID: 0009-0006-5966-1243)
-  signed_at: 2025-11-12T00:00Z
+  signed_at: 
   notarized_at: 
   file_hash: 
   anchor_targets:
