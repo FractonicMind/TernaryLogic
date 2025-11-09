@@ -125,14 +125,14 @@ This declaration requires two witnesses who can attest to:
 
 **Witness 1:**
 Name: _________________________
-Signature: _________________________ Date: _____________
+Signature: _________________________ Date: _____________________
 Relationship: _________________________
 
 
    
 **Witness 2:**
 Name: _________________________
-Signature: _________________________ Date: _____________
+Signature: _________________________ Date: _____________________
 Relationship: _________________________
 
 ---
