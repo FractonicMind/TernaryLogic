@@ -106,12 +106,12 @@ I tuned it precisely for TL, precisely for this document, and precisely for the 
 
 ## **Declaration Execution**
 
-Document: **Immutable_Ledger_Notarized.md**
-Declarant: **Lev Goukassian**
-Signature: _______________________________
-Date: **2025-11-12**
+Document: **Immutable_Ledger_Notarized.md**   
+Declarant: **Lev Goukassian**   
 ORCID: **0009-0006-5966-1243**
 Email: **[leogouk@gmail.com](mailto:leogouk@gmail.com)**
+
+Signature: _______________________________               Date: _______________________________________ 
 
 ---
 
