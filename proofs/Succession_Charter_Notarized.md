@@ -321,4 +321,3 @@ chain_of_custody:
   verification_method: sha256 + opentimestamps
 ```
 
-A charter of succession is just a promise written forward in time.
