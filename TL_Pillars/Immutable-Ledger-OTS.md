@@ -1,10 +1,4 @@
-# Immutable\_Ledger.md
-
-**DOCUMENT ID:** TL-CONST-LEDGER-V1
-**STATUS:** CANONICAL, IMMUTABLE
-**CLASSIFICATION:** CONSTITUTIONAL ARTIFACT
-
----
+# Immutable Ledger
 
 ## Article 1: Canonical Definition
 
@@ -24,7 +18,7 @@ The integrity of the Immutable Ledger is an absolute and permanent constitutiona
 
 The Immutable Ledger shall be structured as a sequential chain of cryptographic commitments (Merkle trees).
 
-1.  **Leaf Formation:** Each "leaf" in the tree shall be the hash of a single, verifiable economic evidence artifact originating from the `Epistemic Hold`.
+1.  **Leaf Formation:** Each leaf in the tree shall be the hash of a single, verifiable economic evidence artifact created after Epistemic Hold is triggered and its uncertainty evaluation is complete.
 2.  **Batching:** Leaves shall be collected and ordered into discrete time-based batches.
 3.  **Root Creation:** A Merkle root shall be computed for each batch. This root serves as the singular cryptographic proof of existence and integrity for all evidence contained within that batch.
 4.  **Proof Linkage:** This Merkle root is the artifact that shall be used for all multi-chain anchoring procedures.
