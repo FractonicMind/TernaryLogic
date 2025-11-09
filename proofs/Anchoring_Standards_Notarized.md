@@ -165,7 +165,7 @@ Anchoring is continuous:
 * Constitutional updates: immediate
 * Succession events: immediate + priority flag
 
-Receipts must be appended to **Anchor_Log.md** inside `/proofs`.
+Receipts must be appended to **Anchoring_Standards_Notarized.md** inside `/proofs`.
 
 ---
 
