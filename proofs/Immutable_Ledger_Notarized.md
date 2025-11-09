@@ -95,7 +95,7 @@ This document, `Immutable_Ledger.md`, is a foundational constitutional artifact.
 
 ## **Declaration Execution**
 
-Document: **Immutable_Ledger_Notarized.md**
+Document: **Immutable_Ledger_Notarized.md**   
 Declarant: **Lev Goukassian**
 
 **Signature:**
