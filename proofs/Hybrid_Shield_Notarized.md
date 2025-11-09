@@ -52,12 +52,6 @@ This Pillar cannot be amended or repealed by any process other than a formal, co
 
 ---
 
-Here is the **notary block** for **Hybrid_Shield_Notarized.md** — clean, neutral, wide-spaced, ready for printing.
-
-You can paste it straight into the file with no edits.
-
----
-
 ## Execution and Witnessing
 
 ### Declaration Execution
