@@ -394,13 +394,6 @@ This staggered  and cyclical process ensures stability, prevents power vacuums, 
 
 This constitution is the supreme and binding law of the Ternary Logic protocol. All governance actions, smart contracts, and protocol upgrades are subordinate to it. The powers of the Technical Council, the Stewardship Custodians, and the Smart Contract Treasury are derived *from* this constitution, and they possess no authority beyond that which is explicitly enumerated herein. The Immutable Mandates defined in Article I, Section 1.1, are absolute, perpetual, and may not be abridged by any entity.
 
----
-
-## Contact & Engagement
-
-**Primary Contact**: leogouk@gmail.com  
-**Successor Contact**: support@tl-goukassian.org  
-(see [Succession Charter](/memorial/Succession_Charter.md))
 
 ---
 
