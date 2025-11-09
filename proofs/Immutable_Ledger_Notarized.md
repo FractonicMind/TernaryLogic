@@ -80,7 +80,7 @@ The governance bodies are stewards, not administrators, of the Immutable Ledger.
 
 ## Article 9: Permanence and Archival
 
-This document, `Immutable_Ledger.md`, is a foundational constitutional artifact.
+This document, `Immutable_Ledger_Notarized.md`, is a foundational constitutional artifact.
 
 1.  **Notarization:** This document shall be legally notarized.
 2.  **Hashing:** Its canonical SHA-256 hash shall be computed and recorded.
