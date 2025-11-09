@@ -90,75 +90,106 @@ This document, `Immutable_Ledger.md`, is a foundational constitutional artifact.
 
 ---
 
-Alright, Lev — for **this specific file**:
 
-`Immutable_Ledger_Notarized.md`
-(location irrelevant, but you said it sits in `/proofs/` right now)
-
-Here is the exact block you should paste at the end.
-Names, dates, and hashes left blank for you to fill at the notary table.
-
-I tuned it precisely for TL, precisely for this document, and precisely for the reality that on November 12, 2025, this file becomes part of your constitutional skeleton.
-
----
-
-# ✅ **Execution and Witnessing**
+# **Execution and Witnessing**
 
 ## **Declaration Execution**
 
-Document: **Immutable_Ledger_Notarized.md**   
-Declarant: **Lev Goukassian**   
-ORCID: **0009-0006-5966-1243**
-Email: **[leogouk@gmail.com](mailto:leogouk@gmail.com)**   
+Document: **Immutable_Ledger_Notarized.md**
+Declarant: **Lev Goukassian**
 
-Signature: _______________________________
-Date: __________________
+**Signature:**
 
 ---
 
-### **Witness Requirements**
+**Date:**
 
-This declaration requires two witnesses who can attest to:
+---
 
-1. The mental capacity of Lev Goukassian at the time of signing.
-2. The voluntary nature of this declaration.
-3. The identity of the declarant.
+ORCID: **0009-0006-5966-1243**
+Email: **[leogouk@gmail.com](mailto:leogouk@gmail.com)**
 
-**Witness 1:**
-Name: _________________________
-Signature: _________________________ Date: _____________________
-Relationship: _________________________
-   
+---
 
-      
-**Witness 2:**
-Name: _________________________
-Signature: _________________________ Date: _____________________
-Relationship: _________________________
+## **Witness Requirements**
+
+Two witnesses attest that:
+
+1. The declarant possessed full mental capacity at the time of signing.
+2. The execution of this document was voluntary.
+3. The identity of the declarant was verified.
+
+---
+
+### **Witness 1**
+
+**Name:**
+
+---
+
+**Signature:**
+
+---
+
+**Date:**
+
+---
+
+**Relationship:**
+
+---
+
+---
+
+### **Witness 2**
+
+**Name:**
+
+---
+
+**Signature:**
+
+---
+
+**Date:**
+
+---
+
+**Relationship:**
+
+---
 
 ---
 
 ## **Notarization**
 
-Notary Public: ______________________________________________________________
-Signature and Seal: ____________________________________________   
+**Notary Public:**
 
-Date: ________________________________
-Commission Expires: ______________________________
+---
+
+**Signature and Seal:**
+
+---
+
+**Date:**
+
+---
+
+**Commission Expires:**
+
+---
 
 ---
 
 # ✅ **Chain of Custody Metadata**
 
-Paste exactly as below. Only fill in the hash and timestamp after signing.
-
 ```
 chain_of_custody:
   document: Immutable_Ledger_Notarized.md
   created_by: Lev Goukassian (ORCID: 0009-0006-5966-1243)
-  signed_at: 
-  notarized_at: 
-  file_hash: 
+  signed_at: [to be filled on signing]
+  notarized_at: [to be filled after notarization]
+  file_hash: [insert SHA-256 after notarization]
   anchor_targets:
     - Bitcoin (OpenTimestamps)
     - Ethereum AnchorLog
@@ -167,4 +198,5 @@ chain_of_custody:
   version: 1.0.0-notarized
   verification_method: sha256 + opentimestamps
 ```
+
 
