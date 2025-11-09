@@ -181,7 +181,7 @@ Two witnesses attest that:
 
 ---
 
-# ✅ **Chain of Custody Metadata**
+# **Chain of Custody Metadata**
 
 ```
 chain_of_custody:
