@@ -111,7 +111,7 @@ Declarant: **Lev Goukassian**
 ORCID: **0009-0006-5966-1243**
 Email: **[leogouk@gmail.com](mailto:leogouk@gmail.com)**
 
-                                             Signature: _______________________________________      Date: _______________________________________ 
+                                             Signature: _______________________________________      Date: _________________________ 
 
 
 ---
