@@ -175,20 +175,13 @@ Receipts must be appended to **Anchor_Log.md** inside `/proofs`.
 Memory is the last protection against ruin.
 This standard is immutable.**
 
-Got you, Lev.
-Let’s give the witnesses room to breathe. Wide lines, clean spacing, easy to write on a printed page — no cramped boxes, no tight lines.
-
-Here is the expanded version custom-tailored for **Anchoring_Standards_Notarized.md**.
-
-Paste this block at the end of your file.
-
 ---
 
-# ✅ **Execution and Witnessing**
+# **Execution and Witnessing**
 
 ## **Declaration Execution**
 
-Document: **Anchoring_Standards_Notarized.md**
+Document: **Anchoring_Standards_Notarized.md**   
 Declarant: **Lev Goukassian**
 
 **Signature:**
@@ -199,7 +192,7 @@ Declarant: **Lev Goukassian**
 
 ---
 
-ORCID: **0009-0006-5966-1243**
+ORCID: **0009-0006-5966-1243**   
 Email: **[leogouk@gmail.com](mailto:leogouk@gmail.com)**
 
 ---
@@ -208,9 +201,9 @@ Email: **[leogouk@gmail.com](mailto:leogouk@gmail.com)**
 
 Two witnesses attest that:
 
-1. The declarant possessed full mental capacity at the time of signing.
-2. The execution of this document was voluntary.
-3. The identity of the declarant was verified.
+1. The declarant possessed full mental capacity at the time of signing.   
+2. The execution of this document was voluntary.   
+3. The identity of the declarant was verified.   
 
 ---
 
@@ -274,7 +267,7 @@ Two witnesses attest that:
 
 ---
 
-# ✅ **Chain of Custody Metadata**
+# **Chain of Custody Metadata**   
 
 ```
 chain_of_custody:
