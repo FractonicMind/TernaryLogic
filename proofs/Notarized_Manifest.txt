@@ -1,0 +1,138 @@
+Notarized_Manifest.txt
+
+This manifest lists all TL documents requiring notarization, anchoring,  
+and inclusion in the permanent evidence chain of the Ternary Logic framework.
+
+These files represent the constitutional backbone of TL.  
+Each must be notarized, timestamped, and anchored across multiple public chains  
+(Bitcoin, Ethereum, Polygon) using OpenTimestamps or equivalent proofs.
+
+No document on this list may be removed, altered, or superseded without
+a recorded, hashed, and publicly anchored event in the permanent TL audit trail.
+
+Anchoring_Standards_Notarized.md <Hash>
+Anchoring_Standards_Notarized.pdf <Hash>
+Goukassian_Principle_Notarized.md <Hash>
+Goukassian_Principle_Notarized.pdf <Hash>
+Governance_Notarized.md <Hash>
+Governance_Notarized.pdf <Hash>
+Memorial_Fund_Notarized.md <Hash>
+Memorial_Fund_Notarized.pdf <Hash>
+Succession_Charter_Notarized.md <Hash>
+Succession_Charter_Notarized.pdf <Hash>
+Succession_Declaration_Notarized.md <Hash>
+Succession_Declaration_Notarized.pdf <Hash>
+Sync_Protocol_Notarized.md <Hash>
+Sync_Protocol_Notarized.pdf <Hash>
+
+
+---
+
+## Execution and Witnessing
+
+### Declaration Execution
+
+Document: **Notarized_Manifest.txt**   
+Declarant: **Lev Goukassian**
+
+**Signature:**
+
+---
+
+**Date:**
+
+---
+
+ORCID: **0009-0006-5966-1243**   
+Email: **[leogouk@gmail.com](mailto:leogouk@gmail.com)**
+
+---
+
+### Witness Requirements
+
+Two witnesses attest that:
+
+1. The declarant possessed full mental capacity at the time of signing.
+2. The execution of this document was voluntary.
+3. The identity of the declarant was verified.
+
+---
+
+#### Witness 1
+
+**Name:**
+
+---
+
+**Signature:**
+
+---
+
+**Date:**
+
+---
+
+**Relationship:**
+
+---
+
+---
+
+#### Witness 2
+
+**Name:**
+
+---
+
+**Signature:**
+
+---
+
+**Date:**
+
+---
+
+**Relationship:**
+
+---
+
+---
+
+### Notarization
+
+**Notary Public:**
+
+---
+
+**Signature and Seal:**
+
+---
+
+**Date:**
+
+---
+
+**Commission Expires:**
+
+---
+
+---
+
+## Chain of Custody Metadata
+
+```
+chain_of_custody:
+  document: Notarized_Manifest.txt
+  created_by: Lev Goukassian (ORCID: 0009-0006-5966-1243)
+  signed_at: [to be filled on signing]
+  notarized_at: [to be added after notarization]
+  file_hash: [insert SHA-256 after notarization]
+  anchor_targets:
+    - Bitcoin (OpenTimestamps)
+    - Ethereum AnchorLog
+    - Polygon AnchorLog
+  repository: https://github.com/FractonicMind/TernaryLogic
+  version: 1.0.0-notarized
+  verification_method: sha256 + opentimestamps
+```
+
