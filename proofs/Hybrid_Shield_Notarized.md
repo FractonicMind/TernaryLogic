@@ -19,7 +19,7 @@ The Shield is composed of two inseparable layers:
 The Technical Shield shall automatically activate and invoke an Epistemic Hold upon the detection of any of the following enumerated events:  
 3.1. Any command to execute an action in the absence of a verifiable, antecedent **Decision Log**.  
 3.2. Any command to bypass or skip the mandatory deliberation state (the **Epistemic Hold**).  
-3.3. Any command to commit an entry to the **Immutable Ledger** without a corresponding **Public Anchor**.  
+3.3. Any command to commit an entry to the **Immutable Ledger** without a corresponding **Anchor**.  
 3.4. Any command to disable or impede the function of logging or anchoring mechanisms.  
 3.5. Any action that attempts to unilaterally modify governance protocols.  
 3.6. Any command that attempts to bypass architecturally-embedded compliance checks or license constraints.
@@ -40,12 +40,129 @@ The Hybrid Shield possesses no authority to modify the constitutional principles
 ### **Article 6: Relation to Evidentiary Architecture**
 
 The Hybrid Shield is the guarantor of the system's evidentiary chain.  
-6.1. It shall be architecturally impossible to sever the linkage between a **Decision Log** (justification), its corresponding entry on the **Immutable Ledger** (action), and its **Public Anchor** (proof).  
-6.2. The **Epistemic Hold** is the sole and mandatory state for both standard deliberation and Shield-activated security pauses.
+6.1. It shall be architecturally impossible to sever the linkage between a **Decision Log** (justification), its corresponding entry on the **Immutable Ledger** (action), and its **Anchor** (proof).  
+6.2. The Epistemic Hold is the sole mandatory deliberation and security state for the system. All uncertainty evaluations and Shield-triggered pauses must enter this state without exception.
 
 ### **Article 7: Non-Extinguishability**
 
 This Pillar cannot be amended or repealed by any process other than a formal, constitutional modification.  
 7.1. The Hybrid Shield is mandated to actively block any termination or decommissioning of the system by any actor, including its operators or creators, that bypasses the formal, public, multi-signature decommissioning protocol.  
-7.2. The system's end-of-life must be as verifiable and auditable as its operation.
+7.2. The system's end-of-life must be as verifiable and auditable as its operation.   
+7.3. No process may weaken, bypass, or disable any of the Eight Pillars of Ternary Logic. The Hybrid Shield shall block any such attempt.
+
+---
+
+Here is the **notary block** for **Hybrid_Shield_Notarized.md** — clean, neutral, wide-spaced, ready for printing.
+
+You can paste it straight into the file with no edits.
+
+---
+
+## Execution and Witnessing
+
+### Declaration Execution
+
+Document: **Hybrid_Shield_Notarized.md**   
+Declarant: **Lev Goukassian**
+
+**Signature:**
+
+---
+
+**Date:**
+
+---
+
+ORCID: **0009-0006-5966-1243**   
+Email: **[leogouk@gmail.com](mailto:leogouk@gmail.com)**
+
+---
+
+### Witness Requirements
+
+Two witnesses attest that:
+
+1. The declarant possessed full mental capacity at the time of signing.
+2. The execution of this document was voluntary.
+3. The identity of the declarant was verified.
+
+---
+
+#### Witness 1
+
+**Name:**
+
+---
+
+**Signature:**
+
+---
+
+**Date:**
+
+---
+
+**Relationship:**
+
+---
+
+---
+
+#### Witness 2
+
+**Name:**
+
+---
+
+**Signature:**
+
+---
+
+**Date:**
+
+---
+
+**Relationship:**
+
+---
+
+---
+
+### Notarization
+
+**Notary Public:**
+
+---
+
+**Signature and Seal:**
+
+---
+
+**Date:**
+
+---
+
+**Commission Expires:**
+
+---
+
+---
+
+## Chain of Custody Metadata
+
+```
+chain_of_custody:
+  document: Hybrid_Shield_Notarized.md
+  created_by: Lev Goukassian (ORCID: 0009-0006-5966-1243)
+  signed_at: [to be filled on signing]
+  notarized_at: [to be added after notarization]
+  file_hash: [insert SHA-256 after notarization]
+  anchor_targets:
+    - Bitcoin (OpenTimestamps)
+    - Ethereum AnchorLog
+    - Polygon AnchorLog
+  repository: https://github.com/FractonicMind/TernaryLogic
+  version: 1.0.0-notarized
+  verification_method: sha256 + opentimestamps
+```
 
