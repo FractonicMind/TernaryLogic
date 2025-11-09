@@ -36,19 +36,19 @@ The integrity of the Immutable Ledger must be guaranteed by continuous, redundan
 
 The Immutable Ledger is a ledger of proofs, not a public database of private data.
 
-1.  **Pseudonymization Mandate:** All data associated with individuals or protected entities must be pseudonymized before it is processed by the ledger.[1]
+1.  **Pseudonymization Mandate:** All data associated with individuals or protected entities must be pseudonymized before it is processed by the ledger.
 2.  **Erasure Before Hashing:** All private, sensitive, or trade secret data must be programmatically separated and erased from the evidence artifact *before* the artifact is hashed to create a leaf (Article 3).
 3.  **Proof-Only Anchoring:** Only the final cryptographic proof (Merkle root) shall be anchored. The underlying data itself is never published, anchored, or revealed.
-4.  **Selective Disclosure:** Access to the original, off-ledger data is governed by the `Hybrid Shield`. This access requires Ephemeral Key Rotation (EKR) [1] and a valid, auditable request from the Stewardship Custodians.
+4.  **Selective Disclosure:** Access to the original, off-ledger data is governed by the `Hybrid Shield`. This access requires Ephemeral Key Rotation (EKR)  and a valid, auditable request from the Stewardship Custodians.
 
 ## Article 6: Deferred Anchoring and Reconciliation
 
 This protocol provides a contingency for temporary network-level anchoring failures.
 
-1.  **Temporary Deferral:** In the event of a failure to communicate with the required anchor chains, the protocol may enter a Deferred Anchoring state.[1] This is a temporary, non-standard operational mode.
-2.  **No Data Loss:** The system must securely cache all events in a `rolling buffer`.[1] No events shall be lost.
-3.  **Reconciliation Mandate:** Upon restoration of network connectivity, the system must immediately reconcile by anchoring all buffered proofs in their original, correct sequence.[1]
-4.  **Merkle Cascade:** A "Merkle cascade" is permitted, whereby buffered batches are aggregated into a single, subsequent Merkle root for post-hoc anchoring.[1]
+1.  **Temporary Deferral:** In the event of a failure to communicate with the required anchor chains, the protocol may enter a Deferred Anchoring state. This is a temporary, non-standard operational mode.
+2.  **No Data Loss:** The system must securely cache all events in a `rolling buffer`. No events shall be lost.
+3.  **Reconciliation Mandate:** Upon restoration of network connectivity, the system must immediately reconcile by anchoring all buffered proofs in their original, correct sequence.
+4.  **Merkle Cascade:** A "Merkle cascade" is permitted, whereby buffered batches are aggregated into a single, subsequent Merkle root for post-hoc anchoring.
 5.  **State Resolution:** The system cannot programmatically end an operational day in a deferred state. Full reconciliation and anchoring are mandatory for the system to close its operational cycle.
 
 ## Article 7: Failure Modes and Deterministic Response
