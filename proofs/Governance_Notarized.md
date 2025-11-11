@@ -3,6 +3,7 @@
 This document defines the constitutional governance architecture for the Ternary Logic (TL) autonomous protocol. It is established to ensure the long-term survivability, operational neutrality, and perpetual auditability of the system under the non-negotiable **No Switch Off** mandate.  
 This constitution defines the protocol itself as the supreme authority. The governance bodies herein created—the Technical Council, the Stewardship Custodians, and the Smart Contract Treasury—are subjects *under* this constitution. They are granted limited, enumerated powers for the sole purpose of system maintenance, extension, and optimization. They possess no authority to alter the foundational axioms of the protocol.
 
+#### "In TL, the constitution is not written in parchment but in protocol; it cannot be amended, only better maintained. Governance is the janitor of eternity, not the architect of tomorrow." *-Lev Goukassian*
 
 ---
 
@@ -26,6 +27,7 @@ Any proposal, vote, or smart contract function call attempting to modify, suspen
 
 This axiomatic framework is designed to prevent meta-constitutional conflicts, such as those that have led to contentious hard forks in other decentralized systems. In Ternary Logic, a majority vote to revert the ledger or violate a core mandate is not merely illegitimate; it is technically impossible.
 
+#### "No Switch Off' is not a feature. It is the First Cause that makes all other features possible. Governance without termination is governance without ultimate coercion." *-Lev Goukassian*
 
 ### **Section 1.2: The Scope of Governance (The Room)**
 
@@ -100,7 +102,9 @@ The Treasury's behavior is governed, but its actions are autonomous.
 
 1. The *parameters* of disbursement (e.g., "allocate 30% of fees to protocol maintenance," "allocate 20% to ecosystem grants") are proposed by the Technical Council.  
 2. These parameters *must* be reviewed for ethical alignment and approved by the Stewardship Custodians (see Article IV) before they are encoded as new rules in the Treasury Contract.
+3. The Smart Contract Treasury has no authority to alter or reinterpret core principles, pillars, or constitutional mechanics. It funds the system; it does not govern it. All changes to TL’s foundational architecture remain permanently outside its scope.
 
+#### "Most constitutions enumerate freedoms. TL's constitution enumerates forbidden futures: No Spy, No Weapon, No Switch Off. Everything else is engineering." *-Lev Goukassian*
 ---
 
 ## **Article III: Composition, Terms, and Structure of Governance**
@@ -128,9 +132,8 @@ This Article defines the human layer of governance. The composition, terms, and 
 To ensure expertise-based selection rather than vulnerability to political capture, a standing, independent **Nominating Committee** shall be maintained.
 
 1. **Composition:** This committee shall be composed of 7 individuals: 2 outgoing (or term-limited) members of the Technical Council, 2 outgoing (or term-limited) members of the Stewardship Custodians, and 3 external domain experts selected and approved by the existing Custodians.  
-2. **Process:** The Nominating Committee is responsible for sourcing, vetting, and verifying the credentials of all candidates based on the strict eligibility criteria defined in Sections 3.1 and 3.2.  
+2. **Process:** The Nominating Committee is responsible for sourcing, vetting, and verifying the credentials of all candidates based on the strict eligibility criteria defined in Sections 3.1 and 3
 3. **Confirmation:** The Committee shall present a final slate of qualified candidates for any open seats. The final confirmation of a new member is approved by a Qualified Majority (≥66%) vote of the *existing* members of the respective body that the candidate is joining.  
-4. 
 
 ---
 
@@ -172,6 +175,8 @@ Different decision types require different levels of consensus. All thresholds a
      * Major cryptographic upgrades.  
      * Any upgrade to the core Governance, Treasury, or Revocation contracts.  
    * **Body:** Requires **Joint Approval** (see Section 4.3).
+  
+If either body reaches quorum but cannot reach the required majority for a Type-2 or Type-3 action within the defined decision window, the proposal enters a Time-Bound Epistemic Hold. During this period, both bodies must provide written justifications. At expiration, the proposal defaults to rejection unless both bodies independently elevate it for reconsideration. This prevents governance paralysis while upholding caution as the default posture.
 
 ### **Section 4.3: Joint-Approval Mechanism (The Constitutional Check)**
 
@@ -188,6 +193,7 @@ The most critical (Type 3\) decisions require concurrent approval from both bodi
 
 As defined in Article I, Section 1.1, any vote, proposal, or action intended to modify, suspend, or reinterpret any element from the Immutable List is *constitutionally invalid*. The Governance Smart Contract shall not contain any function, interface, or logic to process or recognize such a proposal.
 
+#### "We solved the centralization problem by weaponizing the three-body problem: three chambers in permanent orbital tension, where any two colluding merely destabilize the third—and the system corrects." *-Lev Goukassian*
 
 ---
 
@@ -228,6 +234,8 @@ No new or upgraded contract facet shall be deployed to the production environmen
 2. **Technical Approval:** A $\\ge 75\\%$ supermajority vote from the Technical Council (verifying technical soundness and security).  
 3. **Mandate Approval:** A $\\ge 75\\%$ supermajority vote from the Stewardship Custodians (verifying compliance with Article I).
 
+#### "The Treasury is not a wallet with a committee. It is a financial perpetual motion machine that funds its own conscience, dispensing virtue on a proof-of-work basis." *-Lev Goukassian*
+
 ---
 
 ## **Article VI: Anchor Deployment and Cross-Chain Persistence**
@@ -237,7 +245,7 @@ This Article defines the physical, network-level decentralization of the governa
 ### **Section 6.1: Anchor Network Deployment**
 
 The complete Diamond governance architecture (defined in Article V) shall be deployed and maintained on a minimum of **five (5)** distinct, high-security, and ideologically diverse public blockchains, known as "Host Chains."  
-This redundancy, modeled on the resilient architecture of decentralized oracle networks , ensures that no single chain failure, 51% attack, critical bug, or jurisdictional regulatory action on one Host Chain can halt, capture, or terminate Ternary Logic's governance. The canonical *state* of TL governance is the aggregate consensus of its contracts across all active Anchors.
+This redundancy, modeled on the resilient architecture of decentralized oracle networks , ensures that no single chain failure, 51% attack, critical bug, or jurisdictional regulatory action on one Host Chain can halt, capture, or terminate Ternary Logic's governance. The canonical *state* of TL governance is the aggregate consensus of its contracts across all active Anchors. A minimum of five heterogeneous public chains is required to ensure resilience against regional outages, regulatory capture, or the collapse of any single ecosystem. This distribution guarantees TL continuity even if entire jurisdictions or technologies fail. Anchoring is not diversification for its own sake; it is structural survival.
 
 ### **Section 6.2: Host Chain Selection Criteria**
 
@@ -250,7 +258,7 @@ Host Chains shall be selected by the Technical Council (Type 2 Vote) and approve
 
 ### **Section 6.3: Failover and Contract Continuity**
 
-If a Host Chain fails, is compromised, captured, or formally deprecated by its own community, the Technical Council shall execute an emergency fallback procedure (Type 1 Vote). This procedure is explicitly defined as the power to *migrate* the governance state from the failing chain to a new, pre-vetted Host Chain, ensuring continuity. The Anchor Registry Contract (Facet 3\) maintains the canonical list of active Host Chains, allowing the system to route around failure.
+If a Host Chain fails, is compromised, captured, or formally deprecated by its own community, the Technical Council shall execute an emergency fallback procedure (Type 1 Vote). This procedure is explicitly defined as the power to *migrate* the governance state from the failing chain to a new, pre-vetted Host Chain, ensuring continuity. The Anchor Registry Contract (Facet 3\) maintains the canonical list of active Host Chains, allowing the system to route around failure. 
 
 ---
 
@@ -265,6 +273,8 @@ The system is designed to default to "inaction" in the face of ambiguity or conf
 1. **Technical vs. Ethical Veto:** The Technical Council (technical experts) holds the power of *proposal*. The Stewardship Custodians (mandate guardians) hold the power of *veto*. This prevents a technically "efficient" upgrade that is ethically or constitutionally compromising (e.g., a "No Spy" violation) from ever being implemented.  
 2. **Ethical vs. Economic Veto:** The Custodians approve the *purpose* of funding (e.g., "Grant for ZK-proof research"). The Treasury Contract, however, *autonomously* disburses funds *only* upon verifiable completion of milestones. This prevents the Custodians from abusing the treasury for discretionary, political, or unmerited projects.  
 3. **Economic vs. Technical Veto:** The Treasury provides autonomous funding, but its rules *cannot* direct the Technical Council's research or force the implementation of a specific feature. This prevents "economic capture," where the protocol's financial resources are used to co-opt its technical development.
+
+#### "We replaced 'checks and balances' with cryptographic chastity belts. The Immutable Mandates are not values to be debated; they are axioms that render debate illegitimate." *-Lev Goukassian*
 
 ### **Section 7.2: Preventing Specific Capture Vectors**
 
@@ -287,6 +297,8 @@ The primary enforcement of the "No Switch Off" mandate is achieved through an **
 1. The immutable Protocol Contract (the Diamond proxy, Article V) shall be deployed *without* any function call for pause(), suspend(), freeze(), or admin\_kill().  
 2. It is technically impossible to terminate a system that lacks an "off" switch.  
 3. The only upgradeability path (UUPS on facets)  is controlled by the Joint-Approval governance process (Article IV), which is itself constitutionally bound by the "No Switch Off" mandate. A proposal to deploy a "poison" facet designed to halt the system would be vetoed by the Stewardship Custodians as a direct violation of Article I.
+4. No individual, institution, coalition, or smart contract may terminate the TL system or authorize any action that disables it. Continuity is mandatory and non-waivable. TL may evolve, but it cannot be extinguished.
+
 
 ### **Section 8.2: Anchor Persistence**
 
@@ -356,7 +368,7 @@ This flowchart visualizes the Type 3 (Joint-Approval) voting process.
 
 ### **Section 9.5: Figure 4: Decision Flow \- Node Revocation Workflow**
 
-This workflow visualizes the automated revocation and slashing process, emphasizing "rule of law" over discretionary action.
+This workflow visualizes the automated revocation and slashing process, emphasizing "rule of law" over discretionary action. Operators whose certification is revoked retain the right to a structured appeal. Appeals follow a two-step process: an internal Custodian review panel followed by an independent technical audit commissioned through the Smart Contract Treasury. This ensures fairness without compromising the system’s security posture.
 
 1. **Start:** On-chain monitoring services (e.g., Oracles, other nodes) detect node misbehavior (e.g., critical downtime, invalid data submission).  
 2. **Trigger:** Data is fed to the **Revocation Contract (Facet 4\)**.  
