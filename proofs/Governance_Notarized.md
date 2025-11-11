@@ -3,8 +3,6 @@
 This document defines the constitutional governance architecture for the Ternary Logic (TL) autonomous protocol. It is established to ensure the long-term survivability, operational neutrality, and perpetual auditability of the system under the non-negotiable **No Switch Off** mandate.  
 This constitution defines the protocol itself as the supreme authority. The governance bodies herein created—the Technical Council, the Stewardship Custodians, and the Smart Contract Treasury—are subjects *under* this constitution. They are granted limited, enumerated powers for the sole purpose of system maintenance, extension, and optimization. They possess no authority to alter the foundational axioms of the protocol.
 
-#### "In TL, the constitution is not written in parchment but in protocol; it cannot be amended, only better maintained. Governance is the janitor of eternity, not the architect of tomorrow." *-Lev Goukassian*
-
 ---
 
 ## **Article I: The Immutable Mandate and Constitutional Boundaries**
@@ -27,7 +25,6 @@ Any proposal, vote, or smart contract function call attempting to modify, suspen
 
 This axiomatic framework is designed to prevent meta-constitutional conflicts, such as those that have led to contentious hard forks in other decentralized systems. In Ternary Logic, a majority vote to revert the ledger or violate a core mandate is not merely illegitimate; it is technically impossible.
 
-#### "No Switch Off' is not a feature. It is the First Cause that makes all other features possible. Governance without termination is governance without ultimate coercion." *-Lev Goukassian*
 
 ### **Section 1.2: The Scope of Governance (The Room)**
 
@@ -104,7 +101,6 @@ The Treasury's behavior is governed, but its actions are autonomous.
 2. These parameters *must* be reviewed for ethical alignment and approved by the Stewardship Custodians (see Article IV) before they are encoded as new rules in the Treasury Contract.
 3. The Smart Contract Treasury has no authority to alter or reinterpret core principles, pillars, or constitutional mechanics. It funds the system; it does not govern it. All changes to TL’s foundational architecture remain permanently outside its scope.
 
-#### "Most constitutions enumerate freedoms. TL's constitution enumerates forbidden futures: No Spy, No Weapon, No Switch Off. Everything else is engineering." *-Lev Goukassian*
 ---
 
 ## **Article III: Composition, Terms, and Structure of Governance**
@@ -193,7 +189,6 @@ The most critical (Type 3\) decisions require concurrent approval from both bodi
 
 As defined in Article I, Section 1.1, any vote, proposal, or action intended to modify, suspend, or reinterpret any element from the Immutable List is *constitutionally invalid*. The Governance Smart Contract shall not contain any function, interface, or logic to process or recognize such a proposal.
 
-#### "We solved the centralization problem by weaponizing the three-body problem: three chambers in permanent orbital tension, where any two colluding merely destabilize the third—and the system corrects." *-Lev Goukassian*
 
 ---
 
@@ -234,7 +229,6 @@ No new or upgraded contract facet shall be deployed to the production environmen
 2. **Technical Approval:** A $\\ge 75\\%$ supermajority vote from the Technical Council (verifying technical soundness and security).  
 3. **Mandate Approval:** A $\\ge 75\\%$ supermajority vote from the Stewardship Custodians (verifying compliance with Article I).
 
-#### "The Treasury is not a wallet with a committee. It is a financial perpetual motion machine that funds its own conscience, dispensing virtue on a proof-of-work basis." *-Lev Goukassian*
 
 ---
 
@@ -274,7 +268,6 @@ The system is designed to default to "inaction" in the face of ambiguity or conf
 2. **Ethical vs. Economic Veto:** The Custodians approve the *purpose* of funding (e.g., "Grant for ZK-proof research"). The Treasury Contract, however, *autonomously* disburses funds *only* upon verifiable completion of milestones. This prevents the Custodians from abusing the treasury for discretionary, political, or unmerited projects.  
 3. **Economic vs. Technical Veto:** The Treasury provides autonomous funding, but its rules *cannot* direct the Technical Council's research or force the implementation of a specific feature. This prevents "economic capture," where the protocol's financial resources are used to co-opt its technical development.
 
-#### "We replaced 'checks and balances' with cryptographic chastity belts. The Immutable Mandates are not values to be debated; they are axioms that render debate illegitimate." *-Lev Goukassian*
 
 ### **Section 7.2: Preventing Specific Capture Vectors**
 
