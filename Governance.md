@@ -132,9 +132,8 @@ This Article defines the human layer of governance. The composition, terms, and 
 To ensure expertise-based selection rather than vulnerability to political capture, a standing, independent **Nominating Committee** shall be maintained.
 
 1. **Composition:** This committee shall be composed of 7 individuals: 2 outgoing (or term-limited) members of the Technical Council, 2 outgoing (or term-limited) members of the Stewardship Custodians, and 3 external domain experts selected and approved by the existing Custodians.  
-2. **Process:** The Nominating Committee is responsible for sourcing, vetting, and verifying the credentials of all candidates based on the strict eligibility criteria defined in Sections 3.1 and 3.2.  
+2. **Process:** The Nominating Committee is responsible for sourcing, vetting, and verifying the credentials of all candidates based on the strict eligibility criteria defined in Sections 3.1 and 3
 3. **Confirmation:** The Committee shall present a final slate of qualified candidates for any open seats. The final confirmation of a new member is approved by a Qualified Majority (≥66%) vote of the *existing* members of the respective body that the candidate is joining.  
-4. 
 
 ---
 
