@@ -102,6 +102,7 @@ The Treasury's behavior is governed, but its actions are autonomous.
 
 1. The *parameters* of disbursement (e.g., "allocate 30% of fees to protocol maintenance," "allocate 20% to ecosystem grants") are proposed by the Technical Council.  
 2. These parameters *must* be reviewed for ethical alignment and approved by the Stewardship Custodians (see Article IV) before they are encoded as new rules in the Treasury Contract.
+3. The Smart Contract Treasury has no authority to alter or reinterpret core principles, pillars, or constitutional mechanics. It funds the system; it does not govern it. All changes to TL’s foundational architecture remain permanently outside its scope.
 
 #### "Most constitutions enumerate freedoms. TL's constitution enumerates forbidden futures: No Spy, No Weapon, No Switch Off. Everything else is engineering." *-Lev Goukassian*
 ---
@@ -175,6 +176,8 @@ Different decision types require different levels of consensus. All thresholds a
      * Major cryptographic upgrades.  
      * Any upgrade to the core Governance, Treasury, or Revocation contracts.  
    * **Body:** Requires **Joint Approval** (see Section 4.3).
+  
+If either body reaches quorum but cannot reach the required majority for a Type-2 or Type-3 action within the defined decision window, the proposal enters a Time-Bound Epistemic Hold. During this period, both bodies must provide written justifications. At expiration, the proposal defaults to rejection unless both bodies independently elevate it for reconsideration. This prevents governance paralysis while upholding caution as the default posture.
 
 ### **Section 4.3: Joint-Approval Mechanism (The Constitutional Check)**
 
@@ -243,7 +246,7 @@ This Article defines the physical, network-level decentralization of the governa
 ### **Section 6.1: Anchor Network Deployment**
 
 The complete Diamond governance architecture (defined in Article V) shall be deployed and maintained on a minimum of **five (5)** distinct, high-security, and ideologically diverse public blockchains, known as "Host Chains."  
-This redundancy, modeled on the resilient architecture of decentralized oracle networks , ensures that no single chain failure, 51% attack, critical bug, or jurisdictional regulatory action on one Host Chain can halt, capture, or terminate Ternary Logic's governance. The canonical *state* of TL governance is the aggregate consensus of its contracts across all active Anchors.
+This redundancy, modeled on the resilient architecture of decentralized oracle networks , ensures that no single chain failure, 51% attack, critical bug, or jurisdictional regulatory action on one Host Chain can halt, capture, or terminate Ternary Logic's governance. The canonical *state* of TL governance is the aggregate consensus of its contracts across all active Anchors. A minimum of five heterogeneous public chains is required to ensure resilience against regional outages, regulatory capture, or the collapse of any single ecosystem. This distribution guarantees TL continuity even if entire jurisdictions or technologies fail. Anchoring is not diversification for its own sake; it is structural survival.
 
 ### **Section 6.2: Host Chain Selection Criteria**
 
@@ -256,7 +259,7 @@ Host Chains shall be selected by the Technical Council (Type 2 Vote) and approve
 
 ### **Section 6.3: Failover and Contract Continuity**
 
-If a Host Chain fails, is compromised, captured, or formally deprecated by its own community, the Technical Council shall execute an emergency fallback procedure (Type 1 Vote). This procedure is explicitly defined as the power to *migrate* the governance state from the failing chain to a new, pre-vetted Host Chain, ensuring continuity. The Anchor Registry Contract (Facet 3\) maintains the canonical list of active Host Chains, allowing the system to route around failure.
+If a Host Chain fails, is compromised, captured, or formally deprecated by its own community, the Technical Council shall execute an emergency fallback procedure (Type 1 Vote). This procedure is explicitly defined as the power to *migrate* the governance state from the failing chain to a new, pre-vetted Host Chain, ensuring continuity. The Anchor Registry Contract (Facet 3\) maintains the canonical list of active Host Chains, allowing the system to route around failure. 
 
 ---
 
@@ -295,6 +298,8 @@ The primary enforcement of the "No Switch Off" mandate is achieved through an **
 1. The immutable Protocol Contract (the Diamond proxy, Article V) shall be deployed *without* any function call for pause(), suspend(), freeze(), or admin\_kill().  
 2. It is technically impossible to terminate a system that lacks an "off" switch.  
 3. The only upgradeability path (UUPS on facets)  is controlled by the Joint-Approval governance process (Article IV), which is itself constitutionally bound by the "No Switch Off" mandate. A proposal to deploy a "poison" facet designed to halt the system would be vetoed by the Stewardship Custodians as a direct violation of Article I.
+4. No individual, institution, coalition, or smart contract may terminate the TL system or authorize any action that disables it. Continuity is mandatory and non-waivable. TL may evolve, but it cannot be extinguished.
+
 
 ### **Section 8.2: Anchor Persistence**
 
@@ -364,7 +369,7 @@ This flowchart visualizes the Type 3 (Joint-Approval) voting process.
 
 ### **Section 9.5: Figure 4: Decision Flow \- Node Revocation Workflow**
 
-This workflow visualizes the automated revocation and slashing process, emphasizing "rule of law" over discretionary action.
+This workflow visualizes the automated revocation and slashing process, emphasizing "rule of law" over discretionary action. Operators whose certification is revoked retain the right to a structured appeal. Appeals follow a two-step process: an internal Custodian review panel followed by an independent technical audit commissioned through the Smart Contract Treasury. This ensures fairness without compromising the system’s security posture.
 
 1. **Start:** On-chain monitoring services (e.g., Oracles, other nodes) detect node misbehavior (e.g., critical downtime, invalid data submission).  
 2. **Trigger:** Data is fed to the **Revocation Contract (Facet 4\)**.  
