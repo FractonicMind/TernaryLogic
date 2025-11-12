@@ -10,21 +10,47 @@ Each must be notarized, timestamped, and anchored across multiple public chains
 No document on this list may be removed, altered, or superseded without
 a recorded, hashed, and publicly anchored event in the permanent TL audit trail.
 
-Anchoring_Standards_Notarized.md <Hash>
-Anchoring_Standards_Notarized.pdf <Hash>
-Goukassian_Principle_Notarized.md <Hash>
-Goukassian_Principle_Notarized.pdf <Hash>
-Governance_Notarized.md <Hash>
-Governance_Notarized.pdf <Hash>
-Memorial_Fund_Notarized.md <Hash>
-Memorial_Fund_Notarized.pdf <Hash>
-Succession_Charter_Notarized.md <Hash>
-Succession_Charter_Notarized.pdf <Hash>
-Succession_Declaration_Notarized.md <Hash>
-Succession_Declaration_Notarized.pdf <Hash>
-Sync_Protocol_Notarized.md <Hash>
-Sync_Protocol_Notarized.pdf <Hash>
+Anchoring_Standards_Notarized.md <HASH>
+Anchoring_Standards_Notarized.pdf <HASH>
 
+Anchors_Notarized.md <HASH>
+Anchors_Notarized.pdf <HASH>
+
+Decision_Logs_Notarized.md <HASH>
+Decision_Logs_Notarized.pdf <HASH>
+
+Economic_Rights_and_Transparency_Notarized.md <HASH>
+Economic_Rights_and_Transparency_Notarized.pdf <HASH>
+
+Epistemic_Hold_Notarized.md <HASH>
+Epistemic_Hold_Notarized.pdf <HASH>
+
+Goukassian_Principle_Notarized.md <HASH>
+Goukassian_Principle_Notarized.pdf <HASH>
+
+Governance_Notarized.md <HASH>
+Governance_Notarized.pdf <HASH>
+
+Hybrid_Shield_Notarized.md <HASH>
+Hybrid_Shield_Notarized.pdf <HASH>
+
+Immutable_Ledger_Notarized.md <HASH>
+Immutable_Ledger_Notarized.pdf <HASH>
+
+Memorial_Fund_Notarized.md <HASH>
+Memorial_Fund_Notarized.pdf <HASH>
+
+Succession_Charter_Notarized.md <HASH>
+Succession_Charter_Notarized.pdf <HASH>
+
+Succession_Declaration_Notarized.md <HASH>
+Succession_Declaration_Notarized.pdf <HASH>
+
+Sustainable_Capital_Allocation_Notarized.md <HASH>
+Sustainable_Capital_Allocation_Notarized.pdf <HASH>
+
+Sync_Protocol_Notarized.md <HASH>
+Sync_Protocol_Notarized.pdf <HASH>
 
 ---
 
@@ -124,9 +150,9 @@ Two witnesses attest that:
 chain_of_custody:
   document: Notarized_Manifest.txt
   created_by: Lev Goukassian (ORCID: 0009-0006-5966-1243)
-  signed_at: [to be filled on signing]
-  notarized_at: [to be added after notarization]
-  file_hash: [insert SHA-256 after notarization]
+  signed_at: 2025-11-12T14:00-08:00
+  notarized_at: 2025-11-12T15:00-08:00
+  file_hash: 
   anchor_targets:
     - Bitcoin (OpenTimestamps)
     - Ethereum AnchorLog
