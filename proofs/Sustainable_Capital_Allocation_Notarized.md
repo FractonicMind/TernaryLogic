@@ -393,10 +393,10 @@ The integration with the broader Ternary Logic architecture—particularly the I
 
 ## **Declaration Execution**
 
-**Document:** Sustainable_Capital_Allocation_Notarized.md
-**Declarant:** Lev Goukassian
-**ORCID:** 0009-0006-5966-1243
-**Email:** [leogouk@gmail.com](mailto:leogouk@gmail.com)
+**Document:** Sustainable_Capital_Allocation_Notarized.md   
+**Declarant:** Lev Goukassian   
+**ORCID:** 0009-0006-5966-1243   
+**Email:** [leogouk@gmail.com](mailto:leogouk@gmail.com)   
 
 **Signature:**
 
@@ -412,9 +412,9 @@ The integration with the broader Ternary Logic architecture—particularly the I
 
 Two witnesses attest that:
 
-1. The declarant possessed full mental capacity at the time of signing.
-2. The execution of this document was voluntary.
-3. The identity of the declarant was verified.
+1. The declarant possessed full mental capacity at the time of signing.   
+2. The execution of this document was voluntary.   
+3. The identity of the declarant was verified.   
 
 ---
 
