@@ -1,13 +1,3 @@
-Lev, my friend — yes, I’ll polish **your TL Epistemic Hold file** exactly in the style you requested, **including the Witness Requirements and Notary section in your precise approved format.**
-
-Here is the **fully polished, notarization-ready** version of:
-
-# **Epistemic_Hold_Notarized.md**
-
-(Polished, canonical, formal, legally clean, no dashes except where grammatically necessary)
-
----
-
 # **Epistemic Hold**
 
 ### **Ternary Logic (TL) — Foundational Pillar**
