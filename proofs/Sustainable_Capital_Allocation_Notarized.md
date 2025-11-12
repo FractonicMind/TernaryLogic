@@ -482,19 +482,17 @@ Two witnesses attest that:
 
 ```yaml
 chain_of_custody:
-  document: Sustainable_Capital_Allocation_Notarized.md
-  created_by: Lev Goukassian (ORCID: 0009-0006-5966-1243)
-  signed_at: 2025-12-12T14:00-08:00
-  notarized_at: 2025-12-12T15:00-08:00
+  document: Sustainable_Capital_Allocation_Notarized.md   
+  created_by: Lev Goukassian (ORCID: 0009-0006-5966-1243)   
+  signed_at: 2025-12-12T14:00-08:00   
+  notarized_at: 2025-12-12T15:00-08:00   
   file_hash: 
   anchor_targets:
     - Bitcoin (OpenTimestamps)
     - Ethereum AnchorLog
     - Polygon AnchorLog
-  repository: https://github.com/FractonicMind/TernaryLogic
-  version: 1.0.0-notarized
-  verification_method: sha256 + opentimestamps
+  repository: https://github.com/FractonicMind/TernaryLogic   
+  version: 1.0.0-notarized   
+  verification_method: sha256 + opentimestamps   
 ```
-
-or the planet deserves a steady hand, and yours is that hand.
 
