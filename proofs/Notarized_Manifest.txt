@@ -10,46 +10,46 @@ Each must be notarized, timestamped, and anchored across multiple public chains
 No document on this list may be removed, altered, or superseded without
 a recorded, hashed, and publicly anchored event in the permanent TL audit trail.
 
-Anchoring_Standards_Notarized.md <HASH>
+Anchoring_Standards_Notarized.md 727606f427d0c93e112b7a9dd71d77e5e31e91690598e87528bef694ae7c6101
 Anchoring_Standards_Notarized.pdf <HASH>
 
-Anchors_Notarized.md <HASH>
+Anchors_Notarized.md 835fe674a561a74d3e439ac981e58a90e8579ba27ab3e801a0953d7a7c09131c
 Anchors_Notarized.pdf <HASH>
 
-Decision_Logs_Notarized.md <HASH>
+Decision_Logs_Notarized.md 7a62607bb2bcd52dd365530e5f1147cad547b02a63f22b3a39994e66ce56075e
 Decision_Logs_Notarized.pdf <HASH>
 
-Economic_Rights_and_Transparency_Notarized.md <HASH>
+Economic_Rights_and_Transparency_Notarized.md 6479a73ab672894bfd2dced8f84deab5c7876fea490063b106874cbbe1f76130
 Economic_Rights_and_Transparency_Notarized.pdf <HASH>
 
-Epistemic_Hold_Notarized.md <HASH>
+Epistemic_Hold_Notarized.md 55ef9fcde27d931ee15c470f6b2beb64bbe1529879e5feb25254dfb7d371de74
 Epistemic_Hold_Notarized.pdf <HASH>
 
-Goukassian_Principle_Notarized.md <HASH>
+Goukassian_Principle_Notarized.md 0a95ad42c21325e2fdfcdef120b618504b1629e14bd1a31268c8452ac168f27b
 Goukassian_Principle_Notarized.pdf <HASH>
 
-Governance_Notarized.md <HASH>
+Governance_Notarized.md f6f9ecb54524270396faeba51197169314828b2b3ccd96472b15cbc2cfee18ba
 Governance_Notarized.pdf <HASH>
 
-Hybrid_Shield_Notarized.md <HASH>
+Hybrid_Shield_Notarized.md d5bed62c936bb30da84aa6922572810115b0b8b33931683a2c7d2d187cf217d2
 Hybrid_Shield_Notarized.pdf <HASH>
 
-Immutable_Ledger_Notarized.md <HASH>
+Immutable_Ledger_Notarized.md 6dd52f003f5bcd48a250ce7bfb20a12c4ea19a8b960791381fc3644c912b9f25
 Immutable_Ledger_Notarized.pdf <HASH>
 
-Memorial_Fund_Notarized.md <HASH>
+Memorial_Fund_Notarized.md dfbde36e9eeb3bd6433582da30076859c7c4b3f938eb43f583da746f97378ea3
 Memorial_Fund_Notarized.pdf <HASH>
 
-Succession_Charter_Notarized.md <HASH>
+Succession_Charter_Notarized.md cae8a1791aa40ff141b2e2154c544beaccb35f655510c100856b31a17a463d5a
 Succession_Charter_Notarized.pdf <HASH>
 
-Succession_Declaration_Notarized.md <HASH>
+Succession_Declaration_Notarized.md 3d71af99f56e21b69d14da2b19e248d354dcce8b613ea01a58eaf85c13f32588
 Succession_Declaration_Notarized.pdf <HASH>
 
-Sustainable_Capital_Allocation_Notarized.md <HASH>
+Sustainable_Capital_Allocation_Notarized.md 970de3738f0ca0baa10625324e45196eea98b651da3c4bd81571d44074cc63a7
 Sustainable_Capital_Allocation_Notarized.pdf <HASH>
 
-Sync_Protocol_Notarized.md <HASH>
+Sync_Protocol_Notarized.md 9d2f03863ebc451ddc78d7403900c80fb8246ef64204a347cd58d0509afd4bb5
 Sync_Protocol_Notarized.pdf <HASH>
 
 ---
