@@ -273,8 +273,8 @@ Two witnesses attest that:
 chain_of_custody:
   document: Anchoring_Standards_Notarized.md
   created_by: Lev Goukassian (ORCID: 0009-0006-5966-1243)
-  signed_at: 2025-11-12T14:00-08:00
-  notarized_at: 2025-11-12T15:00-08:00
+  signed_at: 2025-12-12T14:00-08:00
+  notarized_at: 2025-12-12T15:00-08:00
   file_hash: c6bb896e9c7b5ec4a4781e65ace9ff191fdf3988eaefa40b1d616d6419a2e1ce
   anchor_targets:
     - Bitcoin (OpenTimestamps)
