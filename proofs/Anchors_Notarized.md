@@ -462,7 +462,7 @@ chain_of_custody:
   created_by: Lev Goukassian (ORCID: 0009-0006-5966-1243)
   signed_at: 2025-11-12T14:00-08:00
   notarized_at: 2025-11-12T15:00-08:00
-  file_hash: 
+  file_hash: 835fe674a561a74d3e439ac981e58a90e8579ba27ab3e801a0953d7a7c09131c
   anchor_targets:
     - Bitcoin (OpenTimestamps)
     - Ethereum AnchorLog
