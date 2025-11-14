@@ -118,7 +118,7 @@ The Two Sigma enforcement action 31 is the key case study. The firm's Reg SCI-co
 
 This visualization compares the SEC's current framework with the proposed TL architecture across key regulatory dimensions. The further a point is from the center, the more robust the capability in that dimension. This analysis demonstrates how TL extends and hardens the SEC's existing tools rather than replacing its authority.
 
-[image1]: images/Comparative_Analysis.png
+![Comparative Analysis](images/Comparative_Analysis.png)
 
 # **Section IV – Conceptual Pathways for Coexistence and Integration**
 
