@@ -16,4 +16,10 @@ This file records cryptographic proofs, timestamps, and custody points for TL ar
 **Location:** Repo, Zenodo DOI: 10.5281/zenodo.17517643  
 **Notes:** Zenodo-archived version; verified match to original anchor hash
 
-
+### 2025-11-16 — TL Constitutional Anchor
+**Artifact:** proofs/Notarized_Manifest.txt  
+**SHA-256:** 0c16f2f2228932f836929804b871a9c4765924b24190f35a3309ca94f8da826e  
+**OTS Proof:** proofs/Notarized_Manifest.txt.ots  
+**Anchor Method:** OpenTimestamps → Bitcoin  
+**Bitcoin Status:** Confirmed (Success! Timestamp complete)  
+**Notes:** Master manifest securing 15 notarized TL constitutional files. Any modification invalidates the entire hash chain.
