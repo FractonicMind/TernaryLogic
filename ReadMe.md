@@ -10,9 +10,14 @@
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0006--5966--1243-green?style=flat-square)](https://orcid.org/0009-0006-5966-1243)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License-MIT%20with%20Ethics-yellow?style=flat-square)](License)
+[![ZENODO Notarized Constitutional Extensions](https://img.shields.io/badge/Academic%20Validation-Complete-brightgreen?style=flat-square)](https://zenodo.org/records/17613006)
 
 
 #### *"The world is not binary. And the future will not be either."* — Lev Goukassian, Creator of Ternary Logic
+
+---
+
+**This repository contains the constitutional notarized files of Ternary Logic; see [proofs/Notarized_Manifest.txt](proofs/Notarized_Manifest.txt) for the verification chain.**
 
 ---
 
