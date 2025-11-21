@@ -843,10 +843,10 @@ def process_batch(transactions: List[Dict]) -> List[TLResult]:
 ## Support and Resources
 
 ### Documentation
-- [Eight Pillars Specification](../pillars/)
-- [Governance Framework](../governance/)
+- [Eight Pillars Specification](/TL_Pillars/)
+- [Governance Framework](/Governance.md)
 - [Implementation Examples](../examples/)
-- [Research Papers](../research/)
+- [Research Papers](/research/academic_papers/)
 
 ### Community
 - GitHub: https://github.com/FractonicMind/TernaryLogic
