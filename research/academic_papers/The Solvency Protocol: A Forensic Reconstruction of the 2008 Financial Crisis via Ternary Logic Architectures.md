@@ -5,6 +5,10 @@
 **Subject:** Economic Analysis / Systemic Risk Architecture
 
 ---
+https://zenodo.org/records/17715767
+
+---
+
 
 ## **Abstract**
 
@@ -154,7 +158,10 @@ The **Solvency Protocol** inherent in Ternary Logic introduces the necessary str
 While implementing such a system requires significant coordination among bodies like the Bank for International Settlements (BIS), the cost of implementation is negligible compared to the cost of systemic collapse. The "Sacred Pause" ensures that when the financial machine encounters the unknown, it does not accelerate into the abyss, but pauses, verifies, and preserves the integrity of the global economy.
 
 -----
+---
+https://zenodo.org/records/17715767
 
+---
 ### **VII. References**
 
 1.  Goukassian, L. (2025). *Ternary Moral Logic (TML): A Governance Framework for Ethical Accountability and Immutable AI Systems*. TechRxiv. [[Zenodo](https://doi.org/10.5281/zenodo.17704748)]
