@@ -157,7 +157,7 @@ While implementing such a system requires significant coordination among bodies 
 
 ### **VII. References**
 
-1.  Goukassian, L. (2025). *Ternary Moral Logic (TML): A Governance Framework for Ethical Accountability and Immutable AI Systems*. TechRxiv. [Link to Zenodo/TechRxiv]
+1.  Goukassian, L. (2025). *Ternary Moral Logic (TML): A Governance Framework for Ethical Accountability and Immutable AI Systems*. TechRxiv. [[Zenodo](https://doi.org/10.5281/zenodo.17704748)]
 2.  Goukassian, L. (2025). *The Sacred Pause: Implementing Ethical Hesitation in Computational Systems*. Medium.
 3.  Goukassian, L. (2025). *Arming Earth's Right to Sue*. Medium.
 4.  Valukas, A. R. (2010). *Report of Anton R. Valukas, Examiner: In re Lehman Brothers Holdings Inc.* Vol 3. Jenner & Block LLP.
