@@ -103,28 +103,6 @@ graph TD
     style J fill:#f9f,stroke:#333,stroke-width:2px
     style D fill:#faa,stroke:#333,stroke-width:2px
 
-```mermaid
-graph TD
-    subgraph Binary_Architecture_2008
-    A[Toxic Loan Input] --> B{Manual Review?}
-    B -- Defect Found --> C[Manager "Waives" Defect]
-    C --> D[Marked Valid (+1)]
-    D --> E[Securitized into AAA Bond]
-    E --> F[Systemic Contagion]
-    end
-
-    subgraph Ternary_Architecture
-    G[Toxic Loan Input] --> H{Veracity Anchor Check}
-    H -- State -1 Found --> I[Hybrid Shield Triggered]
-    I --> J[STATE 0: QUARANTINE]
-    J --> K[Aggregation Blocked]
-    K --> L[Contagion Contained]
-    end
-    
-    style J fill:#f9f,stroke:#333,stroke-width:2px
-    style D fill:#faa,stroke:#333,stroke-width:2px
-```
-
 In the Ternary framework, overriding a **State -1** anchor requires a **Counter-Anchor** (new verified proof). A "managerial waiver" is not a valid cryptographic input. The system rejects it, creating a "firewall" that prevents toxic assets from entering the global pool.
 
 -----
