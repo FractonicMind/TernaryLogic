@@ -87,7 +87,7 @@ graph TD
     subgraph Binary_Architecture_2008
     A[Toxic Loan Input] --> B{Manual Review?}
     B -- Defect Found --> C[Manager "Waives" Defect]
-    C --> D[Marked Valid (+1)]
+    C --> D[Marked Valid +1]
     D --> E[Securitized into AAA Bond]
     E --> F[Systemic Contagion]
     end
