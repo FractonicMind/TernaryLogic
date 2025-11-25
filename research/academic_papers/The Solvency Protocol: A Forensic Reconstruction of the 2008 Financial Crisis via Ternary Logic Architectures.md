@@ -80,10 +80,10 @@ Ternary Logic introduces **Veracity Anchors**—cryptographic proofs attached to
   * **The Check:** When a bank attempts to aggregate mortgages into a Prime RMBS, the **Hybrid Shield** [6] scans the Veracity Anchors.
   * **The Block:** If the system detects a **State -1 (Defect)** anchor placed by a due diligence firm (like Clayton), it structurally prevents aggregation.
 
-**Figure 2: The Securitization Gate** *Comparison of the historical binary pipeline versus the Ternary "Solvency Protocol."*
+**Figure 2a: The Binary Failure (2008)** *The historical architecture allowed toxic assets to pass as valid (+1) through manual waivers.*
 
 ```mermaid
-graph TD
+graph LR
     subgraph Binary_Architecture_2008
         A[Toxic Loan Input] --> B{Manual Review?}
         B -- Defect Found --> C[Manager 'Waives' Defect]
@@ -92,6 +92,13 @@ graph TD
         E --> F[Systemic Contagion]
     end
 
+    style D fill:#faa,stroke:#333,stroke-width:2px
+```
+
+**Figure 2b: The Ternary Solution** *The Solvency Protocol quarantines unverified assets in State 0, blocking contagion.*
+
+```mermaid
+graph LR
     subgraph Ternary_Architecture
         G[Toxic Loan Input] --> H{Veracity Anchor Check}
         H -- State -1 Found --> I[Hybrid Shield Triggered]
@@ -101,7 +108,6 @@ graph TD
     end
 
     style J fill:#f9f,stroke:#333,stroke-width:2px
-    style D fill:#faa,stroke:#333,stroke-width:2px
 ```
 
 In the Ternary framework, overriding a **State -1** anchor requires a **Counter-Anchor** (new verified proof). A "managerial waiver" is not a valid cryptographic input. The system rejects it, creating a "firewall" that prevents toxic assets from entering the global pool.
