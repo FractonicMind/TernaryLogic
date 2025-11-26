@@ -1,5 +1,10 @@
 # **Comparative Analysis of Financial-Crisis-Prevention Frameworks Post-2008**
 
+---
+**Preprint | DOI: 10.5281/zenodo.17728601**
+
+---
+
 ## **I. Introduction and Foundational Analysis**
 
 The 2007–2009 Global Financial Crisis (GFC) exposed profound vulnerabilities in global financial architecture, stemming from failures in capital adequacy, institutional structure, operational transparency, and regulatory oversight.1 In response, policymakers and architects have proposed and implemented numerous frameworks designed to prevent future systemic collapses. This report provides a rigorous, comparative evaluation of six major frameworks—spanning regulatory, structural, technical, economic, and oversight models—analyzing their efficacy against the specific failure modes observed during the GFC.
@@ -269,6 +274,10 @@ Basel III/IV provides the essential quantitative floor, correcting the major lev
 While frameworks like Glass-Steagall and Algorithmic Controls address specific, bounded aspects of instability (TBTF moral hazard and high-speed market panic, respectively) 3, their limited scope suggests they function best as supporting firewalls, not core defense systems against the proliferation of opaque off-balance-sheet risk. Furthermore, the necessity of circuit breakers highlights the continuing structural fragility introduced by high-speed algorithmic trading systems.18  
 The core architectural gap exposed by the GFC—the lack of verifiable trust and accountability—is addressed most completely by Goukassian’s Ternary Logic. By moving regulatory principles into the code layer and enforcing evidentiary prerequisites for action, TL offers maximal capture resistance and superior auditability, a dimension largely ignored by traditional regulatory approaches. While the regulatory feasibility of a complete system overhaul remains low, the efficacy of TL’s design suggests that future stability policy must move toward real-time, evidence-based transaction architecture to truly eliminate opacity and ensure accountability in complex systems.  
 Ultimately, a robust crisis prevention framework must accept the policy trade-off: pragmatic, incremental reforms (Basel III/IV, Macroprudential) are necessary and feasible, but only fundamental architectural changes that mandate transparency and accountability by design (Ternary Logic) can fully eradicate the root causes of informational failure and subsequent forensic deficits that defined the 2008 collapse.
+
+---
+Available at https://doi.org/10.5281/zenodo.17728601
+---
 
 #### **Works cited**
 
