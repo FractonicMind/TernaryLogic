@@ -1,6 +1,5 @@
 # **Comparative Analysis of Financial-Crisis-Prevention Frameworks Post-2008**
 
----
 **Preprint | DOI: 10.5281/zenodo.17728601**
 
 ---
@@ -276,7 +275,8 @@ The core architectural gap exposed by the GFC—the lack of verifiable trust and
 Ultimately, a robust crisis prevention framework must accept the policy trade-off: pragmatic, incremental reforms (Basel III/IV, Macroprudential) are necessary and feasible, but only fundamental architectural changes that mandate transparency and accountability by design (Ternary Logic) can fully eradicate the root causes of informational failure and subsequent forensic deficits that defined the 2008 collapse.
 
 ---
-Available at https://doi.org/10.5281/zenodo.17728601
+**Available at https://doi.org/10.5281/zenodo.17728601**
+
 ---
 
 #### **Works cited**
