@@ -439,7 +439,7 @@ if result.state == TLState.EPISTEMIC_HOLD:
 
 **[Mandatory Reading](docs/Mandatory.md)**: Critical safety guidelines for economic system implementation  
 **[Quick Start Guide](docs/Quick_Start.md)**: 60-minute implementation tutorial for academic and institutional applications  
-**[Complete API Reference](docs/api/Complete_Api_Reference.md)**: Professional documentation with comprehensive examples and integration patterns  
+**[Complete API Reference](api/Complete_Api_Reference.md)**: Professional documentation with comprehensive examples and integration patterns  
 **[Academic Validation Framework](docs/Academic_Validation.md)**: Peer review and validation protocols for research applications
 
 ### Implementation Resources
