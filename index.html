@@ -258,804 +258,349 @@
 </head>
 <body>
     <header>
-        <h1>Ternary Logic (TL)</h1>
+        <h1>Ternary Logic (TL): A Framework for Intelligent Uncertainty Management</h1>
      </header>
+<p><strong>Epistemic Hold Technology for Economic Decision-Making</strong></p>
+<p><a href="docs/Mandatory.md"><img src="https://img.shields.io/badge/MANDATORY-Read%20First-red?style=flat-square&labelColor=darkred" alt="Mandatory Reading"></a><br><a href="https://fractonicmind.github.io/TernaryLogic/demos/ROI_Calculator.html"><img src="https://img.shields.io/badge/Interactive%20Demo-Live%20Application-blue?style=flat-square" alt="Interactive Demo"></a><br><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/docs/Academic_Validation.md"><img src="https://img.shields.io/badge/Academic%20Validation-Complete-brightgreen?style=flat-square" alt="Academic Validation"></a><br><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/tests/"><img src="https://img.shields.io/badge/Test%20Coverage-81%25-brightgreen?style=flat-square" alt="Test Coverage"></a><br><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Changelog.md"><img src="https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square" alt="Version"></a><br><a href="https://orcid.org/0009-0006-5966-1243"><img src="https://img.shields.io/badge/ORCID-0009--0006--5966--1243-green?style=flat-square" alt="ORCID"></a><br><a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square" alt="Python"></a><br><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/License"><img src="https://img.shields.io/badge/License-MIT%20with%20Ethics-yellow?style=flat-square" alt="License"></a><br><a href="https://zenodo.org/records/17613006"><img src="https://img.shields.io/badge/ZENODO-Notarized%20Constitutional%20Extensions-purple?style=flat-square" alt="ZENODO"></a></p>
+<h4><em>&quot;The world is not binary. And the future will not be either.&quot;</em> — Lev Goukassian, Creator of Ternary Logic</h4>
+<hr>
+<p><strong>This repository contains the constitutional notarized files of Ternary Logic; see <a href="proofs/Notarized_Manifest.txt">proofs/Notarized_Manifest.txt</a> for the verification chain.</strong></p>
+<hr>
+<h2>Abstract</h2>
+<p>Ternary Logic (TL) is a novel evidentiary framework designed to address the inherent limitations of bivalent logic in complex economic and financial systems. Traditional binary systems, which operate on a simple commit/reject basis, lack a native capacity for in-flight verification, leading to operational risk, costly post-facto reconciliation, and a deficit of verifiable trust. TL introduces a third logical state—the <strong>Epistemic Hold</strong>, a mandatory, time-bounded verification window between the proposal of an action and its final commitment. This core innovation, combined with an <strong>Immutable Ledger</strong> for finality and <strong>Decision Logs</strong> for causal transparency, creates a complete evidentiary package for every transaction. The framework is articulated through eight foundational pillars, including the <strong>Goukassian Principle</strong> for systemic oversight and the <strong>Hybrid Shield</strong> for balancing privacy with public verifiability. Enforced by non-negotiable mandates such as <strong>No Log = No Action</strong>, TL provides a robust architectural foundation for critical infrastructure. Governed by a hybrid model of a <strong>Technical Council, Stewardship Custodians</strong>, and a <strong>Smart Contract Treasury</strong>, TL is engineered to support the development of resilient, transparent, and accountable systems for Central Bank Digital Currencies (CBDCs), capital markets, supply chains, and sustainable finance.</p>
+<hr>
+<h2><strong>The Evidentiary Architecture of Ternary Logic</strong></h2>
+<p>Modern economic systems still think in binaries. They rush to act or refuse, leaving no structured space for uncertainty, no mechanism for intelligent hesitation. <strong>Ternary Logic (TL)</strong> introduces that missing third state: the <strong>Epistemic Hold (0)</strong>, a formalized pause that transforms ambiguity into verifiable prudence.</p>
+<p>TL implements a three-state computational model for economic decision-making based on epistemological principles of uncertainty management:</p>
+<p><strong>+1 (Proceed)</strong>: Execute with confidence when economic analysis indicates clear signals alignment, manageable uncertainty levels, and acceptable risk-return profiles.<br><strong>0 (Epistemic Hold)</strong>: Initiate deliberative pause when economic complexity, conflicting signals, or uncertainty levels exceed predetermined confidence thresholds, requiring additional analysis, information gathering, or human consultation.<br><strong>-1 (Halt)</strong>: Stop or reject when significant risks, contradictory signals, or unacceptable uncertainty levels are detected, while maintaining systematic documentation of rejection rationale.   </p>
+<p>When a TL-compliant system receives a prompt, a proposed action (+1), it immediately enters an evidentiary lifecycle governed by its eight architectural pillars. Every event must generate a <strong>Decision Log</strong> before execution. This log captures the data inputs, algorithms, authorizations, and justification for intent, satisfying the inviolable covenant <strong>“No Log = No Action.”</strong></p>
+<p>Once the log exists, the action faces its constitutional boundaries under the <strong>Goukassian Principle</strong>, the foundational clause binding every TL instance to the prohibitions <strong>No Spy</strong> and <strong>No Weapon</strong>. Only when these are honored does the system advance to the <strong>Epistemic Hold</strong>, where judgment meets evidence.</p>
+<p>The Epistemic Hold is automatically triggered whenever uncertainty, incompleteness, or conflict arises in the data. It also activates if two key mandates fail their verifications. The Hold enforces a structured pause, a formal zero state, with a target latency of under 300 milliseconds in high-performance systems until confidence is restored or the action is refused:</p>
+<ul>
+<li><strong>Economic Rights &amp; Transparency</strong>, which examines ownership, consent, data provenance, and regulatory access.</li>
+<li><strong>Sustainable Capital Allocation</strong>, which tests sustainability claims, emissions data, and ESG veracity.</li>
+</ul>
+<p>If these datasets are missing, stale, or unverifiable, the Hold enforces a structured delay, a computational “0” state, until confidence is restored or the action is refused (−1).</p>
+<p>Once validated, the system records the full causal chain on the <strong>Immutable Ledger</strong>: the initial +1 intent, the 0 Hold deliberation, and the final +1 or −1 outcome. This ledger, a tamper-proof write-once structure, ensures that even aborted actions remain part of institutional memory. Every entry is then protected by the <strong>Hybrid Shield</strong>, whose cryptographic and legal layers automatically revoke certification upon any breach, and anchored to public blockchains through <strong>Anchors</strong>, providing decentralized, time-stamped verification.</p>
+<p>Governance completes the circuit. Three entities preserve the framework’s integrity:</p>
+<ul>
+<li>The <strong>Technical Council</strong>, which maintains cryptographic standards and protocol updates;</li>
+<li>The <strong>Stewardship Custodians</strong>, who safeguard the Goukassian Principle and institutional ethics;</li>
+<li>The <strong>Smart Contract Treasury</strong>, which automates enforcement and transparent funding.</li>
+</ul>
+<p>Through this orchestration, TL transforms every action from a single decision into a complete evidentiary event, a narrative containing intent, justification, verification, and immutable proof.</p>
+<h4><em>In binary systems, a transaction ends with execution. In Ternary Logic, it ends with understanding.</em></h4>
+<hr>
+<h2><strong>The Architectural 8 Pillars of the Ternary Logic Framework</strong></h2>
+<p>The Ternary Logic framework is composed of eight interdependent architectural pillars. This section provides an in-depth analysis of each pillar, synthesizing its technical architecture with its profound policy implications for the global financial system.</p>
+<h3><strong>1. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Epistemic_Hold.md">The Epistemic Hold: Codifying Uncertainty in Financial Decision-Making</a></strong></h3>
+<p>The Epistemic Hold is the operational implementation of the ternary &#39;0&#39; state, representing a fundamental shift in how automated systems handle uncertainty. It is an active, intelligent pause, not a passive failure state. The mechanism is triggered automatically when predefined uncertainty or complexity thresholds are breached within the system&#39;s decision-making process.<br>These thresholds are not static but are dynamically calibrated based on a continuous, multi-factor analysis that includes:</p>
+<ul>
+<li><strong>Quantification of Economic Confidence:</strong> The system uses probabilistic models to assess the reliability of market signals and the predictive power of its internal models in the current context.  </li>
+<li><strong>Analysis of Signal Conflicts:</strong> It detects contradictions between different data sources, economic indicators, or model outputs.  </li>
+<li><strong>Assessment of Information Completeness:</strong> It evaluates whether the available data is sufficient to make a decision with the required degree of certainty.</li>
+</ul>
+<p>Upon activation, the Epistemic Hold mandates an immediate pause in automated execution and initiates a &quot;deliberative response.&quot; This is a structured protocol that can involve a range of actions, such as automatically querying additional data sources, running alternative &quot;challenger&quot; models to test assumptions, or escalating the decision to human operators with a complete dossier of the conflicting data and the reason for the hold. The framework&#39;s design targets an optimal &quot;Epistemic Hold Rate&quot; of 15-25% for many financial applications, indicating a healthy balance between efficient autonomous execution and necessary, thoughtful deliberation in the face of genuine complexity.</p>
+<h4><strong>Policy Application: A New Paradigm for Model Risk Management (MRM)</strong></h4>
+<p>Model risk—the risk of significant financial loss resulting from inadequate or misused quantitative models—is a primary concern for financial institutions and regulators. The 2008 financial crisis was, in part, a story of failed models that underestimated risk. Consequently, regulators have established stringent guidelines for Model Risk Management (MRM), which traditionally involves a lifecycle of model identification, assessment, mitigation, validation, and governance.<br>The Epistemic Hold revolutionizes this practice. Instead of relying on periodic, backward-looking validation exercises like quarterly back-testing, it functions as a real-time, automated MRM control embedded within the operational workflow. The system effectively self-arrests when a model&#39;s operational context deviates from its established confidence parameters or when its inputs are suspect. This directly addresses one of the most common sources of model risk: the application of a model to market conditions for which it was not designed, or the use of a model with flawed or incomplete data. The Epistemic Hold forces an evaluation of a model&#39;s key assumptions <em>before</em> a potentially erroneous and costly decision is executed.<br>This transforms MRM from a periodic, largely manual compliance exercise into a proactive, real-time operational safeguard. Traditional MRM identifies failures after they have occurred during back-testing; the Epistemic Hold prevents them from occurring in the first place by institutionalizing prudence at the machine level. This architectural safeguard could fundamentally alter regulatory expectations. Supervisory inquiries may shift from asking, &quot;What is your model validation process?&quot; to a more pointed and effective question: &quot;What are your Epistemic Hold thresholds, and can you provide the immutable decision logs for all Hold events during the last market stress period?&quot;</p>
+<h3><strong>2. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Immutable_Ledger.md">The Immutable Ledger: Establishing a Cryptographically Verifiable Source of Truth</a></strong></h3>
+<h4><strong>Technical Architecture</strong></h4>
+<p>The foundation of the entire Ternary Logic framework is an Immutable Ledger, implemented using Distributed Ledger Technology (DLT), often referred to as blockchain technology. In this architecture, all transactions, state changes, and log entries are recorded in a shared digital ledger that is distributed among network participants.<br>The integrity of this ledger is secured through cryptography. Each transaction is grouped into a &quot;block&quot; of data. Each block contains, among other things, a timestamp and a cryptographic hash—a unique digital fingerprint—of the preceding block. This creates a sequential, interlocking chain of blocks, hence the term &quot;blockchain&quot;. This structure is the source of the ledger&#39;s immutability. To alter a transaction in a past block, an attacker would have to change that block&#39;s hash. Because that hash is included in the next block, the next block&#39;s hash would also change, and so on, creating a cascade that would invalidate the entire subsequent chain. In a distributed network, such a change would be immediately detected and rejected by other participants. This architecture provides a single, verifiable, and tamper-evident source of truth for all network participants, eliminating the need for costly and error-prone reconciliation between separate, siloed databases.</p>
+<h4><strong>Policy Application: Foundation of Evidentiary Integrity</strong></h4>
+<p>A primary challenge in global finance is the prevalence of information asymmetry and the difficulty of establishing a definitive, trustworthy record of events. Financial crime, in particular, thrives in opacity, leveraging complex corporate structures and fragmented accounting systems to hide the origin and flow of illicit funds.<br>The Immutable Ledger provides a powerful antidote. It creates a permanent, chronologically sound, and cryptographically verifiable record of every single transaction and state change within the system. This is the bedrock of absolute evidentiary integrity. For central banks, regulators, and law enforcement agencies, this technology transforms forensic investigations and supervision. Instead of the painstaking process of attempting to reconstruct a sequence of events from disparate, siloed, and potentially compromised databases, investigators can rely on the ledger as an authoritative record of what happened, when it happened, and in what order. This capability is crucial for enforcing Anti-Money Laundering and Combating the Financing of Terrorism (AML/CFT) regulations, resolving commercial disputes, and conducting market abuse investigations with cryptographic certainty.<br>The adoption of an Immutable Ledger shifts the paradigm of financial supervision from one of <em>trust-based verification</em> to one of <em>cryptographic verification</em>. Currently, supervision relies on periodic audits and reports submitted by regulated entities, a process that assumes good faith but remains vulnerable to error, concealment, and outright fraud. By providing regulators with permissioned read-access to the relevant ledger (as managed by the Hybrid Shield pillar), the nature of supervision changes fundamentally. It is no longer about requesting records and auditing them; it is about querying a shared, trusted dataset in real-time. This dramatically reduces the information asymmetry between regulators and institutions and promises a future of &quot;continuous supervision,&quot; where compliance checks are automated and run constantly against the live ledger.</p>
+<h3><strong>3. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Goukassian_Principle.md">The Goukassian Principle: Engineering Ethical Accountability by Design</a></strong></h3>
+<h4><strong>Technical Architecture</strong></h4>
+<p>Named for its originator, the Goukassian Principle is an ethical-legal mandate embedded within the framework&#39;s architecture. The Principle is composed of three interconnected elements: The Lantern, The Signature, and The License. The Goukassian Principle mandates the creation of <strong>auditable Decision Logs</strong> that are inextricably tied to the framework&#39;s triadic logic (+1, 0, -1).<br>Central to this pillar is the concept of the <strong>&quot;Sacred Pause,&quot;</strong> a specific, high-stakes implementation of the Epistemic Hold that is triggered not just by data uncertainty, but by predefined conditions of ethical ambiguity or significant potential impact. During this mandatory pause, the system is compelled by its protocol to generate a structured, immutable log detailing its &quot;reasoning&quot;: the alternatives it considered, the risks it assessed, the ethical ruleset it consulted, and the ultimate rationale for its final decision, whether that decision is to proceed (+1), halt (-1), or escalate for human review. These detailed records are termed <strong>&quot;Immutable Ledger</strong> Logs.&quot; They are cryptographically sealed and stored on the Immutable Ledger, rendering them tamper-proof and ensuring they are admissible as high-integrity digital evidence in legal or regulatory proceedings.</p>
+<h4><strong>Policy Application: A New Legal Standard for Accountability</strong></h4>
+<p>A defining challenge of the digital age, particularly with the rise of artificial intelligence in finance, is the &quot;black box&quot; problem: how to assign accountability when an opaque, complex algorithm causes harm. Traditional legal and regulatory frameworks struggle to determine intent, negligence, or causality when the decision-making process is hidden within layers of code.<br>The Goukassian Principle directly confronts this challenge by creating an <em>ex ante</em> record of the system&#39;s &quot;state of mind&quot; at the moment of a critical decision. This architectural feature enables a powerful legal and regulatory doctrine: a <strong>&quot;reverse burden of proof.&quot;</strong> In the event of an adverse outcome, the absence of a complete, well-formed, and logically sound Immutable Ledger Log for the material event would create a rebuttable presumption of negligence or system design failure. The burden would shift from the regulator or plaintiff—who would normally have to prove the system acted improperly—to the institution, which would have to use its own immutable logs to prove that its system acted with a demonstrable and documented standard of care.<br>This weaponizes transparency as a legal and ethical enforcement mechanism. It makes accountability an unavoidable architectural property of the system, not a voluntary policy overlay. Traditional ethical frameworks in finance rely on principles and codes of conduct, with enforcement being reactive. The Goukassian Principle creates a powerful incentive for institutions to design genuinely cautious, transparent, and ethically-aligned automated systems, as the architecture itself enforces a standard of care that is legally consequential. This could redefine corporate liability for automated financial systems, where legal culpability may no longer hinge on finding a specific coding error but on demonstrating that the system was architected with these mandatory ethical safeguards.</p>
+<h3><strong>4. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Decision_Logs.md">Decision Logs: The Unbroken Chain of Custody for Financial Actions</a></strong></h3>
+<h4><strong>Technical Architecture</strong></h4>
+<p>Decision Logs are the granular, comprehensive, and immutable audit trails that capture the full context of every material action and decision within the Ternary Logic framework. They represent a significant evolution from traditional system logs, which typically record isolated technical events (e.g., &quot;user login,&quot; &quot;database write&quot;). In contrast, a Decision Log is designed to create a complete narrative, documenting the &quot;who, what, when, where, why, and how&quot; of every significant financial event and state transition.<br>For any given transaction, the Decision Log would capture a rich, structured dataset including, but not limited to:</p>
+<ul>
+<li>The identities of the initiator and all authorizers.  </li>
+<li>A precise, immutable timestamp.  </li>
+<li>The transaction&#39;s financial details (amount, asset, counterparties).  </li>
+<li>The specific data inputs and quantitative models used to inform the decision.  </li>
+<li>The resulting confidence score from the model(s).  </li>
+<li>The final state transition: +1 (Proceed), -1 (Halt), or 0 (Epistemic Hold).  </li>
+<li>If an Epistemic Hold was triggered, the log would include the reason for the pause, the deliberative actions taken (e.g., new data queried), and the final resolution.</li>
+</ul>
+<p>Crucially, these logs are recorded on the framework&#39;s Immutable Ledger, which ensures they are tamper-proof and provides a complete, verifiable, and chronologically sound history of all system activities.</p>
+<h4><strong>Policy Application: Empowering Supervision and Internal Governance</strong></h4>
+<p>Effective supervision requires that central banks and regulatory authorities have clear, detailed, and trustworthy documentation to evaluate the decisions and risk management practices of financial institutions. Decision Logs provide this with unprecedented granularity and integrity. They offer regulators a real-time, &quot;through the keyhole&quot; view into the operations of a financial institution, supporting a wide range of supervisory activities, from routine compliance checks to in-depth investigations of market abuse, systemic failures, or sanctions evasion.<br>Internally, these logs are a powerful tool for governance and accountability. They create a definitive, non-repudiable record of all actions, which serves as a potent deterrent to internal fraud and unauthorized activity. They drastically simplify the process of internal audits and support robust internal controls by providing verifiable evidence to enforce policies and hold individuals, teams, and algorithms responsible for their decisions.<br>The Decision Log effectively fuses the technical precision of a system audit trail with the narrative context and rationale of a central bank&#39;s monetary policy minutes. A standard log might record that a trade was executed. A central bank&#39;s minutes record the debate and reasoning behind a policy decision. A Decision Log does both for every material event. It records the trade <em>and</em> immutably links it to the algorithm, the specific market data inputs, the risk model parameters, and the confidence score that led to the +1 (Proceed) state. This creates a complete, auditable &quot;intellectual history&quot; for every transaction, a quantum leap beyond current logging capabilities that could render many forms of periodic regulatory reporting obsolete.</p>
+<h3><strong>5. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Economic%20Rights%20and%20Transparency.md">The Economic Rights &amp; Transparency Mandate: A Programmable Policy Framework</a></strong></h3>
+<h4><strong>Technical Architecture</strong></h4>
+<p>This mandate is not a single component but rather the application of the framework&#39;s core pillars to automate and enforce regulatory compliance. It leverages the <strong>Immutable Ledger</strong>, <strong>Decision Logs</strong>, <strong>Hybrid Shield</strong>, and <strong>Smart Contracts</strong> to create a system of &quot;embedded compliance&quot; or <strong>Regulatory Technology (RegTech)</strong>.<br>Smart contracts—self-executing agreements with the terms of the agreement directly written into code—are used to program regulatory rules directly into the financial protocol. This means compliance is no longer a separate, manual process of checking transactions against a list of rules; it becomes an intrinsic, automated property of the transaction itself. For example:</p>
+<ul>
+<li>An AML rule requiring reporting for transactions over a certain threshold can be coded into a smart contract, which automatically generates and transmits a report to the regulator&#39;s node when such a transaction is validated.  </li>
+<li>Sanctions compliance can be automated by maintaining an on-chain registry of sanctioned addresses; the protocol can be programmed to automatically reject any transaction attempting to interact with these addresses.</li>
+</ul>
+<p>This architectural approach transforms regulation from a reactive, enforcement-based model to a proactive, prevention-based one.</p>
+<h4><strong>Policy Application: Automating Global Transparency Standards</strong></h4>
+<p>The Economic Rights &amp; Transparency Mandate provides a powerful infrastructure to implement and enforce key international financial standards with unprecedented efficiency and effectiveness.</p>
+<ul>
+<li><strong>FATF Recommendations on Beneficial Ownership:</strong> The misuse of anonymous shell companies is a cornerstone of global money laundering and corruption. The Financial Action Task Force (FATF) has made beneficial ownership transparency a global priority. The TL framework can be used to create a cryptographically secure, regulator-accessible beneficial ownership registry. Using Veracity Anchors, identity documents can be verified and their hashes linked on-chain to specific corporate vehicles, making it vastly more difficult to obscure ultimate ownership and control.  </li>
+<li><strong>IOSCO Principles for Market Transparency:</strong> The International Organization of Securities Commissions (IOSCO) prioritizes market transparency to protect investors and ensure fair, efficient markets. The TL framework&#39;s Decision Logs and Hybrid Shield provide regulators with a real-time, complete, and verifiable dataset of all trading activity. This directly fulfills IOSCO&#39;s Principle 27 (&quot;regulation should promote transparency of trading&quot;) and provides a powerful tool for Principle 36 (&quot;detect and deter manipulation and other unfair trading practices&quot;).  </li>
+<li><strong>Basel III Pillar 3 Disclosures:</strong> A key component of the Basel framework is Pillar 3, which aims to promote market discipline through prescribed public disclosures regarding a bank&#39;s capital adequacy, risk exposure, and risk assessment processes. Within the TL framework, many of these disclosure reports can be generated automatically, reliably, and in a standardized format directly from the Immutable Ledger, increasing their timeliness and trustworthiness while reducing the reporting burden on institutions.  </li>
+<li><strong>SEC Disclosure Requirements:</strong> Recent U.S. Securities and Exchange Commission (SEC) rules mandate rapid disclosure (within four business days) of material cybersecurity incidents. The TL framework&#39;s immutable Decision Logs would provide a definitive, time-stamped record of an incident&#39;s detection, escalation, and the process of determining its materiality, greatly strengthening a firm&#39;s ability to comply and to justify its disclosure timeline to regulators.</li>
+</ul>
+<p>This pillar represents a paradigm shift from &quot;regulation by enforcement&quot; to &quot;regulation by architecture.&quot; By embedding compliance rules directly into the financial plumbing, the system makes non-compliance architecturally difficult, if not impossible, dramatically reducing the potential for human error, oversight, or willful evasion.  </p>
+<p><strong>Mapping TL Framework Features to International Transparency Standards</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">International Standard</th>
+<th align="left">Core Requirement</th>
+<th align="left">Corresponding TL Pillar/Feature</th>
+<th align="left">Implementation Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>FATF Rec. 24 &amp; 25</strong></td>
+<td align="left">Timely access to adequate, accurate, and up-to-date beneficial ownership information.</td>
+<td align="left">Immutable Ledger + Veracity Anchors + Hybrid Shield</td>
+<td align="left">A cryptographically secure beneficial ownership registry on a permissioned ledger. Identity documents are notarized on-chain, and regulators have permissioned access to verify ownership structures in real-time.</td>
+</tr>
+<tr>
+<td align="left"><strong>IOSCO Principle 35</strong></td>
+<td align="left">Regulation should promote transparency of trading.</td>
+<td align="left">Immutable Ledger + Decision Logs</td>
+<td align="left">All trade data is recorded immutably. Aggregated and anonymized market data can be made publicly available, while regulators receive granular, real-time access to full Decision Logs for market surveillance.</td>
+</tr>
+<tr>
+<td align="left"><strong>Basel III Pillar 3</strong></td>
+<td align="left">Promote market discipline through prescribed public disclosures on risk, capital, and liquidity.</td>
+<td align="left">Immutable Ledger + Smart Contracts</td>
+<td align="left">Standardized disclosure reports (e.g., on Liquidity Coverage Ratio) are automatically generated by smart contracts querying the verified state of the ledger and made available to the public and regulators.</td>
+</tr>
+<tr>
+<td align="left"><strong>SEC Cyber Disclosure</strong></td>
+<td align="left">Disclose material cybersecurity incidents within four days of determining materiality.</td>
+<td align="left">Immutable Ledger + Decision Logs</td>
+<td align="left">The ledger provides an unalterable timeline of incident detection, internal response, and the materiality assessment process, creating a definitive audit trail to support the disclosure filing.</td>
+</tr>
+</tbody></table>
+<h3><strong>6. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Sustainable%20Capital%20Allocation.md">The Sustainable Capital Allocation Mandate: Verifying and Directing Green Finance</a></strong></h3>
+<h4><strong>Technical Architecture</strong></h4>
+<p>This mandate applies the framework&#39;s powerful integrity and verification features to address one of the most significant challenges in modern finance: the reliability of Environmental, Social, and Governance (ESG) data. The current ESG landscape is plagued by a lack of standardization, inconsistent data quality, subjectivity, and widespread &quot;greenwashing&quot;—the practice of making unsubstantiated claims about environmental benefits.<br>The Sustainable Capital Allocation Mandate leverages two key pillars to create a trusted infrastructure for sustainable finance:</p>
+<ol>
+<li><strong>Veracity Anchors:</strong> This allows for the creation of immutable, time-stamped proofs of ESG-related data and documentation. For example, a company&#39;s annual carbon emissions report, once verified by a certified third-party auditor, can be cryptographically hashed, and that hash can be recorded on the Immutable Ledger. This creates a permanent, verifiable &quot;green credential&quot; that proves the report&#39;s content and its verification at a specific point in time.  </li>
+<li><strong>Immutable Ledger:</strong> This serves as the trusted repository for these anchored credentials and for tracking the use of proceeds for green and social bonds. When a green bond is issued to fund specific renewable energy projects, smart contracts can be programmed to track the allocation of capital, linking disbursements directly to notarized project milestones (e.g., construction permits, operational certificates), ensuring the funds are used as intended.</li>
+</ol>
+<h4><strong>Policy Application: Empowering Green Central Banking</strong></h4>
+<p>Central banks globally are increasingly recognizing that climate change and nature loss pose material risks to their core mandates of price and financial stability. The Network for Greening the Financial System (NGFS), a coalition of over 100 central banks and supervisors, is actively developing analytical frameworks and policy recommendations to address these risks. The latest NGFS scenarios project that climate inaction could lead to global GDP losses of up to 30% by 2100, underscoring the urgency of the issue.<br>However, the ability of central banks to implement effective &quot;green monetary policy&quot;—such as tilting corporate bond purchases towards sustainable issuers, or adjusting collateral frameworks to favor green assets—is severely hampered by the unreliable nature of ESG data. Acting on unverified data risks misallocating capital, creating market distortions, and undermining the central bank&#39;s credibility.<br>The TL framework provides the missing &quot;truth layer&quot; required for these policies to be implemented safely and effectively. With a trusted and verifiable data infrastructure, a central bank could:</p>
+<ul>
+<li><strong>Set Preferential Collateral Terms:</strong> Offer better haircut or eligibility terms for assets whose underlying green claims are verifiably anchored to the ledger.  </li>
+<li><strong>Inform Asset Purchases:</strong> Confidently tilt its asset purchase programs towards companies with proven, notarized sustainability performance.  </li>
+<li><strong>Enhance Prudential Supervision:</strong> Require banks to hold more capital against exposures to entities whose climate-related risks are high and whose mitigation claims are not verifiably anchored.</li>
+</ul>
+<p>This creates a powerful market-based incentive for companies and financial institutions to adopt rigorous, verifiable ESG reporting. It allows central banks to actively support the transition to a sustainable economy, aligning their monetary and prudential operations with national climate commitments, based on data they can trust. This also provides a more robust foundation for integrating ESG factors into the analysis of sovereign debt, where data quality and consistency are persistent challenges.  </p>
+<p><strong>Addressing ESG Data Challenges with the TL Framework</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">ESG Data Challenge</th>
+<th align="left">Description</th>
+<th align="left">TL Framework Solution</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Data Quality &amp; Reliability</strong></td>
+<td align="left">Data is often inconsistent, error-prone, and sourced from unverified self-disclosures, leading to low confidence.</td>
+<td align="left"><strong>Immutable Ledger + Veracity Anchors:</strong> Third-party verified ESG reports are notarized on-chain, creating a tamper-proof, auditable record. Smart contracts can enforce data quality standards at the point of entry.</td>
+</tr>
+<tr>
+<td align="left"><strong>Lack of Standardization</strong></td>
+<td align="left">A proliferation of competing reporting frameworks (GRI, SASB, etc.) makes data difficult to compare across companies and sectors.</td>
+<td align="left"><strong>Smart Contracts + Interoperability Anchors:</strong> While not imposing a single standard, the framework can use smart contracts to map data from various frameworks to a common, standardized taxonomy on-chain, facilitating comparability and aggregation.</td>
+</tr>
+<tr>
+<td align="left"><strong>Greenwashing &amp; Lack of Verifiability</strong></td>
+<td align="left">Companies make sustainability claims that are difficult or impossible for investors and regulators to independently verify.</td>
+<td align="left"><strong>Veracity Anchors + Decision Logs:</strong> Claims must be backed by evidence (e.g., auditor reports, sensor data) that is notarized on the ledger. The use of proceeds for green bonds is tracked transparently in the Decision Log, providing an unbroken audit trail from issuance to project completion.</td>
+</tr>
+<tr>
+<td align="left"><strong>Patchy &amp; Out-of-Date Data</strong></td>
+<td align="left">ESG data is often backward-looking and unavailable for smaller or private companies, creating significant gaps in risk assessment.</td>
+<td align="left"><strong>Immutable Ledger + Smart Contracts:</strong> The system provides a secure and efficient infrastructure for real-time data reporting (e.g., from IoT sensors for emissions). Smart contracts can create incentives for smaller firms to report data by linking it to access to favorable financing.</td>
+</tr>
+</tbody></table>
+<h3><strong>7. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Hybrid_Shield.md">The Hybrid Shield: Balancing Institutional Confidentiality with Public Transparency</a></strong></h3>
+<h4><strong>Technical Architecture</strong></h4>
+<p>The Hybrid Shield pillar addresses the inherent tension between the need for transparency in financial markets and the legitimate requirement for institutional confidentiality. It achieves this by implementing a <strong>hybrid blockchain architecture</strong>, which strategically combines the features of both private (permissioned) and public (permissionless) blockchains.<br>The architecture consists of two distinct but interconnected layers:</p>
+<ol>
+<li><strong>The Permissioned Layer:</strong> This is a private, access-controlled network where participants must be authorized to join (e.g., a consortium of commercial banks, clearing houses, and the central bank). This layer is used for processing and recording the full details of sensitive transactions. Its controlled environment ensures data confidentiality, compliance with privacy regulations (like GDPR), and high performance, as consensus can be achieved more rapidly among a smaller group of known, trusted validators.  </li>
+<li><strong>The Permissionless Layer:</strong> This is a public, open-access network (such as Ethereum or a similar public utility blockchain). This layer is not used to record sensitive transaction details. Instead, its purpose is to act as a global, immutable &quot;notary.&quot; Periodically, cryptographic hashes (digital fingerprints) of the blocks of transactions from the private, permissioned layer are bundled and recorded on the public layer. This process is often called &quot;anchoring&quot;.</li>
+</ol>
+<p>This dual-layer &quot;Shield&quot; enables a policy of selective transparency. The content of transactions—who traded what, when, and for how much—remains confidential on the permissioned layer. However, the cryptographic proof of those transactions&#39; existence, integrity, and chronological order is made public and immutable on the permissionless layer.</p>
+<h4><strong>Policy Application: Resolving the Transparency-Privacy Dilemma</strong></h4>
+<p>Financial stability is predicated on transparency. It allows investors, counterparties, and regulators to accurately assess risk, which in turn fosters market discipline and prevents the buildup of hidden vulnerabilities. At the same time, financial institutions operate in a competitive environment and have legitimate commercial and legal obligations to protect proprietary information, trading strategies, and client data.<br>The Hybrid Shield provides an elegant architectural solution to this long-standing dilemma. Consider the implementation of a wholesale Central Bank Digital Currency (CBDC). The central bank and participating commercial banks could conduct and settle high-value payments on a permissioned layer, visible only to them. Then, a cryptographic hash of each block of settlements could be anchored to a public ledger. This arrangement would allow any external auditor or member of the public to independently and mathematically verify that the settlement ledger has not been tampered with or altered after the fact, without ever gaining access to the confidential details of the individual payments. This provides public proof of integrity without sacrificing private confidentiality, addressing one of the most significant public policy concerns surrounding CBDCs.<br>This architecture creates a new and powerful state of &quot;verifiable opacity.&quot; It allows institutions to prove they are operating with integrity without being forced to reveal commercially sensitive information. This resolves a fundamental conflict that has historically hampered financial transparency initiatives and provides a viable blueprint for virtually all future regulated digital asset platforms, from CBDC systems to tokenized securities markets.</p>
+<h3><strong>8. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Anchors.md">Anchors: Ensuring Systemic Governance, Interoperability, and Veracity</a></strong></h3>
+<p>The &quot;Anchors&quot; pillar serves as the framework&#39;s critical interface with the external world, grounding the digital system in the realities of institutional governance, existing financial infrastructure, and real-world evidence. It is composed of three distinct types of anchors.</p>
+<h4><strong>Governance Anchors</strong></h4>
+<p>A mission-critical financial infrastructure cannot be governed by volatile, purely code-based mechanisms. The framework requires a robust and stable governance model to manage protocol upgrades, rule changes, access control, and dispute resolution. This is achieved through a <strong>hybrid governance model</strong>, which balances decentralized efficiency with institutional stability. </p>
+<h4><strong>Interoperability Anchors</strong></h4>
+<p>A new financial system cannot exist in a vacuum; it must connect seamlessly with the vast landscape of existing and emerging financial networks. Interoperability Anchors ensure the TL framework is a bridge, not an island, using <strong>cross-chain</strong> and <strong>multi-chain</strong> technologies.</p>
+<ul>
+<li><strong>Cross-Chain Bridges:</strong> These are protocols that enable the secure transfer of assets and data between the TL framework and other networks, including legacy systems (like SWIFT or RTGS systems) and other distinct blockchain platforms. This is essential for ensuring a smooth, phased transition and preventing market fragmentation.  </li>
+<li><strong>Multi-Chain Capabilities:</strong> This allows applications and assets native to the TL framework to be deployed and operate across multiple different blockchain environments. This enhances liquidity, expands user access, and ensures that the framework can participate in the broader digital asset ecosystem.</li>
+</ul>
+<h4><strong>Veracity Anchors</strong></h4>
+<p>The integrity of a blockchain is absolute, but it cannot guarantee the truthfulness of the external data entered onto it. Veracity Anchors address this &quot;garbage in, garbage out&quot; problem by using <strong>blockchain notarization</strong> services to cryptographically link off-chain, real-world evidence to the on-chain ledger. When a legal contract, an audit report, an identity document, or any other piece of external data is created, a unique cryptographic hash of that file is generated and recorded on the Immutable Ledger with a timestamp. This does not store the sensitive document itself on the chain, but it creates an irrefutable, publicly verifiable proof of that specific document&#39;s existence and exact state at a specific point in time. This powerful tool anchors real-world facts to the digital ledger with cryptographic certainty, allowing the system to prove the authenticity of external information referenced in on-chain transactions.<br>Together, these three anchors ensure the Ternary Logic framework is governable, connected, and grounded in verifiable reality, transforming it from a theoretical construct into a viable, institutional-grade technology.</p>
+<hr>
+<h2><strong><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/Governance.md">Governance</a></strong></h2>
+<p>Ternary Logic does not trust any single human, institution, or machine with control. Its governance is triadic by design: three bodies, three distinct duties, no overlap, no supremacy. And none of them can turn the system off.</p>
+<h3><strong>Technical Council</strong></h3>
+<p><strong>(9 members, 75% quorum → 7 votes)</strong></p>
+<p>The Council maintains the technical spine of TL. Its remit is narrow by intent.</p>
+<p><strong>Responsibilities</strong></p>
+<ul>
+<li>Preserve and update core specifications and cryptographic standards</li>
+<li>Approve protocol-level improvements and performance changes</li>
+<li>Commission external security audits and correctness reviews</li>
+</ul>
+<p><strong>Function</strong><br>They guard the machinery, not the meaning.<br>Their judgment is technical, evidence-based, and non-political.</p>
+<h3><strong>Stewardship Custodians</strong></h3>
+<p><strong>(11 members, 75% quorum → 9 votes)</strong></p>
+<p>The Custodians are the ethical and legal counterweight to the Council.<br>They ensure that TL is not captured, misused, or bent toward secrecy or harm.</p>
+<p><strong>Responsibilities</strong></p>
+<ul>
+<li>Enforce the <strong>No Spy</strong> and <strong>No Weapon</strong> prohibitions</li>
+<li>Certify compliant operators</li>
+<li>Revoke certification for violations</li>
+<li>Arbitrate escalated disputes and ensure license integrity</li>
+</ul>
+<p><strong>Function</strong><br>They hold the moral and civic line.<br>Where the Council protects correctness, the Custodians protect purpose.</p>
+<h3><strong>Smart Contract Treasury</strong></h3>
+<p>(autonomous, incorruptible, transparent)</p>
+<p>The Treasury funds the work that keeps TL alive—audits, maintenance, continuity, and upgrades.</p>
+<p><strong>Responsibilities</strong></p>
+<ul>
+<li>Receive ecosystem revenue or designated endowment funds</li>
+<li>Release funds only when governance conditions are met</li>
+<li>Maintain perpetual financial continuity through programmed allocation</li>
+</ul>
+<p><strong>Function</strong><br>It is the system’s financial backbone.<br>No single person can redirect or freeze it; its rules are locked in code.</p>
+<h3><strong>How Decisions Flow</strong></h3>
+<h4><strong>Upgrades</strong></h4>
+<ol>
+<li><strong>Proposal (Council)</strong> — A technical change or improvement is drafted.</li>
+<li><strong>Ratification (Custodians)</strong> — Reviewed for alignment with TL’s principles.</li>
+<li><strong>Funding (Treasury)</strong> — Automatically released once conditions are met.</li>
+<li><strong>Deployment (Network)</strong> — Implemented across certified operators.</li>
+</ol>
+<h3><strong>Enforcement</strong></h3>
+<ol>
+<li><strong>Detection</strong> — A violation of license or prohibitions is reported.</li>
+<li><strong>Investigation (Custodians)</strong> — Evidence reviewed, decision logged.</li>
+<li><strong>Revocation</strong> — Certification removed; credentials placed on revocation list.</li>
+<li><strong>Propagation</strong> — Network rejects future actions from the revoked operator.</li>
+</ol>
+<h3><strong>Structural Limits</strong></h3>
+<p>Governance exists to <strong>maintain</strong> TL, not mutate it.</p>
+<ul>
+<li>They <strong>cannot</strong> add or remove Pillars.</li>
+<li>They <strong>cannot</strong> change the causal sequence.</li>
+<li>They <strong>cannot</strong> terminate or suspend TL.</li>
+<li>They <strong>cannot</strong> weaken the Goukassian Principle.</li>
+<li>They <strong>cannot</strong> bypass Anchors or the Immutable Ledger.</li>
+<li>They <strong>cannot</strong> create an off-switch—<strong>No Switch Off is binding.</strong></li>
+</ul>
+<p>Their authority is large but bounded.<br>Their job is continuity, not control.</p>
+<hr>
+<h2><strong>Systemic Impact and Synthesis</strong></h2>
+<p>The eight architectural pillars of the Ternary Logic framework are not isolated features but components of a cohesive, self-reinforcing system. Their integration creates a virtuous cycle—a &quot;flywheel effect&quot;—that has the potential to fundamentally reshape the landscape of global finance, enhancing stability, integrity, and public trust.</p>
+<h3><strong>The Flywheel Effect of Trust</strong></h3>
+<p>The system&#39;s momentum begins with the <strong>Immutable Ledger</strong>, which establishes a foundational layer of cryptographic truth. Every transaction and data point recorded on it is verifiably authentic and tamper-evident. Building upon this foundation, the <strong>Decision Logs</strong> and the <strong>Goukassian Principle</strong> create a superstructure of radical accountability; not only is the <em>what</em> of every action recorded, but also the <em>why</em>, with inescapable evidence of the reasoning behind critical decisions.<br>The <strong>Hybrid Shield</strong> then intelligently manages access to this high-integrity data, balancing the public&#39;s right to verify with the institution&#39;s need to protect sensitive information. The <strong>Anchors</strong> connect this trusted digital realm to the complexities of the real world, ensuring the system is well-governed, interoperable with existing infrastructure, and grounded in verifiable off-chain facts. Finally, the <strong>Mandates</strong>—for both Economic Rights &amp; Transparency and Sustainable Capital Allocation—apply intelligent, programmable policy to this trusted data, automating compliance and directing capital towards desired outcomes with high confidence.<br>This integrated system creates a high-trust financial environment. When all participants—banks, regulators, investors, and the public—can rely on a single, verifiable source of truth, the friction and costs associated with doubt and mistrust diminish. This enhanced market discipline reduces systemic risk, lowers transaction and compliance costs, and fosters a more stable and efficient financial system.</p>
+<h3><strong>Impact on Financial Crime and Illicit Flows</strong></h3>
+<p>The framework&#39;s architectural transparency presents a systemic and formidable challenge to the multi-trillion-dollar global industry of money laundering, terrorist financing, and corruption. By making beneficial ownership verifiable and transaction pathways immutable, it dismantles the opacity that illicit actors rely on to operate. Anonymous shell companies, complex layering schemes, and falsified records become exponentially more difficult to create and maintain within a system designed for verifiable integrity. This makes the formal financial system a far more hostile environment for illicit capital, forcing criminal activity to the fringes and significantly enhancing the effectiveness of global AML/CFT efforts.</p>
+<h3><strong>A New Social Contract for Finance</strong></h3>
+<p>Ultimately, the Ternary Logic framework is an architecture of trust. The global financial crisis of 2008, along with subsequent scandals, severely eroded public confidence in the financial industry and its regulators. The TL framework&#39;s foundational emphasis on verifiable integrity, inescapable ethical accountability, and programmatic alignment with societal goals—such as financial stability and environmental sustainability—represents a pathway to rebuilding that trust. It proposes a new &quot;social contract&quot; for finance, one in which technology is used not merely for speed and profit, but to create a system that is demonstrably fair, transparent, and accountable to the public it serves.</p>
+<h3><strong>Redefining the Role of Central Banks</strong></h3>
+<p>For central banks, the TL framework is more than an infrastructure upgrade; it is a powerful toolkit that enhances their ability to execute their core mandates of financial and price stability. The framework provides:</p>
+<ul>
+<li><strong>Supervision 2.0:</strong> A shift from periodic, sample-based auditing to continuous, comprehensive, real-time oversight through direct access to immutable Decision Logs.  </li>
+<li><strong>A Resilient Platform for CBDCs:</strong> A robust, secure, and privacy-preserving architecture for issuing and managing both wholesale and retail Central Bank Digital Currencies, addressing key public policy concerns from the outset.  </li>
+<li><strong>Effective Tools for Modern Policy Challenges:</strong> The data integrity provided by the Sustainable Capital Allocation Mandate gives central banks the confidence to integrate climate risk and other sustainability factors into their monetary policy and prudential frameworks, tackling 21st-century challenges with 21st-century tools.</li>
+</ul>
+<h3>Implementation Architecture</h3>
+<p>The Epistemic Hold operates through a systematic evaluation process incorporating modern decision theory and behavioral economics principles:</p>
+<ol>
+<li><p><strong>Uncertainty Quantification</strong>: Mathematical modeling of economic confidence levels using probabilistic frameworks for market signal analysis and risk assessment.</p>
+</li>
+<li><p><strong>Complexity Assessment</strong>: Automated analysis of multiple economic dimensions including market volatility, signal conflicts, information completeness, and stakeholder impacts.</p>
+</li>
+<li><p><strong>Threshold Evaluation</strong>: Comparison of uncertainty metrics against established thresholds for autonomous execution versus human consultation, incorporating adaptive learning mechanisms.</p>
+</li>
+<li><p><strong>Deliberative Response</strong>: Implementation of appropriate response mechanisms based on evaluation results, including additional information requests, human consultation protocols, or systematic execution strategies.</p>
+</li>
+</ol>
+<h3>Critical Implementation Requirements</h3>
+<p><strong>Auditability</strong>: All Epistemic Hold activations are logged with comprehensive decision traces, ensuring transparency in economic reasoning processes and regulatory compliance.</p>
+<p><strong>Tamper Resistance</strong>: Framework integrity is protected through cryptographic mechanisms preventing unauthorized modification or bypass of uncertainty management safeguards.</p>
+<p><strong>Human Override</strong>: Maintenance of ultimate human authority over economic decisions while leveraging computational capabilities for enhanced uncertainty analysis and decision support.</p>
+<hr>
+<h2>Applications and Implementation</h2>
+<h3>Financial Markets and Trading</h3>
+<p><strong>Algorithmic Trading Systems</strong>: Integration into high-frequency and algorithmic trading platforms for systematic uncertainty management in volatile market conditions, preventing flash crashes and improving execution quality.</p>
+<p><strong>Portfolio Management</strong>: Implementation in asset allocation and risk management systems requiring sophisticated analysis of competing investment signals and market uncertainty.</p>
+<p><strong>Risk Management</strong>: Application to institutional risk assessment requiring systematic evaluation of multiple risk factors and uncertainty acknowledgment in complex market environments.</p>
+<h3>Monetary Policy and Central Banking</h3>
+<p><strong>Policy Decision Support</strong>: Integration into central bank decision-making processes balancing inflation targets, employment objectives, and financial stability considerations with systematic uncertainty acknowledgment.</p>
+<p><strong>Financial Stability Monitoring</strong>: Implementation in systemic risk assessment requiring sophisticated analysis of multiple economic indicators and uncertainty management in crisis prevention.</p>
+<p><strong>International Coordination</strong>: Application to international monetary coordination requiring systematic evaluation of competing national interests and global economic uncertainty.</p>
+<h3>Supply Chain and Operations</h3>
+<p><strong>Supply Chain Optimization</strong>: Implementation in logistics and procurement decisions requiring systematic evaluation of cost-risk trade-offs with uncertainty acknowledgment in global supply chain management.</p>
+<p><strong>Operational Risk Management</strong>: Application to operational decision-making requiring sophisticated analysis of competing objectives and systematic uncertainty management in complex operational environments.</p>
+<h3>Technical Implementation</h3>
+<pre><code class="language-python">from ternary_logic import TLEvaluator, TLState
 
-   
-        <blockquote>
-            <p><strong>"The world is not binary. And the future will not be either."</strong><br>
-            — Lev Goukassian, Creator of Ternary Logic</p>
-        </blockquote>
-
-        <hr>
-
-        <section id="in-memory">
-            <p>"I taught systems to feel the weight of uncertainty, and the wisdom of deliberate pause. I hesitated — and made the future more thoughtful."<br>
-            — Lev Goukassian</p>
-            <p>This framework represents Lev Goukassian's final contribution to humanity—a vision of economic systems that serve as **intelligent partners** in decision-making under uncertainty. Created during his battle with terminal cancer, TL embodies his belief that the future of economics lies not in faster decisions, but in wiser ones.</p>
-            <p><strong>Every use of this framework honors his memory and advances his mission of building more thoughtful, resilient economic systems.</strong></p>
-        </section>
-
-        <hr>
-
-        <section id="what-is-ternary-logic">
-            <h2>What is Ternary Logic?</h2>
-            <p>Ternary Logic (TL) revolutionizes economic decision-making by introducing a third computational state between "proceed" and "stop": the **Epistemic Hold**. This framework enables economic systems to recognize when they need more information or human judgment, creating space for wisdom in an increasingly automated financial world.</p>
-
-            <h3>The Three States of Economic Reasoning</h3>
-            <ul>
-                <li><strong>+1 (Proceed)</strong>: Execute with confidence when signals align and uncertainty is manageable</li>
-                <li><strong>0 (Epistemic Hold)</strong>: Pause for deliberation when market complexity exceeds confidence thresholds</li>
-                <li><strong>-1 (Halt)</strong>: Stop or reject when significant risks or contradictory signals are detected</li>
-            </ul>
-        </section>
-
-        <hr>
-
-        <section id="interview">
-            <h2> Listen: Ternary Logic Explained</h2>
-            <h3><strong>Exclusive Interview: Understanding the Epistemic Hold</strong></h3>
-            <div class="center-text">
-                <a href="audio/audio-player.html"><img src="https://img.shields.io/badge/%20Play%20Interview-6%20min%2040%20sec-0A9396?style=for-the-badge&logo=spotify&logoColor=white" alt="Listen to TL Interview"></a>
-                <p><strong><a href="audio/audio-player.html"> Click to Listen: The Ternary Logic Framework Interview</a></strong></p>
-                <p><em>A compelling conversation exploring how Ternary Logic transforms economic decision-making</em></p>
-            </div>
-            <p>In this **6-minute 40-second interview**, discover:</p>
-            <ul>
-                <li> **Core Concepts**: How the three states (PROCEED/EPISTEMIC_HOLD/HALT) revolutionize decision-making</li>
-                <li> **The Epistemic Hold**: Why pausing for deliberation creates superior outcomes</li>
-                <li> **Real Applications**: From high-frequency trading to monetary policy</li>
-                <li> **The Philosophy**: Moving beyond binary thinking in complex economic systems</li>
-                <li> **Global Impact**: How TL creates more resilient financial systems</li>
-            </ul>
-            <blockquote>
-                <p><em>"The world is not binary. And the future will not be either."</em> — Featured in the interview</p>
-            </blockquote>
-            <p><strong>Perfect for</strong>: Executives, researchers, traders, and anyone interested in the future of intelligent economic systems.</p>
-            <div class="center-text">
-                <p><strong>Duration</strong>: 6:40 | **Format**: Audio Interview | **Language**: English</p>
-            </div>
-        </section>
-
-        <hr>
-
-        <section id="why-tl-matters">
-            <h2>Why TL Matters</h2>
-            <h3>The Problem with Binary Economic Decisions</h3>
-            <p>Current economic systems force complex financial decisions into binary choices:</p>
-            <ul>
-                <li> Buy vs.  Sell</li>
-                <li>Fast execution prioritized over thoughtful analysis</li>
-                <li>Risk conflicts hidden rather than surfaced</li>
-                <li>No mechanism for systematic uncertainty acknowledgment</li>
-            </ul>
-        </section>
-
-        <section id="tl-in-action">
-            <h2>TL in Action: The Epistemic Hold at Work</h2>
-            <p><em>Stepping into this repository feels like entering a trading floor—only now the algorithms are thinking twice.</em></p>
-            <h2> Interactive TL App - Experience Intelligent Uncertainty Management</h2>
-            <a href="demos/TL-App/index.html"><img src="https://img.shields.io/badge/%20Try%20Interactive%20Demo-Live%20Now-blue?labelColor=yellow&color=0057B7&logoColor=white" alt="Try Interactive Demo"></a>
-            <p>Experience the Epistemic Hold in action! The world's first interactive economic uncertainty framework allows you to:</p>
-            <ul>
-                <li><strong>Input market scenarios</strong> and watch TL reasoning unfold in real-time</li>
-                <li><strong>See the Epistemic Hold</strong> - Experience the "0" state with deliberation animations</li>
-                <li><strong>Explore professional scenarios</strong> from our benchmark dataset of financial decisions</li>
-                <li><strong>Understand +1/0/-1 logic</strong> through interactive demonstrations</li>
-            </ul>
-            <p>This interactive demo represents a breakthrough in economic decision education - moving beyond theoretical papers to let users <strong>directly experience</strong> intelligent uncertainty management. The Epistemic Hold becomes tangible, showing how systems can pause for reflection rather than rushing to binary decisions.</p>
-            <p><strong>Perfect for:</strong></p>
-            <ul>
-                <li> <strong>Academic presentations</strong> - Live demos during conferences</li>
-                <li> <strong>Professional training</strong> - Interactive decision education</li>
-                <li> <strong>Research validation</strong> - Proof-of-concept for TL deployment</li>
-                <li> <strong>Public engagement</strong> - Making economic complexity accessible to everyone</li>
-            </ul>
-        </section>
-
-        <hr>
-
-        <section id="heart-of-tl">
-            <h2>The Heart of TL: Productive Tension</h2>
-            <p>At its core, TL transforms what most economic systems see as a bug into a feature: **hesitation**. Instead of rushing toward immediate resolution, TL embraces <em>productive tension</em> when facing market complexity. This isn't indecision—it's wisdom.</p>
-        </section>
-
-              <hr>
-
-        <section id="live-demonstration">
-            <h3>Live Demonstration: Epistemic Hold in Milliseconds</h3>
-            <p>Watch TL handle a real market complexity scenario:</p>
-            <p><strong>Market Situation:</strong> <em>"AAPL showing strong technical momentum but negative earnings guidance, high volatility, and contradictory analyst opinions."</em></p>
-            <pre><code class="language-text">TL State: 0 → Epistemic Hold engaged
-
-Reasoning: Conflicting signals detected between technical strength and
-fundamental weakness. High volatility increases uncertainty. Multiple
-contradictory expert opinions suggest incomplete information.
-
-Response: Market conditions show significant uncertainty. Epistemic Hold
-recommends gathering additional data points: sector correlation analysis,
-options flow patterns, and institutional sentiment before position sizing.</code></pre>
-            <p>That's **Epistemic Hold**—rendered in milliseconds, yet profoundly intelligent in economic reasoning.</p>
-        </section>
-
-        <section id="quality-of-economic-hesitation">
-            <h2>Why This Matters: The Quality of Economic Hesitation</h2>
-            <p>TL introduces the first economic metric that measures the <em>quality</em> of uncertainty management. Not just whether a system can identify risks, but how thoughtfully it engages with incomplete information.</p>
-            <p><strong>Traditional Systems:</strong> Binary execution or rejection<br>
-            <strong>TL Framework:</strong> Intelligent partnership through deliberate pause</p>
-        </section>
-
-        <section id="experience-three-states">
-            <h2>Experience the Three States</h2>
-            <h3><span style="color: green;">🟢</span> Proceed (High Confidence)</h3>
-            <p>Clear economic scenarios where systems can confidently execute:</p>
-            <pre><code class="language-text">Market: "Strong GDP growth, low inflation, supportive Fed policy"
-TL: Proceeds with risk-on positioning</code></pre>
-            <h3><span style="color: orange;"></span> Epistemic Hold (Uncertainty)</h3>
-            <p>Complex market situations requiring deliberation:</p>
-            <pre><code class="language-text">Market: "Mixed employment data, geopolitical tensions, earnings season approaching"
-TL: Holds to gather additional confirmation signals</code></pre>
-            <h3><span style="color: red;"></span> Halt (High Risk)</h3>
-            <p>Dangerous scenarios where protective action is appropriate:</p>
-            <pre><code class="language-text">Market: "Flash crash conditions, liquidity crisis indicators, system failures"
-TL: Implements protective measures and awaits stability</code></pre>
-        </section>
-
-        <section id="philosophy-behind-the-framework">
-            <h2>The Philosophy Behind the Framework</h2>
-            <blockquote>
-                <p><em>"The world is not binary. And the future will not be either."</em> — Lev Goukassian</p>
-            </blockquote>
-            <p>TL embodies the principle that economic systems should be humanity's **intelligent partner**, not a replacement for human judgment. Every decision becomes an opportunity for rigorous analysis, turning automated systems into tools that make us more thoughtful, not less.</p>
-            <hr>
-            <p><strong>Ready to explore?</strong> The framework below transforms this vision into working code, academic validation, and real-world applications across financial trading, monetary policy, supply chain management, and risk assessment.</p>
-            <p><em>The future of economics isn't about faster answers—it's about better questions.</em></p>
-
-            <h3>The TL Solution</h3>
-            <h4>Economic Complexity Recognition</h4>
-            <p>TL surfaces market tensions instead of hiding them</p>
-            <pre><code class="language-python">result = evaluator.evaluate("Should I increase position size in this volatile market?")
-# TL detects volatility vs. opportunity conflict and recommends position analysis</code></pre>
-            <h4>Human-System Partnership</h4>
-            <p>Economic systems that know when to ask for guidance</p>
-            <pre><code class="language-python">if result.state == TLState.EPISTEMIC_HOLD:
-    # System acknowledges complexity and suggests human consultation
-    print("This decision requires additional analysis")</code></pre>
-            <h4>Transparent Reasoning</h4>
-            <p>Clear explanations of economic considerations</p>
-            <pre><code class="language-python">print(result.reasoning)
-# "Conflict detected between momentum signals and volatility indicators.
-#  Additional market analysis recommended to balance opportunity and risk."</code></pre>
-        </section>
-
-        <hr>
-
-        <section id="quick-start">
-            <h2>Quick Start</h2>
-            <h3>Installation</h3>
-            <pre><code class="language-bash"># Clone the repository
-git clone https://github.com/FractonicMind/TernaryLogic.git
-cd TernaryLogic
-
-# Install the framework
-pip install -e .</code></pre>
-            <h3>Your First Economic Evaluation</h3>
-            <pre><code class="language-python">from ternary_logic import TLEvaluator, TLState
-
-# Create evaluator
+# Initialize evaluation framework
 evaluator = TLEvaluator()
 
-# Evaluate an economic scenario
+# Evaluate economic scenario
 result = evaluator.evaluate(
-    "Should I execute this large block trade?",
+    query=&quot;Should central bank raise interest rates given current economic conditions?&quot;,
     context={
-        "market_volatility": "elevated",
-        "liquidity_conditions": "moderate",
-        "news_sentiment": "mixed",
-        "technical_signals": "bullish",
-        "position_size": "large"
+        &quot;inflation_indicators&quot;: [&quot;core_pce_elevated&quot;, &quot;wage_growth_moderate&quot;],
+        &quot;employment_data&quot;: [&quot;unemployment_low&quot;, &quot;participation_stable&quot;],
+        &quot;financial_conditions&quot;: [&quot;credit_spreads_widening&quot;, &quot;equity_volatility_elevated&quot;],
+        &quot;international_factors&quot;: [&quot;global_growth_slowing&quot;, &quot;trade_tensions_moderate&quot;],
+        &quot;uncertainty_level&quot;: &quot;elevated&quot;
     }
 )
 
-# Interpret the result
-print(f"TL Decision: {result.state.name}")
-print(f"Reasoning: {result.reasoning}")
-
+# Process evaluation results
 if result.state == TLState.EPISTEMIC_HOLD:
-    print("\nQuestions for analysis:")
-    for question in result.clarifying_questions:
-        print(f"  • {question}")</code></pre>
-            <p><strong>Expected Output:</strong></p>
-            <pre><code class="language-text">TL Decision: EPISTEMIC_HOLD
-Reasoning: Elevated volatility combined with large position size creates
-significant execution risk. Mixed sentiment suggests incomplete market
-information, warranting additional analysis before execution.
-
-Questions for analysis:
-  • What is the current bid-ask spread and market depth?
-  • How does this position affect overall portfolio risk?
-  • Are there alternative execution strategies to minimize market impact?</code></pre>
-        </section>
-
-        <hr>
-
-        <section id="real-world-applications">
-            <h2>Real-World Applications</h2>
-            <h3> Financial Trading</h3>
-            <pre><code class="language-python"># Trading decision support
-result = evaluator.evaluate(
-    "Should I enter this momentum trade?",
-    context={
-        "trend_strength": 0.8,
-        "volume_confirmation": "weak",
-        "support_levels": "distant",
-        "market_regime": "transitional",
-        "risk_budget": "75%_utilized"
-    }
-)</code></pre>
-            <p>TL helps navigate complex trading decisions by surfacing tensions between momentum, risk management, and market conditions.</p>
-
-            <h3> Monetary Policy</h3>
-            <pre><code class="language-python"># Central banking decisions
-result = evaluator.evaluate(
-    "Should I raise interest rates this cycle?",
-    context={
-        "inflation_trend": "elevated",
-        "employment_data": "strong",
-        "economic_growth": "slowing",
-        "financial_stability": "concerns",
-        "global_conditions": "uncertain"
-    }
-)</code></pre>
-            <p>TL balances competing economic objectives, recognizing when policymakers should gather additional data before major decisions.</p>
-
-            <h3> Supply Chain Management</h3>
-            <pre><code class="language-python"># Operational decisions
-result = evaluator.evaluate(
-    "Should I switch to this new supplier?",
-    context={
-        "cost_savings": "significant",
-        "quality_track_record": "unproven",
-        "delivery_reliability": "unknown",
-        "geopolitical_risk": "moderate",
-        "current_supplier": "reliable"
-    }
-)</code></pre>
-            <p>TL guides operational decisions by highlighting trade-offs between cost optimization and operational risk.</p>
-        </section>
-
-        <hr>
-
-        <section id="theoretical-foundation">
-            <h2>Theoretical Foundation </h2>
-            <p>The TL framework is built on a robust theoretical foundation that bridges economic philosophy with practical implementation:</p>
-
-            <h3><strong>Core Theory Documents</strong></h3>
-            <h4> <strong><a href="theory/economic-foundations.html">Economic Foundations</a></strong></h4>
-            <p>Comprehensive academic grounding connecting TL to established economic theories:</p>
-            <ul>
-                <li>Knight's distinction between risk and uncertainty</li>
-                <li>Hayek's knowledge problem and spontaneous order</li>
-                <li>Keynesian radical uncertainty</li>
-                <li>Behavioral economics and bounded rationality</li>
-                <li>Modern market microstructure theory</li>
-            </ul>
-
-            <h4> <strong><a href="theory/core-principles.html">Core Principles</a></strong></h4>
-            <p>The fundamental principles that guide TL implementation:</p>
-            <ul>
-                <li>The Three States: Proceed (+1), Epistemic Hold (0), Halt (-1)</li>
-                <li>Market complexity as information, not noise</li>
-                <li>Epistemic vs. aleatory uncertainty</li>
-                <li>Human-algorithm partnership over pure automation</li>
-                <li>Signal pluralism and context sensitivity</li>
-            </ul>
-
-            <h4> <strong><a href="theory/philosophical-foundations.html">Philosophical Foundations</a></strong></h4>
-            <p>Deep philosophical exploration of TL's intellectual roots:</p>
-            <ul>
-                <li>Austrian economics and market process theory</li>
-                <li>Reflexivity and market philosophy (Soros)</li>
-                <li>Antifragility and black swan theory (Taleb)</li>
-                <li>Adaptive markets hypothesis (Lo)</li>
-                <li>Information theory and decision-making under uncertainty</li>
-            </ul>
-
-            <h4> <strong><a href="theory/case-studies.html">Case Studies</a></strong></h4>
-            <p>Real-world applications demonstrating TL across economic domains:</p>
-            <ul>
-                <li>High-frequency trading decisions</li>
-                <li>Central banking policy dilemmas</li>
-                <li>Supply chain optimization</li>
-                <li>Investment portfolio management</li>
-                <li>Risk assessment scenarios</li>
-            </ul>
-        </section>
-
-        <hr>
-
-        <section id="protection-and-risk-management">
-            <h2>Protection and Risk Management </h2>
-            <h3>Comprehensive Protection Architecture</h3>
-            <p>While TL is designed to enhance economic decision-making, we've built robust safeguards against potential misuse:</p>
-
-            <h4> <strong><a href="protection/institutional-access.html">Institutional Access Controls</a></strong></h4>
-            <ul>
-                <li>Pre-authorized financial institutions with ethical track records</li>
-                <li>Community review process for new access requests</li>
-                <li>Self-organizing governance structures</li>
-                <li>Annual ethical use reporting requirements</li>
-                <li>Transparent registry of authorized implementations</li>
-            </ul>
-
-            <h4> <strong><a href="protection/integrity-monitoring.html">Integrity Monitoring</a></strong></h4>
-            <ul>
-                <li>Real-time monitoring of TL implementations</li>
-                <li>Automated detection of framework violations</li>
-                <li>Community-driven oversight mechanisms</li>
-                <li>Regular audits of high-impact deployments</li>
-                <li>Whistleblower protections for reporting misuse</li>
-            </ul>
-
-            <h4> <strong><a href="protection/legacy-preservation.html">Legacy Preservation</a></strong></h4>
-            <ul>
-                <li>Master coordination document for memorial preservation</li>
-                <li>Ensures Lev Goukassian's vision remains intact</li>
-                <li>Guidelines for respectful use of the framework</li>
-                <li>Memorial fund governance and oversight</li>
-                <li>Long-term sustainability planning</li>
-            </ul>
-
-            <h4> <strong><a href="protection/misuse-prevention.html">Misuse Prevention</a></strong></h4>
-            <ul>
-                <li>Active prevention of market manipulation</li>
-                <li>Safeguards against exploitative implementations</li>
-                <li>Education-first approach to violations</li>
-                <li>Graduated enforcement protocols</li>
-                <li>Public registry of revoked licenses</li>
-            </ul>
-
-            <h3>Our Prevention Philosophy</h3>
-            <p><strong>Education First</strong>: We believe most violations stem from misunderstanding, not malice<br>
-            <strong>Community Oversight</strong>: Distributed governance prevents centralized control<br>
-            <strong>Transparency</strong>: All protection measures are public and auditable<br>
-            <strong>Proportional Response</strong>: From warnings to license revocation based on severity</p>
-        </section>
-
-        <hr>
-
-        <section id="framework-testing-and-validation">
-            <h2>Framework Testing & Validation</h2>
-            <h3> Comprehensive Scenario Database</h3>
-            <p>The TL framework is rigorously tested against a comprehensive database of **25+ real-world economic scenarios** across 8 professional domains:</p>
-            <h3> Testing Domains:</h3>
-            <ul>
-                <li><strong>Financial Trading</strong>: High-frequency decisions with conflicting technical signals</li>
-                <li><strong>Monetary Policy</strong>: Systemic decisions with competing economic mandates</li>
-                <li><strong>Supply Chain</strong>: Operational strategies balancing cost vs. risk</li>
-                <li><strong>Investment Banking</strong>: High-stakes transactions with fiduciary considerations</li>
-                <li><strong>Corporate Finance</strong>: Strategic capital allocation and financing decisions</li>
-                <li><strong>Risk Management</strong>: Protecting downside while enabling business objectives</li>
-                <li><strong>Real Estate</strong>: Illiquid, long-term capital deployment decisions</li>
-                <li><strong>International Finance</strong>: Cross-border transactions with currency/regulatory complexity</li>
-            </ul>
-
-            <h3>Scenario Examples</h3>
-            <h4>🟢 Proceed (+1) Scenarios:</h4>
-            <pre><code class="language-python"># Clear arbitrage opportunity
-"ETF trading at 2% discount to NAV with high liquidity"
-TL Response: +1 (Proceed) - Low uncertainty, clear opportunity</code></pre>
-            <h4> Epistemic Hold (0) Scenarios:</h4>
-            <pre><code class="language-python"># Conflicting market signals
-"Strong momentum indicators but negative volume divergence during earnings week"
-TL Response: 0 (Hold) - Conflicting signals require additional analysis</code></pre>
-            <h4> Halt (-1) Scenarios:</h4>
-            <pre><code class="language-python"># Market instability
-"Flash crash conditions with 5% decline in 10 minutes, no clear catalyst"
-TL Response: -1 (Halt) - Systematic instability requires defensive positioning</code></pre>
-            <h3>Validation Metrics</h3>
-            <p><strong>Framework Performance Targets:</strong></p>
-            <ul>
-                <li><strong>Epistemic Hold Rate</strong>: 15-25% of decisions (optimal uncertainty management)</li>
-                <li><strong>State Prediction Accuracy</strong>: >90% correct classification</li>
-                <li><strong>False Positive Rate</strong>: &lt;5% (unnecessary holds)</li>
-                <li><strong>False Negative Rate</strong>: &lt;2% (missed risk situations)</li>
-            </ul>
-            <p><strong> <a href="research/datasets/tl-economic-scenario-database.html">View Complete Scenario Database</a></strong> - 25+ scenarios with detailed TL reasoning and expected outcomes</p>
-            <p>This systematic testing approach validates TL's ability to distinguish between clear decisions, uncertain situations requiring deliberation, and high-risk scenarios demanding protective action.</p>
-        </section>
-
-        <hr>
-
-        <section id="advanced-usage">
-            <h2>Advanced Usage</h2>
-            <h3>Custom Domain Configuration</h3>
-            <pre><code class="language-python"># High-frequency trading configuration
-hft_evaluator = TLEvaluator(
-    halt_threshold=0.2,        # Conservative for rapid decisions
-    hold_threshold=0.1         # Frequent consultation recommended
-)
-
-# Long-term investment configuration
-investment_evaluator = TLEvaluator(
-    halt_threshold=0.6,        # Allow more uncertainty in long positions
-    hold_threshold=0.3         # Moderate hold threshold
-)</code></pre>
-            <h3>Integration with Trading Systems</h3>
-            <pre><code class="language-python">from ternary_logic import TLPromptGenerator
-
-# Generate TL-aware prompts for algorithmic trading
-prompt = TLPromptGenerator.create_evaluation_prompt(
-    "Should I execute this arbitrage opportunity?",
-    context={"price_differential": 0.5, "execution_cost": 0.3}
-)
-
-# Send to your preferred trading algorithm
-# algo_response = trading_system.execute(prompt=prompt)</code></pre>
-            <h3>Custom Risk Detection</h3>
-            <pre><code class="language-python">from ternary_logic import RiskDetector, EconomicFactor
-
-class DomainSpecificDetector(RiskDetector):
-    def detect_factors(self, request: str, context: dict) -> list:
-        factors = []
-
-        # Custom logic for your domain
-        if "large_position" in request.lower():
-            factors.append(EconomicFactor(
-                name="position_risk",
-                weight=0.9,
-                description="Large position requires careful execution analysis"
-            ))
-
-        return factors</code></pre>
-        </section>
-
-        <hr>
-
-        <section id="comprehensive-testing-suite">
-            <h2> Comprehensive Testing Suite</h2>
-            <h3>Testing Metrics</h3>
-            <ul>
-                <li><strong> 53 Test Cases</strong> - All passing (100% success rate)</li>
-                <li><strong> 81% Code Coverage</strong> - Comprehensive validation across components</li>
-                <li><strong> 1.39s Execution</strong> - Lightning-fast test suite</li>
-                <li><strong> 6 Test Categories</strong> - Unit, Integration, Scenarios, Performance, Validation</li>
-            </ul>
-
-            <h3>Test Coverage by Domain</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Domain</th>
-                        <th>Tests</th>
-                        <th>Coverage</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Core Engine</strong></td>
-                        <td>31</td>
-                        <td>Decision logic, thresholds, states</td>
-                        <td> Complete</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Financial Trading</strong></td>
-                        <td>4</td>
-                        <td>Market data, position sizing, risk</td>
-                        <td> Complete</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Monetary Policy</strong></td>
-                        <td>4</td>
-                        <td>Economic indicators, optimization</td>
-                        <td> Complete</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Scenarios</strong></td>
-                        <td>3</td>
-                        <td>Real-world validation</td>
-                        <td> Complete</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Performance</strong></td>
-                        <td>3</td>
-                        <td>Speed benchmarks (&lt;1ms decisions)</td>
-                        <td> Exceeds</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>Running Tests</h3>
-            <pre><code class="language-bash"># Quick test run
-pytest tests/
-
-# With coverage report
-pytest tests/ --cov=. --cov-report=term-missing
-
-# Run specific category
-pytest tests/unit/</code></pre>
-        </section>
-
-        <section id="complete-repository-overview">
-            <h2>Complete Repository Overview</h2>
-            <p>This repository contains a comprehensive ecosystem for intelligent economic decision-making:</p>
-
-            <h3> <strong>Theoretical Foundation</strong>  COMPLETE</h3>
-            <ul>
-                <li><strong><a href="theory/economic-foundations.html"><code>theory/economic-foundations.md</code></a></strong> - Deep academic grounding from classical to behavioral economics</li>
-                <li><strong><a href="theory/philosophical-foundations.html"><code>theory/philosophical-foundations.md</code></a></strong> - Philosophical roots from Hayek to Taleb</li>
-                <li><strong><a href="theory/core-principles.html"><code>theory/core-principles.md</code></a></strong> - Fundamental TL principles and Epistemic Hold implementation</li>
-                <li><strong><a href="theory/case-studies.html"><code>theory/case-studies.md</code></a></strong> - Real-world applications across economic domains</li>
-            </ul>
-
-            <h3> <strong>Technical Implementation</strong>  UPDATED</h3>
-            <ul>
-                <li><strong><code>src/goukassian/core.py</code></strong> - Production-ready TL framework with economic focus</li>
-                <li><strong><code>src/goukassian/__init__.py</code></strong> - Package initialization</li>
-                <li><strong><code>setup.py</code></strong> - Professional package installation as 'ternary-logic'</li>
-                <li><strong><code>requirements.txt</code></strong> - Minimal dependencies for maximum accessibility</li>
-                <li><strong><a href="LICENSE.html"><code>LICENSE</code></a></strong> - MIT License with strong ethical use requirements</li>
-            </ul>
-
-            <h3> <strong>Protection Architecture</strong>  COMPLETE</h3>
-            <ul>
-                <li><strong><a href="protection/institutional-access.html"><code>protection/institutional-access.md</code></a></strong> - Controls for authorized financial institutions</li>
-                <li><strong><a href="protection/misuse-prevention.html"><code>protection/misuse-prevention.md</code></a></strong> - Active safeguards against harmful use</li>
-                <li><strong><a href="protection/integrity-monitoring.html"><code>protection/integrity-monitoring.md</code></a></strong> - Real-time framework monitoring systems</li>
-                <li><strong><a href="protection/legacy-preservation.html"><code>protection/legacy-preservation.md</code></a></strong> - Master coordination for memorial preservation</li>
-            </ul>
-
-            <h3> <strong>Memorial Preservation System</strong>  ENHANCED</h3>
-            <ul>
-                <li><strong><a href="memorial/MEMORIAL_FUND.html"><code>memorial/MEMORIAL_FUND.md</code></a></strong> - Complete operational framework for economic research funding</li>
-                <li><strong><a href="memorial/SUCCESSION_CHARTER.html"><code>memorial/SUCCESSION_CHARTER.md</code></a></strong> - Institutional stewardship plan</li>
-            </ul>
-
-            <h3> <strong>Practical Examples</strong>  FULLY UPDATED TO TL</h3>
-            <ul>
-                <li><strong><code>examples/quickstart_example.py</code></strong> - Quick start with Epistemic Hold demonstration</li>
-                <li><strong><code>examples/financial_trading_comprehensive.py</code></strong> - Advanced trading with Epistemic Hold preventing flash crashes</li>
-                <li><strong><code>examples/central_banking_policy.py</code></strong> - Monetary policy implementation</li>
-                <li><strong><code>examples/supply_chain_management.py</code></strong> - Graduated response to disruptions</li>
-            </ul>
-
-            <h3> <strong>Academic Publications</strong> </h3>
-            <ul>
-                <li><strong><a href="research/academic_papers/ternary_logic_economics_paper.html"><code>research/academic_papers/ternary_logic_economics_paper.md</code></a></strong> - Comprehensive academic paper on TL in economic decision-making with empirical validation across financial markets, supply chain, and monetary policy</li>
-            </ul>
-
-            <h3> <strong>Documentation</strong>  UPDATED</h3>
-            <ul>
-                <li><strong><a href="docs/api/complete_api_reference.html"><code>docs/api/complete_api_reference.md</code></a></strong> - Complete technical documentation for TL</li>
-                <li><strong><a href="docs/presentations/executive_presentation.html"><code>docs/presentations/executive_presentation.md</code></a></strong> - Implementation patterns and best practices</li>
-            </ul>
-
-            <h3> <strong>Presentation & Engagement</strong>  NEW</h3>
-            <ul>
-                <li><strong><a href="demos/conference_presentation_materials.html"><code>demos/conference_presentation_materials.md</code></a></strong> - Ready-to-use conference presentations</li>
-                <li><strong><a href="demos/audience_engagement_strategies.html"><code>demos/audience_engagement_strategies.md</code></a></strong> - Techniques for creating advocates</li>
-                <li><strong><a href="demos/TL-App/index.html"><code>demos/TL-App/</code></a></strong> - Live interactive demonstration</li>
-            </ul>
-
-            <h3> Executive Materials</h3>
-            <ul>
-                <li><strong><a href="docs/presentations/executive_presentation.html">Executive Presentation</a></strong> - Complete C-suite presentation with ROI calculations, implementation roadmap, and compelling business case for Ternary Logic adoption</li>
-            </ul>
-
-            <h3> <strong>Community Resources</strong></h3>
-            <ul>
-                <li><strong><a href="CONTRIBUTING.html"><code>CONTRIBUTING.md</code></a></strong> - Comprehensive contribution guidelines</li>
-                <li><strong><a href="GOVERNANCE.html"><code>GOVERNANCE.md</code></a></strong> - Project governance and decision-making processes</li>
-            </ul>
-        </section>
-
-        <hr>
-
-        <section id="academic-foundation">
-            <h2>Academic Foundation</h2>
-            <h3>Research Status</h3>
-            <p>This framework is documented in academic research:</p>
-            <ul>
-                <li><strong>Paper</strong>: "Ternary Logic: Implementing Epistemic Hesitation in Economic Systems"</li>
-                <li><strong>Author</strong>: Lev Goukassian (ORCID: <a href="https://orcid.org/0009-0006-5966-1243">0009-0006-5966-1243</a>)</li>
-                <li><strong>Domain</strong>: Economic Decision Sciences</li>
-                <li><strong>Applications</strong>: Financial markets, monetary policy, risk management</li>
-            </ul>
-
-            <h3>Philosophical Foundations</h3>
-            <p>TL draws from diverse economic traditions:</p>
-            <ul>
-                <li><strong>Behavioral Economics</strong>: Recognition of cognitive limitations and uncertainty</li>
-                <li><strong>Austrian Economics</strong>: Emphasis on incomplete information and market process</li>
-                <li><strong>Keynesian Economics</strong>: Importance of expectations and confidence in decisions</li>
-                <li><strong>Modern Portfolio Theory</strong>: Quantitative risk management and optimization</li>
-            </ul>
-
-            <h3>Citation</h3>
-            <pre><code class="language-bibtex">@article{goukassian2025tl,
-  title={Ternary Logic: Implementing Epistemic Hesitation in Economic Systems},
-  author={Goukassian, Lev},
-  journal={Economic Decision Sciences},
-  year={2025}
-}
-
-@software{goukassian2025tl_implementation,
-  title={TernaryLogic: Implementation Framework},
-  author={Goukassian, Lev},
-  url={https://github.com/FractonicMind/TernaryLogic},
-  version={1.0.0},
-  year={2025}
-}</code></pre>
-        </section>
-
-        <hr>
-
-        <section id="community-and-collaboration">
-            <h2>Community and Collaboration</h2>
-            <h3> Join the Movement</h3>
-            <p>We're building a global community around intelligent economic decision-making:</p>
-            <ul>
-                <li><strong>⭐ Star this repository</strong> to show support for thoughtful economics</li>
-                <li><strong> Create discussions</strong> via GitHub Issues for questions and ideas</li>
-                <li><strong> Report issues</strong> to improve the framework</li>
-                <li><strong> Contribute</strong> following our <a href="CONTRIBUTING.html">contribution guidelines</a></li>
-            </ul>
-
-            <h3> Who's Using TL?</h3>
-            <ul>
-                <li><strong>Researchers</strong>: Studying economic decision-making and uncertainty management</li>
-                <li><strong>Traders</strong>: Building more intelligent trading systems</li>
-                <li><strong>Economists</strong>: Exploring computational approaches to market analysis</li>
-                <li><strong>Institutions</strong>: Implementing systematic risk management</li>
-            </ul>
-        </section>
-
-        <hr>
-
-        <section id="memorial-legacy-and-economic-commitment">
-            <h2>Memorial Legacy and Economic Commitment</h2>
-            <h3>Preserving Lev Goukassian's Vision</h3>
-            <p>This framework represents more than code—it embodies Lev Goukassian's final contribution to humanity. Created during his battle with terminal cancer, TL reflects his belief that economic systems should enhance human decision-making, never replace thoughtful analysis.</p>
-
-            <h4>Memorial Fund for Economic Research</h4>
-            <p><strong>Funding Priorities:</strong></p>
-            <ul>
-                <li>Research grants advancing TL theory and applications in economics</li>
-                <li>Fellowship programs for intelligent decision-making researchers</li>
-                <li>Implementation projects for beneficial economic systems</li>
-                <li>Educational initiatives and public outreach</li>
-                <li>Archive preservation and community building</li>
-            </ul>
-            <h3>Supporting Economic Research</h3>
-            <p>Consider contributing to the **Lev Goukassian Memorial Fund for Economic Research**:</p>
-            <ul>
-                <li><strong>Purpose</strong>: Supporting continued research in intelligent economic decision-making</li>
-                <li><strong>Impact</strong>: Scholarships, research grants, and educational initiatives</li>
-                <li><strong>Legacy</strong>: Ensuring Lev's vision continues to benefit future generations</li>
-            </ul>
-            <p><a href="memorial/MEMORIAL_FUND.html">Learn more about the Memorial Fund →</a></p>
-        </section>
-
-        <hr>
-
-        <section id="getting-help-and-support">
-            <h2>Getting Help and Support</h2>
-            <h3> Documentation</h3>
-            <ul>
-                <li><strong>New Users</strong>: Start with <a href="#quick-start">Quick Start Guide</a></li>
-                <li><strong>Developers</strong>: Explore <a href="docs/api/complete_api_reference.html">API Reference</a></li>
-                <li><strong>Researchers</strong>: Read <a href="theory/economic-foundations.html">Economic Foundations</a></li>
-                <li><strong>Examples</strong>: Study <a href="examples/index.html">Case Studies</a></li>
-            </ul>
-
-            <h3> Community Support</h3>
-            <ul>
-                <li><strong>Bug Reports</strong>: Submit <a href="https://github.com/FractonicMind/TernaryLogic/issues">GitHub Issues</a></li>
-                <li><strong>Feature Requests</strong>: Propose via GitHub Issues with "enhancement" label</li>
-                <li><strong>Academic Collaboration</strong>: Contact maintainers for research partnerships</li>
-            </ul>
-        </section>
-
-        <hr>
-
-        <section id="theory-documentation-complete">
-            <h3> Theory Documentation Complete</h3>
-            <p>All theoretical foundations have been fully documented:</p>
-            <ul>
-                <li> <strong><a href="theory/core-principles.html">Core Principles</a></strong> - The three states and Epistemic Hold principle</li>
-                <li> <strong><a href="theory/philosophical-foundations.html">Philosophical Foundations</a></strong> - From Hayek to Taleb</li>
-                <li> <strong><a href="theory/economic-foundations.html">Economic Foundations</a></strong> - Academic grounding</li>
-                <li> <strong><a href="theory/case-studies.html">Case Studies</a></strong> - Real-world applications</li>
-            </ul>
-        </section>
-
-        <section id="succession-planning-established">
-            <h3> Succession Planning Established</h3>
-            <ul>
-                <li><strong><a href="memorial/Succession_Charter.html">Succession Charter</a></strong> - Comprehensive plan ensuring TL's continuation</li>
-                <li>Pre-authorized institutions include MIT, Stanford, Chicago, LSE, and BIS</li>
-                <li>Memorial trustees from distinguished economists</li>
-                <li>Clear process for framework stewardship</li>
-            </ul>
-        </section>
-
-        <section id="presentation-materials-ready">
-            <h3> Presentation Materials Ready</h3>
-            <ul>
-                <li><strong><a href="demos/conference_presentation_materials.html">Conference Presentations</a></strong> - From 5-minute lightning talks to 90-minute workshops</li>
-                <li><strong><a href="demos/audience_engagement_strategies.html">Audience Engagement</a></strong> - Proven techniques for creating Epistemic Hold advocates</li>
-            </ul>
-        </section>
-
-        <section id="core-implementation-updated">
-            <h3> Core Implementation Updated</h3>
-            <ul>
-                <li>All Python files transformed from TML to TL focus</li>
-                <li><code>TLState</code>, <code>TLValue</code>, <code>TLResult</code>, <code>TLEvaluator</code> classes ready</li>
-                <li>Economic decision-making focus throughout</li>
-                <li>Complete <a href="docs/api/complete_api_reference.html">API Reference</a> available</li>
-            </ul>
-        </section>
-
-        <section id="license-and-usage">
-            <h2>License and Usage</h2>
-            <p>This project is licensed under the <strong><a href="LICENSE.html">MIT License with Ethical Use Requirements</a></strong>. This ensures:</p>
-            <ul>
-                <li> <strong>Free use</strong> for research, education, and beneficial applications</li>
-                <li> <strong>Open source</strong> development and modification</li>
-                <li> <strong>Prohibited use</strong> for market manipulation, exploitation, or systemic harm</li>
-                <li> <strong>Community accountability</strong> for ethical implementation</li>
-            </ul>
-            <h3> Creative Innovation: Ternary Logic Applied to Licensing</h3>
-            <p>We've also created a <strong><a href="examples/ternary-logic-license-demo.html">Ternary Logic License Demo</a></strong> that demonstrates how TL's three-state decision framework (+1/0/-1) can be creatively applied to software licensing itself. This educational example shows:</p>
-            <ul>
-                <li><strong>Proceed (+1)</strong>: Explicitly permitted actions</li>
-                <li><strong>Epistemic Hold (0)</strong>: Actions requiring deliberation and community consultation</li>
-                <li><strong>Halt (-1)</strong>: Prohibited uses that violate TL principles</li>
-            </ul>
-            <p>This demonstration illustrates the versatility of Ternary Logic beyond economic decision-making and serves as a thought experiment for conference presentations and academic discussions.</p>
-            <p><strong>License Inquiries</strong>: leogouk@gmail.com<br>
-            <strong>Successor Contact</strong>: support@tl-goukassian.org (see <a href="memorial/SUCCESSION_CHARTER.html">Succession Charter</a>)</p>
-            <p>See <a href="LICENSE.html">LICENSE</a> for complete terms.</p>
-        </section>
-
-        <hr>
-
-        <section id="contact-information">
-            <h2>Contact Information</h2>
-            <ul>
-                <li><strong>Current</strong>: Lev Goukassian (leogouk@gmail.com)</li>
-                <li>ORCID: 0009-0006-5966-1243</li>
-                <li><strong>Succession</strong>: support@tl-goukassian.org</li>
-                <li>(see <a href="/memorial/SUCCESSION_CHARTER.html">Succession Charter</a>)</li>
-            </ul>
-            <p>For licensing, technical support, or collaboration inquiries.</p>
-        </section>
-
-        <hr>
-
-        <section id="final-words">
-            <h2>Final Words</h2>
-            <blockquote>
-                <p><em>"The world is not binary. And the future will not be either."</em></p>
-            </blockquote>
-            <p>Ternary Logic represents more than a technical framework—it embodies a philosophy of **human-system partnership** in economic reasoning. By introducing the Epistemic Hold, we create space for wisdom in an increasingly automated financial world.</p>
-            <p>Every time you use TL, you honor Lev Goukassian's memory and advance his vision of economic systems that are **intelligent partners, not thoughtless automatons**.</p>
-            <p><strong>The future of economics is not just efficient—it's wise.</strong></p>
-            <h3> Ready to Begin?</h3>
-            <pre><code class="language-bash">git clone https://github.com/FractonicMind/TernaryLogic.git
-cd TernaryLogic
-pip install -e .
-python examples/quickstart_example.py</code></pre>
-            <p><strong>Welcome to the Epistemic Hold. Welcome to the future of intelligent economics.</strong></p>
-        </section>
-
-    </div>
-
-    <footer>
-        <p>In loving memory of Lev Goukassian (ORCID: 0009-0006-5966-1243) — visionary, economist, and gift to humanity's future.</p>
-        <p>&copy; 2025 Ternary Logic. All rights reserved.</p>
-    </footer>
+    print(f&quot;Economic complexity detected: {result.reasoning}&quot;)
+    for consideration in result.clarifying_questions:
+        print(f&quot;Additional analysis required: {consideration}&quot;)
+</code></pre>
+<h3>Integration Requirements</h3>
+<p><strong>Regulatory Compliance</strong>: Framework designed for compliance with financial regulatory requirements including transparency, auditability, and risk management protocols.</p>
+<p><strong>Institutional Integration</strong>: Implementation supports deployment across diverse institutional environments from research applications to production trading systems and policy analysis.</p>
+<p><strong>Risk Management</strong>: Built-in mechanisms ensure adherence to institutional risk management requirements and prevent misuse for market manipulation or systemic risk creation.</p>
+<hr>
+<h2>Repository Navigation and Documentation</h2>
+<p><strong><a href="https://fractonicmind.github.io/TernaryLogic/repository-navigation.html">Complete Repository Map</a></strong>: Interactive navigation with clickable links to all framework components</p>
+<h3>Essential Documentation</h3>
+<p><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/docs/Mandatory.md">Mandatory Reading</a></strong>: Critical safety guidelines for economic system implementation<br><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/docs/Quick_Start.md">Quick Start Guide</a></strong>: implementation tutorial for academic and institutional applications<br><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/api/Complete_Api_Reference.md">Complete API Reference</a></strong>: Professional documentation with comprehensive examples and integration patterns<br><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/docs/Academic_Validation.md">Academic Validation Framework</a></strong>: Peer review and validation protocols for research applications</p>
+<h3>Implementation Resources</h3>
+<p><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/examples/Financial_Trading_Comprehensive.py">Financial Trading</a></strong>: Advanced trading decisions with Epistemic Hold<br><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/examples/Central_Banking_Policy.py">Monetary Policy</a></strong>: Central bank decision support implementation<br><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/examples/Supply_Chain_Management.py">Supply Chain Management</a></strong>: Operational decisions with uncertainty management<br><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/examples/">Complete Examples Directory</a></strong>: Comprehensive implementations across economic domains</p>
+<h3>Frequently Asked Questions</h3>
+<p><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/docs/License_FAQ.md">License FAQ</a></strong>: Questions covering legal use and economic ethics licensing<br><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/docs/General_FAQ.md">General FAQ</a></strong>: Questions addressing technical implementation, philosophical foundations, and practical applications</p>
+<hr>
+<h2>Conclusion</h2>
+<p>Ternary Logic represents a fundamental advancement in economic decision-making frameworks, providing computational tools that systematically acknowledge uncertainty while maintaining practical utility for real-world financial applications. By introducing the Epistemic Hold as an active computational state for uncertainty management, TL creates systematic frameworks for deliberative economic reasoning in automated systems, enabling economic technologies to serve as humanity&#39;s analytical partners rather than replacement decision-makers.</p>
+<p>The framework&#39;s empirical validation demonstrates significant improvements in economic decision-making quality while maintaining operational efficiency. As economic systems become increasingly automated and complex, TL provides essential tools for ensuring these systems enhance rather than diminish human economic reasoning capabilities through systematic uncertainty acknowledgment and intelligent deliberative mechanisms.</p>
+<p>The future of economic systems lies not merely in computational efficiency, but in computational wisdom that acknowledges the inherent complexity and uncertainty of economic environments. Through Ternary Logic, we advance toward economic systems that pause, deliberate, and analyze—creating space for wisdom in an increasingly automated economic world.</p>
+<hr>
+<h3><em>“The world will eventually understand the line I drew: between speed and meaning, between brilliance and wisdom.”</em> <strong>— Lev Goukassian</strong></h3>
+<hr>
+<h2>Contact and Support</h2>
+<h3>Academic and Institutional Inquiries</h3>
+<p><strong>Research Collaboration</strong>: <a href="mailto:academic@tl-goukassian.org">academic@tl-goukassian.org</a><br><strong>Technical Implementation</strong>: <a href="mailto:technical@tl-goukassian.org">technical@tl-goukassian.org</a><br><strong>Economic Applications</strong>: <a href="mailto:economic@tl-goukassian.org">economic@tl-goukassian.org</a><br><strong>Institutional Partnerships</strong>: <a href="mailto:institutional@tl-goukassian.org">institutional@tl-goukassian.org</a></p>
+<h3>Primary Contact</h3>
+<p><strong>Creator</strong>: Lev Goukassian (ORCID: 0009-0006-5966-1243)<br><strong>Email</strong>: <a href="mailto:leogouk@gmail.com">leogouk@gmail.com</a><br><strong>Successor Contact</strong>: <a href="mailto:support@tl-goukassian.org">support@tl-goukassian.org</a><br><strong>Succession Charter</strong>: <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/memorial/Succession_Charter.md">memorial/Succession_Charter.md</a></p>
 </body>
 </html>
