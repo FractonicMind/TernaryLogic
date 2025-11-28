@@ -83,7 +83,7 @@ Model risk—the risk of significant financial loss resulting from inadequate or
 The Epistemic Hold revolutionizes this practice. Instead of relying on periodic, backward-looking validation exercises like quarterly back-testing, it functions as a real-time, automated MRM control embedded within the operational workflow. The system effectively self-arrests when a model's operational context deviates from its established confidence parameters or when its inputs are suspect. This directly addresses one of the most common sources of model risk: the application of a model to market conditions for which it was not designed, or the use of a model with flawed or incomplete data. The Epistemic Hold forces an evaluation of a model's key assumptions *before* a potentially erroneous and costly decision is executed.  
 This transforms MRM from a periodic, largely manual compliance exercise into a proactive, real-time operational safeguard. Traditional MRM identifies failures after they have occurred during back-testing; the Epistemic Hold prevents them from occurring in the first place by institutionalizing prudence at the machine level. This architectural safeguard could fundamentally alter regulatory expectations. Supervisory inquiries may shift from asking, "What is your model validation process?" to a more pointed and effective question: "What are your Epistemic Hold thresholds, and can you provide the immutable decision logs for all Hold events during the last market stress period?"
 
-### **2. The Immutable Ledger: Establishing a Cryptographically Verifiable Source of Truth**
+### **2. [The Immutable Ledger: Establishing a Cryptographically Verifiable Source of Truth](https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Immutable_Ledger.md)**
 
 #### **Technical Architecture**
 
@@ -96,7 +96,7 @@ A primary challenge in global finance is the prevalence of information asymmetry
 The Immutable Ledger provides a powerful antidote. It creates a permanent, chronologically sound, and cryptographically verifiable record of every single transaction and state change within the system. This is the bedrock of absolute evidentiary integrity. For central banks, regulators, and law enforcement agencies, this technology transforms forensic investigations and supervision. Instead of the painstaking process of attempting to reconstruct a sequence of events from disparate, siloed, and potentially compromised databases, investigators can rely on the ledger as an authoritative record of what happened, when it happened, and in what order. This capability is crucial for enforcing Anti-Money Laundering and Combating the Financing of Terrorism (AML/CFT) regulations, resolving commercial disputes, and conducting market abuse investigations with cryptographic certainty.  
 The adoption of an Immutable Ledger shifts the paradigm of financial supervision from one of *trust-based verification* to one of *cryptographic verification*. Currently, supervision relies on periodic audits and reports submitted by regulated entities, a process that assumes good faith but remains vulnerable to error, concealment, and outright fraud. By providing regulators with permissioned read-access to the relevant ledger (as managed by the Hybrid Shield pillar), the nature of supervision changes fundamentally. It is no longer about requesting records and auditing them; it is about querying a shared, trusted dataset in real-time. This dramatically reduces the information asymmetry between regulators and institutions and promises a future of "continuous supervision," where compliance checks are automated and run constantly against the live ledger.
 
-### **3. The Goukassian Principle: Engineering Ethical Accountability by Design**
+### **3. [The Goukassian Principle: Engineering Ethical Accountability by Design](https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Goukassian_Principle.md)**
 
 #### **Technical Architecture**
 
@@ -109,7 +109,7 @@ A defining challenge of the digital age, particularly with the rise of artificia
 The Goukassian Principle directly confronts this challenge by creating an *ex ante* record of the system's "state of mind" at the moment of a critical decision. This architectural feature enables a powerful legal and regulatory doctrine: a **"reverse burden of proof."** In the event of an adverse outcome, the absence of a complete, well-formed, and logically sound Immutable Ledger Log for the material event would create a rebuttable presumption of negligence or system design failure. The burden would shift from the regulator or plaintiff—who would normally have to prove the system acted improperly—to the institution, which would have to use its own immutable logs to prove that its system acted with a demonstrable and documented standard of care.  
 This weaponizes transparency as a legal and ethical enforcement mechanism. It makes accountability an unavoidable architectural property of the system, not a voluntary policy overlay. Traditional ethical frameworks in finance rely on principles and codes of conduct, with enforcement being reactive. The Goukassian Principle creates a powerful incentive for institutions to design genuinely cautious, transparent, and ethically-aligned automated systems, as the architecture itself enforces a standard of care that is legally consequential. This could redefine corporate liability for automated financial systems, where legal culpability may no longer hinge on finding a specific coding error but on demonstrating that the system was architected with these mandatory ethical safeguards.
 
-### **4. Decision Logs: The Unbroken Chain of Custody for Financial Actions**
+### **4. [Decision Logs: The Unbroken Chain of Custody for Financial Actions](https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Decision_Logs.md)**
 
 #### **Technical Architecture**
 
@@ -132,7 +132,7 @@ Effective supervision requires that central banks and regulatory authorities hav
 Internally, these logs are a powerful tool for governance and accountability. They create a definitive, non-repudiable record of all actions, which serves as a potent deterrent to internal fraud and unauthorized activity. They drastically simplify the process of internal audits and support robust internal controls by providing verifiable evidence to enforce policies and hold individuals, teams, and algorithms responsible for their decisions.  
 The Decision Log effectively fuses the technical precision of a system audit trail with the narrative context and rationale of a central bank's monetary policy minutes. A standard log might record that a trade was executed. A central bank's minutes record the debate and reasoning behind a policy decision. A Decision Log does both for every material event. It records the trade *and* immutably links it to the algorithm, the specific market data inputs, the risk model parameters, and the confidence score that led to the \+1 (Proceed) state. This creates a complete, auditable "intellectual history" for every transaction, a quantum leap beyond current logging capabilities that could render many forms of periodic regulatory reporting obsolete.
 
-### **5. The Economic Rights & Transparency Mandate: A Programmable Policy Framework**
+### **5. [The Economic Rights & Transparency Mandate: A Programmable Policy Framework](https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Economic%20Rights%20and%20Transparency.md)**
 
 #### **Technical Architecture**
 
@@ -164,7 +164,7 @@ This pillar represents a paradigm shift from "regulation by enforcement" to "reg
 | **Basel III Pillar 3** | Promote market discipline through prescribed public disclosures on risk, capital, and liquidity. | Immutable Ledger \+ Smart Contracts | Standardized disclosure reports (e.g., on Liquidity Coverage Ratio) are automatically generated by smart contracts querying the verified state of the ledger and made available to the public and regulators. |
 | **SEC Cyber Disclosure** | Disclose material cybersecurity incidents within four days of determining materiality. | Immutable Ledger \+ Decision Logs | The ledger provides an unalterable timeline of incident detection, internal response, and the materiality assessment process, creating a definitive audit trail to support the disclosure filing. |
 
-### **6. The Sustainable Capital Allocation Mandate: Verifying and Directing Green Finance**
+### **6. [The Sustainable Capital Allocation Mandate: Verifying and Directing Green Finance](https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Sustainable%20Capital%20Allocation.md)**
 
 #### **Technical Architecture**
 
@@ -195,7 +195,7 @@ This creates a powerful market-based incentive for companies and financial insti
 | **Greenwashing & Lack of Verifiability** | Companies make sustainability claims that are difficult or impossible for investors and regulators to independently verify. | **Veracity Anchors \+ Decision Logs:** Claims must be backed by evidence (e.g., auditor reports, sensor data) that is notarized on the ledger. The use of proceeds for green bonds is tracked transparently in the Decision Log, providing an unbroken audit trail from issuance to project completion. |
 | **Patchy & Out-of-Date Data** | ESG data is often backward-looking and unavailable for smaller or private companies, creating significant gaps in risk assessment. | **Immutable Ledger \+ Smart Contracts:** The system provides a secure and efficient infrastructure for real-time data reporting (e.g., from IoT sensors for emissions). Smart contracts can create incentives for smaller firms to report data by linking it to access to favorable financing. |
 
-### **7. The Hybrid Shield: Balancing Institutional Confidentiality with Public Transparency**
+### **7. [The Hybrid Shield: Balancing Institutional Confidentiality with Public Transparency](https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Hybrid_Shield.md)**
 
 #### **Technical Architecture**
 
@@ -213,7 +213,7 @@ Financial stability is predicated on transparency. It allows investors, counterp
 The Hybrid Shield provides an elegant architectural solution to this long-standing dilemma. Consider the implementation of a wholesale Central Bank Digital Currency (CBDC). The central bank and participating commercial banks could conduct and settle high-value payments on a permissioned layer, visible only to them. Then, a cryptographic hash of each block of settlements could be anchored to a public ledger. This arrangement would allow any external auditor or member of the public to independently and mathematically verify that the settlement ledger has not been tampered with or altered after the fact, without ever gaining access to the confidential details of the individual payments. This provides public proof of integrity without sacrificing private confidentiality, addressing one of the most significant public policy concerns surrounding CBDCs.  
 This architecture creates a new and powerful state of "verifiable opacity." It allows institutions to prove they are operating with integrity without being forced to reveal commercially sensitive information. This resolves a fundamental conflict that has historically hampered financial transparency initiatives and provides a viable blueprint for virtually all future regulated digital asset platforms, from CBDC systems to tokenized securities markets.
 
-### **8. Anchors: Ensuring Systemic Governance, Interoperability, and Veracity**
+### **8. [Anchors: Ensuring Systemic Governance, Interoperability, and Veracity](https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Anchors.md)**
 
 The "Anchors" pillar serves as the framework's critical interface with the external world, grounding the digital system in the realities of institutional governance, existing financial infrastructure, and real-world evidence. It is composed of three distinct types of anchors.
 
@@ -235,7 +235,7 @@ Together, these three anchors ensure the Ternary Logic framework is governable, 
 
 ---
 
-## **Governance**
+## **[Governance](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance.md)**
 
 Ternary Logic does not trust any single human, institution, or machine with control. Its governance is triadic by design: three bodies, three distinct duties, no overlap, no supremacy. And none of them can turn the system off.
 
