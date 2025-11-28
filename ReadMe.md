@@ -66,7 +66,7 @@ Through this orchestration, TL transforms every action from a single decision in
 
 The Ternary Logic framework is composed of eight interdependent architectural pillars. This section provides an in-depth analysis of each pillar, synthesizing its technical architecture with its profound policy implications for the global financial system.
 
-### **1. The Epistemic Hold: Codifying Uncertainty in Financial Decision-Making**
+### **1. [The Epistemic Hold: Codifying Uncertainty in Financial Decision-Making](TL_Pillars/Epistemic_Hold.md)**
 
 The Epistemic Hold is the operational implementation of the ternary '0' state, representing a fundamental shift in how automated systems handle uncertainty. It is an active, intelligent pause, not a passive failure state. The mechanism is triggered automatically when predefined uncertainty or complexity thresholds are breached within the system's decision-making process.  
 These thresholds are not static but are dynamically calibrated based on a continuous, multi-factor analysis that includes:
