@@ -4,12 +4,12 @@
 
 [![Mandatory Reading](https://img.shields.io/badge/MANDATORY-Read%20First-red?style=flat-square&labelColor=darkred)](docs/Mandatory.md)
 [![Interactive Demo](https://img.shields.io/badge/Interactive%20Demo-Live%20Application-blue?style=flat-square)](https://fractonicmind.github.io/TernaryLogic/demos/ROI_Calculator.html)
-[![Academic Validation](https://img.shields.io/badge/Academic%20Validation-Complete-brightgreen?style=flat-square)](docs/Academic_Validation.md)
-[![Test Coverage](https://img.shields.io/badge/Test%20Coverage-81%25-brightgreen?style=flat-square)](tests/)
-[![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square)](Changelog.md)
+[![Academic Validation](https://img.shields.io/badge/Academic%20Validation-Complete-brightgreen?style=flat-square)](https://github.com/FractonicMind/TernaryLogic/tree/main/docs/Academic_Validation.md)
+[![Test Coverage](https://img.shields.io/badge/Test%20Coverage-81%25-brightgreen?style=flat-square)](https://github.com/FractonicMind/TernaryLogic/tree/main/tests/)
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square)](https://github.com/FractonicMind/TernaryLogic/tree/main/Changelog.md)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0006--5966--1243-green?style=flat-square)](https://orcid.org/0009-0006-5966-1243)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square)](https://www.python.org/downloads/)
-[![License](https://img.shields.io/badge/License-MIT%20with%20Ethics-yellow?style=flat-square)](License)
+[![License](https://img.shields.io/badge/License-MIT%20with%20Ethics-yellow?style=flat-square)](https://github.com/FractonicMind/TernaryLogic/tree/main/License)
 [![ZENODO](https://img.shields.io/badge/ZENODO-Notarized%20Constitutional%20Extensions-purple?style=flat-square)](https://zenodo.org/records/17613006)
 
 
@@ -437,22 +437,22 @@ if result.state == TLState.EPISTEMIC_HOLD:
 
 ### Essential Documentation
 
-**[Mandatory Reading](docs/Mandatory.md)**: Critical safety guidelines for economic system implementation  
-**[Quick Start Guide](docs/Quick_Start.md)**: 60-minute implementation tutorial for academic and institutional applications  
-**[Complete API Reference](api/Complete_Api_Reference.md)**: Professional documentation with comprehensive examples and integration patterns  
-**[Academic Validation Framework](docs/Academic_Validation.md)**: Peer review and validation protocols for research applications
+**[Mandatory Reading](https://github.com/FractonicMind/TernaryLogic/tree/main/docs/Mandatory.md)**: Critical safety guidelines for economic system implementation  
+**[Quick Start Guide](https://github.com/FractonicMind/TernaryLogic/tree/main/docs/Quick_Start.md)**: implementation tutorial for academic and institutional applications  
+**[Complete API Reference](https://github.com/FractonicMind/TernaryLogic/tree/main/api/Complete_Api_Reference.md)**: Professional documentation with comprehensive examples and integration patterns  
+**[Academic Validation Framework](https://github.com/FractonicMind/TernaryLogic/tree/main/docs/Academic_Validation.md)**: Peer review and validation protocols for research applications
 
 ### Implementation Resources
 
-**[Financial Trading](examples/Financial_Trading_Comprehensive.py)**: Advanced trading decisions with Epistemic Hold  
-**[Monetary Policy](examples/Central_Banking_Policy.py)**: Central bank decision support implementation  
-**[Supply Chain Management](examples/Supply_Chain_Management.py)**: Operational decisions with uncertainty management  
-**[Complete Examples Directory](examples/)**: Comprehensive implementations across economic domains
+**[Financial Trading](https://github.com/FractonicMind/TernaryLogic/tree/main/examples/Financial_Trading_Comprehensive.py)**: Advanced trading decisions with Epistemic Hold  
+**[Monetary Policy](https://github.com/FractonicMind/TernaryLogic/tree/main/examples/Central_Banking_Policy.py)**: Central bank decision support implementation  
+**[Supply Chain Management](https://github.com/FractonicMind/TernaryLogic/tree/main/examples/Supply_Chain_Management.py)**: Operational decisions with uncertainty management  
+**[Complete Examples Directory](https://github.com/FractonicMind/TernaryLogic/tree/main/examples/)**: Comprehensive implementations across economic domains
 
 ### Frequently Asked Questions
 
-**[License FAQ](docs/License_FAQ.md)**: Questions covering legal use and economic ethics licensing  
-**[General FAQ](docs/General_FAQ.md)**: Questions addressing technical implementation, philosophical foundations, and practical applications
+**[License FAQ](https://github.com/FractonicMind/TernaryLogic/tree/main/docs/License_FAQ.md)**: Questions covering legal use and economic ethics licensing  
+**[General FAQ](https://github.com/FractonicMind/TernaryLogic/tree/main/docs/General_FAQ.md)**: Questions addressing technical implementation, philosophical foundations, and practical applications
 
 ---
 
@@ -484,4 +484,4 @@ The future of economic systems lies not merely in computational efficiency, but 
 **Creator**: Lev Goukassian (ORCID: 0009-0006-5966-1243)  
 **Email**: leogouk@gmail.com  
 **Successor Contact**: support@tl-goukassian.org  
-**Succession Charter**: [memorial/Succession_Charter.md](memorial/Succession_Charter.md)
+**Succession Charter**: [memorial/Succession_Charter.md](https://github.com/FractonicMind/TernaryLogic/tree/main/memorial/Succession_Charter.md)
