@@ -1,9 +1,9 @@
 # Integration of Ternary Logic Computational Architectures with BIS Prudential Mandates and Project Agorá
 
-**Author:** Policy-Technical Analysis
-**Date:** November 25, 2025
-**Classification:** Technical Research | Central Banking Policy
-**Subject:** Operationalizing the Solvency Protocol via the Unified Ledger
+**Author:** Policy-Technical Analysis.  
+**Date:** November 25, 2025.  
+**Classification:** Technical Research | Central Banking Policy.  
+**Subject:** Operationalizing the Solvency Protocol via the Unified Ledger.  
 
 ---
 
