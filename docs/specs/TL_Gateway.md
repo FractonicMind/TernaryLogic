@@ -8,13 +8,13 @@
 
 ## **Abstract**
 
-This proposal outlines an architecture for a Ternary AI Governance Gateway—a mandatory enforcement layer designed to operationalize three-state decision logic in autonomous and semi-autonomous systems. The gateway intercepts decision requests, validates them against a standardized Universal Decision Envelope (UDE), and enforces one of three outcomes: **PROCEED**, **HESITATE**, or **REFUSE**. It introduces a formalized hesitation state to address moral and operational ambiguity, mandates immutable trace logging with cryptographic anchoring, and enforces a "No Log = No Action" failure mode. The design aims to support emerging AI governance principles found in frameworks like the EU AI Act and NIST AI RMF by transforming compliance from documentation into runtime assertion.
+This proposal outlines an architecture for a Ternary AI Governance Gateway—a mandatory enforcement layer designed to operationalize three-state decision logic in autonomous and semi-autonomous systems. The gateway intercepts decision requests, validates them against a standardized Universal Decision Envelope (UDE), and enforces one of three outcomes: **PROCEED**, **HESITATE**, or **REFUSE**. It introduces a formalized hesitation state to address operational uncertainty, mandates immutable trace logging with cryptographic anchoring, and enforces a "No Log = No Action" failure mode. The design aims to support emerging AI governance principles found in frameworks like the EU AI Act and NIST AI RMF by transforming compliance from documentation into runtime assertion.
 
 ---
 
 ## **1. Introduction**
 
-Existing AI safety measures often rely on probabilistic guardrails that are insufficient for high-stakes autonomy. Binary decision models (Allow/Deny) fail to capture ethical nuance and create accountability gaps. This proposal introduces a third state—a structured **hesitation**—that mandates expanded logging and potential escalation when uncertainty exceeds acceptable thresholds. The gateway functions as a middleware component, separating decision generation from decision authorization to ensure no action occurs without a verifiable, auditable record.
+Existing AI safety measures often rely on probabilistic guardrails that are insufficient for high-stakes autonomy. Binary decision models (Allow/Deny) fail to capture nuance and create accountability gaps. This proposal introduces a third state—a structured **hesitation**—that mandates expanded logging and potential escalation when uncertainty exceeds acceptable thresholds. The gateway functions as a middleware component, separating decision generation from decision authorization to ensure no action occurs without a verifiable, auditable record.
 
 ---
 
@@ -33,7 +33,7 @@ Existing AI safety measures often rely on probabilistic guardrails that are insu
 - **Immutable Logging:** Requirements for local hash chaining and optional public Merkle anchoring.  
 - **Security & Privacy:** Mechanisms for managing sensitive data within an immutable log framework.
 
-This proposal does **not** specify internal AI model architecture or dictate moral policy content; it defines the *enforcement mechanism*.
+This proposal does **not** specify internal AI model architecture or dictate policy content; it defines the *enforcement mechanism*.
 
 ---
 
@@ -43,7 +43,7 @@ This proposal does **not** specify internal AI model architecture or dictate mor
 * **Governance Gateway:** The trusted enforcement layer that validates UDEs and authorizes actions.  
 * **Actuator:** The execution component (e.g., robotic arm, API) that accepts only cryptographically signed permits from the gateway.  
 * **Universal Decision Envelope (UDE):** A structured payload containing intent, context, and risk metadata.  
-* **Hesitation State:** A system-level pause triggered by ambiguity, requiring enhanced logging and review.  
+* **Hesitation State:** A system-level pause triggered by uncertainty, requiring enhanced logging and review.  
 * **Trace Log:** An append-only record of decision events.  
 * **Merkle Anchor:** A cryptographic commitment of log batches to a tamper-evident ledger.
 
@@ -123,7 +123,7 @@ The UDE provides the context needed for ternary evaluation.
 
 ### **5.2. Key Principles**
 
-- **Risk Self-Assessment:** The agent must provide its internal risk calculus. The gateway uses this to detect ambiguity when values fall within a configurable uncertainty band (e.g., probability 0.2–0.8).  
+- **Risk Self-Assessment:** The agent must provide its internal risk calculus. The gateway uses this to detect uncertainty when values fall within a configurable uncertainty band (e.g., probability 0.2–0.8).  
 - **Alternatives Documentation:** The `alternatives` array should contain at least one lower-risk option. An empty array may trigger hesitation to force reconsideration.  
 - **Canonical Serialization:** The UDE must be serialized deterministically (e.g., RFC 8785) before signing to ensure cryptographic verification.
 
@@ -154,7 +154,7 @@ The UDE provides the context needed for ternary evaluation.
 - Human reviewer explicitly rejects a paused request.
 
 **HESITATE if:**  
-- Harm probability lies within the ambiguity band.  
+- Harm probability lies within the uncertainty band.  
 - Confidence is below threshold.  
 - Inconsistency detected between intent and context.  
 - Action requires mandatory review per policy.
@@ -179,7 +179,7 @@ Push UDE to review dashboard. Human reviewer issues signed override. This decisi
 If `max_pause_duration` (configurable, e.g., 30s) expires without resolution, **default to REFUSE**.
 
 **Performance Note:** To avoid latency impact, implement dual-lane processing:  
-- **Fast Lane:** Synchronous handling of PROCEED/REFUSE decisions (target < 100ms).  
+- **Fast Lane:** Synchronous handling of PROCEED/REFUSE decisions (target < 300ms).  
 - **Slow Lane:** Asynchronous handling of HESITATE decisions.
 
 ---
@@ -242,7 +242,7 @@ Immutable logging conflicts with GDPR's "Right to be Forgotten." **Crypto-shredd
 ## **11. Performance and Resilience**
 
 ### **11.1. Latency Targets**  
-- **Fast Lane:** Target < 100ms for PROCEED/REFUSE. Timeout defaults to HESITATE.  
+- **Fast Lane:** Target < 300ms for PROCEED/REFUSE. Timeout defaults to HESITATE.  
 - **Slow Lane:** Bounded by `max_pause_duration`. Timeout defaults to REFUSE.
 
 ### **11.2. Circuit Breakers**  
