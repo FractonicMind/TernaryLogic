@@ -14,7 +14,7 @@ This proposal describes a reference architecture for **AI Governance Adapters**�
 
 ## **2. Introduction**
 
-As AI systems enter high-stakes domains, binary Allow/Deny logic proves insufficient for handling ethical and operational ambiguity. This proposal explores a **ternary logic** approach that formalizes hesitation as a distinct operational state—requiring expanded logging and potential escalation rather than silent failure or uninformed proceeding.
+As AI systems enter high-stakes domains, binary Allow/Deny logic proves insufficient for handling operational uncertainty. This proposal explores a **ternary logic** approach that formalizes hesitation as a distinct operational state—requiring expanded logging and potential escalation rather than silent failure or uninformed proceeding.
 
 The **Governance Adapter** concept serves as a translation layer between AI systems and policy enforcement, decoupling capability from authority.
 
@@ -69,7 +69,7 @@ The adapter should:
 
 Map AI confidence metrics and safety signals to ternary states:  
 - **PROCEED (+1)**: High confidence, low risk, no policy violations  
-- **HESITATE (0)**: Ambiguity detected (confidence in gray zone, conflicting signals, out-of-distribution input)  
+- **HESITATE (0)**: Uncertainty detected (confidence in gray zone, conflicting signals, out-of-distribution input)  
 - **REFUSE (-1)**: Hard policy violation or critical risk threshold exceeded
 
 ### **4.3 Secure Communication**
@@ -83,7 +83,7 @@ Map AI confidence metrics and safety signals to ternary states:
 When state 0 is triggered:  
 - Queue the transaction and notify stakeholders of delay  
 - For physical systems, transition to safe operational mode  
-- Generate explicit log entries acknowledging the ambiguity
+- Generate explicit log entries acknowledging the uncertainty
 
 ---
 
@@ -99,7 +99,7 @@ Proposed UDE structure based on CloudEvents v1.0 for interoperability:
   "id": "uuid-v4",  
   "time": "ISO-8601-UTC",  
   "datacontenttype": "application/json",  
-  "gov_moral_state": 0,  
+  "gov_state": 0,  
   "gov_domain": "medical_imaging",  
   "gov_sensitivity": "high",  
   "gov_model_id": "model-version-identifier",  
@@ -133,7 +133,7 @@ Proposed UDE structure based on CloudEvents v1.0 for interoperability:
 ### **6.2 Medical Imaging (DICOM)**  
 - **Pattern**: Hybrid Orchestrator  
 - **Logic**: AI findings with 40-70% confidence trigger preliminary status and human review queue  
-- **Safety**: Results withheld from patient portal until ambiguity resolved
+- **Safety**: Results withheld from patient portal until uncertainty resolved
 
 ### **6.3 Autonomous Vehicles (ROS 2)**  
 - **Pattern**: Supervisory Controller  
@@ -143,7 +143,7 @@ Proposed UDE structure based on CloudEvents v1.0 for interoperability:
 ### **6.4 Financial Trading (FIX)**  
 - **Pattern**: Inline Interceptor  
 - **Logic**: Large orders with failed liquidity checks trigger order rejection with explanation  
-- **Fallback**: Return FIX ExecutionReport with TML rejection reason
+- **Fallback**: Return FIX ExecutionReport with TL rejection reason
 
 ---
 
@@ -184,7 +184,7 @@ This pattern is **inspired by** Certificate Transparency (RFC 6962) but adapted 
 
 **Latency Targets by System Class**:  
 - **Class A (Real-Time)**: < 10ms overhead; use Supervisory pattern  
-- **Class B (Interactive)**: < 500ms overhead; use Inline pattern  
+- **Class B (Interactive)**: < 300ms overhead; use Inline pattern  
 - **Class C (Batch)**: No strict limit; use Hybrid/Sidecar patterns
 
 **Throughput**: Implement non-blocking I/O with backpressure signaling when governance queues are saturated.
