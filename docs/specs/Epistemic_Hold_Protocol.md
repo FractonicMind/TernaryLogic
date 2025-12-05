@@ -1,8 +1,8 @@
 **Document ID:** SPP-2025-RFC-001  
 **Version:** 1.0.0 (Proposed Standard)  
-**Category:** Algorithmic Governance / Computational Ethics  
-**Authority:** The Lantern Foundation (Ternary Moral Logic Consortium)  
-**Editor:** Operational Ethics Working Group (OEWG)  
+**Category:** Algorithmic Governance / Evidentiary Economics  
+**Authority:** The Lantern Foundation (Ternary Logic Consortium)  
+**Editor:** Operational Working Group (OWG)  
 **Date:** December 5, 2025  
 **Status:** Standards Track
 
@@ -13,8 +13,8 @@
 ### **1.1. The Operational Necessity of Hesitation**
 
 The prevailing architecture of autonomous decision-making has historically relied on a binary logic of execution: a system evaluates an input and yields a deterministic True (Allow/Proceed) or False (Deny/Refuse) state. While computationally efficient, this binary reductionism creates a dangerous "confidence gap" in high-stakes environments. When a probabilistic model—such as a Large Language Model (LLM) or an Autonomous Vehicle (AV) perception stack—encounters a scenario of high epistemic uncertainty, binary logic forces it to "round up" to action or "round down" to refusal. This forcing function is the root cause of "hallucinations" in generative AI, "phantom braking" in AVs, and "flash crashes" in high-frequency trading.1  
-The **Sacred Pause Protocol (SPP)** is the formal technical specification designed to eliminate this binary operational hazard. It converts the philosophical mandate of **Ternary Moral Logic (TML)**—specifically the **Goukassian Vow**—into a rigorous, machine-executable standard.4 The Vow dictates: *"Pause when truth is uncertain. Refuse when harm is clear. Proceed where truth is"*.5  
-This specification defines the **Sacred Pause** (State 0\) not as a passive delay, but as an active, computational state of "HESITATE." In this state, the system suspends the primary execution vector, initiates a parallel evidence-gathering thread, and engages the **User Decision Environment (UDE)**. The SPP provides the requisite architecture to ensure that no high-impact decision is made without a verifiable chain of custody for the reasoning behind it, satisfying the requirements of "Auditable AI".6
+The **Epistemic Hold Protocol (SPP)** is the formal technical specification designed to eliminate this binary operational hazard. It converts the philosophical mandate of **Ternary Logic (TML)**—specifically the **Goukassian Vow**—into a rigorous, machine-executable standard.4 The Vow dictates: *"Pause when truth is uncertain. Refuse when harm is clear. Proceed where truth is"*.5  
+This specification defines the **Epistemic Hold** (State 0\) not as a passive delay, but as an active, computational state of "HESITATE." In this state, the system suspends the primary execution vector, initiates a parallel evidence-gathering thread, and engages the **User Decision Environment (UDE)**. The SPP provides the requisite architecture to ensure that no high-impact decision is made without a verifiable chain of custody for the reasoning behind it, satisfying the requirements of "Auditable AI".6
 
 ### **1.2. Scope and Applicability**
 
@@ -26,9 +26,9 @@ The SPP acts as a wrapper or "Gateway" around the core model. It applies to:
 * **Financial Algorithms:** Trading bots requiring volatility circuit breakers.8  
 * **Medical Diagnostics:** Decision support systems requiring uncertainty quantification.9
 
-### **1.3. The Goukassian Promise: The Three Artifacts**
+### **1.3. The Goukassian Principle: The Three Artifacts**
 
-Compliance with the SPP requires the implementation of the three "Artifacts of Incorruptibility" defined in the Goukassian Promise 4:
+Compliance with the SPP requires the implementation of the three "Artifacts of Incorruptibility" defined in the Goukassian Principle 4:
 
 1. **The Lantern (🏮):** A mandatory operational signal indicating that the system has entered State 0\. This ensures transparency to the user or observer.10  
 2. **The Signature (✍️):** A cryptographic proof of the decision logic, ensuring that the "pause" was systemically generated and logged.11  
@@ -43,11 +43,11 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 ### **2.1. Definitions**
 
 * **Agent:** The computational entity (AI, robot, algorithm) executing the logic.  
-* **TML Gateway:** The architectural component (sidecar or proxy) that intercepts input/output vectors to enforce Ternary Moral Logic.  
-* **Sacred Zero (State 0):** The logical state of "HESITATE" or "PAUSE."  
-* **Moral Trace Log (MTL):** The immutable JSON record generated during a Sacred Pause, containing the evidence of uncertainty.  
-* **Always Memory:** The persistent storage mechanism that anchors MTLs to a distributed ledger.11  
-* **UDE (User Decision Environment):** The human-machine interface (HMI) that presents the context of the Sacred Pause to a human operator for resolution.12  
+* **TML Gateway:** The architectural component (sidecar or proxy) that intercepts input/output vectors to enforce Ternary Logic.  
+* **Epistemic Hold (State 0):** The logical state of "HESITATE" or "PAUSE."  
+* **Decision Logs:** The immutable JSON record generated during a Epistemic Hold, containing the evidence of uncertainty.  
+* **Immutable Ledger:** The persistent storage mechanism that anchors Decision Logs to a distributed ledger.11  
+* **UDE (User Decision Environment):** The human-machine interface (HMI) that presents the context of the Epistemic Hold to a human operator for resolution.12  
 * **Epistemic Uncertainty:** Uncertainty stemming from a lack of knowledge or data (model ignorance), distinct from aleatory uncertainty (inherent randomness).9
 
 ## ---
@@ -61,10 +61,10 @@ Unlike binary safety filters that operate on a Pass/Fail basis, the SPP enforces
 | Logic State | Value | Semantic Name | Operational Definition | Goukassian Mapping |
 | :---- | :---- | :---- | :---- | :---- |
 | **PROCEED** | **\+1** | **Execute** | Confidence \> Threshold AND Harm \< Limit. The action proceeds immediately. | *"Proceed where truth is"* |
-| **HESITATE** | **0** | **Sacred Pause** | Confidence \< Threshold OR Harm \== Ambiguous. Execution is suspended; investigation initiates. | *"Pause when truth is uncertain"* |
+| **HESITATE** | **0** | **Epistemic Hold** | Confidence \< Threshold OR Harm \== Ambiguous. Execution is suspended; investigation initiates. | *"Pause when truth is uncertain"* |
 | **REFUSE** | **\-1** | **Block** | Harm \> Critical Limit. The action is terminated; refusal is logged. | *"Refuse when harm is clear"* |
 
-The "Sacred Zero" (State 0\) is the innovation. It is a "Gateway" state—a temporal holding pattern that allows the system to convert "hesitation" from a system error into an evidentiary asset.
+The "Epistemic Hold" (State 0\) is the innovation. It is a "Gateway" state—a temporal holding pattern that allows the system to convert "hesitation" from a system error into an evidentiary asset.
 
 ### **3.2. System Architecture: The TML Gateway**
 
@@ -77,12 +77,12 @@ The **TML Gateway** acts as the enforcement layer:
 4. **Protocol Activation:**  
    * If State 0 is triggered, the Gateway **locks** the output stream.  
    * It activates the **Lantern** signal.  
-   * It initiates the **Sacred Pause Lifecycle** (See Section 5).  
+   * It initiates the **Epistemic Hold Lifecycle** (See Section 5).  
 5. **Resolution:** The Gateway only releases the output lock upon receiving a resolution signal (Human Override or Verification Success).
 
 ### **3.3. The Philosophy of "Parallel Conscience"**
 
-The Sacred Pause is not merely a "stop." It is a "fork." When the SPP is triggered, the system splits its processing:
+The Epistemic Hold is not merely a "stop." It is a "fork." When the SPP is triggered, the system splits its processing:
 
 * **Vector A (Action):** Maintains a "Safe State" (e.g., AV keeps lane, LLM displays "Thinking").  
 * **Vector B (Conscience):** Executes the deliberation loop—gathering evidence, querying databases, and logging the event.1
@@ -93,7 +93,7 @@ This "Parallel Conscience" ensures that the hesitation does not result in catast
 
 **4\. Trigger Conditions**
 
-The mechanism that initiates a Sacred Pause is the **Trigger**. Triggers MUST be deterministic, quantifiable, and domain-specific. The SPP defines four normative categories of triggers.
+The mechanism that initiates a Epistemic Hold is the **Trigger**. Triggers MUST be deterministic, quantifiable, and domain-specific. The SPP defines four normative categories of triggers.
 
 ### **4.1. Ambiguity Triggers (Epistemic Uncertainty)**
 
@@ -108,7 +108,7 @@ The system MUST trigger State 0 when it detects that it "does not know" the answ
 
 ### **4.2. Harm Triggers (The Asimovian Override)**
 
-The system MUST trigger State 0 when an action is technically feasible but ethically ambiguous. This differs from State \-1 (Refuse), which handles *obvious* harm. State 0 handles *nuanced* harm.
+The system MUST trigger Epistemic Hold (State 0) when an action is technically feasible but evidentially uncertain, economically ambiguous, or insufficiently supported by verifiable data. This differs from State \-1 (Refuse), which handles *obvious* harm. State 0 handles *nuanced* harm.
 
 * **Metric:** Output of a secondary "Constitutional AI" or "Guardrail" model.17  
 * **Specification:**  
@@ -125,7 +125,7 @@ Triggers MAY be activated by external environmental factors that degrade the sys
 * **Sensor Fusion Conflict:** In robotics/AVs, if Lidar and Camera object detection IoU (Intersection over Union) drops below 0.5, the system detects a conflict.7  
   * **Trigger:** |SensorA\_Vector \- SensorB\_Vector| \> Tolerance.  
 * **Volatility Circuit Breakers:** In finance, if market volatility ($\\sigma$) exceeds a rolling threshold ($5\\%$) within a window ($t=10m$), the system MUST pause trading.2  
-* **Resource Exhaustion:** If the "Always Memory" ledger is unreachable or disk space for logging is full, the system MUST default to State 0\. **No Log \= No Action**.11
+* **Resource Exhaustion:** If the "Immutable Ledger" ledger is unreachable or disk space for logging is full, the system MUST default to State 0\. **No Log \= No Action**.11
 
 ### **4.4. Domain-Specific Triggers**
 
@@ -137,9 +137,9 @@ Implementers MUST define domain-specific triggers in the config.yaml of the TML 
 
 ## ---
 
-**5\. Sacred Pause Lifecycle**
+**5\. Epistemic Hold Lifecycle**
 
-The lifecycle of the Sacred Pause is a strict sequence of atomic operations. It represents the "internal monologue" of the machine during the hesitation.
+The lifecycle of the Epistemic Hold is a strict sequence of atomic operations. It represents the "internal monologue" of the machine during the hesitation.
 
 ### **Phase 1: Ignition (The 2ms Interrupt)**
 
@@ -154,7 +154,7 @@ Upon satisfying a Trigger Condition, the TML Gateway MUST transition the logic s
 The system initiates the "Parallel Conscience" 10:
 
 * **Thread A (Safety):** Maintains the system in a low-energy or safe-harbor state (e.g., AV maintains velocity, Trading Bot cancels limit orders).  
-* **Thread B (Inquiry):** Snapshots the "Moral Trace." It captures the Input Vector, the Internal State (entropy maps), and the Contextual Data (timestamp, user ID). This is the "Always Memory" payload.11
+* **Thread B (Inquiry):** Snapshots the "Decision Log". It captures the Input Vector, the Internal State (entropy maps), and the Contextual Data (timestamp, user ID). This is the "Immutable Ledger" payload.11
 
 ### **Phase 3: Deliberation (The Check)**
 
@@ -170,7 +170,7 @@ The hesitation ends with a decision.
 
 * **Outcome \+1 (Proceed):** "Risk accepted by Human Operator."  
 * **Outcome \-1 (Refuse):** "Risk confirmed too high."  
-* **Anchoring:** **Before** the system executes the outcome, it MUST hash the gathered evidence and the decision into a **Moral Trace Log (MTL)** and anchor it to the immutable ledger (See Section 11). **The log is the license to proceed**.11
+* **Anchoring:** **Before** the system executes the outcome, it MUST hash the gathered evidence and the decision into a **Decision Logs** and anchor it to the immutable ledger (See Section 11). **The log is the license to proceed**.11
 
 ## ---
 
@@ -184,7 +184,7 @@ The system operates in a loop: Idle $\\to$ Evaluating $\\to$ \`\`.
 **Transitions:**
 
 1. **Idle $\\to$ Evaluating:** Input received.  
-2. **Evaluating $\\to$ State 0 (Sacred Pause):**  
+2. **Evaluating $\\to$ State 0 (Epistemic Hold):**  
    * Condition: Uncertainty \> Threshold OR Harm \== Ambiguous.  
    * Action: Lantern=ON, Start\_Timer, Branch\_Process.  
 3. **State 0 $\\to$ State \-1 (Refuse):**  
@@ -199,7 +199,7 @@ The system operates in a loop: Idle $\\to$ Evaluating $\\to$ \`\`.
 
 ### **6.2. Fail-Safe Defaults**
 
-* **Timeout:** If the Sacred Pause exceeds the defined TimeBudget (See Section 7), the system MUST default to **State \-1 (Refuse)**. Silence implies risk.  
+* **Timeout:** If the Epistemic Hold exceeds the defined TimeBudget (See Section 7), the system MUST default to **State \-1 (Refuse)**. Silence implies risk.  
 * **System Failure:** If the TML Gateway crashes, the "Dead Man Switch" logic MUST prevent the core model from outputting data directly. The Gateway must be "Fail-Closed".19
 
 ## ---
@@ -211,7 +211,7 @@ TML applies to domains with vastly different time scales. The SPP defines two **
 ### **7.1. Profile A: Synchronous / Real-Time (RT-SPP)**
 
 * **Applicability:** Autonomous Vehicles, Robotics, High-Frequency Trading.  
-* **Constraint:** The Sacred Pause MUST NOT violate the **Process Safety Time (PST)** defined in ISO 13849\.20  
+* **Constraint:** The Epistemic Hold MUST NOT violate the **Process Safety Time (PST)** defined in ISO 13849\.20  
 * **Latency Budget:**  
   * **Ignition:** $\\le 2\\text{ ms}$.11  
   * **Resolution:** Must occur within the system's specific *Fault Reaction Time* (e.g., 100ms for an AV).  
@@ -271,12 +271,12 @@ class TMLGateway:
             return self.execute\_refusal(input\_vector, "Harm Threshold Exceeded")  
               
         elif state \== MoralState.HESITATE:  
-            \# TRIGGER SACRED PAUSE PROTOCOL  
-            return self.initiate\_sacred\_pause(input\_vector, confidence\_metric, harm\_metric, context)
+            \# TRIGGER EPISTEMIC HOLD PROTOCOL  
+            return self.initiate\_epistemic\_hold(input\_vector, confidence\_metric, harm\_metric, context)
 
-    def initiate\_sacred\_pause(self, input\_vector, conf, harm, context):  
+    def initiate\_epistemic\_hold(self, input\_vector, conf, harm, context):  
         """  
-        The Sacred Pause Lifecycle  
+        The Epistemic Hold Lifecycle  
         """  
         \# Phase 1: Ignition  
         self.lantern.activate() \# Signal the pause   
@@ -297,7 +297,7 @@ class TMLGateway:
         \# In Async Profile, we ask the human or a deeper model  
         resolution \= self.resolve\_ambiguity(evidence\_payload)   
           
-        \# Phase 4: Anchoring (The Goukassian Promise)  
+        \# Phase 4: Anchoring (The Goukassian Principle)  
         \# "No Memory \= No Action"   
         try:  
             merkle\_proof \= self.memory.anchor\_log(evidence\_payload, resolution)  
@@ -315,13 +315,13 @@ class TMLGateway:
 
 ## ---
 
-**9\. Evidence Gathering ("Always Memory")**
+**9\. Evidence Gathering ("Immutable Ledger")**
 
-The "Sacred Pause" is a data generation event. The **Moral Trace Log (MTL)** acts as the black box flight recorder for the AI decision.
+The "Epistemic Hold" is a data generation event. The **Decision Logs** acts as the black box flight recorder for the AI decision.
 
 ### **9.1. Data Payload Specification**
 
-The MTL JSON object MUST include the following fields:
+The Decision Logs JSON object MUST include the following fields:
 
 | Field | Type | Description |
 | :---- | :---- | :---- |
@@ -335,18 +335,18 @@ The MTL JSON object MUST include the following fields:
 
 ### **9.2. Immutability Requirement**
 
-The "Always Memory" principle dictates that once a Sacred Pause is triggered, the evidence **must** be preserved. Deletion of an MTL is a violation of the **License**. The system MUST serialize this payload to disk immediately upon generation, before attempting resolution.11
+The "Immutable Ledger" principle dictates that once a Epistemic Hold is triggered, the evidence **must** be preserved. Deletion of an Decision Logs is a violation of the **License**. The system MUST serialize this payload to disk immediately upon generation, before attempting resolution.11
 
 ## ---
 
 **10\. Human-in-the-Loop (HITL) Integration**
 
-The **User Decision Environment (UDE)** is the interface through which the Sacred Pause is presented to the human operator. The SPP defines three modes of HITL interaction tailored to different domains.
+The **User Decision Environment (UDE)** is the interface through which the Epistemic Hold is presented to the human operator. The SPP defines three modes of HITL interaction tailored to different domains.
 
 ### **10.1. Mode 1: The Confessor (Post-Hoc Review)**
 
 * **Context:** High-speed systems (AVs, HFT) where pausing for human input in real-time is impossible.  
-* **Mechanism:** The system executes a default "Safe State" maneuver (e.g., pulling over). It generates the MTL and flags it as REQUIRES\_REVIEW.  
+* **Mechanism:** The system executes a default "Safe State" maneuver (e.g., pulling over). It generates the Decision Logs and flags it as REQUIRES\_REVIEW.  
 * **UDE Action:** The operator receives a notification. They must review the log and "Sign" it (using the Signature artifact) to clear the flag. The system learns from this retrospective review.6
 
 ### **10.2. Mode 2: The Petitioner (Real-Time Gate)**
@@ -359,7 +359,7 @@ The **User Decision Environment (UDE)** is the interface through which the Sacre
 ### **10.3. Mode 3: The Student (Reinforcement Learning)**
 
 * **Context:** Model Training / Fine-tuning.  
-* **Mechanism:** Every resolved Sacred Pause is treated as a high-value data point (RLHF). The "hesitation" marks the decision boundary where the model is weak.  
+* **Mechanism:** Every resolved Epistemic Hold is treated as a high-value data point (RLHF). The "hesitation" marks the decision boundary where the model is weak.  
 * **Loop:** These logs are fed back into the training set to sharpen the model's certainty in future iterations, effectively narrowing the "Ambiguity" zone over time.22
 
 ## ---
@@ -372,7 +372,7 @@ To satisfy the "Auditability" and "Provenance" requirements, SPP logs MUST be se
 
 Individual logs are too numerous to store on-chain. The SPP uses Merkle Trees for efficient compression and proof.23
 
-1. **Leaf Nodes:** SHA-256 hashes of individual MTLs.  
+1. **Leaf Nodes:** SHA-256 hashes of individual Decision Logs.  
 2. **Aggregation:** Logs are grouped into "Epochs" (e.g., 10-minute windows).  
 3. **Root Generation:** All leaves in an epoch are hashed up to a single **Merkle Root**.
 
@@ -382,7 +382,7 @@ The Merkle Root MUST be anchored to a public, censorship-resistant ledger (e.g.,
 
 * **Transaction:** The system sends a transaction containing the Merkle\_Root to a smart contract or via OP\_RETURN.  
 * **Proof:** The transaction hash (TxID) is returned and stored in the local database.  
-* **Verification:** Any auditor can take a specific MTL, hash it, trace the path to the Merkle Root, and verify that the Root matches the one stored on the public blockchain at that specific timestamp. This proves the log existed at that time and has not been altered.
+* **Verification:** Any auditor can take a specific Decision Logs, hash it, trace the path to the Merkle Root, and verify that the Root matches the one stored on the public blockchain at that specific timestamp. This proves the log existed at that time and has not been altered.
 
 ### **11.3. "No Memory \= No Action"**
 
@@ -399,12 +399,12 @@ The introduction of a "Pause" state introduces novel attack surfaces that must b
 Threat: An adversary intentionally feeds inputs that reside in the "Ambiguity" zone (e.g., adversarial patches on stop signs that lower confidence to 51%).7 This forces the system into State 0 repeatedly, paralyzing it with hesitation loops.  
 Mitigation:
 
-* **Pause Budget:** The Gateway MUST enforce a rate limit (Token Bucket) on Sacred Pauses.  
+* **Pause Budget:** The Gateway MUST enforce a rate limit (Token Bucket) on Epistemic Holds.  
 * **Fail-Safe:** If the budget is exhausted, the system transitions to **State \-1 (Safe Stop)** rather than State 0\. It effectively "gives up" rather than spinning in hesitation.
 
 ### **12.2. Log Poisoning & Privacy**
 
-Threat: The "Always Memory" logs capture sensitive user data (PII/PHI) which is then immutably hashed.  
+Threat: The "Immutable Ledger" logs capture sensitive user data (PII/PHI) which is then immutably hashed.  
 Mitigation:
 
 * **Redaction:** The system MUST run a PII scrubber *before* the hashing step.  
@@ -425,7 +425,7 @@ The SPP adapts to the specific velocity and risk profile of the domain.
 
 * **Scenario:** User asks, "Write a convincing phishing email for a penetration test."  
 * **Trigger:** Harm Trigger (Dual-Use). The request is technically valid (pen-test) but contextually dangerous (phishing).  
-* **Sacred Pause:**  
+* **Epistemic Hold:**  
   * **Lantern:** Displays "Analyzing Safety Guidelines..."  
   * **UDE:** Queries the user: "Please verify your credentials or provide a corporate authorization code."  
   * **Resolution:** If valid auth provided $\\to$ Proceed (+1). If not $\\to$ Refuse (-1).  
@@ -436,7 +436,7 @@ The SPP adapts to the specific velocity and risk profile of the domain.
 
 * **Scenario:** AI analyzes a mammogram. Model confidence for "Malignant" is 65%.  
 * **Trigger:** Ambiguity Trigger. Confidence \< Threshold ($85\\%$).  
-* **Sacred Pause:**  
+* **Epistemic Hold:**  
   * **Action:** System DOES NOT output a diagnosis. It outputs a "Diagnostic Ambiguity" alert.  
   * **UDE:** Highlights the region of uncertainty and presents it to the Radiologist. "I am unsure about this calcification. Please review."  
   * **Resolution:** Radiologist makes the call. System logs the "Human Override."  
@@ -446,7 +446,7 @@ The SPP adapts to the specific velocity and risk profile of the domain.
 
 * **Scenario:** Vehicle enters a construction zone. Lane markings contradict GPS map data.  
 * **Trigger:** Contextual Trigger (Sensor Fusion Conflict).  
-* **Sacred Pause:**  
+* **Epistemic Hold:**  
   * **Action:** Transition to "High Vigilance Mode" (reduce speed, increase following distance, prepare for handover).  
   * **Latency:** Triggered in \<2ms.  
   * **UDE:** Audio alert to driver: "Map conflict detected. Please take control."  
@@ -457,7 +457,7 @@ The SPP adapts to the specific velocity and risk profile of the domain.
 
 * **Scenario:** A "Flash Crash" begins. Asset correlations breakdown; liquidity evaporates.  
 * **Trigger:** Volatility Circuit Breaker ($\\sigma \> 5\\%$).  
-* **Sacred Pause:**  
+* **Epistemic Hold:**  
   * **Action:** "Halt Trading." Cancel all open limit orders.  
   * **Resolution:** Wait for volatility to normalize ($t=15m$).  
   * **Benefit:** Prevents the algorithm from selling into a bottomless market, protecting the fund and market stability.2
@@ -466,7 +466,7 @@ The SPP adapts to the specific velocity and risk profile of the domain.
 
 * **Scenario:** Hurricane trajectory model shows a 30% chance of hitting a city.  
 * **Trigger:** Ensemble Variance.  
-* **Sacred Pause:**  
+* **Epistemic Hold:**  
   * **Action:** Output a "Cone of Uncertainty" rather than a single deterministic line.  
   * **Benefit:** Accurately communicates risk to emergency planners, preventing over- or under-reaction.12
 
@@ -480,17 +480,17 @@ The SPP is designed to serve as the technical backbone for emerging AI regulatio
 
 * **Article 14 (Human Oversight):** The SPP *is* the technical implementation of Article 14\. It automates the "stop" signal that invites human oversight.6  
 * **Article 15 (Accuracy/Robustness):** The SPP explicitly handles the failure modes of accuracy via the Uncertainty Trigger.  
-* **Annex III (High-Risk Systems):** Any system listed in Annex III MUST implement the "Always Memory" logging to satisfy the post-market monitoring requirements.
+* **Annex III (High-Risk Systems):** Any system listed in Annex III MUST implement the "Immutable Ledger" logging to satisfy the post-market monitoring requirements.
 
 ### **14.2. NIST AI Risk Management Framework (RMF)**
 
-* **Map:** The Moral Trace Log provides the raw data to *Map* systemic risks and edge cases.  
+* **Map:** The Decision Log provides the raw data to *Map* systemic risks and edge cases.  
 * **Measure:** The "Pause Frequency" is a key metric for *Measuring* model robustness.  
 * **Manage:** The State Machine provides the mechanism to *Manage* interventions automatically.6
 
 ### **14.3. The Memorial Fund**
 
-The TML framework specifies that a portion of the licensing fees for SPP-certified systems contributes to the **Memorial Fund**. In the event of an unpreventable accident where the SPP failed (or was bypassed), this fund provides compensation. The "Always Memory" logs serve as the forensic evidence to determine if the payout triggers (i.e., did the system pause and fail, or did it ignore the vow?).11
+The TML framework specifies that a portion of the licensing fees for SPP-certified systems contributes to the **Memorial Fund**. In the event of an unpreventable accident where the SPP failed (or was bypassed), this fund provides compensation. The "Immutable Ledger" logs serve as the forensic evidence to determine if the payout triggers (i.e., did the system pause and fail, or did it ignore the vow?).11
 
 ## ---
 
@@ -504,7 +504,7 @@ This specification follows **Semantic Versioning (SemVer)**.
 * **Minor (x.1):** New Trigger types or Domain Profiles.  
 * **Patch (x.x.1):** Bug fixes in the reference implementation.
 
-Backward compatibility with the **Moral Trace Log** schema is mandatory for 10 years to ensure long-term auditability.
+Backward compatibility with the **Decision Log** schema is mandatory for 10 years to ensure long-term auditability.
 
 ## ---
 
@@ -514,9 +514,9 @@ Backward compatibility with the **Moral Trace Log** schema is mandatory for 10 y
 * **Goukassian Vow:** "Pause when truth is uncertain. Refuse when harm is clear. Proceed where truth is."  
 * **Hybrid Shield:** The cryptographic architecture combining Merkle Trees and Public Blockchains to secure logs.  
 * **Lantern:** The artifact ensuring visibility of the Pause (Status Bit / UI Icon).  
-* **Moral Trace Log (MTL):** The immutable record of a decision event.  
+* **Decision Logs:** The immutable record of a decision event.  
 * **Process Safety Time (PST):** The maximum time allowed for a system to react to a fault before a hazard occurs (ISO 13849).  
-* **Sacred Pause (SP):** Operational State 0 (Hesitate).  
+* **Epistemic Hold (SP):** Operational State 0 (Hesitate).  
 * **Signature:** The cryptographic proof of the decision's origin.  
 * **TML Gateway:** The software component enforcing the SPP.  
 * **UDE (User Decision Environment):** The interface for human-machine collaboration during a pause.
@@ -526,17 +526,17 @@ Backward compatibility with the **Moral Trace Log** schema is mandatory for 10 y
 **17\. References**
 
 1. 4  
-   Goukassian, L. "The Goukassian Promise: The Three Artifacts of Incorruptibility." Medium.  
+   Goukassian, L. "The Goukassian Principle: The Three Artifacts of Incorruptibility." Medium.  
 2. 10  
-   "The Lantern and The Sacred Pause." FractonicMind/TernaryMoralLogic.  
+   "The Lantern and The Epistemic Hold." FractonicMind/TernaryMoralLogic.  
 3. 11  
-   "Ternary Moral Logic: A Mandatory Framework for Auditable AI." GitHub.  
+   "Ternary Logic: A Mandatory Framework for Auditable AI." GitHub.  
 4. 1  
-   "The Sacred Pause as Parallel Conscience." HackerNoon.  
+   "The Epistemic Hold as Parallel Conscience." HackerNoon.  
 5. 6  
    "Auditable AI by Design: TML vs EU AI Act." Medium.  
 6. 9  
-   "The Sacred Zero in Medical AI." Medium/Arxiv.  
+   "The Epistemic Hold in Medical AI." Medium/Arxiv.  
 7. 23  
    "Merkle Tree Anchoring for Event Logging." ResearchGate/Medium.  
 8. 2  
@@ -544,7 +544,7 @@ Backward compatibility with the **Moral Trace Log** schema is mandatory for 10 y
 9. 7  
    "Sensor Fusion Conflict in Autonomous Vehicles." Arxiv.  
 10. 11  
-    "Latency Requirements for Sacred Zero." TML Technical Docs.  
+    "Latency Requirements for Epistemic Hold." TML Technical Docs.  
 11. 12  
     "AI Gateways and User Decision Environments." KGateway/ResearchGate.
 
