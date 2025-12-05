@@ -32,7 +32,7 @@ Compliance with the EHP requires the implementation of the three "Artifacts of I
 
 1. **The Lantern (🏮):** A mandatory operational signal indicating that the system has entered State 0. This ensures transparency to the user or observer.10  
 2. **The Signature (✍️):** A cryptographic proof of the decision logic, ensuring that the "pause" was systemically generated and logged.11  
-3. **The License (📜):** The binding operational constraint that prohibits the system from bypassing the EHP logic ("No Memory = No Action").11
+3. **The License (📜):** The binding operational constraint that prohibits the system from bypassing the EHP logic ("No Log = No Action").11
 
 
 
@@ -290,7 +290,7 @@ class TLGateway:
         resolution = self.resolve_uncertainty(evidence_payload)   
           
         # Phase 4: Anchoring (The Goukassian Principle)  
-        # "No Memory = No Action"   
+        # "No Log = No Action"   
         try:  
             merkle_proof = self.memory.anchor_log(evidence_payload, resolution)  
         except LedgerError:  
@@ -376,7 +376,7 @@ The Merkle Root MUST be anchored to a public, censorship-resistant ledger (e.g.,
 * **Proof:** The transaction hash (TxID) is returned and stored in the local database.  
 * **Verification:** Any auditor can take a specific DL, hash it, trace the path to the Merkle Root, and verify that the Root matches the one stored on the public blockchain at that specific timestamp. This proves the log existed at that time and has not been altered.
 
-### **11.3. "No Memory = No Action"**
+### **11.3. "No Log = No Action"**
 
 The TL Gateway MUST perform a "Liveness Check" on the anchoring service. If the system detects it cannot connect to the ledger or write to the local log, it MUST default to **State -1 (Refuse)**. An AI without a memory is not permitted to act.11
 
