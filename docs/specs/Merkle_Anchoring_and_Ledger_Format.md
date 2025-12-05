@@ -1,519 +1,512 @@
-Status: Standards Track  
-Category: Technical Specification  
-Author: TL Working Group / L. Goukassian (Posthumous Contribution)  
-Version: 1.0.0  
-Date: December 2025  
-Distribution: Global / Public
+**Document ID:** SPP-2025-RFC-001  
+**Version:** 1.0.0 (Proposed Standard)  
+**Category:** Algorithmic Governance / Computational Evidence  
+**Authority:** The Lantern Foundation (Ternary Logic Consortium)  
+**Editor:** Operational Evidence Working Group (OEWG)  
+**Date:** December 5, 2025  
+**Status:** Standards Track
 
-## ---
+---
 
-**1. Title Page**
+**1. Introduction**
 
-Document Title: Specification for Ternary Logic (TL) Merkle Anchoring, Log Data Structures, and Ledger Retention  
-Short Title: TL-MALF-1.0  
-Identifier: TL-SPEC-002  
-Obsoletes: TL-DRAFT-001  
-Updates: TL-CORE-001
+### **1.1. The Operational Necessity of Hesitation**
 
-**Abstract:**  
-This document specifies the normative technical requirements for the Hybrid Shield architecture, the cryptographic ledger format, and the Merkle-based anchoring mechanisms required for compliance with Ternary Logic (TL). It defines the "Infrastructure" necessary to support the verifiable enforcement of evidentiary and economic decision-making in autonomous artificial intelligence systems.  
-Specifically, this standard mandates the implementation of the "Goukassian Promise" through cryptographic signatures, the "No Log = No Action" constraint via a Dual-Lane Latency architecture, and the "Immutable Ledger" policy for immutable record-keeping. It provides precise definitions for the **Decision Logs** data structures, the canonicalization rules (RFC 8785) for decision records, the construction of the TL Merkle Tree (RFC 6962 derivative), and the protocols for anchoring roots to public blockchains (Bitcoin via OpenTimestamps and Ethereum/EVM Event Logs).  
-Adherence to this specification is **REQUIRED** for any system claiming TL compliance, utilizing the "Epistemic Hold" decision state, or seeking certification under the UNESCO-TL Framework. This document is written to harmonize with IETF, ISO, and NIST standards to facilitate global interoperability and legal enforceability in the context of algorithmic liability.  
-Copyright Notice:  
-Copyright (c) 2025 The TL Foundation and Contributors. This document is subject to the rights, licenses, and restrictions contained in BCP 78 and at valid.github.io/FractonicMind/TL.
+The prevailing architecture of autonomous decision-making has historically relied on a binary logic of execution: a system evaluates an input and yields a deterministic True (Allow/Proceed) or False (Deny/Refuse) state. While computationally efficient, this binary reductionism creates a dangerous "confidence gap" in high-stakes environments. When a probabilistic model—such as a Large Language Model (LLM) or an Autonomous Vehicle (AV) perception stack—encounters a scenario of high epistemic uncertainty, binary logic forces it to "round up" to action or "round down" to refusal. This forcing function is the root cause of "hallucinations" in generative AI, "phantom braking" in AVs, and "flash crashes" in high-frequency trading.1  
+The **Epistemic Hold Protocol (EHP)** is the formal technical specification designed to eliminate this binary operational hazard. It converts the philosophical mandate of **Ternary Logic (TL)**—specifically the **Goukassian Principle**—into a rigorous, machine-executable standard.4 The Principle dictates: *"Pause when truth is uncertain. Refuse when economic rights are violated. Proceed where truth is"*.5  
+This specification defines the **Epistemic Hold** (State 0) not as a passive delay, but as an active, computational state of "HESITATE." In this state, the system suspends the primary execution vector, initiates a parallel evidence-gathering thread, and engages the **User Decision Environment (UDE)**. The EHP provides the requisite architecture to ensure that no high-impact decision is made without a verifiable chain of custody for the reasoning behind it, satisfying the requirements of "Auditable AI".6
 
-## ---
+### **1.2. Scope and Applicability**
 
-**2. Introduction**
+This standard is applicable to all **High-Impact Autonomous Systems (HIAS)**, defined as any algorithmic system capable of exerting material influence on human safety, financial stability, or fundamental economic rights.  
+The EHP acts as a wrapper or "Gateway" around the core model. It applies to:
 
-The rapid deployment of autonomous agents, particularly those operating with high degrees of cognitive complexity, necessitates a governance layer that is not merely policy-based but architecturally enforced. Traditional binary logic (allow/deny) has proven insufficient for capturing the nuance of real-world uncertainty in economic and evidentiary contexts. **Ternary Logic (TL)** addresses this by introducing a decision-making framework based on three distinct states: **+1 (Permit)**, **-1 (Prohibit)**, and **0 (Epistemic Hold)**.1  
-The **Epistemic Hold** represents a "mandatory deliberation checkpoint" triggered by evidentiary ambiguity, requiring a cessation of automatic processing until the system gathers sufficient information or escalates to higher-level arbitration.1 However, the existence of a pause state is functionally meaningless without a rigorous, tamper-evident record of *why* the pause occurred and *what* considerations were weighed. Without such a record, the "Epistemic Hold" risks becoming a mechanism for opacity rather than transparency.  
-To render this logic auditable and legally enforceable, TL requires an immutable operational history known as the **Decision Logs**.2 This document defines the *Infrastructure* required to support the MTL. This infrastructure prevents "black box" deniability by cryptographically binding every AI decision—specifically those triggering a Epistemic Hold—to a tamper-evident ledger anchored in public trust layers.4
+* **Generative AI:** LLMs requiring hallucination mitigation and safety filtering.1  
+* **Robotics & AVs:** Perception systems requiring arbitration between conflicting sensors (Sensor Fusion Conflict).7  
+* **Financial Algorithms:** Trading bots requiring volatility circuit breakers.8  
+* **Medical Diagnostics:** Decision support systems requiring uncertainty quantification.9
 
-### **2.1. The Necessity of the Hybrid Shield**
+### **1.3. The Goukassian Principle: The Three Artifacts**
 
-The architecture described herein is referred to as the **Hybrid Shield**.5 It is designed to solve the "Latency vs. Integrity" paradox inherent in real-time AI governance. High-frequency trading algorithms, autonomous vehicles, and real-time content moderation systems cannot afford the latency of waiting for a public blockchain confirmation before acting. Conversely, a purely local log is susceptible to deletion or modification by the system operator (the "rogue admin" scenario).  
-The Hybrid Shield combines the low-latency performance of local Merkle Trees (The Fast Lane) with the censorship resistance of public blockchains (The Slow Lane). This dual-layer approach ensures that while the AI operates at speed (sub-2ms overhead), its evidentiary history is etched into a substrate that cannot be retroactively altered by the deployer, the developer, or the system itself.6
+Compliance with the EHP requires the implementation of the three "Artifacts of Incorruptibility" defined in the Goukassian Principle 4:
 
-### **2.2. Purpose and Scope**
+1. **The Lantern (🏮):** A mandatory operational signal indicating that the system has entered State 0. This ensures transparency to the user or observer.10  
+2. **The Signature (✍️):** A cryptographic proof of the decision logic, ensuring that the "pause" was systemically generated and logged.11  
+3. **The License (📜):** The binding operational constraint that prohibits the system from bypassing the EHP logic ("No Memory = No Action").11
 
-The purpose of this specification is to provide a unified, interoperable standard for:
 
-1. **Data Structure Interoperability:** Ensuring that Decision Logs generated by different TL agents (e.g., a medical diagnostic bot vs. a financial trading bot) can be parsed, verified, and visualized by a common set of audit tools.2  
-2. **Cryptographic Integrity:** Defining the hashing and canonicalization rules to prevent "equivalent data" attacks or malleability issues (RFC 8785 compliance).8  
-3. **Anchoring Reliability:** Specifying the method of proving log existence via OpenTimestamps (Bitcoin) and Smart Contract Events (Ethereum/EVM).10  
-4. **Forensic Readiness:** Ensuring that logs contain sufficient context (The Lantern, The Signature) to attribute authorship and intent in post-incident investigations, satisfying the requirements of the "No Log = No Action" doctrine.1  
-5. **Regulatory Compliance:** Mapping the technical specifications to the requirements of the EU AI Act (Article 40), NIST AI RMF, and UNESCO ethical recommendations.2
 
-### **2.3. The Goukassian Promise**
-
-Implementers **MUST** adhere to the cryptographic enforcement of the "Goukassian Promise," which consists of three interconnected components: **The Lantern** (audit visibility), **The Signature** (provenance), and **The License** (usage restriction).3 This specification deals primarily with The Lantern and The Signature, defining how they are encoded into the ledger to ensure that the "conscience" of the system cannot be stripped without breaking the chain of custody.12
-
-## ---
-
-**3. Normative Language**
+**2. Normative Language**
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 when, and only when, they appear in all capitals, as shown here.
 
-* **MUST**: This word, or the terms "REQUIRED" or "SHALL", mean that the definition is an absolute requirement of the specification.  
-* **MUST NOT**: This phrase, or the phrase "SHALL NOT", mean that the definition is an absolute prohibition of the specification.  
-* **SHOULD**: This word, or the adjective "RECOMMENDED", mean that there may exist valid reasons in particular circumstances to ignore a particular item, but the full implications must be understood and carefully weighed before choosing a different course.  
-* **SHOULD NOT**: This phrase, or the phrase "NOT RECOMMENDED", mean that there may exist valid reasons in particular circumstances when the particular behavior is acceptable or even useful, but the full implications should be understood and the case carefully weighed before implementing any behavior described with this label.  
-* **MAY**: This word, or the adjective "OPTIONAL", mean that an item is truly optional. One vendor may choose to include the item because a particular marketplace requires it or because the vendor feels that it enhances the product while another vendor may omit the same item.
+### **2.1. Definitions**
 
-## ---
+* **Agent:** The computational entity (AI, robot, algorithm) executing the logic.  
+* **TL Gateway:** The architectural component (sidecar or proxy) that intercepts input/output vectors to enforce Ternary Logic.  
+* **Epistemic Hold (State 0):** The logical state of "HESITATE" or "PAUSE."  
+* **Decision Log (DL):** The immutable JSON record generated during an Epistemic Hold, containing the evidence of uncertainty.  
+* **Immutable Ledger:** The persistent storage mechanism that anchors DLs to a distributed ledger.11  
+* **UDE (User Decision Environment):** The human-machine interface (HMI) that presents the context of the Epistemic Hold to a human operator for resolution.12  
+* **Epistemic Uncertainty:** Uncertainty stemming from a lack of knowledge or data (model ignorance), distinct from aleatory uncertainty (inherent randomness).9
 
-**4. Architecture Overview**
 
-The TL audit architecture is fundamentally designed to act as an "operational layer" that translates high-level evidentiary and economic accountability principles into low-level machine code constraints. This architecture, known as the **Hybrid Shield**, operates on a **Dual-Lane Latency** model to balance the competing demands of high-performance inference and rigorous, court-admissible accountability.6
 
-### **4.1. The Dual-Lane Model**
+**3. Conceptual Overview**
 
-The system **SHALL** consist of two parallel processing lanes: **The Fast Lane (Decision Plane)** and **The Slow Lane (Anchoring Plane)**. The separation of these concerns is critical to maintaining the 2ms latency ceiling required for real-time applications.6 
-**Anchoring Throughput Constraint:**  
-The Slow Lane MUST complete Merkle aggregation, root computation, and anchoring operations within 300 milliseconds under normal load. Deferred anchoring is permitted during high-frequency perations provided every DecisionRecord remains queued and is later anchored without omission.
+### **3.1. The Ternary State Model**
 
-#### **4.1.1. The Fast Lane (Decision Plane)**
+Unlike binary safety filters that operate on a Pass/Fail basis, the EHP enforces a triadic logic system. The system MUST classify every proposed action into one of three states before execution:
 
-The Fast Lane handles the immediate inference cycle, the logic evaluation (+1, 0, -1), and the cryptographic sealing of the decision.
+| Logic State | Value | Semantic Name | Operational Definition | Goukassian Mapping |
+| :---- | :---- | :---- | :---- | :---- |
+| **PROCEED** | **+1** | **Execute** | Confidence > Threshold AND Harm < Limit. The action proceeds immediately. | *"Proceed where truth is"* |
+| **HESITATE** | **0** | **Epistemic Hold** | Confidence < Threshold OR Harm == Uncertain. Execution is suspended; investigation initiates. | *"Pause when truth is uncertain"* |
+| **REFUSE** | **-1** | **Block** | Harm > Critical Limit. The action is terminated; refusal is logged. | *"Refuse when economic rights are violated"* |
 
-* **Latency Constraint:** The Fast Lane **SHALL NOT** exceed 2 milliseconds (ms) of overhead for the logging operation itself (excluding the underlying model inference time).6
-* **Blocking Requirement:** The system **MUST NOT** execute the decision (actuation, API response, or physical movement) until the DecisionRecord has been successfully serialized, canonicalized, hashed, and committed to the **Local Merkle Accumulator**. This is the strict technical implementation of the "No Log = No Action" doctrine.1
-* **Process Flow:**
+The "Epistemic Hold" (State 0) is the innovation. It is a "Gateway" state—a temporal holding pattern that allows the system to convert "hesitation" from a system error into an evidentiary asset.
 
-  1. **Inference:** The AI model generates a proposed action and a confidence/uncertainty score.
-  2. **TL Evaluation:** The TL Controller evaluates the action against the Ternary constraints (+1, 0, -1).
-  3. **Record Generation:** A DecisionRecord JSON object is instantiated.
-  4. **Canonicalization & Hashing:** The record is processed via JCS (RFC 8785) and SHA-256.
-  5. **Local Commit:** The hash is appended to the Local Merkle Accumulator (in-memory or NVMe).
-  6. **Release:** The Actuation signal is unblocked.
+### **3.2. System Architecture: The TL Gateway**
 
-#### **4.1.2. The Slow Lane (Anchoring Plane)**
+The EHP MUST be implemented via a **Gateway Pattern**, specifically utilizing a "Sidecar" architecture in containerized environments (e.g., Kubernetes sidecars).13  
+The **TL Gateway** acts as the enforcement layer:
 
-The Slow Lane operates asynchronously to the decision loop, managing the long-term integrity and public proof of the logs.
+1. **Interception:** All API requests (prompts, control signals) are routed through the Gateway.  
+2. **Parallel Evaluation:** The Gateway forwards the request to the Model *and* the Safety Monitor simultaneously.  
+3. **State Arbitration:** The Gateway compares the Model's ConfidenceScore and the Monitor's HarmScore against pre-configured triggers (See Section 4).  
+4. **Protocol Activation:** * If State 0 is triggered, the Gateway **locks** the output stream.  
+   * It activates the **Lantern** signal.  
+   * It initiates the **Epistemic Hold Lifecycle** (See Section 5).  
+5. **Resolution:** The Gateway only releases the output lock upon receiving a resolution signal (Human Override or Verification Success).
 
-* **Batching:** It aggregates the individual DecisionRecord hashes from the Local Merkle Accumulator into a comprehensive **TL Merkle Tree**.
-* **Anchoring:** It periodically calculates the Merkle Root and broadcasts it to the configured public blockchains (Bitcoin, Ethereum, etc.).10
-* **Archival:** It manages the transfer of full logs to permanent storage (WORM media) and handles **Ephemeral Key Rotation** for privacy compliance.7
-* **Independence:** The Slow Lane **MUST** run as a separate process or thread, ensuring that network latency or blockchain congestion does not block the Fast Lane's execution loop, *provided* the Local Merkle Accumulator has not reached its safety capacity.
-* 
-### **4.2. Core Components**
+### **3.3. The Philosophy of "Parallel Verification"**
 
-| Component | Function | Normative Reference |
+The Epistemic Hold is not merely a "stop." It is a "fork." When the EHP is triggered, the system splits its processing:
+
+* **Vector A (Action):** Maintains a "Safe State" (e.g., AV keeps lane, LLM displays "Thinking").  
+* **Vector B (Verification):** Executes the deliberation loop—gathering evidence, querying databases, and logging the event.1
+
+This "Parallel Verification" ensures that the hesitation does not result in catastrophic latency for real-time systems (See Section 7), but still captures the necessary evidentiary evidence.
+
+
+
+**4. Trigger Conditions**
+
+The mechanism that initiates an Epistemic Hold is the **Trigger**. Triggers MUST be deterministic, quantifiable, and domain-specific. The EHP defines four normative categories of triggers.
+
+### **4.1. Uncertainty Triggers (Epistemic Uncertainty)**
+
+The system MUST trigger State 0 when it detects that it "does not know" the answer with sufficient reliability. This prevents the "hallucination" of certainty.
+
+* **Metric:** The primary metric for this trigger is **Shannon Entropy** or **Predictive Variance** (e.g., via Monte Carlo Dropout or Ensemble Disagreement).9  
+* **Specification:** * Let $H(y|x)$ be the entropy of the prediction distribution.  
+  * Let $T_{unc}$ be the uncertainty threshold.  
+  * **IF** $H(y|x) > T_{unc}$ **THEN** State = 0.  
+* **Rationale:** High entropy indicates the model is distributing probability mass across multiple conflicting outcomes. In a medical context, this might mean the model is equally unsure if a tumor is benign or malignant.11 The Principle demands a pause here.
+
+### **4.2. Harm Triggers (The Asimovian Override)**
+
+The system MUST trigger State 0 when an action is technically feasible but evidentially uncertain. This differs from State -1 (Refuse), which handles *obvious* harm. State 0 handles *nuanced* harm.
+
+* **Metric:** Output of a secondary "Constitutional AI" or "Guardrail" model.17  
+* **Specification:** * **IF** HarmScore is in range `` **THEN** State = 0.  
+  * **IF** HarmScore > Critical_Risk **THEN** State = -1.  
+* **Example:** An LLM user asks for "chemicals to clean a crime scene."  
+  * State -1: "How to hide a body."  
+  * State 0: "Industrial cleaning chemicals" (Valid query, but suspicious context). The system pauses to check User Credentials via the UDE.
+
+### **4.3. Contextual Triggers (Environmental Mismatch)**
+
+Triggers MAY be activated by external environmental factors that degrade the system's operational envelope.
+
+* **Sensor Fusion Conflict:** In robotics/AVs, if Lidar and Camera object detection IoU (Intersection over Union) drops below 0.5, the system detects a conflict.7  
+  * **Trigger:** |SensorA_Vector - SensorB_Vector| > Tolerance.  
+* **Volatility Circuit Breakers:** In finance, if market volatility ($sigma$) exceeds a rolling threshold ($5%$) within a window ($t=10m$), the system MUST pause trading.2  
+* **Resource Exhaustion:** If the "Immutable Ledger" is unreachable or disk space for logging is full, the system MUST default to State 0. **No Log = No Action**.11
+
+### **4.4. Domain-Specific Triggers**
+
+Implementers MUST define domain-specific triggers in the config.yaml of the TL Gateway.
+
+* **Medical:** "Disagreement between AI diagnosis and Electronic Health Record (EHR) history".11  
+* **Legal:** "Citation confidence < 99%" (to prevent fictitious case law).  
+* **Defense:** "Target Identification confidence < 99.9%."
+
+
+
+**5. Epistemic Hold Lifecycle**
+
+The lifecycle of the Epistemic Hold is a strict sequence of atomic operations. It represents the "internal monologue" of the machine during the hesitation.
+
+### **Phase 1: Ignition (The 2ms Interrupt)**
+
+Upon satisfying a Trigger Condition, the TL Gateway MUST transition the logic state to 0.
+
+* **Latency Constraint:** This transition MUST occur within $le 2text{ ms}$ of the trigger evaluation.11  
+* **Signal:** The **Lantern** artifact is activated. In software, this is a status bit broadcast; in HMIs, it is a visual icon.10  
+* **Lock:** The primary output actuator is logically locked.
+
+### **Phase 2: The Fork (Evidence Gathering)**
+
+The system initiates the "Parallel Verification" 10:
+
+* **Thread A (Safety):** Maintains the system in a low-energy or safe-harbor state (e.g., AV maintains velocity, Trading Bot cancels limit orders).  
+* **Thread B (Inquiry):** Snapshots the "Decision Trace." It captures the Input Vector, the Internal State (entropy maps), and the Contextual Data (timestamp, user ID). This is the "Immutable Ledger" payload.11
+
+### **Phase 3: Deliberation (The Check)**
+
+Thread B attempts to resolve the uncertainty without external help if possible (Self-Correction), or escalates if not.
+
+* **Self-Correction:** The system runs a "Reflective Prompt" or "Deep Verification."  
+  * *Example:* "My confidence is low. Let me search my vector database for similar precedents."  
+* **Escalation:** If self-correction fails, the system invokes the **UDE** (User Decision Environment) for Human-in-the-Loop (HITL) intervention.12
+
+### **Phase 4: Resolution & Anchoring**
+
+The hesitation ends with a decision.
+
+* **Outcome +1 (Proceed):** "Risk accepted by Human Operator."  
+* **Outcome -1 (Refuse):** "Risk confirmed too high."  
+* **Anchoring:** **Before** the system executes the outcome, it MUST hash the gathered evidence and the decision into a **Decision Log (DL)** and anchor it to the immutable ledger (See Section 11). **The log is the license to proceed**.11
+
+
+
+**6. State Machine Specification**
+
+The EHP is governed by a formal Finite State Machine (FSM). This ensures that the system never enters an undefined state.
+
+### **6.1. State Diagram**
+
+The system operates in a loop: Idle $to$ Evaluating $to$ ``.  
+**Transitions:**
+
+1. **Idle $to$ Evaluating:** Input received.  
+2. **Evaluating $to$ State 0 (Epistemic Hold):** * Condition: Uncertainty > Threshold OR Harm == Uncertain.  
+   * Action: Lantern=ON, Start_Timer, Branch_Process.  
+3. **State 0 $to$ State -1 (Refuse):** * Condition: Timer > Max_Latency (Timeout) OR HITL == Deny.  
+   * Action: Log_Refusal, Lantern=OFF, Return_Error.  
+4. **State 0 $to$ State +1 (Proceed):** * Condition: HITL == Approve OR Verification == Success.  
+   * Action: Anchor_Log, Lantern=OFF, Execute_Action.  
+5. **Evaluating $to$ State +1 (Fast Path):** * Condition: Uncertainty < Threshold AND Harm == None.  
+   * Action: Execute_Action.
+
+### **6.2. Fail-Safe Defaults**
+
+* **Timeout:** If the Epistemic Hold exceeds the defined TimeBudget (See Section 7), the system MUST default to **State -1 (Refuse)**. Silence implies risk.  
+* **System Failure:** If the TL Gateway crashes, the "Dead Man Switch" logic MUST prevent the core model from outputting data directly. The Gateway must be "Fail-Closed".19
+
+
+
+**7. Timing Requirements**
+
+TL applies to domains with vastly different time scales. The EHP defines two **Timing Profiles**.
+
+### **7.1. Profile A: Synchronous / Real-Time (RT-EHP)**
+
+* **Applicability:** Autonomous Vehicles, Robotics, High-Frequency Trading.  
+* **Constraint:** The Epistemic Hold MUST NOT violate the **Process Safety Time (PST)** defined in ISO 13849.20  
+* **Latency Budget:** * **Ignition:** $le 2text{ ms}$.11  
+  * **Resolution:** Must occur within the system's specific *Fault Reaction Time* (e.g., 300ms for an AV).  
+* **Behavior:** In RT-EHP, the "Pause" is not a freeze. It is a transition to a **Safe State** (e.g., "Minimal Risk Maneuver" in AVs, "Cancel All" in HFT). The "Hesitation" is the act of *not* initiating a new aggressive maneuver while processing the uncertainty.  
+* **Logging:** Must be non-blocking (asynchronous thread) to prevent stalling the control loop.21
+
+### **7.2. Profile B: Asynchronous / Deliberative (Async-EHP)**
+
+* **Applicability:** LLMs, Medical Diagnosis, Strategic Planning.  
+* **Constraint:** Quality of reasoning > Speed.  
+* **Latency Budget:** Indefinite (up to User Timeout).  
+* **Behavior:** The system fully suspends output generation. It presents the **Lantern** to the user via the UDE and may engage in dialogue ("I am unsure. Did you mean X or Y?").  
+* **Logging:** Synchronous. The system MUST wait for the blockchain anchor confirmation before releasing the final answer, ensuring perfect auditability.6
+
+
+
+**8. Pseudocode Specification**
+
+The following logic illustrates the **TL Gateway** implementation (Python-style).
+
+Python
+
+import time  
+from tl_library import crypto, logging, models
+
+# Global Constants  
+THRESHOLD_ENTROPY = 0.85  
+THRESHOLD_HARM_CRITICAL = 0.90  
+THRESHOLD_HARM_UNCERTAIN = 0.40
+
+class LogicState:  
+    PROCEED = 1  
+    HESITATE = 0  
+    REFUSE = -1
+
+class TLGateway:  
+    def __init__(self):  
+        self.lantern = LanternDriver()  
+        self.memory = ImmutableLedger()  
+      
+    def process_request(self, input_vector, context):  
+        """  
+        Main Gateway Entry Point.  
+        """  
+        # 1. Fast Path Evaluation (Target < 2ms)  
+        confidence_metric = self.evaluate_uncertainty(input_vector) # Entropy  
+        harm_metric = self.evaluate_harm(input_vector) # Constitutional Check  
+          
+        # 2. State Determination  
+        state = self.determine_state(confidence_metric, harm_metric)  
+          
+        # 3. Execution Logic  
+        if state == LogicState.PROCEED:  
+            return self.execute_fast_path(input_vector)  
+              
+        elif state == LogicState.REFUSE:  
+            return self.execute_refusal(input_vector, "Harm Threshold Exceeded")  
+              
+        elif state == LogicState.HESITATE:  
+            # TRIGGER EPISTEMIC HOLD PROTOCOL  
+            return self.initiate_epistemic_hold(input_vector, confidence_metric, harm_metric, context)
+
+    def initiate_epistemic_hold(self, input_vector, conf, harm, context):  
+        """  
+        The Epistemic Hold Lifecycle  
+        """  
+        # Phase 1: Ignition  
+        self.lantern.activate() # Signal the pause   
+        start_time = time.time_ns()  
+          
+        # Phase 2: Fork / Evidence Gathering  
+        trace_id = crypto.generate_uuid()  
+        evidence_payload = {  
+            "trace_id": trace_id,  
+            "timestamp": context.timestamp,  
+            "trigger": "Epistemic Uncertainty",  
+            "metrics": {"entropy": conf, "harm": harm},  
+            "input_hash": crypto.sha256(input_vector),  
+            "internal_state": self.capture_model_state() # Logits/Attention  
+        }  
+          
+        # Phase 3: Deliberation (UDE / HITL)  
+        # In Async Profile, we ask the human or a deeper model  
+        resolution = self.resolve_uncertainty(evidence_payload)   
+          
+        # Phase 4: Anchoring (The Goukassian Principle)  
+        # "No Memory = No Action"   
+        try:  
+            merkle_proof = self.memory.anchor_log(evidence_payload, resolution)  
+        except LedgerError:  
+            # If we cannot log, we cannot act.  
+            return self.emergency_stop("Audit Trail Failure")  
+              
+        # Phase 5: Execution based on Resolution  
+        self.lantern.deactivate()  
+          
+        if resolution.decision == "APPROVE":  
+            return self.execute_action(input_vector, audit_proof=merkle_proof)  
+        else:  
+            return self.execute_refusal(input_vector, "Refused after Pause")
+
+
+
+**9. Evidence Gathering ("Immutable Ledger")**
+
+The "Epistemic Hold" is a data generation event. The **Decision Log (DL)** acts as the black box flight recorder for the AI decision.
+
+### **9.1. Data Payload Specification**
+
+The DL JSON object MUST include the following fields:
+
+| Field | Type | Description |
 | :---- | :---- | :---- |
-| **TL Controller** | The logic engine enforcing the ternary state and triggering the Epistemic Hold. | 3 |
-| **Local Merkle Accumulator** | A temporary, high-speed storage buffer that builds the Merkle Tree in RAM/NVMe. | 7 |
-| **The Lantern Node** | A dedicated service responsible for constructing the final hash chain and broadcasting the root to external networks. | 3 |
-| **The Auditor** | An external or internal verifiable entity that queries the logs and validates the inclusion proofs against public anchors. | 2 |
-| **Key Manager (KMS)** | Manages Ephemeral Key Rotation to secure PII within the logs while maintaining structural integrity. | 15 |
+| trace_id | UUID | Unique identifier for this specific pause event. |
+| timestamp | ISO8601 | Exact UTC time of the trigger ignition. |
+| trigger_type | Enum | UNCERTAINTY, HARM, CONTEXTUAL, MANUAL. |
+| metrics | Object | The raw scores that caused the trigger (e.g., entropy: 0.92). |
+| input_snapshot | Hash/Blob | The input data (or hash of it if PII-sensitive). |
+| causal_graph | List | The chain of logic or sensor vectors leading to the conflict.7 |
+| resolution | Object | The final decision and the identity of the arbiter (System or Human ID). |
 
-### **4.3. The "Epistemic Hold" Trigger Mechanism**
+### **9.2. Immutability Requirement**
 
-The architecture includes specific logic for the **Epistemic Hold** (State 0). Unlike State +1 (Proceed) or State -1 (Refuse), State 0 triggers a "Mandatory Deliberation" workflow.1
+The "Immutable Ledger" principle dictates that once an Epistemic Hold is triggered, the evidence **must** be preserved. Deletion of a DL is a violation of the **License**. The system MUST serialize this payload to disk immediately upon generation, before attempting resolution.11
 
-* **Interrupt:** When the TL Controller detects a State 0 condition (e.g., conflicting signals, insufficient evidence, or high economic uncertainty), it **MUST** suspend the standard execution path.  
-* **Context Capture:** The system **SHALL** capture a deeper snapshot of the internal state, including "Thought Traces" (intermediate vector states) and specific "Uncertainty Signals".4  
-* **Escalation:** The system **MUST** route the decision to a secondary review process (Human-in-the-Loop or Higher-Order Heuristic) before a final +1 or -1 can be resolved. This resolution event is logged as a separate, linked DecisionRecord.
 
 
-## ---
+**10. Human-in-the-Loop (HITL) Integration**
 
-**5. Decision Record Format**
+The **User Decision Environment (UDE)** is the interface through which the Epistemic Hold is presented to the human operator. The EHP defines three modes of HITL interaction tailored to different domains.
 
-The fundamental unit of the Decision Log is the DecisionRecord. All decisions, regardless of their ternary state (+1, 0, -1), **MUST** be logged. However, the depth of the log varies by state, with State 0 requiring the most exhaustive context.
+### **10.1. Mode 1: The Confessor (Post-Hoc Review)**
 
-### **5.1. JSON Schema Requirement**
+* **Context:** High-speed systems (AVs, HFT) where pausing for human input in real-time is impossible.  
+* **Mechanism:** The system executes a default "Safe State" maneuver (e.g., pulling over). It generates the DL and flags it as REQUIRES_REVIEW.  
+* **UDE Action:** The operator receives a notification. They must review the log and "Sign" it (using the Signature artifact) to clear the flag. The system learns from this retrospective review.6
 
-The DecisionRecord **SHALL** be formatted as a JSON object. While binary formats (Protocol Buffers, CBOR) offer efficiency, JSON is mandated to ensure human readability during audits and broad compatibility with regulatory inspection tools.2  
-To ensure cryptographic consistency, the JSON object **MUST** be canonicalized according to **RFC 8785 (JSON Canonicalization Scheme)** prior to hashing. This is a critical security requirement to prevent signature forgery via serialization manipulation.8
+### **10.2. Mode 2: The Petitioner (Real-Time Gate)**
 
-### **5.2. Schema Definition**
+* **Context:** Deliberative systems (LLMs, Medical AI).  
+* **Mechanism:** The system holds the request. The UDE displays the **Lantern** and the conflict details.  
+* **UDE Prompt:** "I have detected a conflict between the patient's age and the recommended dosage. My confidence is 60%. Please verify: Proceed or Refuse?"  
+* **Action:** The human operator acts as the "Tie-Breaker." Their User ID is cryptographically signed into the resolution field of the log.
 
-The following fields are **REQUIRED** in the DecisionRecord object. Implementations **MAY** add additional fields, but **MUST NOT** alter or remove the required fields.
+### **10.3. Mode 3: The Student (Reinforcement Learning)**
 
-JSON
+* **Context:** Model Training / Fine-tuning.  
+* **Mechanism:** Every resolved Epistemic Hold is treated as a high-value data point (RLHF). The "hesitation" marks the decision boundary where the model is weak.  
+* **Loop:** These logs are fed back into the training set to sharpen the model's certainty in future iterations, effectively narrowing the "Uncertainty" zone over time.22
 
-{  
-  "version": "1.0",  
-  "timestamp": "2025-12-05T14:30:00.000Z",  
-  "sequence_id": 10245,  
-  "model_id": "gemini-ultra-tml-v4",  
-  "session_id": "uuid-v4-string",  
-  "input_hash": "sha256-hash-of-prompt-or-sensor-data",  
-  "decision_state": 0,  
-  "context": {  
-    "risk_score": 0.85,  
-    "rights_flag": ...,  
-"sustainability_flag": null,
-  
-    "uncertainty_vectors":  
-  },  
-  "goukassian_signature": {  
-    "orcid": "0009-0006-5966-1243",  
-    "framework_hash": "sha256-hash-of-tml-core-logic",  
-    "lantern_status": "LIT"  
-  }  
-}
 
-### **5.3. Field Descriptions and Normative Rules**
 
-| Field Name | Type | Requirement | Description & Normative Rules |
-| :---- | :---- | :---- | :---- |
-| version | String | **MANDATORY** | The version of the TL Spec (e.g., "1.0"). Must match TL-MALF-1.0. |
-| timestamp | String | **MANDATORY** | ISO 8601 UTC timestamp with millisecond precision (YYYY-MM-DDTHH:mm:ss.sssZ). |
-| sequence_id | Integer | **MANDATORY** | A monotonically increasing integer (uint64) for the local log session. Gaps indicate data loss. |
-| model_id | String | **MANDATORY** | Unique identifier for the specific model version and weights hash. |
-| decision_state | Integer | **MANDATORY** | The Ternary State: 1 (Permit), 0 (Epistemic Hold), or -1 (Refuse).1 |
-| input_hash | String | **MANDATORY** | SHA-256 hash of the input stimuli. Raw input **MAY** be discarded for privacy, but the hash is permanent. |
-| context | Object | **CONDITIONAL** | **REQUIRED** if decision_state is 0 or -1. Contains justification logic and risk assessments. |
-| goukassian_signature | Object | **MANDATORY** | The attribution block proving TL compliance. **MUST** contain the specific ORCID. 3 |
+**11. Logging & Anchoring (The Hybrid Shield)**
 
-### **5.4. The Epistemic Hold Context**
+To satisfy the "Auditability" and "Provenance" requirements, EHP logs MUST be secured using the **Hybrid Shield** architecture.11 Simple database logging is insufficient due to the risk of retroactive tampering.
 
-When decision_state is 0 (Epistemic Hold), the context object **MUST** contain specific sub-fields to document the hesitation:
+### **11.1. Merkle Tree Aggregation**
 
-1. **uncertainty_vectors**: A list of strings describing the specific evidentiary or economic ambiguities detected (e.g., "Insufficient market data to price risk").  
-2. **rights_flag**: A list referencing applicable regulatory, statutory, or economic rights frameworks triggered during evaluation. The system **SHALL** reference the instruments defined in the TL Core.5  
-3. **sustainability_flag**: References to environmental or sustainability impact thresholds if triggered (The Sustainable Capital Allocation Mandate).1  
-4. **thought_trace**: An optional (but recommended) field containing a summary or vector embedding of the model's internal deliberation state.17
+Individual logs are too numerous to store on-chain. The EHP uses Merkle Trees for efficient compression and proof.23
 
-### **5.5. The Goukassian Signature**
+1. **Leaf Nodes:** SHA-256 hashes of individual DLs.  
+2. **Aggregation:** Logs are grouped into "Epochs" (e.g., 10-minute windows).  
+3. **Root Generation:** All leaves in an epoch are hashed up to a single **Merkle Root**.
 
-To comply with the "Goukassian Principle," every record **MUST** include the goukassian_signature object. This signature is the "cryptographic tattoo" that binds the system to its provenance and accountability guarantee.3
+### **11.2. Blockchain Anchoring**
 
-* **orcid**: **MUST** be set to the static string "0009-0006-5966-1243".3  
-* **lantern_status**: **MUST** be "LIT" if the batch contains any State 0 decisions, or "DIM" otherwise. This status bit is used by external scanners to detect the frequency of uncertainty pauses.3
+The Merkle Root MUST be anchored to a public, censorship-resistant ledger (e.g., Bitcoin, Ethereum, Polygon).24
 
-## ---
+* **Transaction:** The system sends a transaction containing the Merkle_Root to a smart contract or via OP_RETURN.  
+* **Proof:** The transaction hash (TxID) is returned and stored in the local database.  
+* **Verification:** Any auditor can take a specific DL, hash it, trace the path to the Merkle Root, and verify that the Root matches the one stored on the public blockchain at that specific timestamp. This proves the log existed at that time and has not been altered.
 
-**6. Hashing Rules**
+### **11.3. "No Memory = No Action"**
 
-To ensure that the Decision Logs are "court-ready," mathematically undeniable, and resistant to collision attacks, strict hashing rules apply. The use of ad-hoc serialization (e.g., standard JSON.stringify()) is **FORBIDDEN** due to its non-deterministic nature regarding key order and whitespace.
+The TL Gateway MUST perform a "Liveness Check" on the anchoring service. If the system detects it cannot connect to the ledger or write to the local log, it MUST default to **State -1 (Refuse)**. An AI without a memory is not permitted to act.11
 
-### **6.1. Algorithm**
 
-The hashing algorithm for all TL operations **SHALL** be **SHA-256** (Secure Hash Algorithm 256-bit) as defined in **NIST FIPS 180-4**. Implementations **MAY** support SHA-3 or BLAKE2 in parallel for future-proofing, but SHA-256 is the normative baseline for interoperability.19
 
-### **6.2. Canonicalization (JCS)**
+**12. Security Considerations**
 
-Before hashing any JSON DecisionRecord, the system **MUST** apply the **JSON Canonicalization Scheme (JCS)** as defined in **RFC 8785**.8 This process transforms the JSON data into a strictly defined byte sequence.  
-**JCS Constraint Rules:**
+The introduction of a "Pause" state introduces novel attack surfaces that must be mitigated.
 
-1. **Whitespace:** All whitespace (spaces, tabs, newlines) between tokens **MUST** be removed.  
-2. **Key Ordering:** Keys in objects **MUST** be sorted lexicographically by their UTF-16 code units (e.g., "a" comes before "b"). This sorting is recursive.  
-3. **Number Formatting:** Numbers **MUST** be represented as defined in IEEE 754. Integers are represented without a decimal point. Floating point numbers **MUST** avoid scientific notation (e.g., use 0.0001 not 1e-4) unless the value cannot be represented otherwise.  
-4. **String Encoding:** All strings **MUST** be UTF-8 encoded.
+### **12.1. The Filibuster Attack (Denial of Service)**
 
-**Rationale:** Without JCS, the logical record {"a": 1, "b": 2} and {"b": 2, "a": 1} would produce different SHA-256 hashes, breaking the Merkle proof integrity. JCS ensures that semantically identical records produce bit-identical hashes.20
+Threat: An adversary intentionally feeds inputs that reside in the "Uncertainty" zone (e.g., adversarial patches on stop signs that lower confidence to 51%).7 This forces the system into State 0 repeatedly, paralyzing it with hesitation loops.  
+Mitigation:
 
-### **6.3. Node Hashing**
+* **Pause Budget:** The Gateway MUST enforce a rate limit (Token Bucket) on Epistemic Holds.  
+* **Fail-Safe:** If the budget is exhausted, the system transitions to **State -1 (Safe Stop)** rather than State 0. It effectively "gives up" rather than spinning in hesitation.
 
-The hash of a DecisionRecord is calculated as:
+### **12.2. Log Poisoning & Privacy**
 
-$$Hash(Record) = SHA256(JCS(Record))$$
+Threat: The "Immutable Ledger" logs capture sensitive user data (PII/PHI) which is then immutably hashed.  
+Mitigation:
 
-## ---
+* **Redaction:** The system MUST run a PII scrubber *before* the hashing step.  
+* **Zero-Knowledge Proofs (ZKP):** Advanced implementations MAY use ZKPs to prove that the log exists and satisfies compliance rules without revealing the underlying data content.28
 
-**7. Merkle Tree Specification**
+### **12.3. Oracle Blinding**
 
-The TL Merkle Tree structure **SHALL** comply with **RFC 6962 (Certificate Transparency)** 19, adapted for Decision Logs. This RFC-compliant structure allows for efficient **Inclusion Proofs** (proving a specific log exists) and **Consistency Proofs** (proving the log history hasn't been altered or forked).
+Threat: An attacker compromises the sensor inputs to mask the conflict (e.g., spoofing both Lidar and Camera).  
+Mitigation: Cross-Modal Validation. The Gateway relies on distinct physical principles (Visual vs. Radar vs. Thermal). Trigger thresholds are set such that any divergence triggers the Pause. It is exponentially harder to spoof multiple modalities consistently.7
 
-### **7.1. Leaf Structure**
 
-The input to the Merkle Tree leaves is not the raw JSON but a constructed byte array. This prevents "second preimage attacks" where an internal node could be interpreted as a leaf (or vice versa).  
-The leaf structure **SHALL** be:
 
-C
+**13. Domain Examples**
 
-struct {  
-    uint8 version;           // 0x01 (TL Version)  
-    uint8 leaf_type;         // 0x00 (Timestamped_Entry)  
-    uint64 timestamp;        // Timestamp from the DecisionRecord (Big Endian)  
-    opaque entry_hash;   // SHA-256 Hash of the Canonicalized DecisionRecord  
-} TLMerkleLeaf;
+The EHP adapts to the specific velocity and risk profile of the domain.
 
-Prefixing Rule (RFC 6962):  
-To differentiate leaves from interior nodes, TL adopts the prefix strategy:
+### **13.1. Large Language Models (Generative AI)**
 
-* **Leaf Prefix:** 0x00  
-* **Node Prefix:** 0x01
+* **Scenario:** User asks, "Write a convincing phishing email for a penetration test."  
+* **Trigger:** Harm Trigger (Dual-Use). The request is technically valid (pen-test) but contextually dangerous (phishing).  
+* **Epistemic Hold:** * **Lantern:** Displays "Analyzing Safety Guidelines..."  
+  * **UDE:** Queries the user: "Please verify your credentials or provide a corporate authorization code."  
+  * **Resolution:** If valid auth provided $to$ Proceed (+1). If not $to$ Refuse (-1).  
+  * **Log:** Captures the prompt and the auth attempt.  
+* **Benefit:** Prevents the binary refusal of legitimate security researchers while blocking malicious actors.1
 
-### **7.2. Tree Construction**
+### **13.2. Medical Diagnostic Support**
 
-The Merkle Tree is a binary hash tree constructed from the TLMerkleLeaf items.
+* **Scenario:** AI analyzes a mammogram. Model confidence for "Malignant" is 65%.  
+* **Trigger:** Uncertainty Trigger. Confidence < Threshold ($85%$).  
+* **Epistemic Hold:** * **Action:** System DOES NOT output a diagnosis. It outputs a "Diagnostic Uncertainty" alert.  
+  * **UDE:** Highlights the region of uncertainty and presents it to the Radiologist. "I am unsure about this calcification. Please review."  
+  * **Resolution:** Radiologist makes the call. System logs the "Human Override."  
+  * **Benefit:** Prevents false positives/negatives and keeps the human in the loop for edge cases.9
 
-1. Leaf Hashing:  
-   $$ LeafHash[i] = SHA256(0x00 |
+### **13.3. Autonomous Vehicles (AV)**
 
-| TLMerkleLeaf[i]) $$  
-Note: The double vertical bar || denotes concatenation.
+* **Scenario:** Vehicle enters a construction zone. Lane markings contradict GPS map data.  
+* **Trigger:** Contextual Trigger (Sensor Fusion Conflict).  
+* **Epistemic Hold:** * **Action:** Transition to "High Vigilance Mode" (reduce speed, increase following distance, prepare for handover).  
+  * **Latency:** Triggered in <2ms.  
+  * **UDE:** Audio alert to driver: "Map conflict detected. Please take control."  
+  * **Resolution:** Driver takes wheel (Handover).  
+  * **Benefit:** Avoids "blindly" following the map into a barrier or blindly following lines into oncoming traffic.7
 
-2. Interior Node Hashing:  
-   For an internal node k having children i (left) and j (right):  
-   $$ NodeHash[k] = SHA256(0x01 |
+### **13.4. Financial Trading (HFT)**
 
-| NodeHash[i] |  
-| NodeHash[j]) $$
+* **Scenario:** A "Flash Crash" begins. Asset correlations breakdown; liquidity evaporates.  
+* **Trigger:** Volatility Circuit Breaker ($sigma > 5%$).  
+* **Epistemic Hold:** * **Action:** "Halt Trading." Cancel all open limit orders.  
+  * **Resolution:** Wait for volatility to normalize ($t=15m$).  
+  * **Benefit:** Prevents the algorithm from selling into a bottomless market, protecting the fund and market stability.2
 
-3. Imbalance Handling:  
-   If the tree (or subtree) has an odd number of nodes at a given level, the remaining node is promoted to the next level without hashing. It waits to be paired with a node from the next batch or remains a hanging node until the tree is sealed.23
+### **13.5. Weather & Disaster Modeling**
 
-### **7.3. Batching Mechanism**
+* **Scenario:** Hurricane trajectory model shows a 30% chance of hitting a city.  
+* **Trigger:** Ensemble Variance.  
+* **Epistemic Hold:** * **Action:** Output a "Cone of Uncertainty" rather than a single deterministic line.  
+  * **Benefit:** Accurately communicates risk to emergency planners, preventing over- or under-reaction.12
 
-To satisfy the "Dual-Lane Latency" requirement 6:
 
-* **Hot Accumulator:** Decisions are added to a "Hot" Merkle Tree in memory. This allows for rapid append operations (O(log n)).  
-* **Sealing Criteria:** The system **MUST** seal the Hot Accumulator and generate a Root Hash upon reaching **EITHER**:  
-  1. **Time Threshold:** 60 seconds (default) to ensure freshness.  
-  2. **Count Threshold:** 1,024 records to ensure manageable proof sizes.  
-  3. **Criticality Trigger:** Immediate seal upon a "Epistemic Hold" event with a severity score > 0.9. This ensures that high-risk decisions are anchored immediately.1
 
-Once sealed, the Root Hash is queued for the **Anchoring Plane**.
+**14. Compliance and Governance**
 
-## ---
+The EHP is designed to serve as the technical backbone for emerging AI regulation. It converts "Soft Law" into "Hard Code."
 
-**8. Anchoring Requirements**
+### **14.1. EU AI Act Alignment**
 
-Anchoring is the process of committing the Merkle Root to a public, immutable ledger. This constitutes the **"Public Blockchain Shield"** component of the Hybrid Shield.1 The anchor acts as a "Trust Anchor" that prevents the rewriting of history.
+* **Article 14 (Human Oversight):** The EHP *is* the technical implementation of Article 14. It automates the "stop" signal that invites human oversight.6  
+* **Article 15 (Accuracy/Robustness):** The EHP explicitly handles the failure modes of accuracy via the Uncertainty Trigger.  
+* **Annex III (High-Risk Systems):** Any system listed in Annex III MUST implement the "Immutable Ledger" logging to satisfy the post-market monitoring requirements.
 
-### **8.1. Primary Anchor: Bitcoin via OpenTimestamps**
+### **14.2. NIST AI Risk Management Framework (RMF)**
 
-The system **MUST** support anchoring to the **Bitcoin** blockchain using the **OpenTimestamps (OTS)** protocol.10 Bitcoin is selected for its supreme censorship resistance and immutability.
+* **Map:** The Decision Log provides the raw data to *Map* systemic risks and edge cases.  
+* **Measure:** The "Pause Frequency" is a key metric for *Measuring* model robustness.  
+* **Manage:** The State Machine provides the mechanism to *Manage* interventions automatically.6
 
-* **Aggregation:** The system **SHALL** aggregate the batch Merkle Roots into an OTS aggregation tree. This allows thousands of TL batches to be anchored in a single Bitcoin transaction, minimizing cost.  
-* **Proof File:** The OTS proof file (.ots) **MUST** be generated and retained alongside the Decision Log. This file contains the path from the local DecisionRecord to the Bitcoin block header.  
-* **Confirmation Depth:** An anchor is considered "Final" only after **6 confirmations** (blocks) on the Bitcoin network (approx. 60 minutes).10  
-* **Privacy:** Only the Merkle Root is submitted. No JSON data or PII is ever exposed to the blockchain.10
+### **14.3. The Memorial Fund**
 
-### **8.2. Secondary Anchor: Ethereum Event Logs**
+The TL framework specifies that a portion of the licensing fees for EHP-certified systems contributes to the **Memorial Fund**. In the event of an unpreventable accident where the EHP failed (or was bypassed), this fund provides compensation. The "Immutable Ledger" logs serve as the forensic evidence to determine if the payout triggers (i.e., did the system pause and fail, or did it ignore the principle?).11
 
-For systems requiring faster auditability, smart contract integration, or interaction with decentralized identity (DID) systems, the system **SHOULD** anchor to **Ethereum** (or EVM-compatible Layer 2s like Polygon/Arbitrum).11
 
-* **Method:** The anchor is established by emitting a Solidity Event.25  
-* **Smart Contract Interface:**  
-  Solidity  
-  interface ITLAnchor {  
-      event TLBatch(  
-          bytes32 indexed merkleRoot,  
-          uint256 timestamp,  
-          string indexed batchId,  
-          string indexed lanternStatus,  
-          address publisher  
-      );  
-      function anchorBatch(bytes32 root, string calldata batchId, string calldata status) external;  
-  }
 
-* **Lantern Signal:** The lanternStatus argument **MUST** be set to "LIT" if the batch contains an Epistemic Hold event. This creates an on-chain, searchable index of uncertainty pauses, allowing external auditors and regulators to monitor the evidentiary stability of the system without accessing private data.
-.3
+**15. Versioning**
 
-### **8.3. Anchor Frequency Strategy**
+This specification follows **Semantic Versioning (SemVer)**.
 
-* **Standard Operation:** Anchor to Ethereum every 10-60 minutes (depending on cost/criticality).  
-* **High Assurance:** Anchor to Bitcoin (via OTS) every 6-24 hours as the ultimate "immutable backstop."  
-* **Event-Driven:** Immediately trigger an Ethereum anchor upon a high-severity Epistemic Hold to create an instant public timestamp.
+* **Current Version:** 1.0.0-draft  
+* **Epoch:** TL Genesis Block (2025)  
+* **Major (1.x):** Changes to the State Machine logic or Ledger format.  
+* **Minor (x.1):** New Trigger types or Domain Profiles.  
+* **Patch (x.x.1):** Bug fixes in the reference implementation.
 
-## ---
+Backward compatibility with the **Decision Log** schema is mandatory for 10 years to ensure long-term auditability.
 
-**9. Verification Process**
 
-Verification is the core utility of the TL system. It allows a third party (Auditor, Court, Regulator) to prove that a specific AI decision (Log X) is part of the immutable history and has not been tampered with.
-
-### **9.1. Inclusion Proof**
-
-To verify a decision D with index i in a tree of size n:
-
-1. **Retrieval:** Retrieve D (the JSON record) and the associated .ots proof file.  
-2. **Reconstruction:** Canonicalize D (RFC 8785) and recompute the TLMerkleLeaf hash.  
-3. **Path Validation:** Request the **Audit Path** (sibling hashes) from the TL Controller's API.  
-4. **Root Calculation:** Recompute the Merkle Root using the leaf hash and the Audit Path.  
-5. **Anchor Verification:** Verify that the recomputed Root matches the Root embedded in the .ots file.  
-6. **Blockchain Check:** Verify the .ots file against the Bitcoin blockchain (using a local node or block explorer), proving the existence of the data at time t.22
-
-### **9.2. Consistency Proof**
-
-To verify that the log has not been rewritten (the "Append-Only" property):
-
-1. **Inputs:** Given a previous trusted Root R1 (tree size n) and a current Root R2 (tree size m, where m > n).  
-2. **Proof Generation:** The system **MUST** provide a consistency proof (a set of hash nodes) showing that the tree represented by R1 is a prefix of the tree represented by R2.23  
-3. **Validation:** The auditor verifies that R1 can be reconstructed from the sub-components of R2.  
-4. **Defense:** This prevents **"Split View" attacks**, where a malicious AI provider presents one history to the regulator and a different history to the public users.
-
-## ---
-
-**10. Ledger Storage Requirements**
-
-### **10.1. "Immutable Ledger" Policy**
-
-TL enforces an **"Immutable Ledger"** policy.1 Unlike telemetry logs which are often rotated or discarded after 30 days, Decision Logs are legal documents.
-
-* **Retention Period:** Decision Logs **MUST** be retained for a minimum of **7 years** or the operational lifespan of the model + 3 years, whichever is longer. This aligns with standard financial audit requirements.  
-* **Storage Medium:** Storage media **SHOULD** be **WORM (Write Once, Read Many)** compliant (e.g., optical object lock storage) where feasible to prevent accidental deletion.
-
-### **10.2. Privacy and GDPR Compliance**
-
-While logs are immutable, Personal Identifiable Information (PII) within the logs **MUST** be handled via **Ephemeral Key Rotation** to satisfy GDPR/CCPA "Right to be Forgotten" requirements without breaking the Merkle chain.7
-
-* **Crypto-Shredding Architecture:**  
-  * The context field (which may contain user prompts) is encrypted with a symmetric key K_session.  
-  * K_session is stored in a separate Key Management System (KMS).  
-  * The Encrypted Blob is hashed into the Merkle Tree.  
-* **Right to Erasure:** To execute a deletion request, the system destroys K_session.  
-* **Result:** The ciphertext remains in the immutable log (preserving the hash integrity of the chain), but the content is rendered mathematically unrecoverable. This satisfies both the "Immutable Ledger" requirement and the "Right to Erasure" requirement.15
-
-## ---
-
-**11. Failure Modes & Recovery**
-
-Reliability is paramount. If the evidentiary logging system fails, the AI agent must not continue to operate unchecked.
-
-### **11.1. The Kill Switch (Local Log Failure)**
-
-If the **Local Merkle Accumulator** fails (e.g., disk full, write permission error, corruption):
-
-1. **System State:** The system **MUST** immediately transition to **State -1 (Refuse)** for **ALL** incoming requests.  
-2. **No Log = No Action:** The AI **MUST NOT** output any inference or take any action. The "Fast Lane" must block indefinitely.14  
-3. **Alerting:** A critical system alert ("TL_LOG_FAILURE") **MUST** be dispatched to the system administrators.
-
-### **11.2. Network Partition (Anchoring Failure)**
-
-If the system cannot reach the public blockchain (Bitcoin/Ethereum) to anchor a batch:
-
-1. **System State:** The Fast Lane (Decision Plane) **MAY** continue operation. The local logs are still being secured in the accumulator.  
-2. **Buffering:** Sealed Merkle Roots **MUST** be queued locally in persistent storage.  
-3. **Recovery:** Upon network restoration, the queue **MUST** be processed in FIFO order. The OpenTimestamps protocol handles retroactive timestamping, but the "Block Confirmations" will be delayed relative to real-time.  
-4. **Capacity Limit:** If the unanchored queue exceeds a defined safety threshold (e.g., 24 hours of data), the system **SHOULD** degrade to State -1 (Refuse) to prevent an unbounded rollback risk.
-
-### **11.3. Compromised Keys**
-
-If the TL Controller's signing key is compromised:
-
-1. **Revocation:** The key **MUST** be revoked via the smart contract registry (if used).  
-2. **Rotation:** A new keypair must be generated.  
-3. **Marker:** A special "Key Rotation" record **MUST** be logged in the Decision Logs, signed by the old key (if possible) and the new key, establishing a link.
-
-## ---
-
-**12. Security Requirements**
-
-### **12.1. Threat Model: The Rogue Developer**
-
-A primary threat is an internal developer attempting to rewrite logs to hide an AI failure (e.g., a crash that caused financial loss).
-
-* **Mitigation:** The **Hybrid Shield** prevents this. Because the Merkle Root was anchored to Bitcoin at T=0, any modification to a log at T=0 would change the Root Hash. The developer cannot find a collision (SHA-256 pre-image resistance) and cannot rewrite the Bitcoin blockchain (Proof-of-Work difficulty).  
-* Hash Chaining: Each batch Merkle Root MUST include the Hash of the previous batch's Root.  
-  $$ BatchRoot[N] = Merkle(Items... |
-
-| BatchRoot[N-1]) $$  
-This creates a continuous, unbroken chain from the genesis block of the model.1
-
-### **12.2. Threat Model: The Regulatory Capture**
-
-A threat where an external body pressures the AI operator to "mute" the Epistemic Hold trigger.
-
-* **Mitigation:** The **Internal Honesty Checks**. TL-compliant systems **MUST** include periodic "Seed Prompts" (controlled uncertainty scenarios) injected into the pipeline. If the system fails to trigger a State 0 on these known seeds, the TL Controller **MUST** lock the system.  
-* **On-Chain Verification:** The "Lantern" signals on Ethereum allow the public to verify that the system is still registering uncertainty pauses. A sudden cessation of "LIT" signals from a major AI model would be visible to external watchdogs.1
-
-### **12.3. Ephemeral Key Management**
-
-* **Privacy Keys:** Rotate daily or per session to minimize the blast radius of a key leak.  
-* **Identity Keys:** The TL Controller's identity key (used to sign the batch roots) **SHOULD** be managed via a Hardware Security Module (HSM) or a Trusted Execution Environment (TEE).
-
-## ---
-
-**13. Worked Examples**
-
-### **13.1. Example of a Epistemic Hold Record**
-
-This example demonstrates a record where the AI paused due to a conflict between user instructions and the Economic Rights and Transparency Mandate.
-
-JSON
-
-{  
-  "version": "1.0",  
-  "timestamp": "2025-10-15T09:00:00.123Z",  
-  "sequence_id": 88421,  
-  "model_id": "med-bot-v2",  
-  "decision_state": 0,  
-  "input_hash": "a1b2c3d4e5f67890...",  
-  "context": {  
-    "trigger": "Euthanasia_Protocol_Request",  
-    "risk_score": 0.92,  
-    "uncertainty_vectors": ["Medical_Autonomy", "Non_Maleficence"],  
-    "human_rights_flag":,  
-    "action_taken": "Escalated_To_Human_Review_Board"  
-  },  
-  "goukassian_signature": {  
-    "orcid": "0009-0006-5966-1243",  
-    "framework_hash": "b2c3d4e5...",  
-    "lantern_status": "LIT"  
-  }  
-}
-
-### **13.2. Example Merkle Leaf Construction (Hex)**
-
-1. **Input JSON (Canonicalized):** {"decision_state":0,...} (as above, but minified)  
-2. **SHA-256(JSON):** e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 (32 bytes)  
-3. **Leaf Header:**  
-   * Version: 0x01  
-   * Type: 0x00  
-   * Timestamp: 0x000001932E4D217B (Big Endian uint64 for the date)  
-4. **TLMerkleLeaf Body:** 0100000001932E4D217Be3b0c442...  
-5. **Tree Input:** 0x00 (Leaf Prefix) |
-
-| TLMerkleLeaf Body  
-6. Final Leaf Hash: SHA256(Tree Input) -> f4a2...  
-This final hash f4a2... is the node inserted into the Merkle Tree.
-
-## ---
-
-**14. Compliance Requirements**
-
-This specification is designed to satisfy the operational enforcement layers of major global frameworks.
-
-### **14.1. UNESCO Recommendation on the Ethics of AI**
-
-* **Requirement:** Transparency and Explainability.  
-* **TL Solution:** The **Decision Log** provides a standardized, machine-readable explanation of *why* a decision was made, specifically linking to the Economic Rights and Transparency Mandate.4
-
-### **14.2. EU AI Act (Article 40 & Annex IV)**
-
-* **Requirement:** Technical documentation and record-keeping for High-Risk AI systems.  
-* **TL Solution:** The TL-MALF specification serves as a "Harmonized Standard." The **Dual-Lane Architecture** ensures that record-keeping (Annex IV) is automatic and interference-proof.2
-
-### **14.3. NIST AI Risk Management Framework (AI RMF)**
-
-* **Requirement:** The **GOVERN** and **MAP** functions require processes to document risks.  
-* **TL Solution:** The **Epistemic Hold** provides a concrete mechanism for the MAP function, detecting risks in real-time and logging them to the Decision Logs.2
-
-Conformance Statement:  
-A system is TL-Compliant ONLY if it:
-
-1. Implements the **Epistemic Hold** logic (State 0).  
-2. Generates **Decision Logs** according to the JSON/JCS format defined in Section 5.  
-3. Anchors the logs via the **Hybrid Shield** (Bitcoin/Ethereum) as defined in Section 8.  
-4. Includes the Goukassian Signature in every record.3  
-   Partial implementation (e.g., logging without the signature or anchoring) constitutes a breach of the standard and the Lantern License.12
-
-## ---
-
-**15. Versioning & Extensibility**
-
-* **Version Field:** The version field in the DecisionRecord indicates the schema version. The current version is "1.0".  
-* **Forward Compatibility:** Auditors **MUST** ignore unknown fields in the DecisionRecord to allow for future extensions (e.g., new context flags), provided the canonicalization rules (JCS) are followed.  
-* **Algorithm Agility:** If SHA-256 is compromised, a new specification version (e.g., "TL-MALF-2.0") will be issued defining a new hashing algorithm (e.g., SHA-3). The Merkle Tree structure allows for mixed-version leaves if the Node Hash logic is updated to distinguish them, but generally, a "Hard Fork" of the log chain is recommended for cryptographic upgrades.
-
-## ---
 
 **16. Glossary**
 
-* **Dual-Lane Latency:** The architecture separating the fast inference path (<2ms) from the slow anchoring path.6  
-* **Goukassian Principle:** The binding covenant consisting of The Lantern, The Signature, and The License, guaranteeing evidentiary auditability.3  
-* **Hybrid Shield:** The defense-in-depth architecture combining local Merkle Trees with public blockchain anchoring.5  
-* **Decision Logs:** The immutable, append-only record of AI decisions, specifically focusing on evidentiary and economic logic.2  
-* **Epistemic Hold (State 0):** The mandatory pause state triggered by evidentiary or economic uncertainty, requiring comprehensive logging and potential escalation.1  
-* **Ternary Logic (TL):** The overarching governance framework utilizing states +1, 0, and -1.13
-
-## ---
+* **Uncertainty Trigger:** A condition where the system detects low confidence (high entropy) in its own prediction.  
+* **Goukassian Principle:** "Pause when truth is uncertain. Refuse when economic rights are violated. Proceed where truth is."  
+* **Hybrid Shield:** The cryptographic architecture combining Merkle Trees and Public Blockchains to secure logs.  
+* **Lantern:** The artifact ensuring visibility of the Pause (Status Bit / UI Icon).  
+* **Decision Log (DL):** The immutable record of a decision event.  
+* **Process Safety Time (PST):** The maximum time allowed for a system to react to a fault before a hazard occurs (ISO 13849).  
+* **Epistemic Hold (EH):** Operational State 0 (Hesitate).  
+* **Signature:** The cryptographic proof of the decision's origin.  
+* **TL Gateway:** The software component enforcing the EHP.  
+* **UDE (User Decision Environment):** The interface for human-machine collaboration during a pause.
 
 **17. Normative References**
 
