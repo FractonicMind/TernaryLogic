@@ -237,7 +237,7 @@ The existential clarity yielded the core ethical mandate for automated systems:
 **"Pause when truth is uncertain. Refuse when harm is clear. Proceed where truth is."** 4  
 TL applies the Vow to economic decision-making by architecturally mapping each directive to a verifiable computational state: **Proceed where truth is** maps to the **\+1 (Proceed)** state, permitting validated transactions and operations; **Refuse when harm is clear** maps to the **–1 (Refuse)** state, mandatorily blocking prohibited or clearly harmful actions (e.g., AML violations or manipulative trades); and **Pause when truth is uncertain** maps to the **0 (Epistemic Hold/Sacred Zero)** state, compelling the system to halt and escalate when market or data conditions introduce ambiguity, preventing reckless action under uncertainty.4 This Vow is not philosophical; it is executable law encoded into the system's core, establishing the mandatory standard of care.3
 
-### ---
+
 
 **1\. Epistemic Hold (economic hesitation checkpoint)**
 
@@ -253,7 +253,7 @@ The key failure mode of the Epistemic Hold is **Human Override Abuse**. If human
 **Real-Sector Implications**  
 In banking, the Epistemic Hold would mandate a pause on internal credit model execution when critical input data (e.g., economic forecasts) exhibits high variance or unexpected statistical noise, preventing the sudden, unverified revision of thousands of risk-weighted assets (RWA) calculations. In High-Frequency Trading (HFT), the Hold would activate during periods of anomalous latency or 'stale quotes,' preventing manipulative order submission or execution at non-representative prices, effectively acting as an architectural anti-manipulation circuit.6
 
-### ---
+
 
 **2\. Immutable Ledger (evidence-before-action; tamper-evident logging)**
 
@@ -269,7 +269,7 @@ A catastrophic failure mode involves **Hardware Compromise**, where the physical
 **Real-Sector Implications**  
 In Central Banking and CBDC issuance, the Immutable Ledger would record the exact sequence of algorithmic monetary policy triggers, issuance amounts, and distribution rules, providing a cryptographically verifiable audit trail for every unit of digital currency issued, eliminating the possibility of opaque or unauthorized creation.14 For audit firms, the Ledger provides direct, non-repudiable access to the underlying evidence of every financial transaction, dramatically streamlining compliance audits and reducing reliance on manual sampling and testimonial evidence.
 
-### ---
+
 
 **3\. Goukassian Principle (Lantern, Signature, License)**
 
@@ -290,7 +290,7 @@ The core failure mode is **Collusion to Forge Consent**. If the internal governa
 **Real-Sector Implications**  
 For sovereign bodies creating regulatory technology (RegTech), the Goukassian Principle provides the mandatory schema for all regulatory reporting and enforcement logic. For insurance companies, the Principle governs actuarial algorithms, ensuring that the Lantern test runs a verifiable bias detection check before issuing a policy, and if uncertainty is detected, the Sacred Zero is triggered, creating an auditable appeal foundation for any customer claims of algorithmic discrimination.
 
-### ---
+
 
 **4\. Decision Logs (pre-action, schema-validated, audit-grade)**
 
@@ -306,7 +306,7 @@ The primary failure mode is **Information Stripping**, where the log is generate
 **Real-Sector Implications**  
 In supply chains and global trade, the Decision Log for a cross-border transaction would include every regulatory check, customs clearance confirmation, and provenance verification required, creating an unimpeachable record of the good's journey and regulatory adherence. For insurance, the Decision Log of an actuarial calculation would document the exact features used, the bias mitigation checks performed, and the resulting score, providing the foundation for policy issuance and the legally defensible basis for a consumer appeal.17
 
-### ---
+
 
 **5\. Economic Rights & Transparency Mandate**
 
@@ -322,7 +322,7 @@ The primary failure mode is **Key Compromise and Re-identification**. If the dec
 **Real-Sector Implications**  
 For legislators, this pillar provides a template for drafting future regulations governing algorithmic accountability, moving beyond vague mandates for "explainability" to specific requirements for "architectural evidence." For Private-sector financial institutions, implementing this pillar transforms the consumer relationship from one based on blind trust to one based on verifiable evidence, building critical long-term confidence and reducing the cost of dispute resolution by providing definitive, verifiable records.
 
-### ---
+
 
 **6\. Sustainable Capital Allocation Mandate**
 
@@ -338,7 +338,7 @@ The core failure mode is **Proxy Attack on ESG Data**. Malicious actors could ma
 **Real-Sector Implications**  
 For financial regulators, this pillar offers a tool to move beyond macro-prudential guidance and implement real-time, micro-prudential controls on capital flow that impact systemic stability. For asset managers, it provides a cryptographically verifiable mechanism to prove to investors and regulators that their portfolio construction adheres rigorously to stated sustainability mandates, transforming "greenwashing" from a marketing claim into an auditable violation of the TL architecture.
 
-### ---
+
 
 **7\. Hybrid Shield (fraud resistance, regulator capture resistance, anti-manipulation)**
 
@@ -354,7 +354,7 @@ The primary failure mode is **Internal Key Exfiltration**. If a privileged inter
 **Real-Sector Implications**  
 For Global Standards Bodies (like IOSCO), the Hybrid Shield provides an architectural foundation for enforcing the principles of transparency and public confidence 20 while protecting sensitive competitive and personal information. For auditors, the Shield provides confidence in the integrity of the audit trail, allowing them to rely on the immutable, cryptographically-proven logs rather than spending excessive time verifying internal controls.
 
-### ---
+
 
 **8\. Anchors (multi-chain proofs; long-term evidentiary permanence)**
 
@@ -821,7 +821,7 @@ TL provides a robust, real-time enforcement capability that is currently unavail
 2. **Real-Time Deterrence:** By making the successful execution of the profitable Layer 2 trade computationally impossible during the Sacred Zero, TL eliminates the economic incentive for the manipulation strategy itself. The latency benefit is destroyed by the mandatory pause.  
 3. **HFT Oversight:** The **Deferred Anchoring Mechanism** is essential here. The high-speed Decision Logs (DC-554905, 554906, 554907\) are generated in sub-millisecond time (Fast Lane), ensuring compliance, while the final **Anchoring Proof Flow** (Slow Lane) confirms the log's integrity on a public blockchain within 300–500ms, satisfying the need for both speed and sovereign-grade evidence.11
 
-### ---
+
 
 **6.3. Case Study 3: Central Banking & CBDCs — Algorithmic Issuance and Audit Trails**
 
@@ -859,7 +859,7 @@ TL transforms CBDC governance into a system of **Zero-Trust systemic risk oversi
 2. **Policy Transparency:** The public anchoring of the override log (DC-554912) provides verifiable evidence of when and why the central bank deviated from its own algorithmic rules, fostering public confidence and satisfying the demands for transparency in macro-economic policy modeling .  
 3. **Technical Council Integrity:** The entire process is protected by the TL Governance Triad (Pillar 8), ensuring that the underlying cryptographic standards and the "No Switch Off" rule are preserved, guaranteeing the longevity and integrity of the sovereign digital currency's foundation .
 
-### ---
+
 
 **6.4. Case Study 4: Supply Chains & Global Trade Systems — Fraud and Cross-Border Alignment**
 
@@ -896,7 +896,7 @@ A TL-governed supply chain utilizes **Veracity Anchors** (Pillar 3\) to link the
 2. **Cross-Jurisdictional Trust:** The standardized Decision Log schema allows regulators (e.g., customs agencies, trade finance bodies) to trust the rejection rationale of a foreign TL system without needing to audit the foreign system's internal code. The trust is placed in the shared TL architecture and the public Anchor.10 This facilitates much faster and more transparent **cross-border regulatory alignment**.  
 3. **Digital Evidence for Forgery:** The log sequence (DC-554914 to 554915\) provides definitive digital evidence of the attempted forgery (the submission of the non-matching hash), forming the basis for legal action against the broker.
 
-### ---
+
 
 **6.5. Case Study 5: Insurance & Actuarial Algorithms — Bias Detection and Legal Defensibility**
 
