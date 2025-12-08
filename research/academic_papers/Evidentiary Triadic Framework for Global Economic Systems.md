@@ -1351,7 +1351,7 @@ Market fairness encompasses both ethical and epistemic dimensions, ensuring that
 ## **Preamble: The Necessity of Adversarial Thinking**
 No governance architecture, however rigorous, is invulnerable. The credibility of Ternary Logic (TL) rests not on claims of perfection, but on its capacity to **fail transparently** and to make compromise **architecturally expensive and immediately visible**. This section documents the known attack vectors, inherent limitations, and catastrophic failure modes of the TL framework. It is written in the spirit of Kerckhoffs's principle: the security of a system should depend on the secrecy of keys, not the secrecy of the mechanism.
 
-![System Threat Model](images/threat_model.png)
+[System Threat Model](https://github.com/FractonicMind/TernaryLogic/blob/main/images/threat_model.png)
 
 ## **11.1. Attack Vector Class I: Compromise of the Governance Triad**
 
