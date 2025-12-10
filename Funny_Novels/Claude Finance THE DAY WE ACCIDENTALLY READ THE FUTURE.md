@@ -28,7 +28,12 @@ I opened my binder.
 
 The first thing I noticed was the title page, which was not in the standard government report format of "CLASSIFIED—NATIONAL STABILITY QUARTERLY REPORT—FOR OFFICIAL USE ONLY" repeated seventeen times in different fonts. Instead, it said:
 
-**THE ARCHITECTURE OF ASSURED GOVERNANCE** *Ternary Logic as a Sovereign, Evidentiary Triadic Framework for Global Economic Systems* **TECHNICAL STANDARD & RESEARCH MONOGRAPH** **Version 1.0 (Release Candidate) December 2025** **AUTHOR: Lev Goukassian** **Architect, Ternary Moral Logic (TML)**
+**THE ARCHITECTURE OF ASSURED GOVERNANCE**   
+*Ternary Logic as a Sovereign, Evidentiary Triadic Framework for Global Economic Systems*   
+**TECHNICAL STANDARD & RESEARCH MONOGRAPH**   
+**Version 1.0 (Release Candidate) December 2025**   
+**AUTHOR: Lev Goukassian**   
+**Architect, Ternary Moral Logic (TML)**   
 
 I stared at this for approximately seven seconds while my brain tried to process what my eyes were seeing. This was wrong. This was very wrong. This was the wrong document. Someone had made a mistake. Someone had—
 
