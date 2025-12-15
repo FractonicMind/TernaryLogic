@@ -2,7 +2,7 @@
 
 The air in the Mont Blanc Suite of the Grand Satori was supposed to be a calming blend of cedar, citrus, and a subtle, proprietary scent designed to smell exactly like a perfectly balanced sovereign wealth fund. The view outside, a geological impossibility featuring the Swiss Alps melting into a pristine Pacific cove, was specifically engineered to convince the twelve people around the single, petrified redwood table that complexity could be managed. I, the Chief Economic Strategist for Global Stability, felt the tension in my ergonomic chair, a $50,000 titanium marvel that was still less comfortable than my old folding lawn chair, and knew this serene lie was about to collapse.
 
-![images](images/12_VIPs_Meeting.png)
+![images](/images/12_VIPs_Meeting.png)
 
 “Right then, distinguished colleagues,” I began, trying to channel the cool authority of the BIS General Manager, but sounding more like a nervous cruise ship captain. “The purpose of this emergency session is to review the ‘World Stability Outlook, Economic Continuity Under AI, Fraud, War, and Market Panic.’ You should all have the agenda packet in front of you. Let’s start with the opening remarks from Governor Karswell on liquidity constraints.”
 
