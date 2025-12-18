@@ -1,0 +1,31 @@
+**UNFREEZE_TOKEN_SCHEMA.json**
+
+
+JSON
+
+{  
+  "$schema": "http://json-schema.org/draft-07/schema\#",  
+  "title": "TL Unfreeze Authorization Token",  
+  "type": "object",  
+  "properties": {  
+    "incident\_id": { "type": "string" },  
+    "action": { "type": "string", "enum": },  
+    "signatures": {  
+      "type": "array",  
+      "minItems": 3,  
+      "items": {  
+        "type": "object",  
+        "required": \["signer\_id", "role", "signature"\],  
+        "properties": {  
+          "signer\_id": { "type": "string" },  
+          "role": { "type": "string", "enum": },  
+          "signature": { "type": "string" }  
+        }  
+      }  
+    }  
+  }  
+}
+
+*Note: Roles changed from "ETHICIST" to "RISK\_OFFICER" and "REGULATOR".*
+
+## ---
