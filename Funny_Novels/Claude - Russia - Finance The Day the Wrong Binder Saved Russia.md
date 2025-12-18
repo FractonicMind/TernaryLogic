@@ -617,3 +617,6 @@ And possibly—just possibly—the one that saved us.
 *December 9, 2025*  
 
 *P.S.: If you're reading this, Mr. Goukassian, please call. We need to talk. Urgently. And bring more copies of that document. We're going to need them.*
+
+---
+***This story is a work of fiction. All characters, names, roles, meetings, and dialogues are fictional and created for satirical and illustrative purposes only. Any resemblance to real persons, governments, or events is purely coincidental. The technical concepts referenced are discussed in a fictional narrative context.***
