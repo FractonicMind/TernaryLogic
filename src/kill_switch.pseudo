@@ -1,0 +1,61 @@
+**src/kill_switch.pseudo**
+
+Code snippet
+
+/\*\*  
+ \* TERNARY LOGIC (TL) KILL SWITCH \- FINANCIAL CORE  
+ \* CONTEXT: Trusted Execution Environment (TEE)  
+ \*/
+
+ENUM SystemState {  
+    BOOT\_CHECK,  
+    ACTIVE\_MARKET,  
+    EPISTEMIC\_HOLD, // State 0  
+    FREEZE\_HOLD,  
+    RECOVERY\_MODE  
+};
+
+ENUM TriState {  
+    REJECT\_TRADE \= \-1,  
+    EPISTEMIC\_ZERO \= 0,  
+    EXECUTE\_TRADE \= 1  
+};
+
+// \--- CORE INTERRUPT HANDLER \---
+
+FUNCTION on\_system\_tick():  
+    // 1\. Hardware Integrity  
+    IF NOT hw\_mon.verify\_rails():  
+        RAISE\_TRIGGER("H-001", "Voltage Instability");  
+      
+    // 2\. Financial Constitution (C-Series)  
+    // "No Anchor, No Liquidity"  
+    IF decision\_log.is\_bypassed():  
+        RAISE\_TRIGGER("C-001", "Decision Log bypass attempt");  
+          
+    IF NOT oracle.verify\_solvency\_proofs():  
+        RAISE\_TRIGGER("C-003", "Solvency Illusion detected");
+
+FUNCTION EVALUATE\_TRANSACTION(tx\_context):  
+    // 1\. Calculate Logic State  
+    VAR result \= risk\_engine.compute(tx\_context); 
+
+    // 2\. EPISTEMIC HOLD CHECK  
+    IF result \== EPISTEMIC\_ZERO:  
+        // Ambiguity detected (e.g., conflicting price feeds)  
+        log\_decision(tx\_context, result, "ENTERING\_HOLD");  
+        ENTER\_EPISTEMIC\_HOLD(tx\_context);  
+        RETURN NULL; 
+
+    // 3\. Prepare for Execution  
+    VAR log\_entry \= decision\_log.prepare\_entry(tx\_context, result);  
+      
+    // 4\. Anchor BEFORE Trade  
+    VAR receipt \= decision\_log.commit(log\_entry);  
+      
+    IF receipt.verified \== TRUE:  
+        market\_gateway.execute(result);  
+    ELSE:  
+        RAISE\_TRIGGER("C-001", "Log commit failed \- Trade Blocked");
+
+## ---
