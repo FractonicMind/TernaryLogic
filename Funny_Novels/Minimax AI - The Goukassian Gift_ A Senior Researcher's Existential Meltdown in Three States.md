@@ -31,7 +31,7 @@ My name is Dr. Marcus Chen, Senior Researcher at UNESCO's AI Ethics Observatory,
  "I'm not replacing your framework," he wrote. "I'm operationalizing it."  
  That's when I did something that would have horrified my doctoral supervisor: I started googling this guy mid-email.  
  "Lev Goukassian" returned results, and with each click, my coffee grew cold and my professional skepticism transformed into something approaching disbelief.  
- The first article I found was titled "How a Terminal Diagnosis Inspired a New Ethical AI System." My stomach dropped. Terminal diagnosis? I scrolled down and found that Lev Goukassian, the person who had just emailed me what appeared to be the holy grail of AI ethics implementation, was battling stage-4 pancreatic cancer.  
+ The first article I found was titled "How a Terminal Diagnosis Inspired a New Ethical AI System." My stomach dropped. Terminal diagnosis? I scrolled down and found that Lev Goukassian, the person who had just emailed me what appeared to be the holy grail of AI ethics implementation, was battling stage-4 cancer.  
  But that wasn't even the most shocking part.  
  According to the interviews and articles, Lev had created the entire TML framework— eight interdependent pillars, complete technical implementation, cryptographic verification systems, legal frameworks, everything—in just two months. While undergoing chemotherapy.  
  The articles described him as working with "urgent intensity," as if he knew he was racing against time. He had created something called the "Goukassian Vow" (Pause when truth is uncertain, Refuse when harm is clear, Proceed where truth is), notarized succession documents, and even created a system to prevent what he called the "Bus Factor"—the risk that if he disappeared tomorrow, his work would die with him.  
@@ -82,7 +82,7 @@ My name is Dr. Marcus Chen, Senior Researcher at UNESCO's AI Ethics Observatory,
  "How enforceable?" asked someone whose title I think was Deputy Assistant Director-General.  
  "Well," I said, "it includes cryptographic verification, court-admissible evidence generation, and hard-coded triggers for human rights and environmental protections."  
  "And this person created this... framework... in two months?"  
- "While undergoing chemotherapy for stage-4 pancreatic cancer, ma'am."  
+ "While undergoing chemotherapy for stage-4 cancer, ma'am."  
  The room fell silent in that particular way that happens when someone's personal circumstances make you reevaluate the urgency of your own professional concerns.  
  "That's..." Director-General Azoulay paused. "That's quite a story."  
  "Yes, ma'am. But the technical implementation is what's really remarkable. We ran a pilot test this morning on one of our experimental models, and it actually worked. We have logs that show exactly how the system handles ethical ambiguities, how it enforces human oversight, how it generates auditable evidence for regulatory purposes."  
@@ -126,7 +126,7 @@ My name is Dr. Marcus Chen, Senior Researcher at UNESCO's AI Ethics Observatory,
  The response came back within hours:  
  "Dr. Chen,  
  Thank you for your kind words. I appreciate the warmth and clarity with which you've approached TML. This response means more to me than you know.  
- Let me be clear about my motives and health status. Yes, I'm terminally ill with stage-4 pancreatic cancer. Yes, I've approached this work with urgency because I understand the stakes involved in AI development. But this isn't about ego or martyrdom—it's about operational ethics and protecting humanity and Earth.  
+ Let me be clear about my motives and health status. Yes, I'm terminally ill with stage-4 cancer. Yes, I've approached this work with urgency because I understand the stakes involved in AI development. But this isn't about ego or martyrdom—it's about operational ethics and protecting humanity and Earth.  
  The UNESCO Recommendation on AI Ethics was beautifully written and unanimously adopted, but it lacked the technical implementation layer that could make its principles enforceable. TML exists to fill that gap. It provides the missing operational layer that global ethics frameworks have been missing.  
  Your observation about auditable AI is exactly correct. We need to move beyond advisory frameworks to verifiable governance. We need to replace the paradigm of 'trust us' with the mandate to 'verify this.'  
  Why verification matters: In complex AI systems, especially those used in high-stakes decisions affecting human rights and environmental protection, we cannot rely on voluntary compliance. Organizations need technical mechanisms that generate verifiable evidence of ethical decision-making. Courts and regulators need forensic-grade documentation that can stand up to scrutiny. Citizens need assurance that AI systems are actually implementing the ethical principles that governments claim to support.  
