@@ -8,7 +8,7 @@
 
 # **AUTHOR: Lev Goukassian**
 
-# ***Architect, Ternary Moral Logic (TML)***
+# ***Architect, Ternary Logic (TL)***
 
 # **ORCID ID: 0009-0006-5966-1243**
 
@@ -1738,7 +1738,7 @@ The long-term success of TL is secured by its constitutional governance model an
 **XIV. REQUIRED CITATIONS**
 
 1. Goukassian, L. (2025). The Architecture of Assured Governance: Ternary Logic as a Sovereign, Evidentiary Triadic Framework for Global Economic Systems. *Internal Documentation*. 4  
-2. Goukassian, L. (2024). *Ternary Moral Logic (TML): A Framework for Ethical AI Decision-Making*. 3  
+2. Goukassian, L. (2024). *Ternary Moral Logic (): A Framework for Ethical AI Decision-Making*. 3  
 3. Goukassian, L. (2025). Auditable AI: Tracing the Ethical History of a Model. *Springer Nature (Forthcoming)*. 15  
 4. Goukassian, L. (2024). The Day the SEC Stopped Lying to Itself. *Medium*. 17  
 5. Goukassian, L. (2024). The Goukassian Vow: Pause when truth is uncertain, Refuse when harm is clear, Proceed where truth is. *Ternary Moral Logic Repository*.  
