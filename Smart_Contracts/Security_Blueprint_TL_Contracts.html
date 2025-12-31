@@ -1,0 +1,2482 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Security Blueprint for Ternary Logic Smart Contracts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #1e293b;
+            --secondary: #64748b;
+            --accent: #0f172a;
+            --muted: #f8fafc;
+            --border: #e2e8f0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--primary);
+            overflow-x: hidden;
+        }
+        
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .toc-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            border-right: 1px solid var(--border);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+        
+        .toc-item {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-left: 2px solid transparent;
+            padding-left: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        
+        .toc-item:hover {
+            color: var(--primary);
+            border-left-color: var(--accent);
+            background: var(--muted);
+            margin-left: -0.75rem;
+            padding-left: 0.75rem;
+        }
+        
+        .toc-item.level-2 {
+            margin-left: 1rem;
+            font-size: 0.85rem;
+        }
+        
+        .toc-item.level-3 {
+            margin-left: 2rem;
+            font-size: 0.8rem;
+        }
+        
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            min-height: 60vh;
+        }
+        
+        .bento-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            word-wrap: break-word;
+        }
+        
+        .citation {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            text-decoration: none;
+            margin-left: 0.25rem;
+            transition: all 0.2s ease;
+        }
+        
+        .citation:hover {
+            background: var(--primary);
+            transform: translateY(-1px);
+        }
+        
+        .security-metric {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .threat-indicator {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin: 0.25rem;
+        }
+        
+        .threat-critical { background: #fee2e2; color: #dc2626; }
+        .threat-high { background: #fef3c7; color: #d97706; }
+        .threat-medium { background: #dbeafe; color: #2563eb; }
+        
+        .architecture-diagram {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .pillar-card {
+            background: white;
+            border-left: 4px solid var(--accent);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .toggle-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .toggle-button:hover {
+            background: var(--primary);
+        }
+        
+        .hidden-section {
+            display: none;
+            background: var(--muted);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .mermaid-container {
+            display: flex;
+            justify-content: center;
+            min-height: 300px;
+            max-height: 800px;
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mermaid-container .mermaid {
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            cursor: grab;
+            transition: transform 0.3s ease;
+            transform-origin: center center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .mermaid-container .mermaid svg {
+            max-width: 100%;
+            height: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .mermaid-container .mermaid:active {
+            cursor: grabbing;
+        }
+
+        .mermaid-container.zoomed .mermaid {
+            height: 100%;
+            width: 100%;
+            cursor: grab;
+        }
+
+        .mermaid-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .mermaid-control-btn {
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #374151;
+            font-size: 14px;
+            min-width: 36px;
+            height: 36px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mermaid-control-btn:hover {
+            background: #f8fafc;
+            border-color: #3b82f6;
+            color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        .mermaid-control-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Mermaid diagram styling overrides */
+        .mermaid svg {
+            max-width: none !important;
+            max-height: none !important;
+            height: auto !important;
+            width: auto !important;
+        }
+        
+        /* Override mermaid default styles for better contrast and consistency */
+        .mermaid .node rect,
+        .mermaid .node circle,
+        .mermaid .node ellipse,
+        .mermaid .node polygon {
+            stroke: var(--accent) !important;
+            stroke-width: 2px !important;
+        }
+        
+        .mermaid .node .label {
+            color: var(--primary) !important;
+            font-weight: 500 !important;
+            font-family: 'Inter', sans-serif !important;
+        }
+        
+        .mermaid .edgePath .path {
+            stroke: var(--secondary) !important;
+            stroke-width: 2px !important;
+        }
+        
+        .mermaid .edgeLabel {
+            background-color: white !important;
+            color: var(--primary) !important;
+            font-weight: 500 !important;
+            font-family: 'Inter', sans-serif !important;
+            padding: 4px 8px !important;
+            border-radius: 4px !important;
+            border: 1px solid var(--border) !important;
+        }
+        
+        /* Enhanced contrast for different node types */
+        .mermaid .node[id*="A"] rect { fill: #dbeafe !important; }
+        .mermaid .node[id*="B"] rect { fill: #dcfce7 !important; }
+        .mermaid .node[id*="C"] rect { fill: #fef3c7 !important; }
+        .mermaid .node[id*="D"] rect { fill: #fce7f3 !important; }
+        .mermaid .node[id*="E"] rect { fill: #f3e8ff !important; }
+        .mermaid .node[id*="F"] rect { fill: #fef2f2 !important; }
+        .mermaid .node[id*="G"] rect { fill: #f0f9ff !important; }
+        .mermaid .node[id*="H"] rect { fill: #fffbeb !important; }
+        
+        /* Ensure text contrast for all node types */
+        .mermaid .node[id*="A"] .label { color: #1e40af !important; }
+        .mermaid .node[id*="B"] .label { color: #166534 !important; }
+        .mermaid .node[id*="C"] .label { color: #a16207 !important; }
+        .mermaid .node[id*="D"] .label { color: #be185d !important; }
+        .mermaid .node[id*="E"] .label { color: #7c3aed !important; }
+        .mermaid .node[id*="F"] .label { color: #dc2626 !important; }
+        .mermaid .node[id*="G"] .label { color: #0284c7 !important; }
+        .mermaid .node[id*="H"] .label { color: #d97706 !important; }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .toc-fixed {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .mermaid-control-btn:not(.reset-zoom) {
+                display: none;
+            }
+            .mermaid-controls {
+                top: auto;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+</style>
+  <base target="_blank">
+</head>
+
+  <body>
+    <!-- Fixed Table of Contents -->
+    <nav class="toc-fixed">
+      <div class="mb-6">
+        <h2 class="serif text-xl font-bold text-gray-900 mb-4">Table of Contents</h2>
+      </div>
+
+      <div class="space-y-1">
+        <a href="#executive-summary" class="toc-item">Executive Summary</a>
+        <a href="#threat-model" class="toc-item">2. Threat Model &amp; Security Goals</a>
+        <a href="#assets-to-protect" class="toc-item level-2">2.1 Assets to Protect</a>
+        <a href="#trust-boundaries" class="toc-item level-2">2.2 Trust Boundaries</a>
+        <a href="#attacker-classes" class="toc-item level-2">2.3 Attacker Classes</a>
+        <a href="#security-goals" class="toc-item level-2">2.4 Security Goals</a>
+
+        <a href="#attack-surface" class="toc-item">3. Attack Surface Map</a>
+        <a href="#smart-contract-vulns" class="toc-item level-2">3.1 Smart Contract Vulnerabilities</a>
+        <a href="#economic-attacks" class="toc-item level-2">3.2 Economic Attacks</a>
+        <a href="#oracle-exploitation" class="toc-item level-2">3.3 Oracle Exploitation</a>
+        <a href="#chain-level-risks" class="toc-item level-2">3.4 Chain-Level Risks</a>
+
+        <a href="#secure-architecture" class="toc-item">4. Secure Architecture</a>
+        <a href="#core-principles" class="toc-item level-2">4.1 Core Principles</a>
+        <a href="#component-design" class="toc-item level-2">4.2 Component Design</a>
+        <a href="#constitutional-constraints" class="toc-item level-2">4.3 Constitutional Constraints</a>
+
+        <a href="#governance-security" class="toc-item">5. Governance Security</a>
+        <a href="#oracle-security" class="toc-item">6. Oracle &amp; Bridge Security</a>
+        <a href="#mev-defense" class="toc-item">7. MEV &amp; Market Manipulation Defense</a>
+        <a href="#verification-testing" class="toc-item">8. Formal Verification &amp; Testing</a>
+        <a href="#anchors-security" class="toc-item">9. Anchors &amp; Finality Security</a>
+        <a href="#security-controls" class="toc-item">10. Security Controls by Pillar</a>
+        <a href="#monitoring-alerting" class="toc-item">11. Monitoring &amp; Alerting</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hero Section with Bento Layout -->
+      <section class="bg-gradient-to-br from-slate-50 to-gray-100 py-16 px-8">
+        <div class="max-w-7xl mx-auto">
+          <div class="hero-grid">
+            <div class="space-y-6">
+              <div class="space-y-4">
+                <h1 class="serif text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                  <em class="text-blue-900">Security Blueprint</em>
+                  <br/>
+                  for Ternary Logic
+                  <br/>
+                  Smart Contracts
+                </h1>
+                <p class="text-xl text-gray-600 max-w-2xl">
+                  A comprehensive defense-in-depth strategy for protecting TL&#39;s constitutional invariants under adversarial conditions
+                </p>
+              </div>
+
+              <div class="flex flex-wrap gap-4">
+                <div class="threat-indicator threat-critical">Critical Infrastructure</div>
+                <div class="threat-indicator threat-high">High Security</div>
+                <div class="threat-indicator threat-medium">Multi-Chain</div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="bento-card">
+                <i class="fas fa-shield-alt text-3xl text-blue-600 mb-3"></i>
+                <h3 class="serif text-lg font-semibold mb-2">Immutable Core</h3>
+                <p class="text-sm text-gray-600">Constitutional constraints protecting TL&#39;s eight foundational pillars</p>
+              </div>
+
+              <div class="bento-card">
+                <i class="fas fa-users text-3xl text-green-600 mb-3"></i>
+                <h3 class="serif text-lg font-semibold mb-2">Triadic Governance</h3>
+                <p class="text-sm text-gray-600">Technical Council, Stewardship Custodians, and Smart Contract Treasury</p>
+              </div>
+
+              <div class="bento-card">
+                <i class="fas fa-pause-circle text-3xl text-amber-600 mb-3"></i>
+                <h3 class="serif text-lg font-semibold mb-2">Epistemic Hold</h3>
+                <p class="text-sm text-gray-600">Mandatory verification windows that cannot be bypassed</p>
+              </div>
+
+              <div class="bento-card">
+                <i class="fas fa-link text-3xl text-purple-600 mb-3"></i>
+                <h3 class="serif text-lg font-semibold mb-2">Multi-Chain Anchors</h3>
+                <p class="text-sm text-gray-600">Cryptographic proofs across Bitcoin, Ethereum, and Polygon</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Executive Summary -->
+      <section id="executive-summary" class="py-16 px-8 bg-white">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="serif text-4xl font-bold mb-8 text-gray-900">1. Executive Summary</h2>
+
+          <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <div>
+              <h3 class="serif text-2xl font-semibold mb-4">Purpose and Scope</h3>
+              <p class="text-gray-700 mb-4">
+                This security blueprint provides a comprehensive, defense-in-depth strategy for protecting Ternary Logic (TL) smart contracts. The framework&#39;s central innovation, the <strong>Epistemic Hold</strong>, introduces a mandatory, time-bounded verification window between action proposal and final commitment<a href="https://github.com/FractonicMind/TernaryLogic" class="citation" target="_blank">65</a>.
+              </p>
+              <p class="text-gray-700">
+                The scope is strictly confined to TL&#39;s eight foundational pillars: Epistemic Hold, Immutable Ledger, Goukassian Principle, Decision Logs, Economic Rights and Transparency Mandate, Sustainable Capital Allocation Mandate, Hybrid Shield, and Anchors<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5700283" class="citation" target="_blank">66</a>.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="serif text-2xl font-semibold mb-4">Key Findings</h3>
+              <ul class="space-y-3 text-gray-700">
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-600 mt-1 mr-3"></i>
+                  Security hinges on uncompromising enforcement of Epistemic Hold and &#34;No Log = No Action&#34; mandate
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-600 mt-1 mr-3"></i>
+                  Tri-cameral governance model prevents institutional capture
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-600 mt-1 mr-3"></i>
+                  Dual-lane architecture provides sovereign-grade accountability
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="bg-gray-50 rounded-lg p-6 mb-8">
+            <h3 class="serif text-2xl font-semibold mb-4">Primary Recommendations</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="font-semibold text-lg mb-2">Architecture Security</h4>
+                <ul class="text-sm text-gray-700 space-y-1">
+                  <li>• Immutable core contracts with upgradeable periphery</li>
+                  <li>• Multi-signature governance with hardware-backed keys</li>
+                  <li>• Mandatory timelocks for all non-emergency actions</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-lg mb-2">Operational Security</h4>
+                <ul class="text-sm text-gray-700 space-y-1">
+                  <li>• Multi-provider threshold-signature oracles</li>
+                  <li>• Commit-reveal schemes for MEV protection</li>
+                  <li>• Formal verification and continuous testing</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="architecture-diagram">
+            <h3 class="serif text-xl font-semibold mb-4">TL Security Architecture Overview</h3>
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph TB
+                A[&#34;External Inputs&#34;] --&gt; B[&#34;Oracle Security Layer&#34;]
+                B --&gt; C[&#34;Evidence/Decision Log Registry&#34;]
+                C --&gt; D[&#34;Enforcement Engine&#34;]
+                D --&gt; E{&#34;Ternary Decision&#34;}
+                E --&gt;|&#34;Proceed (+1)&#34;| F[&#34;Transaction Execution&#34;]
+                E --&gt;|&#34;Hold (0)&#34;| G[&#34;Epistemic Hold&#34;]
+                E --&gt;|&#34;Refuse (-1)&#34;| H[&#34;Halt State&#34;]
+
+                G --&gt; I[&#34;Anchor Manager&#34;]
+                F --&gt; I
+                H --&gt; I
+
+                I --&gt; J[&#34;Multi-Chain Anchors&#34;]
+                J --&gt; K[&#34;Bitcoin&#34;]
+                J --&gt; L[&#34;Ethereum&#34;]
+                J --&gt; M[&#34;Polygon&#34;]
+
+                D --&gt; N[&#34;Governance Kernel&#34;]
+                N --&gt; O[&#34;Technical Council&#34;]
+                N --&gt; P[&#34;Stewardship Custodians&#34;]
+                N --&gt; Q[&#34;Smart Contract Treasury&#34;]
+
+                style A fill:#e1f5fe,stroke:#01579b,stroke-width:2px,color:#000
+                style B fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#000
+                style C fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px,color:#000
+                style D fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000
+                style E fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:#000
+                style F fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px,color:#000
+                style G fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000
+                style H fill:#ffebee,stroke:#b71c1c,stroke-width:2px,color:#000
+                style I fill:#e3f2fd,stroke:#0d47a1,stroke-width:2px,color:#000
+                style J fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#000
+                style N fill:#e0f2f1,stroke:#004d40,stroke-width:2px,color:#000
+                style O fill:#fff8e1,stroke:#f57f17,stroke-width:2px,color:#000
+                style P fill:#f1f8e9,stroke:#558b2f,stroke-width:2px,color:#000
+                style Q fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Threat Model and Security Goals -->
+      <section id="threat-model" class="py-16 px-8 bg-gray-50">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="serif text-4xl font-bold mb-12 text-gray-900">2. Threat Model and Security Goals</h2>
+
+          <div id="assets-to-protect" class="mb-12">
+            <h3 class="serif text-2xl font-semibold mb-6">2.1 Assets to Protect</h3>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+              <div class="pillar-card">
+                <i class="fas fa-coins text-2xl text-amber-600 mb-3"></i>
+                <h4 class="font-semibold text-lg mb-2">On-Chain Assets</h4>
+                <ul class="text-sm text-gray-700 space-y-1">
+                  <li>• Funds (native tokens, ERC-20/721)</li>
+                  <li>• Enforcement authority</li>
+                  <li>• State integrity &amp; Decision Logs</li>
+                  <li>• Upgrade pathways</li>
+                </ul>
+              </div>
+
+              <div class="pillar-card">
+                <i class="fas fa-server text-2xl text-blue-600 mb-3"></i>
+                <h4 class="font-semibold text-lg mb-2">Off-Chain Assets</h4>
+                <ul class="text-sm text-gray-700 space-y-1">
+                  <li>• Off-chain custody (private keys)</li>
+                  <li>• Oracle inputs integrity</li>
+                  <li>• Governance signers &amp; processes</li>
+                  <li>• Development infrastructure</li>
+                </ul>
+              </div>
+
+              <div class="pillar-card">
+                <i class="fas fa-gavel text-2xl text-green-600 mb-3"></i>
+                <h4 class="font-semibold text-lg mb-2">Governance Assets</h4>
+                <ul class="text-sm text-gray-700 space-y-1">
+                  <li>• Technical Council authority<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5700283" class="citation" target="_blank">66</a>
+                  </li>
+                  <li>• Stewardship Custodians<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5700283" class="citation" target="_blank">66</a>
+                  </li>
+                  <li>• Smart Contract Treasury<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5700283" class="citation" target="_blank">66</a>
+                  </li>
+                  <li>• Constitutional invariants</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div id="trust-boundaries" class="mb-12">
+            <h3 class="serif text-2xl font-semibold mb-6">2.2 Trust Boundaries</h3>
+
+            <div class="bg-white rounded-lg p-6 border border-gray-200 mb-6">
+              <h4 class="font-semibold text-lg mb-4">Critical Interfaces</h4>
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <div class="w-3 h-3 bg-red-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <div>
+                    <h5 class="font-medium">On-Chain ↔ Off-Chain</h5>
+                    <p class="text-sm text-gray-600">Oracle inputs, off-chain custody, anchoring process</p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <div class="w-3 h-3 bg-amber-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <div>
+                    <h5 class="font-medium">Oracle &amp; External Data</h5>
+                    <p class="text-sm text-gray-600">Data feeds triggering Epistemic Hold decisions</p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <div class="w-3 h-3 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <div>
+                    <h5 class="font-medium">Governance &amp; Admin Roles</h5>
+                    <p class="text-sm text-gray-600">Technical Council, Stewardship Custodians interface</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="attacker-classes" class="mb-12">
+            <h3 class="serif text-2xl font-semibold mb-6">2.3 Attacker Classes and Capabilities</h3>
+
+            <div class="grid md:grid-cols-3 gap-6">
+              <div class="bg-white rounded-lg p-6 border border-red-200">
+                <h4 class="font-semibold text-lg mb-4 text-red-800">External Attackers</h4>
+                <ul class="text-sm space-y-2">
+                  <li>• Contract hackers (reentrancy, access control)</li>
+                  <li>• MEV searchers (front-running, sandwich attacks)</li>
+                  <li>• Oracle attackers (data manipulation)</li>
+                  <li>• Governance capturers (proxy takeovers)</li>
+                </ul>
+                <div class="mt-4 p-2 bg-red-50 rounded text-xs">
+                  <strong>Capability:</strong> Financial motivation, technical expertise
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 border border-amber-200">
+                <h4 class="font-semibold text-lg mb-4 text-amber-800">Insider Threats</h4>
+                <ul class="text-sm space-y-2">
+                  <li>• Colluding governance signers</li>
+                  <li>• Malicious developers (code injection)</li>
+                  <li>• Compromised oracle operators</li>
+                  <li>• Social engineering attacks</li>
+                </ul>
+                <div class="mt-4 p-2 bg-amber-50 rounded text-xs">
+                  <strong>Capability:</strong> Authorized access, system knowledge
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 border border-blue-200">
+                <h4 class="font-semibold text-lg mb-4 text-blue-800">Infrastructure Threats</h4>
+                <ul class="text-sm space-y-2">
+                  <li>• Supply chain attacks (dependencies)</li>
+                  <li>• Chain-level attacks (51% attacks)</li>
+                  <li>• Censorship attacks</li>
+                  <li>• DoS attacks (gas griefing)</li>
+                </ul>
+                <div class="mt-4 p-2 bg-blue-50 rounded text-xs">
+                  <strong>Capability:</strong> Resource intensive, systemic impact
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="security-goals">
+            <h3 class="serif text-2xl font-semibold mb-6">2.4 Explicit Security Goals for TL Invariants</h3>
+
+            <div class="space-y-6">
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-lock text-red-600 mr-2"></i>
+                  Enforce &#34;No Log = No Action&#34;
+                </h4>
+                <p class="text-gray-700 mb-3">The mandate that no action can be executed without a corresponding immutable Decision Log entry<a href="https://github.com/FractonicMind/TernaryLogic" class="citation" target="_blank">65</a>.</p>
+                <div class="bg-red-50 p-3 rounded text-sm">
+                  <strong>Goal:</strong> Cannot be bypassed under any circumstances, including governance compromise or malicious upgrades.
+                </div>
+              </div>
+
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-pause-circle text-amber-600 mr-2"></i>
+                  Prevent Skipping Epistemic Hold
+                </h4>
+                <p class="text-gray-700 mb-3">The mandatory verification window cannot be skipped when uncertainty or risk thresholds are met<a href="https://github.com/FractonicMind/TernaryLogic" class="citation" target="_blank">65</a>.</p>
+                <div class="bg-amber-50 p-3 rounded text-sm">
+                  <strong>Goal:</strong> Hold state is fail-closed; any ambiguity defaults to Hold until resolved.
+                </div>
+              </div>
+
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-ban text-blue-600 mr-2"></i>
+                  Ensure Finality of Refusal
+                </h4>
+                <p class="text-gray-700 mb-3">Halt or Refuse decisions are final and irreversible states.</p>
+                <div class="bg-blue-50 p-3 rounded text-sm">
+                  <strong>Goal:</strong> No mechanism for reversing refused decisions without new transparent process.
+                </div>
+              </div>
+
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-fingerprint text-green-600 mr-2"></i>
+                  Guarantee Tamper-Evident Logs
+                </h4>
+                <p class="text-gray-700 mb-3">Decision Logs must be tamper-evident with complete evidentiary trail<a href="https://github.com/FractonicMind/TernaryLogic" class="citation" target="_blank">65</a>.</p>
+                <div class="bg-green-50 p-3 rounded text-sm">
+                  <strong>Goal:</strong> Any modification attempt is immediately detectable via cryptographic proofs.
+                </div>
+              </div>
+
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-users-slash text-purple-600 mr-2"></i>
+                  Eliminate &#34;God Mode&#34; Access
+                </h4>
+                <p class="text-gray-700 mb-3">No unilateral, unchecked authority can bypass security controls.</p>
+                <div class="bg-purple-50 p-3 rounded text-sm">
+                  <strong>Goal:</strong> All administrative actions subject to multi-signature governance with timelocks.
+                </div>
+              </div>
+
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-anchor text-indigo-600 mr-2"></i>
+                  Preserve Anchor Verifiability
+                </h4>
+                <p class="text-gray-700 mb-3">Cryptographic proofs must remain verifiable despite censorship and chain reorganizations<a href="https://github.com/FractonicMind/TernaryLogic" class="citation" target="_blank">65</a>.</p>
+                <div class="bg-indigo-50 p-3 rounded text-sm">
+                  <strong>Goal:</strong> Multi-chain anchoring with Merkle proofs ensures persistent verifiability.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Attack Surface Map -->
+      <section id="attack-surface" class="py-16 px-8 bg-white">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="serif text-4xl font-bold mb-12 text-gray-900">3. Attack Surface Map</h2>
+
+          <div class="architecture-diagram mb-12">
+            <h3 class="serif text-xl font-semibold mb-4">TL Attack Surface Taxonomy</h3>
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph TD
+                A[&#34;Ternary Logic System&#34;] --&gt; B[&#34;Smart Contract Layer&#34;]
+                A --&gt; C[&#34;Economic Layer&#34;]
+                A --&gt; D[&#34;Oracle Layer&#34;]
+                A --&gt; E[&#34;Infrastructure Layer&#34;]
+
+                B --&gt; B1[&#34;Reentrancy &amp; External Calls&#34;]
+                B --&gt; B2[&#34;Access Control &amp; Role Management&#34;]
+                B --&gt; B3[&#34;Upgrade &amp; Initialization Flaws&#34;]
+                B --&gt; B4[&#34;Signature &amp; Replay Attacks&#34;]
+
+                C --&gt; C1[&#34;MEV &amp; Front-Running&#34;]
+                C --&gt; C2[&#34;Flash Loan &amp; Price Manipulation&#34;]
+                C --&gt; C3[&#34;Griefing &amp; DoS&#34;]
+
+                D --&gt; D1[&#34;Oracle Manipulation&#34;]
+                D --&gt; D2[&#34;Cross-Bridge Integrity&#34;]
+                D --&gt; D3[&#34;Data Feed Disruption&#34;]
+
+                E --&gt; E1[&#34;Chain Reorganizations&#34;]
+                E --&gt; E2[&#34;Censorship Attacks&#34;]
+                E --&gt; E3[&#34;Storage Bloat &amp; Gas Griefing&#34;]
+
+                style A fill:#1e293b,stroke:#0f172a,stroke-width:3px,color:#fff
+                style B fill:#fef2f2,stroke:#dc2626,stroke-width:2px,color:#000
+                style C fill:#fffbeb,stroke:#d97706,stroke-width:2px,color:#000
+                style D fill:#eff6ff,stroke:#2563eb,stroke-width:2px,color:#000
+                style E fill:#f0fdf4,stroke:#16a34a,stroke-width:2px,color:#000
+                style B1 fill:#fee2e2,stroke:#dc2626,stroke-width:1px,color:#000
+                style B2 fill:#fee2e2,stroke:#dc2626,stroke-width:1px,color:#000
+                style B3 fill:#fee2e2,stroke:#dc2626,stroke-width:1px,color:#000
+                style B4 fill:#fee2e2,stroke:#dc2626,stroke-width:1px,color:#000
+                style C1 fill:#fef3c7,stroke:#d97706,stroke-width:1px,color:#000
+                style C2 fill:#fef3c7,stroke:#d97706,stroke-width:1px,color:#000
+                style C3 fill:#fef3c7,stroke:#d97706,stroke-width:1px,color:#000
+                style D1 fill:#dbeafe,stroke:#2563eb,stroke-width:1px,color:#000
+                style D2 fill:#dbeafe,stroke:#2563eb,stroke-width:1px,color:#000
+                style D3 fill:#dbeafe,stroke:#2563eb,stroke-width:1px,color:#000
+                style E1 fill:#dcfce7,stroke:#16a34a,stroke-width:1px,color:#000
+                style E2 fill:#dcfce7,stroke:#16a34a,stroke-width:1px,color:#000
+                style E3 fill:#dcfce7,stroke:#16a34a,stroke-width:1px,color:#000
+              </div>
+            </div>
+          </div>
+
+          <div id="smart-contract-vulns" class="mb-12">
+            <h3 class="serif text-2xl font-semibold mb-6">3.1 Smart Contract Vulnerabilities</h3>
+
+            <div class="space-y-6">
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-redo text-red-600 mr-2"></i>
+                  Reentrancy and External Calls
+                </h4>
+                <p class="text-gray-700 mb-3">Classic vulnerability where malicious contracts can re-enter functions before state updates complete.</p>
+                <div class="bg-red-50 p-3 rounded text-sm">
+                  <strong>Mitigation:</strong> Strict &#34;checks-effects-interactions&#34; pattern and reentrancy guards on all external calls.
+                </div>
+              </div>
+
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-key text-amber-600 mr-2"></i>
+                  Access Control and Role Management
+                </h4>
+                <p class="text-gray-700 mb-3">Improper role validation can allow unauthorized users to execute sensitive functions.</p>
+                <div class="bg-amber-50 p-3 rounded text-sm">
+                  <strong>Mitigation:</strong> Use audited OpenZeppelin libraries, multi-signature requirements for all administrative actions.
+                </div>
+              </div>
+
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-arrow-up text-blue-600 mr-2"></i>
+                  Upgrade and Initialization Flaws
+                </h4>
+                <p class="text-gray-700 mb-3">Proxy patterns and initialization functions are critical attack vectors for contract takeover.</p>
+                <div class="bg-blue-50 p-3 rounded text-sm">
+                  <strong>Mitigation:</strong> Audited proxy patterns, secure admin keys with multi-signature, timelocks on upgrades.
+                </div>
+              </div>
+
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-signature text-green-600 mr-2"></i>
+                  Signature and Replay Attacks
+                </h4>
+                <p class="text-gray-700 mb-3">Flawed signature verification or missing replay protection can enable unauthorized transactions.</p>
+                <div class="bg-green-50 p-3 rounded text-sm">
+                  <strong>Mitigation:</strong> Use EIP-712 for structured data signing, implement nonces and domain separation.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="economic-attacks" class="mb-12">
+            <h3 class="serif text-2xl font-semibold mb-6">3.2 Economic and Market-Based Attacks</h3>
+
+            <div class="grid md:grid-cols-3 gap-6">
+              <div class="bg-white rounded-lg p-6 border border-amber-200">
+                <h4 class="font-semibold text-lg mb-3 text-amber-800">MEV &amp; Front-Running</h4>
+                <p class="text-sm text-gray-700 mb-3">Sophisticated actors monitor mempools to extract value through transaction reordering.</p>
+                <ul class="text-xs space-y-1">
+                  <li>• Front-running Epistemic Hold triggers</li>
+                  <li>• Sandwich attacks around enforcement</li>
+                  <li>• Back-running state transitions</li>
+                </ul>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 border border-red-200">
+                <h4 class="font-semibold text-lg mb-3 text-red-800">Flash Loan Attacks</h4>
+                <p class="text-sm text-gray-700 mb-3">Uncollateralized loans used to manipulate asset prices within single transactions.</p>
+                <ul class="text-xs space-y-1">
+                  <li>• Price oracle manipulation</li>
+                  <li>• Forcing incorrect Hold decisions</li>
+                  <li>• Exploiting market volatility</li>
+                </ul>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 border border-blue-200">
+                <h4 class="font-semibold text-lg mb-3 text-blue-800">Griefing &amp; DoS</h4>
+                <p class="text-sm text-gray-700 mb-3">Attacks aimed at disrupting normal operation through resource exhaustion.</p>
+                <ul class="text-xs space-y-1">
+                  <li>• Spamming Hold triggers</li>
+                  <li>• Gas griefing transactions</li>
+                  <li>• Storage bloat attacks</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div id="oracle-exploitation" class="mb-12">
+            <h3 class="serif text-2xl font-semibold mb-6">3.3 Oracle and Data Feed Exploitation</h3>
+
+            <div class="space-y-6">
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-database text-blue-600 mr-2"></i>
+                  Oracle Manipulation
+                </h4>
+                <p class="text-gray-700 mb-3">Compromised oracles feeding false data to trigger incorrect system decisions.</p>
+                <div class="bg-blue-50 p-3 rounded text-sm">
+                  <strong>Impact:</strong> Premature &#34;Proceed&#34; decisions, bypassing of Sustainable Capital Allocation Mandate.
+                </div>
+              </div>
+
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-bridge text-green-600 mr-2"></i>
+                  Cross-Bridge Message Integrity
+                </h4>
+                <p class="text-gray-700 mb-3">Vulnerabilities in cross-chain bridges allowing message forgery or asset theft.</p>
+                <div class="bg-green-50 p-3 rounded text-sm">
+                  <strong>Defense:</strong> Prefer light-client proofs over trusted bridges, implement replay protection.
+                </div>
+              </div>
+
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-wifi text-amber-600 mr-2"></i>
+                  Data Feed Disruption
+                </h4>
+                <p class="text-gray-700 mb-3">DoS attacks preventing TL system from receiving necessary decision-making data.</p>
+                <div class="bg-amber-50 p-3 rounded text-sm">
+                  <strong>Mitigation:</strong> Redundant oracle providers, contingency plans for prolonged disruptions.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="chain-level-risks">
+            <h3 class="serif text-2xl font-semibold mb-6">3.4 Chain-Level and Infrastructure Risks</h3>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="bg-white rounded-lg p-6 border border-purple-200">
+                <h4 class="font-semibold text-lg mb-3 text-purple-800">Chain Reorganizations</h4>
+                <p class="text-sm text-gray-700 mb-3">Blockchain history rewrites invalidating anchors and reversing transactions.</p>
+                <div class="bg-purple-50 p-3 rounded text-xs">
+                  <strong>Defense:</strong> Multi-chain anchoring, sufficient confirmation waits based on chain security.
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 border border-indigo-200">
+                <h4 class="font-semibold text-lg mb-3 text-indigo-800">Censorship Attacks</h4>
+                <p class="text-sm text-gray-700 mb-3">Miners/validators refusing to include Hold triggers or anchor transactions.</p>
+                <div class="bg-indigo-50 p-3 rounded text-xs">
+                  <strong>Response:</strong> Monitor for censorship, use alternative chains for anchoring.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Secure Architecture -->
+      <section id="secure-architecture" class="py-16 px-8 bg-gray-50">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="serif text-4xl font-bold mb-12 text-gray-900">4. Secure Architecture for TL Contracts</h2>
+
+          <div id="core-principles" class="mb-12">
+            <h3 class="serif text-2xl font-semibold mb-6">4.1 Core Architectural Principles</h3>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+              <div class="pillar-card">
+                <i class="fas fa-layer-group text-2xl text-blue-600 mb-3"></i>
+                <h4 class="font-semibold text-lg mb-2">Separation of Concerns</h4>
+                <p class="text-sm text-gray-700">System divided into independent components with single responsibilities:</p>
+                <ul class="text-xs mt-2 space-y-1">
+                  <li>• Evidence/Decision Log Registry</li>
+                  <li>• Enforcement Engine</li>
+                  <li>• Governance Kernel</li>
+                  <li>• Anchor Manager</li>
+                </ul>
+              </div>
+
+              <div class="pillar-card">
+                <i class="fas fa-shield-alt text-2xl text-green-600 mb-3"></i>
+                <h4 class="font-semibold text-lg mb-2">Immutable Core, Upgradeable Periphery</h4>
+                <p class="text-sm text-gray-700">Critical invariants like &#34;No Log = No Action&#34; and Epistemic Hold logic are immutable, while periphery components can be upgraded under strict governance.</p>
+              </div>
+
+              <div class="pillar-card">
+                <i class="fas fa-lock text-2xl text-red-600 mb-3"></i>
+                <h4 class="font-semibold text-lg mb-2">Fail-Closed &amp; Deny-by-Default</h4>
+                <p class="text-sm text-gray-700">System defaults to safest state (Epistemic Hold) on any error, ambiguity, or failure. All access control follows deny-by-default principle.</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="component-design" class="mb-12">
+            <h3 class="serif text-2xl font-semibold mb-6">4.2 Component Design</h3>
+
+            <div class="space-y-8">
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-file-alt text-blue-600 mr-2"></i>
+                  Evidence/Decision Log Registry
+                </h4>
+                <p class="text-gray-700 mb-3">Immutable contract responsible for creating, storing, and managing all Decision Logs.</p>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <h5 class="font-medium mb-2">Key Features:</h5>
+                    <ul class="text-sm space-y-1">
+                      <li>• Cryptographic hash chaining for tamper-evidence</li>
+                      <li>• Write-once, read-many (WORM) data structure</li>
+                      <li>• Merkle proof generation for efficient verification</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 class="font-medium mb-2">Security Controls:</h5>
+                    <ul class="text-sm space-y-1">
+                      <li>• Immutable core logic</li>
+                      <li>• Strict access controls</li>
+                      <li>• Automated anchoring integration</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-cogs text-amber-600 mr-2"></i>
+                  Enforcement Engine
+                </h4>
+                <p class="text-gray-700 mb-3">Core decision-making component implementing ternary logic (Proceed, Hold, Refuse).</p>
+                <div class="bg-amber-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Critical Properties:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Immutable evaluation logic</li>
+                    <li>• Fail-closed design defaults to Hold state</li>
+                    <li>• Formal verification of decision logic</li>
+                    <li>• Integration with Evidence Registry</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-users text-green-600 mr-2"></i>
+                  Governance Kernel
+                </h4>
+                <p class="text-gray-700 mb-3">Manages administrative functions and upgrades under triadic governance model<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5700283" class="citation" target="_blank">66</a>.</p>
+                <div class="grid md:grid-cols-3 gap-4">
+                  <div class="bg-green-50 p-3 rounded text-center">
+                    <i class="fas fa-code text-green-600 mb-2"></i>
+                    <h6 class="font-medium text-sm">Technical Council</h6>
+                    <p class="text-xs">Cryptographic standards &amp; protocol</p>
+                  </div>
+                  <div class="bg-blue-50 p-3 rounded text-center">
+                    <i class="fas fa-balance-scale text-blue-600 mb-2"></i>
+                    <h6 class="font-medium text-sm">Stewardship Custodians</h6>
+                    <p class="text-xs">Goukassian Principle &amp; ethics</p>
+                  </div>
+                  <div class="bg-purple-50 p-3 rounded text-center">
+                    <i class="fas fa-coins text-purple-600 mb-2"></i>
+                    <h6 class="font-medium text-sm">Smart Contract Treasury</h6>
+                    <p class="text-xs">Autonomous funding mechanism</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="security-metric">
+                <h4 class="font-semibold text-lg mb-3 flex items-center">
+                  <i class="fas fa-anchor text-indigo-600 mr-2"></i>
+                  Anchor Manager
+                </h4>
+                <p class="text-gray-700 mb-3">Creates and verifies cryptographic proofs linking system state to public blockchains.</p>
+                <div class="bg-indigo-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Resilience Features:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Multi-chain anchoring (Bitcoin, Ethereum, Polygon)</li>
+                    <li>• Chain reorganization handling</li>
+                    <li>• Merkle proof generation and verification</li>
+                    <li>• Confirmation depth management</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="constitutional-constraints">
+            <h3 class="serif text-2xl font-semibold mb-6">4.3 Constitutional Constraints</h3>
+
+            <div class="bg-white rounded-lg p-6 border-2 border-gray-200 mb-6">
+              <h4 class="font-semibold text-lg mb-4">Immutable Invariants</h4>
+              <p class="text-gray-700 mb-4">Fundamental rules encoded in immutable core contracts that cannot be altered by any governance action:</p>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                  <h5 class="font-medium mb-2">Core Invariants:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• &#34;No Log = No Action&#34; mandate</li>
+                    <li>• Epistemic Hold logic and conditions</li>
+                    <li>• Finality of refusal decisions</li>
+                    <li>• Goukassian Principle prohibitions<a href="https://medium.com/@leogouk/the-great-ternary-logic-incident-a-tale-of-five-greeks-and-one-very-confused-document-e621b95f06dd" class="citation" target="_blank">67</a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 class="font-medium mb-2">Upgrade Constraints:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Cannot modify core invariant logic</li>
+                    <li>• Cannot bypass access controls</li>
+                    <li>• Cannot weaken security parameters</li>
+                    <li>• Must maintain fail-closed posture</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Governance Security -->
+      <section id="governance-security" class="py-16 px-8 bg-white">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="serif text-4xl font-bold mb-12 text-gray-900">5. Governance Security and Anti-Capture Design</h2>
+
+          <div class="architecture-diagram mb-12">
+            <h3 class="serif text-xl font-semibold mb-4">Triadic Governance Model</h3>
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph TD
+                A[&#34;TL Governance System&#34;] --&gt; B[&#34;Technical Council&#34;]
+                A --&gt; C[&#34;Stewardship Custodians&#34;]
+                A --&gt; D[&#34;Smart Contract Treasury&#34;]
+
+                B --&gt; B1[&#34;Cryptographic Standards&#34;]
+                B --&gt; B2[&#34;Protocol Upgrades&#34;]
+                B --&gt; B3[&#34;Security Reviews&#34;]
+
+                C --&gt; C1[&#34;Goukassian Principle&#34;]
+                C --&gt; C2[&#34;Ethical Oversight&#34;]
+                C --&gt; C3[&#34;Dispute Arbitration&#34;]
+
+                D --&gt; D1[&#34;Transparent Funding&#34;]
+                D --&gt; D2[&#34;Automated Enforcement&#34;]
+                D --&gt; D3[&#34;Ecosystem Revenue&#34;]
+
+                B --&gt; E[&#34;Multi-Signature Approval&#34;]
+                C --&gt; E
+                D --&gt; E
+
+                E --&gt; F[&#34;Governance Actions&#34;]
+
+                style A fill:#1e293b,stroke:#0f172a,stroke-width:3px,color:#fff
+                style B fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000
+                style C fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
+                style D fill:#e8f5e8,stroke:#388e3c,stroke-width:2px,color:#000
+                style E fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000
+                style F fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#000
+                style B1 fill:#bbdefb,stroke:#1565c0,stroke-width:1px,color:#000
+                style B2 fill:#bbdefb,stroke:#1565c0,stroke-width:1px,color:#000
+                style B3 fill:#bbdefb,stroke:#1565c0,stroke-width:1px,color:#000
+                style C1 fill:#e1bee7,stroke:#7b1fa2,stroke-width:1px,color:#000
+                style C2 fill:#e1bee7,stroke:#7b1fa2,stroke-width:1px,color:#000
+                style C3 fill:#e1bee7,stroke:#7b1fa2,stroke-width:1px,color:#000
+                style D1 fill:#c8e6c9,stroke:#388e3c,stroke-width:1px,color:#000
+                style D2 fill:#c8e6c9,stroke:#388e3c,stroke-width:1px,color:#000
+                style D3 fill:#c8e6c9,stroke:#388e3c,stroke-width:1px,color:#000
+              </div>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <div class="pillar-card">
+              <i class="fas fa-code text-2xl text-blue-600 mb-3"></i>
+              <h4 class="font-semibold text-lg mb-2">Technical Council</h4>
+              <p class="text-sm text-gray-700 mb-3">Maintains cryptographic standards, proposes protocol upgrades, ensures code security<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5700283" class="citation" target="_blank">66</a>.</p>
+              <div class="text-xs text-gray-600">
+                <strong>Security:</strong> Multi-signature, transparent process, Stewardship ratification required
+              </div>
+            </div>
+
+            <div class="pillar-card">
+              <i class="fas fa-balance-scale text-2xl text-green-600 mb-3"></i>
+              <h4 class="font-semibold text-lg mb-2">Stewardship Custodians</h4>
+              <p class="text-sm text-gray-700 mb-3">Safeguards Goukassian Principle, ensures ethical operation, arbitrates disputes<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5700283" class="citation" target="_blank">66</a>.</p>
+              <div class="text-xs text-gray-600">
+                <strong>Security:</strong> Multi-signature, ethical code, Treasury funding dependency
+              </div>
+            </div>
+
+            <div class="pillar-card">
+              <i class="fas fa-coins text-2xl text-purple-600 mb-3"></i>
+              <h4 class="font-semibold text-lg mb-2">Smart Contract Treasury</h4>
+              <p class="text-sm text-gray-700 mb-3">Autonomous, transparent funding mechanism governed by smart contracts<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5700283" class="citation" target="_blank">66</a>.</p>
+              <div class="text-xs text-gray-600">
+                <strong>Security:</strong> Multi-signature, auditable disbursement, constitutional constraints
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-8">
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-users-cog text-blue-600 mr-2"></i>
+                Multi-Signature and Threshold Security
+              </h4>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h5 class="font-medium mb-2">Signer Distribution:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Geographically distributed signers</li>
+                    <li>• Organizationally diverse participants</li>
+                    <li>• High quorum thresholds (e.g., 7-of-9)</li>
+                    <li>• Transparent selection and vetting process</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 class="font-medium mb-2">Hardware Security:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Hardware Security Modules (HSMs)</li>
+                    <li>• Secure key generation and storage</li>
+                    <li>• Regular key rotation protocols</li>
+                    <li>• Emergency recovery procedures</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-clock text-amber-600 mr-2"></i>
+                Timelocks and Emergency Actions
+              </h4>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-amber-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Public Notice Requirements:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Mandatory delay periods for all proposals</li>
+                    <li>• Community review and feedback periods</li>
+                    <li>• Stakeholder exit opportunity windows</li>
+                    <li>• Transparent proposal documentation</li>
+                  </ul>
+                </div>
+                <div class="bg-red-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Emergency Powers (Constraint-Tightening Only):</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• System pause capabilities</li>
+                    <li>• Vulnerable function disabling</li>
+                    <li>• Security parameter tightening</li>
+                    <li>• Cannot bypass core invariants</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-gavel text-red-600 mr-2"></i>
+                Slashing and Accountability
+              </h4>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h5 class="font-medium mb-2">Malicious Action Detection:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Signing malicious proposals</li>
+                    <li>• Governance participation failures</li>
+                    <li>• Private key compromise incidents</li>
+                    <li>• Collusion attempts</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 class="font-medium mb-2">Recovery Procedures:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Secure key rotation protocols</li>
+                    <li>• Multi-signature recovery processes</li>
+                    <li>• Social recovery mechanisms</li>
+                    <li>• Succession planning for signers</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Oracle Security -->
+      <section id="oracle-security" class="py-16 px-8 bg-gray-50">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="serif text-4xl font-bold mb-12 text-gray-900">6. Oracle and Bridge Security (Input Integrity)</h2>
+
+          <div class="space-y-8">
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-shield-alt text-blue-600 mr-2"></i>
+                Securing Oracle Inputs
+              </h4>
+
+              <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-blue-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Redundant Providers</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Multiple independent oracles</li>
+                    <li>• Decentralized networks (Chainlink)</li>
+                    <li>• On-chain data aggregation</li>
+                    <li>• Median value selection</li>
+                  </ul>
+                </div>
+
+                <div class="bg-green-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Threshold Signatures</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• M-of-N signature scheme</li>
+                    <li>• Prevents single oracle compromise</li>
+                    <li>• Cryptographic attestation</li>
+                    <li>• Censorship resistance</li>
+                  </ul>
+                </div>
+
+                <div class="bg-amber-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Challenge Windows</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Dispute periods for data validity</li>
+                    <li>• Cryptographic proof requirements</li>
+                    <li>• Oracle slashing mechanisms</li>
+                    <li>• Automated dispute resolution</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-bridge text-green-600 mr-2"></i>
+                Cross-Chain Message Integrity
+              </h4>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h5 class="font-medium mb-2">Light-Client vs Trusted Bridges:</h5>
+                  <div class="bg-green-50 p-3 rounded text-sm">
+                    <strong>Preferred:</strong> Light-client proofs for direct chain state verification without trusted third parties.
+                  </div>
+                  <div class="bg-red-50 p-3 rounded text-sm mt-2">
+                    <strong>Avoid:</strong> Trusted bridges with validator sets that introduce centralization risks.
+                  </div>
+                </div>
+
+                <div>
+                  <h5 class="font-medium mb-2">Replay Protection:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Unique nonces for each message</li>
+                    <li>• Domain separation between chains</li>
+                    <li>• Message expiry timestamps</li>
+                    <li>• Duplicate transaction rejection</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-search text-red-600 mr-2"></i>
+                Corruption and Falsification Checks
+              </h4>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-red-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Detecting Falsified Logs:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Cryptographic hash verification against anchors</li>
+                    <li>• Regular automated integrity checks</li>
+                    <li>• Cross-reference with anchored blockchain data</li>
+                    <li>• Community monitoring and reporting</li>
+                  </ul>
+                </div>
+
+                <div class="bg-amber-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Verifying State Signals:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Digital signature verification</li>
+                    <li>• Threshold signature requirements</li>
+                    <li>• Trusted key registry management</li>
+                    <li>• Signature timestamp validation</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MEV Defense -->
+      <section id="mev-defense" class="py-16 px-8 bg-white">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="serif text-4xl font-bold mb-12 text-gray-900">7. MEV and Market Manipulation Defense</h2>
+
+          <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <div class="pillar-card">
+              <h4 class="font-semibold text-lg mb-3 flex items-center">
+                <i class="fas fa-eye-slash text-blue-600 mr-2"></i>
+                Commit-Reveal Schemes
+              </h4>
+              <p class="text-gray-700 mb-3">Cryptographic commitments prevent front-running by hiding transaction details until after confirmation.</p>
+              <div class="bg-blue-50 p-3 rounded text-sm">
+                <strong>Process:</strong> Hash submission → Verification period → Reveal original transaction
+              </div>
+            </div>
+
+            <div class="pillar-card">
+              <h4 class="font-semibold text-lg mb-3 flex items-center">
+                <i class="fas fa-gavel text-green-600 mr-2"></i>
+                Batch Auctions &amp; Sealed Bidding
+              </h4>
+              <p class="text-gray-700 mb-3">Competitive processes that prevent sandwich attacks and front-running in resource allocation.</p>
+              <div class="bg-green-50 p-3 rounded text-sm">
+                <strong>Benefits:</strong> Single execution price, encrypted bids, prevents information leakage
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-8">
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-shield-alt text-amber-600 mr-2"></i>
+                Preventing Economic Exploits
+              </h4>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-amber-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Grace Periods &amp; Settlement Delays</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Temporary disablement of collateral withdrawal during Hold</li>
+                    <li>• Settlement delays for high-value transactions</li>
+                    <li>• Time-based restrictions on state transitions</li>
+                    <li>• Prevention of arbitrage during resolution</li>
+                  </ul>
+                </div>
+
+                <div class="bg-red-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Circuit Breakers &amp; Volatility Escalation</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Automatic Hold triggers during extreme volatility</li>
+                    <li>• Market-based circuit breaker activation</li>
+                    <li>• Prevention of cascade liquidations</li>
+                    <li>• Graduated response based on risk levels</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-random text-purple-600 mr-2"></i>
+                Mitigating State-Dependent Arbitrage
+              </h4>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h5 class="font-medium mb-2">Securing Epistemic Hold Transitions:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Atomic state transitions (no intermediate states)</li>
+                    <li>• Indivisible Hold to Proceed/Refuse operations</li>
+                    <li>• Prevention of transaction interruption</li>
+                    <li>• Consistent state machine implementation</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h5 class="font-medium mb-2">Preventing Collateral Bypasses:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Strict access controls during Hold state</li>
+                    <li>• Prevention of asset transfers during deliberation</li>
+                    <li>• Monitoring for bypass attempts</li>
+                    <li>• Automated response to suspicious activity</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Verification and Testing -->
+      <section id="verification-testing" class="py-16 px-8 bg-gray-50">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="serif text-4xl font-bold mb-12 text-gray-900">8. Formal Verification, Testing, and Audits</h2>
+
+          <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <div class="pillar-card">
+              <i class="fas fa-check-double text-2xl text-blue-600 mb-3"></i>
+              <h4 class="font-semibold text-lg mb-2">Formal Verification</h4>
+              <p class="text-sm text-gray-700">Mathematical proof of critical invariants and security properties.</p>
+              <ul class="text-xs mt-2 space-y-1">
+                <li>• &#34;No Log = No Action&#34; invariant</li>
+                <li>• Epistemic Hold enforcement</li>
+                <li>• Refusal finality properties</li>
+              </ul>
+            </div>
+
+            <div class="pillar-card">
+              <i class="fas fa-vial text-2xl text-green-600 mb-3"></i>
+              <h4 class="font-semibold text-lg mb-2">Property-Based Testing</h4>
+              <p class="text-sm text-gray-700">Automated testing with generated inputs to find edge cases.</p>
+              <ul class="text-xs mt-2 space-y-1">
+                <li>• Fuzzing for unexpected behavior</li>
+                <li>• State machine testing</li>
+                <li>• Invariant preservation checks</li>
+              </ul>
+            </div>
+
+            <div class="pillar-card">
+              <i class="fas fa-search text-2xl text-amber-600 mb-3"></i>
+              <h4 class="font-semibold text-lg mb-2">Static Analysis</h4>
+              <p class="text-sm text-gray-700">Code analysis without execution to find vulnerabilities.</p>
+              <ul class="text-xs mt-2 space-y-1">
+                <li>• Reentrancy detection</li>
+                <li>• Access control validation</li>
+                <li>• Code quality and style checks</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="space-y-8">
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-certificate text-blue-600 mr-2"></i>
+                Third-Party Audits and Bug Bounties
+              </h4>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-blue-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Audit Process:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Pre-release audits by reputable firms</li>
+                    <li>• Clear scope and transparent reporting</li>
+                    <li>• Regular audit cadence for updates</li>
+                    <li>• Public disclosure of findings</li>
+                  </ul>
+                </div>
+
+                <div class="bg-green-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Bug Bounty Program:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Public rewards for vulnerability reports</li>
+                    <li>• Responsible disclosure policy</li>
+                    <li>• Clear rules and reporting process</li>
+                    <li>• Fair compensation based on severity</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-exclamation-triangle text-red-600 mr-2"></i>
+                Incident Response and Evidence Preservation
+              </h4>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h5 class="font-medium mb-2">Runbooks for Security Incidents:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Step-by-step response procedures</li>
+                    <li>• Different scenarios (reentrancy, oracle manipulation, governance capture)</li>
+                    <li>• Containment and recovery protocols</li>
+                    <li>• Communication and escalation plans</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h5 class="font-medium mb-2">Evidence Integrity:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Secure preservation of contract state</li>
+                    <li>• Immutable Decision Logs protection</li>
+                    <li>• Forensic analysis capabilities</li>
+                    <li>• Chain of custody for digital evidence</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Anchors Security -->
+      <section id="anchors-security" class="py-16 px-8 bg-white">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="serif text-4xl font-bold mb-12 text-gray-900">9. Anchors and Finality Security</h2>
+
+          <div class="architecture-diagram mb-12">
+            <h3 class="serif text-xl font-semibold mb-4">Multi-Chain Anchoring Strategy</h3>
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph TD
+                A[&#34;TL System Decision Logs&#34;] --&gt; B[&#34;Anchor Manager&#34;]
+                B --&gt; C[&#34;Hash Calculation&#34;]
+                C --&gt; D[&#34;SHA-256 Hash&#34;]
+
+                D --&gt; E[&#34;Bitcoin Anchoring&#34;]
+                D --&gt; F[&#34;Ethereum Anchoring&#34;]
+                D --&gt; G[&#34;Polygon Anchoring&#34;]
+
+                E --&gt; E1[&#34;Wait for 6 Confirmations&#34;]
+                F --&gt; F1[&#34;Wait for 20 Confirmations&#34;]
+                G --&gt; G1[&#34;Wait for 100 Confirmations&#34;]
+
+                E1 --&gt; H[&#34;Merkle Proof Generation&#34;]
+                F1 --&gt; H
+                G1 --&gt; H
+
+                H --&gt; I[&#34;Cross-Verification&#34;]
+                I --&gt; J[&#34;Final Anchor Verification&#34;]
+
+                J --&gt; K[&#34;Redundancy Achieved&#34;]
+                K --&gt; L[&#34;Censorship Resistance&#34;]
+
+                style A fill:#e1f5fe,stroke:#01579b,stroke-width:2px,color:#000
+                style B fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#000
+                style C fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000
+                style D fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px,color:#000
+                style E fill:#ffebee,stroke:#b71c1c,stroke-width:2px,color:#000
+                style F fill:#e3f2fd,stroke:#0d47a1,stroke-width:2px,color:#000
+                style G fill:#f1f8e9,stroke:#558b2f,stroke-width:2px,color:#000
+                style H fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:#000
+                style I fill:#e0f2f1,stroke:#004d40,stroke-width:2px,color:#000
+                style J fill:#fff8e1,stroke:#f57f17,stroke-width:2px,color:#000
+                style K fill:#f1f8e9,stroke:#558b2f,stroke-width:2px,color:#000
+                style L fill:#e1f5fe,stroke:#01579b,stroke-width:2px,color:#000
+                style E1 fill:#ffcdd2,stroke:#b71c1c,stroke-width:1px,color:#000
+                style F1 fill:#bbdefb,stroke:#0d47a1,stroke-width:1px,color:#000
+                style G1 fill:#c8e6c9,stroke:#558b2f,stroke-width:1px,color:#000
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-8">
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-link text-blue-600 mr-2"></i>
+                Handling Chain Reorganizations
+              </h4>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-blue-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Probabilistic Finality:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Variable confirmation requirements by chain security</li>
+                    <li>• Bitcoin: 6+ confirmations</li>
+                    <li>• Ethereum: 20+ confirmations</li>
+                    <li>• Polygon: 100+ confirmations</li>
+                  </ul>
+                </div>
+
+                <div class="bg-green-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Multi-Chain Redundancy:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Simultaneous anchoring to multiple chains</li>
+                    <li>• Independent verification across chains</li>
+                    <li>• Censorship resistance through diversity</li>
+                    <li>• Fallback verification options</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-clock text-amber-600 mr-2"></i>
+                Ensuring Timestamp and Log Integrity
+              </h4>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h5 class="font-medium mb-2">Anti-Backdating:</h5>
+                  <div class="bg-amber-50 p-3 rounded text-sm">
+                    <strong>Mechanisms:</strong> Trusted timestamping (Bitcoin blockchain), timestamp validation preventing backdated anchors.
+                  </div>
+                </div>
+
+                <div>
+                  <h5 class="font-medium mb-2">Merkle Proofs:</h5>
+                  <div class="bg-green-50 p-3 rounded text-sm">
+                    <strong>Benefits:</strong> Efficient verification of log inclusion without downloading entire dataset, cryptographic proof of membership.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-forward text-purple-600 mr-2"></i>
+                Deferred Anchoring Strategies
+              </h4>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-purple-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">High-Frequency Batching:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Multiple logs batched in single anchor transaction</li>
+                    <li>• Cost optimization for high-volume operations</li>
+                    <li>• Maintained hash chain integrity within batches</li>
+                    <li>• Reduced gas costs through aggregation</li>
+                  </ul>
+                </div>
+
+                <div class="bg-indigo-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Reconciliation Deadlines:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Mandatory anchoring deadlines</li>
+                    <li>• Completeness verification procedures</li>
+                    <li>• Alert systems for missed deadlines</li>
+                    <li>• Automated investigation triggers</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Security Controls by Pillar -->
+      <section id="security-controls" class="py-16 px-8 bg-gray-50">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="serif text-4xl font-bold mb-12 text-gray-900">10. Security Controls Mapped to the Eight TL Pillars</h2>
+
+          <div class="mb-8">
+            <p class="text-gray-700 mb-4">
+              This section provides comprehensive security controls for each of the eight foundational pillars of the Ternary Logic framework. Each pillar&#39;s security analysis includes identified threats, contract-level controls, operational controls, and key monitoring metrics.
+            </p>
+          </div>
+
+          <!-- Epistemic Hold Pillar -->
+          <div class="pillar-card mb-8">
+            <h3 class="serif text-2xl font-semibold mb-4 flex items-center">
+              <i class="fas fa-pause-circle text-amber-600 mr-3"></i>
+              Pillar 1: Epistemic Hold
+            </h3>
+            <p class="text-gray-700 mb-4">
+              The cornerstone of TL framework introducing mandatory, time-bounded verification windows triggered by uncertainty or risk thresholds<a href="https://github.com/FractonicMind/TernaryLogic" class="citation" target="_blank">58</a>
+              <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5695042" class="citation" target="_blank">60</a>.
+            </p>
+
+            <button class="toggle-button mb-4" onclick="toggleSection(&#39;epistemic-details&#39;)">
+              <i class="fas fa-chevron-down"></i> Show Details
+            </button>
+
+            <div id="epistemic-details" class="hidden-section">
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-red-50 p-4 rounded">
+                  <h5 class="font-medium mb-2 text-red-800">Threats:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Hold state bypass attempts</li>
+                    <li>• Manipulation of hold resolution</li>
+                    <li>• State corruption vulnerabilities</li>
+                    <li>• Front-running hold transitions</li>
+                  </ul>
+                </div>
+
+                <div class="bg-green-50 p-4 rounded">
+                  <h5 class="font-medium mb-2 text-green-800">Contract Controls:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Immutable state machine enforcement</li>
+                    <li>• Mandatory verifyDecisionLog() checks</li>
+                    <li>• Strict input validation</li>
+                    <li>• Reentrancy guards and fail-closed design</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <h5 class="font-medium mb-3">Key Monitoring Metrics:</h5>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm">
+                    <thead>
+                      <tr class="bg-gray-100">
+                        <th class="p-2 text-left">Metric</th>
+                        <th class="p-2 text-left">Description</th>
+                        <th class="p-2 text-left">Severity</th>
+                        <th class="p-2 text-left">Alert Condition</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="border-b">
+                        <td class="p-2 font-medium">Hold Bypass Rate</td>
+                        <td class="p-2">Transactions executing without Hold state</td>
+                        <td class="p-2"><span class="threat-indicator threat-critical">Critical</span></td>
+                        <td class="p-2">Any value &gt; 0</td>
+                      </tr>
+                      <tr class="border-b">
+                        <td class="p-2 font-medium">Hold Duration</td>
+                        <td class="p-2">Average/max time in Hold state</td>
+                        <td class="p-2"><span class="threat-indicator threat-medium">Medium</span></td>
+                        <td class="p-2">Exceeds 24h threshold</td>
+                      </tr>
+                      <tr class="border-b">
+                        <td class="p-2 font-medium">Oracle Agreement Rate</td>
+                        <td class="p-2">Consensus among oracle providers</td>
+                        <td class="p-2"><span class="threat-indicator threat-high">High</span></td>
+                        <td class="p-2">&lt; 80% agreement</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Immutable Ledger Pillar -->
+          <div class="pillar-card mb-8">
+            <h3 class="serif text-2xl font-semibold mb-4 flex items-center">
+              <i class="fas fa-book text-blue-600 mr-3"></i>
+              Pillar 2: Immutable Ledger
+            </h3>
+            <p class="text-gray-700 mb-4">
+              The foundational WORM (Write-Once, Read-Many) repository providing tamper-proof record of all system activities<a href="https://github.com/FractonicMind/TernaryLogic" class="citation" target="_blank">58</a>
+              <a href="https://github.com/FractonicMind/TernaryLogic" class="citation" target="_blank">62</a>.
+            </p>
+
+            <button class="toggle-button mb-4" onclick="toggleSection(&#39;ledger-details&#39;)">
+              <i class="fas fa-chevron-down"></i> Show Details
+            </button>
+
+            <div id="ledger-details" class="hidden-section">
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-red-50 p-4 rounded">
+                  <h5 class="font-medium mb-2 text-red-800">Threats:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Data tampering and modification</li>
+                    <li>• Transaction censorship</li>
+                    <li>• DoS and storage bloat attacks</li>
+                    <li>• Unauthorized access attempts</li>
+                  </ul>
+                </div>
+
+                <div class="bg-green-50 p-4 rounded">
+                  <h5 class="font-medium mb-2 text-green-800">Contract Controls:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Cryptographic hash chain linking</li>
+                    <li>• WORM data structure enforcement</li>
+                    <li>• Decentralized consensus mechanism</li>
+                    <li>• Rate limiting and data validation</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <h5 class="font-medium mb-3">Verification Metrics:</h5>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="bg-blue-50 p-3 rounded">
+                    <h6 class="font-medium text-sm mb-1">Ledger Integrity Check</h6>
+                    <p class="text-xs">Daily hash chain verification</p>
+                  </div>
+                  <div class="bg-amber-50 p-3 rounded">
+                    <h6 class="font-medium text-sm mb-1">Validator Node Uptime</h6>
+                    <p class="text-xs">Consensus participation monitoring</p>
+                  </div>
+                  <div class="bg-purple-50 p-3 rounded">
+                    <h6 class="font-medium text-sm mb-1">Transaction Throughput</h6>
+                    <p class="text-xs">Performance and DoS detection</p>
+                  </div>
+                  <div class="bg-indigo-50 p-3 rounded">
+                    <h6 class="font-medium text-sm mb-1">Ledger Growth Rate</h6>
+                    <p class="text-xs">Storage bloat attack detection</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Goukassian Principle Pillar -->
+          <div class="pillar-card mb-8">
+            <h3 class="serif text-2xl font-semibold mb-4 flex items-center">
+              <i class="fas fa-shield-alt text-green-600 mr-3"></i>
+              Pillar 3: Goukassian Principle
+            </h3>
+            <p class="text-gray-700 mb-4">
+              The ethical cornerstone prohibiting &#34;No Spy&#34; and &#34;No Weapon&#34; uses, ensuring system integrity and ethical operation<a href="https://github.com/FractonicMind/TernaryLogic" class="citation" target="_blank">58</a>
+              <a href="https://medium.com/@leogouk/the-great-ternary-logic-incident-a-tale-of-five-greeks-and-one-very-confused-document-e621b95f06dd" class="citation" target="_blank">67</a>.
+            </p>
+
+            <button class="toggle-button mb-4" onclick="toggleSection(&#39;goukassian-details&#39;)">
+              <i class="fas fa-chevron-down"></i> Show Details
+            </button>
+
+            <div id="goukassian-details" class="hidden-section">
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-red-50 p-4 rounded">
+                  <h5 class="font-medium mb-2 text-red-800">Threats:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• System infiltration for surveillance</li>
+                    <li>• Co-option by malicious actors</li>
+                    <li>• Backdoor insertion attempts</li>
+                    <li>• Regulatory capture attempts</li>
+                  </ul>
+                </div>
+
+                <div class="bg-green-50 p-4 rounded">
+                  <h5 class="font-medium mb-2 text-green-800">Contract Controls:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Principle embedded in contract code</li>
+                    <li>• Immutable constitutional invariant</li>
+                    <li>• Open source public auditability</li>
+                    <li>• Regular security assessments</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <h5 class="font-medium mb-3">Compliance Metrics:</h5>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="bg-blue-50 p-3 rounded">
+                    <h6 class="font-medium text-sm mb-1">Principle Violation Reports</h6>
+                    <p class="text-xs">Investigation and response tracking</p>
+                  </div>
+                  <div class="bg-amber-50 p-3 rounded">
+                    <h6 class="font-medium text-sm mb-1">Custodian Review Rate</h6>
+                    <p class="text-xs">Activity monitoring coverage</p>
+                  </div>
+                  <div class="bg-purple-50 p-3 rounded">
+                    <h6 class="font-medium text-sm mb-1">Compliance Audit Results</h6>
+                    <p class="text-xs">Third-party assessment outcomes</p>
+                  </div>
+                  <div class="bg-indigo-50 p-3 rounded">
+                    <h6 class="font-medium text-sm mb-1">Training Completion</h6>
+                    <p class="text-xs">Team awareness and education</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Pillars (5-8) would follow similar pattern -->
+          <div class="text-center mt-8">
+            <p class="text-gray-600 text-sm">
+              Security controls for Pillars 4-8 (Decision Logs, Economic Rights, Sustainable Capital, Hybrid Shield, and Anchors)
+              follow the same comprehensive threat modeling and control implementation pattern.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Monitoring and Alerting -->
+      <section id="monitoring-alerting" class="py-16 px-8 bg-white">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="serif text-4xl font-bold mb-12 text-gray-900">11. Monitoring, Alerting, and Response</h2>
+
+          <div class="space-y-8">
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-chart-line text-blue-600 mr-2"></i>
+                Key Production Metrics to Monitor
+              </h4>
+
+              <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-blue-50 p-4 rounded">
+                  <h5 class="font-medium mb-2 text-blue-800">Governance &amp; Signature</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Unusual governance proposals</li>
+                    <li>• Failed signature validations</li>
+                    <li>• Multi-signature quorum status</li>
+                    <li>• Governance participation rates</li>
+                  </ul>
+                </div>
+
+                <div class="bg-green-50 p-4 rounded">
+                  <h5 class="font-medium mb-2 text-green-800">Oracle &amp; State</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Oracle divergence across providers</li>
+                    <li>• Abnormal Epistemic Hold rates</li>
+                    <li>• Unexpected state transitions</li>
+                    <li>• Decision Log completeness</li>
+                  </ul>
+                </div>
+
+                <div class="bg-purple-50 p-4 rounded">
+                  <h5 class="font-medium mb-2 text-purple-800">Anchor &amp; Performance</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Anchor lag beyond thresholds</li>
+                    <li>• Gas spikes and DoS indicators</li>
+                    <li>• Transaction throughput changes</li>
+                    <li>• Block confirmation delays</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-exclamation-triangle text-amber-600 mr-2"></i>
+                Alert Severity Levels
+              </h4>
+
+              <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-red-50 p-4 rounded border-l-4 border-red-500">
+                  <h5 class="font-medium mb-2 text-red-800">Critical Alerts</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• &#34;No Log = No Action&#34; bypass</li>
+                    <li>• Epistemic Hold manipulation</li>
+                    <li>• Governance multi-sig compromise</li>
+                    <li>• Large fund movements</li>
+                  </ul>
+                  <div class="mt-2 text-xs text-red-600">
+                    <strong>Response:</strong> Immediate, 24/7 on-call
+                  </div>
+                </div>
+
+                <div class="bg-amber-50 p-4 rounded border-l-4 border-amber-500">
+                  <h5 class="font-medium mb-2 text-amber-800">High Priority</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• High rate of signature failures</li>
+                    <li>• Significant oracle divergence</li>
+                    <li>• Long anchor lag times</li>
+                    <li>• Unexpected contract upgrades</li>
+                  </ul>
+                  <div class="mt-2 text-xs text-amber-600">
+                    <strong>Response:</strong> Within 2-4 hours
+                  </div>
+                </div>
+
+                <div class="bg-blue-50 p-4 rounded border-l-4 border-blue-500">
+                  <h5 class="font-medium mb-2 text-blue-800">Medium Priority</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Unusual governance proposals</li>
+                    <li>• Minor performance degradation</li>
+                    <li>• Increased gas consumption</li>
+                    <li>• Low-risk anomalies</li>
+                  </ul>
+                  <div class="mt-2 text-xs text-blue-600">
+                    <strong>Response:</strong> Within 24 hours
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="security-metric">
+              <h4 class="font-semibold text-lg mb-4 flex items-center">
+                <i class="fas fa-clipboard-list text-green-600 mr-2"></i>
+                Response Actions and Runbooks
+              </h4>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-green-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Immediate Response:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• System isolation and containment</li>
+                    <li>• Evidence preservation procedures</li>
+                    <li>• Emergency contact notifications</li>
+                    <li>• Incident documentation initiation</li>
+                  </ul>
+                </div>
+
+                <div class="bg-blue-50 p-4 rounded">
+                  <h5 class="font-medium mb-2">Escalation &amp; Communication:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Technical team escalation paths</li>
+                    <li>• Community notification procedures</li>
+                    <li>• Stakeholder communication plans</li>
+                    <li>• Public disclosure protocols</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-12 bg-gray-50 rounded-lg p-6">
+            <h3 class="serif text-xl font-semibold mb-4">Security Posture Summary</h3>
+            <p class="text-gray-700 mb-4">
+              The Ternary Logic security blueprint implements a comprehensive defense-in-depth strategy that protects constitutional invariants through immutable core contracts, triadic governance, and rigorous operational controls. The framework&#39;s evidence-centric design, centered on the Epistemic Hold mechanism, creates a resilient system capable of operating safely in adversarial environments.
+            </p>
+            <div class="grid md:grid-cols-3 gap-4 text-sm">
+              <div class="text-center">
+                <div class="text-2xl font-bold text-blue-600">8</div>
+                <div>Foundational Pillars</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold text-green-600">3</div>
+                <div>Governance Bodies</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold text-purple-600">∞</div>
+                <div>Attack Surface Defense</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+        // Initialize Mermaid with enhanced styling and better contrast
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                fontFamily: 'Inter, sans-serif',
+                fontSize: '14px',
+                fontWeight: '500',
+                primaryColor: '#ffffff',
+                primaryTextColor: '#1e293b',
+                primaryBorderColor: '#0f172a',
+                lineColor: '#64748b',
+                secondaryColor: '#f8fafc',
+                tertiaryColor: '#e2e8f0',
+                background: '#ffffff',
+                mainBkg: '#ffffff',
+                secondBkg: '#f8fafc',
+                tertiaryBkg: '#e2e8f0',
+                // Enhanced contrast colors for different node types
+                primaryTextColor: '#1e293b',
+                secondaryTextColor: '#374151',
+                tertiaryTextColor: '#4b5563',
+                // Border colors with good contrast
+                primaryBorderColor: '#0f172a',
+                secondaryBorderColor: '#1e293b',
+                tertiaryBorderColor: '#374151'
+            },
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'basis',
+                padding: 20,
+                nodeSpacing: 50,
+                rankSpacing: 80,
+                diagramPadding: 20
+            },
+            sequence: {
+                useMaxWidth: false,
+                diagramMarginX: 20,
+                diagramMarginY: 20,
+                boxMargin: 10,
+                boxTextMargin: 5,
+                noteMargin: 10,
+                messageMargin: 35
+            },
+            graph: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                padding: 20
+            }
+        });
+
+        // Initialize Mermaid Controls for zoom and pan
+        function initializeMermaidControls() {
+            const containers = document.querySelectorAll('.mermaid-container');
+
+            containers.forEach(container => {
+            const mermaidElement = container.querySelector('.mermaid');
+            let scale = 1;
+            let isDragging = false;
+            let startX, startY, translateX = 0, translateY = 0;
+
+            // 触摸相关状态
+            let isTouch = false;
+            let touchStartTime = 0;
+            let initialDistance = 0;
+            let initialScale = 1;
+            let isPinching = false;
+
+            // Zoom controls
+            const zoomInBtn = container.querySelector('.zoom-in');
+            const zoomOutBtn = container.querySelector('.zoom-out');
+            const resetBtn = container.querySelector('.reset-zoom');
+            const fullscreenBtn = container.querySelector('.fullscreen');
+
+            function updateTransform() {
+                mermaidElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+                if (scale > 1) {
+                container.classList.add('zoomed');
+                } else {
+                container.classList.remove('zoomed');
+                }
+
+                mermaidElement.style.cursor = isDragging ? 'grabbing' : 'grab';
+            }
+
+            if (zoomInBtn) {
+                zoomInBtn.addEventListener('click', () => {
+                scale = Math.min(scale * 1.25, 4);
+                updateTransform();
+                });
+            }
+
+            if (zoomOutBtn) {
+                zoomOutBtn.addEventListener('click', () => {
+                scale = Math.max(scale / 1.25, 0.3);
+                if (scale <= 1) {
+                    translateX = 0;
+                    translateY = 0;
+                }
+                updateTransform();
+                });
+            }
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => {
+                scale = 1;
+                translateX = 0;
+                translateY = 0;
+                updateTransform();
+                });
+            }
+
+            if (fullscreenBtn) {
+                fullscreenBtn.addEventListener('click', () => {
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                } else if (container.msRequestFullscreen) {
+                    container.msRequestFullscreen();
+                }
+                });
+            }
+
+            // Mouse Events
+            mermaidElement.addEventListener('mousedown', (e) => {
+                if (isTouch) return; // 如果是触摸设备，忽略鼠标事件
+
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                mermaidElement.style.cursor = 'grabbing';
+                updateTransform();
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging && !isTouch) {
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                updateTransform();
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (isDragging && !isTouch) {
+                isDragging = false;
+                mermaidElement.style.cursor = 'grab';
+                updateTransform();
+                }
+            });
+
+            document.addEventListener('mouseleave', () => {
+                if (isDragging && !isTouch) {
+                isDragging = false;
+                mermaidElement.style.cursor = 'grab';
+                updateTransform();
+                }
+            });
+
+            // 获取两点之间的距离
+            function getTouchDistance(touch1, touch2) {
+                return Math.hypot(
+                touch2.clientX - touch1.clientX,
+                touch2.clientY - touch1.clientY
+                );
+            }
+
+            // Touch Events - 触摸事件处理
+            mermaidElement.addEventListener('touchstart', (e) => {
+                isTouch = true;
+                touchStartTime = Date.now();
+
+                if (e.touches.length === 1) {
+                // 单指拖动
+                isPinching = false;
+                isDragging = true;
+
+                const touch = e.touches[0];
+                startX = touch.clientX - translateX;
+                startY = touch.clientY - translateY;
+
+                } else if (e.touches.length === 2) {
+                // 双指缩放
+                isPinching = true;
+                isDragging = false;
+
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+                initialDistance = getTouchDistance(touch1, touch2);
+                initialScale = scale;
+                }
+
+                e.preventDefault();
+            }, { passive: false });
+
+            mermaidElement.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 1 && isDragging && !isPinching) {
+                // 单指拖动
+                const touch = e.touches[0];
+                translateX = touch.clientX - startX;
+                translateY = touch.clientY - startY;
+                updateTransform();
+
+                } else if (e.touches.length === 2 && isPinching) {
+                // 双指缩放
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+                const currentDistance = getTouchDistance(touch1, touch2);
+
+                if (initialDistance > 0) {
+                    const newScale = Math.min(Math.max(
+                    initialScale * (currentDistance / initialDistance),
+                    0.3
+                    ), 4);
+                    scale = newScale;
+                    updateTransform();
+                }
+                }
+
+                e.preventDefault();
+            }, { passive: false });
+
+            mermaidElement.addEventListener('touchend', (e) => {
+                // 重置状态
+                if (e.touches.length === 0) {
+                isDragging = false;
+                isPinching = false;
+                initialDistance = 0;
+
+                // 延迟重置isTouch，避免鼠标事件立即触发
+                setTimeout(() => {
+                    isTouch = false;
+                }, 100);
+                } else if (e.touches.length === 1 && isPinching) {
+                // 从双指变为单指，切换为拖动模式
+                isPinching = false;
+                isDragging = true;
+
+                const touch = e.touches[0];
+                startX = touch.clientX - translateX;
+                startY = touch.clientY - translateY;
+                }
+
+                updateTransform();
+            });
+
+            mermaidElement.addEventListener('touchcancel', (e) => {
+                isDragging = false;
+                isPinching = false;
+                initialDistance = 0;
+
+                setTimeout(() => {
+                isTouch = false;
+                }, 100);
+
+                updateTransform();
+            });
+
+            // Enhanced wheel zoom with better center point handling
+            container.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const rect = container.getBoundingClientRect();
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                const newScale = Math.min(Math.max(scale * delta, 0.3), 4);
+
+                // Adjust translation to zoom towards center
+                if (newScale !== scale) {
+                const scaleDiff = newScale / scale;
+                translateX = translateX * scaleDiff;
+                translateY = translateY * scaleDiff;
+                scale = newScale;
+
+                if (scale <= 1) {
+                    translateX = 0;
+                    translateY = 0;
+                }
+
+                updateTransform();
+                }
+            });
+
+            // Initialize display
+            updateTransform();
+            });
+        }
+
+        // Initialize mermaid controls after page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for mermaid to render
+            setTimeout(() => {
+                initializeMermaidControls();
+            }, 1000);
+        });
+
+        // Toggle sections
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const button = section.previousElementSibling;
+            const icon = button.querySelector('i');
+            
+            if (section.classList.contains('hidden-section')) {
+                section.classList.remove('hidden-section');
+                section.style.display = 'block';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                section.classList.add('hidden-section');
+                section.style.display = 'none';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+
+        // Smooth scrolling for TOC links
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 20;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Highlight active TOC item on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const tocItems = document.querySelectorAll('.toc-item');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocItems.forEach(item => {
+                item.classList.remove('border-blue-800', 'bg-blue-50');
+                if (item.getAttribute('href') === '#' + current) {
+                    item.classList.add('border-blue-800', 'bg-blue-50');
+                }
+            });
+        });
+    </script>
+  
+
+</body></html>
