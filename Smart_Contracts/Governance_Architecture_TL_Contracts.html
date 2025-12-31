@@ -1,0 +1,1660 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Governance Architecture for Ternary Logic Smart Contracts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.5.0/mermaid.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Canela:wght@300;400;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        :root {
+            --primary: #1e40af;
+            --secondary: #059669;
+            --accent: #dc2626;
+            --neutral: #374151;
+            --base-100: #ffffff;
+            --base-200: #f8fafc;
+            --base-300: #e2e8f0;
+        }
+        
+        .font-canela { font-family: 'Canela', serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--neutral);
+        }
+        
+        .hero-overlay {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.9) 0%, rgba(5, 150, 105, 0.8) 100%);
+        }
+        
+        .toc-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--base-100);
+            border-right: 1px solid var(--base-300);
+            z-index: 50;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--base-300), transparent);
+            margin: 3rem 0;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.05) 0%, rgba(5, 150, 105, 0.05) 100%);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .citation-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted var(--primary);
+        }
+        
+        .citation-link:hover {
+            background-color: rgba(30, 64, 175, 0.1);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .pull-quote {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--primary);
+            border-left: 3px solid var(--secondary);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .chart-container {
+            background: var(--base-100);
+            border: 1px solid var(--base-300);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .mermaid-container {
+            display: flex;
+            justify-content: center;
+            min-height: 300px;
+            max-height: 800px;
+            background: var(--base-100);
+            border: 2px solid var(--base-300);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mermaid-container .mermaid {
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            cursor: grab;
+            transition: transform 0.3s ease;
+            transform-origin: center center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: none; /* 防止触摸设备上的默认行为 */
+            -webkit-user-select: none; /* 防止文本选择 */
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .mermaid-container .mermaid svg {
+            max-width: 100%;
+            height: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .mermaid-container .mermaid:active {
+            cursor: grabbing;
+        }
+
+        .mermaid-container.zoomed .mermaid {
+            height: 100%;
+            width: 100%;
+            cursor: grab;
+        }
+
+        .mermaid-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .mermaid-control-btn {
+            background: var(--base-100);
+            border: 1px solid var(--base-300);
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--neutral);
+            font-size: 14px;
+            min-width: 36px;
+            height: 36px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mermaid-control-btn:hover {
+            background: var(--base-200);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .mermaid-control-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .mermaid-control-btn:not(.reset-zoom) {
+                display: none;
+            }
+            .mermaid-controls {
+                top: auto;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .toc-fixed {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .toc-fixed.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mermaid-container {
+                overflow-x: auto;
+            }
+        }
+        
+        /* Custom scrollbar for TOC */
+        .toc-fixed::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .toc-fixed::-webkit-scrollbar-track {
+            background: var(--base-200);
+        }
+        
+        .toc-fixed::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .nav-item {
+            transition: all 0.2s ease;
+        }
+        
+        .nav-item:hover {
+            background: rgba(30, 64, 175, 0.1);
+            border-radius: 6px;
+        }
+        
+        .nav-item.active {
+            background: rgba(30, 64, 175, 0.15);
+            border-left: 3px solid var(--primary);
+            padding-left: 1rem;
+        }
+
+        /* Mermaid diagram theme customization for better contrast */
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Override mermaid default styles for better contrast */
+        .mermaid .node rect,
+        .mermaid .node circle,
+        .mermaid .node ellipse,
+        .mermaid .node polygon {
+            stroke-width: 2px !important;
+        }
+
+        .mermaid .nodeLabel,
+        .mermaid .node text,
+        .mermaid text {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            fill: var(--neutral) !important;
+        }
+
+        .mermaid .edgeLabel {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+            padding: 4px 8px !important;
+            border-radius: 4px !important;
+            font-size: 12px !important;
+            font-weight: 500 !important;
+            color: var(--neutral) !important;
+        }
+
+        .mermaid .edgePath path {
+            stroke: var(--neutral) !important;
+            stroke-width: 2px !important;
+        }
+
+        .mermaid .marker {
+            fill: var(--neutral) !important;
+        }
+
+        /* Enhanced contrast for different node types */
+        .mermaid .node[class*="default"] rect,
+        .mermaid .node[class*="default"] polygon {
+            fill: var(--base-100) !important;
+            stroke: var(--primary) !important;
+        }
+
+        .mermaid .node[class*="default"] text {
+            fill: var(--neutral) !important;
+            font-weight: 600 !important;
+        }
+
+        .mermaid .node[class*="primary"] rect,
+        .mermaid .node[class*="primary"] polygon {
+            fill: var(--base-100) !important;
+            stroke: var(--primary) !important;
+            stroke-width: 3px !important;
+        }
+
+        .mermaid .node[class*="primary"] text {
+            fill: var(--neutral) !important;
+            font-weight: 700 !important;
+        }
+
+        .mermaid .node[class*="secondary"] rect,
+        .mermaid .node[class*="secondary"] polygon {
+            fill: var(--base-100) !important;
+            stroke: var(--secondary) !important;
+            stroke-width: 2px !important;
+        }
+
+        .mermaid .node[class*="secondary"] text {
+            fill: var(--neutral) !important;
+            font-weight: 500 !important;
+        }
+    </style>
+  <base target="_blank">
+</head>
+
+  <body class="bg-base-200">
+    <!-- Table of Contents - Fixed Left -->
+    <nav class="toc-fixed">
+      <div class="mb-8">
+        <h2 class="font-canela text-xl font-bold text-primary mb-4">Contents</h2>
+        <div class="space-y-2 text-sm">
+          <a href="#executive-summary" class="nav-item block py-2 px-3 text-neutral hover:text-primary">Executive Summary</a>
+          <a href="#tri-cameral-model" class="nav-item block py-2 px-3 text-neutral hover:text-primary">Tri-Cameral Model</a>
+          <a href="#smart-contracts" class="nav-item block py-2 px-3 text-neutral hover:text-primary">Smart Contracts</a>
+          <a href="#architectural-pillars" class="nav-item block py-2 px-3 text-neutral hover:text-primary">Architectural Pillars</a>
+          <a href="#governance-relationship" class="nav-item block py-2 px-3 text-neutral hover:text-primary">Governance Relationship</a>
+          <a href="#comparative-analysis" class="nav-item block py-2 px-3 text-neutral hover:text-primary">Comparative Analysis</a>
+        </div>
+      </div>
+
+      <div class="mt-auto pt-8 border-t border-base-300">
+        <div class="text-xs text-neutral/70 space-y-1">
+          <div><i class="fas fa-bookmark mr-2"></i>Research Report</div>
+          <div><i class="fas fa-calendar mr-2"></i>January 2026</div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hero Section -->
+      <section class="relative min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900">
+        <div class="hero-overlay absolute inset-0"></div>
+        <div class="relative z-10 container mx-auto px-8 py-16">
+          <!-- Bento Grid Layout -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-screen">
+            <!-- Title Section -->
+            <div class="lg:col-span-7 space-y-8">
+              <div class="space-y-6">
+                <h1 class="font-canela text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-light text-white leading-tight">
+                  <em class="italic">Governance Architecture</em>
+                  <br/>
+                  <span class="text-emerald-300">for Ternary Logic</span>
+                  <br/>
+                  <span class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal">Smart Contracts</span>
+                </h1>
+
+                <p class="text-base sm:text-lg md:text-xl text-blue-100 leading-relaxed max-w-2xl">
+                  A hybrid, tri-cameral model designed for institutional-grade accountability,
+                  balancing technical expertise, ethical oversight, and autonomous financial logic.
+                </p>
+              </div>
+
+              <!-- Key Highlights Grid -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                  <div class="text-emerald-300 text-2xl mb-3">
+                    <i class="fas fa-shield-alt"></i>
+                  </div>
+                  <h3 class="text-white font-semibold mb-2">Preventative Oversight</h3>
+                  <p class="text-blue-100 text-sm">Expert-led governance prioritizing ethical compliance over decentralized voting</p>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                  <div class="text-emerald-300 text-2xl mb-3">
+                    <i class="fas fa-balance-scale"></i>
+                  </div>
+                  <h3 class="text-white font-semibold mb-2">Tri-Cameral Structure</h3>
+                  <p class="text-blue-100 text-sm">Three specialized bodies ensuring checks and balances without centralization</p>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                  <div class="text-emerald-300 text-2xl mb-3">
+                    <i class="fas fa-gavel"></i>
+                  </div>
+                  <h3 class="text-white font-semibold mb-2">Embedded Compliance</h3>
+                  <p class="text-blue-100 text-sm">Regulatory rules programmed directly into financial protocols</p>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                  <div class="text-emerald-300 text-2xl mb-3">
+                    <i class="fas fa-infinity"></i>
+                  </div>
+                  <h3 class="text-white font-semibold mb-2">No Switch Off</h3>
+                  <p class="text-blue-100 text-sm">Structural limits ensuring system continuity and resistance to capture</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Visual Element -->
+            <div class="lg:col-span-5">
+              <div class="relative">
+                <img src="https://kimi-web-img.moonshot.cn/img/www.dps.tsinghua.edu.cn/1ce928a721f25138cad8a7fc5c6b9fb266044b94.png" alt="Abstract representation of ternary logic governance structure" class="w-full h-auto rounded-lg shadow-2xl opacity-80" size="large" aspect="wide" query="abstract ternary logic governance structure" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-lg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Executive Summary -->
+      <section id="executive-summary" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-4xl">
+          <h2 class="font-canela text-4xl font-light text-primary mb-8">Executive Summary</h2>
+
+          <div class="highlight-box p-8 rounded-lg mb-8">
+            <p class="text-lg leading-relaxed mb-6">
+              The governance architecture for Ternary Logic (TL) smart contracts represents a fundamental departure from conventional blockchain governance models. Rather than adopting token-based DAO structures or complete contract-level autonomy, TL implements a sophisticated <strong>hybrid, tri-cameral model</strong> designed for institutional-grade accountability.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-6 mt-8">
+              <div class="text-center">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-cogs text-primary text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-primary mb-2">Technical Council</h4>
+                <p class="text-sm text-neutral/70">Guards the machinery, maintains technical standards</p>
+              </div>
+
+              <div class="text-center">
+                <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-heart text-secondary text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-secondary mb-2">Stewardship Custodians</h4>
+                <p class="text-sm text-neutral/70">Hold the moral line, enforce ethical principles</p>
+              </div>
+
+              <div class="text-center">
+                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-coins text-neutral text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-neutral mb-2">Smart Contract Treasury</h4>
+                <p class="text-sm text-neutral/70">Ensures financial continuity, autonomous funding</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="pull-quote">
+            &#34;This model contrasts sharply with token-based DAOs, prioritizing expert-led, preventative oversight over decentralized voting.&#34;
+          </div>
+
+          <p class="text-lg leading-relaxed">
+            The framework&#39;s approach to smart contract governance emphasizes <strong>embedded compliance</strong>—where regulatory rules are programmed directly into financial protocols—transforming compliance from a reactive enforcement process to a proactive architectural feature. While a &#34;Priestess Algorithm&#34; for contract-level governance has been mentioned, its function remains undefined, making the framework-level tri-cameral model the sole, explicit governance mechanism.
+          </p>
+        </div>
+      </section>
+
+      <!-- Tri-Cameral Governance Model -->
+      <section id="tri-cameral-model" class="py-16 bg-base-200">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-canela text-4xl font-light text-primary mb-12">The Tri-Cameral Governance Model</h2>
+
+          <!-- Overview Diagram -->
+          <div class="chart-container mb-12">
+            <h3 class="font-semibold text-xl mb-6 text-center">Ternary Logic Governance Structure</h3>
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph TB
+                A[&#34;Ternary Logic Framework&#34;] --&gt; B[&#34;Technical Council
+                <br/>9 Members • 75% Quorum&#34;]
+                A --&gt; C[&#34;Stewardship Custodians
+                <br/>11 Members • 75% Quorum&#34;]
+                A --&gt; D[&#34;Smart Contract Treasury
+                <br/>Autonomous Entity&#34;]
+
+                B --&gt; E[&#34;Guard the Machinery
+                <br/>Technical Standards&#34;]
+                C --&gt; F[&#34;Hold the Moral Line
+                <br/>Ethical Principles&#34;]
+                D --&gt; G[&#34;Ensure Financial Continuity
+                <br/>Autonomous Funding&#34;]
+
+                E --&gt; H[&#34;Protocol Upgrades&#34;]
+                F --&gt; I[&#34;No Spy/No Weapon&#34;]
+                G --&gt; J[&#34;Approved Upgrades&#34;]
+
+                H --&gt; K[&#34;Four-Stage Process&#34;]
+                I --&gt; K
+                J --&gt; K
+
+                K --&gt; L[&#34;Proposal → Ratification → Funding → Deployment&#34;]
+
+                style A fill:#1e40af,color:#fff,stroke:#1e3a8a,stroke-width:3px
+                style B fill:#3b82f6,color:#fff,stroke:#2563eb,stroke-width:2px
+                style C fill:#059669,color:#fff,stroke:#047857,stroke-width:2px
+                style D fill:#6b7280,color:#fff,stroke:#4b5563,stroke-width:2px
+                style E fill:#dbeafe,color:#1e40af,stroke:#3b82f6,stroke-width:2px
+                style F fill:#d1fae5,color:#059669,stroke:#10b981,stroke-width:2px
+                style G fill:#f3f4f6,color:#374151,stroke:#6b7280,stroke-width:2px
+                style H fill:#eff6ff,color:#1e40af,stroke:#3b82f6,stroke-width:2px
+                style I fill:#ecfdf5,color:#059669,stroke:#10b981,stroke-width:2px
+                style J fill:#f9fafb,color:#374151,stroke:#6b7280,stroke-width:2px
+                style K fill:#1f2937,color:#fff,stroke:#111827,stroke-width:3px
+                style L fill:#f8fafc,color:#1e40af,stroke:#3b82f6,stroke-width:2px
+              </div>
+            </div>
+          </div>
+
+          <div class="grid lg:grid-cols-3 gap-8 mb-12">
+            <!-- Technical Council -->
+            <div class="bg-white rounded-lg p-8 shadow-lg">
+              <div class="flex items-center mb-6">
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                  <i class="fas fa-cogs text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h3 class="font-canela text-xl font-semibold text-primary">Technical Council</h3>
+                  <p class="text-sm text-neutral/70">9 Members • 75% Quorum Required</p>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                  <h4 class="font-semibold text-primary mb-2">Mandate</h4>
+                  <p class="text-sm text-neutral">Guard the machinery, not the meaning</p>
+                </div>
+
+                <div class="space-y-3">
+                  <h4 class="font-semibold text-neutral mb-2">Responsibilities</h4>
+                  <ul class="text-sm space-y-2">
+                    <li class="flex items-start">
+                      <i class="fas fa-check text-primary mr-2 mt-1 text-xs"></i>
+                      <span>Maintain core technical specifications &amp; cryptographic standards</span>
+                    </li>
+                    <li class="flex items-start">
+                      <i class="fas fa-check text-primary mr-2 mt-1 text-xs"></i>
+                      <span>Approve protocol-level improvements and performance changes</span>
+                    </li>
+                    <li class="flex items-start">
+                      <i class="fas fa-check text-primary mr-2 mt-1 text-xs"></i>
+                      <span>Commission external security audits and correctness reviews</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                <p class="text-xs text-neutral/70">
+                  <strong>Reference:</strong>
+                  <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">Ternary Logic Framework Documentation</a>
+                </p>
+              </div>
+            </div>
+
+            <!-- Stewardship Custodians -->
+            <div class="bg-white rounded-lg p-8 shadow-lg">
+              <div class="flex items-center mb-6">
+                <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mr-4">
+                  <i class="fas fa-heart text-secondary text-xl"></i>
+                </div>
+                <div>
+                  <h3 class="font-canela text-xl font-semibold text-secondary">Stewardship Custodians</h3>
+                  <p class="text-sm text-neutral/70">11 Members • 75% Quorum Required</p>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <div class="bg-emerald-50 p-4 rounded-lg">
+                  <h4 class="font-semibold text-secondary mb-2">Mandate</h4>
+                  <p class="text-sm text-neutral">Hold the moral and civic line</p>
+                </div>
+
+                <div class="space-y-3">
+                  <h4 class="font-semibold text-neutral mb-2">Responsibilities</h4>
+                  <ul class="text-sm space-y-2">
+                    <li class="flex items-start">
+                      <i class="fas fa-shield-alt text-secondary mr-2 mt-1 text-xs"></i>
+                      <span>Enforce &#34;No Spy&#34; and &#34;No Weapon&#34; prohibitions</span>
+                    </li>
+                    <li class="flex items-start">
+                      <i class="fas fa-certificate text-secondary mr-2 mt-1 text-xs"></i>
+                      <span>Certify and revoke operator certifications</span>
+                    </li>
+                    <li class="flex items-start">
+                      <i class="fas fa-gavel text-secondary mr-2 mt-1 text-xs"></i>
+                      <span>Arbitrate escalated disputes and ensure license integrity</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                <p class="text-xs text-neutral/70">
+                  <strong>Reference:</strong>
+                  <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">Ternary Logic Framework Documentation</a>
+                </p>
+              </div>
+            </div>
+
+            <!-- Smart Contract Treasury -->
+            <div class="bg-white rounded-lg p-8 shadow-lg">
+              <div class="flex items-center mb-6">
+                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-4">
+                  <i class="fas fa-coins text-neutral text-xl"></i>
+                </div>
+                <div>
+                  <h3 class="font-canela text-xl font-semibold text-neutral">Smart Contract Treasury</h3>
+                  <p class="text-sm text-neutral/70">Autonomous Entity • Governed by Code</p>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <h4 class="font-semibold text-neutral mb-2">Mandate</h4>
+                  <p class="text-sm text-neutral">Ensure financial continuity through autonomous logic</p>
+                </div>
+
+                <div class="space-y-3">
+                  <h4 class="font-semibold text-neutral mb-2">Responsibilities</h4>
+                  <ul class="text-sm space-y-2">
+                    <li class="flex items-start">
+                      <i class="fas fa-piggy-bank text-neutral mr-2 mt-1 text-xs"></i>
+                      <span>Manage ecosystem revenue and endowment funds</span>
+                    </li>
+                    <li class="flex items-start">
+                      <i class="fas fa-robot text-neutral mr-2 mt-1 text-xs"></i>
+                      <span>Automatically release funds for approved upgrades</span>
+                    </li>
+                    <li class="flex items-start">
+                      <i class="fas fa-lock text-neutral mr-2 mt-1 text-xs"></i>
+                      <span>Operate with programmed, incorruptible allocation logic</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                <p class="text-xs text-neutral/70">
+                  <strong>Reference:</strong>
+                  <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">Ternary Logic Framework Documentation</a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Decision-Making Process -->
+          <div class="bg-white rounded-lg p-8 shadow-lg">
+            <h3 class="font-canela text-2xl font-semibold text-primary mb-6">Four-Stage Upgrade Process</h3>
+
+            <div class="grid md:grid-cols-4 gap-6">
+              <div class="text-center">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-primary font-bold text-xl">1</span>
+                </div>
+                <h4 class="font-semibold text-primary mb-2">Proposal</h4>
+                <p class="text-sm text-neutral/70">Technical Council drafts technical changes ensuring technical soundness</p>
+              </div>
+
+              <div class="text-center">
+                <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-secondary font-bold text-xl">2</span>
+                </div>
+                <h4 class="font-semibold text-secondary mb-2">Ratification</h4>
+                <p class="text-sm text-neutral/70">Stewardship Custodians review for ethical alignment and core values</p>
+              </div>
+
+              <div class="text-center">
+                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-neutral font-bold text-xl">3</span>
+                </div>
+                <h4 class="font-semibold text-neutral mb-2">Funding</h4>
+                <p class="text-sm text-neutral/70">Smart Contract Treasury automatically releases necessary funds</p>
+              </div>
+
+              <div class="text-center">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-primary font-bold text-xl">4</span>
+                </div>
+                <h4 class="font-semibold text-primary mb-2">Deployment</h4>
+                <p class="text-sm text-neutral/70">Network of certified operators implements approved upgrade</p>
+              </div>
+            </div>
+
+            <div class="mt-8 p-4 bg-blue-50 rounded-lg">
+              <p class="text-sm text-neutral">
+                <strong>Process Reference:</strong>
+                <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">Ternary Logic Framework Documentation</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Smart Contracts Section -->
+      <section id="smart-contracts" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-canela text-4xl font-light text-primary mb-12">TL Smart Contracts: Instruments of Embedded Compliance</h2>
+
+          <div class="grid lg:grid-cols-2 gap-12 mb-12">
+            <div>
+              <h3 class="font-canela text-2xl font-semibold text-primary mb-6">Embedded Compliance Architecture</h3>
+
+              <p class="text-lg leading-relaxed mb-6">
+                Within the Ternary Logic framework, smart contracts are not merely tools for automating transactions; they are the fundamental instruments through which the system&#39;s governance and compliance mechanisms are enforced. The TL framework leverages smart contracts to create a system of <strong>&#34;embedded compliance,&#34;</strong> where regulatory rules are programmed directly into the financial protocol.
+              </p>
+
+              <div class="highlight-box p-6 rounded-lg">
+                <h4 class="font-semibold text-primary mb-3">Key Innovation</h4>
+                <p class="text-sm leading-relaxed">
+                  This approach transforms compliance from a separate, manual process into an intrinsic, automated property of every transaction. By embedding the rules of the system into the code itself, the TL framework makes non-compliance architecturally difficult, if not impossible.
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <img src="https://kimi-web-img.moonshot.cn/img/pub.mdpi-res.com/332ecec7b6ce7e5c7f729dc9b470606cce137708.png" alt="Abstract representation of smart contract compliance system" class="w-full h-auto rounded-lg shadow-lg" size="medium" aspect="wide" query="abstract smart contract compliance system" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+            </div>
+          </div>
+
+          <!-- Smart Contract Features -->
+          <div class="grid md:grid-cols-3 gap-8 mb-12">
+            <div class="bg-base-200 rounded-lg p-6">
+              <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-pause-circle text-primary text-xl"></i>
+              </div>
+              <h4 class="font-semibold text-primary mb-3">Epistemic Hold</h4>
+              <p class="text-sm text-neutral/70 mb-3">Mandatory verification window for uncertain transactions</p>
+              <div class="text-xs text-neutral/60">
+                Third logical state beyond traditional binary proceed/halt
+              </div>
+            </div>
+
+            <div class="bg-base-200 rounded-lg p-6">
+              <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-book text-secondary text-xl"></i>
+              </div>
+              <h4 class="font-semibold text-secondary mb-3">Immutable Ledger</h4>
+              <p class="text-sm text-neutral/70 mb-3">Tamper-proof record of all actions</p>
+              <div class="text-xs text-neutral/60">
+                Single source of truth secured by cryptography
+              </div>
+            </div>
+
+            <div class="bg-base-200 rounded-lg p-6">
+              <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-list-alt text-neutral text-xl"></i>
+              </div>
+              <h4 class="font-semibold text-neutral mb-3">Decision Logs</h4>
+              <p class="text-sm text-neutral/70 mb-3">Unbroken chain of custody documentation</p>
+              <div class="text-xs text-neutral/60">
+                Complete narrative for every significant event
+              </div>
+            </div>
+          </div>
+
+          <!-- Application Examples -->
+          <div class="bg-base-200 rounded-lg p-8">
+            <h3 class="font-canela text-2xl font-semibold text-primary mb-6">Real-World Applications</h3>
+
+            <div class="grid md:grid-cols-3 gap-8">
+              <div class="bg-white rounded-lg p-6">
+                <h4 class="font-semibold text-primary mb-3">
+                  <i class="fas fa-search-dollar mr-2"></i>AML Automation
+                </h4>
+                <p class="text-sm text-neutral/70 mb-3">
+                  Smart contracts automatically generate and transmit AML reports when transactions exceed regulatory thresholds, ensuring real-time compliance.
+                </p>
+                <div class="text-xs text-neutral/60">
+                  Reduces manual reporting burden while improving regulatory oversight
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6">
+                <h4 class="font-semibold text-secondary mb-3">
+                  <i class="fas fa-ban mr-2"></i>Sanctions Enforcement
+                </h4>
+                <p class="text-sm text-neutral/70 mb-3">
+                  On-chain registry of sanctioned addresses enables automatic rejection of non-compliant transactions, streamlining enforcement.
+                </p>
+                <div class="text-xs text-neutral/60">
+                  Creates transparent, tamper-proof sanctions compliance system
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg p-6">
+                <h4 class="font-semibold text-neutral mb-3">
+                  <i class="fas fa-leaf mr-2"></i>ESG Verification
+                </h4>
+                <p class="text-sm text-neutral/70 mb-3">
+                  Digital identity systems with verified ESG credentials enable transparent tracking of environmental and social performance.
+                </p>
+                <div class="text-xs text-neutral/60">
+                  Supports sustainable finance through verifiable impact data
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Architectural Pillars -->
+      <section id="architectural-pillars" class="py-16 bg-base-200">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-canela text-4xl font-light text-primary mb-12">Architectural Pillars Supporting TL Governance</h2>
+
+          <div class="grid lg:grid-cols-3 gap-8 mb-12">
+            <!-- Goukassian Principle -->
+            <div class="bg-white rounded-lg p-8 shadow-lg">
+              <div class="flex items-center mb-6">
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                  <i class="fas fa-balance-scale text-primary text-xl"></i>
+                </div>
+                <h3 class="font-canela text-xl font-semibold text-primary">Goukassian Principle</h3>
+              </div>
+
+              <p class="text-sm text-neutral/70 mb-4">
+                The cornerstone of TL&#39;s ethical architecture, embedding technical mechanisms for transparency, accountability, and ethical deliberation.
+              </p>
+
+              <div class="space-y-3">
+                <div class="bg-blue-50 p-3 rounded">
+                  <h5 class="font-semibold text-primary text-sm mb-1">Sacred Pause</h5>
+                  <p class="text-xs text-neutral/70">Mandatory verification window for ethical deliberation</p>
+                </div>
+                <div class="bg-blue-50 p-3 rounded">
+                  <h5 class="font-semibold text-primary text-sm mb-1">Three Components</h5>
+                  <p class="text-xs text-neutral/70">Lantern (transparency), Signature (integrity), License (enforcement)</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hybrid Shield -->
+            <div class="bg-white rounded-lg p-8 shadow-lg">
+              <div class="flex items-center mb-6">
+                <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mr-4">
+                  <i class="fas fa-shield-alt text-secondary text-xl"></i>
+                </div>
+                <h3 class="font-canela text-xl font-semibold text-secondary">Hybrid Shield</h3>
+              </div>
+
+              <p class="text-sm text-neutral/70 mb-4">
+                Balances privacy and transparency through a dual-layer architecture combining confidential and public ledgers.
+              </p>
+
+              <div class="space-y-3">
+                <div class="bg-emerald-50 p-3 rounded">
+                  <h5 class="font-semibold text-secondary text-sm mb-1">Permissioned Layer</h5>
+                  <p class="text-xs text-neutral/70">Confidential transactions for sensitive financial data</p>
+                </div>
+                <div class="bg-emerald-50 p-3 rounded">
+                  <h5 class="font-semibold text-secondary text-sm mb-1">Permissionless Layer</h5>
+                  <p class="text-xs text-neutral/70">Public notarization for transparency and verification</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Anchors -->
+            <div class="bg-white rounded-lg p-8 shadow-lg">
+              <div class="flex items-center mb-6">
+                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-4">
+                  <i class="fas fa-anchor text-neutral text-xl"></i>
+                </div>
+                <h3 class="font-canela text-xl font-semibold text-neutral">Anchors</h3>
+              </div>
+
+              <p class="text-sm text-neutral/70 mb-4">
+                Connects TL framework to external world through three specialized anchor types for enhanced stability and interoperability.
+              </p>
+
+              <div class="space-y-3">
+                <div class="bg-gray-50 p-3 rounded">
+                  <h5 class="font-semibold text-neutral text-sm mb-1">Governance Anchors</h5>
+                  <p class="text-xs text-neutral/70">Connect to trusted institutions like central banks</p>
+                </div>
+                <div class="bg-gray-50 p-3 rounded">
+                  <h5 class="font-semibold text-neutral text-sm mb-1">Interoperability Anchors</h5>
+                  <p class="text-xs text-neutral/70">Enable cross-chain functionality with other networks</p>
+                </div>
+                <div class="bg-gray-50 p-3 rounded">
+                  <h5 class="font-semibold text-neutral text-sm mb-1">Veracity Anchors</h5>
+                  <p class="text-xs text-neutral/70">Verify real-world data integrity and authenticity</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Structural Safeguards -->
+          <div class="bg-white rounded-lg p-8 shadow-lg">
+            <h3 class="font-canela text-2xl font-semibold text-primary mb-6">Structural Safeguards &amp; No Switch Off Policy</h3>
+
+            <div class="grid md:grid-cols-2 gap-8">
+              <div>
+                <h4 class="font-semibold text-primary mb-4">
+                  <i class="fas fa-lock mr-2"></i>Immutable Foundations
+                </h4>
+                <ul class="space-y-3 text-sm">
+                  <li class="flex items-start">
+                    <i class="fas fa-times-circle text-accent mr-2 mt-1 text-xs"></i>
+                    <span>Cannot add or remove Eight Foundational Pillars</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-times-circle text-accent mr-2 mt-1 text-xs"></i>
+                    <span>Cannot change causal sequence of actions</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-times-circle text-accent mr-2 mt-1 text-xs"></i>
+                    <span>Cannot weaken Goukassian Principle</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 class="font-semibold text-secondary mb-4">
+                  <i class="fas fa-infinity mr-2"></i>No Switch Off Policy
+                </h4>
+                <p class="text-sm text-neutral/70 mb-4">
+                  Explicit prohibition on creating any system off-switch, ensuring continuity and resistance to shutdown attempts from internal or external pressures.
+                </p>
+
+                <div class="bg-emerald-50 p-4 rounded-lg">
+                  <p class="text-xs text-secondary font-medium">
+                    &#34;Governance exists to maintain the TL framework, not mutate it into something else.&#34;
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+              <p class="text-sm text-neutral">
+                <strong>Reference:</strong>
+                <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">Ternary Logic Framework Documentation</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Governance Relationship -->
+      <section id="governance-relationship" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-canela text-4xl font-light text-primary mb-12">Framework Governance vs. Individual Contracts</h2>
+
+          <div class="grid lg:grid-cols-2 gap-12 mb-12">
+            <div>
+              <h3 class="font-canela text-2xl font-semibold text-primary mb-6">Centralized Oversight Model</h3>
+
+              <p class="text-lg leading-relaxed mb-6">
+                Unlike many blockchain platforms that grant high autonomy to individual smart contracts, TL adopts a centralized, preventative approach. All smart contract governance is managed at the framework level by the tri-cameral model, ensuring consistency but potentially limiting contract-level agility.
+              </p>
+
+              <div class="highlight-box p-6 rounded-lg mb-6">
+                <h4 class="font-semibold text-primary mb-3">Key Implication</h4>
+                <p class="text-sm leading-relaxed">
+                  Every contract modification requires full framework-level governance cycle, creating potential bottlenecks but ensuring high standards of compliance and security.
+                </p>
+              </div>
+
+              <div class="pull-quote">
+                &#34;The absence of distinct governance for individual contracts suggests they are treated as integral components subject to centralized oversight.&#34;
+              </div>
+            </div>
+
+            <div>
+              <img src="https://kimi-web-img.moonshot.cn/img/cdn.shopify.com/b17c0a6eb7a7842a86976eba857cd29590f5250f.webp" alt="Diagram comparing centralized and decentralized smart contract governance" class="w-full h-auto rounded-lg shadow-lg" size="medium" aspect="wide" query="abstract smart contract governance oversight comparison" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+            </div>
+          </div>
+
+          <!-- Priestess Algorithm -->
+          <div class="bg-base-200 rounded-lg p-8 mb-12">
+            <h3 class="font-canela text-2xl font-semibold text-primary mb-6">The Enigmatic &#34;Priestess Algorithm&#34;</h3>
+
+            <div class="grid md:grid-cols-2 gap-8">
+              <div>
+                <h4 class="font-semibold text-primary mb-4">
+                  <i class="fas fa-question-circle mr-2"></i>Unclarified Concept
+                </h4>
+                <p class="text-sm text-neutral/70 mb-4">
+                  Documentation mentions a &#34;Priestess algorithm&#34; for contract governance, described as evaluating &#34;weighted proofs&#34; to form &#34;contract governance.&#34; However, its function remains undefined.
+                </p>
+
+                <div class="bg-yellow-50 p-4 rounded-lg">
+                  <p class="text-xs text-yellow-800">
+                    <strong>Research Gap:</strong> Critical need for clarification on this component&#39;s role and implementation within the governance architecture.
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <h4 class="font-semibold text-secondary mb-4">
+                  <i class="fas fa-lightbulb mr-2"></i>Potential Applications
+                </h4>
+                <ul class="space-y-3 text-sm">
+                  <li class="flex items-start">
+                    <i class="fas fa-brain text-secondary mr-2 mt-1 text-xs"></i>
+                    <span>Algorithmic governance for nuanced decision-making</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-balance-scale text-secondary mr-2 mt-1 text-xs"></i>
+                    <span>Automated enforcement through moderation ledger</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-weight text-secondary mr-2 mt-1 text-xs"></i>
+                    <span>Weighted proof evaluation beyond binary logic</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+              <p class="text-sm text-neutral">
+                <strong>Reference:</strong>
+                <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">Ternary Logic Framework Documentation</a>
+              </p>
+            </div>
+          </div>
+
+          <!-- Treasury Role -->
+          <div class="bg-white border border-base-300 rounded-lg p-8">
+            <h3 class="font-canela text-2xl font-semibold text-primary mb-6">Smart Contract Treasury: Financial Enabler</h3>
+
+            <div class="grid md:grid-cols-3 gap-6">
+              <div class="text-center">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-coins text-primary text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-primary mb-2">Funding Role</h4>
+                <p class="text-sm text-neutral/70">Provides financial resources for approved smart contract development and deployment</p>
+              </div>
+
+              <div class="text-center">
+                <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-users text-secondary text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-secondary mb-2">Community Support</h4>
+                <p class="text-sm text-neutral/70">Supports projects leveraging TL&#39;s unique features and contributing to ecosystem growth</p>
+              </div>
+
+              <div class="text-center">
+                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-handshake text-neutral text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-neutral mb-2">Strategic Alignment</h4>
+                <p class="text-sm text-neutral/70">Funds projects aligned with TL&#39;s core principles and long-term vision</p>
+              </div>
+            </div>
+
+            <div class="mt-8 p-4 bg-blue-50 rounded-lg">
+              <p class="text-sm text-primary">
+                <strong>Important Distinction:</strong> The Treasury funds but does not direct. Technical and ethical oversight remains with the Technical Council and Stewardship Custodians respectively.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Comparative Analysis -->
+      <section id="comparative-analysis" class="py-16 bg-base-200">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-canela text-4xl font-light text-primary mb-12">Comparative Governance Analysis</h2>
+
+          <div class="bg-white rounded-lg p-8 shadow-lg mb-8">
+            <h3 class="font-canela text-2xl font-semibold text-primary mb-6">Governance Models Comparison</h3>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-base-300">
+                    <th class="text-left py-4 px-4 font-semibold text-primary">Feature</th>
+                    <th class="text-left py-4 px-4 font-semibold text-primary">Ternary Logic</th>
+                    <th class="text-left py-4 px-4 font-semibold text-primary">Token-Based DAOs</th>
+                    <th class="text-left py-4 px-4 font-semibold text-primary">Off-Chain Governance</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-base-200">
+                  <tr>
+                    <td class="py-4 px-4 font-medium text-neutral">Decision-Making Body</td>
+                    <td class="py-4 px-4 text-neutral/70">Tri-cameral model: Technical Council, Stewardship Custodians, Smart Contract Treasury</td>
+                    <td class="py-4 px-4 text-neutral/70">Token holders with voting power proportional to stake</td>
+                    <td class="py-4 px-4 text-neutral/70">Informal consensus among developers and stakeholders</td>
+                  </tr>
+                  <tr>
+                    <td class="py-4 px-4 font-medium text-neutral">Voting Mechanism</td>
+                    <td class="py-4 px-4 text-neutral/70">Not applicable for individual contracts. Framework-level decisions require 75% quorum</td>
+                    <td class="py-4 px-4 text-neutral/70">On-chain, token-weighted voting (&#34;one token, one vote&#34;)</td>
+                    <td class="py-4 px-4 text-neutral/70">No formal on-chain voting; social consensus processes</td>
+                  </tr>
+                  <tr>
+                    <td class="py-4 px-4 font-medium text-neutral">Primary Focus</td>
+                    <td class="py-4 px-4 text-neutral/70">Preventative oversight, institutional stability, ethical compliance (&#34;No Spy,&#34; &#34;No Weapon&#34;)</td>
+                    <td class="py-4 px-4 text-neutral/70">Decentralization and community-driven decision-making</td>
+                    <td class="py-4 px-4 text-neutral/70">Technical soundness and flexibility driven by developers</td>
+                  </tr>
+                  <tr>
+                    <td class="py-4 px-4 font-medium text-neutral">Key Risks</td>
+                    <td class="py-4 px-4 text-neutral/70">Potential bottlenecks, lack of agility, concentration of power in governing bodies</td>
+                    <td class="py-4 px-4 text-neutral/70">Plutocracy (&#34;whale dominance&#34;), voter apathy, governance attacks</td>
+                    <td class="py-4 px-4 text-neutral/70">Lack of transparency, potential developer centralization</td>
+                  </tr>
+                  <tr>
+                    <td class="py-4 px-4 font-medium text-neutral">Upgrade Process</td>
+                    <td class="py-4 px-4 text-neutral/70">Multi-stage process: Proposal, Ratification, Funding, Deployment</td>
+                    <td class="py-4 px-4 text-neutral/70">On-chain proposal and voting by token holders</td>
+                    <td class="py-4 px-4 text-neutral/70">Informal consensus and voluntary software adoption</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+              <p class="text-sm text-neutral">
+                <strong>References:</strong>
+                <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">Ternary Logic Framework</a> |
+                <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5700283" class="citation-link">SSRN Governance Analysis</a> |
+                <a href="https://metana.io/blog/governance-attacks-in-smart-contracts/" class="citation-link">Governance Attack Risks</a>
+              </p>
+            </div>
+          </div>
+
+          <!-- Key Advantages -->
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-lg p-8 shadow-lg">
+              <h3 class="font-canela text-xl font-semibold text-primary mb-6">
+                <i class="fas fa-thumbs-up mr-2"></i>TL Advantages
+              </h3>
+
+              <ul class="space-y-4">
+                <li class="flex items-start">
+                  <i class="fas fa-shield text-primary mr-3 mt-1"></i>
+                  <div>
+                    <h5 class="font-semibold text-primary mb-1">Preventative Oversight</h5>
+                    <p class="text-sm text-neutral/70">Proactive compliance reduces regulatory risk and operational burdens</p>
+                  </div>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-balance-scale text-primary mr-3 mt-1"></i>
+                  <div>
+                    <h5 class="font-semibold text-primary mb-1">Institutional Grade</h5>
+                    <p class="text-sm text-neutral/70">Designed for critical infrastructure like CBDCs and capital markets</p>
+                  </div>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-users text-primary mr-3 mt-1"></i>
+                  <div>
+                    <h5 class="font-semibold text-primary mb-1">Expert Governance</h5>
+                    <p class="text-sm text-neutral/70">Technical and ethical decisions made by qualified specialists</p>
+                  </div>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-infinity text-primary mr-3 mt-1"></i>
+                  <div>
+                    <h5 class="font-semibold text-primary mb-1">System Continuity</h5>
+                    <p class="text-sm text-neutral/70">No switch off policy ensures permanent infrastructure</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-white rounded-lg p-8 shadow-lg">
+              <h3 class="font-canela text-xl font-semibold text-secondary mb-6">
+                <i class="fas fa-exclamation-triangle mr-2"></i>Potential Challenges
+              </h3>
+
+              <ul class="space-y-4">
+                <li class="flex items-start">
+                  <i class="fas fa-clock text-secondary mr-3 mt-1"></i>
+                  <div>
+                    <h5 class="font-semibold text-secondary mb-1">Governance Bottlenecks</h5>
+                    <p class="text-sm text-neutral/70">Full governance cycle for every contract change may slow innovation</p>
+                  </div>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-question-circle text-secondary mr-3 mt-1"></i>
+                  <div>
+                    <h5 class="font-semibold text-secondary mb-1">Implementation Gaps</h5>
+                    <p class="text-sm text-neutral/70">Unclear contract governance mechanisms need clarification</p>
+                  </div>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-user-tie text-secondary mr-3 mt-1"></i>
+                  <div>
+                    <h5 class="font-semibold text-secondary mb-1">Centralization Risks</h5>
+                    <p class="text-sm text-neutral/70">Power concentration in governing bodies requires careful design</p>
+                  </div>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-arrows-alt text-secondary mr-3 mt-1"></i>
+                  <div>
+                    <h5 class="font-semibold text-secondary mb-1">Flexibility Trade-offs</h5>
+                    <p class="text-sm text-neutral/70">Less contract autonomy may limit certain use cases</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Conclusion -->
+      <section class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-4xl">
+          <h2 class="font-canela text-4xl font-light text-primary mb-8">Conclusion</h2>
+
+          <div class="prose prose-lg max-w-none">
+            <p class="text-lg leading-relaxed mb-6">
+              The Ternary Logic framework&#39;s governance architecture represents a sophisticated evolution in blockchain governance design. By implementing a <strong>hybrid, tri-cameral model</strong> that prioritizes expert oversight over decentralized voting, TL addresses key challenges in institutional-grade blockchain applications.
+            </p>
+
+            <div class="highlight-box p-8 rounded-lg mb-8">
+              <h3 class="font-canela text-xl font-semibold text-primary mb-4">Key Innovations</h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h4 class="font-semibold text-primary mb-2">Embedded Compliance</h4>
+                  <p class="text-sm text-neutral/70">Transforming regulatory adherence from reactive enforcement to proactive architectural feature</p>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-secondary mb-2">Preventative Oversight</h4>
+                  <p class="text-sm text-neutral/70">Expert-led governance ensuring ethical alignment and technical soundness before deployment</p>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-neutral mb-2">System Continuity</h4>
+                  <p class="text-sm text-neutral/70">Structural limits and no switch off policy ensuring permanent infrastructure</p>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-primary mb-2">Tripartite Balance</h4>
+                  <p class="text-sm text-neutral/70">Technical, ethical, and financial governance ensuring comprehensive oversight</p>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-lg leading-relaxed mb-6">
+              While the framework&#39;s approach to individual smart contract governance requires further clarification—particularly the role of the enigmatic &#34;Priestess Algorithm&#34;—the overall architecture demonstrates a mature understanding of the governance requirements for critical financial infrastructure.
+            </p>
+
+            <div class="pull-quote">
+              &#34;The Ternary Logic governance model offers a compelling blueprint for institutional blockchain applications requiring high levels of accountability, security, and ethical alignment.&#34;
+            </div>
+
+            <p class="text-lg leading-relaxed">
+              As the blockchain ecosystem continues to mature, TL&#39;s emphasis on <strong>embedded compliance</strong> and <strong>preventative oversight</strong> may well represent the next evolutionary step in governance design, particularly for applications in regulated industries and critical infrastructure.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="py-12 bg-neutral text-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <div class="grid md:grid-cols-3 gap-8">
+            <div>
+              <h3 class="font-canela text-xl font-semibold mb-4">Research Sources</h3>
+              <div class="space-y-2 text-sm text-white/70">
+                <div>
+                  <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link text-white/90">Ternary Logic Framework Documentation</a>
+                </div>
+                <div>
+                  <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5700283" class="citation-link text-white/90">SSRN Governance Analysis</a>
+                </div>
+                <div>
+                  <a href="https://metana.io/blog/governance-attacks-in-smart-contracts/" class="citation-link text-white/90">Governance Attack Analysis</a>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-canela text-xl font-semibold mb-4">Key Concepts</h3>
+              <div class="text-sm text-white/70 space-y-1">
+                <div>Tri-Cameral Governance</div>
+                <div>Embedded Compliance</div>
+                <div>Goukassian Principle</div>
+                <div>Epistemic Hold</div>
+                <div>No Switch Off Policy</div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-canela text-xl font-semibold mb-4">Research Date</h3>
+              <div class="text-sm text-white/70">
+                <p>January 2026</p>
+                <p class="mt-2">Governance Architecture Analysis</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-t border-white/20 mt-8 pt-8 text-center text-sm text-white/60">
+            <p>This research report analyzes the governance architecture for Ternary Logic smart contracts based on available documentation and framework specifications.</p>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <!-- Mobile TOC Toggle -->
+    <button id="tocToggle" class="fixed top-4 left-4 z-50 lg:hidden bg-primary text-white p-3 rounded-full shadow-lg">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <script>
+        // Initialize Mermaid
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'base',
+                themeVariables: {
+                    primaryColor: '#ffffff',
+                    primaryTextColor: '#374151',
+                    primaryBorderColor: '#1e40af',
+                    lineColor: '#374151',
+                    secondaryColor: '#f8fafc',
+                    tertiaryColor: '#f1f5f9',
+                    background: '#ffffff',
+                    mainBkg: '#ffffff',
+                    secondBkg: '#f8fafc',
+                    tertiaryBkg: '#f1f5f9',
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '14px'
+                },
+                flowchart: {
+                    useMaxWidth: true,
+                    htmlLabels: true,
+                    curve: 'basis'
+                }
+            });
+
+            // Initialize Mermaid Controls for zoom and pan
+            initializeMermaidControls();
+        });
+
+        // Initialize Mermaid Controls for zoom and pan
+        function initializeMermaidControls() {
+            const containers = document.querySelectorAll('.mermaid-container');
+
+            containers.forEach(container => {
+            const mermaidElement = container.querySelector('.mermaid');
+            let scale = 1;
+            let isDragging = false;
+            let startX, startY, translateX = 0, translateY = 0;
+
+            // 触摸相关状态
+            let isTouch = false;
+            let touchStartTime = 0;
+            let initialDistance = 0;
+            let initialScale = 1;
+            let isPinching = false;
+
+            // Zoom controls
+            const zoomInBtn = container.querySelector('.zoom-in');
+            const zoomOutBtn = container.querySelector('.zoom-out');
+            const resetBtn = container.querySelector('.reset-zoom');
+            const fullscreenBtn = container.querySelector('.fullscreen');
+
+            function updateTransform() {
+                mermaidElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+                if (scale > 1) {
+                container.classList.add('zoomed');
+                } else {
+                container.classList.remove('zoomed');
+                }
+
+                mermaidElement.style.cursor = isDragging ? 'grabbing' : 'grab';
+            }
+
+            if (zoomInBtn) {
+                zoomInBtn.addEventListener('click', () => {
+                scale = Math.min(scale * 1.25, 4);
+                updateTransform();
+                });
+            }
+
+            if (zoomOutBtn) {
+                zoomOutBtn.addEventListener('click', () => {
+                scale = Math.max(scale / 1.25, 0.3);
+                if (scale <= 1) {
+                    translateX = 0;
+                    translateY = 0;
+                }
+                updateTransform();
+                });
+            }
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => {
+                scale = 1;
+                translateX = 0;
+                translateY = 0;
+                updateTransform();
+                });
+            }
+
+            if (fullscreenBtn) {
+                fullscreenBtn.addEventListener('click', () => {
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                } else if (container.msRequestFullscreen) {
+                    container.msRequestFullscreen();
+                }
+                });
+            }
+
+            // Mouse Events
+            mermaidElement.addEventListener('mousedown', (e) => {
+                if (isTouch) return; // 如果是触摸设备，忽略鼠标事件
+
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                mermaidElement.style.cursor = 'grabbing';
+                updateTransform();
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging && !isTouch) {
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                updateTransform();
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (isDragging && !isTouch) {
+                isDragging = false;
+                mermaidElement.style.cursor = 'grab';
+                updateTransform();
+                }
+            });
+
+            document.addEventListener('mouseleave', () => {
+                if (isDragging && !isTouch) {
+                isDragging = false;
+                mermaidElement.style.cursor = 'grab';
+                updateTransform();
+                }
+            });
+
+            // 获取两点之间的距离
+            function getTouchDistance(touch1, touch2) {
+                return Math.hypot(
+                touch2.clientX - touch1.clientX,
+                touch2.clientY - touch1.clientY
+                );
+            }
+
+            // Touch Events - 触摸事件处理
+            mermaidElement.addEventListener('touchstart', (e) => {
+                isTouch = true;
+                touchStartTime = Date.now();
+
+                if (e.touches.length === 1) {
+                // 单指拖动
+                isPinching = false;
+                isDragging = true;
+
+                const touch = e.touches[0];
+                startX = touch.clientX - translateX;
+                startY = touch.clientY - translateY;
+
+                } else if (e.touches.length === 2) {
+                // 双指缩放
+                isPinching = true;
+                isDragging = false;
+
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+                initialDistance = getTouchDistance(touch1, touch2);
+                initialScale = scale;
+                }
+
+                e.preventDefault();
+            }, { passive: false });
+
+            mermaidElement.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 1 && isDragging && !isPinching) {
+                // 单指拖动
+                const touch = e.touches[0];
+                translateX = touch.clientX - startX;
+                translateY = touch.clientY - startY;
+                updateTransform();
+
+                } else if (e.touches.length === 2 && isPinching) {
+                // 双指缩放
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+                const currentDistance = getTouchDistance(touch1, touch2);
+
+                if (initialDistance > 0) {
+                    const newScale = Math.min(Math.max(
+                    initialScale * (currentDistance / initialDistance),
+                    0.3
+                    ), 4);
+                    scale = newScale;
+                    updateTransform();
+                }
+                }
+
+                e.preventDefault();
+            }, { passive: false });
+
+            mermaidElement.addEventListener('touchend', (e) => {
+                // 重置状态
+                if (e.touches.length === 0) {
+                isDragging = false;
+                isPinching = false;
+                initialDistance = 0;
+
+                // 延迟重置isTouch，避免鼠标事件立即触发
+                setTimeout(() => {
+                    isTouch = false;
+                }, 100);
+                } else if (e.touches.length === 1 && isPinching) {
+                // 从双指变为单指，切换为拖动模式
+                isPinching = false;
+                isDragging = true;
+
+                const touch = e.touches[0];
+                startX = touch.clientX - translateX;
+                startY = touch.clientY - translateY;
+                }
+
+                updateTransform();
+            });
+
+            mermaidElement.addEventListener('touchcancel', (e) => {
+                isDragging = false;
+                isPinching = false;
+                initialDistance = 0;
+
+                setTimeout(() => {
+                isTouch = false;
+                }, 100);
+
+                updateTransform();
+            });
+
+            // Enhanced wheel zoom with better center point handling
+            container.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const rect = container.getBoundingClientRect();
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                const newScale = Math.min(Math.max(scale * delta, 0.3), 4);
+
+                // Adjust translation to zoom towards center
+                if (newScale !== scale) {
+                const scaleDiff = newScale / scale;
+                translateX = translateX * scaleDiff;
+                translateY = translateY * scaleDiff;
+                scale = newScale;
+
+                if (scale <= 1) {
+                    translateX = 0;
+                    translateY = 0;
+                }
+
+                updateTransform();
+                }
+            });
+
+            // Initialize display
+            updateTransform();
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close mobile TOC after clicking
+                    if (window.innerWidth <= 1024) {
+                        document.querySelector('.toc-fixed').classList.remove('open');
+                    }
+                }
+            });
+        });
+
+        // Active section highlighting in TOC
+        const sections = document.querySelectorAll('section[id]');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        function updateActiveSection() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${current}`) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveSection);
+        updateActiveSection();
+
+        // Mobile TOC toggle
+        document.getElementById('tocToggle').addEventListener('click', function() {
+            document.querySelector('.toc-fixed').classList.toggle('open');
+        });
+
+        // Close mobile TOC when clicking outside
+        document.addEventListener('click', function(e) {
+            const toc = document.querySelector('.toc-fixed');
+            const toggle = document.getElementById('tocToggle');
+            
+            if (window.innerWidth <= 1024 && 
+                !toc.contains(e.target) && 
+                !toggle.contains(e.target) && 
+                toc.classList.contains('open')) {
+                toc.classList.remove('open');
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const toc = document.querySelector('.toc-fixed');
+            if (window.innerWidth > 1024) {
+                // On large screens, remove the open class (if present) because we don't need it.
+                toc.classList.remove('open');
+            }
+        });
+    </script>
+  
+
+</body></html>
