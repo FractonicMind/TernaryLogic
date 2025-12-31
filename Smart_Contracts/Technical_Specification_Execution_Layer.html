@@ -1,0 +1,1125 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Specification: The Ternary Logic (TL) Smart Contract Execution Layer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e3a8a',
+                        secondary: '#475569',
+                        accent: '#64748b',
+                        neutral: '#f8fafc',
+                        'base-100': '#ffffff',
+                        'base-content': '#1f2937'
+                    },
+                    fontFamily: {
+                        'display': ['Georgia', 'serif'],
+                        'body': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        .text-shadow {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .citation-link {
+            color: #1e3a8a;
+            text-decoration: none;
+            border-bottom: 1px dotted #1e3a8a;
+            transition: all 0.2s ease;
+        }
+        .citation-link:hover {
+            background-color: #f1f5f9;
+            border-bottom-style: solid;
+        }
+        .toc-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+        }
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+        .toc-link {
+            display: block;
+            padding: 0.5rem 0;
+            color: #475569;
+            text-decoration: none;
+            font-size: 0.875rem;
+            line-height: 1.4;
+            border-left: 2px solid transparent;
+            padding-left: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        .toc-link:hover {
+            color: #1e3a8a;
+            border-left-color: #1e3a8a;
+            background-color: #f8fafc;
+        }
+        .toc-link.active {
+            color: #1e3a8a;
+            border-left-color: #1e3a8a;
+            background-color: #f1f5f9;
+            font-weight: 500;
+        }
+        @media (max-width: 1024px) {
+            .toc-fixed {
+                display: none;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+        .code-block {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+        .state-box {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .state-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .pillar-card {
+            transition: all 0.3s ease;
+        }
+        .pillar-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+  <base target="_blank">
+</head>
+
+  <body class="bg-neutral font-body text-base-content overflow-x-hidden">
+    <!-- Fixed Table of Contents -->
+    <nav class="toc-fixed">
+      <div class="mb-6">
+        <h3 class="font-display font-semibold text-lg text-primary mb-4">Table of Contents</h3>
+      </div>
+      <div class="space-y-1">
+        <a href="#introduction" class="toc-link">1. Introduction</a>
+        <a href="#core-principles" class="toc-link">2. Core Principles</a>
+        <div class="ml-4 space-y-1">
+          <a href="#three-states" class="toc-link text-xs">2.1 Three Operational States</a>
+          <a href="#eight-pillars" class="toc-link text-xs">2.2 Eight Architectural Pillars</a>
+          <a href="#governance-trinity" class="toc-link text-xs">2.3 Governance Trinity</a>
+          <a href="#four-mandates" class="toc-link text-xs">2.4 Four Mandates</a>
+        </div>
+        <a href="#enforcement-layer" class="toc-link">3. Enforcement Layer</a>
+        <div class="ml-4 space-y-1">
+          <a href="#executioner-role" class="toc-link text-xs">3.1 The Executioner</a>
+          <a href="#state-machine" class="toc-link text-xs">3.2 State Machine Architecture</a>
+          <a href="#failure-modes" class="toc-link text-xs">3.3 Failure Modes</a>
+        </div>
+        <a href="#implementation" class="toc-link">4. Technical Implementation</a>
+        <a href="#triple-entry" class="toc-link">5. Triple-Entry Accounting</a>
+        <a href="#governance" class="toc-link">6. Governance &amp; Permissioning</a>
+        <a href="#applicability" class="toc-link">7. Cross-Domain Applications</a>
+        <a href="#conclusion" class="toc-link">8. Conclusion</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Hero Section -->
+      <section class="hero-gradient min-h-screen flex items-center">
+        <div class="container mx-auto px-6 lg:px-12">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <!-- Text Content -->
+            <div class="lg:col-span-7">
+              <div class="mb-6">
+                <span class="inline-block px-4 py-2 bg-primary/10 text-primary text-sm font-medium rounded-full">
+                  Technical Specification
+                </span>
+              </div>
+              <h1 class="font-display text-4xl sm:text-5xl lg:text-7xl font-bold text-primary mb-6 leading-tight text-shadow">
+                The Ternary Logic Smart Contract
+                <span class="italic text-secondary">Execution Layer</span>
+              </h1>
+              <p class="text-lg sm:text-xl text-secondary mb-8 leading-relaxed max-w-2xl">
+                A novel smart contract architecture introducing a third intermediate state—
+                <strong>Epistemic Hold (0)</strong>—to manage uncertainty and enforce verifiable prudence in economic and governance systems.
+              </p>
+              <div class="flex flex-col gap-4">
+                <div class="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-slate-200">
+                  <h3 class="font-semibold text-primary mb-2">Core Innovation</h3>
+                  <p class="text-sm text-secondary">Moves beyond binary pass/fail logic by creating a structured, auditable pause for verification when data is ambiguous or incomplete.</p>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-slate-200">
+                  <h3 class="font-semibold text-primary mb-2">Paradigm Shift</h3>
+                  <p class="text-sm text-secondary">From &#34;Trust&#34; in human promises to &#34;Verification&#34; through cryptographic certainty.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Visual Element -->
+            <div class="lg:col-span-5">
+              <div class="relative">
+                <img src="https://kimi-web-img.moonshot.cn/img/i.ytimg.com/7d82ee095a74354db6ee16d5765648f84f2f288e.jpg" alt="Ternary logic state machine diagram" class="w-full rounded-2xl shadow-2xl" size="medium" aspect="wide" query="ternary logic state machine" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent rounded-2xl"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Introduction Section -->
+      <section id="introduction" class="py-20 bg-white">
+        <div class="container mx-auto px-6 lg:px-12">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-display text-4xl font-bold text-primary mb-8">1. Introduction</h2>
+            <div class="prose prose-lg max-w-none">
+              <p class="text-lg text-secondary leading-relaxed mb-6">
+                The Ternary Logic (TL) Smart Contract Execution Layer represents a fundamental advancement in blockchain-based economic and governance systems. By introducing a third, intermediate state—<strong>Epistemic Hold (0)</strong>—this architecture addresses a critical gap in traditional binary (pass/fail) smart contract logic.
+              </p>
+              <p class="text-lg text-secondary leading-relaxed mb-6">
+                Traditional smart contracts operate on a binary paradigm: transactions either succeed or fail. This model, while efficient for simple transfers, proves inadequate for complex scenarios involving uncertainty, ambiguity, or the need for human judgment. The TL framework introduces a structured pause mechanism that allows for verification and dispute resolution when data is incomplete or contentious.
+              </p>
+              <div class="bg-slate-50 rounded-lg p-6 my-8">
+                <h3 class="font-display text-xl font-semibold text-primary mb-4">System Overview</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                  <div class="text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <i class="fas fa-check text-green-600 text-xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-primary mb-2">Proceed (+1)</h4>
+                    <p class="text-sm text-secondary">Transaction finalized, assets transferred</p>
+                  </div>
+                  <div class="text-center">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <i class="fas fa-pause text-yellow-600 text-xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-primary mb-2">Epistemic Hold (0)</h4>
+                    <p class="text-sm text-secondary">Transaction suspended, awaiting verification</p>
+                  </div>
+                  <div class="text-center">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <i class="fas fa-times text-red-600 text-xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-primary mb-2">Refuse (-1)</h4>
+                    <p class="text-sm text-secondary">Transaction reverted, assets returned</p>
+                  </div>
+                </div>
+              </div>
+              <p class="text-lg text-secondary leading-relaxed">
+                This specification details the complete architecture of the TL system, including its eight core pillars, tripartite governance model, and four non-negotiable hard constraints. The framework is designed to create an &#34;Economic Constitution&#34; where the rules of value management and state enforcement are embedded in transparent, immutable code.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Core Principles Section -->
+      <section id="core-principles" class="py-20 bg-slate-50">
+        <div class="container mx-auto px-6 lg:px-12">
+          <div class="max-w-6xl mx-auto">
+            <h2 class="font-display text-4xl font-bold text-primary mb-12 text-center">2. Core Architectural Principles</h2>
+
+            <!-- Three States -->
+            <div id="three-states" class="mb-16">
+              <h3 class="font-display text-2xl font-semibold text-primary mb-8">2.1 The Three Operational States</h3>
+              <div class="grid lg:grid-cols-3 gap-8">
+                <div class="state-box bg-white rounded-xl p-6 shadow-lg border-l-4 border-green-500">
+                  <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                      <span class="text-green-600 font-bold text-xl">+1</span>
+                    </div>
+                    <h4 class="font-display text-xl font-semibold text-primary">Proceed</h4>
+                  </div>
+                  <p class="text-secondary mb-4">Transaction finalized, assets transferred, and ledger updated. Represents cryptographic certainty and irreversible completion.</p>
+                  <div class="text-sm text-accent">
+                    <strong>Triggers:</strong> Oracle confirmation, governance approval, condition fulfillment
+                  </div>
+                </div>
+
+                <div class="state-box bg-white rounded-xl p-6 shadow-lg border-l-4 border-yellow-500">
+                  <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
+                      <span class="text-yellow-600 font-bold text-xl">0</span>
+                    </div>
+                    <h4 class="font-display text-xl font-semibold text-primary">Epistemic Hold</h4>
+                  </div>
+                  <p class="text-secondary mb-4">Transaction suspended, assets locked in escrow. Systematic pause for verification when data is ambiguous or incomplete.</p>
+                  <div class="text-sm text-accent">
+                    <strong>Triggers:</strong> Oracle conflict, stakeholder dispute, insufficient data
+                  </div>
+                </div>
+
+                <div class="state-box bg-white rounded-xl p-6 shadow-lg border-l-4 border-red-500">
+                  <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                      <span class="text-red-600 font-bold text-xl">-1</span>
+                    </div>
+                    <h4 class="font-display text-xl font-semibold text-primary">Refuse</h4>
+                  </div>
+                  <p class="text-secondary mb-4">Transaction reverted, assets returned. Definitive rejection with potential gas/fee penalties.</p>
+                  <div class="text-sm text-accent">
+                    <strong>Triggers:</strong> Governance rejection, mandate violation, timeout expiration
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Eight Pillars -->
+            <div id="eight-pillars" class="mb-16">
+              <h3 class="font-display text-2xl font-semibold text-primary mb-8">2.2 The Eight Architectural Pillars</h3>
+              <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="pillar-card bg-white rounded-lg p-6 shadow-md">
+                  <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-pause-circle text-blue-600 text-xl"></i>
+                  </div>
+                  <h4 class="font-semibold text-primary mb-2">Epistemic Hold</h4>
+                  <p class="text-sm text-secondary">Automatic pause triggered by uncertainty, not administrative fiat</p>
+                </div>
+
+                <div class="pillar-card bg-white rounded-lg p-6 shadow-md">
+                  <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-book text-green-600 text-xl"></i>
+                  </div>
+                  <h4 class="font-semibold text-primary mb-2">Immutable Ledger</h4>
+                  <p class="text-sm text-secondary">Structured Log events ensuring tamper-proof history</p>
+                </div>
+
+                <div class="pillar-card bg-white rounded-lg p-6 shadow-md">
+                  <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-shield-alt text-purple-600 text-xl"></i>
+                  </div>
+                  <h4 class="font-semibold text-primary mb-2">Goukassian Principle</h4>
+                  <p class="text-sm text-secondary">Defaults to &#34;Hold&#34; (0) in ambiguity, preventing failure modes</p>
+                </div>
+
+                <div class="pillar-card bg-white rounded-lg p-6 shadow-md">
+                  <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-file-alt text-orange-600 text-xl"></i>
+                  </div>
+                  <h4 class="font-semibold text-primary mb-2">Decision Logs</h4>
+                  <p class="text-sm text-secondary">Mandatory emit Decision(...) for every state change</p>
+                </div>
+
+                <div class="pillar-card bg-white rounded-lg p-6 shadow-md">
+                  <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-eye text-teal-600 text-xl"></i>
+                  </div>
+                  <h4 class="font-semibold text-primary mb-2">Economic Rights &amp; Transparency</h4>
+                  <p class="text-sm text-secondary">Public view functions for unrestricted auditability</p>
+                </div>
+
+                <div class="pillar-card bg-white rounded-lg p-6 shadow-md">
+                  <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-piggy-bank text-indigo-600 text-xl"></i>
+                  </div>
+                  <h4 class="font-semibold text-primary mb-2">Sustainable Capital Allocation</h4>
+                  <p class="text-sm text-secondary">Smart contract constraints preventing treasury drainage</p>
+                </div>
+
+                <div class="pillar-card bg-white rounded-lg p-6 shadow-md">
+                  <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-users text-red-600 text-xl"></i>
+                  </div>
+                  <h4 class="font-semibold text-primary mb-2">Hybrid Shield</h4>
+                  <p class="text-sm text-secondary">Multi-sig DAO interface for Stewardship Custodians</p>
+                </div>
+
+                <div class="pillar-card bg-white rounded-lg p-6 shadow-md">
+                  <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-anchor text-yellow-600 text-xl"></i>
+                  </div>
+                  <h4 class="font-semibold text-primary mb-2">Anchors</h4>
+                  <p class="text-sm text-secondary">block.timestamp and oracle hashes linking to reality</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Governance Trinity -->
+            <div id="governance-trinity" class="mb-16">
+              <h3 class="font-display text-2xl font-semibold text-primary mb-8">2.3 The Governance Trinity</h3>
+              <div class="bg-white rounded-xl p-8 shadow-lg">
+                <div class="grid md:grid-cols-3 gap-8">
+                  <div class="text-center">
+                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <i class="fas fa-cogs text-blue-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-display text-xl font-semibold text-primary mb-3">Technical Council</h4>
+                    <p class="text-secondary text-sm mb-4">Responsible for code upgrades, bug fixes, and protocol improvements with time-locked execution.</p>
+                    <div class="text-xs text-accent">
+                      <strong>Powers:</strong> Technical maintenance, security audits, interoperability
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <i class="fas fa-balance-scale text-green-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-display text-xl font-semibold text-primary mb-3">Stewardship Custodians</h4>
+                    <p class="text-secondary text-sm mb-4">Ethical guardians resolving disputes, enforcing mandates, and arbitrating State (0) transitions.</p>
+                    <div class="text-xs text-accent">
+                      <strong>Powers:</strong> Dispute resolution, mandate enforcement, operator certification
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <i class="fas fa-university text-purple-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-display text-xl font-semibold text-primary mb-3">Smart Contract Treasury</h4>
+                    <p class="text-secondary text-sm mb-4">Autonomous vault managing funds with programmed allocation rules and perpetual financial continuity.</p>
+                    <div class="text-xs text-accent">
+                      <strong>Powers:</strong> Fund management, allocation control, disbursement governance
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Four Mandates -->
+            <div id="four-mandates" class="mb-16">
+              <h3 class="font-display text-2xl font-semibold text-primary mb-8">2.4 The Four Mandates (Hard Constraints)</h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg p-6 shadow-md border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-primary mb-3 flex items-center">
+                    <i class="fas fa-user-secret text-blue-600 mr-3"></i>
+                    No Spy
+                  </h4>
+                  <p class="text-secondary text-sm">Zero-Knowledge proofs for privacy protection, prohibiting backdoor data collection or surveillance.</p>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 shadow-md border-l-4 border-red-500">
+                  <h4 class="font-semibold text-primary mb-3 flex items-center">
+                    <i class="fas fa-ban text-red-600 mr-3"></i>
+                    No Weapon
+                  </h4>
+                  <p class="text-secondary text-sm">Forbidden function calls and exclusion lists prohibiting harm-causing applications or malicious use.</p>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 shadow-md border-l-4 border-green-500">
+                  <h4 class="font-semibold text-primary mb-3 flex items-center">
+                    <i class="fas fa-file-alt text-green-600 mr-3"></i>
+                    No Log = No Action
+                  </h4>
+                  <p class="text-secondary text-sm">Modifier reverting transactions if logging fails, ensuring complete transparency and auditability.</p>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 shadow-md border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-primary mb-3 flex items-center">
+                    <i class="fas fa-power-off text-purple-600 mr-3"></i>
+                    No Switch Off
+                  </h4>
+                  <p class="text-secondary text-sm">Absence of selfdestruct or kill switches, ensuring perpetual operation and censorship resistance.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Enforcement Layer Section -->
+      <section id="enforcement-layer" class="py-20 bg-white">
+        <div class="container mx-auto px-6 lg:px-12">
+          <div class="max-w-6xl mx-auto">
+            <h2 class="font-display text-4xl font-bold text-primary mb-12 text-center">3. Smart Contract as Enforcement Layer</h2>
+
+            <div id="executioner-role" class="mb-16">
+              <h3 class="font-display text-2xl font-semibold text-primary mb-8">3.1 The Executioner: Role &amp; Responsibilities</h3>
+              <div class="bg-slate-50 rounded-xl p-8 mb-8">
+                <div class="grid lg:grid-cols-2 gap-8 items-center">
+                  <div>
+                    <h4 class="font-display text-xl font-semibold text-primary mb-4">Clear Separation of Concerns</h4>
+                    <p class="text-secondary mb-4">The smart contract serves as a deterministic <strong>&#34;Executioner&#34;</strong>—not an intelligent agent. It executes state transitions (+1, 0, -1) based on signed inputs from external decision-makers.</p>
+                    <div class="space-y-3">
+                      <div class="flex items-center">
+                        <i class="fas fa-brain text-blue-600 mr-3"></i>
+                        <span class="text-sm"><strong>Decision Layer:</strong> Off-chain intelligence (Oracles, AI, humans)</span>
+                      </div>
+                      <div class="flex items-center">
+                        <i class="fas fa-cogs text-green-600 mr-3"></i>
+                        <span class="text-sm"><strong>Enforcement Layer:</strong> On-chain, immutable execution</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <img src="https://kimi-web-img.moonshot.cn/img/csdl-images.ieeecomputer.org/b64a86e46bbc6bdb88c1275845bf91d08d71ddfe.gif" alt="Separation of decision-making and execution layers in smart contract architecture" class="rounded-lg shadow-lg" size="medium" aspect="wide" query="smart contract decision enforcement layers" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="state-machine" class="mb-16">
+              <h3 class="font-display text-2xl font-semibold text-primary mb-8">3.2 State Machine Architecture (FSM)</h3>
+              <div class="bg-white border border-slate-200 rounded-xl p-8 mb-8">
+                <h4 class="font-display text-xl font-semibold text-primary mb-6">State Transition Logic</h4>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm">
+                    <thead>
+                      <tr class="border-b border-slate-200">
+                        <th class="text-left py-3 px-4 font-semibold text-primary">Current State</th>
+                        <th class="text-left py-3 px-4 font-semibold text-primary">Action</th>
+                        <th class="text-left py-3 px-4 font-semibold text-primary">Next State</th>
+                      </tr>
+                    </thead>
+                    <tbody class="text-secondary">
+                      <tr class="border-b border-slate-100">
+                        <td class="py-3 px-4">`PROCEED`</td>
+                        <td class="py-3 px-4">`SUSPENDED`</td>
+                        <td class="py-3 px-4">`EPISTEMIC_HOLD`</td>
+                      </tr>
+                      <tr class="border-b border-slate-100">
+                        <td class="py-3 px-4">`EPISTEMIC_HOLD`</td>
+                        <td class="py-3 px-4">`EVIDENCE_RECEIVED`</td>
+                        <td class="py-3 px-4">`PROCEED`</td>
+                      </tr>
+                      <tr class="border-b border-slate-100">
+                        <td class="py-3 px-4">`EPISTEMIC_HOLD`</td>
+                        <td class="py-3 px-4">`TIMEOUT`</td>
+                        <td class="py-3 px-4">`REFUSE`</td>
+                      </tr>
+                      <tr>
+                        <td class="py-3 px-4">`REFUSE`</td>
+                        <td class="py-3 px-4">`NEW_PROPOSAL`</td>
+                        <td class="py-3 px-4">`PROCEED`</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="bg-blue-50 rounded-lg p-6">
+                <h4 class="font-semibold text-primary mb-3 flex items-center">
+                  <i class="fas fa-lock text-blue-600 mr-3"></i>
+                  Forbidden Transitions
+                </h4>
+                <p class="text-secondary text-sm">Critical security feature preventing invalid state transitions: `REFUSE` → `PROCEED` directly (requires new proposal), `PROCEED` → `REFUSE` without intermediate hold state.</p>
+              </div>
+            </div>
+
+            <div id="failure-modes" class="mb-16">
+              <h3 class="font-display text-2xl font-semibold text-primary mb-8">3.3 Failure Modes &amp; &#34;Fail-Secure&#34; Zero</h3>
+              <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-red-50 rounded-lg p-6">
+                  <h4 class="font-semibold text-primary mb-3 flex items-center">
+                    <i class="fas fa-exclamation-triangle text-red-600 mr-3"></i>
+                    Oracle Failure
+                  </h4>
+                  <p class="text-secondary text-sm">System transitions to State 0 (Hold) instead of proceeding with stale or manipulated data, preventing flash loan attacks.</p>
+                </div>
+
+                <div class="bg-yellow-50 rounded-lg p-6">
+                  <h4 class="font-semibold text-primary mb-3 flex items-center">
+                    <i class="fas fa-shield-alt text-yellow-600 mr-3"></i>
+                    System Stress
+                  </h4>
+                  <p class="text-secondary text-sm">Under any form of stress or ambiguity, the system defaults to Epistemic Hold, preventing irreversible actions.</p>
+                </div>
+
+                <div class="bg-green-50 rounded-lg p-6">
+                  <h4 class="font-semibold text-primary mb-3 flex items-center">
+                    <i class="fas fa-check-circle text-green-600 mr-3"></i>
+                    Security Guarantee
+                  </h4>
+                  <p class="text-secondary text-sm">&#34;Fail-secure&#34; design ensures assets remain locked and protected during system uncertainty or external attacks.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Implementation Section -->
+      <section id="implementation" class="py-20 bg-slate-50">
+        <div class="container mx-auto px-6 lg:px-12">
+          <div class="max-w-6xl mx-auto">
+            <h2 class="font-display text-4xl font-bold text-primary mb-12 text-center">4. Technical Implementation Specification</h2>
+
+            <div class="mb-12">
+              <h3 class="font-display text-2xl font-semibold text-primary mb-8">Solidity Implementation: Core States</h3>
+              <div class="code-block">
+                <pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract TernaryLogicSystem {
+    // Define the three operational states using an enum
+    enum TernaryState {
+        Proceed,        // Represents the (+1) state
+        EpistemicHold,  // Represents the (0) state
+        Refuse          // Represents the (-1) state
+    }
+
+    // Struct to represent a transaction with state
+    struct Transaction {
+        uint256 id;
+        address initiator;
+        uint256 amount;
+        TernaryState state;
+        uint256 holdDeadline;
+        bytes32 justificationHash;
+    }
+
+    // State management
+    mapping(uint256 =&gt; Transaction) public transactions;
+    uint256 public transactionCount;
+
+    // Event for state changes (Immutable Ledger)
+    event DecisionLog(
+        uint256 indexed decisionId,
+        address indexed initiator,
+        TernaryState previousState,
+        TernaryState newState,
+        bytes32 justificationHash,
+        uint256 timestamp,
+        string reason
+    );
+
+    // Create new transaction in Proceed state
+    function createTransaction(
+        uint256 amount,
+        bytes32 justificationHash
+    ) public returns (uint256) {
+        transactionCount++;
+        uint256 newId = transactionCount;
+        
+        transactions[newId] = Transaction({
+            id: newId,
+            initiator: msg.sender,
+            amount: amount,
+            state: TernaryState.Proceed,
+            holdDeadline: 0,
+            justificationHash: justificationHash
+        });
+
+        emit DecisionLog(
+            newId,
+            msg.sender,
+            TernaryState.Proceed,
+            TernaryState.Proceed,
+            justificationHash,
+            block.timestamp,
+            &#34;Transaction created&#34;
+        );
+        
+        return newId;
+    }
+}</code></pre>
+              </div>
+            </div>
+
+            <div class="mb-12">
+              <h3 class="font-display text-2xl font-semibold text-primary mb-8">Epistemic Hold Implementation</h3>
+              <div class="code-block">
+                <pre><code>// Modifier implementing Epistemic Hold logic
+modifier checkForHold(uint256 transactionId) {
+    Transaction storage txn = transactions[transactionId];
+    require(txn.state == TernaryState.Proceed, &#34;Transaction not active&#34;);
+
+    // Check for stale price data
+    if (block.timestamp - lastPriceUpdateTime &gt; PRICE_STALENESS_THRESHOLD) {
+        txn.state = TernaryState.EpistemicHold;
+        txn.holdDeadline = block.timestamp + HOLD_DURATION;
+        
+        emit DecisionLog(
+            transactionId,
+            TernaryState.Proceed,
+            TernaryState.EpistemicHold,
+            txn.justificationHash,
+            block.timestamp,
+            &#34;Stale price data - Entering Epistemic Hold&#34;
+        );
+        return;
+    }
+
+    // Check for high volatility
+    uint256 priceChange = getPriceChangePercent();
+    if (priceChange &gt; VOLATILITY_THRESHOLD) {
+        txn.state = TernaryState.EpistemicHold;
+        txn.holdDeadline = block.timestamp + HOLD_DURATION;
+        
+        emit DecisionLog(
+            transactionId,
+            TernaryState.Proceed,
+            TernaryState.EpistemicHold,
+            txn.justificationHash,
+            block.timestamp,
+            &#34;High volatility - Entering Epistemic Hold&#34;
+        );
+        return;
+    }
+    
+    _;
+}</code></pre>
+              </div>
+            </div>
+
+            <div class="mb-12">
+              <h3 class="font-display text-2xl font-semibold text-primary mb-8">Goukassian Principle Implementation</h3>
+              <div class="code-block">
+                <pre><code>// Ambiguity gate implementing Goukassian Principle
+function processOracleUpdate(
+    uint256 newPrice,
+    uint256 oracleTimestamp,
+    uint256 transactionId
+) public {
+    Transaction storage txn = transactions[transactionId];
+    
+    // Default to Hold in presence of ambiguity
+    if (block.timestamp - oracleTimestamp &gt; 1 hours) {
+        // Price is stale - default to Hold
+        transitionToHold(transactionId, &#34;Stale oracle data&#34;);
+        return;
+    }
+    
+    if (newPrice == 0 || newPrice &gt; MAX_REASONABLE_PRICE) {
+        // Price is invalid - default to Hold
+        transitionToHold(transactionId, &#34;Invalid price data&#34;);
+        return;
+    }
+    
+    // Only proceed if no ambiguity detected
+    continueTransaction(transactionId, newPrice);
+}
+
+function transitionToHold(uint256 transactionId, string memory reason) internal {
+    Transaction storage txn = transactions[transactionId];
+    TernaryState previousState = txn.state;
+    
+    txn.state = TernaryState.EpistemicHold;
+    txn.holdDeadline = block.timestamp + 1 days;
+    
+    emit DecisionLog(
+        transactionId,
+        previousState,
+        TernaryState.EpistemicHold,
+        txn.justificationHash,
+        block.timestamp,
+        reason
+    );
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Triple-Entry Accounting Section -->
+      <section id="triple-entry" class="py-20 bg-white">
+        <div class="container mx-auto px-6 lg:px-12">
+          <div class="max-w-6xl mx-auto">
+            <h2 class="font-display text-4xl font-bold text-primary mb-12 text-center">5. Triple-Entry Accounting Model</h2>
+
+            <div class="mb-12">
+              <div class="grid lg:grid-cols-2 gap-12 items-start">
+                <div>
+                  <h3 class="font-display text-2xl font-semibold text-primary mb-6">Beyond Double-Entry</h3>
+                  <p class="text-secondary mb-6">Traditional ERC-20 tokens implement double-entry accounting, tracking only debits and credits. The TL framework introduces a <strong>third column</strong>—a cryptographic hash linking on-chain transactions to their real-world context and justification.</p>
+
+                  <div class="bg-slate-50 rounded-lg p-6 mb-6">
+                    <h4 class="font-semibold text-primary mb-3">Standard ERC-20 Limitations</h4>
+                    <ul class="text-secondary text-sm space-y-2">
+                      <li>• Tracks only <em>what</em> happened (balance changes)</li>
+                      <li>• Lacks context or justification data</li>
+                      <li>• Creates audit gaps in governance</li>
+                      <li>• Vulnerable to fraudulent transactions</li>
+                    </ul>
+                  </div>
+
+                  <p class="text-secondary">The third entry transforms blockchain from a simple ledger into a complete, verifiable audit trail, essential for DAO governance, supply chain management, and compliant financial systems.</p>
+                </div>
+
+                <div>
+                  <img src="https://fixedplaceholder" alt="Three column ledger showing debit, credit, and justification entries" class="rounded-lg shadow-lg mb-6" size="medium" aspect="wide" style="linedrawing" query="triple entry accounting ledger" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+
+                  <div class="bg-blue-50 rounded-lg p-6">
+                    <h4 class="font-semibold text-primary mb-3">Triple-Entry Benefits</h4>
+                    <ul class="text-secondary text-sm space-y-2">
+                      <li>• Immutable link to off-chain justification</li>
+                      <li>• Complete causal chain recording</li>
+                      <li>• Enhanced fraud detection capabilities</li>
+                      <li>• Regulatory compliance support</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-12">
+              <h3 class="font-display text-2xl font-semibold text-primary mb-8">Implementation: The Third Column</h3>
+              <div class="code-block">
+                <pre><code>// Triple-Entry Accounting Event Structure
+event TransferWithJustification(
+    address indexed from,
+    address indexed to,
+    uint256 value,
+    bytes32 indexed justificationHash,
+    string contextDescription,
+    string proposalId,
+    uint256 timestamp
+);
+
+// Function implementing triple-entry transfer
+function transferWithJustification(
+    address to,
+    uint256 amount,
+    bytes32 justificationHash,
+    string memory context,
+    string memory proposalId
+) public returns (bool) {
+    // Perform standard ERC-20 transfer
+    bool success = transfer(to, amount);
+    require(success, &#34;Transfer failed&#34;);
+    
+    // Emit third entry event
+    emit TransferWithJustification(
+        msg.sender,
+        to,
+        amount,
+        justificationHash,
+        context,
+        proposalId,
+        block.timestamp
+    );
+    
+    return true;
+}
+
+// Justification hash verification
+function verifyJustification(
+    string memory justificationData,
+    bytes32 storedHash
+) public pure returns (bool) {
+    bytes32 computedHash = keccak256(abi.encodePacked(justificationData));
+    return computedHash == storedHash;
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Governance Section -->
+      <section id="governance" class="py-20 bg-slate-50">
+        <div class="container mx-auto px-6 lg:px-12">
+          <div class="max-w-6xl mx-auto">
+            <h2 class="font-display text-4xl font-bold text-primary mb-12 text-center">6. Governance and Permissioning</h2>
+
+            <div class="mb-12">
+              <h3 class="font-display text-2xl font-semibold text-primary mb-8">Role-Based Access Control (RBAC)</h3>
+              <div class="grid lg:grid-cols-2 gap-8">
+                <div class="code-block">
+                  <pre><code>// OpenZeppelin AccessControl Implementation
+import &#34;@openzeppelin/contracts/access/AccessControl.sol&#34;;
+
+contract TernaryLogicGovernance is AccessControl {
+    bytes32 public constant TECHNICAL_COUNCIL_ROLE = 
+        keccak256(&#34;TECHNICAL_COUNCIL_ROLE&#34;);
+    bytes32 public constant STEWARDSHIP_CUSTODIANS_ROLE = 
+        keccak256(&#34;STEWARDSHIP_CUSTODIANS_ROLE&#34;);
+    bytes32 public constant TREASURY_ROLE = 
+        keccak256(&#34;TREASURY_ROLE&#34;);
+
+    constructor() {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    }
+
+    function grantTechnicalCouncilRole(address account) 
+        public onlyRole(DEFAULT_ADMIN_ROLE) {
+        _grantRole(TECHNICAL_COUNCIL_ROLE, account);
+    }
+
+    // Technical Council functions
+    function proposeUpgrade() 
+        public onlyRole(TECHNICAL_COUNCIL_ROLE) {
+        // Time-locked upgrade logic
+    }
+
+    // Stewardship Custodians functions
+    function resolveDispute(uint256 transactionId) 
+        public onlyRole(STEWARDSHIP_CUSTODIANS_ROLE) {
+        // Dispute resolution logic
+    }
+}</code></pre>
+                </div>
+
+                <div>
+                  <h4 class="font-display text-xl font-semibold text-primary mb-4">Multi-Signature Integration</h4>
+                  <p class="text-secondary mb-6">The Stewardship Custodians&#39; authority is implemented through a multi-signature wallet (e.g., Gnosis Safe), requiring collective approval for critical actions.</p>
+
+                  <div class="bg-white rounded-lg p-6 shadow-md mb-6">
+                    <h5 class="font-semibold text-primary mb-3">Typical Multi-Sig Configuration</h5>
+                    <ul class="text-secondary text-sm space-y-2">
+                      <li>• 11 total custodian members</li>
+                      <li>• 6-of-11 signature threshold</li>
+                      <li>• Time-delayed execution</li>
+                      <li>• Emergency pause mechanisms</li>
+                    </ul>
+                  </div>
+
+                  <div class="code-block">
+                    <pre><code>// Multi-sig integration pattern
+modifier onlyCustodians() {
+    require(msg.sender == stewardshipCustodians, 
+            &#34;Not authorized by Custodians&#34;);
+    _;
+}
+
+function resolveEpistemicHold(
+    uint256 transactionId,
+    bool approve,
+    string memory resolution
+) public onlyCustodians {
+    Transaction storage txn = transactions[transactionId];
+    require(txn.state == TernaryState.EpistemicHold, 
+            &#34;Not in hold state&#34;);
+    
+    if (approve) {
+        txn.state = TernaryState.Proceed;
+        // Release escrowed funds
+    } else {
+        txn.state = TernaryState.Refuse;
+        // Return funds to sender
+    }
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cross-Domain Applications Section -->
+      <section id="applicability" class="py-20 bg-white">
+        <div class="container mx-auto px-6 lg:px-12">
+          <div class="max-w-6xl mx-auto">
+            <h2 class="font-display text-4xl font-bold text-primary mb-12 text-center">7. Cross-Domain Applicability &amp; Case Studies</h2>
+
+            <div class="grid lg:grid-cols-3 gap-8 mb-12">
+              <div class="bg-blue-50 rounded-xl p-6">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-vote-yea text-blue-600 text-2xl"></i>
+                </div>
+                <h3 class="font-display text-xl font-semibold text-primary mb-4 text-center">DAO Governance</h3>
+                <ul class="text-secondary text-sm space-y-2">
+                  <li>• On-chain proposal voting systems</li>
+                  <li>• Treasury management with Epistemic Hold</li>
+                  <li>• Transparent dispute resolution</li>
+                  <li>• Triple-entry accounting for audits</li>
+                </ul>
+              </div>
+
+              <div class="bg-green-50 rounded-xl p-6">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-coins text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="font-display text-xl font-semibold text-primary mb-4 text-center">DeFi Protocols</h3>
+                <ul class="text-secondary text-sm space-y-2">
+                  <li>• Conditional escrow mechanisms</li>
+                  <li>• Oracle-based derivatives</li>
+                  <li>• Flash loan attack prevention</li>
+                  <li>• Automated settlement controls</li>
+                </ul>
+              </div>
+
+              <div class="bg-purple-50 rounded-xl p-6">
+                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-shipping-fast text-purple-600 text-2xl"></i>
+                </div>
+                <h3 class="font-display text-xl font-semibold text-primary mb-4 text-center">Supply Chain</h3>
+                <ul class="text-secondary text-sm space-y-2">
+                  <li>• Goods tracking with verifiable states</li>
+                  <li>• Automated payments on delivery</li>
+                  <li>• Quality assurance checkpoints</li>
+                  <li>• Dispute resolution for shipments</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-8 mb-12">
+              <h3 class="font-display text-2xl font-semibold text-primary mb-6">Real-World Case Study: DAO Governance</h3>
+              <div class="grid lg:grid-cols-2 gap-8">
+                <div>
+                  <img src="https://kimi-web-img.moonshot.cn/img/csdl-images.ieeecomputer.org/23db946e88d4d5e4729aadde4d86bda608c5dce5.gif" alt="DAO governance proposal workflow diagram" class="rounded-lg shadow-lg mb-6" size="medium" aspect="wide" query="DAO governance process flowchart" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+                </div>
+                <div>
+                  <div class="space-y-6">
+                    <div>
+                      <h4 class="font-semibold text-primary mb-2 flex items-center">
+                        <span class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 text-sm font-bold text-blue-600">1</span>
+                        Proposal Submission
+                      </h4>
+                      <p class="text-secondary text-sm ml-11">Community member submits marketing campaign proposal for 100 ETH. System initializes in Proceed state.</p>
+                    </div>
+
+                    <div>
+                      <h4 class="font-semibold text-primary mb-2 flex items-center">
+                        <span class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mr-3 text-sm font-bold text-yellow-600">2</span>
+                        Epistemic Hold Trigger
+                      </h4>
+                      <p class="text-secondary text-sm ml-11">Community raises concerns about proposal vagueness. Vote is contentious, triggering State 0 for custodian review.</p>
+                    </div>
+
+                    <div>
+                      <h4 class="font-semibold text-primary mb-2 flex items-center">
+                        <span class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-3 text-sm font-bold text-red-600">3</span>
+                        Custodian Resolution
+                      </h4>
+                      <p class="text-secondary text-sm ml-11">Stewardship Custodians review evidence, deliberate off-chain, and ultimately reject proposal via multi-sig vote.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Conclusion Section -->
+      <section id="conclusion" class="py-20 bg-slate-50">
+        <div class="container mx-auto px-6 lg:px-12">
+          <div class="max-w-4xl mx-auto text-center">
+            <h2 class="font-display text-4xl font-bold text-primary mb-8">8. Conclusion: The Constitutional Code</h2>
+            <div class="bg-white rounded-xl p-8 shadow-lg mb-12">
+              <img src="https://kimi-web-img.moonshot.cn/img/briandcolwell.com/78ddb72cda2e4a81a5dbdb29f296228878cf598a.webp" alt="Smart contract constitution document" class="w-full rounded-lg shadow-md mb-8" size="large" aspect="wide" style="photo" query="smart contract constitution" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+
+              <p class="text-lg text-secondary leading-relaxed mb-6">
+                The Ternary Logic Smart Contract Execution Layer represents a paradigm shift from <strong>&#34;Trust&#34;</strong> to <strong>&#34;Verification.&#34;</strong> By encoding economic rules into immutable, transparent smart contracts, we create an <em>&#34;Economic Constitution&#34;</em> where the laws of money are harder to break than the laws of men.
+              </p>
+
+              <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-blue-50 rounded-lg p-6">
+                  <h3 class="font-semibold text-primary mb-3">Constitutional Rights</h3>
+                  <p class="text-secondary text-sm">The Four Mandates—No Spy, No Weapon, No Log = No Action, No Switch Off—serve as fundamental rights protecting users and ensuring system integrity.</p>
+                </div>
+                <div class="bg-green-50 rounded-lg p-6">
+                  <h3 class="font-semibold text-primary mb-3">Separation of Powers</h3>
+                  <p class="text-secondary text-sm">The Governance Trinity ensures no single entity controls the system, creating checks and balances through distributed authority.</p>
+                </div>
+              </div>
+
+              <p class="text-secondary mb-6">
+                The introduction of the <strong>Epistemic Hold (0)</strong> state addresses a critical gap in smart contract design, providing a structured mechanism for handling uncertainty and ambiguity. This fail-secure approach ensures that when the system encounters incomplete information, it defaults to a safe, verifiable state rather than making potentially harmful decisions.
+              </p>
+
+              <div class="bg-purple-50 rounded-lg p-6">
+                <h3 class="font-semibold text-primary mb-3">The Future of Verification</h3>
+                <p class="text-secondary text-sm">
+                  As blockchain technology matures, the need for systems that can handle complexity while maintaining security becomes paramount. The TL framework provides the foundation for building next-generation applications where trust is not assumed but cryptographically guaranteed—a true revolution in how we manage value, govern communities, and build economic systems.
+                </p>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <p class="text-accent text-sm">
+                This specification establishes the technical foundation for implementing Ternary Logic systems across multiple blockchain platforms, providing a robust, secure, and transparent framework for the future of decentralized applications.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="bg-primary text-white py-12">
+        <div class="container mx-auto px-6 lg:px-12">
+          <div class="max-w-4xl mx-auto text-center">
+            <h3 class="font-display text-xl font-semibold mb-4">Glossary &amp; References</h3>
+            <div class="grid md:grid-cols-2 gap-8 text-left">
+              <div>
+                <h4 class="font-semibold mb-3">Key Terms</h4>
+                <ul class="text-sm space-y-1 opacity-90">
+                  <li>• <strong>Anchors:</strong> Connection between on-chain and real-world data</li>
+                  <li>• <strong>Epistemic Hold:</strong> Pause state for uncertainty resolution</li>
+                  <li>• <strong>Goukassian Principle:</strong> Default to safe state in ambiguity</li>
+                  <li>• <strong>Triple-Entry Accounting:</strong> Enhanced ledger with justification</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-3">Resources</h4>
+                <div class="text-sm space-y-1 opacity-90">
+                  <p>
+                    <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link text-blue-200">Ternary Logic Framework Repository</a>
+                  </p>
+                  <p>
+                    <a href="https://www.caxacca.com/triple-entry-accounting-and-its-implications-for-auditors/" class="citation-link text-blue-200">Triple-Entry Accounting Research</a>
+                  </p>
+                  <p>
+                    <a href="https://blog.blockmagnates.com/state-machine-design-pattern-in-solidity-1d81569a7833" class="citation-link text-blue-200">State Machine Design Patterns</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+        // Table of Contents Active Link Tracking
+        const tocLinks = document.querySelectorAll('.toc-link');
+        const sections = document.querySelectorAll('[id]');
+
+        function updateActiveLink() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLink);
+        updateActiveLink();
+
+        // Smooth scrolling for TOC links
+        tocLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+  
+
+</body></html>
