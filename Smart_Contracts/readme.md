@@ -26,8 +26,9 @@ Defines the high-level structural layout of the system. It replaces the monolith
 
 #### **2. Technical Specification (Execution Layer)**
 
-**File:** `Technical_Specification_Execution_Layer.pdf`
-**Role:** *The Muscle*
+**File:** `Technical_Specification_Execution_Layer.pdf`   
+**Role:** *The Muscle*   
+
 Provides the rigorous engineering standards for the **Finite State Machine (FSM)**. It defines the deterministic rules for state transitions:
 
 * **(+1) Proceed:** Settlement and value transfer.
@@ -37,18 +38,19 @@ Provides the rigorous engineering standards for the **Finite State Machine (FSM)
 
 #### **3. Security Blueprint**
 
-**File:** `Security_Blueprint_TL_Contracts.pdf`
-**Role:** *The Shield*
-Shifts security from "Bug Prevention" to **"Systemic Resilience"**. It models adversarial threats not just as code exploits, but as economic attacks (e.g., Governance Capture, Oracle Spam).
+**File:** `Security_Blueprint_TL_Contracts.pdf`   
+**Role:** *The Shield*   
 
-* **Defense Strategy:** Implements **Economic Resistance**, ensuring that the cost of attacking the system (via spam or deadlock) always exceeds the potential extraction value.
+Shifts security from "Bug Prevention" to **"Systemic Resilience"**. It models adversarial threats not just as code exploits, but as economic attacks (e.g., Governance Capture, Oracle Spam).   
+
+* **Defense Strategy:** Implements **Economic Resistance**, ensuring that the cost of attacking the system (via spam or deadlock) always exceeds the potential extraction value.   
 * **Containment:** Defines "Blast Radius" limitations to isolate compromised modules without freezing the entire economy.
 
 #### **4. Governance Architecture**
 
-**File:** `Governance_Architecture_TL_Contracts.pdf`
-**Role:** *The Brain*
-Establishes the checks and balances that prevent the system from becoming a digital tyranny. It defines Governance as **Constraint**, not **Management**.
+**File:** `Governance_Architecture_TL_Contracts.pdf`   
+**Role:** *The Brain*   
+Establishes the checks and balances that prevent the system from becoming a digital tyranny. It defines Governance as **Constraint**, not **Management**.   
 
 * **The Trinity:** Segregates power between the **Technical Council** (Code Upgrades), **Stewardship Custodians** (Dispute Resolution), and the **Automated Treasury**.
 * **Anti-Capture:** Cryptographically enforces that Governance cannot override the immutable history of the ledger or bypass the core logic of Ternary Safety.
