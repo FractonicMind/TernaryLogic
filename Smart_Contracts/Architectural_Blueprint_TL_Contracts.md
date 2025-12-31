@@ -300,89 +300,54 @@ By using the Immutable Ledger to record all decisions and actions, the TL framew
 
 #### 5.1.1. High-Level System Architecture: Smart Contracts within the TL Framework
 
-```mermaid  
-graph TB  
-subgraph "User / External System"  
-A[Initiates Action]  
+graph TB
+subgraph "User / External System"
+    A[Initiates Action]
 end
 
-subgraph "Ternary Logic Smart Contract"  
-
-    B{Ternary State Machine}  
-
-    C[Hold() Function]  
-
-    D[Decision Log Structure]  
-
+subgraph "Ternary Logic Smart Contract"
+    B{Ternary State Machine}
+    C["Hold() Function"]
+    D[Decision Log Structure]
 end
 
-subgraph "Oracle-Custodian Gateway"  
-
-    E[Off-Chain Oracle]  
-
-    F[Human Custodian]  
-
+subgraph "Oracle-Custodian Gateway"
+    E[Off-Chain Oracle]
+    F[Human Custodian]
 end
 
-subgraph "TL Framework Infrastructure"  
-
-    G[Immutable Ledger]  
-
-    H[Hybrid Shield<br/>(Public/Private)]  
-
-    I[Veracity Anchors]  
-
+subgraph "TL Framework Infrastructure"
+    G[Immutable Ledger]
+    H["Hybrid Shield<br/>(Public/Private)"]
+    I[Veracity Anchors]
 end
 
-subgraph "Governance Layer"  
-
-    J[Technical Council]  
-
-    K[Stewardship Custodians]  
-
-    L[Smart Contract Treasury]  
-
+subgraph "Governance Layer"
+    J[Technical Council]
+    K[Stewardship Custodians]
+    L[Smart Contract Treasury]
 end
 
-A --> B  
-
-B -- "+1 (Proceed)" --> G  
-
-B -- "0 (Hold)" --> C  
-
-C -- "Request Evidence" --> E  
-
-C -- "Escalate Dispute" --> F  
-
-E -- "Callback with Data" --> C  
-
-F -- "Callback with Decision" --> C  
-
-C -- "+1 / -1" --> B  
-
-B -- "Log Decision" --> D  
-
-D --> G  
-
-G -- "Anchor Hash" --> H  
-
-H -- "Public Proof" --> I  
-
-J -- "Propose Upgrade" --> L  
-
-K -- "Ratify Upgrade" --> L  
-
+A --> B
+B -- "+1 (Proceed)" --> G
+B -- "0 (Hold)" --> C
+C -- "Request Evidence" --> E
+C -- "Escalate Dispute" --> F
+E -- "Callback with Data" --> C
+F -- "Callback with Decision" --> C
+C -- "+1 / -1" --> B
+B -- "Log Decision" --> D
+D --> G
+G -- "Anchor Hash" --> H
+H -- "Public Proof" --> I
+J -- "Propose Upgrade" --> L
+K -- "Ratify Upgrade" --> L
 L -- "Release Funds" --> J
 
-style A fill:#f9f,stroke:#333,stroke-width:2px  
-
-style B fill:#bbf,stroke:#333,stroke-width:2px  
-
-style G fill:#9f9,stroke:#333,stroke-width:2px  
-
-style J fill:#ff9,stroke:#333,stroke-width:2px  
-
-```
+style A fill:#f9f,stroke:#333,stroke-width:2px
+style B fill:#bbf,stroke:#333,stroke-width:2px
+style G fill:#9f9,stroke:#333,stroke-width:2px
+style J fill:#ff9,stroke:#333,stroke-width:2px
 
 *Figure 1: High-level architecture showing the interaction between the Ternary Logic Smart Contract, the Oracle-Custodian Gateway, the core TL Framework infrastructure, and the Tri-Cameral Governance model.*
 
