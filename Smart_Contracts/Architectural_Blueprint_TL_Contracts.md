@@ -361,43 +361,38 @@ graph TB
 
 
 #### 5.1.2. Data Flow Diagram: The Lifecycle of a Ternary Decision
+Code snippet
 
-```mermaid  
-graph LR  
-A[1. Intent (+1)] --> B{2. Initial Checks};  
-B -- "Pass" --> C{3. Risk/Uncertainty Check};  
-B -- "Fail (e.g., No Log)" --> D[4. Halt (-1)];  
-C -- "Low Risk" --> E[5. Commit (+1)];  
-C -- "High Risk" --> D;  
-C -- "Uncertainty" --> F[6. Epistemic Hold (0)];  
-F --> G{7. Evidence Gathering};  
-G -- "Resolved (+1)" --> E;  
-G -- "Unresolved / Harm (-1)" --> D;  
-G -- "Timeout / Error" --> H[8. Re-evaluate / Halt];
+graph LR
+    A["1. Intent (+1)"] --> B{"2. Initial Checks"}
+    B -- "Pass" --> C{"3. Risk/Uncertainty Check"}
+    B -- "Fail (e.g., No Log)" --> D["4. Halt (-1)"]
+    C -- "Low Risk" --> E["5. Commit (+1)"]
+    C -- "High Risk" --> D
+    C -- "Uncertainty" --> F["6. Epistemic Hold (0)"]
+    F --> G{"7. Evidence Gathering"}
+    G -- "Resolved (+1)" --> E
+    G -- "Unresolved / Harm (-1)" --> D
+    G -- "Timeout / Error" --> H["8. Re-evaluate / Halt"]
 
-subgraph "On-Chain"  
+    subgraph "On-Chain"
+        A
+        B
+        C
+        D
+        E
+        F
+    end
 
-    A; B; C; D; E; F;  
+    subgraph "Off-Chain"
+        G
+    end
 
-end
-
-subgraph "Off-Chain"  
-
-    G;  
-
-end
-
-style A fill:#9f9,stroke:#333,stroke-width:2px  
-
-style E fill:#9f9,stroke:#333,stroke-width:2px  
-
-style D fill:#f99,stroke:#333,stroke-width:2px  
-
-style F fill:#ff9,stroke:#333,stroke-width:2px  
-
-style G fill:#bbf,stroke:#333,stroke-width:2px  
-
-```
+    style A fill:#9f9,stroke:#333,stroke-width:2px
+    style E fill:#9f9,stroke:#333,stroke-width:2px
+    style D fill:#f99,stroke:#333,stroke-width:2px
+    style F fill:#ff9,stroke:#333,stroke-width:2px
+    style G fill:#bbf,stroke:#333,stroke-width:2px
 
 *Figure 2: Data flow diagram illustrating the lifecycle of a decision within the Ternary Logic framework, from initial intent to final resolution, including the asynchronous evidence gathering process.*
 
