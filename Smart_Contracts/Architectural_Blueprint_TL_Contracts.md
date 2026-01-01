@@ -300,8 +300,6 @@ By using the Immutable Ledger to record all decisions and actions, the TL framew
 
 #### 5.1.1. High-Level System Architecture: Smart Contracts within the TL Framework
 
-Code snippet
-
 graph TB
     subgraph "User / External System"
         A[Initiates Action]
@@ -330,7 +328,7 @@ graph TB
         L[Smart Contract Treasury]
     end
 
-    %% Connections
+    %% Process Flow
     A --> B
     B -- "+1 (Proceed)" --> G
     B -- "0 (Hold)" --> C
@@ -341,8 +339,12 @@ graph TB
     C -- "+1 / -1" --> B
     B -- "Log Decision" --> D
     D --> G
+    
+    %% Infrastructure & Verification
     G -- "Anchor Hash" --> H
     H -- "Public Proof" --> I
+
+    %% Governance Flow
     J -- "Propose Upgrade" --> L
     K -- "Ratify Upgrade" --> L
     L -- "Release Funds" --> J
@@ -353,6 +355,7 @@ graph TB
     style G fill:#9f9,stroke:#333,stroke-width:2px
     style J fill:#ff9,stroke:#333,stroke-width:2px
 
+    
 *Figure 1: High-level architecture showing the interaction between the Ternary Logic Smart Contract, the Oracle-Custodian Gateway, the core TL Framework infrastructure, and the Tri-Cameral Governance model.*
 
 
