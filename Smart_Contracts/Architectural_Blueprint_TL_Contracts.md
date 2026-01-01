@@ -361,8 +361,8 @@ graph TB
 
 
 #### 5.1.2. Data Flow Diagram: The Lifecycle of a Ternary Decision
-Code snippet
 
+```
 graph LR
     A["1. Intent (+1)"] --> B{"2. Initial Checks"}
     B -- "Pass" --> C{"3. Risk/Uncertainty Check"}
@@ -393,6 +393,7 @@ graph LR
     style D fill:#f99,stroke:#333,stroke-width:2px
     style F fill:#ff9,stroke:#333,stroke-width:2px
     style G fill:#bbf,stroke:#333,stroke-width:2px
+```
 
 *Figure 2: Data flow diagram illustrating the lifecycle of a decision within the Ternary Logic framework, from initial intent to final resolution, including the asynchronous evidence gathering process.*
 
