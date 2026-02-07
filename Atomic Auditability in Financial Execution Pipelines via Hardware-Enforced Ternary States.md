@@ -13,6 +13,8 @@ This paper presents a hardware architecture for **Atomic Auditability** in high-
 
 ## 
 
+## 
+
 ## I. Introduction
 
 ### I.1 Problem Domain: Nanosecond-Scale Execution Correctness
