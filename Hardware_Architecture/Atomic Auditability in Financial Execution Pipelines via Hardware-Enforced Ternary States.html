@@ -1,0 +1,1164 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Atomic Auditability in Financial Execution Pipelines</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tiempos+Headline:wght@400;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        :root {
+            --primary: #1e40af;
+            --secondary: #64748b;
+            --accent: #ef4444;
+            --neutral: #374151;
+            --base-100: #ffffff;
+        }
+        
+        .font-tiempos { font-family: 'Tiempos Headline', serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        
+        .toc-fixed {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 280px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-right: 1px solid #e2e8f0;
+            z-index: 50;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+        
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 2rem;
+            min-height: 60vh;
+        }
+        
+        .hero-title {
+            grid-column: 1 / -1;
+            position: relative;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        
+        .hero-visual {
+            background: linear-gradient(45deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 2px solid #cbd5e1;
+            border-radius: 1rem;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .hero-insight {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+        
+        .citation-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted var(--primary);
+        }
+        
+        .citation-link:hover {
+            background-color: #dbeafe;
+            padding: 2px 4px;
+            border-radius: 4px;
+            border-bottom: none;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, #cbd5e1 50%, transparent 100%);
+            margin: 4rem 0;
+        }
+        
+        .data-table {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .data-table th {
+            background: #f8fafc;
+            font-weight: 600;
+            padding: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        
+        @media (max-width: 1024px) {
+            .toc-fixed {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .toc-fixed.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                padding: 1.5rem;
+            }
+            .hero-title h1 {
+                font-size: 2rem;
+            }
+            .hero-visual, .hero-insight {
+                padding: 1.5rem;
+            }
+            .hero-visual img {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                padding: 1rem;
+            }
+            .hero-title h1 {
+                font-size: 1.75rem;
+            }
+            .hero-visual, .hero-insight {
+                padding: 1rem;
+            }
+        }
+    </style>
+  <base target="_blank">
+</head>
+
+  <body class="bg-gray-50 font-inter">
+    <!-- Table of Contents -->
+    <nav class="toc-fixed">
+      <div class="mb-8">
+        <h3 class="font-tiempos text-lg font-bold text-gray-900 mb-4">Contents</h3>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a href="#executive-summary" class="block py-2 px-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors">Executive Summary</a>
+          </li>
+          <li>
+            <a href="#introduction" class="block py-2 px-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors">I. Introduction</a>
+          </li>
+          <li>
+            <a href="#binary-timing" class="block py-2 px-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors">II. Binary Timing Model</a>
+          </li>
+          <li>
+            <a href="#failure-modes" class="block py-2 px-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors">III. Failure Modes</a>
+          </li>
+          <li>
+            <a href="#ternary-model" class="block py-2 px-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors">IV. Ternary Commit Model</a>
+          </li>
+          <li>
+            <a href="#device-enforcement" class="block py-2 px-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors">V. Device-Level Enforcement</a>
+          </li>
+          <li>
+            <a href="#cost-analysis" class="block py-2 px-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors">VI. Cost Analysis</a>
+          </li>
+          <li>
+            <a href="#goukassian-promise" class="block py-2 px-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors">VII. The Goukassian Promise</a>
+          </li>
+          <li>
+            <a href="#falsifiability" class="block py-2 px-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors">VIII. Falsifiability &amp; Limits</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="border-t pt-4">
+        <p class="text-xs text-gray-500 mb-2">Key Insights</p>
+        <div class="space-y-1 text-xs">
+          <div class="bg-blue-50 p-2 rounded">
+            <span class="font-semibold text-blue-800">Atomic Auditability</span>
+            <p class="text-blue-600">Execution impossible without audit evidence</p>
+          </div>
+          <div class="bg-amber-50 p-2 rounded">
+            <span class="font-semibold text-amber-800">Escrow State</span>
+            <p class="text-amber-600">Physically non-executable hold condition</p>
+          </div>
+          <div class="bg-green-50 p-2 rounded">
+            <span class="font-semibold text-green-800">DITL/NCL</span>
+            <p class="text-green-600">Delay-insensitive correctness by construction</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hero Section -->
+      <section class="px-8 py-12 bg-white">
+        <div class="max-w-6xl mx-auto">
+          <div class="hero-grid">
+            <!-- Hero Title -->
+            <div class="hero-title">
+              <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20"></div>
+              <div class="relative z-10">
+                <h1 class="font-tiempos text-4xl font-bold mb-4 leading-tight">
+                  <em class="text-blue-200">Atomic Auditability</em> in Financial Execution Pipelines
+                </h1>
+                <p class="text-xl text-gray-300 font-light">
+                  via Hardware-Enforced Ternary States
+                </p>
+                <div class="mt-6 flex items-center space-x-4 text-sm text-gray-400">
+                  <span><i class="fas fa-microchip mr-2"></i>Delay-Insensitive Ternary Logic</span>
+                  <span><i class="fas fa-shield-alt mr-2"></i>NULL Convention Logic</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hero Visual -->
+            <div class="hero-visual">
+              <img src="https://kimi-web-img.moonshot.cn/img/ietresearch.onlinelibrary.wiley.com/f1293eb7537a3671e4214b8d507aecd01be118fc.jpg" alt="Hardware circuit diagram representing ternary execution states" class="max-w-full h-48 object-contain opacity-80" size="medium" aspect="wide" query="ternary logic circuit diagram" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+              <div class="absolute top-4 right-4 bg-white/80 px-3 py-1 rounded-full text-xs font-semibold text-gray-700">
+                Ternary State Machine
+              </div>
+            </div>
+
+            <!-- Hero Insight -->
+            <div class="hero-insight">
+              <h3 class="font-tiempos text-lg font-bold text-amber-900 mb-3">
+                <i class="fas fa-bolt mr-2"></i>Executive Summary
+              </h3>
+              <p class="text-amber-800 font-medium">
+                A physically enforced third execution state (&#34;Escrow/Null&#34;) implemented through DITL and NCL eliminates entire classes of race conditions, audit gaps, and irreversibility errors that binary execution fundamentally cannot address.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Executive Summary -->
+      <section id="executive-summary" class="px-8 py-12 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-6">Executive Summary</h2>
+
+          <div class="highlight-box">
+            <p class="text-lg font-semibold text-gray-900 mb-4">
+              <strong>Atomic Auditability</strong> is achieved when execution and audit evidence share the same physical commit boundary, making execution impossible unless audit evidence already exists.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h4 class="font-tiempos text-lg font-bold text-gray-900 mb-3">
+                <i class="fas fa-times-circle text-red-500 mr-2"></i>Binary Execution Problem
+              </h4>
+              <p class="text-gray-700">
+                Under binary commit semantics, execution precedes audit, creating a temporal window where system failures can produce executed trades without corresponding audit evidence—known as &#34;Ghost Fills.&#34;
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h4 class="font-tiempos text-lg font-bold text-gray-900 mb-3">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>Ternary Solution
+              </h4>
+              <p class="text-gray-700">
+                A physically enforced third state—&#34;Escrow&#34; or &#34;Null&#34;—creates an electrical gating barrier where execution paths are physically blocked until audit evidence is irrevocably recorded.
+              </p>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow-sm border">
+            <h4 class="font-tiempos text-lg font-bold text-gray-900 mb-4">Key Technical Advances</h4>
+            <ul class="space-y-2 text-gray-700">
+              <li><strong>Delay-Insensitive Ternary Logic (DITL):</strong> Correct operation independent of wire delays or clock skew</li>
+              <li><strong>NULL Convention Logic (NCL):</strong> Escrow state mapped to Spacer token for delay-insensitive correctness</li>
+              <li><strong>Hardware-Enforced Escrow:</strong> Electrical gating prevents execution until audit verification completes</li>
+              <li><strong>The Goukassian Promise:</strong> Formal LTL constraint ensuring atomic auditability</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- I. Introduction -->
+      <section id="introduction" class="px-8 py-12">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">I. Introduction</h2>
+
+          <div class="prose prose-lg max-w-none">
+            <h3 class="font-tiempos text-xl font-bold text-gray-800 mb-4">I.1 Problem Domain: Nanosecond-Scale Execution Correctness</h3>
+
+            <p class="text-gray-700 mb-6">
+              Modern equity and futures matching engines operate at temporal scales where the speed of light through fiber becomes a meaningful constraint on system architecture. The <a href="https://www.six-group.com/dam/download/the-swiss-stock-exchange/trading/trading-platform/x-stream-inet-performance-measurement-details.pdf" class="citation-link" target="_blank">SIX Swiss Exchange X-stream INET platform achieves average latencies of 14 microseconds</a> for OUCH Trading Interface roundtrips, with 93% of transactions completing within 29 microseconds.
+            </p>
+
+            <img src="https://kimi-web-img.moonshot.cn/img/www.webpronews.com/03456fd7d8e9147a8d42de23da960ac4af30e6be.jpeg" alt="High-frequency trading server room with racks of equipment" class="w-full h-64 object-cover rounded-lg mb-6 shadow-md" size="medium" aspect="wide" style="photo" query="high frequency trading server room" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+
+            <p class="text-gray-700 mb-6">
+              The regulatory response to these dynamics has focused substantially on post-trade transparency and audit requirements. Following the <a href="https://www.sec.gov/files/2010-05-06-cftc-sec-report.pdf" class="citation-link" target="_blank">2010 Flash Crash</a>, the CFTC and SEC implemented comprehensive reporting mandates requiring market participants to maintain complete records of all order and execution activity.
+            </p>
+
+            <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+              <p class="text-red-800 font-semibold">Critical Architectural Tension</p>
+              <p class="text-red-700">Audit systems are logically and physically external to execution pipelines, creating a temporal window where system failures can produce executed trades without corresponding audit evidence.</p>
+            </div>
+
+            <h3 class="font-tiempos text-xl font-bold text-gray-800 mb-4">I.2 Ternary Execution Commit Semantics</h3>
+
+            <div class="data-table mb-6">
+              <table class="w-full">
+                <thead>
+                  <tr>
+                    <th class="text-left">State</th>
+                    <th class="text-left">Encoding</th>
+                    <th class="text-left">Physical Interpretation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="font-semibold text-red-600">−1: Refused</td>
+                    <td>{1,0} dual-rail (FALSE)</td>
+                    <td>Order invalid, rejected by pre-trade risk controls or matching engine validation</td>
+                  </tr>
+                  <tr class="bg-blue-50">
+                    <td class="font-semibold text-blue-600">0: Escrowed</td>
+                    <td>{0,0} dual-rail (NULL/Spacer)</td>
+                    <td><strong>Physically prevented from committing</strong> by hardware-enforced gating. Execution paths electrically isolated.</td>
+                  </tr>
+                  <tr>
+                    <td class="font-semibold text-green-600">+1: Executed</td>
+                    <td>{0,1} dual-rail (TRUE)</td>
+                    <td>Order matched, <strong>audit evidence exists in non-volatile storage</strong>, execution irreversible</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="text-gray-700">
+              This ternary model <strong>restructures the fundamental timing relationship between execution and verification</strong>. Under binary semantics, execution precedes audit; the system commits and then records. Under ternary semantics, <strong>audit precedes execution</strong>; the system records into Escrow state and only then commits.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- II. Binary Financial Execution Timing Model -->
+      <section id="binary-timing" class="px-8 py-12 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">II. Binary Financial Execution Timing Model</h2>
+
+          <div class="grid lg:grid-cols-2 gap-8 mb-8">
+            <div>
+              <h3 class="font-tiempos text-xl font-bold text-gray-800 mb-4">II.1 Cycle-Accurate Pipeline Architecture</h3>
+
+              <div class="data-table">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr>
+                      <th class="text-left">Stage</th>
+                      <th class="text-left">Latency</th>
+                      <th class="text-left">Critical Path</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-semibold">S1: Market Data Ingest</td>
+                      <td>5–15 ns</td>
+                      <td>Serializer, protocol state machine</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">S2: Strategy Evaluation</td>
+                      <td>10–50 ns</td>
+                      <td>Arithmetic units, lookup tables</td>
+                    </tr>
+                    <tr>
+                      <td class="font-semibold">S3: Order Generation</td>
+                      <td>5–10 ns</td>
+                      <td>Message construction, checksum</td>
+                    </tr>
+                    <tr class="bg-red-50">
+                      <td class="font-semibold">S5: Matching Engine Execution</td>
+                      <td>10–50 μs</td>
+                      <td><strong>Price-time matching, IRREVERSIBLE</strong></td>
+                    </tr>
+                    <tr class="bg-yellow-50">
+                      <td class="font-semibold">S6: Post-Trade Logging</td>
+                      <td>100 ns – 10 ms</td>
+                      <td><strong>ASYNCHRONOUS, UNBOUNDED</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-tiempos text-xl font-bold text-gray-800 mb-4">II.4 ASCII Timing Diagram</h3>
+
+              <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                <pre class="whitespace-pre">Binary Execution Pipeline Timing
+═══════════════════════════════════════════════════════════════════
+
+Clock Domain A (Trading System)          
+─────────────────────────────────        
+                               
+Cycle 0:  Market Data Arrival ──┐
+                                │
+Cycle 1:  Strategy Eval Complete├─&gt; Order Generation ──┐
+                                │                      │
+Cycle 2:  ──────────────────────┘                      │
+                                                       ▼
+Cycle 3:                                         [Network Transit]
+                                                       │
+Cycle 4:                                         [Exchange Processing]
+                                                       │
+Cycle 5:                                         Matching Engine
+                                                 Execution Commit
+                                                 (IRREVERSIBLE)
+                                                       │
+Cycle 6:  &lt;────────────────────────────────────────────┘
+          Execution Acknowledgment Received
+          
+Cycle 7-20:  [Variable Delay]  ──&gt;  Post-Trade Logging Initiated
+                                    (ASYNCHRONOUS, UNBOUNDED)
+                                    
+Cycle N:   Log Acknowledgment (N &gt;&gt; 6, highly variable)
+           [COMMIT-AUDIT GAP: Cycles 5 to N]
+
+Race Windows:
+├─ Clock skew at domain crossing: ±50-100 ps uncertainty
+├─ Pipeline overlap: Multiple transactions in flight, N to N+3 typical
+└─ Speculative execution: Transient states visible to risk systems
+                </pre>
+              </div>
+
+              <div class="mt-4 p-4 bg-red-100 rounded-lg">
+                <p class="text-red-800 font-semibold text-sm">
+                  <i class="fas fa-exclamation-triangle mr-2"></i>
+                  Critical Window: [T_commit, T_audit] represents unrecoverable system state if failures occur
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- III. Failure Modes of Binary Commit Semantics -->
+      <section id="failure-modes" class="px-8 py-12">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">III. Failure Modes of Binary Commit Semantics</h2>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 class="font-tiempos text-lg font-bold text-gray-900 mb-3">
+                <i class="fas fa-chart-line text-red-500 mr-2"></i>Latency Arbitrage Amplification
+              </h3>
+              <p class="text-gray-700 mb-3">
+                Binary commit semantics <strong>structurally advantage participants with faster logging infrastructure</strong>. System A with 100 ns commit-audit gap can trade against System B&#39;s 10 μs gap.
+              </p>
+              <p class="text-sm text-gray-600">
+                Source: <a href="https://www.amf-france.org/sites/institutionnel/files/private/2022-01/1_Discussion__Ghost_by_TFoucault.pdf" class="citation-link" target="_blank">AMF &#34;Ghost Liquidity&#34; Research</a>
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 class="font-tiempos text-lg font-bold text-gray-900 mb-3">
+                <i class="fas fa-sync-alt text-orange-500 mr-2"></i>Microsecond-Scale Feedback Loops
+              </h3>
+              <p class="text-gray-700 mb-3">
+                The <a href="https://www.sec.gov/files/2010-05-06-cftc-sec-report.pdf" class="citation-link" target="_blank">2010 Flash Crash</a> demonstrated how <strong>27,000 E-Mini contracts traded between 2:32-2:45 PM</strong> in a self-reinforcing cycle.
+              </p>
+              <p class="text-sm text-gray-600">
+                Binary semantics provide no natural damping mechanisms.
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 class="font-tiempos text-lg font-bold text-gray-900 mb-3">
+                <i class="fas fa-domino text-purple-500 mr-2"></i>Cascading Order Book Instability
+              </h3>
+              <p class="text-gray-700 mb-3">
+                Latency spikes at one exchange propagate arbitrage opportunities to others. Binary semantics prevent &#34;prepare but do not commit&#34; signaling.
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 class="font-tiempos text-lg font-bold text-gray-900 mb-3">
+                <i class="fas fa-ghost text-gray-500 mr-2"></i>Ghost Fills: Execution-Audit Mismatches
+              </h3>
+              <p class="text-gray-700 mb-3">
+                <a href="https://www.amf-france.org/sites/institutionnel/files/private/2022-01/1_Discussion__Ghost_by_TFoucault.pdf" class="citation-link" target="_blank">AMF research identifies &#34;Ghost Liquidity&#34;</a>—trades that execute without corresponding audit trail entries.
+              </p>
+            </div>
+          </div>
+
+          <img src="https://kimi-web-img.moonshot.cn/img/imgs.699pic.com/8a9ceb9bf97851ca0e4ef456c54e154a641fe241.v1" alt="Abstract network visualization of financial system feedback loops" class="w-full h-48 object-cover rounded-lg mb-6 shadow-md" size="medium" aspect="wide" query="financial system feedback loop abstract" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- IV. Hardware-Enforced Ternary Commit Model -->
+      <section id="ternary-model" class="px-8 py-12 bg-blue-50">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">IV. Hardware-Enforced Ternary Commit Model</h2>
+
+          <div class="highlight-box mb-8">
+            <h3 class="font-tiempos text-xl font-bold text-gray-800 mb-4">Critical Distinction: Escrow is a State, Not a Delay</h3>
+            <p class="text-gray-700">
+              Unlike IEX&#39;s <a href="https://corescholar.libraries.wright.edu/cgi/viewcontent.cgi?article=2326&amp;context=etd_all" class="citation-link" target="_blank">350μs Speed Bump</a> which adds latency to a synchronous pipeline, DITL creates an asynchronous state barrier that enforces correctness by construction.
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h4 class="font-tiempos text-lg font-bold text-gray-900 mb-3">
+                <i class="fas fa-microchip text-blue-500 mr-2"></i>DITL Foundations
+              </h4>
+              <p class="text-gray-700 mb-3">
+                <a href="http://www.theseusresearch.com/NullConventionLogic.htm" class="citation-link" target="_blank">NULL Convention Logic</a> achieves correctness regardless of wire delays by explicitly representing data validity in signal encoding.
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h4 class="font-tiempos text-lg font-bold text-gray-900 mb-3">
+                <i class="fas fa-handshake text-green-500 mr-2"></i>Four-Phase Protocol
+              </h4>
+              <p class="text-gray-700 mb-3">
+                Data → Completion → Spacer (Escrow) → Spacer Completion. <strong>No direct data-to-data transitions allowed</strong>.
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h4 class="font-tiempos text-lg font-bold text-gray-900 mb-3">
+                <i class="fas fa-shield-alt text-purple-500 mr-2"></i>Correctness Guarantees
+              </h4>
+              <p class="text-gray-700 mb-3">
+                Wire delay independence, clock skew elimination, execution speed orthogonality.
+              </p>
+            </div>
+          </div>
+
+          <div class="data-table mb-8">
+            <table class="w-full">
+              <thead>
+                <tr>
+                  <th class="text-left">Property</th>
+                  <th class="text-left">IEX Speed Bump</th>
+                  <th class="text-left">DITL Escrow State</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="font-semibold">Mechanism</td>
+                  <td>38 miles of fiber coil, ~350μs delay</td>
+                  <td class="bg-green-50"><strong>Hysteretic C-element gating, electrical state isolation</strong></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">Timing Effect</td>
+                  <td>Adds latency to synchronous pipeline</td>
+                  <td class="bg-green-50"><strong>Creates asynchronous state barrier</strong></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">Reversibility</td>
+                  <td>Orders in delay may be cancelled</td>
+                  <td class="bg-green-50"><strong>Physically blocked from execution</strong></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">Correctness</td>
+                  <td>None—timing is probabilistic</td>
+                  <td class="bg-green-50"><strong>By construction—independent of timing</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <img src="https://kimi-web-img.moonshot.cn/img/cdn.shopify.com/eec75217e5d902101f5bdb80d465163285409b5e.png" alt="Four-phase handshake protocol diagram in asynchronous circuit design" class="w-full h-48 object-cover rounded-lg mb-6 shadow-md" size="medium" aspect="wide" style="linedrawing" query="asynchronous circuit handshake protocol" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- V. Device-Level Enforcement -->
+      <section id="device-enforcement" class="px-8 py-12">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">V. Device-Level Enforcement</h2>
+
+          <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-400">
+              <h3 class="font-tiempos text-lg font-bold text-blue-900 mb-3">
+                <i class="fas fa-gate-closed mr-2"></i>Execution-Path Gating
+              </h3>
+              <p class="text-blue-800 text-sm">
+                Signal paths electrically blocked through transmission gate configurations where both NMOS and PMOS devices are disabled.
+              </p>
+            </div>
+
+            <div class="bg-green-50 p-6 rounded-lg border-l-4 border-green-400">
+              <h3 class="font-tiempos text-lg font-bold text-green-900 mb-3">
+                <i class="fas fa-arrow-right mr-2"></i>Monotonic Transitions
+              </h3>
+              <p class="text-green-800 text-sm">
+                Escrow-to-Executed transition is irreversible by any physical mechanism other than intended audit-verified path.
+              </p>
+            </div>
+
+            <div class="bg-purple-50 p-6 rounded-lg border-l-4 border-purple-400">
+              <h3 class="font-tiempos text-lg font-bold text-purple-900 mb-3">
+                <i class="fas fa-wave-square mr-2"></i>Hysteresis
+              </h3>
+              <p class="text-purple-800 text-sm">
+                State transition threshold differs from holding threshold, preventing oscillation or accidental triggering.
+              </p>
+            </div>
+          </div>
+
+          <div class="data-table mb-8">
+            <table class="w-full">
+              <thead>
+                <tr>
+                  <th class="text-left">Technology</th>
+                  <th class="text-left">Gating Mechanism</th>
+                  <th class="text-left">Volatility</th>
+                  <th class="text-left">Area (μm²/bit)</th>
+                  <th class="text-left">Key Limitations</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="font-semibold">SRAM Latch</td>
+                  <td>Cross-coupled inverters</td>
+                  <td class="text-red-600">Volatile</td>
+                  <td>0.5–2</td>
+                  <td>Power loss = state loss; SEU vulnerability</td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">FPGA Fabric LUT</td>
+                  <td>SRAM-configured mux</td>
+                  <td class="text-red-600">Volatile</td>
+                  <td>1–4</td>
+                  <td>Reconfiguration latency; integration complexity</td>
+                </tr>
+                <tr class="bg-green-50">
+                  <td class="font-semibold">Hardened C-Element</td>
+                  <td>Static CMOS with feedback</td>
+                  <td class="text-green-600 font-bold">Non-volatile</td>
+                  <td>2–6</td>
+                  <td>Process variation sensitivity</td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">RRAM/MRAM</td>
+                  <td>Resistive/magnetic switching</td>
+                  <td class="text-green-600 font-bold">Non-volatile</td>
+                  <td>0.1–0.5</td>
+                  <td>Write latency; endurance degradation</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="bg-gray-900 text-green-400 p-6 rounded-lg font-mono text-sm mb-8">
+            <h4 class="text-white font-bold mb-4">Hysteretic C-Element Implementation</h4>
+            <pre class="whitespace-pre">// Ternary C-element with three stable states
+module ternary_c_element (
+  input wire set,           // Set condition (audit_valid)
+  input wire reset,         // Reset condition
+  input wire audit_valid,   // Audit verification token
+  output reg Z_f,           // Escrow/Refused rail
+  output reg Z_t            // Executed rail
+);
+
+  // Escrow state: {0,0} - default condition
+  // Executed state: {0,1} - set &amp;&amp; audit_valid
+  // Refused state: {1,0} - reset || !audit_valid
+  
+  always_comb begin
+    // Pull-up network for Z_t (Executed)
+    if (set &amp;&amp; audit_valid &amp;&amp; !reset)
+      Z_t = 1;
+    else if (reset || !audit_valid)
+      Z_t = 0;
+    else
+      Z_t = Z_t;  // Hold state - hysteresis
+      
+    // Pull-down network for Z_f (Refused)
+    if (reset || !audit_valid)
+      Z_f = 1;
+    else
+      Z_f = 0;
+  end
+endmodule
+                    </pre>
+          </div>
+
+          <img src="https://kimi-web-img.moonshot.cn/img/pages.cs.wisc.edu/9c78f4f1bd800ab4104c45efa298a0da52a1c600.gif" alt="CMOS integrated circuit layout showing transistor-level implementation" class="w-full h-48 object-cover rounded-lg shadow-md" size="medium" aspect="wide" style="photo" query="CMOS integrated circuit layout" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- VI. Latency, Energy, and Area Cost Analysis -->
+      <section id="cost-analysis" class="px-8 py-12 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">VI. Latency, Energy, and Area Cost Analysis</h2>
+
+          <div class="grid lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 class="font-tiempos text-lg font-bold text-gray-900 mb-4">
+                <i class="fas fa-clock text-blue-500 mr-2"></i>Latency Analysis
+              </h3>
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between">
+                  <span>Binary execute-then-verify</span>
+                  <span class="font-semibold">45-55 ns</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Binary simulated escrow</span>
+                  <span class="font-semibold">60-80 ns</span>
+                </div>
+                <div class="flex justify-between bg-green-50 p-2 rounded">
+                  <span class="font-semibold">Ternary DITL</span>
+                  <span class="font-bold text-green-700">65 ns (bounded)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 class="font-tiempos text-lg font-bold text-gray-900 mb-4">
+                <i class="fas fa-bolt text-yellow-500 mr-2"></i>Energy Impact
+              </h3>
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between">
+                  <span>Dynamic Power</span>
+                  <span class="font-semibold text-green-600">0.85× binary</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Clock Distribution</span>
+                  <span class="font-semibold text-green-600">0× (eliminated)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 class="font-tiempos text-lg font-bold text-gray-900 mb-4">
+                <i class="fas fa-microchip text-purple-500 mr-2"></i>Area Impact
+              </h3>
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between">
+                  <span>Total Area</span>
+                  <span class="font-semibold text-red-600">1.7× binary</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Dual-Rail Tax</span>
+                  <span class="font-semibold text-red-600">2.0× wiring</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="data-table mb-8">
+            <table class="w-full">
+              <thead>
+                <tr>
+                  <th class="text-left">Stage</th>
+                  <th class="text-left">Function</th>
+                  <th class="text-left">Local Latency</th>
+                  <th class="text-left">Handshake Overhead</th>
+                  <th class="text-left">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="font-semibold">S1</td>
+                  <td>Data ingest + validation</td>
+                  <td>8 ns</td>
+                  <td>4 ns</td>
+                  <td>12 ns</td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">S2</td>
+                  <td>Strategy evaluation</td>
+                  <td>15 ns</td>
+                  <td>4 ns</td>
+                  <td>19 ns</td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">S3</td>
+                  <td>Order generation</td>
+                  <td>6 ns</td>
+                  <td>4 ns</td>
+                  <td>10 ns</td>
+                </tr>
+                <tr class="bg-blue-50">
+                  <td class="font-semibold">S4</td>
+                  <td><strong>Escrow entry + audit verify</strong></td>
+                  <td><strong>20 ns (external memory)</strong></td>
+                  <td><strong>4 ns</strong></td>
+                  <td><strong>24 ns</strong></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">S5</td>
+                  <td>Execute (if verified)</td>
+                  <td>3 ns</td>
+                  <td>4 ns</td>
+                  <td>7 ns</td>
+                </tr>
+                <tr class="bg-gray-100 font-bold">
+                  <td colspan="4">Total Pipeline Latency</td>
+                  <td>72 ns</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="highlight-box">
+            <h4 class="font-tiempos text-lg font-bold text-gray-800 mb-3">Dual-Rail Encoding Tax Justification</h4>
+            <p class="text-gray-700 mb-3">
+              For a major exchange processing 10 million orders per second with average trade value $50,000, a single Ghost Fill event affecting 1,000 trades represents <strong>$50 million of un-audited risk exposure</strong>.
+            </p>
+            <p class="text-gray-700">
+              The dual-rail area cost, amortized across millions of trades, is negligible compared to this risk. The <strong>risk elimination justifies the area increase</strong> in high-value financial execution contexts.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- VII. Formal Constraint: The Goukassian Promise -->
+      <section id="goukassian-promise" class="px-8 py-12">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">VII. Formal Constraint: The Goukassian Promise</h2>
+
+          <div class="bg-indigo-50 border-l-4 border-indigo-400 p-6 mb-8">
+            <h3 class="font-tiempos text-xl font-bold text-indigo-900 mb-3">System Invariant Definition</h3>
+            <blockquote class="text-indigo-800 text-lg italic">
+              &#34;No execution signal may propagate unless the system has entered, recorded, and exited a physically enforced escrow state.&#34;
+            </blockquote>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-8 mb-8">
+            <div>
+              <h3 class="font-tiempos text-xl font-bold text-gray-800 mb-4">VII.2 Linear Temporal Logic Expression</h3>
+
+              <div class="bg-gray-900 text-green-400 p-6 rounded-lg font-mono text-sm mb-4">
+                <pre class="whitespace-pre">Predicates:
+- execute: execution signal asserted
+- enter_escrow: system enters Escrow/NULL state  
+- record: audit evidence written to storage
+- exit_escrow: system exits Escrow state
+
+LTL Formula:
+□(execute → ◇(enter_escrow ∧ 
+                record ∧ 
+                exit_escrow))
+
+Where:
+□ (Globally): Property holds at all times
+◇ (Eventually): Subproperty holds at some future time
+→ (Implication): If antecedent, then consequent
+∧ (Conjunction): Both subproperties hold
+                </pre>
+              </div>
+
+              <div class="bg-blue-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-blue-900 mb-2">Stronger Formulation with Until Operator</h4>
+                <p class="text-blue-800 text-sm font-mono">
+                  □(execute → (¬execute U (enter_escrow ∧ ◇(record ∧ exit_escrow))))
+                </p>
+                <p class="text-blue-700 text-xs mt-2">
+                  The Until (U) operator requires ¬execute hold continuously until escrow conditions are satisfied.
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-tiempos text-xl font-bold text-gray-800 mb-4">VII.3 SystemVerilog Assertions</h3>
+
+              <div class="bg-gray-900 text-green-400 p-6 rounded-lg font-mono text-sm">
+                <pre class="whitespace-pre">// Sequence: proper escrow protocol completion
+sequence escrow_protocol;
+  enter_escrow ##[1:$] 
+  record ##[1:$] 
+  exit_escrow;
+endsequence
+
+// Property: execute implies prior protocol
+property goukassian_promise;
+  @(posedge clk or async_handshake)
+  disable iff (reset)
+  execute |-&gt; ($past(escrow_protocol, 1));
+endproperty
+
+// Assertion: runtime check
+assert property (goukassian_promise)
+  else $error(&#34;Goukassian Promise violated&#34;);
+
+// Cover: verification
+cover property (escrow_protocol ##1 execute);
+                </pre>
+              </div>
+
+              <div class="mt-4 p-4 bg-green-50 rounded-lg">
+                <h4 class="font-semibold text-green-900 mb-2">Implementation Features</h4>
+                <ul class="text-green-800 text-sm space-y-1">
+                  <li>• Clocked and unclocked forms for async operation</li>
+                  <li>• $past system function for temporal ordering</li>
+                  <li>• Custom Muller C-element monitors for pure DITL</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="data-table">
+            <table class="w-full">
+              <thead>
+                <tr>
+                  <th class="text-left">Verification Method</th>
+                  <th class="text-left">Application</th>
+                  <th class="text-left">Goukassian Promise Coverage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="font-semibold">Formal Model Checking</td>
+                  <td>Property verification on abstracted design</td>
+                  <td>Complete for bounded transaction sequences with state space reduction</td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">Simulation-Based Monitoring</td>
+                  <td>RTL/gate-level with real workloads</td>
+                  <td>Statistical sampling with immediate violation detection</td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">FPGA Emulation</td>
+                  <td>Pre-silicon validation with production traffic</td>
+                  <td>Near-complete at hardware speeds</td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">Post-Silicon Validation</td>
+                  <td>Production hardware with on-chip monitors</td>
+                  <td>Physical measurement with forensic logging</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- VIII. Falsifiability and Limits -->
+      <section id="falsifiability" class="px-8 py-12 bg-gray-50">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">VIII. Falsifiability and Limits</h2>
+
+          <div class="grid lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 class="font-tiempos text-lg font-bold text-gray-900 mb-4">
+                <i class="fas fa-times-circle text-red-500 mr-2"></i>Conditions of No Advantage
+              </h3>
+              <ul class="space-y-2 text-sm text-gray-700">
+                <li><strong>Latency-insensitive markets:</strong> Execution latency &gt; 1 ms</li>
+                <li><strong>Low-frequency domains:</strong> Holding periods &gt; 1 second</li>
+                <li><strong>Error-tolerant applications:</strong> Statistical correctness acceptable</li>
+              </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 class="font-tiempos text-lg font-bold text-gray-900 mb-4">
+                <i class="fas fa-exclamation-triangle text-orange-500 mr-2"></i>Invalidating Assumptions
+              </h3>
+              <ul class="space-y-2 text-sm text-gray-700">
+                <li><strong>C-element hysteresis integrity:</strong> Threshold voltage drift</li>
+                <li><strong>Dual-rail crosstalk immunity:</strong> Aggressive wire spacing</li>
+                <li><strong>Completion detection metastability:</strong> Synchronizer failure</li>
+              </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 class="font-tiempos text-lg font-bold text-gray-900 mb-4">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>Sufficient Binary Scenarios
+              </h3>
+              <ul class="space-y-2 text-sm text-gray-700">
+                <li><strong>Batch processing systems:</strong> Complete input before output</li>
+                <li><strong>Single-clock-domain pipelines:</strong> Negligible clock skew</li>
+                <li><strong>Approximate computing:</strong> Occasional errors acceptable</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow-sm border">
+            <h3 class="font-tiempos text-xl font-bold text-gray-900 mb-4">Falsifiability Criteria</h3>
+            <p class="text-gray-700 mb-4">
+              Our central claim—that binary commit semantics fundamentally cannot eliminate certain failure modes—is <strong>falsifiable</strong>. A demonstration of a binary system with <strong>provably zero commit-audit gap under all failure modes</strong> would invalidate our argument.
+            </p>
+
+            <div class="bg-blue-50 p-4 rounded-lg">
+              <h4 class="font-semibold text-blue-900 mb-2">Such a demonstration would require:</h4>
+              <ol class="text-blue-800 text-sm space-y-1 list-decimal list-inside">
+                <li>Synchronous execution and audit with single-clock-cycle latency</li>
+                <li>Failure-proof audit storage with acknowledgment before execution visibility</li>
+                <li>No speculative or pipelined state that could diverge from audited state</li>
+              </ol>
+              <p class="text-blue-700 text-sm mt-2">
+                These requirements are <strong>incompatible with high-frequency trading performance requirements</strong> and practical hardware constraints.
+              </p>
+            </div>
+          </div>
+
+          <img src="https://kimi-web-img.moonshot.cn/img/www.thetransmitter.org/4e550f0e7707d99369ece39a955fdd41ca3f524f.webp" alt="Abstract representation of scientific falsifiability concept" class="w-full h-48 object-cover rounded-lg mt-8 shadow-md" size="medium" aspect="wide" query="scientific falsifiability concept abstract" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="px-8 py-12 bg-gray-900 text-white">
+        <div class="max-w-4xl mx-auto">
+          <div class="border-t border-gray-700 pt-8">
+            <h3 class="font-tiempos text-lg font-bold mb-4">References</h3>
+            <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-300">
+              <div>
+                <p class="mb-2">
+                  <a href="https://www.sec.gov/files/2010-05-06-cftc-sec-report.pdf" class="citation-link" target="_blank">[1] CFTC/SEC Report on the 2010 Flash Crash</a>
+                </p>
+                <p class="mb-2">
+                  <a href="http://www.theseusresearch.com/NullConventionLogic.htm" class="citation-link" target="_blank">[3] Fant &amp; Brandt, NULL Convention Logic</a>
+                </p>
+                <p class="mb-2">
+                  <a href="https://corescholar.libraries.wright.edu/cgi/viewcontent.cgi?article=2326&amp;context=etd_all" class="citation-link" target="_blank">[4] IEX Speed Bump Patent and Disclosures</a>
+                </p>
+                <p class="mb-2">
+                  <a href="https://theses.hal.science/tel-03206505/file/AQUINO_GUAZZELLI_2020_archivage.pdf" class="citation-link" target="_blank">[6] IEEE SystemVerilog Standard</a>
+                </p>
+              </div>
+              <div>
+                <p class="mb-2">
+                  <a href="https://www.amf-france.org/sites/institutionnel/files/private/2022-01/1_Discussion__Ghost_by_TFoucault.pdf" class="citation-link" target="_blank">[68] AMF Ghost Liquidity Analysis</a>
+                </p>
+                <p class="mb-2">
+                  <a href="https://eng.ox.ac.uk/media/5199/bressana2020trading.pdf" class="citation-link" target="_blank">[114] Xilinx/NetFPGA Specifications</a>
+                </p>
+                <p class="mb-2">
+                  <a href="https://www.asxonline.com/content/dam/asxonline/public/documents/asx-trade-refresh-manuals/asx-trade-ouch-message-specification.pdf" class="citation-link" target="_blank">[122] ASX Trade OUCH Protocol</a>
+                </p>
+                <p class="mb-2">
+                  <a href="https://www.six-group.com/dam/download/the-swiss-stock-exchange/trading/trading-platform/x-stream-inet-performance-measurement-details.pdf" class="citation-link" target="_blank">[123] SIX Swiss Exchange Latency Metrics</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+        // Mobile TOC toggle
+        function toggleTOC() {
+            const toc = document.querySelector('.toc-fixed');
+            toc.classList.toggle('open');
+            
+            // Close TOC when clicking outside on mobile
+            if (toc.classList.contains('open')) {
+                document.addEventListener('click', closeTOCOnClickOutside);
+            } else {
+                document.removeEventListener('click', closeTOCOnClickOutside);
+            }
+        }
+        
+        function closeTOCOnClickOutside(event) {
+            const toc = document.querySelector('.toc-fixed');
+            const menuButton = document.querySelector('button[onclick="toggleTOC()"]');
+            
+            if (!toc.contains(event.target) && !menuButton.contains(event.target)) {
+                toc.classList.remove('open');
+                document.removeEventListener('click', closeTOCOnClickOutside);
+            }
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close mobile TOC after navigation
+                    if (window.innerWidth <= 1024) {
+                        const toc = document.querySelector('.toc-fixed');
+                        toc.classList.remove('open');
+                    }
+                }
+            });
+        });
+
+        // Highlight current section in TOC
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const tocLinks = document.querySelectorAll('.toc-fixed a[href^="#"]');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('bg-blue-100', 'text-blue-700', 'font-semibold');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('bg-blue-100', 'text-blue-700', 'font-semibold');
+                }
+            });
+        });
+        
+        // Add mobile menu button for smaller screens
+        if (window.innerWidth <= 1024) {
+            const menuButton = document.createElement('button');
+            menuButton.innerHTML = '<i class="fas fa-bars"></i>';
+            menuButton.className = 'fixed top-4 left-4 z-50 bg-white p-3 rounded-lg shadow-lg lg:hidden';
+            menuButton.onclick = toggleTOC;
+            document.body.appendChild(menuButton);
+        }
+    </script>
+  
+
+</body></html>
