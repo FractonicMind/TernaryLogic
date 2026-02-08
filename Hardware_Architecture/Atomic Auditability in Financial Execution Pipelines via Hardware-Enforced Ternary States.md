@@ -8,6 +8,7 @@ This paper presents a hardware architecture for **Atomic Auditability** in high-
 
 
 ![Interactive Web Report](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/Atomic%20Auditability%20in%20Financial%20Execution%20Pipelines%20via%20Hardware-Enforced%20Ternary%20States.html)
+
 ---
 
 ## I. Introduction
