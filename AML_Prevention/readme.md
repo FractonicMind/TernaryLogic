@@ -33,8 +33,8 @@ TL shifts financial enforcement from **Post-Hoc Reporting** (probabilistic/react
 
 **For Compliance Officers (CCOs), Auditors, and Regulators.**
 
-* **`TL-Regulatory-Mapping-K.docx`**: Exhaustive comparative tables mapping TL controls against **Basel III**, **FATF**, **IOSCO**, **NIST**, and **SOX/COSO** frameworks.
-* **`Interactive-Compliance-Matrix.html`**: A dynamic web report allowing auditors to filter controls by regulatory domain.
+* **`Ternary Logic (TL) as an Anti-Money Laundering (AML) Enforcement Architecture_ Governance-Grade System Specification.md`**: Exhaustive comparative tables mapping TL controls against **Basel III**, **FATF**, **IOSCO**, **NIST**, and **SOX/COSO** frameworks.
+* **`Ternary Logic (TL) as an Anti-Money Laundering (AML) Enforcement Architecture_ Governance-Grade System Specification.html`**: A dynamic web report allowing auditors to filter controls by regulatory domain.
 
 ## Core Principle: "No Log = No Action"
 
