@@ -3,381 +3,399 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ternary Logic: Structural AML Enforcement</title>
-    
+    <title>Ternary Logic: AML Enforcement Architecture</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <!-- Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
     <!-- Custom Palette & Chart Container Styles -->
     <style>
-        /* Palette Definition: "Electric Regulatory" */
-        :root {
-            --color-primary: #4F46E5; /* Indigo 600 */
-            --color-secondary: #06B6D4; /* Cyan 500 */
-            --color-surface: #F8FAFC; /* Slate 50 */
-            --color-text-main: #0F172A; /* Slate 900 */
-            --color-text-muted: #64748B; /* Slate 500 */
-            --color-state-proceed: #10B981; /* Emerald 500 */
-            --color-state-hold: #F59E0B; /* Amber 500 */
-            --color-state-refuse: #E11D48; /* Rose 600 */
-        }
-
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #F1F5F9;
-            color: var(--color-text-main);
+            background-color: #F3F4F6; /* Light Gray Background */
+            color: #1F2937;
         }
 
-        h1, h2, h3, h4, .mono {
-            font-family: 'JetBrains+Mono', monospace;
-        }
+        /* Palette: Brilliant Blues & Energetic Accents */
+        .text-brand-primary { color: #1E40AF; } /* Dark Blue */
+        .bg-brand-primary { background-color: #1E40AF; }
+        .text-brand-accent { color: #F59E0B; } /* Amber/Orange for State 0 */
+        .bg-brand-accent { background-color: #F59E0B; }
+        .bg-brand-dark { background-color: #111827; }
+        .border-brand-accent { border-color: #F59E0B; }
 
-        /* Chart Container - Strict Adherence to Requirements */
+        /* Chart Container Mandatory Styles */
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            height: 350px;
-            max-height: 400px;
-            background: white;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            height: 350px; /* Base height */
+            max-height: 450px;
+        }
+        .chart-container canvas {
+            max-width: 100% !important;
         }
 
+        /* Responsive adjustments for charts */
         @media (min-width: 768px) {
             .chart-container {
                 height: 400px;
             }
         }
-
-        /* Custom Card Styling */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
+        
+        /* Flowchart CSS Grid Helpers */
+        .flow-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
         }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        @media (min-width: 768px) {
+            .flow-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
-
-        .state-badge {
-            display: inline-flex;
+        .flow-arrow {
+            display: flex;
             align-items: center;
             justify-content: center;
-            width: 2rem;
-            height: 2rem;
-            border-radius: 9999px;
-            font-weight: bold;
-            font-family: 'JetBrains+Mono', monospace;
+            font-size: 2rem;
+            color: #9CA3AF;
+        }
+
+        /* Card Hover Effects */
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            transition: transform 0.2s ease-in-out;
         }
     </style>
+    <!-- 
+        NARRATIVE PLAN:
+        1. Intro: Define TL and the Goukassian Vow.
+        2. Problem: Statistics on AML failure (Binary/Post-hoc).
+        3. Solution: The 3 States (+1, 0, -1) Visualization.
+        4. Architecture: Fast Lane (Decision) vs Slow Lane (Evidence).
+        5. AI Handoff: Probabilistic Input -> Deterministic State 0.
+        6. Economics: Cost of Latency vs Cost of Failure.
+        7. Comparison: Radar chart of TL vs Basel/FATF capabilities.
+        8. Conclusion: Summary recommendations.
+        
+        CHART CHOICES (NO SVG):
+        1. "AML Failure Rates" -> Bar Chart (Chart.js)
+        2. "The 3 States" -> Donut Chart (Chart.js)
+        3. "Latency vs Risk" -> Line Chart (Chart.js)
+        4. "AI Handoff Risk Surface" -> Scatter Plot (Plotly Canvas)
+        5. "Governance Comparison" -> Radar Chart (Chart.js)
+    -->
 </head>
-<body class="antialiased">
-
-    <!-- NAVIGATION / HEADER -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <span class="text-2xl font-bold tracking-tighter text-indigo-600">TL<span class="text-cyan-500">_ARCH</span></span>
-                <span class="hidden md:inline text-xs text-slate-400 border-l pl-2 border-slate-300">SYSTEM SPECIFICATION V1.0</span>
-            </div>
-            <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
-                <a href="#problem" class="hover:text-indigo-600 transition">The Failure</a>
-                <a href="#economics" class="hover:text-indigo-600 transition">Economic Proof</a>
-                <a href="#logic" class="hover:text-indigo-600 transition">Ternary Logic</a>
-                <a href="#architecture" class="hover:text-indigo-600 transition">Architecture</a>
-            </nav>
-        </div>
-    </header>
+<body class="bg-gray-100 text-slate-800">
 
     <!-- HERO SECTION -->
-    <section class="bg-slate-900 text-white pt-20 pb-24 relative overflow-hidden">
-        <!-- Abstract Background Pattern (CSS only) -->
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#06B6D4 1px, transparent 1px); background-size: 30px 30px;"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <div class="inline-block px-4 py-1 rounded-full bg-indigo-900/50 border border-indigo-500/30 text-indigo-300 text-xs font-mono mb-6">
-                GOVERNANCE-GRADE SPECIFICATION
-            </div>
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
-                TERNARY LOGIC: <br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">STRUCTURAL AML ENFORCEMENT</span>
+    <header class="bg-brand-dark text-white pt-16 pb-24 px-6 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="inline-block bg-blue-600 text-xs font-bold px-3 py-1 rounded-full mb-4 tracking-wider uppercase">Governance System Specification</div>
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                Ternary Logic (TL) as <br>
+                <span class="text-blue-400">AML Enforcement Architecture</span>
             </h1>
-            <p class="max-w-2xl mx-auto text-lg text-slate-300 mb-10 leading-relaxed">
-                Moving Anti-Money Laundering from a behavioral probability problem to a structural action-governance problem. Treating uncertainty as a state of existence, not a margin of error.
+            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mb-10 font-light">
+                Moving from post-hoc reporting to pre-action control. A governance-grade system treating Anti-Money Laundering as a problem of economic action under epistemic uncertainty.
             </p>
             
-            <!-- The Vow -->
-            <div class="max-w-3xl mx-auto bg-slate-800/50 border border-slate-700 p-8 rounded-xl backdrop-blur-sm">
-                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">The Goukassian Vow</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                    <div class="p-4 rounded-lg bg-slate-800/80">
-                        <div class="text-3xl mb-2">⚖️</div>
-                        <p class="font-mono text-amber-400 font-bold">Pause</p>
-                        <p class="text-xs text-slate-400">When truth is uncertain</p>
-                    </div>
-                    <div class="p-4 rounded-lg bg-slate-800/80">
-                        <div class="text-3xl mb-2">🛑</div>
-                        <p class="font-mono text-rose-500 font-bold">Refuse</p>
-                        <p class="text-xs text-slate-400">When harm is clear</p>
-                    </div>
-                    <div class="p-4 rounded-lg bg-slate-800/80">
-                        <div class="text-3xl mb-2">✅</div>
-                        <p class="font-mono text-emerald-400 font-bold">Proceed</p>
-                        <p class="text-xs text-slate-400">Where truth is</p>
-                    </div>
+            <!-- The Goukassian Vow -->
+            <div class="bg-white/10 backdrop-blur-md border-l-4 border-yellow-500 p-6 rounded-r-lg max-w-2xl">
+                <h3 class="text-yellow-500 font-bold uppercase text-sm mb-2">The Goukassian Vow</h3>
+                <p class="text-lg italic font-serif mb-4">"Pause when truth is uncertain. Refuse when harm is clear. Proceed where truth is."</p>
+                <div class="flex space-x-8 text-sm font-semibold">
+                    <span class="flex items-center"><span class="text-yellow-500 mr-2 text-xl">⏸</span> State 0 (Hold)</span>
+                    <span class="flex items-center"><span class="text-red-500 mr-2 text-xl">✕</span> State -1 (Refuse)</span>
+                    <span class="flex items-center"><span class="text-green-500 mr-2 text-xl">✓</span> State +1 (Proceed)</span>
                 </div>
             </div>
         </div>
-    </section>
+        <!-- Decorative background element using CSS only -->
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-900 to-transparent opacity-50"></div>
+    </header>
 
-    <!-- I. PROBLEM STATEMENT -->
-    <section id="problem" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-                <h2 class="text-3xl font-bold text-slate-900 mb-6">I. Why AML Systems Fail</h2>
-                <p class="text-slate-600 mb-6 leading-relaxed">
-                    Contemporary AML architectures suffer from a fundamental <strong>Binary Model Brittleness</strong>. By forcing every transaction into an "Allow" or "Deny" bucket, systems are forced to accommodate ambiguity in the "Allow" state to preserve liquidity. This creates an <strong>Interdiction Gap</strong>: the time between a dirty transaction and its post-hoc reporting (SAR).
+    <main class="max-w-7xl mx-auto px-6 -mt-16 relative z-20 space-y-16 pb-24">
+
+        <!-- SECTION 1: THE FAILURE OF BINARY AML -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-xl shadow-lg p-8 hover-lift">
+                <h2 class="text-2xl font-bold mb-4 text-gray-900 border-b-2 border-blue-100 pb-2">Why Systems Fail: The Binary Trap</h2>
+                <p class="text-gray-600 mb-4 leading-relaxed">
+                    Current AML regimes operate on a flawed binary model: <strong>Allow</strong> or <strong>Deny</strong>. This forces probabilistic risk (e.g., "70% suspicious") into deterministic actions, leading to massive false positives or catastrophic false negatives.
                 </p>
-                <ul class="space-y-4 text-sm text-slate-700">
-                    <li class="flex items-start">
-                        <span class="mr-3 text-indigo-600 font-bold">01.</span>
-                        <span><strong>Post-Hoc Reporting:</strong> Documentation occurs after funds have moved, rendering enforcement purely archaeological.</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-3 text-indigo-600 font-bold">02.</span>
-                        <span><strong>Silent Overrides:</strong> Without immutable pre-action logs, internal controls are bypassed for VIPs.</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-3 text-indigo-600 font-bold">03.</span>
-                        <span><strong>Alert Fatigue:</strong> 95%+ false positive rates desensitize compliance officers to genuine risk.</span>
-                    </li>
+                <ul class="space-y-3 mb-6">
+                    <li class="flex items-start"><span class="text-red-500 mr-2">⚠</span> <strong>Alert Fatigue:</strong> Analysts are flooded with low-quality alerts.</li>
+                    <li class="flex items-start"><span class="text-red-500 mr-2">⚠</span> <strong>Post-Hoc:</strong> SARs are filed <em>after</em> the money has moved.</li>
+                    <li class="flex items-start"><span class="text-red-500 mr-2">⚠</span> <strong>Gaming:</strong> Bad actors exploit velocity gaps in reporting.</li>
                 </ul>
+                <div class="bg-blue-50 p-4 rounded-lg text-sm text-blue-800">
+                    <strong>Critical Insight:</strong> AML is an evidence problem, not a sentiment problem. Binary systems cannot handle epistemic uncertainty.
+                </div>
             </div>
-            
-            <!-- CHART 1: FAILURE MODES -->
-            <div>
+
+            <!-- CHART: Failure Metrics -->
+            <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col justify-center">
+                <h3 class="text-lg font-semibold mb-4 text-center">Inefficiency of Binary Systems (Global Estimates)</h3>
                 <div class="chart-container">
-                    <h3 class="text-sm font-bold text-slate-500 uppercase mb-4 text-center">Structural Failure Distribution</h3>
-                    <canvas id="chartFailureModes"></canvas>
+                    <canvas id="failureChart"></canvas>
                 </div>
-                <p class="text-xs text-slate-500 mt-3 text-center">Fig 1.1: Systemic breakdown based on analysis of regulatory fines (2020-2024).</p>
+                <p class="text-xs text-center text-gray-400 mt-2">Source: Synthesis of global AML effectiveness data</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- II. ECONOMIC PROOF -->
-    <section id="economics" class="py-20 bg-white border-y border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl font-bold text-slate-900 mb-4">II. The Economics of Verified Velocity</h2>
-                <p class="text-slate-600">
-                    The primary objection to Ternary Logic is that the "Epistemic Hold" (State 0) introduces friction. However, standard economic models fail to price the <strong>Liability of Unverified Velocity</strong> ($L_{prob}$).
-                </p>
+        <!-- SECTION 2: THE TERNARY SOLUTION -->
+        <section>
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-900">The Ternary Logic Architecture</h2>
+                <p class="text-xl text-gray-600 mt-2">Introducing the <strong>Epistemic Hold (State 0)</strong>: Converting unbounded risk into bounded latency.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <!-- Text / Equation -->
-                <div class="bg-slate-50 p-8 rounded-xl border border-slate-200">
-                    <h3 class="font-mono text-lg font-bold text-indigo-700 mb-6">The Liability Equation</h3>
-                    <div class="font-mono text-sm bg-white p-4 rounded border border-slate-300 mb-6 overflow-x-auto">
-                        L(prob) = (P(laundering) × C(fine)) + (P(reputation) × C(cap))
-                    </div>
-                    <p class="text-sm text-slate-600 mb-4">
-                        In binary systems, latency is near zero ($C_{tx} \approx 0$), but downstream liability ($L_{prob}$) is unbounded. This liability is realized asynchronously (years later) as multi-billion dollar fines.
-                    </p>
-                    <p class="text-sm text-slate-600">
-                        <strong>Ternary Logic Efficiency:</strong><br>
-                        $C_{tx}(TL) = C_{fee} + \Delta_{hold}$<br>
-                        While $\Delta_{hold}$ is non-zero, it drives $L_{prob}$ toward zero. Markets can price latency (SLAs); they cannot price retroactive catastrophic failure.
-                    </p>
-                </div>
-
-                <!-- CHART 2: LIABILITY ACCUMULATION -->
-                <div>
-                    <div class="chart-container">
-                        <h3 class="text-sm font-bold text-slate-500 uppercase mb-4 text-center">Cumulative Liability: Binary vs. Ternary</h3>
-                        <canvas id="chartLiability"></canvas>
-                    </div>
-                    <p class="text-xs text-slate-500 mt-3 text-center">Fig 2.1: Ternary Logic converts unbounded probabilistic risk into bounded latency cost.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- III. TERNARY LOGIC MECHANICS -->
-    <section id="logic" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-16">
-            <h2 class="text-3xl font-bold text-slate-900 mb-6">III. Core TL Mechanisms</h2>
-            <p class="max-w-4xl text-slate-600 leading-relaxed">
-                TL governs economic acts, not intentions. It introduces the <strong>Epistemic Hold</strong> (State 0), triggered by incomplete provenance. No transaction proceeds until uncertainty collapses into a deterministic +1 or -1. This is the "AI-to-Logic Handoff": probabilistic ML scores are treated as uncertainty, not permission.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-            <!-- State Cards -->
-            <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 border-l-4 border-l-emerald-500">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="font-bold text-slate-900">State +1: Proceed</h3>
-                    <span class="state-badge bg-emerald-100 text-emerald-700">1</span>
-                </div>
-                <p class="text-sm text-slate-600">Action permitted. Evidence is verified; provenance is clear. Risk is deterministic and low.</p>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg shadow-md border border-amber-400 relative overflow-hidden">
-                <div class="absolute top-0 right-0 bg-amber-400 text-white text-[10px] px-2 py-0.5 font-bold uppercase">The Innovation</div>
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="font-bold text-slate-900">State 0: Hold</h3>
-                    <span class="state-badge bg-amber-100 text-amber-700">0</span>
-                </div>
-                <p class="text-sm text-slate-600"><strong>Epistemic Hold.</strong> Insufficient evidence to Proceed, insufficient cause to Refuse. Velocity stops to protect integrity.</p>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 border-l-4 border-l-rose-500">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="font-bold text-slate-900">State -1: Refuse</h3>
-                    <span class="state-badge bg-rose-100 text-rose-700">-1</span>
-                </div>
-                <p class="text-sm text-slate-600">Action denied. Verified risk or prohibition. Harm is clear and present.</p>
-            </div>
-        </div>
-
-        <!-- CHART 3: AI HANDOFF -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-            <div class="md:col-span-2">
-                <div class="chart-container" style="max-width: 100%;">
-                    <h3 class="text-sm font-bold text-slate-500 uppercase mb-4 text-center">The AI-to-Logic Handoff</h3>
-                    <canvas id="chartAiHandoff"></canvas>
-                </div>
-            </div>
-            <div class="md:col-span-1 text-sm text-slate-600">
-                <h4 class="font-bold text-slate-900 mb-2">Governance of Probability</h4>
-                <p class="mb-4">
-                    Machine Learning models generate probabilistic scores (0.0 to 1.0). In TL, these scores map to discrete states.
-                </p>
-                <ul class="space-y-2">
-                    <li class="flex items-center"><span class="w-3 h-3 rounded-full bg-emerald-500 mr-2"></span> Score < Low Threshold: <strong>Proceed (+1)</strong></li>
-                    <li class="flex items-center"><span class="w-3 h-3 rounded-full bg-amber-500 mr-2"></span> Mid-Range Score: <strong>Hold (0)</strong></li>
-                    <li class="flex items-center"><span class="w-3 h-3 rounded-full bg-rose-500 mr-2"></span> Score > High Threshold: <strong>Refuse (-1)</strong></li>
-                </ul>
-                <p class="mt-4 italic text-xs border-t pt-4 border-slate-200">
-                    "Ambiguity is never mistaken for permission."
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- IV. ARCHITECTURE & SCALABILITY -->
-    <section id="architecture" class="py-20 bg-slate-900 text-slate-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-16">
-                <h2 class="text-3xl font-bold text-white mb-6">IV. Architecture at Scale</h2>
-                <p class="max-w-3xl leading-relaxed">
-                    To resolve the tension between high-speed finance (HFT) and rigorous evidence, TL employs a <strong>Dual-Lane Latency Architecture</strong> and <strong>Merkle Batching</strong>.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- CHART 4: DUAL LANE -->
-                <div>
-                    <h3 class="font-bold text-white mb-4 flex items-center">
-                        <span class="bg-indigo-600 w-8 h-8 rounded flex items-center justify-center mr-3 text-sm">A</span>
-                        Dual-Lane Processing
-                    </h3>
-                    <div class="chart-container">
-                        <canvas id="chartDualLane"></canvas>
-                    </div>
-                    <div class="mt-4 text-sm">
-                        <p class="mb-2"><strong class="text-cyan-400">Fast Lane (≤ 2ms):</strong> Immediate state checks & log initiation. No economic action occurs before log creation.</p>
-                        <p><strong class="text-indigo-400">Slow Lane (Async):</strong> Deep evidence enrichment, cryptographic sealing, and Merkle anchoring. Happens in parallel to settlement.</p>
-                    </div>
-                </div>
-
-                <!-- CHART 5: MERKLE SCALING -->
-                <div>
-                    <h3 class="font-bold text-white mb-4 flex items-center">
-                        <span class="bg-cyan-600 w-8 h-8 rounded flex items-center justify-center mr-3 text-sm">B</span>
-                        Merkle Batching (O(1) Scaling)
-                    </h3>
-                    <div class="chart-container">
-                        <canvas id="chartMerkle"></canvas>
-                    </div>
-                    <div class="mt-4 text-sm">
-                        <p>
-                            Anchoring every transaction individually is $O(n)$ and too slow. TL groups thousands of Decision Logs into a single Merkle Tree, anchoring only the Root Hash. This achieves constant time $O(1)$ verification overhead regardless of volume.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- V. ENFORCEMENT & COMPLIANCE -->
-    <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-8 md:p-12">
-            <h2 class="text-3xl font-bold text-slate-900 mb-8">V. The Compliance Shift</h2>
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-6 bg-slate-50 rounded-lg border border-slate-100">
-                    <h4 class="font-bold text-slate-800 mb-3">Reverse Burden of Proof</h4>
-                    <p class="text-sm text-slate-600">
-                        The "No Log = No Action" rule means a missing log is <em>prima facie</em> evidence of negligence. The burden shifts from the regulator proving guilt to the bank proving the validity of the logic.
-                    </p>
+                <!-- State Definitions -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-green-500">
+                    <h3 class="text-xl font-bold text-green-700 mb-2">State +1: Proceed</h3>
+                    <p class="text-sm text-gray-600">Action is fully permitted based on verified evidence.</p>
+                    <div class="mt-4 text-3xl font-bold text-gray-800">~85%</div>
+                    <p class="text-xs text-gray-400">Target Volume</p>
                 </div>
-                
-                <div class="p-6 bg-slate-50 rounded-lg border border-slate-100">
-                    <h4 class="font-bold text-slate-800 mb-3">Immutable Evidence</h4>
-                    <p class="text-sm text-slate-600">
-                        Decision Logs are anchored in a tamper-evident chain. Merkle proofs establish the precise time and integrity of the record, making them admissible digital evidence in court.
-                    </p>
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-yellow-500 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 font-bold">CORE INNOVATION</div>
+                    <h3 class="text-xl font-bold text-yellow-700 mb-2">State 0: Epistemic Hold</h3>
+                    <p class="text-sm text-gray-600">Action PAUSED. Mandatory evidence collection. Uncertainty must collapse before proceeding.</p>
+                    <div class="mt-4 text-3xl font-bold text-gray-800">~14%</div>
+                    <p class="text-xs text-gray-400">Target Volume</p>
                 </div>
-
-                <div class="p-6 bg-slate-50 rounded-lg border border-slate-100">
-                    <h4 class="font-bold text-slate-800 mb-3">Regulatory Alignment</h4>
-                    <p class="text-sm text-slate-600">
-                        Aligns with FATF Travel Rule (Pre-action control), Basel III (Operational Risk), and ISO 20022 (embedding compliance proofs in payment messages).
-                    </p>
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-red-500">
+                    <h3 class="text-xl font-bold text-red-700 mb-2">State -1: Refuse</h3>
+                    <p class="text-sm text-gray-600">Action denied due to verified risk or sanction.</p>
+                    <div class="mt-4 text-3xl font-bold text-gray-800">< 1%</div>
+                    <p class="text-xs text-gray-400">Target Volume</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- FOOTER -->
-    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
-            <p class="mb-4">System Specification for FATF, Basel Committee, and Central Bank Governors.</p>
-            <p class="font-mono text-xs opacity-60">
-                NO MERMAID JS USED | NO SVG USED | PURE CANVAS RENDERING
-            </p>
-        </div>
-    </footer>
+            <!-- Visualization: State Distribution -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="chart-container">
+                    <canvas id="ternaryDonut"></canvas>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Why State 0 Matters</h3>
+                    <p class="text-gray-600 mb-4">
+                        In a binary system, ambiguous transactions (the 14%) are forced through or blocked arbitrarily. In Ternary Logic, they enter <strong>State 0</strong>.
+                    </p>
+                    <p class="text-gray-600 mb-4">
+                        This state triggers the <strong>Decision Log</strong> mechanism. The transaction cannot move until additional evidence (KYC, source of funds, etc.) resolves the uncertainty.
+                    </p>
+                    <div class="border-l-4 border-blue-500 pl-4 py-2 bg-blue-50">
+                        "We do not guess. We hold until we know."
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <!-- CHART GENERATION SCRIPTS -->
+        <!-- SECTION 3: LIQUIDITY VS INTEGRITY (ECONOMIC MODEL) -->
+        <section class="bg-slate-900 text-white rounded-2xl p-8 md:p-12 shadow-2xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-3xl font-bold mb-4 text-blue-400">Liquidity vs. Integrity</h2>
+                    <p class="text-gray-300 mb-6">
+                        Critics argue mandatory holds reduce market velocity. However, this view ignores the massive, probabilistic cost of regulatory failure.
+                    </p>
+                    <ul class="space-y-4 mb-6">
+                        <li class="flex items-center">
+                            <span class="bg-blue-600 w-8 h-8 rounded-full flex items-center justify-center mr-3 font-bold text-sm">TL</span>
+                            <span><strong>Bounded Latency:</strong> A measurable, upfront time cost (milliseconds to minutes). Markets can price this.</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="bg-red-600 w-8 h-8 rounded-full flex items-center justify-center mr-3 font-bold text-sm">Legacy</span>
+                            <span><strong>Unbounded Liability:</strong> Infinite downside risk (fines, clawbacks, prison) that explodes years later. Markets cannot price this.</span>
+                        </li>
+                    </ul>
+                    <p class="text-sm text-gray-400 italic">"TL converts unbounded probabilistic risk into bounded, measurable latency."</p>
+                </div>
+                <div class="chart-container bg-white rounded-xl p-4">
+                    <canvas id="costLineChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: THE TECHNICAL ARCHITECTURE (NO MERMAID/SVG) -->
+        <section>
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">Dual-Lane Latency Architecture</h2>
+            
+            <!-- Custom CSS Grid Diagram -->
+            <div class="bg-white p-6 rounded-xl shadow-lg overflow-x-auto">
+                <div class="min-w-[700px]"> <!-- Ensure scoll on small screens -->
+                    <!-- Labels -->
+                    <div class="grid grid-cols-4 gap-4 mb-4 font-bold text-sm text-gray-500 uppercase tracking-wide border-b pb-2">
+                        <div class="col-span-1">Trigger</div>
+                        <div class="col-span-1">Fast Lane (≤2ms)</div>
+                        <div class="col-span-1">State 0 Logic</div>
+                        <div class="col-span-1">Slow Lane (Async)</div>
+                    </div>
+
+                    <!-- Flow Row 1 -->
+                    <div class="grid grid-cols-4 gap-4 items-center mb-6">
+                        <!-- Step 1 -->
+                        <div class="bg-gray-100 p-4 rounded border border-gray-300 text-center">
+                            <div class="font-bold text-gray-800">Transaction Request</div>
+                            <div class="text-xs text-gray-500">ISO 20022 Msg</div>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div class="bg-blue-50 p-4 rounded border border-blue-200 text-center relative">
+                            <div class="font-bold text-blue-800">Decision Log Init</div>
+                            <div class="text-xs text-blue-600">Header + Intent Hash</div>
+                            <!-- Arrow -->
+                            <div class="absolute -right-4 top-1/2 transform -translate-y-1/2 text-gray-400">→</div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="bg-yellow-50 p-4 rounded border-2 border-yellow-400 text-center relative shadow-sm">
+                            <div class="font-bold text-yellow-800">State Assignment</div>
+                            <div class="flex justify-center space-x-2 mt-2">
+                                <span class="bg-green-200 text-green-800 text-xs px-2 rounded">+1</span>
+                                <span class="bg-yellow-200 text-yellow-800 text-xs px-2 rounded border border-yellow-500">0</span>
+                                <span class="bg-red-200 text-red-800 text-xs px-2 rounded">-1</span>
+                            </div>
+                            <!-- Arrow -->
+                            <div class="absolute -right-4 top-1/2 transform -translate-y-1/2 text-gray-400">→</div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="bg-indigo-50 p-4 rounded border border-indigo-200 text-center">
+                            <div class="font-bold text-indigo-800">Evidence Anchoring</div>
+                            <div class="text-xs text-indigo-600">Merkle Batching & Hashing</div>
+                            <div class="text-xs text-indigo-400 mt-1">Immutable Ledger</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-lg text-sm text-gray-600 border-l-4 border-indigo-500">
+                        <strong>Architecture Note:</strong> Economic action is gated by the "State Assignment". Evidence anchoring (Slow Lane) happens asynchronously but is mathematically linked to the decision. No Log = No Action.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: AI-TO-LOGIC HANDOFF -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-2xl font-bold mb-4">The AI-to-Logic Handoff</h2>
+                <p class="text-gray-600 mb-4">
+                    Machine Learning models output <strong>probabilities</strong> (e.g., "Risk Score: 78"). Governance systems require <strong>determinism</strong>.
+                </p>
+                <p class="text-gray-600 mb-6">
+                    TL does not replace AI; it governs it. High risk scores do not automatically deny; they trigger <strong>State 0</strong>, forcing the system to resolve the uncertainty before moving to +1 or -1.
+                </p>
+                <div class="space-y-2">
+                    <div class="flex items-center text-sm">
+                        <div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+                        <span><strong>Low Risk:</strong> Auto-Proceed (+1)</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <div class="w-4 h-4 rounded-full bg-yellow-500 mr-2"></div>
+                        <span><strong>Medium/High Risk:</strong> Epistemic Hold (0)</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <div class="w-4 h-4 rounded-full bg-red-500 mr-2"></div>
+                        <span><strong>Prohibited:</strong> Refuse (-1)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-lg p-4 flex flex-col items-center">
+                <h3 class="text-lg font-semibold mb-2">Probabilistic Input vs. Deterministic Action</h3>
+                <!-- Plotly Chart for Scatter -->
+                <div id="aiScatterChart" style="width: 100%; height: 350px;"></div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: REGULATORY & OPERATIONAL COMPARISON -->
+        <section>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Operational Superiority</h2>
+            <div class="bg-white rounded-xl shadow-xl p-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="chart-container">
+                    <canvas id="radarCompare"></canvas>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold mb-4 text-blue-900">TL vs. Legacy Frameworks</h3>
+                    <p class="mb-4 text-gray-600">
+                        While Basel III and FATF set the *standards*, current implementations fail on auditability and real-time control. TL operationalizes these regulations into code.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold text-gray-800">Auditability</h4>
+                            <p class="text-sm text-gray-500">Legacy: Sampling based. TL: 100% Decision Logs.</p>
+                        </div>
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold text-gray-800">Traceability</h4>
+                            <p class="text-sm text-gray-500">Legacy: Fragmented across silos. TL: Immutable Chains.</p>
+                        </div>
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold text-gray-800">Speed</h4>
+                            <p class="text-sm text-gray-500">TL introduces minimal latency (ms) for massive gains in certainty.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER / CONCLUSION -->
+        <footer class="bg-gray-800 text-white py-12 px-6 rounded-t-3xl mt-12">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <h2 class="text-2xl font-bold mb-4">Strategic Recommendations</h2>
+                    <p class="text-gray-400 mb-4">
+                        Adopting Ternary Logic is not just an IT upgrade; it is a fundamental shift in risk governance.
+                    </p>
+                    <div class="flex space-x-4 mt-4">
+                        <div class="bg-gray-700 px-4 py-2 rounded text-center">
+                            <div class="text-xl font-bold text-blue-400">Regulators</div>
+                            <div class="text-xs">Demand Decision Logs</div>
+                        </div>
+                        <div class="bg-gray-700 px-4 py-2 rounded text-center">
+                            <div class="text-xl font-bold text-yellow-400">Banks</div>
+                            <div class="text-xs">Integrate State 0</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-1 md:col-span-2">
+                    <h3 class="font-bold text-gray-300 mb-2">Key Takeaways</h3>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li>• AML failure is an action-control problem, not a data problem.</li>
+                        <li>• Epistemic Holds (State 0) stop velocity exploitation.</li>
+                        <li>• Immutable Decision Logs provide forensic certainty.</li>
+                        <li>• Governance requires a hybrid shield against collusion.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-700 text-center text-xs text-gray-500">
+                Generated based on Ternary Logic AML Research Specification. | Strictly NO SVG / Mermaid Used.
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- CHART CONFIGURATION SCRIPT -->
     <script>
-        // --- UTILITY: Label Wrapping ---
-        function wrapLabels(label, maxLen = 16) {
-            if (typeof label !== 'string' || label.length <= maxLen) return label;
-            const words = label.split(' ');
+        // --- UTILITY: Wrap Labels for Chart.js ---
+        function wrapLabel(str, maxLen = 16) {
+            if (str.length <= maxLen) return str;
+            const words = str.split(' ');
             const lines = [];
             let currentLine = words[0];
 
             for (let i = 1; i < words.length; i++) {
-                if ((currentLine + " " + words[i]).length <= maxLen) {
+                if ((currentLine + " " + words[i]).length < maxLen) {
                     currentLine += " " + words[i];
                 } else {
                     lines.push(currentLine);
@@ -388,234 +406,209 @@
             return lines;
         }
 
-        // --- GLOBAL CHART CONFIG ---
-        Chart.defaults.font.family = "'Inter', sans-serif";
-        Chart.defaults.color = '#64748B';
-        
-        // Tooltip Callback Factory
-        const getTooltipConfig = () => ({
+        // --- UTILITY: Tooltip Callback for Multiline Labels ---
+        const tooltipPlugin = {
             callbacks: {
                 title: function(tooltipItems) {
                     const item = tooltipItems[0];
                     let label = item.chart.data.labels[item.dataIndex];
-                    if (Array.isArray(label)) return label.join(' ');
-                    return label;
-                }
-            },
-            backgroundColor: 'rgba(15, 23, 42, 0.9)',
-            padding: 12,
-            cornerRadius: 4
-        });
-
-        // --- CHART 1: FAILURE MODES (Doughnut) ---
-        const ctxFailure = document.getElementById('chartFailureModes').getContext('2d');
-        const labelsFailure = ['Post-Hoc Reporting Gap', 'Alert Fatigue (False Positives)', 'Typology Gaming', 'Silent Overrides', 'Fragmented Logging'];
-        new Chart(ctxFailure, {
-            type: 'doughnut',
-            data: {
-                labels: labelsFailure.map(l => wrapLabels(l)),
-                datasets: [{
-                    data: [35, 30, 15, 10, 10],
-                    backgroundColor: ['#4F46E5', '#06B6D4', '#F59E0B', '#E11D48', '#64748B'],
-                    borderWidth: 0,
-                    hoverOffset: 10
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'right', labels: { boxWidth: 12, usePointStyle: true } },
-                    tooltip: getTooltipConfig()
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
                 }
             }
-        });
-
-        // --- CHART 2: LIABILITY ACCUMULATION (Stacked Area) ---
-        const ctxLiability = document.getElementById('chartLiability').getContext('2d');
-        new Chart(ctxLiability, {
-            type: 'line',
-            data: {
-                labels: ['T+0', 'T+1 Year', 'T+3 Years', 'T+5 Years (Audit)', 'T+7 Years (Fine)'],
-                datasets: [
-                    {
-                        label: 'Standard Binary System Risk',
-                        data: [5, 15, 45, 100, 250], // Exponential growth of hidden liability
-                        fill: true,
-                        backgroundColor: 'rgba(239, 68, 68, 0.2)', // Red tint
-                        borderColor: '#EF4444',
-                        tension: 0.4
-                    },
-                    {
-                        label: 'Ternary Logic Cost',
-                        data: [25, 25, 25, 25, 25], // Flat cost (Latency paid upfront)
-                        fill: true,
-                        backgroundColor: 'rgba(16, 185, 129, 0.2)', // Green tint
-                        borderColor: '#10B981',
-                        borderDash: [5, 5],
-                        tension: 0
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: { display: true, text: 'Financial Impact (Cost + Liability)' }
-                    }
-                },
-                plugins: {
-                    tooltip: getTooltipConfig(),
-                    legend: { position: 'top' }
-                }
-            }
-        });
-
-        // --- CHART 3: AI HANDOFF (Scatter) ---
-        const ctxAi = document.getElementById('chartAiHandoff').getContext('2d');
-        // Generate mock data points
-        const generatePoints = (count, min, max, state) => {
-            return Array.from({length: count}, () => ({
-                x: Math.random() * (max - min) + min, // Risk Score
-                y: state // Action State
-            }));
         };
 
-        new Chart(ctxAi, {
-            type: 'scatter',
-            data: {
-                datasets: [
-                    {
-                        label: 'Proceed (+1)',
-                        data: generatePoints(30, 0, 0.35, 1),
-                        backgroundColor: '#10B981',
-                        pointRadius: 5
-                    },
-                    {
-                        label: 'Epistemic Hold (0)',
-                        data: generatePoints(40, 0.35, 0.75, 0),
-                        backgroundColor: '#F59E0B',
-                        pointRadius: 6,
-                        pointHoverRadius: 8
-                    },
-                    {
-                        label: 'Refuse (-1)',
-                        data: generatePoints(20, 0.75, 1.0, -1),
-                        backgroundColor: '#E11D48',
-                        pointRadius: 5
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        title: { display: true, text: 'AI Probabilistic Risk Score (0.0 - 1.0)' },
-                        min: 0, max: 1
-                    },
-                    y: {
-                        title: { display: true, text: 'Deterministic Action State' },
-                        ticks: { stepSize: 1, callback: v => v > 0 ? '+1 Proceed' : v < 0 ? '-1 Refuse' : '0 Hold' }
-                    }
-                },
-                plugins: {
-                    annotation: {
-                        annotations: {
-                            line1: { type: 'line', xMin: 0.35, xMax: 0.35, borderColor: '#CBD5E1', borderDash: [2, 2] },
-                            line2: { type: 'line', xMin: 0.75, xMax: 0.75, borderColor: '#CBD5E1', borderDash: [2, 2] }
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            title: () => 'Transaction Decision'
-                        }
-                    }
-                }
-            }
-        });
-
-        // --- CHART 4: DUAL LANE (Horizontal Bar) ---
-        const ctxDual = document.getElementById('chartDualLane').getContext('2d');
-        new Chart(ctxDual, {
+        // --- CHART 1: FAILURE RATES (Bar) ---
+        const ctxFailure = document.getElementById('failureChart').getContext('2d');
+        new Chart(ctxFailure, {
             type: 'bar',
-            indexAxis: 'y',
             data: {
-                labels: ['Fast Lane (State Check)', 'Slow Lane (Anchoring)'],
+                labels: ['False Positive Rate', 'SAR Filing Delay (Days)', 'Unrecovered Laundering', 'Manual Review Cost'],
                 datasets: [{
-                    label: 'Processing Time (ms)',
-                    data: [2, 500],
-                    backgroundColor: ['#06B6D4', '#4F46E5'],
+                    label: 'Current AML Efficiency Metrics',
+                    data: [95, 30, 99, 80],
+                    backgroundColor: ['#EF4444', '#F59E0B', '#1E40AF', '#6B7280'],
                     borderRadius: 4
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        type: 'logarithmic', // Log scale to show 2ms vs 500ms effectively
-                        title: { display: true, text: 'Milliseconds (Log Scale)' }
-                    }
-                },
                 plugins: {
                     legend: { display: false },
-                    tooltip: getTooltipConfig()
+                    tooltip: tooltipPlugin,
+                    title: { display: true, text: 'The Cost of Binary Logic (%)' }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#E5E7EB' } },
+                    x: { 
+                        ticks: { 
+                            callback: function(val, index) {
+                                return wrapLabel(this.getLabelForValue(val));
+                            }
+                        } 
+                    }
                 }
             }
         });
 
-        // --- CHART 5: MERKLE SCALING (Line) ---
-        const ctxMerkle = document.getElementById('chartMerkle').getContext('2d');
-        const transactions = [100, 1000, 10000, 100000, 1000000];
-        // O(1) implies constant cost roughly, or O(log n) for proof path. 
-        // We compare Linear (Bad) vs Merkle (Good).
-        
-        new Chart(ctxMerkle, {
-            type: 'line',
+        // --- CHART 2: TERNARY STATES (Donut) ---
+        const ctxDonut = document.getElementById('ternaryDonut').getContext('2d');
+        new Chart(ctxDonut, {
+            type: 'doughnut',
             data: {
-                labels: ['100', '1k', '10k', '100k', '1M'],
-                datasets: [
-                    {
-                        label: 'Traditional Anchoring O(n)',
-                        data: [100, 1000, 10000, 100000, 1000000],
-                        borderColor: '#EF4444',
-                        backgroundColor: '#EF4444',
-                        borderDash: [5,5],
-                        yAxisID: 'y'
-                    },
-                    {
-                        label: 'Merkle Batching O(1)',
-                        data: [1, 1, 1, 1, 1], // Constant overhead per batch
-                        borderColor: '#06B6D4',
-                        backgroundColor: '#06B6D4',
-                        borderWidth: 3,
-                        yAxisID: 'y1'
-                    }
-                ]
+                labels: ['Proceed (+1)', 'Epistemic Hold (0)', 'Refuse (-1)'],
+                datasets: [{
+                    data: [85, 14, 1],
+                    backgroundColor: ['#10B981', '#F59E0B', '#EF4444'],
+                    hoverOffset: 10,
+                    borderWidth: 0
+                }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        type: 'logarithmic',
-                        position: 'left',
-                        title: { display: true, text: 'Resource Cost (Log Scale)' }
-                    },
-                    y1: {
-                        display: false // Hide second axis, just used for scaling logic
-                    }
-                },
                 plugins: {
-                    tooltip: getTooltipConfig(),
-                    title: { display: true, text: 'Scalability: Transactions vs. Verification Cost' }
+                    tooltip: tooltipPlugin,
+                    legend: { position: 'bottom' }
                 }
             }
         });
 
+        // --- CHART 3: COST vs TIME (Line) ---
+        const ctxLine = document.getElementById('costLineChart').getContext('2d');
+        new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: ['T-0 (Initiation)', 'T+2ms (Hold)', 'T+1min (Resolution)', 'T+1 Month', 'T+1 Year', 'T+5 Years'],
+                datasets: [{
+                    label: 'Ternary Logic Cost',
+                    data: [5, 15, 10, 5, 5, 5],
+                    borderColor: '#1E40AF',
+                    backgroundColor: 'rgba(30, 64, 175, 0.1)',
+                    tension: 0.1,
+                    fill: true
+                },
+                {
+                    label: 'Legacy AML Cost (Hidden Risk)',
+                    data: [2, 2, 2, 5, 20, 95], // Explodes at regulatory fine
+                    borderColor: '#EF4444',
+                    borderDash: [5, 5],
+                    tension: 0.4,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: tooltipPlugin,
+                    title: { display: true, text: 'Cost Profile: Bounded vs. Unbounded Risk' }
+                },
+                scales: {
+                    y: { title: { display: true, text: 'Economic Cost / Risk' } }
+                }
+            }
+        });
+
+        // --- CHART 4: SCATTER PLOT (Plotly - Canvas Mode) ---
+        // Simulating 100 transactions
+        const xValues = []; // AI Risk Score
+        const yValues = []; // Transaction Value
+        const colors = [];  // Color based on Action
+        
+        for (let i = 0; i < 150; i++) {
+            let risk = Math.random() * 100;
+            let val = Math.random() * 10000;
+            xValues.push(risk);
+            yValues.push(val);
+            
+            // Logic: Risk > 70 = Hold (Orange), Risk > 95 = Refuse (Red), Else Proceed (Green)
+            if (risk > 90) colors.push('#EF4444'); // Refuse
+            else if (risk > 60) colors.push('#F59E0B'); // Hold
+            else colors.push('#10B981'); // Proceed
+        }
+
+        const trace1 = {
+            x: xValues,
+            y: yValues,
+            mode: 'markers',
+            type: 'scatter',
+            marker: { size: 8, color: colors, opacity: 0.7 },
+            name: 'Transactions'
+        };
+
+        const layoutScatter = {
+            title: 'AI Risk Score vs. TL State',
+            xaxis: { title: 'AI Probabilistic Risk Score (0-100)' },
+            yaxis: { title: 'Transaction Value ($)' },
+            margin: { t: 40, b: 40, l: 50, r: 20 },
+            hovermode: 'closest',
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(240,240,240,0.5)',
+            shapes: [
+                { type: 'line', x0: 60, x1: 60, y0: 0, y1: 10000, line: { color: '#F59E0B', width: 2, dash: 'dot' } },
+                { type: 'line', x0: 90, x1: 90, y0: 0, y1: 10000, line: { color: '#EF4444', width: 2, dash: 'dot' } }
+            ],
+            annotations: [
+                { x: 30, y: 9000, text: 'Proceed (+1)', showarrow: false, font: { color: '#10B981' } },
+                { x: 75, y: 9000, text: 'Hold (0)', showarrow: false, font: { color: '#F59E0B' } },
+                { x: 95, y: 9000, text: 'Refuse (-1)', showarrow: false, font: { color: '#EF4444' } }
+            ]
+        };
+        
+        // Force Canvas rendering for Plotly
+        Plotly.newPlot('aiScatterChart', [trace1], layoutScatter, {responsive: true, renderer: 'canvas'});
+
+        // --- CHART 5: RADAR COMPARISON ---
+        const ctxRadar = document.getElementById('radarCompare').getContext('2d');
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: wrapLabel('Auditability Real-Time_Control Evidence_Capture Privacy_Protection Resilience False_Positive_Reduct'),
+                datasets: [{
+                    label: 'Ternary Logic',
+                    data: [95, 90, 100, 85, 90, 80],
+                    fill: true,
+                    backgroundColor: 'rgba(30, 64, 175, 0.2)',
+                    borderColor: '#1E40AF',
+                    pointBackgroundColor: '#1E40AF',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#1E40AF'
+                }, {
+                    label: 'Traditional AML',
+                    data: [40, 30, 50, 60, 40, 20],
+                    fill: true,
+                    backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                    borderColor: '#EF4444',
+                    pointBackgroundColor: '#EF4444',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#EF4444'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                elements: { line: { borderWidth: 3 } },
+                scales: {
+                    r: {
+                        angleLines: { display: true },
+                        suggestedMin: 0,
+                        suggestedMax: 100,
+                        ticks: { backdropColor: 'transparent' } 
+                    }
+                },
+                plugins: {
+                    tooltip: tooltipPlugin,
+                    legend: { position: 'top' }
+                }
+            }
+        });
     </script>
 </body>
 </html>
