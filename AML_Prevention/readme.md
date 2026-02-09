@@ -14,16 +14,19 @@ TL shifts financial enforcement from **Post-Hoc Reporting** (probabilistic/react
 
 **The Strategic Foundation.**
 
-* **`TL-Foundational-Whitepaper-Z.md`**: The "Deep Foundation" document. Analyzes the catastrophic failure of current AML regimes and introduces the "Goukassian Vow" and the philosophical necessity of the "Sacred Zero."
+* **`Ternary Logic as an Anti-Money Laundering Enforcement Architecture.md`**: The "Deep Foundation" document. Analyzes the catastrophic failure of current AML regimes and introduces the "Goukassian Vow" and the philosophical necessity of the "Sacred Zero."
+* **`Interview Ternary Logic as an Anti-Money Laundering Enforcement Architecture.md`**:
 
 ### 📂 02-Technical-Architecture
 
 **For Systems Architects, Engineers & Technical Review.**
 
 * **`TL-AML-Architecture-Spec-T1.pdf`**: The core technical specification (TechRxiv ready). Defines the Dual-Lane Latency model (2ms Fast Lane), Merkle-Batched Anchoring, and ISO 20022 integration.
-* **`TL-Economic-Integrity-Model-P1.pdf`**: The structural analysis proving how TL converts unbounded probabilistic risk (fines) into bounded, measurable latency. Includes the "Red Team" Hold Flood simulation.
-* **`Deep-Dive-Interview.mp3`**: Audio breakdown of the structural engineering and failure mode analysis found in P1/T1.
-* **`TL-Concept-Infographic.html`**: Visual representation of the "Dual-Lane Latency" and "Epistemic Hold" mechanics.
+* **`Structural Anti-Money Laundering Enforcement Via Ternary Logic.pdf`**
+* **`Structural Anti-Money Laundering Enforcement Via Ternary Logic.md`**:
+  The structural analysis proving how TL converts unbounded probabilistic risk (fines) into bounded, measurable latency. Includes the "Red Team" Hold Flood simulation.
+* **`Interview Structural Anti-Money Laundering Enforcement Via Ternary Logic.mp3`**: Audio breakdown of the structural engineering and failure mode analysis found in P1/T1.
+* **`Structural Anti-Money Laundering Enforcement Via Ternary Logic.html`**: Visual representation of the "Dual-Lane Latency" and "Epistemic Hold" mechanics.
 
 ### 📂 03-Regulatory-Compliance
 
