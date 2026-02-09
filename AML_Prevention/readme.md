@@ -14,14 +14,15 @@ TL shifts financial enforcement from **Post-Hoc Reporting** (probabilistic/react
 
 **The Strategic Foundation.**
 
-* **`Ternary Logic as an Anti-Money Laundering Enforcement Architecture.md`**: The "Deep Foundation" document. Analyzes the catastrophic failure of current AML regimes and introduces the "Goukassian Vow" and the philosophical necessity of the "Sacred Zero."
-* **`Interview Ternary Logic as an Anti-Money Laundering Enforcement Architecture.md`**:
+* **`Ternary Logic as an Anti-Money Laundering Enforcement Architecture.md`**: The "Deep Foundation" document. Analyzes the catastrophic failure of current AML regimes and introduces the "Goukassian Vow" and the philosophical necessity of the "Sacred Zero."   
+* **`Interview Ternary Logic as an Anti-Money Laundering Enforcement Architecture.md`**
 
 ### 📂 02-Technical-Architecture
 
 **For Systems Architects, Engineers & Technical Review.**
 
-* **`TL-AML-Architecture-Spec-T1.pdf`**: The core technical specification (TechRxiv ready). Defines the Dual-Lane Latency model (2ms Fast Lane), Merkle-Batched Anchoring, and ISO 20022 integration.
+* **`AML Enforcement Architecture: A Governance-Grade Specification for Global Financial Systems.pdf`**: The core technical specification. Defines the Dual-Lane Latency model (2ms Fast Lane), Merkle-Batched Anchoring, and ISO 20022 integration.
+  
 * **`Structural Anti-Money Laundering Enforcement Via Ternary Logic.pdf`**
 * **`Structural Anti-Money Laundering Enforcement Via Ternary Logic.md`**:
   The structural analysis proving how TL converts unbounded probabilistic risk (fines) into bounded, measurable latency. Includes the "Red Team" Hold Flood simulation.
