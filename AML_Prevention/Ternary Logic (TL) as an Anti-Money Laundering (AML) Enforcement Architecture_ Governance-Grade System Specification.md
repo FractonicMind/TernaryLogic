@@ -4,6 +4,11 @@
 **Classification:** Technical Specification for Regulatory, Judicial, and Operational Use  
 **Target Audience:** Financial Regulators, Banking Institutions, Payment Networks, Cryptocurrency Exchanges, Auditors, Compliance Officers, and Courts
 
+---
+
+**[Interactive Report:](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/Ternary%20Logic%20(TL)%20as%20an%20Anti-Money%20Laundering%20(AML)%20Enforcement%20Architecture_%20Governance-Grade%20System%20Specification.html)** A dynamic web report allowing auditors to filter controls by regulatory domain. 
+
+---
 ## I. Problem Statement: Systemic Failure of Current AML Regimes
 
 ### I.1 Governance, Evidence, and Action-Control Failure Framework
