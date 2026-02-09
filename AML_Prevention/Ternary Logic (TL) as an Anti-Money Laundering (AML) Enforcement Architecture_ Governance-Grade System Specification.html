@@ -1,0 +1,1552 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ternary Logic as an Anti-Money Laundering Enforcement Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+    <link href="https://fonts.googleapis.com/css2?family=Canela:wght@300;400;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --secondary: #2d5a87;
+            --accent: #4a90b8;
+            --muted: #6b7280;
+            --background: #fefefe;
+            --surface: #f8fafc;
+            --text: #1f2937;
+            --text-light: #6b7280;
+        }
+        
+        .font-canela { font-family: 'Canela', serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+        }
+        
+        .toc-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--surface);
+            border-right: 1px solid #e5e7eb;
+            overflow-y: auto;
+            z-index: 100;
+            padding: 2rem 1.5rem;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+        
+        .toc-link {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 400;
+            transition: all 0.2s ease;
+        }
+        
+        .toc-link:hover {
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+        
+        .toc-link.active {
+            color: var(--primary);
+            font-weight: 500;
+            border-left: 3px solid var(--accent);
+            padding-left: 0.75rem;
+            margin-left: -0.75rem;
+        }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .bento-main {
+            grid-row: 1 / -1;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 4rem;
+            border-radius: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bento-side-1, .bento-side-2 {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 4rem 0;
+        }
+        
+        .citation-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted var(--accent);
+        }
+        
+        .citation-link:hover {
+            border-bottom-style: solid;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: var(--surface);
+        }
+        
+        .case-study {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .case-study-header {
+            background: var(--surface);
+            padding: 1rem;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 1rem 1rem 0 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        @media (max-width: 1024px) {
+            .toc-fixed {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .toc-fixed.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .bento-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            
+            .bento-main {
+                grid-row: 1;
+            }
+
+            .bento-side-1 h3,
+            .bento-side-2 h3 {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .bento-main {
+                padding: 2rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            .bento-side-1, .bento-side-2 {
+                padding: 1rem;
+            }
+        }
+    </style>
+  <base target="_blank">
+</head>
+
+  <body class="font-inter">
+    <!-- Mobile TOC Toggle -->
+    <button id="toc-toggle" class="lg:hidden fixed top-4 left-4 z-110 bg-primary text-white p-2 rounded-lg shadow-lg">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Table of Contents -->
+    <nav id="toc" class="toc-fixed">
+      <div class="mb-8">
+        <h3 class="font-canela text-xl font-bold text-primary mb-4">Contents</h3>
+      </div>
+
+      <div class="space-y-2">
+        <a href="#problem-statement" class="toc-link">I. Problem Statement</a>
+        <a href="#ternary-logic-definition" class="toc-link">II. Ternary Logic Definition</a>
+        <a href="#core-mechanisms" class="toc-link">III. Core Mechanisms</a>
+        <a href="#technical-architecture" class="toc-link">IV. Technical Architecture</a>
+        <a href="#regulatory-alignment" class="toc-link">V. Regulatory Alignment</a>
+        <a href="#evidence-enforcement" class="toc-link">VI. Evidence &amp; Enforcement</a>
+        <a href="#case-studies" class="toc-link">VII. Case Studies</a>
+        <a href="#recommendations" class="toc-link">VIII. Strategic Recommendations</a>
+        <a href="#goukassian-vow" class="toc-link">IX. The Goukassian Vow</a>
+        <a href="#citations" class="toc-link">X. Citations</a>
+      </div>
+
+      <div class="mt-8 pt-8 border-t border-gray-200">
+        <p class="text-xs text-gray-500">Classification: Technical Specification</p>
+        <p class="text-xs text-gray-500">Target: Regulators &amp; Financial Institutions</p>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hero Section -->
+      <section class="hero-gradient text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative z-10">
+          <div class="bento-grid max-w-7xl mx-auto p-8">
+            <div class="bento-main">
+              <h1 class="hero-title font-canela">
+                Ternary Logic as an Anti-Money Laundering Enforcement Architecture
+              </h1>
+              <p class="hero-subtitle">
+                A governance-grade system specification transforming probabilistic risk into deterministic enforcement through triadic action states and pre-action evidence capture.
+              </p>
+              <div class="mt-8 flex items-center space-x-4">
+                <span class="text-sm opacity-75">Specification Document</span>
+                <span class="text-sm opacity-75">•</span>
+                <span class="text-sm opacity-75">February 2026</span>
+              </div>
+            </div>
+
+            <div class="bento-side-1">
+              <h3 class="font-canela text-xl font-bold text-primary mb-3">Core Innovation</h3>
+              <p class="text-sm text-gray-600">Triadic action states (+1, 0, -1) replace binary allow/deny systems, converting unbounded probabilistic risk into bounded, measurable latency.</p>
+            </div>
+
+            <div class="bento-side-2">
+              <h3 class="font-canela text-xl font-bold text-primary mb-3">Latency Profile</h3>
+              <p class="text-sm text-gray-600">Fast Lane: ≤2ms for state determination. Slow Lane: ≤500ms for evidence anchoring. Deterministic latency enables market pricing.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TL;DR Summary -->
+      <section class="max-w-7xl mx-auto p-8 mt-8">
+        <div class="highlight-box">
+          <h2 class="font-canela text-2xl font-bold text-primary mb-4">Executive Summary</h2>
+          <p class="text-lg leading-relaxed">
+            <strong>Ternary Logic (TL)</strong> is a triadic action-governance architecture that replaces binary allow/deny AML systems with three states: <strong>+1 Proceed</strong> (verified certainty), <strong>0 Epistemic Hold</strong> (mandatory pause for uncertainty resolution), and <strong>–1 Refuse</strong> (verified risk). By enforcing <strong>pre-action evidence capture</strong> through Decision Logs, <strong>tamper-evident logging</strong> via Immutable Ledgers and Merkle-root anchoring, and <strong>deterministic latency</strong> (≤2ms Fast Lane, ≤500ms Slow Lane), TL converts unbounded probabilistic enforcement risk into bounded, measurable, priceable latency. The architecture prevents money laundering velocity through mandatory interruption at uncertainty points, eliminates silent overrides through Hybrid Shield multi-party authorization, and governs AI/ML probabilistic outputs through mandatory State 0 enforcement. TL does not replace existing regulations but executes them structurally, satisfying FATF, BSA, EU AMLR, and Basel III requirements through technical enforcement rather than procedural compliance.
+          </p>
+        </div>
+      </section>
+
+      <!-- Problem Statement -->
+      <section id="problem-statement" class="max-w-7xl mx-auto p-8">
+        <h2 class="font-canela text-4xl font-bold text-primary mb-8">I. Problem Statement: Why AML Systems Fail</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <p class="text-xl text-gray-600 mb-8 font-light">
+            Despite $51.7 billion in annual AML spending projected by 2028, global anti-money laundering infrastructure continues to fail systematically. These failures are not technological gaps but fundamental governance, evidence, and action-control failures embedded in the architectural assumptions of how financial institutions make and execute decisions about economic movement.
+          </p>
+
+          <h3 class="font-canela text-2xl font-bold text-secondary mb-6">The Seven Failure Modes</h3>
+
+          <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <div class="case-study">
+              <h4 class="font-canela text-xl font-bold mb-4">Post-Hoc Reporting Paradigm</h4>
+              <p class="mb-4">The Suspicious Activity Report (SAR) mechanism creates a fundamental temporal misalignment between detection and prevention. Financial institutions file SARs within 30-60 days—an eternity in modern financial velocity where illicit funds can traverse six jurisdictions in hours.</p>
+              <div class="bg-red-50 p-4 rounded-lg">
+                <p class="text-sm"><strong>Case:</strong> TD Bank processed $18 trillion without adequate monitoring, enabling $470 million in drug trafficking proceeds to move through its systems. The $3.09 billion penalty represents retrospective recognition of completed economic action sequences.</p>
+              </div>
+            </div>
+
+            <div class="case-study">
+              <h4 class="font-canela text-xl font-bold mb-4">Binary Decision Architecture</h4>
+              <p class="mb-4">Binary allow/deny systems force probabilistic ambiguity into categorical determination. When a model generates a 73% risk score, the system must convert continuous probability into discrete decisions.</p>
+              <div class="bg-red-50 p-4 rounded-lg">
+                <p class="text-sm"><strong>Case:</strong> Starling Bank opened 54,000 accounts for high-risk customers despite regulatory prohibitions, lacking intermediate states for mandatory verification before activation.</p>
+              </div>
+            </div>
+
+            <div class="case-study">
+              <h4 class="font-canela text-xl font-bold mb-4">Alert Fatigue &amp; Typology Gaming</h4>
+              <p class="mb-4">90-95% of AML alerts are false positives, overwhelming analytical capacity. Criminals systematically test institutional thresholds, mapping precise transaction patterns that evade detection.</p>
+              <div class="bg-red-50 p-4 rounded-lg">
+                <p class="text-sm"><strong>Case:</strong> Deutsche Bank&#39;s $10 billion &#34;mirror trading&#34; scandal exploited regulatory visibility gaps, with trades structured to appear legitimate while serving no economic purpose.</p>
+              </div>
+            </div>
+
+            <div class="case-study">
+              <h4 class="font-canela text-xl font-bold mb-4">Velocity &amp; Volume Exploitation</h4>
+              <p class="mb-4">Real-time payment systems (SEPA Instant, FedNow) create architectural tension with verification requirements. High-frequency transactional patterns exceed computational review capacity.</p>
+              <div class="bg-red-50 p-4 rounded-lg">
+                <p class="text-sm"><strong>Case:</strong> Coinbase European arm failed to track 30 million transactions worth €176 billion, illustrating volume scaling without proportional compliance investment.</p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="font-canela text-2xl font-bold text-secondary mb-6">Liquidity vs. Integrity Modeling</h3>
+
+          <div class="highlight-box">
+            <p class="mb-4"><strong>Concern:</strong> Critics argue that Epistemic Holds introduce liquidity friction, degrading market velocity and arbitrage efficiency. This concern is legitimate and must be addressed with analytical rigor.</p>
+
+            <div class="grid md:grid-cols-2 gap-6 mt-6">
+              <div>
+                <h4 class="font-bold mb-3">Deterministic Latency Costs</h4>
+                <p class="text-sm mb-3">TL introduces bounded, measurable latency with quantifiable parameters:</p>
+                <ul class="text-sm space-y-1">
+                  <li>• Fast Lane: ≤2ms for state determination</li>
+                  <li>• Slow Lane: ≤500ms for evidence anchoring</li>
+                  <li>• Annual cost for major bank: ~$1.5M</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-bold mb-3">Probabilistic Downstream Costs</h4>
+                <p class="text-sm mb-3">Current regime imposes unbounded, catastrophic costs:</p>
+                <ul class="text-sm space-y-1">
+                  <li>• TD Bank: $3.09B penalty</li>
+                  <li>• Binance: $4.3B settlement</li>
+                  <li>• HSBC: $1.9B fine</li>
+                  <li>• Reputational damage: 15-25bp funding cost increase</li>
+                </ul>
+              </div>
+            </div>
+
+            <p class="mt-4"><strong>Conversion Efficiency:</strong> TL converts $1M expected enforcement cost into $0.10 deterministic cost—a 10,000,000:1 efficiency improvement. Markets can price latency but fail catastrophically when pricing retroactive uncertainty.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Ternary Logic Definition -->
+      <section id="ternary-logic-definition" class="max-w-7xl mx-auto p-8">
+        <h2 class="font-canela text-4xl font-bold text-primary mb-8">II. Ternary Logic: Correct Definition</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <p class="text-xl text-gray-600 mb-8 font-light">
+            Ternary Logic (TL) is a triadic action-governance architecture that governs economic acts through evidence-backed decisions, enforcing permissioned financial movement without intention inference or moral classification.
+          </p>
+
+          <h3 class="font-canela text-2xl font-bold text-secondary mb-6">Triadic Action States</h3>
+
+          <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-green-50 p-6 rounded-lg border-l-4 border-green-500">
+              <h4 class="font-canela text-xl font-bold text-green-800 mb-3">+1 Proceed</h4>
+              <p class="text-sm mb-3">Action permitted with verified certainty. Complete customer identification, verified source of funds, identifiable counterparty, and absence of structural anomalies.</p>
+              <div class="text-xs text-green-700">
+                <strong>Requirements:</strong> Documentary evidence, jurisdictional clearance, risk rating compliance
+              </div>
+            </div>
+
+            <div class="bg-yellow-50 p-6 rounded-lg border-l-4 border-yellow-500">
+              <h4 class="font-canela text-xl font-bold text-yellow-800 mb-3">0 Epistemic Hold</h4>
+              <p class="text-sm mb-3">Action paused due to unresolved uncertainty. Triggered by incomplete provenance, counterparty opacity, jurisdictional risk, or structural anomalies.</p>
+              <div class="text-xs text-yellow-700">
+                <strong>Resolution:</strong> Additional information, authority determination, or automatic timeout
+              </div>
+            </div>
+
+            <div class="bg-red-50 p-6 rounded-lg border-l-4 border-red-500">
+              <h4 class="font-canela text-xl font-bold text-red-800 mb-3">-1 Refuse</h4>
+              <p class="text-sm mb-3">Action denied due to verified risk. Confirmed sanctions matches, prohibitory signals, or failed hold resolution within permitted time.</p>
+              <div class="text-xs text-red-700">
+                <strong>Characteristics:</strong> Categorical denial, appealable through structured processes
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4 class="font-canela text-xl font-bold text-primary mb-3">Primary AML Risk Locus: The Zero State</h4>
+            <p>Conventional AML focuses on denial—blocking identified illicit transactions. TL inverts this focus: the critical risk management state is Epistemic Hold, not Refuse. Sophisticated laundering operations rarely present clear violation signatures; they exploit the uncertainty zone where transactions are unusual but not obviously criminal. TL&#39;s Epistemic Hold captures this uncertainty zone, forcing structured deliberation rather than default approval.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Core Mechanisms -->
+      <section id="core-mechanisms" class="max-w-7xl mx-auto p-8">
+        <h2 class="font-canela text-4xl font-bold text-primary mb-8">III. Core TL Mechanisms for AML</h2>
+
+        <div class="grid lg:grid-cols-2 gap-8 mb-12">
+          <div class="case-study">
+            <div class="case-study-header">
+              <h3 class="font-canela text-2xl font-bold text-primary">Epistemic Hold</h3>
+            </div>
+            <p class="mb-4">The Epistemic Hold mechanism operationalizes uncertainty governance in real-time economic decision-making. It transforms uncertainty from a source of systematic error into a manageable operational state.</p>
+
+            <h4 class="font-bold mb-3">Trigger Conditions</h4>
+            <ul class="text-sm space-y-2 mb-4">
+              <li>• <strong>Incomplete provenance:</strong> Missing source of funds, unverified wealth origin</li>
+              <li>• <strong>Counterparty opacity:</strong> Unidentified ultimate beneficiary, shell company characteristics</li>
+              <li>• <strong>Jurisdictional risk:</strong> High-risk country designation, inadequate AML supervision</li>
+              <li>• <strong>Structural anomalies:</strong> Velocity pattern deviation, circular transaction flows</li>
+            </ul>
+
+            <div class="bg-blue-50 p-4 rounded-lg">
+              <p class="text-sm"><strong>Critical Design:</strong> Hold does not imply suspicion or guilt. It is triggered by information status, not actor characterization, enabling broader deployment without regulatory or reputational cost.</p>
+            </div>
+          </div>
+
+          <div class="case-study">
+            <div class="case-study-header">
+              <h3 class="font-canela text-2xl font-bold text-primary">Decision Logs (Pre-Action)</h3>
+            </div>
+            <p class="mb-4">Decision Logs constitute TL&#39;s evidentiary core—structured records generated before any economic action that capture the complete decision context.</p>
+
+            <h4 class="font-bold mb-3">&#34;No Log = No Action&#34; Covenant</h4>
+            <p class="text-sm mb-4">Transaction processing systems cannot execute without Decision Log initiation. Enforcement extends to database triggers, API gateways, and network protocols.</p>
+
+            <h4 class="font-bold mb-3">Epistemic Categories</h4>
+            <ul class="text-sm space-y-2">
+              <li>• <strong>Known elements:</strong> Verified facts with documentation reference</li>
+              <li>• <strong>Unknown elements:</strong> Information gaps with explanation</li>
+              <li>• <strong>Assumed elements:</strong> Provisional determinations with confidence level</li>
+            </ul>
+          </div>
+
+          <div class="case-study">
+            <div class="case-study-header">
+              <h3 class="font-canela text-2xl font-bold text-primary">Immutable Ledger</h3>
+            </div>
+            <p class="mb-4">The Immutable Ledger provides tamper-evident storage for Decision Logs through cryptographic hash chaining and distributed consensus protocols.</p>
+
+            <h4 class="font-bold mb-3">Tamper Evidence vs. Prevention</h4>
+            <p class="text-sm mb-4">Modifications break hash sequences and are detectable through verification. Detection triggers incident response: system suspension, forensic investigation, regulatory notification.</p>
+
+            <h4 class="font-bold mb-3">Data Separation</h4>
+            <ul class="text-sm space-y-2">
+              <li>• <strong>Transaction data:</strong> Operational systems, standard retention</li>
+              <li>• <strong>Decision Logs:</strong> Compliance infrastructure, extended retention</li>
+              <li>• <strong>Proofs:</strong> Distributed/anchored systems, permanent</li>
+            </ul>
+          </div>
+
+          <div class="case-study">
+            <div class="case-study-header">
+              <h3 class="font-canela text-2xl font-bold text-primary">Hybrid Shield</h3>
+            </div>
+            <p class="mb-4">Prevents silent overrides of Epistemic Holds or Refusals through technical and procedural mechanisms that document, authorize, and review any exception to automated decisions.</p>
+
+            <h4 class="font-bold mb-3">Override Recording</h4>
+            <ul class="text-sm space-y-2 mb-4">
+              <li>• <strong>Who:</strong> Individual identity, multi-factor authentication</li>
+              <li>• <strong>When:</strong> Precise timestamp with atomic clock synchronization</li>
+              <li>• <strong>Authority:</strong> Specific authorization grant, policy reference</li>
+              <li>• <strong>Justification:</strong> Structured documentation with NLP completeness check</li>
+            </ul>
+
+            <div class="bg-green-50 p-4 rounded-lg">
+              <p class="text-sm"><strong>Collusion Resistance:</strong> Distributed authorization requiring geographically separated approvers, time-delayed override with cooling-off periods.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <h3 class="font-canela text-2xl font-bold text-primary mb-4">AI-to-Logic Handoff</h3>
+          <p class="mb-4">TL governs probabilistic AML systems rather than replacing them, converting ML model outputs into deterministic action states through mandatory State 0 enforcement.</p>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div>
+              <h4 class="font-bold mb-2">Input</h4>
+              <p class="text-sm">ML models generate probabilistic risk scores (e.g., 78% probability of illicit source)</p>
+            </div>
+            <div>
+              <h4 class="font-bold mb-2">TL Process</h4>
+              <p class="text-sm">Treats probabilistic outputs as epistemic uncertainty, not authorization. Risk score above threshold forces State 0.</p>
+            </div>
+            <div>
+              <h4 class="font-bold mb-2">Output</h4>
+              <p class="text-sm">Deterministic collapse to +1 or –1 required before proceeding. Prevents probabilistic ambiguity from being mistaken for permission.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Technical Architecture -->
+      <section id="technical-architecture" class="max-w-7xl mx-auto p-8">
+        <h2 class="font-canela text-4xl font-bold text-primary mb-8">IV. Technical Architecture for AML at Scale</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <h3 class="font-canela text-2xl font-bold text-secondary mb-6">Dual-Lane Latency Model</h3>
+
+          <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <div class="case-study">
+              <div class="case-study-header bg-green-50">
+                <h4 class="font-canela text-xl font-bold text-green-800">Fast Lane (≤2 ms)</h4>
+              </div>
+              <p class="mb-4">Pre-action evidence capture and state determination, synchronously with transaction initiation.</p>
+
+              <h5 class="font-bold mb-3">Function Breakdown</h5>
+              <div class="space-y-2 text-sm">
+                <div class="flex justify-between">
+                  <span>Decision Log initiation</span>
+                  <span class="text-gray-600">0.2 ms</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Intent hash</span>
+                  <span class="text-gray-600">0.3 ms</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Context snapshot</span>
+                  <span class="text-gray-600">0.5 ms</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Epistemic state capture</span>
+                  <span class="text-gray-600">0.5 ms</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>State determination</span>
+                  <span class="text-gray-600">0.3 ms</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Pre-action enforcement</span>
+                  <span class="text-gray-600">0.2 ms</span>
+                </div>
+                <div class="border-t pt-2 font-bold">
+                  <div class="flex justify-between">
+                    <span>Total Fast Lane</span>
+                    <span>≤2.0 ms</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-blue-50 p-4 rounded-lg mt-4">
+                <p class="text-sm"><strong>Critical Principle:</strong> Fails closed—defaults to Hold if Fast Lane completion is uncertain. Sufficient for Hold/Refuse decisions even if Proceed requires additional verification.</p>
+              </div>
+            </div>
+
+            <div class="case-study">
+              <div class="case-study-header bg-blue-50">
+                <h4 class="font-canela text-xl font-bold text-blue-800">Slow Lane (≤500 ms, Asynchronous)</h4>
+              </div>
+              <p class="mb-4">Post-action evidence enrichment and permanence, executing after transaction settlement for Proceed states.</p>
+
+              <h5 class="font-bold mb-3">Function Sequence</h5>
+              <ul class="text-sm space-y-2">
+                <li>• <strong>Log enrichment:</strong> Detailed verification results, escalation documentation</li>
+                <li>• <strong>Cryptographic sealing:</strong> Signatures, hashes, integrity proofs (batch processing)</li>
+                <li>• <strong>Merkle batching:</strong> Aggregate logs into tree structures (time/volume triggered)</li>
+                <li>• <strong>Merkle root anchoring:</strong> Publish roots to external verification systems (hourly)</li>
+              </ul>
+
+              <div class="bg-green-50 p-4 rounded-lg mt-4">
+                <p class="text-sm"><strong>Evidence Debt Management:</strong> Temporary gap between log creation and anchor commitment managed through batch size limits, time limits, and redundancy. No log remains unanchored beyond specified parameters.</p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="font-canela text-2xl font-bold text-secondary mb-6">Merkle-Batched Anchoring</h3>
+
+          <div class="highlight-box mb-8">
+            <p class="mb-4"><strong>Architectural Necessity:</strong> Merkle batching is not an optimization but a structural requirement for TL deployment at scale. Direct anchoring of individual Decision Logs would impose impossible costs and throughput limitations.</p>
+
+            <div class="grid md:grid-cols-3 gap-4">
+              <div>
+                <h4 class="font-bold mb-2">Complexity Reduction</h4>
+                <p class="text-sm">From O(n) to O(1) per batch. 10,000-log batch reduces anchor cost by 99.99% versus individual anchoring.</p>
+              </div>
+              <div>
+                <h4 class="font-bold mb-2">Rolling Buffers</h4>
+                <p class="text-sm">Multiple concurrent Merkle trees at different accumulation stages with frequent anchor commitment.</p>
+              </div>
+              <div>
+                <h4 class="font-bold mb-2">Fault Isolation</h4>
+                <p class="text-sm">Merkle proofs enable precise fault localization and reconstruction via external anchors.</p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="font-canela text-2xl font-bold text-secondary mb-6">ISO 20022 Semantic Mapping</h3>
+
+          <div class="overflow-x-auto mb-8">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>TL State</th>
+                  <th>ISO 20022 Message</th>
+                  <th>Status Code</th>
+                  <th>Extended Reason Codes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>+1 Proceed</td>
+                  <td>pacs.002</td>
+                  <td>ACCP (Accepted)</td>
+                  <td>Transaction cleared TL verification</td>
+                </tr>
+                <tr>
+                  <td>0 Epistemic Hold</td>
+                  <td>pacs.002</td>
+                  <td>PDNG (Pending)</td>
+                  <td>
+                    PDNG.TL.001: Incomplete provenance
+                    <br/>
+                    PDNG.TL.002: Counterparty opacity
+                    <br/>
+                    PDNG.TL.003: Jurisdictional risk
+                    <br/>
+                    PDNG.TL.004: Structural anomaly
+                  </td>
+                </tr>
+                <tr>
+                  <td>–1 Refuse</td>
+                  <td>pacs.002</td>
+                  <td>RJCT (Rejected)</td>
+                  <td>Transaction refused with specified reason</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="highlight-box">
+            <h4 class="font-canela text-xl font-bold text-primary mb-3">Evidence Traveling With Transaction</h4>
+            <p>TL&#39;s embedded Decision Log reference creates persistent, verifiable compliance trail across correspondent banking hops. Evidence travels with the transaction rather than alongside it, preventing data truncation and enabling automatic evidence retrieval through transaction-bound LogID references.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Regulatory Alignment -->
+      <section id="regulatory-alignment" class="max-w-7xl mx-auto p-8">
+        <h2 class="font-canela text-4xl font-bold text-primary mb-8">V. Regulatory, Legal, and Operational Alignment</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <h3 class="font-canela text-2xl font-bold text-secondary mb-6">Framework-Specific Alignment</h3>
+
+          <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <div class="case-study">
+              <div class="case-study-header bg-blue-50">
+                <h4 class="font-canela text-xl font-bold text-blue-800">FATF Recommendations</h4>
+              </div>
+              <p class="mb-4">TL operationalizes FATF&#39;s intent through structural enforcement rather than procedural compliance.</p>
+
+              <h5 class="font-bold mb-3">Key Conversions</h5>
+              <ul class="text-sm space-y-2">
+                <li>• <strong>Real-time intervention:</strong> Epistemic Hold replaces 30-60 day SAR filing latency</li>
+                <li>• <strong>Risk-based approach:</strong> Dynamic threshold adjustment with automatic state determination</li>
+                <li>• <strong>Record-keeping:</strong> Pre-action Decision Logs capture known, unknown, assumed</li>
+                <li>• <strong>International cooperation:</strong> ISO 20022 semantic mapping enables cross-border evidence exchange</li>
+              </ul>
+
+              <div class="bg-green-50 p-4 rounded-lg mt-4">
+                <p class="text-sm"><strong>2025 FATF Guidance:</strong> Emphasizes that &#34;speed—not jurisdiction or theory—is the decisive factor&#34; in asset recovery. TL operationalizes this intent structurally.</p>
+              </div>
+            </div>
+
+            <div class="case-study">
+              <div class="case-study-header bg-red-50">
+                <h4 class="font-canela text-xl font-bold text-red-800">Bank Secrecy Act</h4>
+              </div>
+              <p class="mb-4">TL converts BSA&#39;s post-hoc reporting obligations into pre-transaction control mechanisms.</p>
+
+              <h5 class="font-bold mb-3">Implementation</h5>
+              <ul class="text-sm space-y-2">
+                <li>• <strong>Transaction monitoring:</strong> Pre-action logging captures decision process before execution</li>
+                <li>• <strong>Customer due diligence:</strong> Continuous verification enforced at each transaction</li>
+                <li>• <strong>Internal controls:</strong> Hybrid Shield prevents override without documentation</li>
+                <li>• <strong>SAR filing:</strong> Epistemic Hold generates evidentiary foundation for suspicious activity determination</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3 class="font-canela text-2xl font-bold text-secondary mb-6">Comparative Operational Analysis</h3>
+
+          <div class="overflow-x-auto mb-8">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Framework</th>
+                  <th>Current Limitations</th>
+                  <th>TL Resolution</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Basel III</strong></td>
+                  <td>Capital-based risk absorption, periodic supervisory review, loss data collection retrospective</td>
+                  <td>State-based enforcement prevents loss events. Converts supervisory review to continuous transaction-level enforcement. Pre-action Decision Logs eliminate reconstruction gaps.</td>
+                </tr>
+                <tr>
+                  <td><strong>IOSCO Standards</strong></td>
+                  <td>Principles-based with self-assessment, post-trade transparency, no pre-trade decision documentation</td>
+                  <td>Technical enforcement converts principles to deterministic implementation. Pre-action logs extend disclosure to decision rationale. Epistemic Hold prevents cross-border layering.</td>
+                </tr>
+                <tr>
+                  <td><strong>SEC/CFTC Rules</strong></td>
+                  <td>Examination-based enforcement, post-trade reconstruction, no algorithm decision documentation standard</td>
+                  <td>Converts &#34;policies and procedures&#34; to technical enforcement. Decision Logs capture algorithm input, threshold, and deterministic output. Real-time verification eliminates examination gaps.</td>
+                </tr>
+                <tr>
+                  <td><strong>NIST Frameworks</strong></td>
+                  <td>Voluntary implementation, control assessment resource constraints, no transaction-level audit standard</td>
+                  <td>Converts voluntary framework to mandatory technical enforcement. Continuous cryptographic verification eliminates assessment resource constraints. Transaction-level audit standard exceeds NIST scope.</td>
+                </tr>
+                <tr>
+                  <td><strong>Audit Standards (SOX/COSO)</strong></td>
+                  <td>Periodic attestation, management override risk, auditor resource constraints, no real-time verification</td>
+                  <td>Converts periodic attestation to continuous technical verification. Hybrid Shield prevents management override. Automatic verification eliminates resource constraints.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Evidence &amp; Enforcement -->
+      <section id="evidence-enforcement" class="max-w-7xl mx-auto p-8">
+        <h2 class="font-canela text-4xl font-bold text-primary mb-8">VI. Evidence, Liability, and Enforcement</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <h3 class="font-canela text-2xl font-bold text-secondary mb-6">Evidentiary Status Hierarchies</h3>
+
+          <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-red-50 p-6 rounded-lg border-l-4 border-red-500">
+              <h4 class="font-canela text-xl font-bold text-red-800 mb-3">Missing Decision Log</h4>
+              <p class="text-sm mb-3">No log generated for executed transaction</p>
+              <div class="text-xs text-red-700">
+                <strong>Liability:</strong> Prima facie negligence, rebuttable presumption of control circumvention
+                <br/>
+                <strong>Response:</strong> Investigation of technical circumvention or supervisory override failure
+              </div>
+            </div>
+
+            <div class="bg-yellow-50 p-6 rounded-lg border-l-4 border-yellow-500">
+              <h4 class="font-canela text-xl font-bold text-yellow-800 mb-3">Malformed Log</h4>
+              <p class="text-sm mb-3">Log fails cryptographic integrity verification or contains inconsistencies</p>
+              <div class="text-xs text-yellow-700">
+                <strong>Liability:</strong> System failure implication, potential insider attack
+                <br/>
+                <strong>Response:</strong> Technical root cause analysis, potential transaction suspension
+              </div>
+            </div>
+
+            <div class="bg-green-50 p-6 rounded-lg border-l-4 border-green-500">
+              <h4 class="font-canela text-xl font-bold text-green-800 mb-3">Complete Log</h4>
+              <p class="text-sm mb-3">Passes cryptographic verification with proper chain of custody</p>
+              <div class="text-xs text-green-700">
+                <strong>Liability:</strong> Admissible evidence for regulatory, civil, and criminal proceedings
+                <br/>
+                <strong>Response:</strong> Foundation for enforcement action defense or prosecution support
+              </div>
+            </div>
+          </div>
+
+          <h3 class="font-canela text-2xl font-bold text-secondary mb-6">Chain of Custody &amp; Digital Evidence</h3>
+
+          <div class="highlight-box mb-8">
+            <p class="mb-4">TL&#39;s architecture satisfies digital evidence standards across jurisdictions through technical mechanisms that reduce procedural vulnerability:</p>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="font-bold mb-3">Federal Rules of Evidence (USA)</h4>
+                <ul class="text-sm space-y-2">
+                  <li>• <strong>Rule 901 (Authenticity):</strong> Cryptographic signature verification with timestamp authority attestation</li>
+                  <li>• <strong>Rule 1002 (Best Evidence):</strong> Production of original log with Merkle proof</li>
+                  <li>• <strong>Hearsay Exceptions:</strong> Contemporaneous documentation satisfies present sense impression and regularly conducted activity exceptions</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-bold mb-3">International Proceedings</h4>
+                <ul class="text-sm space-y-2">
+                  <li>• <strong>ISO 20022 Mapping:</strong> Cross-jurisdictional evidence recognition</li>
+                  <li>• <strong>Structured Format:</strong> Satisfies civil law and common law requirements</li>
+                  <li>• <strong>Permanent Evidence:</strong> Merkle-root anchoring survives institutional failure or defendant obstruction</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="font-canela text-2xl font-bold text-secondary mb-6">Mens Rea &amp; Due Diligence</h3>
+
+          <div class="case-study mb-8">
+            <div class="case-study-header bg-blue-50">
+              <h4 class="font-canela text-xl font-bold text-blue-800">Criminal Prosecution Enhancement</h4>
+            </div>
+            <p class="mb-4">TL evidence enhances criminal prosecution through direct addressing of knowledge elements and procedural legitimacy.</p>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <h5 class="font-bold mb-3">Mens Rea Establishment</h5>
+                <p class="text-sm mb-3">Structured capture of known, unknown, and assumed elements directly addresses:</p>
+                <ul class="text-sm space-y-1">
+                  <li>• Knowledge of illicit source</li>
+                  <li>• Willful blindness to red flags</li>
+                  <li>• Conscious avoidance of verification</li>
+                  <li>• Deliberate override of risk indicators</li>
+                </ul>
+              </div>
+              <div>
+                <h5 class="font-bold mb-3">Due Diligence Defense</h5>
+                <p class="text-sm mb-3">Epistemic Hold documentation enables:</p>
+                <ul class="text-sm space-y-1">
+                  <li>• Defendants to establish absence of criminal intent</li>
+                  <li>• Prosecutors to challenge inadequate hold maintenance</li>
+                  <li>• Courts to evaluate threshold calibration rationality</li>
+                  <li>• Regulators to assess procedural legitimacy</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Case Studies -->
+      <section id="case-studies" class="max-w-7xl mx-auto p-8">
+        <h2 class="font-canela text-4xl font-bold text-primary mb-8">VII. Case Studies: Simulated Real-World Scenarios</h2>
+
+        <div class="space-y-12">
+          <!-- Cross-Border Correspondent Banking -->
+          <div class="case-study">
+            <div class="case-study-header">
+              <h3 class="font-canela text-2xl font-bold text-primary">Cross-Border Correspondent Banking Transfer</h3>
+              <p class="text-sm text-gray-600 mt-2">Corporate customer initiates $4.7M wire transfer to FATF grey list jurisdiction</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+              <div>
+                <h4 class="font-bold mb-4">Risk Indicators</h4>
+                <ul class="text-sm space-y-2 mb-6">
+                  <li>• Amount just below $5M enhanced approval threshold</li>
+                  <li>• Beneficiary account opened within 30 days</li>
+                  <li>• Vague purpose (&#34;consulting services&#34;)</li>
+                  <li>• Nested correspondent banking structure</li>
+                  <li>• Geographic mismatch with customer business</li>
+                </ul>
+
+                <h4 class="font-bold mb-4">TL Processing Timeline</h4>
+                <div class="text-sm space-y-2">
+                  <div class="flex justify-between">
+                    <span>Fast Lane initiation</span>
+                    <span class="text-gray-600">T+0ms</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Epistemic Hold determination</span>
+                    <span class="text-gray-600">T+2ms</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Escalation to senior compliance</span>
+                    <span class="text-gray-600">T+5ms</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Slow Lane enrichment</span>
+                    <span class="text-gray-600">T+100ms</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Merkle batch anchoring</span>
+                    <span class="text-gray-600">T+4hrs</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 class="font-bold mb-4">Decision Log Payload</h4>
+                <div class="bg-gray-50 p-4 rounded-lg text-xs font-mono">
+                  <div class="mb-2"><strong>Header:</strong> Transaction ID, timestamp, intent hash</div>
+                  <div class="mb-2"><strong>Context:</strong> Customer risk=medium, account hist=47 txns, max=$890K</div>
+                  <div class="mb-2"><strong>Epistemic State:</strong></div>
+                  <div class="ml-4 mb-1">Known: amount, originator, immediate correspondent</div>
+                  <div class="ml-4 mb-1">Unknown: ultimate beneficiary, beneficial ownership, substantive purpose</div>
+                  <div class="ml-4 mb-1">Assumed: correspondent bank due diligence adequacy</div>
+                  <div><strong>State:</strong> 0 (Epistemic Hold)</div>
+                </div>
+
+                <h4 class="font-bold mb-4 mt-6">Resolution Outcomes</h4>
+                <div class="space-y-3 text-sm">
+                  <div class="bg-green-50 p-3 rounded">
+                    <strong>Scenario A (+1):</strong> Ultimate beneficiary verified through SWIFT gpi, purpose documentation provided, senior approval granted. Hold resolved at T+4hrs 23min.
+                  </div>
+                  <div class="bg-red-50 p-3 rounded">
+                    <strong>Scenario B (-1):</strong> Beneficiary opacity persists, documentation inadequate, senior officer refuses approval. Transaction blocked at T+6hrs 17min.
+                  </div>
+                  <div class="bg-yellow-50 p-3 rounded">
+                    <strong>Scenario C (Override):</strong> Business manager requests override citing customer relationship. Dual senior approval required with written justification. Override granted at T+2hrs 45min.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shell Company Transaction Chain -->
+          <div class="case-study">
+            <div class="case-study-header">
+              <h3 class="font-canela text-2xl font-bold text-primary">Shell-Company Transaction Chain</h3>
+              <p class="text-sm text-gray-600 mt-2">Four-entity layering structure with circular beneficial ownership</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+              <div>
+                <h4 class="font-bold mb-4">Entity Structure</h4>
+                <div class="text-sm space-y-3 mb-6">
+                  <div class="flex items-center">
+                    <span class="bg-blue-100 px-2 py-1 rounded mr-3">Entity A</span>
+                    <span>BVI holding company (recipient)</span>
+                  </div>
+                  <div class="flex items-center ml-4">
+                    <span class="text-gray-400">↓</span>
+                    <span class="bg-green-100 px-2 py-1 rounded mx-3">Entity B</span>
+                    <span>Cyprus investment firm</span>
+                  </div>
+                  <div class="flex items-center ml-8">
+                    <span class="text-gray-400">↓</span>
+                    <span class="bg-yellow-100 px-2 py-1 rounded mx-3">Entity C</span>
+                    <span>UAE free zone company</span>
+                  </div>
+                  <div class="flex items-center ml-12">
+                    <span class="text-gray-400">↓</span>
+                    <span class="bg-red-100 px-2 py-1 rounded mx-3">Entity D</span>
+                    <span>Individual account (source)</span>
+                  </div>
+                </div>
+
+                <h4 class="font-bold mb-4">Circular Ownership Pattern</h4>
+                <p class="text-sm mb-4">Entity A&#39;s declared beneficial owner is Entity B; Entity B&#39;s declared beneficial owner is Entity C; Entity C&#39;s declared beneficial owner is Entity D—obscuring ultimate control.</p>
+              </div>
+
+              <div>
+                <h4 class="font-bold mb-4">TL Processing at Each Node</h4>
+                <div class="space-y-4 text-sm">
+                  <div class="border-l-4 border-red-500 pl-4">
+                    <strong>Node D→C:</strong> State 0 triggered by unknown purpose of transfer to UAE free zone company. Escalation: beneficial ownership verification of Entity C.
+                  </div>
+                  <div class="border-l-4 border-yellow-500 pl-4">
+                    <strong>Node C→B:</strong> State 0 triggered by unknown circular ownership pattern (not visible at single node). Escalation: enhanced due diligence for investment firm classification.
+                  </div>
+                  <div class="border-l-4 border-green-500 pl-4">
+                    <strong>Node B→A:</strong> State 0 triggered by incomplete ultimate beneficiary identification. Escalation: cross-border holding company verification.
+                  </div>
+                </div>
+
+                <div class="bg-blue-50 p-4 rounded-lg mt-6">
+                  <p class="text-sm"><strong>Pattern Detection:</strong> Circular ownership emerges through cross-institutional data correlation enabled by anchored Decision Logs. Regulatory analytics identify pattern within 72 hours, enabling coordinated hold maintenance.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Crypto-Fiat Laundering Bridge -->
+          <div class="case-study">
+            <div class="case-study-header">
+              <h3 class="font-canela text-2xl font-bold text-primary">Crypto-Fiat Laundering Bridge</h3>
+              <p class="text-sm text-gray-600 mt-2">VASP customer deposits 150 BTC (≈$6.2M) from self-hosted wallet</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+              <div>
+                <h4 class="font-bold mb-4">Hybrid Asset Class Vulnerabilities</h4>
+                <ul class="text-sm space-y-2 mb-6">
+                  <li>• Large deposit from self-hosted wallet with no transaction history</li>
+                  <li>• Immediate conversion without market exposure</li>
+                  <li>• Destination account opened specifically for this receipt</li>
+                  <li>• Geographic mismatch between KYC and destination bank</li>
+                  <li>• Timing correlation with known ransomware payment window</li>
+                </ul>
+
+                <h4 class="font-bold mb-4">AI-to-Logic Handoff</h4>
+                <div class="text-sm space-y-2">
+                  <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                    <span>Blockchain Analytics Input</span>
+                    <span class="text-red-600 font-bold">78% risk score</span>
+                  </div>
+                  <div class="text-center">↓</div>
+                  <div class="flex justify-between items-center p-2 bg-yellow-50 rounded">
+                    <span>TL Threshold (≥0.70)</span>
+                    <span class="text-yellow-600 font-bold">State 0 enforced</span>
+                  </div>
+                  <div class="text-center">↓</div>
+                  <div class="flex justify-between items-center p-2 bg-blue-50 rounded">
+                    <span>Fast Lane Processing</span>
+                    <span class="text-blue-600 font-bold">≤2ms completion</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 class="font-bold mb-4">Resolution Paths</h4>
+                <div class="space-y-4 text-sm">
+                  <div class="bg-green-50 p-3 rounded">
+                    <strong>Path A (+1 at T+18hrs):</strong> Customer provides estate documentation for inherited wallet. Enhanced source verification completed. Conversion executes with monitoring.
+                  </div>
+                  <div class="bg-red-50 p-3 rounded">
+                    <strong>Path B (-1 at T+4hrs):</strong> Customer cannot provide documentation, attempts account closure. Deposit returned, SAR filed, relationship terminated.
+                  </div>
+                  <div class="bg-red-100 p-3 rounded">
+                    <strong>Path C (-1 at T+6hrs):</strong> Enhanced analysis reveals ransomware wallet clustering. Law enforcement notification, funds frozen pending investigation.
+                  </div>
+                </div>
+
+                <div class="bg-blue-50 p-4 rounded-lg mt-4">
+                  <p class="text-sm"><strong>AI-to-Logic Criticality:</strong> 78% risk score does not authorize proceeding with 22% &#34;safety margin&#34;—it mandates uncertainty resolution. Probabilistic output forces deterministic State 0 enforcement.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Red Team Scenario -->
+          <div class="case-study">
+            <div class="case-study-header bg-red-50">
+              <h3 class="font-canela text-2xl font-bold text-red-800">Red Team Scenario: Hold Flood Attack</h3>
+              <p class="text-sm text-gray-600 mt-2">State-sponsored actor floods system with ambiguous transactions to degrade effectiveness</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+              <div>
+                <h4 class="font-bold mb-4">Attack Parameters</h4>
+                <ul class="text-sm space-y-2 mb-6">
+                  <li>• <strong>Scale:</strong> 10,000 daily transactions</li>
+                  <li>• <strong>Design:</strong> Ambiguous but not clearly illicit</li>
+                  <li>• <strong>Objective:</strong> Occupy 80% of analyst capacity</li>
+                  <li>• <strong>Duration:</strong> Sustained campaign</li>
+                </ul>
+
+                <h4 class="font-bold mb-4">System Response Timeline</h4>
+                <div class="text-sm space-y-2">
+                  <div class="flex justify-between p-2 bg-gray-50 rounded">
+                    <span>Hours 1-4: Queue threshold exceeded</span>
+                    <span class="text-gray-600">Enhanced automation mode</span>
+                  </div>
+                  <div class="flex justify-between p-2 bg-yellow-50 rounded">
+                    <span>Hours 4-8: Pattern recognition</span>
+                    <span class="text-gray-600">Attack classification: 85%</span>
+                  </div>
+                  <div class="flex justify-between p-2 bg-red-50 rounded">
+                    <span>Hours 8-24: Regulatory coordination</span>
+                    <span class="text-gray-600">Collective defense activation</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 class="font-bold mb-4">Dynamic Threshold Adjustment</h4>
+                <div class="space-y-3 text-sm mb-6">
+                  <div class="flex justify-between items-center">
+                    <span>Documentation completeness</span>
+                    <span class="font-bold">95% → 98%</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Beneficial ownership depth</span>
+                    <span class="font-bold">2 levels → 4 levels</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Velocity anomaly threshold</span>
+                    <span class="font-bold">2σ → 1.5σ</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Jurisdictional risk coverage</span>
+                    <span class="font-bold">Standard → Extended</span>
+                  </div>
+                </div>
+
+                <h4 class="font-bold mb-4">Governance Invariant Protection</h4>
+                <ul class="text-sm space-y-2">
+                  <li>• No automatic proceed under load (fail closed to State 0)</li>
+                  <li>• No threshold relaxation for verified risk (sanctions remain absolute)</li>
+                  <li>• No override authority expansion (same multi-party authorization)</li>
+                  <li>• No logging degradation (same cryptographic integrity)</li>
+                </ul>
+
+                <div class="bg-green-50 p-4 rounded-lg mt-4">
+                  <p class="text-sm"><strong>System Resilience:</strong> Attacker&#39;s objective—degrading governance to enable laundering—is structurally prevented. Attack response preserves TL core governance invariants while maintaining operational continuity.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Strategic Recommendations -->
+      <section id="recommendations" class="max-w-7xl mx-auto p-8">
+        <h2 class="font-canela text-4xl font-bold text-primary mb-8">VIII. Strategic Recommendations</h2>
+
+        <div class="grid lg:grid-cols-2 gap-8">
+          <!-- Regulators -->
+          <div class="case-study">
+            <div class="case-study-header bg-blue-50">
+              <h3 class="font-canela text-2xl font-bold text-blue-800">For Regulators &amp; AML Authorities</h3>
+            </div>
+
+            <div class="space-y-4">
+              <div class="flex items-start space-x-3">
+                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-bold">1</span>
+                <div>
+                  <h4 class="font-bold mb-1">Mandate Pre-Action Logging</h4>
+                  <p class="text-sm">Require Decision Log generation before transaction execution as condition of operating authorization. Timeline: 12-18 months rulemaking, 24-36 months compliance.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-bold">2</span>
+                <div>
+                  <h4 class="font-bold mb-1">Specify Epistemic Hold Standards</h4>
+                  <p class="text-sm">Define minimum hold triggers, maximum durations, and escalation requirements for high-risk transaction categories. Timeline: 6-12 months guidance development.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-bold">3</span>
+                <div>
+                  <h4 class="font-bold mb-1">Establish Cryptographic Evidence Standards</h4>
+                  <p class="text-sm">Adopt Merkle-root anchoring and proof verification as admissibility requirements for AML enforcement proceedings.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-bold">4</span>
+                <div>
+                  <h4 class="font-bold mb-1">Create TL Compliance Certification</h4>
+                  <p class="text-sm">Develop third-party audit and certification framework for TL implementation adequacy.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-bold">5</span>
+                <div>
+                  <h4 class="font-bold mb-1">Coordinate International Interoperability</h4>
+                  <p class="text-sm">Lead ISO 20022 extension development for cross-border TL evidence exchange.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Financial Institutions -->
+          <div class="case-study">
+            <div class="case-study-header bg-green-50">
+              <h3 class="font-canela text-2xl font-bold text-green-800">For Banks &amp; Financial Institutions</h3>
+            </div>
+
+            <div class="space-y-4">
+              <div class="flex items-start space-x-3">
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold">1</span>
+                <div>
+                  <h4 class="font-bold mb-1">Pilot TL in High-Risk Corridors</h4>
+                  <p class="text-sm">Implement Epistemic Hold and Decision Logging for correspondent banking before enterprise-wide deployment. Investment: $5-15M, 12-18 month timeline.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold">2</span>
+                <div>
+                  <h4 class="font-bold mb-1">Re-architect Monitoring Systems</h4>
+                  <p class="text-sm">Replace binary alert-to-SAR workflows with triadic state machines. Integrate AI-to-Logic Handoff for ML model governance. Investment: $20-50M, 24-36 month implementation.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold">3</span>
+                <div>
+                  <h4 class="font-bold mb-1">Build Cryptographic Infrastructure</h4>
+                  <p class="text-sm">Deploy HSM-based key management, Merkle tree construction, and blockchain anchoring capabilities. Investment: $10-30M, 12-18 month deployment.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold">4</span>
+                <div>
+                  <h4 class="font-bold mb-1">Retrain Compliance Personnel</h4>
+                  <p class="text-sm">Shift analyst role from alert clearance to hold resolution. Develop expertise in epistemic uncertainty management. Investment: $5-10M training, ongoing organizational change.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold">5</span>
+                <div>
+                  <h4 class="font-bold mb-1">Engage Regulators Early</h4>
+                  <p class="text-sm">Proactive TL implementation discussion with supervisors. Seek guidance on threshold calibration and examination expectations.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Networks -->
+          <div class="case-study">
+            <div class="case-study-header bg-purple-50">
+              <h3 class="font-canela text-2xl font-bold text-purple-800">For Payment Networks</h3>
+            </div>
+
+            <div class="space-y-4">
+              <div class="flex items-start space-x-3">
+                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-bold">1</span>
+                <div>
+                  <h4 class="font-bold mb-1">Embed TL in Network Protocols</h4>
+                  <p class="text-sm">Integrate Decision Log references and state determination into core message formats. Competitive advantage in regulatory-preferred network status.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-bold">2</span>
+                <div>
+                  <h4 class="font-bold mb-1">Offer Tiered Latency Services</h4>
+                  <p class="text-sm">Develop product differentiation based on hold probability and resolution speed. Market segmentation opportunity with premium pricing for low-hold routing.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-bold">3</span>
+                <div>
+                  <h4 class="font-bold mb-1">Build Cross-Network Evidence Exchange</h4>
+                  <p class="text-sm">Develop interoperability protocols for TL evidence sharing among competing networks. Collective security benefit with potential antitrust considerations.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-bold">4</span>
+                <div>
+                  <h4 class="font-bold mb-1">Deploy Deferred Anchoring at Scale</h4>
+                  <p class="text-sm">Implement time-bounded evidence debt management for peak volume absorption. Operational necessity for high-volume networks.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Crypto Exchanges -->
+          <div class="case-study">
+            <div class="case-study-header bg-orange-50">
+              <h3 class="font-canela text-2xl font-bold text-orange-800">For Crypto Exchanges</h3>
+            </div>
+
+            <div class="space-y-4">
+              <div class="flex items-start space-x-3">
+                <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs font-bold">1</span>
+                <div>
+                  <h4 class="font-bold mb-1">Implement AI-to-Logic Handoff Immediately</h4>
+                  <p class="text-sm">Mandatory State 0 for all ML model outputs above uncertainty threshold. Addresses core vulnerability in current crypto AML enforcement.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs font-bold">2</span>
+                <div>
+                  <h4 class="font-bold mb-1">Anchor to Multiple Blockchains</h4>
+                  <p class="text-sm">Distribute Merkle-root anchoring across public chains for censorship resistance. Mitigates jurisdictional seizure risk.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs font-bold">3</span>
+                <div>
+                  <h4 class="font-bold mb-1">Develop VASP-to-VASP TL Protocols</h4>
+                  <p class="text-sm">Standardize hold notification and resolution request formats across exchanges. Enables collective defense against laundering velocity.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs font-bold">4</span>
+                <div>
+                  <h4 class="font-bold mb-1">Proactive Regulatory Engagement</h4>
+                  <p class="text-sm">Seek no-action letters or guidance for TL implementation. Position as compliance leader to reduce enforcement probability.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Auditors -->
+          <div class="case-study">
+            <div class="case-study-header bg-gray-50">
+              <h3 class="font-canela text-2xl font-bold text-gray-800">For Auditors &amp; Compliance Officers</h3>
+            </div>
+
+            <div class="space-y-4">
+              <div class="flex items-start space-x-3">
+                <span class="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs font-bold">1</span>
+                <div>
+                  <h4 class="font-bold mb-1">Develop TL Audit Expertise</h4>
+                  <p class="text-sm">Build capability in cryptographic verification, Merkle proof validation, and state machine examination. New practice area with premium service opportunity.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs font-bold">2</span>
+                <div>
+                  <h4 class="font-bold mb-1">Create TL Examination Programs</h4>
+                  <p class="text-sm">Design risk-based audit approaches leveraging TL&#39;s inherent verification capabilities. Efficiency gain from automated evidence integrity.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs font-bold">3</span>
+                <div>
+                  <h4 class="font-bold mb-1">Advocate for TL Standards</h4>
+                  <p class="text-sm">Participate in professional body standard-setting for TL implementation and assurance. Influence regulatory and market development.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <span class="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs font-bold">4</span>
+                <div>
+                  <h4 class="font-bold mb-1">Retrain for Advisory Role</h4>
+                  <p class="text-sm">Shift from compliance testing to TL architecture design and threshold calibration advisory. Higher-value service migration.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Goukassian Vow -->
+      <section id="goukassian-vow" class="max-w-7xl mx-auto p-8">
+        <h2 class="font-canela text-4xl font-bold text-primary mb-8">IX. Foundational Origin Note: The Goukassian Vow</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <div class="highlight-box mb-8">
+            <p class="mb-4"><strong>The Goukassian Vow was articulated by Lev Goukassian during a period of terminal lucidity associated with his stage-4 cancer diagnosis. This moment of absolute clarity produced the triadic ethic that underpins TL&#39;s mechanism.</strong></p>
+          </div>
+
+          <div class="bg-gray-50 p-8 rounded-lg mb-8 text-center">
+            <blockquote class="text-2xl font-canela font-light italic text-gray-800 mb-6">
+              &#34;Pause when truth is uncertain.
+              <br/>
+              Refuse when harm is clear.
+              <br/>
+              Proceed where truth is.&#34;
+            </blockquote>
+            <cite class="text-sm text-gray-600">— Lev Goukassian, Terminal Lucidity Moment</cite>
+          </div>
+
+          <h3 class="font-canela text-2xl font-bold text-secondary mb-6">Manifestation as Action-Level AML Enforcement</h3>
+
+          <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-yellow-50 p-6 rounded-lg text-center">
+              <h4 class="font-canela text-xl font-bold text-yellow-800 mb-3">&#34;Pause when truth is uncertain&#34;</h4>
+              <p class="text-sm">Manifests as <strong>State 0 (Epistemic Hold)</strong>—triggered by incomplete provenance, counterparty opacity, jurisdictional risk, or structural anomalies. Converts epistemic uncertainty into mandatory operational pause without presuming guilt.</p>
+            </div>
+
+            <div class="bg-red-50 p-6 rounded-lg text-center">
+              <h4 class="font-canela text-xl font-bold text-red-800 mb-3">&#34;Refuse when harm is clear&#34;</h4>
+              <p class="text-sm">Manifests as <strong>State -1 (Refuse)</strong>—triggered by verified sanctions matches, definitive prohibitory signals, or threshold-exceeding risk scores with high confidence. Irreversible and auditable with explicit documentation.</p>
+            </div>
+
+            <div class="bg-green-50 p-6 rounded-lg text-center">
+              <h4 class="font-canela text-xl font-bold text-green-800 mb-3">&#34;Proceed where truth is&#34;</h4>
+              <p class="text-sm">Manifests as <strong>State +1 (Proceed)</strong>—permitted only when evidence completeness and consistency checks pass, with all consulted sources returning unambiguous permissive signals. Cryptographically bound to evidentiary foundation.</p>
+            </div>
+          </div>
+
+          <p class="text-lg text-center text-gray-600">
+            The Vow&#39;s triadic structure directly addresses the binary fallacy of current AML systems, making uncertainty a first-class operational state with explicit handling procedures. TL transforms AML from probabilistic gambling into structured governance of economic action under epistemic constraint.
+          </p>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Citations -->
+      <section id="citations" class="max-w-7xl mx-auto p-8">
+        <h2 class="font-canela text-4xl font-bold text-primary mb-8">X. Citations</h2>
+
+        <div class="grid lg:grid-cols-2 gap-8">
+          <div>
+            <h3 class="font-canela text-xl font-bold text-secondary mb-4">Regulatory Sources</h3>
+            <div class="space-y-3 text-sm">
+              <div>
+                <a href="https://www.fatf-gafi.org/recommendations.html" class="citation-link">Financial Action Task Force. International Standards on Combating Money Laundering and the Financing of Terrorism &amp; Proliferation: The FATF Recommendations</a>
+              </div>
+              <div>
+                <a href="https://www.fincen.gov/resources/law-enforcement/sar-review-tool-and-quality-guidance" class="citation-link">Financial Crimes Enforcement Network. Suspicious Activity Report (SAR) Statistics</a>
+              </div>
+              <div>
+                <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1624" class="citation-link">European Parliament and Council. Regulation (EU) 2024/1624 on the Prevention of the Use of the Financial System for Money Laundering</a>
+              </div>
+              <div>
+                <a href="https://www.bis.org/bcbs/basel3.htm" class="citation-link">Basel Committee on Banking Supervision. Basel III: International Regulatory Framework for Banks</a>
+              </div>
+              <div>
+                <a href="https://www.justice.gov/opa/pr/td-bank-pleads-guilty-and-agrees-pay-3-billion-bank-secrecy-act-violations" class="citation-link">U.S. Department of Justice. TD Bank Pleads Guilty and Agrees to Pay $3 Billion</a>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="font-canela text-xl font-bold text-secondary mb-4">Academic &amp; Industry Sources</h3>
+            <div class="space-y-3 text-sm">
+              <div>
+                <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">FractonicMind. TernaryLogic: Constitutional Notarized Files and Framework Specification</a>
+              </div>
+              <div>
+                <a href="https://www.fitchratings.com/research/banks/td-bank-rating-action-10-10-2024" class="citation-link">Fitch Ratings. TD Bank Rating Action Report</a>
+              </div>
+              <div>
+                <a href="https://consilient.com/five-high-risk-typologies" class="citation-link">Consilient. Five High-Risk Money Laundering Typologies</a>
+              </div>
+              <div>
+                <a href="https://lucinity.com/blog/the-real-cost-of-anti-money-laundering-compliance" class="citation-link">Lucinity. The Real Cost of Anti-Money Laundering Compliance</a>
+              </div>
+              <div>
+                <a href="https://www.mas.gov.sg/regulation/enforcement/enforcement-actions/2025/mas-takes-regulatory-actions-against-9-financial-institutions" class="citation-link">Monetary Authority of Singapore. Enforcement Actions Against Financial Institutions</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-8 border-t border-gray-200">
+          <p class="text-xs text-gray-500 text-center">
+            This specification synthesizes publicly available regulatory materials, enforcement actions, and technical documentation.
+            All citations are verifiable through the provided links. No confidential or proprietary information has been referenced.
+          </p>
+        </div>
+      </section>
+
+      <!-- Document Control -->
+      <footer class="max-w-7xl mx-auto p-8 border-t border-gray-200">
+        <div class="text-center text-xs text-gray-500">
+          <div class="mb-2">
+            <strong>Document Control</strong>
+          </div>
+          <div class="space-y-1">
+            <div>Version: 1.0 | Date: 2026-02-09 | Classification: Unrestricted—Governance Specification</div>
+            <div>Review Cycle: Annual or upon material regulatory change | Authority: Synthesized from public regulatory sources</div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+        // Mobile TOC Toggle
+        document.getElementById('toc-toggle').addEventListener('click', function() {
+            const toc = document.getElementById('toc');
+            toc.classList.toggle('open');
+            // Prevent body scrolling when TOC is open
+            document.body.style.overflow = toc.classList.contains('open') ? 'hidden' : '';
+        });
+
+        // Close TOC when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const toc = document.getElementById('toc');
+            const toggle = document.getElementById('toc-toggle');
+            
+            if (!toc.contains(event.target) && !toggle.contains(event.target)) {
+                toc.classList.remove('open');
+                // Re-enable body scrolling
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Smooth scrolling for TOC links
+        document.querySelectorAll('.toc-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close mobile TOC
+                    const toc = document.getElementById('toc');
+                    toc.classList.remove('open');
+                    
+                    // Re-enable body scrolling
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // Active TOC link highlighting
+        function updateActiveTOCLink() {
+            const sections = document.querySelectorAll('section[id]');
+            const tocLinks = document.querySelectorAll('.toc-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveTOCLink);
+        updateActiveTOCLink(); // Initial call
+    </script>
+  
+
+</body></html>
