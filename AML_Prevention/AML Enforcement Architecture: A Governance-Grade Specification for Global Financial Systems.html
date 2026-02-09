@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ternary Logic: Structural AML Enforcement</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #f1f5f9; /* Slate 100 */
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            height: 350px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .neon-text {
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        .state-card-0 { border-left: 4px solid #f59e0b; }
+        .state-card-pos { border-left: 4px solid #10b981; }
+        .state-card-neg { border-left: 4px solid #ef4444; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-white pb-20">
+
+    <!-- Header Section -->
+    <header class="w-full py-16 px-6 md:px-12 text-center bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border-b border-slate-800">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 neon-text text-white">
+                TERNARY LOGIC
+            </h1>
+            <h2 class="text-xl md:text-2xl text-cyan-400 font-medium mb-8 uppercase tracking-widest">
+                Structural AML Enforcement Architecture
+            </h2>
+            <p class="text-lg text-slate-400 leading-relaxed max-w-2xl mx-auto">
+                Moving beyond the failure of binary "Allow/Deny" models. Treating Anti-Money Laundering as a problem of economic action under epistemic uncertainty.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 grid grid-cols-1 gap-16">
+
+        <!-- SECTION 1: The Problem (Economic) -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            <div class="space-y-6">
+                <div class="flex items-center space-x-3 mb-2">
+                    <span class="text-3xl">⚠️</span>
+                    <h3 class="text-2xl font-bold text-white">The False Economy of "Instant"</h3>
+                </div>
+                <p class="text-slate-300 leading-relaxed">
+                    Current AML systems prioritize "frictionless" liquidity, forcing ambiguous transactions into the "Allow" state. This creates <strong>Unverified Velocity</strong>. While the transaction cost ($C_{tx}$) appears low (near zero latency), it accumulates catastrophic downstream liability ($L_{prob}$) in the form of fines, remediation, and reputation damage years later.
+                </p>
+                <div class="glass-panel p-6 rounded-xl">
+                    <h4 class="text-sm font-bold text-slate-400 uppercase mb-4">The Liability Equation</h4>
+                    <div class="font-mono text-sm md:text-base text-cyan-300 bg-slate-950 p-4 rounded border border-slate-700 overflow-x-auto">
+                        L<sub>prob</sub> = (P<sub>laundering</sub> × C<sub>fine</sub>) + (P<sub>remediation</sub> × C<sub>audit</sub>)
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2">
+                        Because markets price $L_{prob}$ at zero until enforcement occurs, banks face "surprise" multi-billion dollar repricing events.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="glass-panel p-6 rounded-xl w-full">
+                <h4 class="text-lg font-semibold text-center mb-4 text-white">Cost Structure Comparison</h4>
+                <div class="chart-container">
+                    <canvas id="costComparisonChart"></canvas>
+                </div>
+                <p class="text-xs text-center text-slate-500 mt-4">
+                    Comparison of visible transaction fees vs. hidden probabilistic liability.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION 2: The Core Mechanism (Ternary States) -->
+        <section class="space-y-8">
+            <div class="text-center max-w-3xl mx-auto">
+                <h3 class="text-3xl font-bold text-white mb-4">The Triadic Governance Model</h3>
+                <p class="text-slate-300">
+                    Ternary Logic (TL) governs action, not intent. It replaces the brittle binary switch with a three-state system that recognizes "Unknown" as a valid, enforceable state.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- State +1 -->
+                <div class="glass-panel p-6 rounded-xl state-card-pos relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl font-bold text-emerald-500 group-hover:opacity-20 transition-opacity">+1</div>
+                    <h4 class="text-xl font-bold text-emerald-400 mb-2">PROCEED</h4>
+                    <p class="text-sm text-slate-400 mb-4 font-mono">Status: Verified</p>
+                    <p class="text-slate-300 text-sm">
+                        Action permitted. Evidence is complete, provenance is clear, and no risk flags are active. The "Happy Path."
+                    </p>
+                </div>
+
+                <!-- State 0 -->
+                <div class="glass-panel p-6 rounded-xl state-card-0 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300 bg-slate-800/50">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl font-bold text-amber-500 group-hover:opacity-20 transition-opacity">0</div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-xl font-bold text-amber-400">EPISTEMIC HOLD</h4>
+                        <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded">CORE INNOVATION</span>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-4 font-mono">Status: Unresolved</p>
+                    <p class="text-slate-300 text-sm">
+                        Action paused. Insufficient evidence to Proceed, insufficient cause to Refuse. Time is traded for certainty.
+                    </p>
+                </div>
+
+                <!-- State -1 -->
+                <div class="glass-panel p-6 rounded-xl state-card-neg relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl font-bold text-red-500 group-hover:opacity-20 transition-opacity">-1</div>
+                    <h4 class="text-xl font-bold text-red-400 mb-2">REFUSE</h4>
+                    <p class="text-sm text-slate-400 mb-4 font-mono">Status: Prohibited</p>
+                    <p class="text-slate-300 text-sm">
+                        Action denied. Verified harm, sanctions hit, or clear prohibition. The system "fails closed."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: The AI-to-Logic Handoff -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="glass-panel p-6 rounded-xl w-full order-2 lg:order-1">
+                <h4 class="text-lg font-semibold text-center mb-4 text-white">Probability to State Mapping</h4>
+                <div class="chart-container">
+                    <canvas id="logicHandoffChart"></canvas>
+                </div>
+                <p class="text-xs text-center text-slate-500 mt-4">
+                    The "Step Function" prevents probabilistic ambiguity (e.g., 65% risk) from sliding into authorization.
+                </p>
+            </div>
+            
+            <div class="space-y-6 order-1 lg:order-2">
+                <div class="flex items-center space-x-3 mb-2">
+                    <span class="text-3xl">🤖</span>
+                    <h3 class="text-2xl font-bold text-white">Governing Probability</h3>
+                </div>
+                <p class="text-slate-300 leading-relaxed">
+                    Machine Learning models output probabilities (e.g., "Risk: 0.72"), not decisions. A major failure mode of modern banking is treating low-probability risk as "safe."
+                </p>
+                <p class="text-slate-300 leading-relaxed">
+                    TL enforces a strict <strong>Handoff Protocol</strong>:
+                </p>
+                <ul class="space-y-3 text-sm text-slate-300">
+                    <li class="flex items-start">
+                        <span class="text-emerald-500 font-bold mr-2">✓</span>
+                        <span><strong>Score &lt; Threshold_Low:</strong> Collapse to State +1.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-red-500 font-bold mr-2">✕</span>
+                        <span><strong>Score &gt; Threshold_High:</strong> Collapse to State -1.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-amber-500 font-bold mr-2">⏸</span>
+                        <span><strong>Between Thresholds:</strong> Mandatory State 0. The system <em>cannot</em> proceed until external evidence moves the score.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Dual-Lane Architecture (No Mermaid/SVG) -->
+        <section class="space-y-8">
+            <div class="flex items-center space-x-3 mb-2">
+                <span class="text-3xl">🏗️</span>
+                <h3 class="text-2xl font-bold text-white">Dual-Lane Latency Architecture</h3>
+            </div>
+            <p class="text-slate-300 max-w-4xl">
+                To solve the tension between HFT speeds (microseconds) and evidence gathering (seconds/minutes), TL splits the process into two synchronized lanes.
+            </p>
+
+            <!-- CSS Grid Flowchart -->
+            <div class="glass-panel p-8 rounded-xl overflow-x-auto">
+                <div class="min-w-[800px] grid grid-cols-5 gap-4 text-center items-stretch relative">
+                    
+                    <!-- Labels -->
+                    <div class="col-span-1 flex items-center justify-center font-bold text-slate-400 uppercase tracking-widest -rotate-90">Inputs</div>
+                    <div class="col-span-2 bg-slate-800/50 rounded-lg p-4 border border-cyan-900/50">
+                        <div class="text-cyan-400 font-mono font-bold text-lg mb-2">FAST LANE (&le;2ms)</div>
+                        <div class="text-xs text-slate-500">Synchronous Blocking Path</div>
+                    </div>
+                    <div class="col-span-2 bg-slate-800/50 rounded-lg p-4 border border-purple-900/50">
+                        <div class="text-purple-400 font-mono font-bold text-lg mb-2">SLOW LANE (&le;500ms)</div>
+                        <div class="text-xs text-slate-500">Asynchronous Anchoring Path</div>
+                    </div>
+
+                    <!-- Row 1 -->
+                    <div class="col-span-1 flex flex-col justify-center space-y-2">
+                        <div class="bg-slate-700 text-white p-3 rounded shadow">Transaction Request</div>
+                    </div>
+
+                    <!-- Fast Lane Process -->
+                    <div class="col-span-2 flex flex-col space-y-4 relative p-4 border-l border-r border-slate-700">
+                        <div class="bg-slate-900 border border-slate-600 p-3 rounded text-sm text-white font-mono">
+                            Init Decision Log
+                            <br><span class="text-xs text-slate-500">Generate ID & Hash</span>
+                        </div>
+                        <div class="text-slate-500">↓</div>
+                        <div class="bg-slate-900 border border-cyan-500 p-3 rounded text-sm text-white font-mono shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+                            State Check (+1/0/-1)
+                            <br><span class="text-xs text-cyan-300">Action Gated Here</span>
+                        </div>
+                    </div>
+
+                    <!-- Slow Lane Process -->
+                    <div class="col-span-2 flex flex-col space-y-4 relative p-4 border-r border-slate-700">
+                         <div class="bg-slate-900 border border-slate-600 p-3 rounded text-sm text-white font-mono">
+                            Log Enrichment
+                            <br><span class="text-xs text-slate-500">Add Context/Metadata</span>
+                        </div>
+                        <div class="text-slate-500">↓</div>
+                        <div class="bg-slate-900 border border-purple-500 p-3 rounded text-sm text-white font-mono shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+                            Merkle Batching
+                            <br><span class="text-xs text-purple-300">Batch Hash -> Ledger</span>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="col-span-5 pt-4 border-t border-slate-800 flex justify-between text-xs font-mono text-slate-500">
+                        <span>Constraint: No Action before Log Init</span>
+                        <span>Output: Immutable Proof</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: Evidence & Scalability -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="glass-panel p-6 rounded-xl">
+                <h4 class="text-lg font-semibold text-center mb-4 text-white">Simulated Outcomes (1M Tx)</h4>
+                <div class="chart-container">
+                    <canvas id="outcomeDistributionChart"></canvas>
+                </div>
+                <p class="text-xs text-center text-slate-500 mt-4">
+                    In a healthy system, State 0 is active but minority (~15%). A "Hold Flood" attack causes State 0 to spike, protecting the system from bad actors.
+                </p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="flex items-center space-x-3 mb-2">
+                    <span class="text-3xl">🔗</span>
+                    <h3 class="text-2xl font-bold text-white">Merkle-Batched Anchoring</h3>
+                </div>
+                <p class="text-slate-300 text-sm">
+                    Anchoring every transaction to a blockchain is too slow ($O(n)$). TL uses Merkle Batching to achieve $O(1)$ scalability per batch.
+                </p>
+                <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
+                    <h5 class="text-sm font-bold text-slate-400 mb-4 uppercase">The "No Log = No Action" Rule</h5>
+                    <ul class="space-y-4">
+                        <li class="flex items-center justify-between text-sm">
+                            <span class="text-slate-300">1. Pre-Trade Log</span>
+                            <span class="font-mono text-cyan-400">Context_ID Generated</span>
+                        </li>
+                        <li class="flex items-center justify-between text-sm">
+                            <span class="text-slate-300">2. Decision</span>
+                            <span class="font-mono text-amber-400">State = 0 (Hold)</span>
+                        </li>
+                        <li class="flex items-center justify-between text-sm">
+                            <span class="text-slate-300">3. Resolution</span>
+                            <span class="font-mono text-emerald-400">Evidence Added -> State +1</span>
+                        </li>
+                        <li class="flex items-center justify-between text-sm border-t border-slate-700 pt-2">
+                            <span class="text-slate-300 font-bold">4. Anchor</span>
+                            <span class="font-mono text-purple-400">Merkle Root -> Ledger</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONCLUSION: The Vow -->
+        <section class="mt-8 mb-12">
+            <div class="glass-panel p-8 md:p-12 rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-slate-900 to-slate-800">
+                <h3 class="text-xl font-bold text-slate-400 uppercase tracking-widest mb-6">Foundational Origin</h3>
+                <blockquote class="text-2xl md:text-3xl font-serif italic text-white leading-relaxed mb-6">
+                    "Pause when truth is uncertain. <br>
+                    Refuse when harm is clear. <br>
+                    Proceed where truth is."
+                </blockquote>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <cite class="text-cyan-400 font-bold not-italic text-lg">— The Goukassian Vow</cite>
+                        <p class="text-slate-500 text-sm mt-1">Foundational Ethic of Ternary Logic</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="w-full py-8 text-center border-t border-slate-800 mt-12">
+        <p class="text-slate-600 text-sm">Generated for Regulatory Review | FATF / Basel Committee Context</p>
+    </footer>
+
+    <!-- SCRIPT: Chart Generation -->
+    <script>
+        // --- UTILITY: Label Splitter for >16 chars ---
+        function splitLabel(label) {
+            if (label.length <= 16) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if ((currentLine + " " + words[i]).length <= 16) {
+                    currentLine += " " + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        // --- UTILITY: Common Chart Options ---
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: { color: '#cbd5e1', font: { family: 'Inter' } }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#38bdf8',
+                    bodyColor: '#f1f5f9',
+                    borderColor: '#334155',
+                    borderWidth: 1,
+                    padding: 12,
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            } else {
+                                return label;
+                            }
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
+                y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } }
+            }
+        };
+
+        // --- CHART 1: Cost Comparison (Bar) ---
+        const ctxCost = document.getElementById('costComparisonChart').getContext('2d');
+        const costLabels = ['Current Binary Model', 'Ternary Logic Model'];
+        const processedCostLabels = costLabels.map(splitLabel);
+
+        new Chart(ctxCost, {
+            type: 'bar',
+            data: {
+                labels: processedCostLabels,
+                datasets: [
+                    {
+                        label: 'Visible Transaction Fee',
+                        data: [5, 12], // Higher upfront fee for TL (compute/storage)
+                        backgroundColor: '#3b82f6', // Blue
+                        stack: 'Stack 0',
+                    },
+                    {
+                        label: 'Latency Cost (Time)',
+                        data: [1, 25], // Significant latency cost in TL
+                        backgroundColor: '#f59e0b', // Amber
+                        stack: 'Stack 0',
+                    },
+                    {
+                        label: 'Hidden Liability (Fines/Remediation)',
+                        data: [120, 5], // Massive hidden liability in Binary
+                        backgroundColor: '#ef4444', // Red
+                        stack: 'Stack 0',
+                    }
+                ]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    x: { stacked: true, ticks: { color: '#e2e8f0' }, grid: { display: false } },
+                    y: { 
+                        stacked: true, 
+                        ticks: { color: '#94a3b8' }, 
+                        grid: { color: '#334155' },
+                        title: { display: true, text: 'Total System Cost (Arbitrary Units)', color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // --- CHART 2: Logic Handoff (Line/Step) ---
+        const ctxLogic = document.getElementById('logicHandoffChart').getContext('2d');
+        // X Axis: Risk Score 0.0 to 1.0
+        // Y Axis: State (-1, 0, 1)
+        
+        const riskScores = [0, 0.1, 0.2, 0.3, 0.35, 0.4, 0.5, 0.6, 0.65, 0.7, 0.8, 0.9, 1.0];
+        // Logic: 
+        // < 0.35 = +1 (Proceed)
+        // > 0.65 = -1 (Refuse)
+        // 0.35 - 0.65 = 0 (Hold)
+        
+        const states = [1, 1, 1, 1, 0, 0, 0, 0, -1, -1, -1, -1, -1];
+
+        new Chart(ctxLogic, {
+            type: 'line',
+            data: {
+                labels: riskScores.map(s => s.toString()),
+                datasets: [{
+                    label: 'Action State Output',
+                    data: states,
+                    borderColor: '#22d3ee', // Cyan
+                    backgroundColor: 'rgba(34, 211, 238, 0.1)',
+                    borderWidth: 3,
+                    stepped: true, // Crucial for showing discrete state jumps
+                    fill: true
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    tooltip: {
+                        ...commonOptions.plugins.tooltip,
+                        callbacks: {
+                            title: function(tooltipItems) { return "Risk Score: " + tooltipItems[0].label; },
+                            label: function(context) {
+                                const val = context.raw;
+                                if(val === 1) return "State: +1 (PROCEED)";
+                                if(val === 0) return "State: 0 (EPISTEMIC HOLD)";
+                                if(val === -1) return "State: -1 (REFUSE)";
+                            }
+                        }
+                    },
+                    annotation: {
+                        // Note: Annotation plugin not loaded via CDN in instruction, relying on visual cues/text
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function(value) {
+                                if(value === 1) return '+1 PROCEED';
+                                if(value === 0) return '0 HOLD';
+                                if(value === -1) return '-1 REFUSE';
+                                return '';
+                            },
+                            color: function(context) {
+                                if(context.tick.value === 1) return '#10b981';
+                                if(context.tick.value === 0) return '#f59e0b';
+                                if(context.tick.value === -1) return '#ef4444';
+                                return '#94a3b8';
+                            },
+                            font: { weight: 'bold' }
+                        },
+                        grid: { color: '#334155' }
+                    },
+                    x: {
+                        title: { display: true, text: 'AI Probabilistic Risk Score (0.0 - 1.0)', color: '#94a3b8' },
+                        grid: { color: '#334155' }
+                    }
+                }
+            }
+        });
+
+        // --- CHART 3: Outcome Distribution (Donut) ---
+        const ctxOutcome = document.getElementById('outcomeDistributionChart').getContext('2d');
+        const outcomeLabels = ['Proceed (+1)', 'Epistemic Hold (0)', 'Refuse (-1)'];
+        
+        new Chart(ctxOutcome, {
+            type: 'doughnut',
+            data: {
+                labels: outcomeLabels,
+                datasets: [{
+                    data: [75, 15, 10], // 75% clean, 15% unsure, 10% bad
+                    backgroundColor: [
+                        '#10b981', // Emerald
+                        '#f59e0b', // Amber
+                        '#ef4444'  // Red
+                    ],
+                    borderColor: '#0f172a',
+                    borderWidth: 2,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                ...commonOptions,
+                cutout: '60%',
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: { color: '#f8fafc', font: { family: 'Inter', size: 12 } }
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
