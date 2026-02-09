@@ -15,7 +15,7 @@ The global Anti-Money Laundering (AML) framework currently operates on a bivalen
 
 ## 
 
-##  **I. Problem Statement: Why AML Systems Fail**
+## [**Infographic Presentention**](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/Structural%20Anti-Money%20Laundering%20Enforcement%20Via%20Ternary%20Logic.html) **I. Problem Statement: Why AML Systems Fail**
 
 The global financial system currently operates under a regime of systemic ineffectiveness regarding Anti-Money Laundering (AML) and Counter-Terrorist Financing (CTF). Despite the implementation of increasingly draconian regulatory frameworks—from the Bank Secrecy Act (BSA) to the Fifth Anti-Money Laundering Directive (5AMLD)—the United Nations Office on Drugs and Crime (UNODC) consistently estimates that less than 1% of illicit financial flows are successfully interdicted and seized. This report posits that this failure is not a result of insufficient data, lack of computational power, or a deficit of regulatory intent. Rather, it is a catastrophic failure of **governance architecture**.  
 Current AML enforcement relies on a binary "Allow/Deny" execution logic that is fundamentally incompatible with the probabilistic nature of financial risk. This architectural dissonance creates a "Compliance Theater" where vast resources are expended on post-hoc reporting, while the actual mechanics of settlement remain porous to illicit velocity. To address this, we must reframe AML not as a moral or behavioral problem to be solved by surveillance, but as a problem of economic action under epistemic uncertainty.1
