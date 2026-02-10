@@ -21,8 +21,10 @@ The global Anti-Money Laundering (AML) framework currently operates on a bivalen
 
 **Keywords:** Anti-Money Laundering (AML), Ternary Logic, Distributed Ledger Technology (DLT), Merkle Trees, System Architecture, Epistemic Uncertainty, Verifiable Delay Functions (VDF), ISO 20022\.
 
+---
 [**Interactive Report:**](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/Ternary%20Logic%20\(TL\)%20as%20an%20Anti-Money%20Laundering%20\(AML\)%20Enforcement%20Architecture_%20Governance-Grade%20System%20Specification.html) A dynamic web report allowing auditors to filter controls by regulatory domain. 
 
+---
 **[Ternary Logic (TL) as an Anti-Money Laundering (AML) Enforcement Architecture: Governance-Grade System Specification	1](#heading=)**
 
 [Abstract	2](#abstract)
