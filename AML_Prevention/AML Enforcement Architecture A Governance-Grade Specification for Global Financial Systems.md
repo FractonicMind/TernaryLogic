@@ -13,8 +13,11 @@ The global Anti-Money Laundering (AML) framework currently operates on a bivalen
 
 **Keywords:** Anti-Money Laundering (AML), Ternary Logic, Distributed Ledger Technology (DLT), Merkle Trees, System Architecture, Epistemic Uncertainty, Verifiable Delay Functions (VDF), ISO 20022\.
 
+---
+
 ## [**Infographic Presentention**](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/Structural%20Anti-Money%20Laundering%20Enforcement%20Via%20Ternary%20Logic.html)
 
+---
 ## **I. Problem Statement: The Systemic Failure of Bivalent Compliance**
 
 The global Anti-Money Laundering (AML) regime is currently operating under a paradigm of systemic failure. Despite the proliferation of increasingly complex regulations and the expenditure of billions of dollars on compliance technology, the rate of illicit fund interdiction remains negligible, estimated by some observers to be below one percent of total criminal proceeds. To understand why AML fails, one must move beyond the traditional diagnosis of "poor data quality" or "insufficient staffing" and analyze AML as a fundamental failure of governance, evidence, and action-control logic. Current systems fail because they are built on a bivalent (binary) logic that is structurally incapable of managing economic action under epistemic uncertainty.
