@@ -15,7 +15,7 @@ The global Anti-Money Laundering (AML) framework currently operates on a bivalen
 
 ## 
 
-## [**Infographic Presentention**](https://fractonicmind.github.io/TernaryLogic/AML_Enforcement_Architecture_A_Governance_Grade_Specification_for_Global_Financial_Systems.html) 
+## [**Infographic Presentention**](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/Structural Anti-Money Laundering Enforcement Via Ternary Logic.html) 
 
 ---
 
