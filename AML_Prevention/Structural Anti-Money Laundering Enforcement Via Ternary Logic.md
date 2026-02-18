@@ -4,7 +4,10 @@
 *Independent Researcher / Ternary Logic Architecture*   
 Santa Monica, California, USA 
 
-**ORCID: 0009-0006-5966-1243**  
+**DOI 10.5281/zenodo.18686100**
+
+**ORCID: 0009-0006-5966-1243**
+
 **leogouk@gmail.com**
 
 ## **Abstract** 
@@ -13,13 +16,9 @@ The global Anti-Money Laundering (AML) framework currently operates on a bivalen
 
 **Keywords:** Anti-Money Laundering (AML), Ternary Logic, Distributed Ledger Technology (DLT), Merkle Trees, System Architecture, Epistemic Uncertainty, Verifiable Delay Functions (VDF), ISO 20022\.
 
-## 
+## **I. Problem Statement: Why AML Systems Fail**
 
-## [**Infographic Presentention**](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/Structural_Anti_Money_Laundering_Enforcement_Via_Ternary_Logic.html) 
-
----
-
-**I. Problem Statement: Why AML Systems Fail**
+## [**Infographic Presentention**](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/AML_Enforcement_Architecture_A_Governance_Grade_Specification_for_Global_Financial_Systems.html)
 
 The global financial system currently operates under a regime of systemic ineffectiveness regarding Anti-Money Laundering (AML) and Counter-Terrorist Financing (CTF). Despite the implementation of increasingly draconian regulatory frameworks—from the Bank Secrecy Act (BSA) to the Fifth Anti-Money Laundering Directive (5AMLD)—the United Nations Office on Drugs and Crime (UNODC) consistently estimates that less than 1% of illicit financial flows are successfully interdicted and seized. This report posits that this failure is not a result of insufficient data, lack of computational power, or a deficit of regulatory intent. Rather, it is a catastrophic failure of **governance architecture**.  
 Current AML enforcement relies on a binary "Allow/Deny" execution logic that is fundamentally incompatible with the probabilistic nature of financial risk. This architectural dissonance creates a "Compliance Theater" where vast resources are expended on post-hoc reporting, while the actual mechanics of settlement remain porous to illicit velocity. To address this, we must reframe AML not as a moral or behavioral problem to be solved by surveillance, but as a problem of economic action under epistemic uncertainty.1
@@ -422,30 +421,18 @@ This ethic manifests as action-level enforcement. By embedding this logic into t
 
 This specification references and aligns with the following standards and research components:
 
-* 6  
-  : Origins of the Goukassian Vow and Ternary Logic philosophy.  
-* 2  
-  : Definition of Ternary Logic states and the Epistemic Hold mechanism.  
-* 10  
-  : Technical specifications for Dual-Lane Architecture and Merkle-Batched Anchoring.  
-* 2  
-  : The "No Log \= No Action" governance constraint.  
-* 4  
-  : Basel III alignment and capital efficiency arguments.  
-* 18  
-  : Legal analysis regarding the Reverse Burden of Proof.  
-* 14  
-  : ISO 20022 messaging standards and interoperability.  
-* 8  
-  : Quantitative analysis of TL vs. NIST AI Risk Management Framework.  
-* 20  
-  : Case study data regarding correspondent banking and UBO opacity in high-risk corridors.  
-* 5  
-  : Red Team scenarios and "Moral Denial of Service" defenses.  
-* 1  
-  : Epistemic uncertainty in financial crime prosecution.  
-* 8  
-  : Evidence admissibility standards (FRE 902/803).
+* **\[6\]** Origins of the Goukassian Vow and Ternary Logic philosophy.  
+* **\[2\]** Definition of Ternary Logic states and the Epistemic Hold mechanism.  
+* **\[10\]** Technical specifications for Dual-Lane Architecture and Merkle-Batched Anchoring.  
+* **\[2\]** The "No Log \= No Action" governance constraint.  
+* **\[4\]** Basel III alignment and capital efficiency arguments.  
+* **\[18\]** Legal analysis regarding the Reverse Burden of Proof.  
+* **\[14\]** ISO 20022 messaging standards and interoperability.  
+* **\[8\]** Quantitative analysis of TL vs. NIST AI Risk Management Framework.  
+* **\[20\]** Case study data regarding correspondent banking and UBO opacity in high-risk corridors.  
+* **\[5\]** Red Team scenarios and "Moral Denial of Service" defenses.  
+* **\[1\]** Epistemic uncertainty in financial crime prosecution.  
+* **\[8\]** Evidence admissibility standards (FRE 902/803).
 
 ### **Works cited**
 
