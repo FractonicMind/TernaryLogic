@@ -7,7 +7,7 @@ This paper presents a hardware architecture for **Atomic Auditability** in high-
 **Keywords:** High-frequency trading, ternary logic, NULL Convention Logic, delay-insensitive circuits, hardware-enforced audit, matching engines, FPGA acceleration, post-trade verification
 
 
-[Interactive Web Report](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/Atomic Auditability in Financial Execution Pipelines via Hardware-Enforced Ternary States.html)
+[Interactive Web Report](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/Atomic_Auditability_in_Financial_Execution_Pipelines_via_Hardware_Enforced_Ternary_States.html)
 
 ---
 
