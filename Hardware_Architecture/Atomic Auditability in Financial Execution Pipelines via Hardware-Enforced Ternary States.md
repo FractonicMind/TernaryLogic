@@ -11,8 +11,6 @@ Santa Monica, California, USA
 
 **leogouk@gmail.com**
 
-**[Interactive Web Report](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/Atomic_Auditability_in_Financial_Execution_Pipelines_via_Hardware_Enforced_Ternary_States.html)**
-
 ## 
 
 ## **Abstract**  {#abstract}
@@ -21,7 +19,7 @@ This paper presents a hardware architecture for **Atomic Auditability** in high-
 
 **Keywords:** High-Frequency Trading, Ternary Logic, NULL Convention Logic, Delay-Insensitive Circuits, Hardware-Enforced Audit, Matching Engines, FPGA Acceleration, Post-Trade Verification
 
-## 
+## [**Interactive Web Report**](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/Atomic_Auditability_in_Financial_Execution_Pipelines_via_Hardware_Enforced_Ternary_States.html)
 
 ## 
 
@@ -78,52 +76,6 @@ This paper presents a hardware architecture for **Atomic Auditability** in high-
 [V.2 Implementation Technology Comparison	21](#v.2-implementation-technology-comparison)
 
 [Technology	22](#technology)
-
-[Gating Mechanism	22](#gating-mechanism)
-
-[Volatility	22](#volatility)
-
-[Area (μm²/bit)	22](#area-\(μm²/bit\))
-
-[Transition Energy	22](#transition-energy)
-
-[Key Limitation	22](#key-limitation)
-
-[SRAM Latch	22](#sram-latch)
-
-[Cross-coupled inverters	22](#cross-coupled-inverters)
-
-[Volatile	22](#volatile)
-
-[0.5 – 2	22](#0.5-–-2)
-
-[10 – 50 fJ	22](#10-–-50-fj)
-
-[Power loss \= State loss; SEU vulnerability	22](#power-loss-=-state-loss;-seu-vulnerability)
-
-[FPGA Fabric LUT	22](#fpga-fabric-lut)
-
-[SRAM-configured mux	22](#sram-configured-mux)
-
-[Volatile	22](#volatile-1)
-
-[1 – 4	22](#1-–-4)
-
-[50 – 200 fJ	22](#50-–-200-fj)
-
-[Reconfiguration latency; Hardened block complexity	22](#reconfiguration-latency;-hardened-block-complexity)
-
-[Hardened C-Element	22](#hardened-c-element)
-
-[Static CMOS w/ feedback	22](#static-cmos-w/-feedback)
-
-[Non-Volatile (Static)	22](#non-volatile-\(static\))
-
-[2 – 6	22](#2-–-6)
-
-[20 – 100 fJ	22](#20-–-100-fj)
-
-[Process variation sensitivity; Requires threshold design	22](#process-variation-sensitivity;-requires-threshold-design)
 
 [RRAM / MRAM	23](#rram-/-mram)
 
