@@ -11,6 +11,8 @@ Santa Monica, California, USA
 
 **leogouk@gmail.com**
 
+**[Interactive Web Report](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/Atomic_Auditability_in_Financial_Execution_Pipelines_via_Hardware_Enforced_Ternary_States.html)**
+
 ## 
 
 ## **Abstract**  {#abstract}
