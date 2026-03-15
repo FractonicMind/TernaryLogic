@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triadic Logic in Precision-Critical AI Architectures</title>
+
+  <!-- Essential CDN Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: 'hsl(210, 75%, 95%)',
+              100: 'hsl(210, 75%, 85%)',
+              200: 'hsl(210, 75%, 75%)',
+              300: 'hsl(210, 75%, 65%)',
+              400: 'hsl(210, 75%, 55%)',
+              500: 'hsl(210, 75%, 40%)',
+              600: 'hsl(210, 75%, 35%)',
+              700: 'hsl(210, 75%, 25%)',
+              800: 'hsl(210, 75%, 15%)',
+              900: 'hsl(210, 75%, 10%)'
+            },
+            accent: {
+              50: 'hsl(240, 65%, 95%)',
+              100: 'hsl(240, 65%, 85%)',
+              200: 'hsl(240, 65%, 75%)',
+              300: 'hsl(240, 65%, 65%)',
+              400: 'hsl(240, 65%, 60%)',
+              500: 'hsl(240, 65%, 55%)',
+              600: 'hsl(240, 65%, 50%)',
+              700: 'hsl(240, 65%, 40%)',
+              800: 'hsl(240, 65%, 30%)',
+              900: 'hsl(240, 65%, 20%)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+
+  <!-- Preline UI Components -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+
+  <!-- Custom Styles -->
+  <style>
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+    .btn-interactive {
+      transition: all 0.2s ease-out;
+    }
+    
+    .btn-interactive:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .btn-interactive:active {
+      transform: scale(0.95);
+    }
+
+    .card-interactive {
+      transition: all 0.3s ease-out;
+      border: 1px solid transparent;
+      --border-lightness: 40%;
+    }
+
+    .dark .card-interactive {
+      --border-lightness: 60%;
+    }
+
+    .card-interactive:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      filter: brightness(0.98);
+    }
+    
+    /* Primary colored cards */
+    .card-interactive[class*="primary"]:hover,
+    .card-interactive[class*="white"]:hover,
+    .card-interactive[class*="gray-"]:hover {
+      border-color: hsl(210, 75%, var(--border-lightness));
+    }
+    
+    /* Accent colored cards */
+    .card-interactive[class*="accent"]:hover {
+      border-color: hsl(240, 65%, var(--border-lightness));
+    }
+  </style>
+
+  <!-- Dark Mode Toggle Script -->
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      document.getElementById('sunIcon').style.display = isDark ? 'block' : 'none';
+      document.getElementById('moonIcon').style.display = isDark ? 'none' : 'block';
+    }
+  </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+  <!-- Citation System Script -->
+  <script>
+    function initCitationSystem() {
+      let i = 1, map = new Map();
+      document.querySelectorAll('[data-ref]').forEach(el => {
+        if (el.dataset.citationProcessed) return;
+        const raw = (el.getAttribute('data-ref')||'').trim();
+        if (!raw) return;
+
+        const parts = raw.split('|');
+        const url = parts[0].trim();
+        const idx = (parts[1]||'').trim() || map.get(raw) || (map.set(raw, String(i)), String(i++));
+
+        if (!el.textContent || !el.textContent.trim()) { el.dataset.citationProcessed = 'true'; return; }
+
+        const btn = document.createElement('sup'); btn.textContent = String(idx);
+        Object.assign(btn.style, { fontSize:'8px', color:'#fff', cursor:'pointer', top: '1px', fontWeight:'bold', backgroundColor:'#0284c7', borderRadius:'50%', transition:'all .15s', userSelect:'none', minWidth:'19px', height:'19px', marginLeft:'6px', display:'inline-flex', alignItems:'center', justifyContent:'center', boxShadow:'0 1px 3px rgba(0,0,0,.2)', lineHeight:'1'});
+        btn.addEventListener('mouseenter', ()=> Object.assign(btn.style, { backgroundColor:'#0369a1', transform:'scale(1.12)' }));
+        btn.addEventListener('mouseleave', ()=> Object.assign(btn.style, { backgroundColor:'#0284c7', transform:'scale(1)' }));
+        btn.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); window.open(url, '_blank'); });
+
+        el.appendChild(btn); el.dataset.citationProcessed = 'true';
+      });
+    }
+  </script>
+
+  <!-- Progress Bar -->
+  <div class="fixed top-0 left-0 h-1 bg-primary-500 dark:bg-primary-400 z-[60] transition-all duration-300 ease-out" id="progressBar" style="width: 0%;"></div>
+
+  <!-- Floating Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur bg-gray-50/90 dark:bg-gray-900/90 border-b border-primary-500/20 dark:border-primary-600/20">
+    <nav class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <h1 class="text-xl font-bold text-primary-700 dark:text-primary-300">Triadic Logic in AI</h1>
+        
+        <div class="flex items-center space-x-6">
+          <a href="#home" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Home</a>
+          <a href="#frameworks" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Frameworks</a>
+          <a href="#architectures" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Architectures</a>
+          <a href="#integration" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Integration</a>
+          <a href="#challenges" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Challenges</a>
+          <a href="#evaluation" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Evaluation</a>
+          <a href="#conclusion" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Conclusion</a>
+          
+          <button onclick="toggleDarkMode()" class="btn-interactive p-2 rounded-lg bg-primary-100 dark:bg-primary-800 text-primary-600 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-700 transition-all">
+            <i data-lucide="sun" id="sunIcon" class="w-5 h-5"></i>
+            <i data-lucide="moon" id="moonIcon" class="w-5 h-5" style="display:none;"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="min-h-screen">
+    <!-- Hero Section -->
+    <section id="home" class="py-40 bg-primary-50/50 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6 text-primary-700 dark:text-primary-300">
+          Triadic Logic as a Coordination Layer in Precision-Critical AI
+        </h2>
+        <p class="text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
+          Evaluating the technical viability of Lev Goukassian's Ternary Logic (TL) and Ternary Moral Logic (TML) as coordination mechanisms for managing uncertain or deferred decisions between probabilistic reasoning and deterministic verification in high-stakes AI systems.
+        </p>
+        
+        <div class="grid md:grid-cols-2 gap-8 mt-12">
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="cpu" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Precision-Critical Domains</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">
+              Autonomous systems, medical diagnostics, formal verification pipelines, and high-stakes decision-making environments require robust uncertainty management beyond binary true/false evaluations.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="layers" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Coordination Architecture</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">
+              Triadic logic provides a third logical state for deferral or escalation, enabling seamless coordination between probabilistic confidence scoring and deterministic verification layers.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Historical Frameworks Section -->
+    <section id="frameworks" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Historical Development of Three-Valued Logics
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 items-start mb-12">
+          <div class="space-y-6">
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300" data-ref="https://plato.stanford.edu/archives/sum2011/entries/peirce-logic/three-valued-logic.html|104">Charles Sanders Peirce's Contributions</h3>
+            <p class="text-gray-700 dark:text-gray-300">
+              In his notes, Peirce experiments with three symbols representing truth values: V, L, and F. He associates V with "1" and "T", indicating truth. He associates F with "0" and "F", indicating falsehood. The symbol L represents a third value, interpreted as intermediate or unknown, laying the groundwork for three-valued logical systems.
+            </p>
+
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/361540355_Peirce_and_Lukasiewicz_on_modal_and_multi-valued_logics|79">
+              Charles Peirce incorporates modality into his Existential Graphs (EG) by introducing the broken cut for possible falsity. His exploration of modal and multi-valued logics provides a foundation for understanding how truth values can extend beyond classical binary logic.
+            </p>
+
+            <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+              <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://plato.stanford.edu/archives/win2021/entries/peirce-logic/three-valued-logic.html|5">
+                <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Key Insight: The bar operator and the Z operator provide the essentials of a truth-functionally complete strong Kleene semantics for three-valued logic, enabling formal logical operations.
+              </p>
+            </div>
+          </div>
+
+          <img
+            src="https://cdn.qwenlm.ai/60498d16-d2ab-4b9f-8acd-8f6913b3400d/9ed84fba-bab4-420f-b423-ec286e971839/0aeb9fd7-a37e-47e5-a458-d4b6d11b9de8.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiNjA0OThkMTYtZDJhYi00YjlmLThhY2QtOGY2OTEzYjM0MDBkIiwicmVzb3VyY2VfaWQiOiI5ZWQ4NGZiYS1iYWI0LTQyMGYtYjQyMy1lYzI4NmU5NzE4MzkiLCJyZXNvdXJjZV9jaGF0X2lkIjpudWxsfQ.SXafK9Djr9gZQpGeeSFQReOCkoLeJhXXe0jrrgDY8tY"
+            alt="Blackboard-style illustration with mathematical notation demonstrating Peirce's three-valued logic system. The image shows three distinct truth value symbols arranged horizontally: 'V' (representing truth) in bold black letters, 'L' (representing intermediate/unknown) in medium-weight black letters, and 'F' (representing falsehood) in bold black letters. Below each symbol are their associated numerical representations: '1' and 'T' beneath V, 'L' remains unlabeled to indicate its intermediate nature, and '0' and 'F' beneath F. The background is a light gray chalkboard texture with faint grid lines. Mathematical operators including the bar operator (¬) and Z operator are displayed in the upper right corner using standard logical notation. The composition uses high contrast black text against the light gray background for clarity. All text is in English and clearly legible, with no decorative elements or visual clutter."
+            class="w-full rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          />
+        </div>
+
+        <div class="space-y-6">
+          <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300" data-ref="https://www.researchgate.net/publication/385173853_An_exploration_through_matrix_operators_of_the_three-valued_logics_of_Lukasiewicz_Kleene_and_Heyting|43">Łukasiewicz and Kleene Systems</h3>
+          <p class="text-gray-700 dark:text-gray-300">
+            We investigate here the connectives of the three-valued logical systems of Łukasiewicz, Kleene and Heyting using matrix operators and vector truth values. These systems provide different interpretations of the third logical state and varying truth-functional behaviors.
+          </p>
+
+          <p class="text-gray-700 dark:text-gray-300" data-ref="https://hal.science/hal-01122868v1/document|77">
+            In the case of weak Kleene logic, the interpretation of the third value is undefined and the conjunction truth table follows specific rules that differ from classical logic, providing alternative approaches to handling indeterminate states.
+          </p>
+
+          <div class="pl-4 pr-3 py-3 border-l-4 border-amber-500 bg-amber-50/40 dark:bg-amber-900/30 rounded-r-lg">
+            <p class="text-sm font-medium text-amber-900 dark:text-amber-100 leading-relaxed" data-ref="https://hal.science/hal-01122868v1/document|77">
+              <i data-lucide="alert-triangle" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+              Warning: The undefined interpretation of the third value in weak Kleene logic may limit its applicability in deterministic verification contexts where precise state resolution is required.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modern Frameworks Section -->
+    <section class="py-20 bg-primary-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Contemporary Triadic Logic Frameworks
+        </h2>
+
+        <div class="hs-accordion-group space-y-4">
+          <!-- Ternary Moral Logic (TML) -->
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-tml-heading">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="shield-check" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Ternary Moral Logic (TML)</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-tml-collapse" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-tml-heading">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/399129971_Auditable_AI_tracing_the_ethical_history_of_a_model|1">
+                  This paper introduces Ternary Moral Logic (TML), a novel system architecture that converts AI ethical deliberation from an abstract process into a computational framework. TML provides a structured approach to ethical reasoning that can be integrated into AI decision-making processes.
+                </p>
+
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.authorea.com/browse-all?tags=%5B%22ai+ethics%22%5D|42">
+                  This paper introduces Ternary Moral Logic (TML), a novel computational ethics architecture designed to bridge immutable technical systems with enforceable moral reasoning. TML addresses the challenge of embedding ethical constraints into AI systems that operate with deterministic logic.
+                </p>
+
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.linkedin.com/posts/lev-goukassian-5667b2282_aiandethicsj-aiethics-tml-activity-7411089557263179776-X34u|47">
+                  This paper formally establishes Ternary Moral Logic (TML) as a methodology citation verification tools—to secure the foundations of fast-moving AI systems. The formalization provides mathematical rigor to ethical reasoning processes in AI.
+                </p>
+
+                <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+                  <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://www.linkedin.com/posts/lev-goukassian-5667b2282_ai-governance-ternarymorallogic-activity-7404281162170576898-L1lq|48">
+                    <i data-lucide="circle-check" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                    Milestone: Within the span of 10 minutes, SSRN accepted and published two foundational papers on Ternary Moral Logic (TML), indicating rapid academic validation of the framework.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ternary Logic (TL) -->
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-tl-heading">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="git-branch" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">Ternary Logic (TL)</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+            </button>
+            <div id="hs-tl-collapse" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-tl-heading">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://hackernoon.com/the-day-the-house-entered-epistemic-hold-a-story-of-ternary-logic-congress-and-credible-evidence|2">
+                  A satirical trip through Congress to explain Ternary Logic, Epistemic Hold, and a new evidentiary framework for economic systems and governance. This work illustrates how triadic logic can address complex decision-making scenarios involving uncertainty and conflicting evidence.
+                </p>
+
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://inria.hal.science/hal-04852961v1/document|71">
+                  This representation has been designed to be compatible with the ternary Kleene logic, and is in one to one correspondence with respect to logical operations. The compatibility ensures that existing Kleene logic implementations can be extended to support triadic reasoning.
+                </p>
+
+                <div class="pl-4 pr-3 py-3 border-l-4 border-accent-500 bg-accent-50/40 dark:bg-accent-900/30 rounded-r-lg">
+                  <p class="text-sm font-medium text-accent-900 dark:text-accent-100 leading-relaxed" data-ref="https://hackernoon.com/the-day-the-house-entered-epistemic-hold-a-story-of-ternary-logic-congress-and-credible-evidence|2">
+                    <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                    Epistemic Hold: The concept describes situations where evidence is neither confirmed nor refuted, requiring a third logical state for pending verification—a key requirement for AI systems operating in uncertain environments.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Classical vs Contemporary Comparison -->
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4">Comparative Analysis: Classical vs Contemporary Systems</h3>
+            
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-gray-300 dark:border-gray-600">
+                    <th class="text-left py-3 px-4 font-semibold text-primary-700 dark:text-primary-300">Aspect</th>
+                    <th class="text-left py-3 px-4 font-semibold text-primary-700 dark:text-primary-300">Classical Binary Logic</th>
+                    <th class="text-left py-3 px-4 font-semibold text-primary-700 dark:text-primary-300">Contemporary Triadic Logic</th>
+                  </tr>
+                </thead>
+                <tbody class="text-gray-700 dark:text-gray-300">
+                  <tr class="border-b border-gray-200 dark:border-gray-700">
+                    <td class="py-3 px-4">Truth Values</td>
+                    <td class="py-3 px-4">True (1), False (0)</td>
+                    <td class="py-3 px-4">True (1), Unknown (?), False (0)</td>
+                  </tr>
+                  <tr class="border-b border-gray-200 dark:border-gray-700">
+                    <td class="py-3 px-4">Uncertainty Handling</td>
+                    <td class="py-3 px-4">Binary classification only</td>
+                    <td class="py-3 px-4">Explicit third state for pending verification</td>
+                  </tr>
+                  <tr class="border-b border-gray-200 dark:border-gray-700">
+                    <td class="py-3 px-4">Verification Integration</td>
+                    <td class="py-3 px-4">Post-decision verification</td>
+                    <td class="py-3 px-4">Coordinated verification layer</td>
+                  </tr>
+                  <tr class="border-b border-gray-200 dark:border-gray-700">
+                    <td class="py-3 px-4">Decision Deferral</td>
+                    <td class="py-3 px-4">Not supported</td>
+                    <td class="py-3 px-4">Built-in deferral mechanism</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Architectures Section -->
+    <section id="architectures" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Architectural Placement Possibilities
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 items-start mb-12">
+          <img
+            src="https://cdn.qwenlm.ai/60498d16-d2ab-4b9f-8acd-8f6913b3400d/9ed84fba-bab4-420f-b423-ec286e971839/8b7e8f70-f085-4478-8b7e-902a2db4db73.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiNjA0OThkMTYtZDJhYi00YjlmLThhY2QtOGY2OTEzYjM0MDBkIiwicmVzb3VyY2VfaWQiOiI5ZWQ4NGZiYS1iYWI0LTQyMGYtYjQyMy1lYzI4NmU5NzE4MzkiLCJyZXNvdXJjZV9jaGF0X2lkIjpudWxsfQ.SXafK9Djr9gZQpGeeSFQReOCkoLeJhXXe0jrrgDY8tY"
+            alt="Technical architecture diagram showing a multi-layer AI system with triadic logic coordination. The diagram is organized vertically with four distinct layers: at the top, a green rectangular block labeled 'Probabilistic Reasoning Layer' containing a neural network icon and probability distribution curves; below it, a blue rectangular block labeled 'Triadic Logic Coordination Layer' featuring a decision tree symbol with three branches marked 'True', 'Unknown', and 'False', connected by bidirectional arrows to the layers above and below; beneath that, a yellow rectangular block labeled 'Deterministic Verification Layer' showing a checkmark symbol and formal verification symbols; and at the bottom, a red rectangular block labeled 'Execution Control Layer' displaying a gear icon and decision gate symbols. Between each layer are dashed bidirectional arrows indicating coordination flow. The background is a clean white canvas with subtle grid lines. All text is in English using sans-serif font, and the color scheme uses distinct colors for each layer: green for probabilistic reasoning, blue for triadic coordination, yellow for verification, and red for execution control. The layout emphasizes the hierarchical relationship and bidirectional communication between layers."
+            class="w-full rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          />
+
+          <div class="space-y-6">
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300">Decision Gates and Coordination Layers</h3>
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/pdf/2504.04378|203">
+              An overarching scheduling or coordination layer assigns workloads so that multiple nodes cooperate to train AI models or serve inference. This coordination layer can incorporate triadic logic to manage uncertainty across distributed AI systems.
+            </p>
+
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://openreview.net/pdf?id=BWBfK3B3b7|204">
+              A coordination layer that decides who trains what, when, and how. As continual integration becomes the norm, governance primitives will also become essential for maintaining system integrity and managing uncertainty propagation.
+            </p>
+
+            <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+              <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://arxiv.org/pdf/2504.04378|203">
+                <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Key Architecture Pattern: The coordination layer enables distributed AI systems to defer decisions when local uncertainty exceeds acceptable thresholds, escalating to higher verification layers.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300">Reasoning Graph Integration</h3>
+          <p class="text-gray-700 dark:text-gray-300" data-ref="https://openreview.net/pdf/6ee0c1319f2b622aec244223079a03c1a6f0a37f.pdf|195">
+            An Audit Layer that constructs evidence graphs, conflict maps, and hierarchical null-slots, maintaining unresolved hypotheses without brittle decision-making. This audit layer can incorporate triadic logic to represent pending verification states within the reasoning graph.
+          </p>
+
+          <p class="text-gray-700 dark:text-gray-300" data-ref="https://dl.acm.org/doi/full/10.1145/3671148|183">
+            Structure-Information-based reasoning over the KG is a technique used to find the missing facts by the structure information of KG. Triadic logic can enhance knowledge graph reasoning by representing uncertain or pending facts explicitly rather than discarding them.
+          </p>
+
+          <div class="grid md:grid-cols-3 gap-4 mt-8">
+            <div class="card-interactive p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+              <div class="flex items-center space-x-3 mb-2">
+                <i data-lucide="git-merge" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+                <h4 class="font-semibold text-primary-700 dark:text-primary-300">Evidence Graphs</h4>
+              </div>
+              <p class="text-xs text-gray-700 dark:text-gray-300" data-ref="https://openreview.net/pdf/6ee0c1319f2b622aec244223079a03c1a6f0a37f.pdf|195">
+                Construct evidence graphs that maintain unresolved hypotheses without brittle decision-making.
+              </p>
+            </div>
+
+            <div class="card-interactive p-4 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+              <div class="flex items-center space-x-3 mb-2">
+                <i data-lucide="map" class="w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+                <h4 class="font-semibold text-accent-700 dark:text-accent-300">Conflict Maps</h4>
+              </div>
+              <p class="text-xs text-gray-700 dark:text-gray-300" data-ref="https://openreview.net/pdf/6ee0c1319f2b622aec244223079a03c1a6f0a37f.pdf|195">
+                Track conflicting evidence and pending verification requirements across reasoning paths.
+              </p>
+            </div>
+
+            <div class="card-interactive p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+              <div class="flex items-center space-x-3 mb-2">
+                <i data-lucide="file-code-2" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+                <h4 class="font-semibold text-primary-700 dark:text-primary-300">Hierarchical Slots</h4>
+              </div>
+              <p class="text-xs text-gray-700 dark:text-gray-300" data-ref="https://openreview.net/pdf/6ee0c1319f2b622aec244223079a03c1a6f0a37f.pdf|195">
+                Maintain hierarchical null-slots for unresolved hypotheses with clear escalation paths.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Integration Pathways Section -->
+    <section id="integration" class="py-20 bg-accent-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-accent-700 dark:text-accent-300">
+          Integration Pathways into Modern AI Systems
+        </h2>
+
+        <div class="space-y-8">
+          <div>
+            <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4">Probabilistic Confidence Integration</h3>
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/html/2602.08520v1|34">
+              They leveraged this by allowing the model to abstain on low-confidence answers, improving overall accuracy by avoiding some mistakes. This abstention protocol can be enhanced with triadic logic to provide more nuanced uncertainty representation.
+            </p>
+
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://zenodo.org/records/17642038/files/DAVIS_Manifold__Geometry_First_Detection_with_Compositional_Error_Budgets-2.pdf?download=1|88">
+              Multiplicative and union-bound forms both yield weak guarantees, and abstention or deferral is preferable to exuding unwarranted confidence. HERALD and VIDAR as systems demonstrate the importance of uncertainty-aware decision-making.
+            </p>
+
+            <div class="pl-4 pr-3 py-3 border-l-4 border-accent-500 bg-accent-50/40 dark:bg-accent-900/30 rounded-r-lg mt-4">
+              <p class="text-sm font-medium text-accent-900 dark:text-accent-100 leading-relaxed" data-ref="https://arxiv.org/html/2602.08520v1|34">
+                <i data-lucide="trending-up" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Performance Improvement: Allowing models to abstain on low-confidence answers improves overall accuracy by avoiding incorrect predictions.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4">Bayesian Inference Enhancement</h3>
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://ieeexplore.ieee.org/iel8/34/4359286/11219221.pdf|35">
+              The review covers classical probabilistic techniques such as Bayesian neural networks and deep ensembles, methods from generalized probability that leverage uncertainty quantification for robust decision-making.
+            </p>
+
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2025.1668172/full|37">
+              This work advances uncertainty-aware retrieval systems through five contributions: (1) Theoretical framework: We integrate epistemic uncertainty quantification to improve reliability in financial applications.
+            </p>
+
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://hal.science/hal-05449393v1/document|38">
+              Training with dropout and L2 regularization is mathematically equivalent to variational inference in a Bayesian neural network with specific prior and likelihood assumptions.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4">Formal Verification Pipelines</h3>
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://theses.hal.science/tel-03547545v1/file/107114_GIRARD_2021_archivage.pdf|17">
+              Each step of formal verification is backed up by mathematical logic that derives from mathematical principles, with explicit definitions and rigorous proof procedures.
+            </p>
+
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://s3-eu-west-1.amazonaws.com/pstorage-cmu-348901238291901/34990063/ngisolfi_phd_ri_2022.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAI266R7V6O36O5JUA/20251218/eu-west-1/s3/aws4_request&X-Amz-Date=20251218T010608Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=7447a5ade616a9e5592f3a498e176d4646030a42d0159ee23d60baa5351627b0|112">
+              This work shows how provable guarantees can be used to supplement probabilistic estimates in the context of Artificial Intelligence (AI) systems, providing deterministic verification alongside probabilistic reasoning.
+            </p>
+
+            <div class="pl-4 pr-3 py-3 border-l-4 border-amber-500 bg-amber-50/40 dark:bg-amber-900/30 rounded-r-lg">
+              <p class="text-sm font-medium text-amber-900 dark:text-amber-100 leading-relaxed" data-ref="https://pmc.ncbi.nlm.nih.gov/articles/PMC12968330/|9">
+                <i data-lucide="circle-alert" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Verification Gap: AI systems limit formal verification across the full spectrum of potential clinical scenarios, especially for their response to edge cases and rare events.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Operational Scenarios Section -->
+    <section class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Operational Scenarios and Use Cases
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl shadow-md">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="stethoscope" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Medical Diagnostics</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 text-sm mb-4" data-ref="https://www.mdpi.com/2078-2489/16/7|196">
+              Artificial Intelligence (AI) and computer-aided diagnosis (CAD) have revolutionised various aspects of modern life, particularly in the medical domain. These systems can benefit from triadic logic to defer diagnoses when confidence levels are insufficient.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 text-sm" data-ref="https://pmc.ncbi.nlm.nih.gov/articles/PMC12968330/|9">
+              AI systems limit formal verification across the full spectrum of potential clinical scenarios. This limitation necessitates robust uncertainty management through triadic coordination layers.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-accent-50/50 dark:bg-accent-900/20 rounded-xl shadow-md">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="car" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Autonomous Vehicles</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 text-sm mb-4" data-ref="https://openreview.net/pdf/0150e4fac0dea4d6e0b19ae9b7ed52bc8f2048d2.pdf|12">
+              Works, coordination failures, ethical issues, and equity in the use of AI and autonomous systems for environmental or health-related applications. Triadic logic can manage uncertainty in sensor data and decision-making.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 text-sm" data-ref="https://www.researchgate.net/figure/The-triadic-agency-From-bottom-left-anti-clockwise-the-user-the-artifact-the-designer_fig1_322410859|11">
+              Autonomous technologies, particularly self-learning AI systems, are often said to create responsibility gaps—cases where harm is caused, yet no one is accountable.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl shadow-md">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="shield" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Financial Systems</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 text-sm mb-4" data-ref="https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2025.1668172/full|37">
+              This work advances uncertainty-aware retrieval systems through five contributions: (1) Theoretical framework: We integrate epistemic uncertainty quantification to improve reliability in financial applications.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 text-sm" data-ref="https://www.fda.gov/media/184830/download|65">
+              While the use of AI to support regulatory decision-making for drugs is typically assessed on locked data and information produced by an AI model at a predetermined time.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-accent-50/50 dark:bg-accent-900/20 rounded-xl shadow-md">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="settings" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Industrial Automation</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 text-sm mb-4" data-ref="https://www.mdpi.com/2078-2489/16/12/1082|64">
+              These continuous verifications align with the principles of modern pharmaceutical continuous manufacturing first introduced under the FDA's Process Analytical Technology initiative.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 text-sm" data-ref="https://www.sciencedirect.com/science/article/pii/S2667305326000244|59">
+              Particularly for hybrid DTs in physical AI, we examine interdependent challenges including scalable verification, validation, and uncertainty quantification in cyber-physical systems.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Feasibility Section -->
+    <section id="challenges" class="py-20 bg-primary-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Technical Feasibility and Computational Overhead
+        </h2>
+
+        <div class="space-y-8">
+          <div>
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4">Hardware Acceleration for Ternary Logic</h3>
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/html/2502.16473v2|25">
+              We introduce TerEffic, an FPGA-based architecture tailored for ternary-quantized LLM inference. The proposed system offers flexibility through reconfigurable hardware to support ternary logic operations efficiently.
+            </p>
+
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/401179022_TOM_A_Ternary_Read-only_Memory_Accelerator_for_LLM-powered_Edge_Intelligence|27">
+              We compare TiM-DNN with a well-optimized near-memory accelerator for ternary DNNs across a suite of state-of-the-art DNN benchmarks including ResNet, DenseNet, and MobileNet.
+            </p>
+
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://dl.acm.org/doi/full/10.1145/3508390|184">
+              In this article, we propose TAB as a unified and optimized inference method for ternary, binary, and mixed-precision neural networks. The approach demonstrates that ternary logic can achieve comparable accuracy with reduced computational complexity.
+            </p>
+
+            <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg mt-4">
+              <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://arxiv.org/html/2502.16473v2|25">
+                <i data-lucide="zap" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Efficiency Gain: FPGA-based ternary logic architectures offer flexibility and reduced power consumption compared to traditional binary implementations.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4">Compatibility with Current ML Stacks</h3>
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/html/2602.22631v1|14">
+              TorchLean unifies: (1) a PyTorch-style verified API for defining models and training loops with eager execution and a compiled mode that lowers to efficient kernels. This demonstrates that formal verification can be integrated into existing ML frameworks.
+            </p>
+
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.linkedin.com/posts/aiprof_cuda-agent-large-scale-agentic-rl-for-high-performance-activity-7434157608703430656-zWLK|16">
+              Why ONNX Runtime Matters 1️⃣ Framework Agnostic Train your model in PyTorch, TensorFlow, or others → Export to ONNX → Run anywhere. ONNX Runtime provides a standardized interface for deploying ML models across different hardware platforms.
+            </p>
+
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://link.springer.com/article/10.1007/s10462-018-09679-z|75">
+              It will include among other things tighter integration with Caffe2 and ONNX to enable production readiness of PyTorch models. This integration facilitates deployment of complex ML architectures in production environments.
+            </p>
+
+            <div class="pl-4 pr-3 py-3 border-l-4 border-amber-500 bg-amber-50/40 dark:bg-amber-900/30 rounded-r-lg">
+              <p class="text-sm font-medium text-amber-900 dark:text-amber-100 leading-relaxed" data-ref="https://discuss.pytorch.org/t/does-torch-onnx-support-if-control-flow/82137|193">
+                <i data-lucide="triangle-alert" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Compatibility Challenge: Exporting models with control flow logic to ONNX presents challenges that require careful handling of conditional statements and loops.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4">Scalability Considerations</h3>
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/html/2512.23914v3|30">
+              This survey reviews the current technology landscape for hardware acceleration of deep learning, spanning Graphics Processing Units (GPUs) and tensor-core architectures. Scalability depends on efficient utilization of parallel processing capabilities.
+            </p>
+
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.sciencedirect.com/science/article/pii/S1383762122001138|31">
+              Aggregated throughput metrics are generally available for accelerators in the ML inference, ML training, and Data-parallel domains. These values provide benchmarks for evaluating scalability of ternary logic implementations.
+            </p>
+
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://dl.acm.org/doi/pdf/10.1109/SCW63240.2024.00178|32">
+              Our study aims to benchmark LLMs across various AI accelerators and inference frameworks comprehensively. This section details the LLM architectures, hardware platforms, and performance metrics used in evaluation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Limitations and Counterarguments Section -->
+    <section id="evaluation" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Limitations and Counterarguments
+        </h2>
+
+        <div class="space-y-8">
+          <div class="card-interactive p-6 bg-red-50/50 dark:bg-red-900/20 rounded-xl shadow-md border border-red-200 dark:border-red-800">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="circle-x" class="w-6 h-6 text-red-600 dark:text-red-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-red-700 dark:text-red-300">Computational Complexity</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 mb-3" data-ref="https://www.researchgate.net/publication/323774682_The_Natural_Deduction_Systems_for_the_Three-Valued_Nonsense_Logics_Z_and_E|6">
+              The primary aim of this paper is to extend Kooi and Tamminga's correspondence analysis for a larger class of three-valued logics. The extension reveals increased computational complexity in natural deduction systems for ternary logics.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://hal.science/hal-01122868v1/document|77">
+              In the case of weak Kleene logic, the interpretation of the third value is undefined and the conjunction truth table follows specific rules that may increase computational overhead compared to classical binary logic.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-amber-50/50 dark:bg-amber-900/20 rounded-xl shadow-md border border-amber-200 dark:border-amber-800">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-amber-100 dark:bg-amber-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="triangle-alert" class="w-6 h-6 text-amber-600 dark:text-amber-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-amber-700 dark:text-amber-300">Semantic Ambiguity</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 mb-3" data-ref="https://hal.science/hal-01122868v1/document|77">
+              In the case of weak Kleene logic, the interpretation of the third value is undefined, leading to potential semantic ambiguity in practical implementations where precise state resolution is critical.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://plato.stanford.edu/entries/logic-manyvalued/|147">
+              These three different ways of introducing consequence relations (assertional logics, anti-assertional logics, and logics of order) are natural but may lead to inconsistent interpretations of the third logical state across different application domains.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-yellow-50/50 dark:bg-yellow-900/20 rounded-xl shadow-md border border-yellow-200 dark:border-yellow-800">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="circle-help" class="w-6 h-6 text-yellow-600 dark:text-yellow-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-yellow-700 dark:text-yellow-300">Integration Complexity</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 mb-3" data-ref="https://discuss.pytorch.org/t/does-torch-onnx-support-if-control-flow/82137|193">
+              I want to export my RNN Transducer model using torch.onnx.export. However, there is an "if" in my network forward. There is limited documentation on handling control flow logic in ONNX exports, complicating integration with existing ML stacks.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://docs.pytorch.org/tutorials/beginner/onnx/export_control_flow_model_to_onnx_tutorial.html|194">
+              This tutorial demonstrates how to handle control flow logic while exporting a PyTorch model to ONNX. It highlights the challenges of exporting conditional statements and loops, which are essential for implementing triadic logic coordination.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-purple-50/50 dark:bg-purple-900/20 rounded-xl shadow-md border border-purple-200 dark:border-purple-800">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="lock" class="w-6 h-6 text-purple-600 dark:text-purple-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-purple-700 dark:text-purple-300">Verification Challenges</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 mb-3" data-ref="https://arxiv.org/pdf/2310.16762|22">
+              Our implementation quickly finds infinite counter-models that demonstrate the source of verification failures in a simple way, while state-of-the-art SMT solvers struggle with complex triadic logic verification tasks.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/nbjorner-bmr-smt.pdf|180">
+              Abstract. A key driver of SMT over the past decade has been an interchange format, SMT-LIB, and a growing set of benchmarks sharing this common format. However, SMT solvers face limitations when verifying systems with non-classical logical structures.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conclusion Section -->
+    <section id="conclusion" class="py-20 bg-primary-50/50 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Conclusion and Future Directions
+        </h2>
+
+        <div class="space-y-6">
+          <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+            The evaluation of triadic logical structures—specifically Lev Goukassian's Ternary Logic (TL) and Ternary Moral Logic (TML)—reveals significant potential as coordination layers for managing uncertain or deferred decisions in precision-critical AI architectures. These frameworks provide a principled approach to handling the third logical state of "verification pending" or "uncertain," bridging the gap between probabilistic reasoning and deterministic verification.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="card-interactive p-6 bg-green-50/50 dark:bg-green-900/20 rounded-xl shadow-md border border-green-200 dark:border-green-800">
+              <div class="flex items-center space-x-3 mb-3">
+                <i data-lucide="circle-check" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                <h3 class="text-lg font-semibold text-green-700 dark:text-green-300">Strengths</h3>
+              </div>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <span class="mr-2">•</span>
+                  <span>Explicit representation of uncertainty and pending verification states</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="mr-2">•</span>
+                  <span>Compatibility with existing Kleene logic implementations</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="mr-2">•</span>
+                  <span>Hardware acceleration opportunities with FPGA architectures</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="mr-2">•</span>
+                  <span>Integration pathways through ONNX and PyTorch ecosystems</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="card-interactive p-6 bg-orange-50/50 dark:bg-orange-900/20 rounded-xl shadow-md border border-orange-200 dark:border-orange-800">
+              <div class="flex items-center space-x-3 mb-3">
+                <i data-lucide="circle-alert" class="w-6 h-6 text-orange-600 dark:text-orange-400"></i>
+                <h3 class="text-lg font-semibold text-orange-700 dark:text-orange-300">Limitations</h3>
+              </div>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <span class="mr-2">•</span>
+                  <span>Increased computational complexity in natural deduction systems</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="mr-2">•</span>
+                  <span>Potential semantic ambiguity in third-state interpretation</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="mr-2">•</span>
+                  <span>Integration challenges with existing ML frameworks</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="mr-2">•</span>
+                  <span>Verification difficulties with SMT solvers</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+            The research demonstrates that triadic logic frameworks can function as viable coordination layers, particularly when integrated with appropriate hardware acceleration and verification protocols. However, successful deployment requires careful consideration of semantic interpretation, computational overhead, and integration complexity. Future work should focus on developing standardized interfaces for triadic logic coordination, optimizing hardware architectures for ternary operations, and establishing comprehensive verification frameworks for systems incorporating these logical structures.
+          </p>
+
+          <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+            <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed">
+              <i data-lucide="lightbulb" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+              Future Research Directions: Investigation of hybrid architectures combining triadic logic with quantum computing paradigms, development of domain-specific triadic logic systems for specialized applications, and creation of automated tools for translating classical binary logic specifications to triadic frameworks.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-primary-900 dark:bg-gray-950 text-white py-12">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-primary-300">About This Research</h3>
+          <p class="text-sm text-gray-300">
+            Comprehensive analysis of triadic logical structures as coordination mechanisms in precision-critical AI architectures, evaluating Lev Goukassian's Ternary Logic and Ternary Moral Logic frameworks.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-primary-300">Key Topics</h3>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li>Three-Valued Logics</li>
+            <li>Ternary Moral Logic</li>
+            <li>AI Coordination Layers</li>
+            <li>Formal Verification</li>
+            <li>Uncertainty Management</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-primary-300">Research Scope</h3>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li>Medical Diagnostics</li>
+            <li>Autonomous Systems</li>
+            <li>Financial Applications</li>
+            <li>Industrial Automation</li>
+            <li>High-Stakes Decision Making</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-8 pt-8 border-t border-primary-800 text-center text-sm text-gray-400">
+        <p>&copy; 2025 Triadic Logic Research. Educational purposes only.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 100
+    });
+
+    // Progress bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    });
+
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Initialize citation system
+    document.addEventListener('DOMContentLoaded', function() {
+      initCitationSystem();
+      
+      // Initialize Preline components
+      setTimeout(() => {
+        HSStaticMethods.autoInit();
+      }, 100);
+    });
+  </script>
+</body>
+</html>
+
