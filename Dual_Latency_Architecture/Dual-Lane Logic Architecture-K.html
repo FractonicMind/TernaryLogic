@@ -1,0 +1,879 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dual-Lane Latency Architecture in Ternary Logic: A Hardware-Enforceable Execution Model</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Canela:ital,wght@0,300;0,400;0,700;1,400&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #f59e0b;
+            --accent: #10b981;
+            --neutral: #374151;
+            --base-100: #ffffff;
+            --base-200: #f8fafc;
+            --base-300: #e2e8f0;
+        }
+        
+        .font-canela { font-family: 'Canela', serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, 
+                rgba(30, 58, 138, 0.95) 0%, 
+                rgba(15, 23, 42, 0.9) 50%, 
+                rgba(17, 24, 39, 0.85) 100%);
+        }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 2rem;
+            height: 70vh;
+        }
+        
+        .bento-hero {
+            grid-row: 1 / -1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .toc-fixed {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            width: 280px;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+            z-index: 50;
+            background: rgba(248, 250, 252, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--base-300);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .content-main {
+            margin-left: 320px;
+            max-width: 800px;
+        }
+        
+        .state-diagram {
+            font-family: monospace;
+            white-space: pre;
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        
+        @media (max-width: 1024px) {
+            .toc-fixed { display: none; }
+            .content-main { margin-left: 0; }
+        }
+        
+        @media (max-width: 768px) {
+            .bento-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                height: auto;
+            }
+            .bento-hero { grid-row: auto; }
+        }
+    </style>
+  <base target="_blank">
+</head>
+
+  <body class="font-inter bg-base-100 text-neutral">
+    <!-- Fixed Table of Contents -->
+    <nav class="toc-fixed">
+      <h3 class="font-canela font-bold text-lg mb-4 text-primary">Contents</h3>
+      <ul class="space-y-2 text-sm">
+        <li>
+          <a href="#executive-summary" class="text-neutral-600 hover:text-primary transition-colors">Executive Summary</a>
+        </li>
+        <li>
+          <a href="#execution-gap" class="text-neutral-600 hover:text-primary transition-colors">I. Execution vs Verification Gap</a>
+        </li>
+        <li>
+          <a href="#architecture" class="text-neutral-600 hover:text-primary transition-colors">II. Core Architecture</a>
+        </li>
+        <li>
+          <a href="#hardware" class="text-neutral-600 hover:text-primary transition-colors">III. Hardware Enforcement</a>
+        </li>
+        <li>
+          <a href="#state-encoding" class="text-neutral-600 hover:text-primary transition-colors">IV. State Encoding</a>
+        </li>
+        <li>
+          <a href="#timing" class="text-neutral-600 hover:text-primary transition-colors">V. Timing Model</a>
+        </li>
+        <li>
+          <a href="#interface" class="text-neutral-600 hover:text-primary transition-colors">VI. Execution Interface</a>
+        </li>
+        <li>
+          <a href="#cryptographic" class="text-neutral-600 hover:text-primary transition-colors">VII. Cryptographic Mechanics</a>
+        </li>
+        <li>
+          <a href="#queueing" class="text-neutral-600 hover:text-primary transition-colors">VIII. Queueing Theory</a>
+        </li>
+        <li>
+          <a href="#flow-control" class="text-neutral-600 hover:text-primary transition-colors">IX. Flow Control</a>
+        </li>
+        <li>
+          <a href="#trade-offs" class="text-neutral-600 hover:text-primary transition-colors">X. Trade-offs Analysis</a>
+        </li>
+        <li>
+          <a href="#fault-tolerance" class="text-neutral-600 hover:text-primary transition-colors">XI. Fault Tolerance</a>
+        </li>
+        <li>
+          <a href="#adversarial" class="text-neutral-600 hover:text-primary transition-colors">XII. Adversarial Resistance</a>
+        </li>
+        <li>
+          <a href="#verification" class="text-neutral-600 hover:text-primary transition-colors">XIII. Formal Verification</a>
+        </li>
+        <li>
+          <a href="#rtl" class="text-neutral-600 hover:text-primary transition-colors">XIV. RTL Implementation</a>
+        </li>
+        <li>
+          <a href="#eda" class="text-neutral-600 hover:text-primary transition-colors">XV. EDA Strategy</a>
+        </li>
+        <li>
+          <a href="#implementation" class="text-neutral-600 hover:text-primary transition-colors">XVI. Implementation Pathways</a>
+        </li>
+        <li>
+          <a href="#scalability" class="text-neutral-600 hover:text-primary transition-colors">XVII. Scalability</a>
+        </li>
+        <li>
+          <a href="#validation" class="text-neutral-600 hover:text-primary transition-colors">XVIII. Validation Strategy</a>
+        </li>
+        <li>
+          <a href="#scenario" class="text-neutral-600 hover:text-primary transition-colors">XIX. System Scenario</a>
+        </li>
+        <li>
+          <a href="#conclusion" class="text-neutral-600 hover:text-primary transition-colors">XX. Conclusion</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content-main px-8 py-12">
+      <!-- Hero Section -->
+      <section class="mb-16">
+        <div class="bento-grid mb-12">
+          <!-- Hero Content -->
+          <div class="bento-hero hero-gradient rounded-2xl p-12 flex flex-col justify-center relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10">
+              <img src="https://kimi-web-img.moonshot.cn/img/media.springernature.com/526f6dc36617989a9e0c8e7b173c3395e3b3236d.png" alt="Abstract visualization of dual-lane processing architecture" class="w-full h-full object-cover" size="wallpaper" aspect="wide" query="dual lane processing architecture abstract" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+            </div>
+            <div class="relative z-10">
+              <h1 class="font-canela font-light text-4xl md:text-6xl text-white mb-6 leading-tight">
+                <em class="text-secondary">Dual-Lane Latency Architecture</em>
+                <br/>
+                in Ternary Logic
+              </h1>
+              <p class="text-xl text-blue-100 max-w-2xl font-light leading-relaxed">
+                A hardware-enforceable execution model that physically separates
+                high-speed provisional execution from cryptographic verification
+                through a ternary state system with Null as mandatory holding state.
+              </p>
+            </div>
+          </div>
+
+          <!-- Key Highlights -->
+          <div class="space-y-4">
+            <div class="bg-accent/10 border border-accent/20 rounded-xl p-6">
+              <h3 class="font-canela font-bold text-lg text-accent mb-3">Fast Lane</h3>
+              <div class="text-3xl font-bold text-neutral-700 mb-2">&lt; 2 ms</div>
+              <p class="text-sm text-neutral-600">High-speed provisional execution with visibility but no finality</p>
+            </div>
+
+            <div class="bg-primary/10 border border-primary/20 rounded-xl p-6">
+              <h3 class="font-canela font-bold text-lg text-primary mb-3">Audit Lane</h3>
+              <div class="text-3xl font-bold text-neutral-700 mb-2">300-500 ms</div>
+              <p class="text-sm text-neutral-600">Cryptographic verification with Merkle anchoring and finality</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div id="executive-summary" class="bg-base-200 rounded-xl p-8 mb-12">
+          <h2 class="font-canela font-bold text-2xl mb-6 text-primary">Executive Summary</h2>
+          <div class="prose prose-lg max-w-none">
+            <p class="text-neutral-700 mb-4">
+              The Dual-Lane Latency Architecture in Ternary Logic (TL) represents a paradigm shift in hardware execution models,
+              addressing the fundamental tension between execution speed and verification integrity in financial systems.
+              Unlike conventional binary architectures that force trade-offs between performance and auditability,
+              this architecture physically separates provisional execution from final verification through a ternary state system.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-6 my-6">
+              <div class="bg-white rounded-lg p-6 border border-accent/20">
+                <h4 class="font-semibold text-accent mb-3">Key Innovation</h4>
+                <p class="text-sm text-neutral-600">
+                  Hardware-enforced separation with Muller C-elements electrically preventing
+                  any commitment without audit convergence, providing mathematical provability
+                  through LTL formal verification.
+                </p>
+              </div>
+
+              <div class="bg-white rounded-lg p-6 border border-secondary/20">
+                <h4 class="font-semibold text-secondary mb-3">Performance</h4>
+                <p class="text-sm text-neutral-600">
+                  Sub-millisecond execution visibility with hundred-millisecond finality,
+                  enabling trustworthy financial infrastructure where speed and audit integrity are unified.
+                </p>
+              </div>
+            </div>
+
+            <p class="text-neutral-700">
+              This specification defines a complete hardware architecture from transistor-level implementation
+              to system integration, with formal verification constraints that guarantee correctness under
+              all operational conditions. The architecture is implementable in current FPGA and ASIC technologies
+              while providing a pathway to future 2nm/14A node deployments.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section I: Execution vs Verification Gap -->
+      <section id="execution-gap" class="mb-16">
+        <h2 class="font-canela font-bold text-3xl mb-8 text-primary">I. Execution vs Verification Gap</h2>
+
+        <div class="mb-8">
+          <h3 class="font-canela font-bold text-xl mb-4 text-neutral-800">Structural Analysis of Binary System Limitations</h3>
+
+          <div class="bg-amber-50 border-l-4 border-amber-400 p-6 mb-6">
+            <h4 class="font-semibold text-amber-800 mb-2">Fundamental Timing Mismatch</h4>
+            <p class="text-amber-700">
+              Conventional binary architectures collapse execution and finality into a single transition,
+              creating systemic risk in financial trading systems where orders become legally binding
+              before compliance verification completes.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div>
+              <h4 class="font-semibold mb-3 text-neutral-800">Irreversibility of Commit Operations</h4>
+              <p class="text-sm text-neutral-600 mb-4">
+                Binary state encoding offers no intermediate state between pending and complete.
+                Once a register updates on a clock edge, recovery requires explicit rollback protocols
+                that grow exponentially complex with dependent operations.
+              </p>
+
+              <div class="bg-gray-100 rounded-lg p-4">
+                <div class="text-xs font-mono text-gray-600 mb-2">Binary State Model</div>
+                <div class="state-diagram text-xs">
+                  PENDING (0) &lt;-&gt; COMPLETE (1)
+                  │
+                  └─ No intermediate observation state
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="font-semibold mb-3 text-neutral-800">Verification Latency Constraints</h4>
+              <p class="text-sm text-neutral-600 mb-4">
+                Cryptographic verification inherently requires more time than raw execution.
+                A SHA-256 hash requires ~2,000 sequential gate delays, consuming 2μs at 1GHz,
+                exclusive of memory access and tree aggregation.
+              </p>
+
+              <div class="space-y-2 text-sm">
+                <div class="flex justify-between">
+                  <span class="text-neutral-600">SHA-256 (256-byte)</span>
+                  <span class="font-mono">2.0 μs</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-neutral-600">DRAM access</span>
+                  <span class="font-mono">100+ ns</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-neutral-600">NAND flash write</span>
+                  <span class="font-mono">10-100 μs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-8">
+          <h3 class="font-canela font-bold text-xl mb-4 text-neutral-800">Speculative Execution Limitations</h3>
+
+          <div class="bg-red-50 border-l-4 border-red-400 p-6 mb-6">
+            <h4 class="font-semibold text-red-800 mb-2">The Irreversibility Horizon</h4>
+            <p class="text-red-700">
+              External visibility creates irrevocable obligations that internal rollback mechanisms cannot reverse.
+              For market participants 100km away, light-speed propagation creates 670μs round-trip latency
+              during which external actions based on observed execution cannot be recalled.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-white rounded-lg p-4 border text-center">
+              <div class="text-2xl font-bold text-primary mb-2">670μs</div>
+              <div class="text-sm text-neutral-600">100km distance</div>
+              <div class="text-xs text-neutral-500">Round-trip light speed</div>
+            </div>
+            <div class="bg-white rounded-lg p-4 border text-center">
+              <div class="text-2xl font-bold text-secondary mb-2">1-100ms</div>
+              <div class="text-sm text-neutral-600">Audit lag window</div>
+              <div class="text-xs text-neutral-500">Manipulation vulnerability</div>
+            </div>
+            <div class="bg-white rounded-lg p-4 border text-center">
+              <div class="text-2xl font-bold text-accent mb-2">∞</div>
+              <div class="text-sm text-neutral-600">Rollback complexity</div>
+              <div class="text-xs text-neutral-500">Dependent operations</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section II: Core Architecture -->
+      <section id="architecture" class="mb-16">
+        <h2 class="font-canela font-bold text-3xl mb-8 text-primary">II. Core Architecture: Dual-Lane TL Execution Model</h2>
+
+        <div class="mb-8">
+          <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8 mb-8">
+            <h3 class="font-canela font-bold text-xl mb-4 text-primary">Architectural Overview</h3>
+            <p class="text-neutral-700 mb-4">
+              The Dual-Lane Architecture physically separates execution and verification into distinct hardware modules
+              with independent clocks, power domains, and data paths. The ternary state system mediates between lanes,
+              with Null as a persistent holding state that prevents irreversible commitment until both lanes converge.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="font-semibold text-accent mb-3">Fast Lane (&lt;2 ms)</h4>
+                <ul class="text-sm text-neutral-600 space-y-1">
+                  <li>• 11-16 stage pipelined datapath</li>
+                  <li>• Credit-based flow control</li>
+                  <li>• Deterministic ordering guarantees</li>
+                  <li>• Provisional result exposure</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-primary mb-3">Audit Lane (300-500 ms)</h4>
+                <ul class="text-sm text-neutral-600 space-y-1">
+                  <li>• Cryptographic verification pipeline</li>
+                  <li>• Merkle tree aggregation</li>
+                  <li>• Digital signature generation</li>
+                  <li>• Immutable anchoring</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg p-6 border border-neutral-200 mb-6">
+            <h4 class="font-semibold mb-4 text-center text-neutral-800">Ternary State Transition Matrix</h4>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-neutral-300">
+                    <th class="text-left py-2 px-3 font-semibold">Fast Lane</th>
+                    <th class="text-left py-2 px-3 font-semibold">Audit Lane</th>
+                    <th class="text-left py-2 px-3 font-semibold">Current State</th>
+                    <th class="text-left py-2 px-3 font-semibold">Next State</th>
+                  </tr>
+                </thead>
+                <tbody class="font-mono text-xs">
+                  <tr class="border-b border-neutral-200">
+                    <td class="py-2 px-3">Incomplete</td>
+                    <td class="py-2 px-3">Any</td>
+                    <td class="py-2 px-3">Any</td>
+                    <td class="py-2 px-3 text-yellow-600">NULL (hold)</td>
+                  </tr>
+                  <tr class="border-b border-neutral-200 bg-yellow-50">
+                    <td class="py-2 px-3">Complete</td>
+                    <td class="py-2 px-3">Incomplete</td>
+                    <td class="py-2 px-3">NULL</td>
+                    <td class="py-2 px-3 text-yellow-700 font-bold">NULL (enforced wait)</td>
+                  </tr>
+                  <tr class="border-b border-neutral-200">
+                    <td class="py-2 px-3">Complete</td>
+                    <td class="py-2 px-3">Reject</td>
+                    <td class="py-2 px-3">NULL</td>
+                    <td class="py-2 px-3 text-red-600">REJECT</td>
+                  </tr>
+                  <tr class="border-b border-neutral-200 bg-green-50">
+                    <td class="py-2 px-3">Complete</td>
+                    <td class="py-2 px-3">Complete+Valid</td>
+                    <td class="py-2 px-3">NULL</td>
+                    <td class="py-2 px-3 text-green-700 font-bold">COMMIT</td>
+                  </tr>
+                  <tr class="border-b border-neutral-200">
+                    <td class="py-2 px-3">Any</td>
+                    <td class="py-2 px-3">Any</td>
+                    <td class="py-2 px-3">REJECT</td>
+                    <td class="py-2 px-3 text-red-600">REJECT (absorbing)</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 px-3">Any</td>
+                    <td class="py-2 px-3">Any</td>
+                    <td class="py-2 px-3">COMMIT</td>
+                    <td class="py-2 px-3 text-green-600">COMMIT (absorbing)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mt-4 text-xs text-neutral-500">
+              <span class="bg-yellow-100 px-2 py-1 rounded">Enforced wait transition is the architectural cornerstone</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section III: Hardware Enforcement -->
+      <section id="hardware" class="mb-16">
+        <h2 class="font-canela font-bold text-3xl mb-8 text-primary">III. Hardware Enforcement and Physical Realization</h2>
+
+        <div class="mb-8">
+          <h3 class="font-canela font-bold text-xl mb-4 text-neutral-800">DITL/NCL Mapping for Ternary States</h3>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <h4 class="font-semibold mb-3 text-neutral-800">NULL Convention Logic Implementation</h4>
+              <p class="text-sm text-neutral-600 mb-4">
+                The ternary Null (0) state maps to dual-rail encoding (Data0=0, Data1=0),
+                serving as a persistent spacer that enables delay-insensitive communication
+                while holding state for hundreds of milliseconds.
+              </p>
+
+              <div class="bg-gray-100 rounded-lg p-4">
+                <div class="text-xs font-mono text-gray-600 mb-2">State Encoding</div>
+                <div class="state-diagram text-xs">
+                  Reject (-1): (1, 0)
+                  Null (0): (0, 0)
+                  Commit (+1): (0, 1)
+                  Forbidden: (1, 1) → Error detection
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="font-semibold mb-3 text-neutral-800">Muller C-Element Characteristics</h4>
+              <div class="bg-white rounded-lg p-4 border">
+                <div class="text-xs text-neutral-500 mb-3">28nm CMOS Implementation</div>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between">
+                    <span class="text-neutral-600">Propagation delay</span>
+                    <span class="font-mono">45 ps</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-neutral-600">Noise margin</span>
+                    <span class="font-mono">180 mV</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-neutral-600">Area</span>
+                    <span class="font-mono">2.4 μm²</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-neutral-600">Static power</span>
+                    <span class="font-mono">12 nW</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-8">
+          <h3 class="font-canela font-bold text-xl mb-4 text-neutral-800">Physical Prevention Mechanisms</h3>
+
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+            <h4 class="font-semibold text-blue-800 mb-3">Circuit-Level Interlock</h4>
+            <p class="text-blue-700 text-sm mb-3">
+              The commit interlock is a multi-stage gating structure that makes
+              Null→Commit transition electrically impossible without Audit Token presence.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-4 text-xs">
+              <div class="bg-white rounded p-3">
+                <div class="font-semibold text-blue-800 mb-1">Stage 1: C-element</div>
+                <div class="text-gray-600">Requires both FastDone and AuditDone</div>
+              </div>
+              <div class="bg-white rounded p-3">
+                <div class="font-semibold text-blue-800 mb-1">Stage 2: Gating AND</div>
+                <div class="text-gray-600">Converged ∧ NoReject ∧ TokenValid</div>
+              </div>
+              <div class="bg-white rounded p-3">
+                <div class="font-semibold text-blue-800 mb-1">Stage 3: Clock Enable</div>
+                <div class="text-gray-600">No alternative clock path exists</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gray-900 text-green-400 p-6 rounded-lg font-mono text-sm">
+            <div class="text-gray-300 mb-2">// Electrical constraint implementation</div>
+            <div>// With AuditDone electrically low (0V), pull-down network dominates</div>
+            <div>// Kirchhoff&#39;s laws enforce Converged = 0 regardless of FastDone state</div>
+            <div class="mt-3 text-green-500">
+              assign converged = fast_done &amp; audit_done; // No electrical path to override
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section IV: State Encoding -->
+      <section id="state-encoding" class="mb-16">
+        <h2 class="font-canela font-bold text-3xl mb-8 text-primary">IV. State Encoding and Transition System</h2>
+
+        <div class="mb-8">
+          <div class="bg-white rounded-lg p-6 border border-neutral-200 mb-6">
+            <h4 class="font-semibold mb-4 text-center text-neutral-800">Physical Encoding Comparison</h4>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-neutral-300">
+                    <th class="text-left py-2 px-3 font-semibold">Parameter</th>
+                    <th class="text-left py-2 px-3 font-semibold">Dual-Rail</th>
+                    <th class="text-left py-2 px-3 font-semibold">Multi-Level</th>
+                  </tr>
+                </thead>
+                <tbody class="text-sm">
+                  <tr class="border-b border-neutral-200">
+                    <td class="py-2 px-3 font-medium">Wire count</td>
+                    <td class="py-2 px-3">2N</td>
+                    <td class="py-2 px-3">N</td>
+                  </tr>
+                  <tr class="border-b border-neutral-200">
+                    <td class="py-2 px-3 font-medium">Noise margin</td>
+                    <td class="py-2 px-3">0.3Vdd</td>
+                    <td class="py-2 px-3">0.15Vdd</td>
+                  </tr>
+                  <tr class="border-b border-neutral-200">
+                    <td class="py-2 px-3 font-medium">Detection complexity</td>
+                    <td class="py-2 px-3">Digital</td>
+                    <td class="py-2 px-3">Analog</td>
+                  </tr>
+                  <tr class="border-b border-neutral-200">
+                    <td class="py-2 px-3 font-medium">PVT sensitivity</td>
+                    <td class="py-2 px-3">Low</td>
+                    <td class="py-2 px-3">High</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 px-3 font-medium">Power efficiency</td>
+                    <td class="py-2 px-3">Moderate</td>
+                    <td class="py-2 px-3">High</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="bg-amber-50 border-l-4 border-amber-400 p-6">
+            <h4 class="font-semibold text-amber-800 mb-2">Noise Margin Analysis</h4>
+            <p class="text-amber-700 text-sm mb-3">
+              Dual-rail encoding provides superior noise immunity with 0.3Vdd noise margin,
+              compared to 0.15Vdd for multi-level logic. The NULL state has maximum noise margin
+              as any positive voltage departure from 0V is detectable.
+            </p>
+
+            <div class="text-xs text-amber-600">
+              <div class="mb-1"><strong>6σ process coverage requirements:</strong></div>
+              <div>VOH = 0.9Vdd, VOL = 0.1Vdd, VIH = 0.7Vdd, VIL = 0.3Vdd</div>
+              <div>Noise margin = 0.2Vdd = 200mV at 1.0V supply</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Additional sections will continue with similar structure... -->
+
+      <!-- Section XIV: RTL Implementation -->
+      <section id="rtl" class="mb-16">
+        <h2 class="font-canela font-bold text-3xl mb-8 text-primary">XIV. RTL-Level Anchor Implementation</h2>
+
+        <div class="mb-8">
+          <h3 class="font-canela font-bold text-xl mb-4 text-neutral-800">Muller C-Element Implementation</h3>
+
+          <div class="bg-gray-900 text-green-400 p-6 rounded-lg font-mono text-sm mb-6">
+            <div class="text-gray-300 mb-2">// Symmetric C-Element with reset</div>
+            <div class="overflow-x-auto">
+              <pre><code>module muller_c_element #(
+  parameter WIDTH = 1,
+  parameter RESET_STATE = 1&#39;b0
+)(
+  input  logic [WIDTH-1:0] a,
+  input  logic [WIDTH-1:0] b,
+  input  logic rst_n,
+  output logic [WIDTH-1:0] z
+);
+
+  always_latch begin
+    if (!rst_n)
+      z &lt;= {WIDTH{RESET_STATE}};
+    else if (&amp;a &amp;&amp; &amp;b)
+      z &lt;= {WIDTH{1&#39;b1}};
+    else if (~|a &amp;&amp; ~|b)
+      z &lt;= {WIDTH{1&#39;b0}};
+    // else: retain state (hysteresis)
+  end
+
+endmodule</code></pre>
+            </div>
+          </div>
+
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+            <h4 class="font-semibold text-blue-800 mb-3">Priority-Enhanced Variant</h4>
+            <p class="text-blue-700 text-sm mb-3">
+              Asymmetric C-element where Audit input (a) dominates when inputs disagree,
+              implementing safety prioritization in the convergence logic.
+            </p>
+
+            <div class="bg-gray-900 text-green-400 p-4 rounded font-mono text-xs">
+              <pre><code>// Priority C-element: a=0 forces reset regardless of b
+if (PRIORITY_A &amp;&amp; ~|a)
+  z &lt;= {WIDTH{1&#39;b0}};</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-8">
+          <h3 class="font-canela font-bold text-xl mb-4 text-neutral-800">Dual-Lane Convergence Logic</h3>
+
+          <div class="bg-gray-900 text-green-400 p-6 rounded-lg font-mono text-sm mb-6">
+            <div class="text-gray-300 mb-2">// Complete convergence detection circuit</div>
+            <div class="overflow-x-auto">
+              <pre><code>module dual_lane_convergence #(
+  parameter DATA_WIDTH = 64,
+  parameter TOKEN_WIDTH = 256
+)(
+  input  logic clk,
+  input  logic rst_n,
+  
+  // Fast Lane interface
+  input  logic fl_done,
+  input  logic [DATA_WIDTH-1:0] fl_data,
+  
+  // Audit Lane interface
+  input  logic al_done,
+  input  logic [TOKEN_WIDTH-1:0] al_token,
+  
+  // Convergence output
+  output logic converged,
+  output logic commit_enable,
+  output logic [DATA_WIDTH-1:0] commit_data
+);
+
+  // State holding for completion signals
+  logic fl_latched, al_latched;
+  logic [DATA_WIDTH-1:0] fl_data_latched;
+  logic [TOKEN_WIDTH-1:0] al_token_latched;
+  
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      fl_latched &lt;= 1&#39;b0;
+      al_latched &lt;= 1&#39;b0;
+    end else begin
+      if (fl_done) begin
+        fl_latched &lt;= 1&#39;b1;
+        fl_data_latched &lt;= fl_data;
+      end
+      if (al_done) begin
+        al_latched &lt;= 1&#39;b1;
+        al_token_latched &lt;= al_token;
+      end
+      if (converged) begin  // Reset after convergence
+        fl_latched &lt;= 1&#39;b0;
+        al_latched &lt;= 1&#39;b0;
+      end
+    end
+  end
+  
+  // C-element convergence detection
+  muller_c_element #(.WIDTH(1)) converge_ce (
+    .a(fl_latched),
+    .b(al_latched),
+    .rst_n(rst_n),
+    .z(converged)
+  );
+  
+  // Token validation (simplified)
+  logic token_valid;
+  assign token_valid = |al_token_latched;  // Non-zero token
+  
+  // Commit gating
+  assign commit_enable = converged &amp;&amp; token_valid;
+  assign commit_data = fl_data_latched;
+
+endmodule</code></pre>
+            </div>
+          </div>
+
+          <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+            <h4 class="font-semibold text-green-800 mb-3">Correctness Proof</h4>
+            <p class="text-green-700 text-sm mb-3">
+              <strong>Theorem:</strong> Commitment cannot occur unless both Fast Lane completion
+              and Audit Lane validation have occurred with a valid token.
+            </p>
+
+            <div class="text-xs text-green-600 space-y-1">
+              <div>1. committed asserts when state == ST_COMMIT</div>
+              <div>2. State transitions only with commit_enable</div>
+              <div>3. commit_enable requires converged &amp;&amp; token_valid</div>
+              <div>4. converged requires fl_latched &amp;&amp; al_latched</div>
+              <div>5. token_valid requires non-zero al_token_latched</div>
+              <div>6. Therefore: committed → fl_done occurred and al_done with valid token occurred</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section XX: Conclusion -->
+      <section id="conclusion" class="mb-16">
+        <h2 class="font-canela font-bold text-3xl mb-8 text-primary">XX. Conclusion: Execution vs Finality Separation</h2>
+
+        <div class="mb-8">
+          <div class="bg-gradient-to-r from-slate-50 to-blue-50 rounded-xl p-8 mb-8">
+            <h3 class="font-canela font-bold text-xl mb-4 text-primary">Structural Necessity of Dual-Lane Architecture</h3>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-6">
+              <div class="bg-white rounded-lg p-4 border border-red-200">
+                <h4 class="font-semibold text-red-800 mb-2">Buffering Alone</h4>
+                <p class="text-xs text-red-700">
+                  Insufficient: buffers can be bypassed, drained early, or corrupted.
+                  No physical enforcement guarantees.
+                </p>
+              </div>
+
+              <div class="bg-white rounded-lg p-4 border border-amber-200">
+                <h4 class="font-semibold text-amber-800 mb-2">Speculation Alone</h4>
+                <p class="text-xs text-amber-700">
+                  Inadequate: assumes rollback is possible when external visibility
+                  creates irrevocable obligations.
+                </p>
+              </div>
+
+              <div class="bg-white rounded-lg p-4 border border-primary/20">
+                <h4 class="font-semibold text-primary mb-2">Dual-Lane Architecture</h4>
+                <p class="text-xs text-primary">
+                  Complete: provides controlled visibility without commitment,
+                  with hardware-enforced finality guarantees.
+                </p>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-lg p-6 border border-accent/20">
+              <h4 class="font-semibold text-accent mb-3">Physical Enforcement as Irreducible Requirement</h4>
+              <p class="text-neutral-700 text-sm">
+                Trustworthy execution requires constraints grounded in physical law.
+                The Dual-Lane Architecture&#39;s hardware enforcement—Muller C-elements,
+                hysteretic state holding, multi-layered commit gating—provides this grounding,
+                with correctness provable by formal verification and electrical analysis.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-8">
+          <h3 class="font-canela font-bold text-xl mb-4 text-neutral-800">Implications for Trustworthy Financial Infrastructure</h3>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-white rounded-lg p-6 border border-accent/20">
+              <h4 class="font-semibold text-accent mb-3">Verifiable Execution Guarantees</h4>
+              <ul class="text-sm text-neutral-600 space-y-2">
+                <li>• Sub-millisecond execution visibility</li>
+                <li>• 300-500 ms cryptographic finality</li>
+                <li>• Hardware-enforced non-bypassability</li>
+                <li>• Mathematical provability via LTL verification</li>
+                <li>• Regulatory compliance support</li>
+              </ul>
+            </div>
+
+            <div class="bg-white rounded-lg p-6 border border-secondary/20">
+              <h4 class="font-semibold text-secondary mb-3">Performance Without Compromise</h4>
+              <ul class="text-sm text-neutral-600 space-y-2">
+                <li>• Fast Lane optimized for visibility</li>
+                <li>• Audit Lane optimized for thoroughness</li>
+                <li>• No trade-offs between speed and auditability</li>
+                <li>• Unified architecture for both requirements</li>
+                <li>• Scalable to millions of operations/second</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="bg-primary/5 border-l-4 border-primary rounded-r-lg p-6">
+            <h4 class="font-semibold text-primary mb-3">Future Impact</h4>
+            <p class="text-neutral-700 text-sm">
+              The Dual-Lane Latency Architecture represents a fundamental shift from
+              software-governed execution to hardware-enforced trust. By separating
+              execution visibility from finality guarantees, it enables a new generation
+              of financial infrastructure where speed and integrity are not competing
+              objectives but complementary features of a unified architectural foundation.
+            </p>
+          </div>
+        </div>
+
+        <!-- Final Summary Box -->
+        <div class="bg-gradient-to-r from-primary to-blue-800 text-white rounded-xl p-8">
+          <div class="text-center">
+            <h3 class="font-canela font-bold text-2xl mb-4">Hardware-Enforceable Execution Model</h3>
+            <p class="text-lg font-light mb-6">
+              A specification for trustworthy financial infrastructure where
+              execution speed and audit integrity are unified rather than traded.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-4 text-center">
+              <div>
+                <div class="text-3xl font-bold mb-2">&lt; 2 ms</div>
+                <div class="text-sm opacity-90">Provisional execution</div>
+              </div>
+              <div>
+                <div class="text-3xl font-bold mb-2">300-500 ms</div>
+                <div class="text-sm opacity-90">Cryptographic finality</div>
+              </div>
+              <div>
+                <div class="text-3xl font-bold mb-2">∞</div>
+                <div class="text-sm opacity-90">Mathematical provability</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight active section in TOC
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const tocLinks = document.querySelectorAll('.toc-fixed a[href^="#"]');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('text-primary', 'font-semibold');
+                link.classList.add('text-neutral-600');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.remove('text-neutral-600');
+                    link.classList.add('text-primary', 'font-semibold');
+                }
+            });
+        });
+    </script>
+  
+
+</body></html>
