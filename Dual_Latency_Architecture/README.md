@@ -55,17 +55,18 @@ These two documents serve as the foundational technical truth for the architectu
 * **HTML Render:** [Hardware_Enforceable_Execution_Model_Specification.html](https://fractonicmind.github.io/TernaryLogic/Dual_Latency_Architecture/Hardware_Enforceable_Execution_Model_Specification.html)
 
 ### Specification 2: Physical Execution and Cryptographic Anchoring
-* **Markdown:** `Physical_Execution_and_Cryptographic_Anchoring_Specification.md`
+* **Markdown:** [Physical_Execution_and_Cryptographic_Anchoring_Specification.md](Physical_Execution_and_Cryptographic_Anchoring_Specification.md)
 * **HTML Render:** [Physical_Execution_and_Cryptographic_Anchoring_Specification.html](https://fractonicmind.github.io/TernaryLogic/Dual_Latency_Architecture/Physical_Execution_and_Cryptographic_Anchoring_Specification.html)
 * **Audio Summary:** [Physical_Execution_and_Cryptographic_Anchoring_Specification.mp3](https://fractonicmind.github.io/TernaryLogic/Dual_Latency_Architecture/Physical_Execution_and_Cryptographic_Anchoring_Specification.mp3)
 
 ### Executive Overview: Hardware-Enforced Execution and Cryptographic Finality
-* **Markdown:** `Hardware_Enforced_Execution_and_Cryptographic_Finality_Overview.md`
+* **Markdown:** [Hardware_Enforced_Execution_and_Cryptographic_Finality_Overview.md](Hardware_Enforced_Execution_and_Cryptographic_Finality_Overview.md)
 * **HTML Render:** [Hardware_Enforced_Execution_and_Cryptographic_Finality_Overview.html](https://fractonicmind.github.io/TernaryLogic/Dual_Latency_Architecture/Hardware_Enforced_Execution_and_Cryptographic_Finality_Overview.html)
 * **Audio Summary:** [Hardware_Enforced_Execution_and_Cryptographic_Finality_Overview.mp3](https://fractonicmind.github.io/TernaryLogic/Dual_Latency_Architecture/Hardware_Enforced_Execution_and_Cryptographic_Finality_Overview.mp3)
 
 ### RTL Archive: Model for High-Integrity Financial Systems
-* **Markdown:** `Hardware_Enforceable_Model_for_High_Integrity_Financial_Systems.md`
+* **Markdown:** [Hardware_Enforceable_Model_for_High_Integrity_Financial_Systems.md](Hardware_Enforceable_Model_for_High_Integrity_Financial_Systems.md)
 * **HTML Render:** [Hardware_Enforceable_Model_for_High_Integrity_Financial_Systems.html](https://fractonicmind.github.io/TernaryLogic/Dual_Latency_Architecture/Hardware_Enforceable_Model_for_High_Integrity_Financial_Systems.html)
 
 
+### "You cannot software your way out of a hardware deficit. If the physical architecture lacks the capacity to hold a state of epistemic uncertainty, the system will always eventually commit to a lie."    *~ Lev Goukassian*
