@@ -1,5 +1,7 @@
 # **Dual-Lane Latency Architecture in Ternary Logic: A Hardware-Enforced Execution and Cryptographic Anchoring Specification**
 
+#### [Interactive Web Page](https://fractonicmind.github.io/TernaryLogic/Dual_Latency_Architecture/Physical_Execution_and_Cryptographic_Anchoring_Specification.html)
+
 ## **I. Execution vs Verification Gap (Integrated Binary Analysis)**
 
 The fundamental architectural constraint in modern high-frequency financial infrastructure and autonomous execution environments is the structural timing mismatch between deterministic logic execution and cryptographic verification. In conventional synchronous binary systems, performance optimization relies extensively on predicting state transitions, speculative execution, and minimizing instruction pipeline stalls. The bivalent logic paradigm enforces a rigid dichotomy: a state is physically represented as either true ($V\_{dd}$) or false ($Gnd$). When an execution pipeline processes a high-frequency trading (HFT) order or a critical state mutation, the system must assume immediate finality to clear the pipeline for subsequent operations.  
