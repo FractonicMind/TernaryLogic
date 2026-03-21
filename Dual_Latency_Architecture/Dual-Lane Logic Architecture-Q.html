@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dual-Lane Latency Architecture in Ternary Logic (TL) Research Report</title>
+
+  <!-- Essential CDN Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: 'hsl(210, 75%, 95%)',
+              100: 'hsl(210, 75%, 85%)',
+              200: 'hsl(210, 75%, 75%)',
+              300: 'hsl(210, 75%, 65%)',
+              400: 'hsl(210, 75%, 55%)',
+              500: 'hsl(210, 75%, 40%)',
+              600: 'hsl(210, 75%, 35%)',
+              700: 'hsl(210, 75%, 25%)',
+              800: 'hsl(210, 75%, 15%)',
+              900: 'hsl(210, 75%, 10%)'
+            },
+            accent: {
+              50: 'hsl(240, 65%, 95%)',
+              100: 'hsl(240, 65%, 85%)',
+              200: 'hsl(240, 65%, 75%)',
+              300: 'hsl(240, 65%, 65%)',
+              400: 'hsl(240, 65%, 60%)',
+              500: 'hsl(240, 65%, 55%)',
+              600: 'hsl(240, 65%, 50%)',
+              700: 'hsl(240, 65%, 40%)',
+              800: 'hsl(240, 65%, 30%)',
+              900: 'hsl(240, 65%, 20%)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+
+  <!-- Preline UI Components -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+
+  <!-- Micro-interactions & Custom Styles -->
+  <style>
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+    .btn-interactive {
+      transition: all 0.2s ease-out;
+    }
+    
+    .btn-interactive:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .btn-interactive:active {
+      transform: scale(0.95);
+    }
+
+    .card-interactive {
+      transition: all 0.3s ease-out;
+      border: 1px solid transparent;
+      --border-lightness: 40%;
+    }
+
+    .dark .card-interactive {
+      --border-lightness: 60%;
+    }
+
+    .card-interactive:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      filter: brightness(0.98);
+    }
+    
+    /* Primary colored cards */
+    .card-interactive[class*="primary"]:hover,
+    .card-interactive[class*="white"]:hover,
+    .card-interactive[class*="gray-"]:hover {
+      border-color: hsl(210, 75%, var(--border-lightness));
+    }
+    
+    /* Accent colored cards */
+    .card-interactive[class*="accent"]:hover {
+      border-color: hsl(240, 65%, var(--border-lightness));
+    }
+
+    .dark .card-interactive:hover {
+      filter: brightness(1.05);
+    }
+  </style>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      document.getElementById('sunIcon').style.display = isDark ? 'block' : 'none';
+      document.getElementById('moonIcon').style.display = isDark ? 'none' : 'block';
+    }
+  </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+  <!-- Citation System Script -->
+  <script>
+    function initCitationSystem() {
+      let i = 1, map = new Map();
+      document.querySelectorAll('[data-ref]').forEach(el => {
+        if (el.dataset.citationProcessed) return;
+        const raw = (el.getAttribute('data-ref')||'').trim();
+        if (!raw) return;
+
+        const parts = raw.split('|');
+        const url = parts[0].trim();
+        const idx = (parts[1]||'').trim() || map.get(raw) || (map.set(raw, String(i)), String(i++));
+
+        if (!el.textContent || !el.textContent.trim()) { el.dataset.citationProcessed = 'true'; return; }
+
+        const btn = document.createElement('sup'); btn.textContent = String(idx);
+        Object.assign(btn.style, { fontSize:'8px', color:'#fff', cursor:'pointer', top: '1px', fontWeight:'bold', backgroundColor:'#0284c7', borderRadius:'50%', transition:'all .15s', userSelect:'none', minWidth:'19px', height:'19px', marginLeft:'6px', display:'inline-flex', alignItems:'center', justifyContent:'center', boxShadow:'0 1px 3px rgba(0,0,0,.2)', lineHeight:'1'});
+        btn.addEventListener('mouseenter', ()=> Object.assign(btn.style, { backgroundColor:'#0369a1', transform:'scale(1.12)' }));
+        btn.addEventListener('mouseleave', ()=> Object.assign(btn.style, { backgroundColor:'#0284c7', transform:'scale(1)' }));
+        btn.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); window.open(url, '_blank'); });
+
+        el.appendChild(btn); el.dataset.citationProcessed = 'true';
+      });
+    }
+  </script>
+
+  <!-- Progress bar -->
+  <div class="fixed top-0 left-0 h-1 bg-primary-500 dark:bg-primary-400 z-[60] transition-all duration-300 ease-out" id="progressBar"></div>
+
+  <!-- Floating Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur bg-gray-50/90 dark:bg-gray-900/90 border-b border-primary-500/20 dark:border-primary-600/20">
+    <nav class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <h1 class="text-xl font-bold text-primary-700 dark:text-primary-300">Dual-Lane TL Architecture</h1>
+        
+        <div class="flex items-center space-x-6">
+          <a href="#home" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100 transition-colors">Home</a>
+          <a href="#architecture" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100 transition-colors">Architecture</a>
+          <a href="#hardware" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100 transition-colors">Hardware</a>
+          <a href="#verification" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100 transition-colors">Verification</a>
+          <a href="#queueing" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100 transition-colors">Queueing</a>
+          <a href="#threats" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100 transition-colors">Threats</a>
+          <a href="#implementation" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100 transition-colors">Implementation</a>
+          <a href="#conclusion" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100 transition-colors">Conclusion</a>
+          
+          <button onclick="toggleDarkMode()" class="btn-interactive p-2 rounded-lg bg-primary-100 dark:bg-primary-800 text-primary-600 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-700 transition-all">
+            <i data-lucide="sun" id="sunIcon" class="w-5 h-5" style="display:none;"></i>
+            <i data-lucide="moon" id="moonIcon" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="min-h-screen">
+    <!-- Hero Section -->
+    <section id="home" class="py-40 bg-primary-50/50 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-5xl font-bold mb-6 text-primary-700 dark:text-primary-300" data-ref="https://b2broker.com/news/high-frequency-trading-infrastructure/|88">
+          Dual-Lane Latency Architecture in Ternary Logic (TL)
+        </h2>
+        <p class="text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
+          A hardware-enforceable execution model designed for high-integrity, low-latency environments such as financial trading infrastructure, featuring two physically distinct but synchronized lanes: a Fast Lane for provisional execution and an Audit Lane for verification, cryptographic anchoring, and finality enforcement.
+        </p>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="zap" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Fast Lane</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">
+              Provisional execution with response time less than
+              <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">&lt;2 ms</span>
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="shield-check" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Audit Lane</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">
+              Verification and finality enforcement with response time of
+              <span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">300–500 ms</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+          <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://arxiv.org/pdf/2505.12465?|59">
+            <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            Key Principle: No irreversible commit occurs without Audit Lane convergence, ensuring provable integrity in cryptographic anchoring.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture Overview Section -->
+    <section id="architecture" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Architecture Overview
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 items-start mb-12">
+          <div class="space-y-6">
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300" data-ref="https://arxiv.org/pdf/2505.12465?|59">
+              Ternary Logic States
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300">
+              The system uses ternary states to represent execution decisions:
+            </p>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <i data-lucide="circle-check" class="w-5 h-5 text-green-600 dark:text-green-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                <span class="text-gray-700 dark:text-gray-300"><strong>+1 Commit:</strong> Final approval for irreversible execution</span>
+              </li>
+              <li class="flex items-start">
+                <i data-lucide="minus" class="w-5 h-5 text-gray-500 dark:text-gray-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                <span class="text-gray-700 dark:text-gray-300"><strong>0 Null:</strong> Neutral state or pending decision</span>
+              </li>
+              <li class="flex items-start">
+                <i data-lucide="circle-x" class="w-5 h-5 text-red-600 dark:text-red-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                <span class="text-gray-700 dark:text-gray-300"><strong>-1 Reject:</strong> Rejection of execution request</span>
+              </li>
+            </ul>
+          </div>
+
+          <img
+            src="https://cdn.qwenlm.ai/60498d16-d2ab-4b9f-8acd-8f6913b3400d/02156f65-e9e0-4990-b258-012cd729f831/7dff1062-09c4-4e43-aee8-da733b732248.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiNjA0OThkMTYtZDJhYi00YjlmLThhY2QtOGY2OTEzYjM0MDBkIiwicmVzb3VyY2VfaWQiOiIwMjE1NmY2NS1lOWUwLTQ5OTAtYjI1OC0wMTJjZDcyOWY4MzEiLCJyZXNvdXJjZV9jaGF0X2lkIjpudWxsfQ.mCsOaluKQ_6h0zF9cnEsyzXT0NV0xfuhFGtjL-JdKxg"
+            alt="Technical architecture diagram showing a split-path processing system with two parallel lanes. Left lane labeled 'Fast Lane' in blue (#1a73b3) with lightning bolt icon, showing input arrow entering a rectangular processing unit containing 'Provisional Execution' text in white, with output arrow leading to a green checkmark symbol representing '+1 Commit'. Right lane labeled 'Audit Lane' in purple (#6366f1) with shield icon, showing input arrow entering a rectangular verification unit containing 'Cryptographic Anchoring &amp; Finality Enforcement' text in white, with output arrow leading to a red X symbol representing '-1 Reject'. Both lanes share common input at top center with binary decision logic block in gray (#6b7280) containing 'Ternary Logic States' label and three small circles arranged horizontally showing green (+1), gray (0), and red (-1) states. Background is clean white (#ffffff) with subtle grid lines in light gray (#f3f4f6). All text is rendered in sans-serif font, arrows are black with arrowheads, and symbols are simple geometric shapes. Diagram emphasizes the dual-path architecture with clear visual separation between fast and audit lanes."
+            class="w-full rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          />
+        </div>
+
+        <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg mb-8">
+          <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://arxiv.org/pdf/2505.12465?|59">
+            <i data-lucide="circle-alert" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            Critical Requirement: The latency of exchanges in Market Making is inevitable due to hardware limitations, system processing times, and delays in receiving data, making dual-lane architecture essential for maintaining system integrity while meeting performance demands.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="cpu" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300">High-Frequency Execution</h4>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Optimized for high-frequency trading strategies requiring low-latency, high-throughput processing capabilities.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-accent-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="lock" class="w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Cryptographic Anchoring</h4>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Buffered cryptographic anchoring pipelines ensure secure and verifiable transaction finality.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="shield" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Adversarial Resilience</h4>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Designed to withstand adversarial attacks while maintaining mathematical stability under burst traffic conditions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hardware Realization Section -->
+    <section id="hardware" class="py-20 bg-accent-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-accent-700 dark:text-accent-300">
+          Hardware Realization
+        </h2>
+
+        <div class="hs-accordion-group space-y-4">
+          <!-- NCL Mapping -->
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-accent-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-ncl-heading">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="layers" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">NULL Convention Logic (NCL) Mapping</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+            </button>
+            <div id="hs-ncl-collapse" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-ncl-heading">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/3657599_NULL_Convention_LogicTM_a_complete_and_consistent_logic_for_asynchronous_digital_circuit_synthesis|60">
+                  NULL Convention Logic (NCL) is a symbolically complete logic which expresses process completely in terms of the logic itself and inherently and conveniently incorporates timing considerations.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://search.proquest.com/openview/f9dd4be432a1156f3aaa9012db219e5c/1.pdf?pq-origsite=gscholar&cbl=2026366&diss=y|61">
+                  NULL Convention Logic™ (NCL) offers several advantages over conventional design approaches including: power management, reduced noise and high reliability, making it suitable for implementing the dual-lane architecture's asynchronous components.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/319303515_Recent_Advances_in_Low_Power_Asynchronous_Circuit_Design|62">
+                  A new methodology for mapping multi-rail logic expressions to a NULL Convention Logic (NCL) gate library is proposed, enabling efficient implementation of the ternary logic states required for the dual-lane system.
+                </p>
+                
+                <div class="pl-4 pr-3 py-3 border-l-4 border-accent-500 bg-accent-50/40 dark:bg-accent-900/30 rounded-r-lg">
+                  <p class="text-sm font-medium text-accent-900 dark:text-accent-100 leading-relaxed" data-ref="https://www.semanticscholar.org/paper/3a4e82a7b47e85ab9029b76271285c0afe32a753|63">
+                    <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                    NCL Design Focus: Delay-insensitive asynchronous logic design using the NCL paradigm, with detailed design of input-complete and observable dual-rail implementations suitable for the fast lane's provisional execution units.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transistor Level Primitives -->
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-accent-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-transistor-heading">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="microchip" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Transistor-Level Primitives</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-transistor-collapse" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-transistor-heading">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://ieeexplore.ieee.org/iel8/6287639/10820123/10817560.pdf|20">
+                  This paper presents a methodology for designing ternary logic based on Depletion-mode metal-oxide-semiconductor field-effect transistor (DEPFET) and depletion-mode junction field-effect transistor (DEPJFET), providing the foundation for implementing the three-state logic required by the dual-lane architecture.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://ieeexplore.ieee.org/iel8/6245494/10416702/10680295.pdf|21">
+                  The propagation delay of the 5-stage ring oscillator improved from
+                  <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">3.60 ps</span>
+                  to
+                  <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">2.85 ps</span>
+                  when implementing strained GAA FETs, demonstrating the potential for ultra-low latency in the fast lane implementation.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://ieeexplore.ieee.org/iel7/6287639/10380310/10488424.pdf|23">
+                  The journey from Fin-shaped field effect transistor (FinFET) to gate-all-around multi-bridge channel field effect transistor (MBCFET) represents the evolution toward higher performance and lower power consumption suitable for both fast and audit lane implementations.
+                </p>
+                
+                <div class="pl-4 pr-3 py-3 border-l-4 border-amber-500 bg-amber-50/40 dark:bg-amber-900/30 rounded-r-lg">
+                  <p class="text-sm font-medium text-amber-900 dark:text-amber-100 leading-relaxed" data-ref="https://www.ieee.org/ns/periodicals/EDS/EDS-JANUARY-2022-HTML/index.html|25">
+                    <i data-lucide="alert-triangle" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                    Material Considerations: For future 3 nm transistors, tungsten BPR optimizes line and contact resistance, and for 1 nm and 2 nm devices, molybdenum (Mo) appears better, indicating the importance of material selection for near-future process node implementations.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FPGA Implementation -->
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-accent-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-fpga-heading">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="hard-drive" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">FPGA Implementation Pathway</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+            </button>
+            <div id="hs-fpga-collapse" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-fpga-heading">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://inria.hal.science/tel-04884873v2/file/GORIUS_Jean-michel.pdf|83">
+                  A critical difference between the ASIC and FPGA design flows is the much more flexible hardware design approach, including area, clock frequency, and energy consumption optimization, making FPGA a viable prototyping platform for the dual-lane architecture.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://gitee.com/niuniu4/arl/blob/master/README-Verilog.md|64">
+                  A collection of NULL Convention Logic (NCL) circuits and libraries written in Verilog provides the experience of logically determined design in a familiar environment, facilitating FPGA implementation of the ternary logic states.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://m.researching.cn/jos/journaltopic/Articles|96">
+                  Demonstration of comparator modules in GaN ICs based on resistor-transistor logic (RTL) on E-mode wafers shows the feasibility of implementing high-speed comparison logic required for the fast lane's decision-making processes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Formal Verification Section -->
+    <section id="verification" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Formal Verification and Assertion-Based Validation
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+          <div class="space-y-6">
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300" data-ref="http://staff.ustc.edu.cn/~wyu0725/FPGA/snug_collection/1Sunburst%20Design/SystemVerilog%20Assertions%20Design%20Tricks%20and%20SVA%20Bind%20Files.pdf|11">
+              SystemVerilog Assertions (SVA)
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300">
+              This paper documents valuable SystemVerilog Assertion tricks, including use of long SVA labels, use of the immediate assert command, and concise SVA coding styles, which are essential for verifying the correctness of the dual-lane architecture's behavior.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/pdf/2503.08923?|19">
+              This simulation step ensures that assertions involving asynchronous resets are adequately covered, thereby complementing the formal verification process required for the dual-lane system's safety-critical operation.
+            </p>
+            
+            <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+              <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://arxiv.org/html/2503.19174v2|54">
+                <i data-lucide="circle-check" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Knowledge Graph Approach: Constructing a Knowledge Graph from both specifications and RTL using a hardware-specific schema with domain-specific entities enables systematic assertion generation for complex dual-lane interactions.
+              </p>
+            </div>
+          </div>
+
+          <img
+            src="https://cdn.qwenlm.ai/60498d16-d2ab-4b9f-8acd-8f6913b3400d/02156f65-e9e0-4990-b258-012cd729f831/9bf8372f-7478-4681-9ee7-d46c8ae8a182.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiNjA0OThkMTYtZDJhYi00YjlmLThhY2QtOGY2OTEzYjM0MDBkIiwicmVzb3VyY2VfaWQiOiIwMjE1NmY2NS1lOWUwLTQ5OTAtYjI1OC0wMTJjZDcyOWY4MzEiLCJyZXNvdXJjZV9jaGF0X2lkIjpudWxsfQ.mCsOaluKQ_6h0zF9cnEsyzXT0NV0xfuhFGtjL-JdKxg"
+            alt="Formal verification workflow diagram showing interconnected components on a white background (#ffffff) with light gray (#f3f4f6) grid lines. Top section displays 'SystemVerilog Assertions (SVA)' text in bold primary blue (#1a73b3) with a stylized assertion symbol consisting of a checkmark inside a shield shape. Below, three horizontal rectangular blocks arranged vertically with rounded corners: first block labeled 'Specifications' in gray (#6b7280) with document icon, second block labeled 'RTL Design' in primary blue (#1a73b3) with circuit schematic symbol, and third block labeled 'Knowledge Graph' in accent purple (#6366f1) with network node connections. Arrows connect these blocks bidirectionally with curved connectors in gray (#9ca3af). Bottom section shows 'Assertion Generation' text in bold primary blue (#1a73b3) with a gear icon. Right side displays 'Formal Verification Results' panel with green checkmarks and red X symbols in a grid pattern. All text uses sans-serif font, icons are simple line drawings, and the overall layout emphasizes the flow from specifications through RTL to assertion-based verification. The diagram uses the primary blue (#1a73b3) and accent purple (#6366f1) color scheme consistently throughout."
+            class="w-full rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          />
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="circle-check" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Linear Temporal Logic (LTL)</h4>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              LTL properties ensure that critical safety requirements such as mutual exclusion between fast and audit lane states are maintained throughout system execution.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-accent-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="shield-alert" class="w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Property Checking</h4>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              SVA property checking verifies that the ternary logic states transition correctly and that no irreversible commit occurs without audit lane convergence.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4">
+            Verification Challenges
+          </h3>
+          <div class="space-y-4">
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.linkedin.com/posts/ben-cohen-1172a0_assertions-for-asynchronous-entities-activity-7132490339067576320-2giQ|18">
+              SVA: in Async logic? Ideas exist for using SVA in async, unlocked logic, addressing the challenge of verifying asynchronous components within the dual-lane architecture.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.academia.edu/115951828/Bounded_model_checking_for_asynchronous_concurrent_systems|127">
+              Complex hardware systems become more and more ubiquitous in mission critical applications such as military, satellite, and medical, requiring bounded model checking for asynchronous concurrent systems to ensure reliability.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Queueing Theory Section -->
+    <section id="queueing" class="py-20 bg-primary-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Queueing Theory Analysis with Burst Traffic Models
+        </h2>
+
+        <div class="space-y-6 mb-12">
+          <p class="text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/pdf/2505.12465?|59">
+            The latency of the exchanges in Market Making (MM) is inevitable due to hardware limitations, system processing times, delays in receiving data, creating complex queueing dynamics that must be analyzed using appropriate mathematical models.
+          </p>
+          <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.linkedin.com/posts/robert-schiffman-345b80b_wall-of-ai-worry-as-capex-explodes-not-for-activity-7425236750895063040-83-m|9">
+            Transactions queue, confirmations lag, and settlement windows stretch across time intervals, demonstrating the need for robust queueing theory analysis to understand system behavior under varying load conditions.
+          </p>
+
+          <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+            <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://arxiv.org/pdf/0710.4663|100">
+              <i data-lucide="trending-up" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+              Statistical Optimization: A statistical methodology has been developed to optimally design a pipeline circuit for enhancing yield, with optimization results showing that proper imbalance among stages improves performance metrics.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+            <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-4">
+              Heavy-Tailed Traffic Models
+            </h4>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              Heavy-tailed distributions capture the bursty nature of financial transactions and trading activities, where occasional large spikes in traffic can significantly impact system performance.
+            </p>
+            <div class="space-y-2 text-sm">
+              <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.redbooks.ibm.com/redbooks/pdfs/sg248537.pdf|8">
+                High CPU utilization can cause extended latency to your user because the infrastructure cannot perform tasks in a timely manner, emphasizing the importance of understanding traffic patterns.
+              </p>
+              <p class="text-gray-700 dark:text-gray-300" data-ref="https://escholarship.org/content/qt5d79r601/qt5d79r601.pdf|78">
+                Softer tradeoff between both power and area versus performance than reducing the decoder wordlength, retaining almost all of the power savings, indicating the need for careful resource allocation under burst conditions.
+              </p>
+            </div>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+            <h4 class="text-lg font-semibold text-accent-700 dark:text-accent-300 mb-4">
+              Markov-Modulated Poisson Process (MMPP)
+            </h4>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              MMPP models capture the switching behavior between different traffic regimes, reflecting the alternating periods of high and low activity typical in financial markets.
+            </p>
+            <div class="space-y-2 text-sm">
+              <p class="text-gray-700 dark:text-gray-300" data-ref="https://theses.hal.science/tel-01960966/file/73208_DUPLOUY_2018_archivage.pdf|17">
+                Either asynchronous or synchronous systems may exhibit latency, and in synchronous cases, a sampling delay must be provided, affecting queueing behavior analysis.
+              </p>
+              <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.linkedin.com/pulse/hft-stack-engineering-ultra-low-latency-trading-infrastructure-8nxbc|89">
+                The HFT stack represents the complete architectural framework—from physical servers and network infrastructure to sophisticated trading algorithms—requiring queueing analysis across all layers.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 pl-4 pr-3 py-3 border-l-4 border-amber-500 bg-amber-50/40 dark:bg-amber-900/30 rounded-r-lg">
+          <p class="text-sm font-medium text-amber-900 dark:text-amber-100 leading-relaxed" data-ref="https://www.linkedin.com/posts/hodinhthang_quantitativetrading-systemarchitecture-hft-activity-7418890427438772225-ZNvo|50">
+            <i data-lucide="triangle-alert" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            Security Risk: Remote Code Execution (RCE) risk exists when developers load models, bypassing supply chain security frameworks, potentially introducing malicious traffic patterns that disrupt normal queueing behavior.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Adversarial Threat Modeling Section -->
+    <section id="threats" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Adversarial Threat Modeling and Resilience
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-12">
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="shield-alert" class="w-5 h-5 text-red-600 dark:text-red-400"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Denial of Service</h4>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Burst traffic patterns can overwhelm the fast lane, causing delays in audit lane convergence and compromising system availability.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-accent-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="triangle-alert" class="w-5 h-5 text-orange-600 dark:text-orange-400"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Timing Attacks</h4>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Attackers may exploit timing differences between fast and audit lanes to infer sensitive information about transaction processing.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="bug" class="w-5 h-5 text-purple-600 dark:text-purple-400"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Logic Flaws</h4>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Improper handling of ternary logic states or race conditions between lanes could lead to inconsistent transaction outcomes.
+            </p>
+          </div>
+        </div>
+
+        <div class="hs-accordion-group space-y-4">
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-resilience-heading">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="shield" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Resilience Mechanisms</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-resilience-collapse" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-resilience-heading">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://oboe.com/learn/advanced-architectures-for-medium-frequency-trading-10hrdf8/mft-risk-management-design-6|49">
+                  In medium frequency trading, static risk controls are an invitation to failure, necessitating adaptive risk overlays that can respond to changing threat landscapes.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.sciencedirect.com/science/article/abs/pii/S0031320321003903|51">
+                  Traditional factor-based risk control methods in high frequency trading have become the bottleneck for trading systems, requiring more sophisticated adversarial resilience mechanisms.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/html/2506.19676v3|40">
+                  This paper presents a comprehensive survey of agent communication security, providing insights into protecting distributed systems against coordinated adversarial attacks.
+                </p>
+                
+                <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+                  <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://asecuritysite.com/vdf/vdf_sqrt|128">
+                    <i data-lucide="key" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                    Verifiable Delay Functions: With a Verifiable Delay Function (VDF), we can prove that a given amount of work has been done by a prover, enabling audit trails that are computationally expensive to forge.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-stability-heading">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="activity" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">Mathematical Stability Under Burst Traffic</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+            </button>
+            <div id="hs-stability-collapse" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-stability-heading">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.mdpi.com/2079-9292/15/2|72">
+                  The imminent threat of large-scale quantum computers to modern public-key cryptographic devices has led to extensive research into post-quantum cryptography, ensuring long-term stability of cryptographic anchoring mechanisms.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/html/2412.14538v3|44">
+                  The NET4AI architecture must address the dual demands of low-latency, high-reliability communication and computing, as well as growing concerns about privacy, requiring mathematical models that guarantee stability under extreme conditions.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/html/2501.06726v2|41">
+                  As anticipated by ITU-R in June 2023, the 6G landscape is shaped by a range of usage scenarios, including hyper-reliable and low-latency communications (HRLLC), requiring robust mathematical frameworks for stability analysis.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Implementation and Trade-offs Section -->
+    <section id="implementation" class="py-20 bg-accent-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-accent-700 dark:text-accent-300">
+          Implementation Considerations and Trade-offs
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+            <h4 class="text-lg font-semibold text-accent-700 dark:text-accent-300 mb-4">
+              Energy-Latency-Area Trade-offs
+            </h4>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between p-3 bg-accent-50/50 dark:bg-gray-800 rounded-lg">
+                <span class="text-sm text-gray-700 dark:text-gray-300">Energy Efficiency</span>
+                <span class="text-xs font-semibold text-accent-700 dark:text-accent-300" data-ref="https://eds.ieee.org/images/files/Publications/EDS_Apr2025-web.pdf|28">15% speed gain (or 30% power reduction)</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-accent-50/50 dark:bg-gray-800 rounded-lg">
+                <span class="text-sm text-gray-700 dark:text-gray-300">Chip Density</span>
+                <span class="text-xs font-semibold text-accent-700 dark:text-accent-300" data-ref="https://eds.ieee.org/images/files/Publications/EDS_Apr2025-web.pdf|28">&gt;1.15x vs 3nm technology</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-accent-50/50 dark:bg-gray-800 rounded-lg">
+                <span class="text-sm text-gray-700 dark:text-gray-300">Propagation Delay</span>
+                <span class="text-xs font-semibold text-accent-700 dark:text-accent-300" data-ref="https://ieeexplore.ieee.org/iel8/6245494/10416702/10680295.pdf|21">2.85 ps (strained GAA FETs)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+            <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-4">
+              RTL Implementation Strategy
+            </h4>
+            <p class="text-gray-700 dark:text-gray-300 mb-4" data-ref="https://ieeexplore.ieee.org/iel5/10437/33132/01560791.pdf|12">
+              This standard provides a set of extensions to the IEEE 1364™ Verilog® hardware description language (HDL) to aid in the creation of vendor-agnostic but physically enforceable RTL code suitable for the dual-lane architecture.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://aijishu.com/a/1060000000455727|68">
+              Official IEEE 1800-2023 SystemVerilog standard includes support for modeling hardware at behavioral, register transfer level (RTL), and gate-level abstraction levels, providing the foundation for dual-lane RTL implementation.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300">
+            3D Integration and Advanced Packaging
+          </h3>
+          <p class="text-gray-700 dark:text-gray-300" data-ref="https://irds.ieee.org/images/files/pdf/2022/2022IRDS_BC.pdf|118">
+            Use of 2.5D/3D integration to connect discrete CMOS logic dies to the internal pins/TSVs of a memory, enabling high-density integration of fast and audit lane components on separate dies.
+          </p>
+          <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/400967279_Monolithic_Hybrid-3D_Standard_Cell_Library_with_Sandwiched_Inter-Metal_Layer_for_3D_Digital_Computation-in-Memory_Circuits|125">
+            Monolithic Hybrid-3D Standard Cell Library with Sandwiched Inter-Metal Layer for 3D Digital Computation-in-Memory Circuits provides the architectural foundation for implementing the dual-lane system with minimized interconnect delays.
+          </p>
+          <p class="text-gray-700 dark:text-gray-300" data-ref="https://link.springer.com/content/pdf/10.1007/s11432-024-4033-8.pdf|126">
+            Highly area-efficient low-power SRAM cell with 2 transistors and 2 resistors, and WSe2/MoS2 CFET based half-adder circuit using monolithic 3D integration demonstrates the feasibility of ultra-compact ternary logic implementations.
+          </p>
+
+          <div class="pl-4 pr-3 py-3 border-l-4 border-accent-500 bg-accent-50/40 dark:bg-accent-900/30 rounded-r-lg">
+            <p class="text-sm font-medium text-accent-900 dark:text-accent-100 leading-relaxed" data-ref="https://www.scribd.com/document/974898009/2016-Book-3DStackedChips|98">
+              <i data-lucide="thermometer" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+              Thermal Management: Efficient 3D representations of 3D chip floorplans enable thermal-aware physical design, crucial for managing heat dissipation in high-performance dual-lane implementations.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 grid md:grid-cols-2 gap-6">
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-4">
+              Vendor-Agnostic Design Principles
+            </h4>
+            <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+              <li class="flex items-start">
+                <i data-lucide="check" class="w-4 h-4 text-green-600 dark:text-green-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                <span>Standard HDL constructs compatible with multiple synthesis tools</span>
+              </li>
+              <li class="flex items-start">
+                <i data-lucide="check" class="w-4 h-4 text-green-600 dark:text-green-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                <span>Modular architecture enabling component reuse across platforms</span>
+              </li>
+              <li class="flex items-start">
+                <i data-lucide="check" class="w-4 h-4 text-green-600 dark:text-green-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                <span>Abstract timing constraints independent of specific process nodes</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-interactive p-6 bg-accent-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <h4 class="text-lg font-semibold text-accent-700 dark:text-accent-300 mb-4">
+              Near-Future Process Node Assumptions
+            </h4>
+            <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+              <li class="flex items-start">
+                <i data-lucide="target" class="w-4 h-4 text-blue-600 dark:text-blue-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                <span>Targeting 2nm and below process nodes for optimal performance</span>
+              </li>
+              <li class="flex items-start">
+                <i data-lucide="target" class="w-4 h-4 text-blue-600 dark:text-blue-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                <span>Leveraging strained GAA FETs for enhanced speed and power efficiency</span>
+              </li>
+              <li class="flex items-start">
+                <i data-lucide="target" class="w-4 h-4 text-blue-600 dark:text-blue-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                <span>Utilizing advanced materials like Mo for sub-2nm interconnect optimization</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conclusion Section -->
+    <section id="conclusion" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Conclusion
+        </h2>
+
+        <div class="space-y-6">
+          <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+            The Dual-Lane Latency Architecture in Ternary Logic (TL) represents a significant advancement in high-integrity, low-latency computing systems, particularly suited for financial trading infrastructure and other safety-critical applications requiring provable transaction finality.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+              <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-4">
+                Key Contributions
+              </h4>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <i data-lucide="circle-check" class="w-4 h-4 text-green-600 dark:text-green-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                  <span>Hardware-enforceable execution control using ternary logic states</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-check" class="w-4 h-4 text-green-600 dark:text-green-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                  <span>Asynchronous logic design leveraging NULL Convention Logic (NCL)</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-check" class="w-4 h-4 text-green-600 dark:text-green-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                  <span>Comprehensive formal verification using SystemVerilog Assertions</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-check" class="w-4 h-4 text-green-600 dark:text-green-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                  <span>Rigorous queueing theory analysis for burst traffic resilience</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-check" class="w-4 h-4 text-green-600 dark:text-green-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                  <span>Adversarial threat modeling with mathematical stability guarantees</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="card-interactive p-6 bg-accent-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+              <h4 class="text-lg font-semibold text-accent-700 dark:text-accent-300 mb-4">
+                Implementation Feasibility
+              </h4>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <i data-lucide="arrow-right" class="w-4 h-4 text-blue-600 dark:text-blue-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                  <span>FPGA prototyping pathway using established NCL libraries</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="arrow-right" class="w-4 h-4 text-blue-600 dark:text-blue-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                  <span>ASIC implementation targeting 2nm and below process nodes</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="arrow-right" class="w-4 h-4 text-blue-600 dark:text-blue-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                  <span>3D integration for minimizing interconnect delays</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="arrow-right" class="w-4 h-4 text-blue-600 dark:text-blue-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                  <span>Vendor-agnostic RTL design principles</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+            <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://www-file.huawei.com/-/media/corp2020/pdf/giv/intelligent_world_2030_en.pdf|112">
+              <i data-lucide="sparkles" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+              Future Vision: Imagine an intelligent real-time world where waits and delays, queues and paperwork, hassles and drudgery dissolve in almost instantaneous provision of goods and services, enabled by architectures like the dual-lane system described here.
+            </p>
+          </div>
+
+          <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+            This research establishes a technically rigorous foundation for implementing dual-lane latency architectures that balance throughput efficiency with provable integrity in cryptographic anchoring, providing a workload-agnostic framework applicable across diverse high-frequency computing domains.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-primary-900 dark:bg-gray-950 text-gray-300 py-12">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold text-primary-300 dark:text-primary-400 mb-4">About This Research</h3>
+          <p class="text-sm text-gray-400">
+            Comprehensive analysis of Dual-Lane Latency Architecture in Ternary Logic for high-integrity, low-latency computing systems.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-primary-300 dark:text-primary-400 mb-4">Key Topics</h3>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li>Hardware Realization</li>
+            <li>Formal Verification</li>
+            <li>Queueing Theory</li>
+            <li>Adversarial Resilience</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-primary-300 dark:text-primary-400 mb-4">Implementation</h3>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li>FPGA Prototyping</li>
+            <li>ASIC Design</li>
+            <li>3D Integration</li>
+            <li>VLSI Standards</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-500">
+        <p>&copy; 2024 Dual-Lane TL Architecture Research. Educational purposes only.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Initialize Libraries -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize AOS
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100
+      });
+
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Initialize Preline components
+      setTimeout(() => {
+        HSStaticMethods.autoInit();
+      }, 100);
+
+      // Initialize citation system
+      setTimeout(() => {
+        initCitationSystem();
+      }, 200);
+
+      // Progress bar functionality
+      const progressBar = document.getElementById('progressBar');
+      
+      window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        progressBar.style.width = scrolled + '%';
+      });
+    });
+  </script>
+</body>
+</html>
+
