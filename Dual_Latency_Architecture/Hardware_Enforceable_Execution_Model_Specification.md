@@ -2,6 +2,8 @@
 
 ## I. Execution vs Verification Gap: Structural Analysis of Binary System Limitations
 
+#### [Interactive Web Page](https://fractonicmind.github.io/TernaryLogic/Dual_Latency_Architecture/Hardware_Enforceable_Execution_Model_Specification.html)
+
 ### 1.1 Fundamental Timing Mismatch in Binary Execution Models
 
 #### 1.1.1 Irreversibility of Commit Operations in Conventional Architectures
