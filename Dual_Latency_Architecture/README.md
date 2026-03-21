@@ -51,7 +51,7 @@ These two documents serve as the foundational technical truth for the architectu
 
 
 ### Specification 1: Hardware-Enforceable Execution Model
-* **Markdown:** `Hardware_Enforceable_Execution_Model_Specification.md`
+* **Markdown:** [Hardware_Enforceable_Execution_Model_Specification.md](Hardware_Enforceable_Execution_Model_Specification.md)
 * **HTML Render:** [Hardware_Enforceable_Execution_Model_Specification.html](https://fractonicmind.github.io/TernaryLogic/Dual_Latency_Architecture/Hardware_Enforceable_Execution_Model_Specification.html)
 
 ### Specification 2: Physical Execution and Cryptographic Anchoring
