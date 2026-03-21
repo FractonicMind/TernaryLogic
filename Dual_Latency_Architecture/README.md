@@ -69,4 +69,4 @@ These two documents serve as the foundational technical truth for the architectu
 * **HTML Render:** [Hardware_Enforceable_Model_for_High_Integrity_Financial_Systems.html](https://fractonicmind.github.io/TernaryLogic/Dual_Latency_Architecture/Hardware_Enforceable_Model_for_High_Integrity_Financial_Systems.html)
 
 
-### "You cannot software your way out of a hardware deficit. If the physical architecture lacks the capacity to hold a state of epistemic uncertainty, the system will always eventually commit to a lie."    *~ Lev Goukassian*
+#### "You cannot software your way out of a hardware deficit. If the physical architecture lacks the capacity to hold a state of epistemic uncertainty, the system will always eventually commit to a lie."    *~ Lev Goukassian*
