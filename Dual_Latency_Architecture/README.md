@@ -24,21 +24,21 @@ To maintain navigational clarity, the original working drafts have been renamed 
 ### 1. Primary Specifications (The Definitive Hardware Manuals)
 These two documents serve as the foundational technical truth for the architecture, designed for peer review by systems engineers and hardware architects.
 
-* **Hardware-Enforceable Execution Model Specification** *(Formerly Report K)*
+* **Hardware-Enforceable Execution Model Specification**
     * **Focus:** Mathematical rigor, queueing theory, and traffic modeling.
     * **Description:** This specification rigorously models the stability of the Audit Lane buffer under extreme, heavy-tailed burst traffic conditions. By discarding naive M/D/1 queueing assumptions in favor of Markov Modulated Poisson Processes (MMPP) and Pareto distributions, this document mathematically proves that the 500-millisecond audit latency will not result in buffer overflow or pipeline stalling under high-frequency market loads. It also details the flow control policies, backpressure mechanics, and adversarial resistance models required for resilient deployment.
 
-* **Physical Execution and Cryptographic Anchoring Specification** *(Formerly Report P)*
+* **Physical Execution and Cryptographic Anchoring Specification**
     * **Focus:** Semiconductor realities, physical realization, and ASIC design trade-offs.
     * **Description:** This specification grounds the theoretical logic in physical hardware constraints. It deeply explores the implementation of DITL using dual-rail encoding and addresses the physical area and routing overheads. Crucially, it anticipates near-future semiconductor advancements, outlining how Backside Power Delivery Networks (BPDN) and 2nm/14A node architectures can mitigate the routing congestion of ternary logic. It also provides quantitative power and area estimates for the cryptographic hashing pipelines.
 
 ### 2. Executive Overview
-* **Hardware-Enforced Execution and Cryptographic Finality** *(Formerly Report T)*
+* **Hardware-Enforced Execution and Cryptographic Finality**
     * **Focus:** High-level architectural briefing and structural necessity.
     * **Description:** Designed for executive stakeholders and systems architects requiring a rapid conceptual baseline, this document distills the core mechanics of the DLLA without overwhelming the reader with transistor-level equations. It effectively contrasts the proposed ternary model against traditional speculative execution, utilizing clear ASCII timing diagrams to demonstrate the resolution of the "tick-to-trade" paradox.
 
 ### 3. RTL Implementation Archive
-* **A Hardware-Enforceable Model for High-Integrity Financial Systems** *(Formerly Report Q)*
+* **A Hardware-Enforceable Model for High-Integrity Financial Systems**
     * **Focus:** Register-Transfer Level (RTL) code and SystemVerilog Assertions.
     * **Description:** While formatted as a continuous supplementary document rather than a formal chapter-based specification, this file is vital for Electronic Design Automation (EDA) synthesis. It contains the raw SystemVerilog implementations for the Muller C-elements, the dual-lane convergence logic, and the commit gating interlocks.
 
