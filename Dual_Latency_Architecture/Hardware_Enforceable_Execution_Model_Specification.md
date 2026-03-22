@@ -1,4 +1,8 @@
-# I. Execution vs Verification Gap: Structural Analysis of Binary System Limitations
+# Dual-Lane Latency Architecture in Ternary Logic (TL): Hardware-Enforceable Execution Model Specification
+
+## I. Execution vs Verification Gap: Structural Analysis of Binary System Limitations
+
+#### [Interactive Web Page](https://fractonicmind.github.io/TernaryLogic/Dual_Latency_Architecture/Hardware_Enforceable_Execution_Model_Specification.html)
 
 ### 1.1 Fundamental Timing Mismatch in Binary Execution Models
 
