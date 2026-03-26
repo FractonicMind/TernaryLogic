@@ -1,0 +1,1545 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>TL Core Doctrine: No Log = No Action - Execution Integrity Specification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tiempos+Headline:wght@400;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #f8f7f4;
+            --accent: #2563eb;
+            --text: #374151;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+        }
+        
+        .font-tiempos { font-family: 'Tiempos Headline', serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            line-height: 1.7;
+            background: var(--secondary);
+        }
+        
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            min-height: 60vh;
+        }
+        
+        .toc-fixed {
+            position: fixed;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 280px;
+            max-height: 80vh;
+            overflow-y: auto;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .main-content {
+            margin-left: 320px;
+            max-width: 900px;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--border), transparent);
+            margin: 4rem 0;
+        }
+        
+        .citation-link {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--accent);
+            transition: all 0.2s ease;
+        }
+        
+        .citation-link:hover {
+            background: rgba(37, 99, 235, 0.1);
+            border-bottom-style: solid;
+        }
+        
+        .pullquote {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--accent);
+            border-left: 4px solid var(--accent);
+            padding-left: 2rem;
+            margin: 2rem 0;
+            background: rgba(37, 99, 235, 0.05);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+        }
+        
+        .expandable {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+        
+        .expandable-header {
+            background: #ffffff;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            font-weight: 500;
+        }
+        
+        .expandable-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .expandable-content.expanded {
+            max-height: 1000px;
+            padding: 1.5rem;
+        }
+        
+        .formula-box {
+            background: #f9fafb;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            overflow: auto;
+        }
+        
+        @media (max-width: 1280px) {
+            .toc-fixed {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                width: 100%;
+                margin-bottom: 2rem;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .toc-fixed {
+                display: none;
+            }
+            .main-content {
+                padding: 0 1rem;
+            }
+            .hero-grid {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+            .hero-grid h1 {
+                font-size: 2.25rem;
+                line-height: 2.5rem;
+            }
+            .hero-grid p {
+                font-size: 1rem;
+                line-height: 1.5rem;
+            }
+            .hero-grid img {
+                height: auto;
+                max-height: 50vh;
+            }
+            .mermaid-control-btn:not(.reset-zoom) {
+                display: none;
+            }
+            .mermaid-controls {
+                top: auto;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+        
+        img {
+            max-width: 100%;
+        }
+        
+        /* Mermaid diagram styling */
+        .mermaid-container {
+            display: flex;
+            justify-content: center;
+            min-height: 300px;
+            max-height: 800px;
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mermaid-container .mermaid {
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            cursor: grab;
+            transition: transform 0.3s ease;
+            transform-origin: center center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: none; /* 防止触摸设备上的默认行为 */
+            -webkit-user-select: none; /* 防止文本选择 */
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .mermaid-container .mermaid svg {
+            max-width: 100%;
+            height: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .mermaid-container .mermaid:active {
+            cursor: grabbing;
+        }
+
+        .mermaid-container.zoomed .mermaid {
+            height: 100%;
+            width: 100%;
+            cursor: grab;
+        }
+
+        .mermaid-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .mermaid-control-btn {
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #374151;
+            font-size: 14px;
+            min-width: 36px;
+            height: 36px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mermaid-control-btn:hover {
+            background: #f8fafc;
+            border-color: #3b82f6;
+            color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        .mermaid-control-btn:active {
+            transform: scale(0.95);
+        }
+    </style>
+  <base target="_blank">
+</head>
+
+  <body>
+    <!-- Fixed Table of Contents -->
+    <nav class="toc-fixed">
+      <h3 class="font-tiempos font-semibold text-lg mb-4 text-gray-900">Contents</h3>
+      <ul class="space-y-2 text-sm">
+        <li>
+          <a href="#problem-definition" class="citation-link">I. Problem Definition</a>
+        </li>
+        <li>
+          <a href="#the-invariant" class="citation-link">II. The Invariant</a>
+        </li>
+        <li>
+          <a href="#cryptographic-interlock" class="citation-link">III. Cryptographic Actuator Interlock</a>
+        </li>
+        <li>
+          <a href="#hardware-root" class="citation-link">IV. Hardware Root of Trust</a>
+        </li>
+        <li>
+          <a href="#ternary-logic" class="citation-link">V. Ternary Logic Mapping</a>
+        </li>
+        <li>
+          <a href="#non-repudiation" class="citation-link">VI. Cryptographic Non-Repudiation</a>
+        </li>
+        <li>
+          <a href="#adversarial-resistance" class="citation-link">VII. Adversarial Resistance</a>
+        </li>
+        <li>
+          <a href="#failure-modes" class="citation-link">VIII. Failure Modes</a>
+        </li>
+        <li>
+          <a href="#dual-lane" class="citation-link">IX. Dual-Lane Architecture</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content px-8 py-12">
+      <!-- Hero Section -->
+      <header class="hero-grid mb-16">
+        <div class="space-y-6">
+          <div class="text-sm font-medium text-gray-500 uppercase tracking-wider">
+            Technical Specification • Ternary Logic Core Doctrine
+          </div>
+          <h1 class="font-tiempos text-5xl font-bold text-gray-900 leading-tight">
+            <em>No Log = No Action</em>
+            <br/>
+            <span class="text-3xl font-normal text-gray-600">Execution Integrity Specification</span>
+          </h1>
+          <p class="text-xl text-gray-600 leading-relaxed">
+            A hardware-enforced architectural constraint that makes log commitment a strict prerequisite for all execution release in Ternary Logic systems, eliminating the evidentiary debt of traditional asynchronous telemetry through cryptographic coupling and physical existence gating.
+          </p>
+          <div class="flex items-center space-x-4 text-sm text-gray-500">
+            <span class="flex items-center">
+              <i class="fas fa-shield-alt mr-2"></i>
+              Hardware-Enforced
+            </span>
+            <span class="flex items-center">
+              <i class="fas fa-lock mr-2"></i>
+              Cryptographically Bound
+            </span>
+            <span class="flex items-center">
+              <i class="fas fa-microchip mr-2"></i>
+              Sub-2ms Latency
+            </span>
+          </div>
+        </div>
+        <div class="relative">
+          <img src="https://kimi-web-img.moonshot.cn/img/upload.wikimedia.org/d1c3fd5d537e1942a82ec026aa4466a4aed15aef.jpg" alt="Hardware security module with cryptographic chips" class="rounded-lg shadow-2xl" size="medium" aspect="wide" color="blue" style="photo" query="hardware security module" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
+        </div>
+      </header>
+
+      <!-- Problem Definition Section -->
+      <section id="problem-definition" class="mb-16">
+        <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">I. Problem Definition: Optional Logging Failure</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <h3 class="font-tiempos text-xl font-semibold mb-4">I.1 Asynchronous Telemetry and Non-Determinism</h3>
+
+          <p>Traditional computing systems fundamentally rely upon <strong>asynchronous telemetry mechanisms</strong> for observability, creating an inherent architectural decoupling between the execution of operations and the persistence of their corresponding audit records. This decoupling manifests as a <strong>temporal gap</strong> between the moment an action completes and the moment its corresponding log entry becomes durable, during which any number of failure modes may intervene to prevent successful persistence.</p>
+
+          <div class="pullquote">
+            &#34;The execution-persistence decoupling creates evidentiary debt: a cumulative gap between the actual state of the system and the explainable state derived from audit records, which grows without bound in the presence of logging failures.&#34;
+          </div>
+
+          <p>The <strong>silent nature of these failures</strong> is particularly pernicious: the absence of a log entry cannot be distinguished from the absence of an action without independent verification mechanisms that the architecture itself fails to provide. This creates a <strong>false sense of completeness</strong> that is more dangerous than acknowledged absence, as investigators may proceed with confidence in their analysis while remaining unaware of the missing evidence.</p>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4 mt-8">I.2 Post-Hoc Reconstruction Limitations</h3>
+
+          <p>The limitations of <strong>post-hoc reconstruction</strong> become apparent when systems attempt to establish behavioral provenance from incomplete or inconsistent log data. When log entries are missing due to buffer overflow, network congestion, or storage exhaustion, reconstruction algorithms must operate upon an incomplete evidentiary substrate, producing outputs that may be technically consistent with available data yet factually incorrect regarding actual system behavior.</p>
+
+          <div class="grid grid-cols-2 gap-6 my-8">
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+              <h4 class="font-semibold mb-3 text-red-600">
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                Evidence Gaps
+              </h4>
+              <p class="text-sm text-gray-600">Missing entries are fundamentally unbridgeable: no algorithm can recover information that was never recorded.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+              <h4 class="font-semibold mb-3 text-orange-600">
+                <i class="fas fa-user-secret mr-2"></i>
+                Adversarial Amplification
+              </h4>
+              <p class="text-sm text-gray-600">Attackers can deliberately trigger conditions that cause log loss while executing malicious actions.</p>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">I.3 Bypass Vectors in Emergency and Hardware Paths</h3>
+
+          <p><strong>Emergency shutdown sequences</strong> in traditional systems frequently implement direct hardware manipulation paths that circumvent normal software logging stacks. These sequences, designed for rapid response to critical conditions, prioritize speed over comprehensiveness, with hard-coded paths that write directly to hardware registers or trigger physical mechanisms without software mediation.</p>
+
+          <div class="expandable">
+            <div class="expandable-header" onclick="toggleExpandable(this)">
+              <span>Detailed Bypass Mechanisms Analysis</span>
+              <i class="fas fa-chevron-down transform transition-transform"></i>
+            </div>
+            <div class="expandable-content">
+              <ul class="space-y-2 text-sm text-gray-600">
+                <li><strong>Direct Memory Access (DMA):</strong> Hardware subsystems can read from and write to system memory without processor involvement or software visibility, completely bypassing logging infrastructure.</li>
+                <li><strong>Memory-Mapped I/O:</strong> Hardware device registers appear as addressable memory locations, allowing direct manipulation of physical interfaces without triggering software interception points.</li>
+                <li><strong>Emergency Interrupts:</strong> ROM-resident firmware handles critical conditions, circumventing operating systems, file systems, and logging daemons.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- The Invariant Section -->
+      <section id="the-invariant" class="mb-16">
+        <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">II. The Invariant: &#34;No Log = No Action&#34;</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <h3 class="font-tiempos text-xl font-semibold mb-4">II.1 Formal Predicate Logic Definition</h3>
+
+          <p>The <strong>&#34;No Log = No Action&#34; invariant</strong> is formally defined as a <strong>universal constraint</strong> over all possible system executions. Let <strong>A</strong> denote the set of all actions, where each action <strong>a ∈ A</strong> represents a potential state transition, transaction, or physical actuation. Let <strong>L</strong> denote the set of all log entries, with <strong>l_a ∈ L</strong> representing the entry corresponding to action <strong>a</strong>.</p>
+
+          <div class="formula-box">
+            <div class="text-center font-mono text-lg">
+              ∀a ∈ A: ActionReleased(a) → LogCommitted(l_a)
+            </div>
+            <div class="mt-4 text-sm text-gray-600">
+              For all actions, action release implies log commitment. The contrapositive ¬LogCommitted(l_a) → ¬ActionReleased(a) establishes the enforcement interpretation: absence of log commitment guarantees prevention of action release.
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">II.2 Linear Temporal Logic Specification</h3>
+
+          <p>The <strong>temporal dynamics</strong> are formally specified using <strong>Linear Temporal Logic (LTL)</strong> with <strong>strict Until operator semantics</strong>, capturing the requirement that log commitment must precede action release in all possible execution traces.</p>
+
+          <div class="formula-box">
+            <div class="text-center font-mono text-lg">
+              G(ActionRequested(a) → (¬ActionReleased(a) U LogCommitted(l_a)))
+            </div>
+            <div class="mt-4 text-sm text-gray-600">
+              Globally, for all action requests: the action remains unreleased strictly until log commitment occurs. The Until operator enforces genuine temporal precedence with strict sequencing.
+            </div>
+          </div>
+
+          <div class="bg-blue-50 border-l-4 border-blue-400 p-4 my-6">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <i class="fas fa-info-circle text-blue-400"></i>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-blue-700">
+                  The LTL formalization is compatible with standard model checking tools such as <a href="https://nusmv.fbk.eu/" class="citation-link">NuSMV</a> and <a href="https://spinroot.com/" class="citation-link">SPIN</a>, enabling formal verification of system implementations against the invariant specification.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">II.3 Log Completeness Criteria</h3>
+
+          <div class="grid grid-cols-3 gap-6 my-8">
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+              <h4 class="font-semibold mb-3 text-blue-600">
+                <i class="fas fa-file-code mr-2"></i>
+                Canonical Serialization
+              </h4>
+              <p class="text-sm text-gray-600 mb-3">Deterministic byte sequence with explicit field ordering, fixed-width encoding, and versioned format.</p>
+              <div class="text-xs text-gray-500">SHA-3-256 • Length-prefixing • Unicode normalization</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+              <h4 class="font-semibold mb-3 text-green-600">
+                <i class="fas fa-fingerprint mr-2"></i>
+                Cryptographic Hashing
+              </h4>
+              <p class="text-sm text-gray-600 mb-3">Preimage-resistant, collision-resistant integrity anchor computed in hardware-protected environments.</p>
+              <div class="text-xs text-gray-500">SHA-3-256 • Hardware isolation • Quantum-resistant</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+              <h4 class="font-semibold mb-3 text-purple-600">
+                <i class="fas fa-hdd mr-2"></i>
+                Physical Persistence
+              </h4>
+              <p class="text-sm text-gray-600 mb-3">Read-back confirmation from non-volatile accumulator with write atomicity and remanence resistance.</p>
+              <div class="text-xs text-gray-500">Battery-backed SRAM • Ferroelectric RAM • Atomic writes</div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">II.4 Action Definition and Scope</h3>
+
+          <p>The <strong>action definition</strong> comprehensively encompasses all mechanisms by which a system produces effects upon its environment. This includes <strong>externally observable effects</strong> such as API responses and network transmissions; <strong>persistent state mutations</strong> including database writes and configuration changes; and <strong>cyber-physical boundary actuations</strong> comprising motor commands, valve positions, and energy conversion to the physical environment.</p>
+
+          <div class="pullquote">
+            &#34;Any state change that results in non-negligible energy transfer to the physical environment qualifies as physical actuation subject to the strictest enforcement of the invariant.&#34;
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Cryptographic Actuator Interlock Section -->
+      <section id="cryptographic-interlock" class="mb-16">
+        <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">III. Cryptographic Actuator Interlock and Execution Coupling</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <h3 class="font-tiempos text-xl font-semibold mb-4">III.1 Protocol-Level Execution Gating</h3>
+
+          <p>The <strong>transformation of logging from observability mechanism to protocol-level execution gate</strong> represents the central architectural innovation. The <strong>write-before-release model</strong> embeds this participation directly into the execution path, such that the attempt to release an action necessarily traverses the logging verification logic, with no alternative pathway that could circumvent this traversal.</p>
+
+          <div class="mermaid-container">
+            <div class="mermaid-controls">
+              <button class="mermaid-control-btn zoom-in" title="放大">
+                <i class="fas fa-search-plus"></i>
+              </button>
+              <button class="mermaid-control-btn zoom-out" title="缩小">
+                <i class="fas fa-search-minus"></i>
+              </button>
+              <button class="mermaid-control-btn reset-zoom" title="重置">
+                <i class="fas fa-expand-arrows-alt"></i>
+              </button>
+              <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                <i class="fas fa-expand"></i>
+              </button>
+            </div>
+            <div class="mermaid">
+              graph TD
+              A[&#34;Action Requested&#34;] --&gt; B{&#34;Log Entry Created&#34;}
+              B --&gt; C[&#34;Canonical Serialization&#34;]
+              C --&gt; D[&#34;Cryptographic Hash&#34;]
+              D --&gt; E[&#34;Merkle Accumulator Update&#34;]
+              E --&gt; F[&#34;Capability Token Generated&#34;]
+              F --&gt; G{&#34;Token Valid?&#34;}
+              G --&gt;|&#34;Yes&#34;| H[&#34;Action Released&#34;]
+              G --&gt;|&#34;No&#34;| I[&#34;Safe Harbor Transition&#34;]
+              H --&gt; J[&#34;Execution Completed&#34;]
+              I --&gt; K[&#34;System Halt&#34;]
+
+              style A fill:#e1f5fe
+              style H fill:#c8e6c9
+              style I fill:#ffcdd2
+              style K fill:#ffebee
+              style G fill:#fff3e0
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">III.2 Hardware-Protected Register Architecture</h3>
+
+          <p>The <strong>registers maintaining the Merkle accumulator root</strong> are implemented as hardware-protected structures with access controls that enforce logging-subsystem exclusivity. These registers are readable by the execution gating logic for verification purposes but modifiable only by the logging subsystem&#39;s hardware state machines, with no processor instruction, DMA transfer, or debug interface capable of direct modification.</p>
+
+          <div class="expandable">
+            <div class="expandable-header" onclick="toggleExpandable(this)">
+              <span>Hardware Protection Mechanisms</span>
+              <i class="fas fa-chevron-down transform transition-transform"></i>
+            </div>
+            <div class="expandable-content">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <h4 class="font-semibold mb-2">Physical Isolation</h4>
+                  <ul class="text-sm text-gray-600 space-y-1">
+                    <li>• Register files isolated from processor memory maps</li>
+                    <li>• Dedicated clock domains prevent timing attacks</li>
+                    <li>• Tamper detection triggers register clearing</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-2">Cryptographic Control</h4>
+                  <ul class="text-sm text-gray-600 space-y-1">
+                    <li>• Authenticated write operations only</li>
+                    <li>• Exclusive signing keys for accumulator updates</li>
+                    <li>• Hardware-level rejection of unauthorized access</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">III.3 Triple Cryptographic Requirements for Release</h3>
+
+          <div class="grid grid-cols-3 gap-6 my-8">
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200">
+              <h4 class="font-semibold mb-3 text-blue-800">
+                <i class="fas fa-fingerprint mr-2"></i>
+                Hash Verification
+              </h4>
+              <p class="text-sm text-blue-700 mb-3">Preimage-resistant log hash validation with structural verification and collision resistance.</p>
+              <div class="text-xs text-blue-600">SHA-3-256 • Hardware computation • Tamper detection</div>
+            </div>
+            <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg border border-green-200">
+              <h4 class="font-semibold mb-3 text-green-800">
+                <i class="fas fa-certificate mr-2"></i>
+                Attestation Quote
+              </h4>
+              <p class="text-sm text-green-700 mb-3">Hardware-generated proof of physical persistence with TPM-signed evidence and platform state attestation.</p>
+              <div class="text-xs text-green-600">TPM quotes • PCR validation • Non-replayable</div>
+            </div>
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg border border-purple-200">
+              <h4 class="font-semibold mb-3 text-purple-800">
+                <i class="fas fa-shield-alt mr-2"></i>
+                Inference Containment
+              </h4>
+              <p class="text-sm text-purple-700 mb-3">Information flow control preventing result propagation until logging completes with side-channel countermeasures.</p>
+              <div class="text-xs text-purple-600">Memory tagging • I/O filtering • Constant-time execution</div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">III.4 Non-Bypassability Guarantees</h3>
+
+          <p>The architectural design <strong>explicitly excludes administrative privilege</strong> as a mechanism for bypassing execution gating. Traditional superuser or root privileges that enable unrestricted system access do not extend to the capability token registers or the execution release gate. This exclusion is implemented through hardware access controls that are not subject to software configuration, with physical isolation preventing any software-privileged operation from affecting the gate state.</p>
+
+          <div class="pullquote">
+            &#34;Even complete kernel control provides no capability to modify protected registers or generate valid attestation quotes without possession of the hardware-protected signing keys.&#34;
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">III.5 Transactional Commit Semantics</h3>
+
+          <p>The <strong>logging and execution operations are structured as a distributed transaction</strong> with atomic commit semantics, ensuring that partial failures cannot result in states where logging is incomplete yet action has occurred, or where logging is complete yet action fails to occur. The transaction scope encompasses log entry generation, hash computation, accumulator update, physical persistence, capability token issuance, and action release signal generation.</p>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Hardware Root of Trust Section -->
+      <section id="hardware-root" class="mb-16">
+        <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">IV. Hardware Root of Trust</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <h3 class="font-tiempos text-xl font-semibold mb-4">IV.1 Secure Enclave Integration</h3>
+
+          <p><strong>Secure enclaves</strong> provide isolated execution environments where the logging subsystem and execution gate logic operate with protection from observation and modification by software outside the enclave boundary. The enclave boundary encompasses the processors, memory, and hardware accelerators dedicated to log processing, with cryptographic mechanisms ensuring that code and data within the enclave cannot be accessed by software outside.</p>
+
+          <div class="bg-white p-6 rounded-lg border border-gray-200 my-8">
+            <img src="https://kimi-web-img.moonshot.cn/img/upload.wikimedia.org/d1c3fd5d537e1942a82ec026aa4466a4aed15aef.jpg" alt="Hardware security module with tamper detection features" class="w-full h-64 object-cover rounded-lg mb-4" size="medium" aspect="wide" style="photo" query="hardware security module tamper detection" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+            <p class="text-sm text-gray-600 italic">Hardware security module with tamper detection mechanisms for physical security assurance</p>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">IV.2 Trusted Platform Module Functions</h3>
+
+          <p>The <strong>Trusted Platform Module (TPM)</strong> provides foundational capabilities for platform integrity measurement and reporting. Platform integrity measurement captures the state of system software from boot ROM through firmware to operating system in a chain of hash computations extended into TPM Platform Configuration Registers (PCRs).</p>
+
+          <div class="grid grid-cols-3 gap-6 my-8">
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+              <h4 class="font-semibold mb-3 text-blue-600">Integrity Measurement</h4>
+              <p class="text-sm text-gray-600 mb-3">Chain of hash computations from boot ROM to operating system, capturing the complete software stack state.</p>
+              <div class="text-xs text-gray-500">PCR extension • Boot path verification • Firmware measurement</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+              <h4 class="font-semibold mb-3 text-green-600">Secure Storage</h4>
+              <p class="text-sm text-gray-600 mb-3">Non-exportable key storage with hardware random number generation and authorization policies.</p>
+              <div class="text-xs text-gray-500">FIPS 140-2/3 • Monotonic counters • Hardware RNG</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+              <h4 class="font-semibold mb-3 text-purple-600">Attestation Quotes</h4>
+              <p class="text-sm text-gray-600 mb-3">Hardware-generated evidence of platform state and log commitment with replay protection.</p>
+              <div class="text-xs text-gray-500">Signed certificates • Timestamp verification • Nonce challenges</div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">IV.3 Hardware Security Module Backing</h3>
+
+          <p>For deployments requiring <strong>higher assurance than commodity TPMs provide</strong>, dedicated Hardware Security Modules (HSMs) offer FIPS 140-2 or FIPS 140-3 certified implementations with rigorous physical and logical security controls. HSMs provide higher-grade tamper resistance with active shielding, environmental sensors, and key destruction upon detected intrusion.</p>
+
+          <div class="expandable">
+            <div class="expandable-header" onclick="toggleExpandable(this)">
+              <span>HSM Security Features</span>
+              <i class="fas fa-chevron-down transform transition-transform"></i>
+            </div>
+            <div class="expandable-content">
+              <div class="space-y-4">
+                <div>
+                  <h4 class="font-semibold text-red-600 mb-2">Physical Security</h4>
+                  <ul class="text-sm text-gray-600 space-y-1">
+                    <li>• Active shielding with intrusion detection meshes</li>
+                    <li>• Environmental sensors (temperature, voltage, radiation)</li>
+                    <li>• Key destruction upon tamper detection</li>
+                    <li>• Fault injection resistance</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-blue-600 mb-2">Cryptographic Operations</h4>
+                  <ul class="text-sm text-gray-600 space-y-1">
+                    <li>• High-performance signing and verification</li>
+                    <li>• Multi-party authorization with threshold schemes</li>
+                    <li>• Side-channel resistant implementations</li>
+                    <li>• Algorithm agility for cryptographic evolution</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">IV.4 Full Trust Chain Construction</h3>
+
+          <p><strong>Physical Unclonable Functions (PUFs)</strong> bind cryptographic keys to specific silicon instances through manufacturing variation that is uncontrollable, unpredictable, and unclonable. PUF-based key derivation ensures that extracted keys from one device are useless for impersonating another, preventing device substitution attacks.</p>
+
+          <div class="pullquote">
+            &#34;The combination of PUF-based device binding, measured boot, and runtime attestation creates defense in depth that cannot be replicated by software mechanisms alone.&#34;
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">IV.5 Software-Only Enforcement Insufficiency</h3>
+
+          <p><strong>Kernel compromise</strong> demonstrates the fundamental inadequacy of software-only enforcement. A compromised kernel can modify system call tables to intercept and suppress logging calls, directly manipulate log files, forge timestamps, and present false information to remote verification systems. The hardware-based gate is immune to kernel compromise because its operation does not depend on kernel-controlled resources.</p>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Ternary Logic Section -->
+      <section id="ternary-logic" class="mb-16">
+        <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">V. Ternary Logic Mapping and Epistemic Hold / Solvency Protocol</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <h3 class="font-tiempos text-xl font-semibold mb-4">V.1 Triadic Decision Space Definition</h3>
+
+          <div class="grid grid-cols-3 gap-6 my-8">
+            <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+              <h4 class="font-semibold mb-3 text-green-800">
+                <i class="fas fa-check-circle mr-2"></i>
+                Act State (+1)
+              </h4>
+              <p class="text-sm text-green-700 mb-3">Committed execution with confidence thresholds satisfied, inputs consistent and complete, all preconditions verified.</p>
+              <div class="text-xs text-green-600">Effector propagation • Hardware gating • Justification logging</div>
+            </div>
+            <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+              <h4 class="font-semibold mb-3 text-red-800">
+                <i class="fas fa-times-circle mr-2"></i>
+                Refuse State (-1)
+              </h4>
+              <p class="text-sm text-red-700 mb-3">Definitive rejection due to policy violations, risk assessment results, or constraint exceedances with full rationale documentation.</p>
+              <div class="text-xs text-red-600">Execution prevention • Accountability closure • Refusal logging</div>
+            </div>
+            <div class="bg-yellow-50 p-6 rounded-lg border border-yellow-200">
+              <h4 class="font-semibold mb-3 text-yellow-800">
+                <i class="fas fa-pause-circle mr-2"></i>
+                Epistemic Hold (0)
+              </h4>
+              <p class="text-sm text-yellow-700 mb-3">Suspended deliberation when confidence is insufficient for reliable classification, preserving optionality while preventing premature commitment.</p>
+              <div class="text-xs text-yellow-600">Uncertainty representation • Intermediate logging • Escalation procedures</div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">V.2 Solvency Protocol in Financial Contexts</h3>
+
+          <p>In <strong>financial and economic decision-making contexts</strong>, the Epistemic Hold state implements the <strong>Solvency Protocol</strong> that preserves system integrity through transaction halting when confidence conditions are not satisfied. The protocol recognizes that financial actions, once executed, may create irreversible obligations, position changes, or counterparty exposures that constrain subsequent options and potentially propagate instability through interconnected networks.</p>
+
+          <div class="mermaid-container">
+            <div class="mermaid-controls">
+              <button class="mermaid-control-btn zoom-in" title="放大">
+                <i class="fas fa-search-plus"></i>
+              </button>
+              <button class="mermaid-control-btn zoom-out" title="缩小">
+                <i class="fas fa-search-minus"></i>
+              </button>
+              <button class="mermaid-control-btn reset-zoom" title="重置">
+                <i class="fas fa-expand-arrows-alt"></i>
+              </button>
+              <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                <i class="fas fa-expand"></i>
+              </button>
+            </div>
+            <div class="mermaid">
+              graph LR
+              A[&#34;Financial Decision Point&#34;] --&gt; B{&#34;Confidence Threshold&#34;}
+              B --&gt;|&#34;≥99%&#34;| C[&#34;Act State
+              <br/>Transaction Execution&#34;]
+              B --&gt;|&#34;≤1%&#34;| D[&#34;Refuse State
+              <br/>Transaction Rejection&#34;]
+              B --&gt;|&#34;1-99%&#34;| E[&#34;Epistemic Hold
+              <br/>Solvency Protocol&#34;]
+
+              E --&gt; F[&#34;Liquidity Preservation&#34;]
+              F --&gt; G[&#34;Position Freezing&#34;]
+              G --&gt; H[&#34;Transaction Halt&#34;]
+              H --&gt; I[&#34;Mandatory Escalation&#34;]
+
+              C --&gt; J[&#34;Logged Execution&#34;]
+              D --&gt; K[&#34;Logged Rejection&#34;]
+              E --&gt; L[&#34;Logged Suspension&#34;]
+
+              style A fill:#e3f2fd
+              style B fill:#fff3e0
+              style C fill:#c8e6c9
+              style D fill:#ffcdd2
+              style E fill:#fff9c4
+              style J fill:#e8f5e8
+              style K fill:#ffebee
+              style L fill:#fffde7
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">V.3 Epistemic Hold Trigger Conditions</h3>
+
+          <div class="space-y-6">
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+              <h4 class="font-semibold mb-3 text-blue-600">
+                <i class="fas fa-question-circle mr-2"></i>
+                Insufficient Confidence Metrics
+              </h4>
+              <p class="text-sm text-gray-600 mb-3">Calculated confidence in decision outcomes falls below configured thresholds due to model uncertainty, input quality degradation, or out-of-distribution conditions.</p>
+              <div class="text-xs text-gray-500">Aleatory uncertainty • Epistemic uncertainty • Aggregation uncertainty • Calibration validation</div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+              <h4 class="font-semibold mb-3 text-orange-600">
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                Conflicting Input Detection
+              </h4>
+              <p class="text-sm text-gray-600 mb-3">Multiple information sources provide mutually inconsistent data that cannot be reconciled through standard fusion methods.</p>
+              <div class="text-xs text-gray-500">Conflict quantification • Source preservation • Resolution algorithms • Adversarial detection</div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+              <h4 class="font-semibold mb-3 text-purple-600">
+                <i class="fas fa-database mr-2"></i>
+                Incomplete Data States
+              </h4>
+              <p class="text-sm text-gray-600 mb-3">Required information is missing, delayed beyond timeout thresholds, or fails quality checks that would enable reliable use.</p>
+              <div class="text-xs text-gray-500">Schema validation • Data requirements • Quality thresholds • Alternative sourcing</div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+              <h4 class="font-semibold mb-3 text-green-600">
+                <i class="fas fa-chart-line mr-2"></i>
+                Outlier Detection Beyond Validated Envelopes
+              </h4>
+              <p class="text-sm text-gray-600 mb-3">Statistical process control and machine learning techniques identify inputs that deviate significantly from historical patterns or model predictions.</p>
+              <div class="text-xs text-gray-500">Distribution analysis • Statistical guarantees • False positive rates • Calibration validation</div>
+            </div>
+          </div>
+
+          <div class="pullquote">
+            &#34;The Epistemic Hold state explicitly represents uncertainty as a valid system condition, enabling systematic handling of ambiguity that binary systems must address through ad hoc mechanisms.&#34;
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Non-Repudiation Section -->
+      <section id="non-repudiation" class="mb-16">
+        <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">VI. Cryptographic Non-Repudiation of Action</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <p><strong>Verifiable prior log requirements</strong> establish that every action is cryptographically linked to predecessor log entries, creating chains of proof from system initialization through current states. Merkle proof techniques provide logarithmic-size evidence of inclusion and ordering, enabling third-party verification independent of continued operator cooperation.</p>
+
+          <div class="grid grid-cols-2 gap-6 my-8">
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-lg border border-blue-200">
+              <h4 class="font-semibold mb-3 text-blue-800">
+                <i class="fas fa-user-check mr-2"></i>
+                Digital Signature Binding
+              </h4>
+              <p class="text-sm text-blue-700 mb-3">Actor identity binding to action commitments ensures authorizing parties cannot repudiate involvement, with signatures computed over action content and documentary precedent.</p>
+              <div class="text-xs text-blue-600">Identity-integrity-logging triads • Non-repudiation chains • Authorization verification</div>
+            </div>
+            <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-lg border border-green-200">
+              <h4 class="font-semibold mb-3 text-green-800">
+                <i class="fas fa-link mr-2"></i>
+                Complete Trace Reconstruction
+              </h4>
+              <p class="text-sm text-green-700 mb-3">Logs serve as behavioral proof enabling complete trace reconstruction with third-party verification through Merkle inclusion proofs and hardware attestation.</p>
+              <div class="text-xs text-green-600">Logarithmic-size proofs • Independent verification • Forensic reconstruction</div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">Invalid Execution States and Response</h3>
+
+          <div class="space-y-4">
+            <div class="bg-red-50 border-l-4 border-red-400 p-4">
+              <h4 class="font-semibold text-red-800 mb-2">Orphaned Actions</h4>
+              <p class="text-sm text-red-700">Actions without corresponding log entries trigger immediate safe harbor transition with key rotation and log segment quarantine.</p>
+            </div>
+            <div class="bg-orange-50 border-l-4 border-orange-400 p-4">
+              <h4 class="font-semibold text-orange-800 mb-2">Hash Mismatches</h4>
+              <p class="text-sm text-orange-700">Tampering detection through hash verification failures results in immediate system halt and forensic preservation of state.</p>
+            </div>
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+              <h4 class="font-semibold text-yellow-800 mb-2">Signature Verification Failures</h4>
+              <p class="text-sm text-yellow-700">Authentication failures trigger credential revocation, access control revalidation, and comprehensive security audit.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Adversarial Resistance Section -->
+      <section id="adversarial-resistance" class="mb-16">
+        <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">VII. Cryptographic Primitives and Adversarial Resistance</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <h3 class="font-tiempos text-xl font-semibold mb-4">VII.1 Canonicalization and Representation Elimination</h3>
+
+          <p><strong>Canonicalization eliminates representation ambiguity</strong> through deterministic serialization with explicit byte-level field ordering and encoding standards. Length-prefixed encoding replaces delimiter-based termination, normalized string representations ensure consistent text processing, and version negotiation enables format evolution while maintaining backward verifiability.</p>
+
+          <div class="bg-blue-50 border-l-4 border-blue-400 p-4 my-6">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <i class="fas fa-code text-blue-400"></i>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-blue-700">
+                  The canonicalization protocol executes within the trusted computing base, with serialized output being the direct input to cryptographic hashing, preventing manipulation between serialization and integrity protection.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">VII.2 Append-Only Structures and Tamper Evidence</h3>
+
+          <p><strong>Hash chains and Merkle accumulators</strong> ensure tamper evidence with avalanche sensitivity to single-bit modification propagating through entire subsequent chains. The append-only nature prevents undetectable deletion or modification, while periodic cross-anchoring to external timestamp services provides additional protection against rollback attacks.</p>
+
+          <div class="mermaid-container">
+            <div class="mermaid-controls">
+              <button class="mermaid-control-btn zoom-in" title="放大">
+                <i class="fas fa-search-plus"></i>
+              </button>
+              <button class="mermaid-control-btn zoom-out" title="缩小">
+                <i class="fas fa-search-minus"></i>
+              </button>
+              <button class="mermaid-control-btn reset-zoom" title="重置">
+                <i class="fas fa-expand-arrows-alt"></i>
+              </button>
+              <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                <i class="fas fa-expand"></i>
+              </button>
+            </div>
+            <div class="mermaid">
+              graph TD
+              A[&#34;Genesis Block&#34;] --&gt; B[&#34;Log Entry 1&#34;]
+              B --&gt; C[&#34;Log Entry 2&#34;]
+              C --&gt; D[&#34;Log Entry 3&#34;]
+              D --&gt; E[&#34;Log Entry 4&#34;]
+
+              B --&gt; F[&#34;Merkle Root 1&#34;]
+              C --&gt; G[&#34;Merkle Root 2&#34;]
+              D --&gt; H[&#34;Merkle Root 3&#34;]
+              E --&gt; I[&#34;Merkle Root 4&#34;]
+
+              F --&gt; J[&#34;Cross-Anchor 1&#34;]
+              G --&gt; K[&#34;Cross-Anchor 2&#34;]
+              H --&gt; L[&#34;Cross-Anchor 3&#34;]
+              I --&gt; M[&#34;Cross-Anchor 4&#34;]
+
+              style A fill:#f3e5f5
+              style B fill:#e8f5e8
+              style C fill:#e8f5e8
+              style D fill:#e8f5e8
+              style E fill:#e8f5e8
+              style F fill:#fff3e0
+              style G fill:#fff3e0
+              style H fill:#fff3e0
+              style I fill:#fff3e0
+              style J fill:#e1f5fe
+              style K fill:#e1f5fe
+              style L fill:#e1f5fe
+              style M fill:#e1f5fe
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">VII.3 Replay Protection and Logging Suppression</h3>
+
+          <div class="grid grid-cols-2 gap-6 my-8">
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+              <h4 class="font-semibold mb-3 text-blue-600">
+                <i class="fas fa-clock mr-2"></i>
+                Timestamp Granularity
+              </h4>
+              <p class="text-sm text-gray-600 mb-3">Hardware-protected clocks with granularity exceeding action execution rates, synchronized through protocols with bounded uncertainty.</p>
+              <div class="text-xs text-gray-500">Monotonic counters • Hardware RNG • Entropy validation • Freshness checking</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+              <h4 class="font-semibold mb-3 text-green-600">
+                <i class="fas fa-network-wired mr-2"></i>
+                Redundant Channels
+              </h4>
+              <p class="text-sm text-gray-600 mb-3">Byzantine fault tolerant redundant logging channels with covert channel detection and suppression countermeasures.</p>
+              <div class="text-xs text-gray-500">Multi-path transmission • Consistency verification • Fault isolation • Attack detection</div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">VII.4 Insider Threat Mitigation and Silent Action Prevention</h3>
+
+          <p><strong>Multi-party authorization for administrative functions</strong> with separation of duties between logging and action authorization prevents single-point compromise. Behavioral anomaly detection monitors privileged user activities, while observable energy consumption correlation with logged activity provides external monitoring independence.</p>
+
+          <div class="pullquote">
+            &#34;Post-commit immutability through write-once storage enforcement and cryptographic proofs makes undetectable modification and deletion computationally infeasible.&#34;
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Failure Modes Section -->
+      <section id="failure-modes" class="mb-16">
+        <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">VIII. Failure Modes and Cyber-Physical / Financial Safe Harbor States</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <h3 class="font-tiempos text-xl font-semibold mb-4">VIII.1 Fail-Closed Behavior Across Critical Failure Modes</h3>
+
+          <div class="grid grid-cols-2 gap-6 my-8">
+            <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+              <h4 class="font-semibold mb-3 text-red-800">
+                <i class="fas fa-hdd mr-2"></i>
+                Storage Failures
+              </h4>
+              <ul class="text-sm text-red-700 space-y-1">
+                <li>• Storage medium write failures</li>
+                <li>• Read-back verification inconsistencies</li>
+                <li>• Accumulator overflow conditions</li>
+                <li>• Memory corruption detection</li>
+              </ul>
+              <div class="mt-3 text-xs text-red-600">Execution blocked • Safe harbor transition • Failure classification</div>
+            </div>
+            <div class="bg-orange-50 p-6 rounded-lg border border-orange-200">
+              <h4 class="font-semibold mb-3 text-orange-800">
+                <i class="fas fa-key mr-2"></i>
+                Cryptographic Failures
+              </h4>
+              <ul class="text-sm text-orange-700 space-y-1">
+                <li>• Hashing inconsistency detection</li>
+                <li>• Signature verification failures</li>
+                <li>• Key rotation failures</li>
+                <li>• Certificate expiration</li>
+              </ul>
+              <div class="mt-3 text-xs text-orange-600">Immediate system halt • Credential revocation • Key destruction</div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">VIII.2 Cyber-Physical Safe Harbor Definition</h3>
+
+          <p>For <strong>cyber-physical systems</strong>, safe harbor states are defined by <strong>kinetic energy minimization with bounded convergence time</strong>, <strong>controlled deceleration with bounded jerk and acceleration profiles</strong>, and <strong>stable equilibrium achievement without active control</strong>. The transition dynamics are pre-computed and verified to achieve safe state from all operational conditions.</p>
+
+          <div class="bg-blue-50 border-l-4 border-blue-400 p-4 my-6">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <i class="fas fa-cog text-blue-400"></i>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-blue-700">
+                  The separation between high-level decision authority denial and low-level control stability preservation is maintained through stabilizing controllers independent of decision authority and safety envelope constraints enforced through separate hardware pathways.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">VIII.3 Financial Safe Harbor Definition</h3>
+
+          <p>For <strong>financial or data-driven implementations</strong>, the safe harbor state is defined as <strong>immediate transaction halting and liquidity preservation</strong>, running parallel to the kinetic safe harbors of cyber-physical systems. This ensures the specification addresses both domains without conflation, with liquidity preservation protocols preventing new obligation creation while maintaining asset availability.</p>
+
+          <div class="grid grid-cols-2 gap-6 my-8">
+            <div class="bg-gradient-to-br from-blue-50 to-cyan-100 p-6 rounded-lg border border-blue-200">
+              <h4 class="font-semibold mb-3 text-blue-800">
+                <i class="fas fa-robot mr-2"></i>
+                Cyber-Physical Safe Harbor
+              </h4>
+              <ul class="text-sm text-blue-700 space-y-2">
+                <li>• Kinetic energy minimization</li>
+                <li>• Bounded convergence time</li>
+                <li>• Controlled deceleration profiles</li>
+                <li>• Passive stability achievement</li>
+              </ul>
+              <div class="mt-3 text-xs text-blue-600">Hardware-enforced • Real-time constraints • Safety envelopes</div>
+            </div>
+            <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-lg border border-green-200">
+              <h4 class="font-semibold mb-3 text-green-800">
+                <i class="fas fa-chart-line mr-2"></i>
+                Financial Safe Harbor
+              </h4>
+              <ul class="text-sm text-green-700 space-y-2">
+                <li>• Immediate transaction halting</li>
+                <li>• Liquidity preservation</li>
+                <li>• Obligation prevention</li>
+                <li>• Asset availability maintenance</li>
+              </ul>
+              <div class="mt-3 text-xs text-green-600">Position freezing • Risk containment • Regulatory compliance</div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">VIII.4 State Machines with Model-Checked Transitions</h3>
+
+          <p><strong>State machines with model-checked transitions</strong> ensure all mode changes lead to safe states, with formal verification of transition correctness and completeness. Passive hazard analysis demonstrates why passive states are insufficient for momentum-carrying or thermally active systems, requiring active control to safe conditions.</p>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">VIII.5 Manual Override Procedures</h3>
+
+          <p><strong>Manual override procedures</strong> require physical presence and multi-party authorization subject to complete logging and subsequent audit. Override attempts are themselves logged through dedicated emergency paths, with the fact of override and its justification captured for post-incident analysis.</p>
+
+          <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+            <img src="https://kimi-web-img.moonshot.cn/img/media.rs-online.com/8b7c3ad1784367792a84f3b4113b46359c4cf613" alt="Industrial emergency stop button with safety features" class="w-full h-48 object-cover rounded-lg mb-4" size="medium" aspect="wide" style="photo" query="industrial emergency stop button" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+            <p class="text-sm text-gray-600 italic">Physical emergency stop system requiring multi-party authorization and comprehensive logging</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Dual-Lane Architecture Section -->
+      <section id="dual-lane" class="mb-16">
+        <h2 class="font-tiempos text-3xl font-bold text-gray-900 mb-8">IX. Integration with Dual-Lane Architecture</h2>
+
+        <div class="prose prose-lg max-w-none">
+          <h3 class="font-tiempos text-xl font-semibold mb-4">IX.1 Fast Lane: Local Hardware-Backed Commitment</h3>
+
+          <p>The <strong>fast lane</strong> enables <strong>local hardware-backed commitment within a strict sub-two-millisecond latency bound</strong>, implemented through dedicated hardware pipelines in FPGA or ASIC technology with simplified log entry formats and battery-backed non-volatile accumulators sufficient for action release. This lane provides the performance required for high-frequency execution while maintaining the invariant&#39;s safety guarantees.</p>
+
+          <div class="grid grid-cols-2 gap-6 my-8">
+            <div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+              <h4 class="font-semibold mb-3 text-blue-800">
+                <i class="fas fa-tachometer-alt mr-2"></i>
+                Performance Characteristics
+              </h4>
+              <ul class="text-sm text-blue-700 space-y-2">
+                <li>• Sub-2ms latency guarantee</li>
+                <li>• Dedicated hardware pipelines</li>
+                <li>• Simplified log entry formats</li>
+                <li>• Battery-backed NV memory</li>
+              </ul>
+              <div class="mt-3 text-xs text-blue-600">ASIC/FPGA implementation • Real-time constraints • High-frequency support</div>
+            </div>
+            <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+              <h4 class="font-semibold mb-3 text-green-800">
+                <i class="fas fa-shield-alt mr-2"></i>
+                Security Guarantees
+              </h4>
+              <ul class="text-sm text-green-700 space-y-2">
+                <li>• Hardware-backed persistence</li>
+                <li>• Cryptographic commitment</li>
+                <li>• Non-bypassable gating</li>
+                <li>• Immediate verification</li>
+              </ul>
+              <div class="mt-3 text-xs text-green-600">Physical existence proof • Capability tokens • Safe harbor enforcement</div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">IX.2 Slow Lane: Asynchronous External Anchoring</h3>
+
+          <p>The <strong>slow lane</strong> provides <strong>asynchronous anchoring to distributed ledgers or timestamp services</strong> for external auditability, with batch compression and cryptographic aggregation preserving individual entry verifiability via Merkle inclusion proofs. This lane enables long-term evidentiary preservation and third-party verification without impacting real-time performance.</p>
+
+          <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 my-6">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <i class="fas fa-info-circle text-yellow-400"></i>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-yellow-700">
+                  <strong>Important Clarification:</strong> Delayed anchoring does not violate the invariant because execution depends exclusively on guaranteed local physical commitment, not immediate global publication. Slow lane failures do not block continued fast lane operation.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">IX.3 Backpressure and Circuit Breaker Behaviors</h3>
+
+          <p><strong>Backpressure and circuit breaker behaviors</strong> manage the interaction between fast and slow lanes, with fast lane queue depth monitoring and admission control preventing overload. Slow lane backlogs trigger rate limiting or batch size increases, while lane isolation prevents cascading failures across boundaries.</p>
+
+          <div class="mermaid-container">
+            <div class="mermaid-controls">
+              <button class="mermaid-control-btn zoom-in" title="放大">
+                <i class="fas fa-search-plus"></i>
+              </button>
+              <button class="mermaid-control-btn zoom-out" title="缩小">
+                <i class="fas fa-search-minus"></i>
+              </button>
+              <button class="mermaid-control-btn reset-zoom" title="重置">
+                <i class="fas fa-expand-arrows-alt"></i>
+              </button>
+              <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                <i class="fas fa-expand"></i>
+              </button>
+            </div>
+            <div class="mermaid">
+              graph TB
+              A[&#34;Action Request&#34;] --&gt; B{&#34;Fast Lane Admission&#34;}
+              B --&gt;|&#34;Accept&#34;| C[&#34;Fast Lane Processing
+              <br/>Sub-2ms Commit&#34;]
+              B --&gt;|&#34;Reject&#34;| D[&#34;Queue/Backoff&#34;]
+
+              C --&gt; E[&#34;Local Hardware Commit&#34;]
+              E --&gt; F[&#34;Slow Lane Queue&#34;]
+
+              F --&gt; G{&#34;Slow Lane Status&#34;}
+              G --&gt;|&#34;Healthy&#34;| H[&#34;Batch &amp; Anchor
+              <br/>External Verification&#34;]
+              G --&gt;|&#34;Backlog&#34;| I[&#34;Rate Limiting
+              <br/>Circuit Breaker&#34;]
+
+              H --&gt; J[&#34;Distributed Ledger
+              <br/>Timestamp Service&#34;]
+              I --&gt; K[&#34;Queue Management
+              <br/>Admission Control&#34;]
+
+              C --&gt; L[&#34;Immediate Response&#34;]
+              J --&gt; M[&#34;Long-term Evidence&#34;]
+              K --&gt; N[&#34;System Stability&#34;]
+
+              style A fill:#e3f2fd
+              style C fill:#e8f5e8
+              style E fill:#fff3e0
+              style H fill:#e1f5fe
+              style I fill:#fff9c4
+              style J fill:#f3e5f5
+              style L fill:#c8e6c9
+              style M fill:#f3e5f5
+              style N fill:#fffde7
+              style B fill:#fff3e0
+              style G fill:#fff3e0
+            </div>
+          </div>
+
+          <h3 class="font-tiempos text-xl font-semibold mb-4">IX.4 Gap Tolerance and Safety-Critical Constraints</h3>
+
+          <p>The <strong>gap tolerance bound</strong> is defined by safety-critical time constants ensuring slow lane delays do not create hazardous uncertainty windows. The system maintains operational safety even with extended slow lane propagation times, as the fast lane&#39;s hardware-backed commitment provides immediate safety guarantees independent of external verification timing.</p>
+
+          <div class="pullquote">
+            &#34;The parallel between kinetic safe harbors in cyber-physical systems and liquidity preservation in financial systems demonstrates the domain-agnostic nature of the underlying invariant, with both implementations ensuring system state remains safe and explainable under uncertainty.&#34;
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="mt-20 pt-8 border-t border-gray-200">
+        <div class="text-center text-sm text-gray-500">
+          <p class="mb-2">TL Core Doctrine: No Log = No Action — Execution Integrity Specification</p>
+          <p>Hardware-enforced architectural constraint for deterministic state integrity and evidentiary continuity</p>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#ffffff',
+                primaryTextColor: '#1a1a1a',
+                primaryBorderColor: '#374151',
+                lineColor: '#374151',
+                secondaryColor: '#f8f7f4',
+                tertiaryColor: '#ffffff',
+                background: '#ffffff',
+                mainBkg: '#ffffff',
+                secondBkg: '#f8f7f4',
+                tertiaryBkg: '#ffffff',
+                fontFamily: 'Inter, sans-serif',
+                fontSize: '14px'
+            },
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'basis',
+                padding: 20
+            },
+            securityLevel: 'loose'
+        });
+
+        // Initialize Mermaid Controls for zoom and pan
+        function initializeMermaidControls() {
+            const containers = document.querySelectorAll('.mermaid-container');
+
+            containers.forEach(container => {
+                const mermaidElement = container.querySelector('.mermaid');
+                let scale = 1;
+                let isDragging = false;
+                let startX, startY, translateX = 0, translateY = 0;
+
+                // 触摸相关状态
+                let isTouch = false;
+                let touchStartTime = 0;
+                let initialDistance = 0;
+                let initialScale = 1;
+                let isPinching = false;
+
+                // Zoom controls
+                const zoomInBtn = container.querySelector('.zoom-in');
+                const zoomOutBtn = container.querySelector('.zoom-out');
+                const resetBtn = container.querySelector('.reset-zoom');
+                const fullscreenBtn = container.querySelector('.fullscreen');
+
+                function updateTransform() {
+                    mermaidElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+                    if (scale > 1) {
+                        container.classList.add('zoomed');
+                    } else {
+                        container.classList.remove('zoomed');
+                    }
+
+                    mermaidElement.style.cursor = isDragging ? 'grabbing' : 'grab';
+                }
+
+                if (zoomInBtn) {
+                    zoomInBtn.addEventListener('click', () => {
+                        scale = Math.min(scale * 1.25, 4);
+                        updateTransform();
+                    });
+                }
+
+                if (zoomOutBtn) {
+                    zoomOutBtn.addEventListener('click', () => {
+                        scale = Math.max(scale / 1.25, 0.3);
+                        if (scale <= 1) {
+                            translateX = 0;
+                            translateY = 0;
+                        }
+                        updateTransform();
+                    });
+                }
+
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', () => {
+                        scale = 1;
+                        translateX = 0;
+                        translateY = 0;
+                        updateTransform();
+                    });
+                }
+
+                if (fullscreenBtn) {
+                    fullscreenBtn.addEventListener('click', () => {
+                        if (container.requestFullscreen) {
+                            container.requestFullscreen();
+                        } else if (container.webkitRequestFullscreen) {
+                            container.webkitRequestFullscreen();
+                        } else if (container.msRequestFullscreen) {
+                            container.msRequestFullscreen();
+                        }
+                    });
+                }
+
+                // Mouse Events
+                mermaidElement.addEventListener('mousedown', (e) => {
+                    if (isTouch) return; // 如果是触摸设备，忽略鼠标事件
+
+                    isDragging = true;
+                    startX = e.clientX - translateX;
+                    startY = e.clientY - translateY;
+                    mermaidElement.style.cursor = 'grabbing';
+                    updateTransform();
+                    e.preventDefault();
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (isDragging && !isTouch) {
+                        translateX = e.clientX - startX;
+                        translateY = e.clientY - startY;
+                        updateTransform();
+                    }
+                });
+
+                document.addEventListener('mouseup', () => {
+                    if (isDragging && !isTouch) {
+                        isDragging = false;
+                        mermaidElement.style.cursor = 'grab';
+                        updateTransform();
+                    }
+                });
+
+                document.addEventListener('mouseleave', () => {
+                    if (isDragging && !isTouch) {
+                        isDragging = false;
+                        mermaidElement.style.cursor = 'grab';
+                        updateTransform();
+                    }
+                });
+
+                // 获取两点之间的距离
+                function getTouchDistance(touch1, touch2) {
+                    return Math.hypot(
+                        touch2.clientX - touch1.clientX,
+                        touch2.clientY - touch1.clientY
+                    );
+                }
+
+                // Touch Events - 触摸事件处理
+                mermaidElement.addEventListener('touchstart', (e) => {
+                    isTouch = true;
+                    touchStartTime = Date.now();
+
+                    if (e.touches.length === 1) {
+                        // 单指拖动
+                        isPinching = false;
+                        isDragging = true;
+
+                        const touch = e.touches[0];
+                        startX = touch.clientX - translateX;
+                        startY = touch.clientY - translateY;
+
+                    } else if (e.touches.length === 2) {
+                        // 双指缩放
+                        isPinching = true;
+                        isDragging = false;
+
+                        const touch1 = e.touches[0];
+                        const touch2 = e.touches[1];
+                        initialDistance = getTouchDistance(touch1, touch2);
+                        initialScale = scale;
+                    }
+
+                    e.preventDefault();
+                }, { passive: false });
+
+                mermaidElement.addEventListener('touchmove', (e) => {
+                    if (e.touches.length === 1 && isDragging && !isPinching) {
+                        // 单指拖动
+                        const touch = e.touches[0];
+                        translateX = touch.clientX - startX;
+                        translateY = touch.clientY - startY;
+                        updateTransform();
+
+                    } else if (e.touches.length === 2 && isPinching) {
+                        // 双指缩放
+                        const touch1 = e.touches[0];
+                        const touch2 = e.touches[1];
+                        const currentDistance = getTouchDistance(touch1, touch2);
+
+                        if (initialDistance > 0) {
+                            const newScale = Math.min(Math.max(
+                                initialScale * (currentDistance / initialDistance),
+                                0.3
+                            ), 4);
+                            scale = newScale;
+                            updateTransform();
+                        }
+                    }
+
+                    e.preventDefault();
+                }, { passive: false });
+
+                mermaidElement.addEventListener('touchend', (e) => {
+                    // 重置状态
+                    if (e.touches.length === 0) {
+                        isDragging = false;
+                        isPinching = false;
+                        initialDistance = 0;
+
+                        // 延迟重置isTouch，避免鼠标事件立即触发
+                        setTimeout(() => {
+                            isTouch = false;
+                        }, 100);
+                    } else if (e.touches.length === 1 && isPinching) {
+                        // 从双指变为单指，切换为拖动模式
+                        isPinching = false;
+                        isDragging = true;
+
+                        const touch = e.touches[0];
+                        startX = touch.clientX - translateX;
+                        startY = touch.clientY - translateY;
+                    }
+
+                    updateTransform();
+                });
+
+                mermaidElement.addEventListener('touchcancel', (e) => {
+                    isDragging = false;
+                    isPinching = false;
+                    initialDistance = 0;
+
+                    setTimeout(() => {
+                        isTouch = false;
+                    }, 100);
+
+                    updateTransform();
+                });
+
+                // Enhanced wheel zoom with better center point handling
+                container.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    const rect = container.getBoundingClientRect();
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                    const newScale = Math.min(Math.max(scale * delta, 0.3), 4);
+
+                    // Adjust translation to zoom towards center
+                    if (newScale !== scale) {
+                        const scaleDiff = newScale / scale;
+                        translateX = translateX * scaleDiff;
+                        translateY = translateY * scaleDiff;
+                        scale = newScale;
+
+                        if (scale <= 1) {
+                            translateX = 0;
+                            translateY = 0;
+                        }
+
+                        updateTransform();
+                    }
+                });
+
+                // Initialize display
+                updateTransform();
+            });
+        }
+
+        // Initialize the mermaid controls
+        initializeMermaidControls();
+
+        // Expandable functionality
+        function toggleExpandable(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('i');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                content.style.maxHeight = '0';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('expanded');
+                content.style.maxHeight = '1000px';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight active section in TOC
+        function highlightActiveSection() {
+            const sections = document.querySelectorAll('section[id]');
+            const tocLinks = document.querySelectorAll('.toc-fixed a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            tocLinks.forEach(link => {
+                link.classList.remove('font-semibold', 'text-blue-600');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('font-semibold', 'text-blue-600');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightActiveSection);
+        highlightActiveSection(); // Initial call
+    </script>
+  
+
+</body></html>
