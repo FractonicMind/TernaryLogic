@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>No Log = No Action — Ternary Logic Core Doctrine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0f;
+    --paper: #f5f3ee;
+    --paper-2: #ede9e1;
+    --accent: #c8370a;
+    --accent-soft: #e8c4b8;
+    --gold: #b8933a;
+    --gold-light: #f0e4c0;
+    --blue-cold: #1a2b4a;
+    --rule: #c4bdb0;
+    --mono-bg: #1e1e28;
+    --mono-text: #a8d8b0;
+    --section-num: #c8370a;
+    --nav-w: 260px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Figtree', sans-serif;
+    font-weight: 400;
+    line-height: 1.75;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR NAV ── */
+  nav#sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--nav-w);
+    height: 100vh;
+    background: var(--blue-cold);
+    color: #c8d8f0;
+    overflow-y: auto;
+    padding: 2rem 1.5rem 3rem;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-right: 1px solid #2e3f60;
+  }
+
+  nav#sidebar .brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+  }
+
+  nav#sidebar .nav-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: #e8f0ff;
+    line-height: 1.3;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #2e3f60;
+  }
+
+  nav#sidebar ul { list-style: none; display: flex; flex-direction: column; gap: 0; }
+
+  nav#sidebar ul li a {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.55rem 0.5rem;
+    text-decoration: none;
+    color: #8aa8d0;
+    font-size: 0.72rem;
+    font-family: 'Figtree', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1.35;
+    border-left: 2px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  nav#sidebar ul li a:hover,
+  nav#sidebar ul li a.active {
+    color: #e8f0ff;
+    border-left-color: var(--accent);
+    background: rgba(200, 55, 10, 0.08);
+    padding-left: 0.9rem;
+  }
+
+  nav#sidebar ul li a .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--accent);
+    margin-top: 0.1rem;
+    flex-shrink: 0;
+  }
+
+  nav#sidebar .nav-footer {
+    margin-top: auto;
+    padding-top: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    color: #4a6080;
+    line-height: 1.6;
+    border-top: 1px solid #2e3f60;
+  }
+
+  /* ── MAIN CONTENT ── */
+  main {
+    margin-left: var(--nav-w);
+    flex: 1;
+    max-width: 900px;
+    padding: 0 3.5rem 6rem;
+  }
+
+  /* ── HERO HEADER ── */
+  header.hero {
+    padding: 4rem 0 3rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 3.5rem;
+    position: relative;
+  }
+
+  header.hero::before {
+    content: 'TL · CORE DOCTRINE · EXECUTION INTEGRITY SPECIFICATION';
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  header.hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  header.hero h1 span {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  header.hero .subtitle {
+    font-family: 'Figtree', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: #4a4a5a;
+    margin-top: 1rem;
+    max-width: 560px;
+  }
+
+  header.hero .meta-row {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.8rem;
+    flex-wrap: wrap;
+  }
+
+  header.hero .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  header.hero .meta-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #888;
+  }
+
+  header.hero .meta-value {
+    font-family: 'Figtree', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ── INVARIANT CALLOUT ── */
+  .invariant-callout {
+    background: var(--blue-cold);
+    color: #e8f0ff;
+    border-radius: 4px;
+    padding: 2rem 2.5rem;
+    margin: 2.5rem 0 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .invariant-callout::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--accent);
+  }
+
+  .invariant-callout .ic-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .invariant-callout .ic-formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    color: #c8f0d8;
+    line-height: 1.8;
+    margin-bottom: 0.8rem;
+  }
+
+  .invariant-callout .ic-desc {
+    font-size: 0.82rem;
+    color: #8aa8d0;
+    line-height: 1.6;
+  }
+
+  /* ── SECTION ── */
+  section.spec-section {
+    margin-bottom: 4rem;
+    scroll-margin-top: 2rem;
+  }
+
+  section.spec-section .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  section.spec-section .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+    padding-top: 0.3rem;
+  }
+
+  section.spec-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.55rem;
+    color: var(--ink);
+    line-height: 1.25;
+    font-weight: 400;
+  }
+
+  section.spec-section p {
+    font-size: 0.93rem;
+    line-height: 1.85;
+    color: #1e1e2e;
+    margin-bottom: 1.2rem;
+  }
+
+  section.spec-section p strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ── FORMAL LOGIC BLOCKS ── */
+  .logic-block {
+    background: var(--mono-bg);
+    border-radius: 4px;
+    padding: 1.4rem 1.8rem;
+    margin: 1.5rem 0;
+    border-left: 3px solid var(--accent);
+    overflow-x: auto;
+  }
+
+  .logic-block .lb-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.7rem;
+    display: block;
+  }
+
+  .logic-block code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--mono-text);
+    line-height: 2;
+    white-space: pre;
+    display: block;
+  }
+
+  .logic-block .comment {
+    color: #5a7a6a;
+    font-style: italic;
+  }
+
+  /* ── TRIADIC STATE DIAGRAM ── */
+  .triadic-diagram {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+  }
+
+  .triadic-state {
+    flex: 1;
+    min-width: 180px;
+    padding: 1.4rem 1.5rem;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .triadic-state::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 60px; height: 60px;
+    border-radius: 0 0 0 60px;
+    opacity: 0.08;
+  }
+
+  .ts-act { background: #0f2a1a; border: 1px solid #2a6a3a; }
+  .ts-act::after { background: #4aff7a; }
+  .ts-refuse { background: #2a0f0f; border: 1px solid #6a2a2a; }
+  .ts-refuse::after { background: #ff4a4a; }
+  .ts-hold { background: #1a1a0f; border: 1px solid #5a5a2a; }
+  .ts-hold::after { background: #ffdd4a; }
+
+  .ts-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+  }
+
+  .ts-act .ts-value { color: #4aff7a; }
+  .ts-refuse .ts-value { color: #ff6a6a; }
+  .ts-hold .ts-value { color: #ffdd4a; }
+
+  .ts-name {
+    font-family: 'Figtree', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .ts-act .ts-name { color: #8adfaa; }
+  .ts-refuse .ts-name { color: #df8a8a; }
+  .ts-hold .ts-name { color: #dfcc8a; }
+
+  .ts-desc {
+    font-size: 0.72rem;
+    line-height: 1.55;
+    color: #808080;
+  }
+
+  /* ── TRUST CHAIN ── */
+  .trust-chain {
+    margin: 2rem 0;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .trust-chain-title {
+    background: var(--blue-cold);
+    color: #c8d8f0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.2rem;
+  }
+
+  .trust-layer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.2rem;
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.15s;
+    position: relative;
+  }
+
+  .trust-layer:last-child { border-bottom: none; }
+  .trust-layer:hover { background: var(--paper-2); }
+
+  .tl-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--accent);
+    width: 1.5rem;
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  .tl-bar {
+    width: 4px;
+    height: 36px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .tl-content { flex: 1; }
+
+  .tl-name {
+    font-family: 'Figtree', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.15rem;
+  }
+
+  .tl-desc {
+    font-size: 0.72rem;
+    color: #666;
+    line-height: 1.4;
+  }
+
+  .tl-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  /* ── DUAL LANE DIAGRAM ── */
+  .dual-lane {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .lane-card {
+    border-radius: 4px;
+    padding: 1.4rem;
+    position: relative;
+  }
+
+  .lane-fast {
+    background: #0f1e10;
+    border: 1px solid #2a5a2a;
+  }
+
+  .lane-slow {
+    background: #0f0f2a;
+    border: 1px solid #2a2a6a;
+  }
+
+  .lane-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .lane-fast .lane-label { color: #4aff7a; }
+  .lane-slow .lane-label { color: #7a7aff; }
+
+  .lane-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: #e8f0ff;
+    margin-bottom: 0.8rem;
+  }
+
+  .lane-spec {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: #606080;
+    line-height: 1.8;
+  }
+
+  .lane-spec strong {
+    color: #a0b0d0;
+    font-weight: 500;
+  }
+
+  /* ── FAILURE MODES TABLE ── */
+  .failure-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.8rem;
+  }
+
+  .failure-table thead th {
+    background: var(--blue-cold);
+    color: #c8d8f0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.7rem 1rem;
+    text-align: left;
+    font-weight: 400;
+  }
+
+  .failure-table tbody tr {
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.15s;
+  }
+
+  .failure-table tbody tr:hover { background: var(--paper-2); }
+
+  .failure-table tbody td {
+    padding: 0.75rem 1rem;
+    color: #2a2a3a;
+    line-height: 1.5;
+    vertical-align: top;
+  }
+
+  .failure-table .fm-mode {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .fm-response {
+    font-size: 0.76rem;
+    color: #1a3a1a;
+    font-weight: 500;
+  }
+
+  /* ── CONCLUSION ── */
+  .conclusion {
+    background: var(--gold-light);
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    padding: 2rem 2.5rem;
+    margin: 3rem 0 0;
+  }
+
+  .conclusion .c-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .conclusion p {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: #2a1a00;
+    margin-bottom: 0.8rem;
+  }
+
+  .conclusion p:last-child { margin-bottom: 0; }
+
+  /* ── SCROLLBAR ── */
+  nav#sidebar::-webkit-scrollbar { width: 4px; }
+  nav#sidebar::-webkit-scrollbar-track { background: transparent; }
+  nav#sidebar::-webkit-scrollbar-thumb { background: #2e3f60; border-radius: 2px; }
+
+  /* ── PAGE LOAD ANIMATION ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  header.hero { animation: fadeUp 0.6s ease both; }
+  .invariant-callout { animation: fadeUp 0.6s 0.15s ease both; }
+  section.spec-section { animation: fadeUp 0.5s ease both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 800px) {
+    nav#sidebar { display: none; }
+    main { margin-left: 0; padding: 0 1.5rem 4rem; }
+    .dual-lane { grid-template-columns: 1fr; }
+    .triadic-diagram { flex-direction: column; }
+  }
+
+  @media print {
+    nav#sidebar { display: none; }
+    main { margin-left: 0; }
+    .logic-block { background: #f0f0f0; border-color: #333; }
+    .logic-block code { color: #111; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<nav id="sidebar">
+  <div class="brand">Ternary Logic (TL)</div>
+  <div class="nav-title">No Log =<br>No Action</div>
+  <ul>
+    <li><a href="#s0"><span class="num">§0</span> Invariant Overview</a></li>
+    <li><a href="#s1"><span class="num">I</span> Optional Logging Failure</a></li>
+    <li><a href="#s2"><span class="num">II</span> The Invariant</a></li>
+    <li><a href="#s3"><span class="num">III</span> Cryptographic Actuator Interlock</a></li>
+    <li><a href="#s4"><span class="num">IV</span> Hardware Root of Trust</a></li>
+    <li><a href="#s5"><span class="num">V</span> TL Mapping &amp; Epistemic Hold</a></li>
+    <li><a href="#s6"><span class="num">VI</span> Cryptographic Non-Repudiation</a></li>
+    <li><a href="#s7"><span class="num">VII</span> Adversarial Resistance</a></li>
+    <li><a href="#s8"><span class="num">VIII</span> Failure Modes &amp; Safe Harbor</a></li>
+    <li><a href="#s9"><span class="num">IX</span> Dual-Lane Architecture</a></li>
+    <li><a href="#conclusion"><span class="num">∎</span> Conclusion</a></li>
+  </ul>
+  <div class="nav-footer">
+    Author: Lev Goukassian<br>
+    ORCID: 0009-0006-5966-1243<br>
+    Framework: Ternary Logic (TL)<br>
+    Classification: Core Doctrine
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main>
+
+  <header class="hero">
+    <h1><span>No Log = No Action</span></h1>
+    <p class="subtitle">A non-bypassable execution invariant for deterministic state integrity, evidentiary continuity, and guaranteed post-execution traceability within the Ternary Logic framework.</p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-label">Framework</span>
+        <span class="meta-value">Ternary Logic (TL)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Author</span>
+        <span class="meta-value">Lev Goukassian</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">ORCID</span>
+        <span class="meta-value">0009-0006-5966-1243</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Classification</span>
+        <span class="meta-value">Core Doctrine · Execution Integrity</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- INVARIANT CALLOUT -->
+  <div id="s0" class="invariant-callout">
+    <div class="ic-label">Primary Invariant — LTL Formulation</div>
+    <div class="ic-formula">◇exec(a) → (¬exec(a) U (log(a) ∧ ¬exec(a)))
+
+AG(∀a ∈ Act : exec(a) → logged(a))</div>
+    <div class="ic-desc">For all actions a: if execution ever occurs on any trace, then exec(a) must not hold until log(a) holds, and log(a) must be physically committed to a hardware-backed non-volatile accumulator before the gate releases.</div>
+  </div>
+
+  <!-- SECTION I -->
+  <section class="spec-section" id="s1">
+    <div class="section-header">
+      <span class="section-num">§ I</span>
+      <h2>Problem Definition: Optional Logging Failure</h2>
+    </div>
+
+    <p>Traditional computing and control architectures treat logging as a telemetry concern, decoupled from execution by asynchronous buffering, deferred writes, and best-effort delivery semantics. In such systems, the execution path and the persistence path are independent: an action completes on the main processor pipeline while a log entry is enqueued in a memory buffer, forwarded through a network stack, and eventually written to a storage backend. This architectural separation introduces <strong>non-determinism between execution and persistence</strong>, because the temporal ordering of action completion and log commitment is not enforced by any structural constraint.</p>
+
+    <p>Actions routinely complete while their corresponding log entries remain in volatile buffers, transit queues, or write-back caches, any of which may be lost to power interruption, process termination, memory pressure eviction, or network partition. The result is that the observability layer provides a probabilistic, best-effort record of system behavior rather than a deterministic, complete, and tamper-evident proof of every externally visible effect.</p>
+
+    <p>Post-hoc reconstruction, the standard forensic technique applied when logs are incomplete, is fundamentally unreliable under these conditions. Reconstruction depends on correlating timestamps across distributed components, but clock skew, NTP drift, and deliberate clock manipulation introduce timing inconsistencies that make causal ordering ambiguous. Under adversarial conditions, an attacker with sufficient privilege can selectively delete, modify, or forge log entries, rendering post-hoc analysis not merely incomplete but actively misleading.</p>
+
+    <p>Two classes of execution path are particularly dangerous because they reach physical interfaces without traversing any software logging stack. Emergency shutdown sequences in industrial control systems bypass normal software layers entirely, driving actuators through dedicated hardware circuits. <strong>Direct Memory Access and memory-mapped I/O paths</strong> allow DMA-capable peripherals to read and write physical memory without CPU intervention or software mediation, triggering externally observable effects with no logging whatsoever. Even IOMMU protections are insufficient: documented vulnerabilities include early boot gaps, deferred DMA attacks exploiting stale mappings, and message-signaled interrupt forgery. Telemetry provides observability but not enforcement; any architecture that permits action without structurally guaranteed prior log commitment cannot provide the evidentiary integrity that Ternary Logic demands.</p>
+  </section>
+
+  <!-- SECTION II -->
+  <section class="spec-section" id="s2">
+    <div class="section-header">
+      <span class="section-num">§ II</span>
+      <h2>The Invariant: No Log = No Action</h2>
+    </div>
+
+    <p>This specification defines the No Log = No Action invariant as a structural execution constraint requiring that no state transition, transaction, API call, or physical actuation may be released unless a corresponding log entry has been fully committed to a local hardware-backed non-volatile accumulator. The invariant is not a policy, a configuration parameter, or a software check; it is an architectural coupling enforced through the physical topology of the execution path.</p>
+
+    <p>The invariant is defined over a transition system TS = (S, Act, T, I, AP, L). Two atomic propositions are distinguished: <strong>log(a)</strong>, which holds when a log entry for action a has been fully committed with integrity verified, and <strong>exec(a)</strong>, which holds when action a has produced an externally observable effect.</p>
+
+    <div class="logic-block">
+      <span class="lb-label">LTL Primary Invariant — Strict Until Semantics (Dwyer-Avrunin-Corbett)</span>
+      <code><span class="comment">// For all actions a in the action space:</span>
+◇exec(a) → (¬exec(a) U (log(a) ∧ ¬exec(a)))
+
+<span class="comment">// Past-time equivalent (O = Once operator):</span>
+□(exec(a) → O(log(a)))</code>
+    </div>
+
+    <div class="logic-block">
+      <span class="lb-label">CTL Formulation — Universal Path Quantification</span>
+      <code><span class="comment">// No path exists where exec(a) precedes log(a):</span>
+¬E[¬log(a) U exec(a)]
+
+<span class="comment">// Weak Until: exec(a) does not occur until log(a) holds:</span>
+A[¬exec(a) W log(a)]
+
+<span class="comment">// Global safety property:</span>
+AG(∀a ∈ Act : exec(a) → logged(a))</code>
+    </div>
+
+    <p><strong>Log completeness</strong> is defined as the conjunction of four conditions: (1) canonical serialization through a deterministic form such as JCS (RFC 8785) or deterministic CBOR; (2) cryptographic hashing with collision-resistant output included in the Merkle accumulator and linked via hash chain; (3) physical persistence to a hardware-backed non-volatile storage element that retains data across power loss; and (4) read-back confirmation with integrity check verifying that the stored hash matches the recomputed hash.</p>
+
+    <div class="logic-block">
+      <span class="lb-label">Inductive Proof Obligations</span>
+      <code>Let Inv(s) ≡ ∀a ∈ Act :
+  executing(a, s) →
+    ∃e ∈ Log(s) :
+      (e.action = a) ∧
+      (e.timestamp &lt; exec_time(a, s)) ∧
+      verified(e.hash, s)
+
+Base:    ∀s₀ ∈ I : Inv(s₀)       <span class="comment">// No actions executing at init</span>
+Step:    Inv(s) ∧ T(s,a,s') → Inv(s') <span class="comment">// Gate enforces prior commitment</span>
+Safety:  Inv(s) → AG(exec(a) → logged(a))</code>
+    </div>
+  </section>
+
+  <!-- SECTION III -->
+  <section class="spec-section" id="s3">
+    <div class="section-header">
+      <span class="section-num">§ III</span>
+      <h2>Cryptographic Actuator Interlock &amp; Execution Coupling</h2>
+    </div>
+
+    <p>The No Log = No Action invariant transforms logging into a protocol-level gate embedded directly in the execution path, enforcing a strict write-before-release model. The core mechanism is a <strong>Merkle accumulator whose root hash serves as the current execution capability token</strong>, stored in a hardware-protected register accessible only to the logging subsystem and the actuator interlock, and not writable by any other component regardless of privilege level.</p>
+
+    <p>Any attempt to execute an action without presenting a valid capability token that matches the current Merkle root triggers an immediate fault condition, halting the action and initiating a safe harbor transition. Actuator release requires the simultaneous satisfaction of three independent cryptographic requirements:</p>
+
+    <div class="logic-block">
+      <span class="lb-label">Three-Part Actuator Release Condition</span>
+      <code>Release(a) ⟺
+  ValidHash(log_entry(a))          <span class="comment">// Preimage + collision resistance (≥128-bit)</span>
+  ∧ HWAttestation(merkle_root, n)  <span class="comment">// TPM/enclave signed quote with nonce</span>
+  ∧ InferenceContained(a)          <span class="comment">// Decision vector logged before propagation</span></code>
+    </div>
+
+    <p>This specification states explicitly that <strong>no administrative privilege, software override, hypervisor code, or System Management Mode firmware can bypass execution gating</strong>. The actuator interlock operates at a layer below all software privilege levels: the electrical path from the decision logic to the external actuator physically traverses the interlock hardware, and there is no alternate routing that circumvents it. Transactional semantics enforce atomic commit or full abort: the sequence Idle → Proposed → Logging → Committed → Executing → Complete admits no partial states.</p>
+  </section>
+
+  <!-- SECTION IV -->
+  <section class="spec-section" id="s4">
+    <div class="section-header">
+      <span class="section-num">§ IV</span>
+      <h2>Hardware Root of Trust</h2>
+    </div>
+
+    <p>The invariant depends on a hardware root of trust anchoring the entire enforcement chain in tamper-resistant physical components. The trust chain extends from immutable boot ROM through measured firmware stages to the execution gate hardware, with each link cryptographically verified before control passes to the next.</p>
+
+    <div class="trust-chain">
+      <div class="trust-chain-title">Trust Chain — Boot ROM to Execution Gate</div>
+
+      <div class="trust-layer">
+        <span class="tl-num">L1</span>
+        <div class="tl-bar" style="background: #c8370a;"></div>
+        <div class="tl-content">
+          <div class="tl-name">Boot ROM / Root of Trust for Measurement</div>
+          <div class="tl-desc">Mask ROM or OTP memory — cannot be modified post-manufacture. Contains first measurement code. Extends hash into TPM PCR 0.</div>
+        </div>
+        <span class="tl-badge" style="background:#2a0f00;color:#ff8060;">IMMUTABLE</span>
+      </div>
+
+      <div class="trust-layer">
+        <span class="tl-num">L2</span>
+        <div class="tl-bar" style="background: #b8933a;"></div>
+        <div class="tl-content">
+          <div class="tl-name">TPM 2.0 (ISO/IEC 11889) — PCR Measurement Chain</div>
+          <div class="tl-desc">PCR_new = Hash(PCR_old ∥ measurement). Irreversible extend operation. Signs current PCR values as attestation quotes via Endorsement Key.</div>
+        </div>
+        <span class="tl-badge" style="background:#2a200a;color:#c8a040;">TAMPER-EVIDENT</span>
+      </div>
+
+      <div class="trust-layer">
+        <span class="tl-num">L3</span>
+        <div class="tl-bar" style="background: #3a70c8;"></div>
+        <div class="tl-content">
+          <div class="tl-name">Secure Enclave (Intel SGX / ARM TrustZone)</div>
+          <div class="tl-desc">Logging subsystem executes in hardware-protected memory. MRENCLAVE hash in remote attestation reports. TrustZone enforces Normal/Secure World boundary at bus level.</div>
+        </div>
+        <span class="tl-badge" style="background:#0a1a2a;color:#6090e0;">ISOLATED</span>
+      </div>
+
+      <div class="trust-layer">
+        <span class="tl-num">L4</span>
+        <div class="tl-bar" style="background: #3a8a5a;"></div>
+        <div class="tl-content">
+          <div class="tl-name">HSM (FIPS 140-3 Level 3/4)</div>
+          <div class="tl-desc">Key material never leaves boundary in plaintext. Tamper-detection via conductive mesh, light sensors, voltage/temp monitors. Level 4: full tamper-reactive envelope.</div>
+        </div>
+        <span class="tl-badge" style="background:#0a1a0a;color:#50c070;">ZEROIZE</span>
+      </div>
+
+      <div class="trust-layer">
+        <span class="tl-num">L5</span>
+        <div class="tl-bar" style="background: #8a3ac8;"></div>
+        <div class="tl-content">
+          <div class="tl-name">Physical Unclonable Function (PUF)</div>
+          <div class="tl-desc">Device-unique identity from silicon manufacturing variance (SRAM power-up states, ring oscillator deltas). No stored key — reconstructed from physics on demand. Invasion destroys identity.</div>
+        </div>
+        <span class="tl-badge" style="background:#1a0a2a;color:#a060e0;">UNCLONABLE</span>
+      </div>
+
+      <div class="trust-layer">
+        <span class="tl-num">L6</span>
+        <div class="tl-bar" style="background: #c8370a;"></div>
+        <div class="tl-content">
+          <div class="tl-name">Cryptographic Actuator Interlock (FPGA/ASIC Gate)</div>
+          <div class="tl-desc">Physical electrical path to actuator traverses verification gate. No software path bypasses it. Merkle root register accessible only to logging subsystem. Fault triggers safe harbor.</div>
+        </div>
+        <span class="tl-badge" style="background:#2a0a00;color:#ff6040;">GATED</span>
+      </div>
+    </div>
+
+    <p>The insufficiency of software-only enforcement is demonstrated through four attack vectors: <strong>kernel compromise</strong> (full physical memory access enables log suppression); <strong>hypervisor escape</strong> (documented exploits grant host memory modification); <strong>SMM subversion</strong> (SMM operates above hypervisor privilege, SMM callout vulnerabilities enable OS-level code to run at SMM privilege); and <strong>supply chain substitution</strong> (compromised UEFI modules or device firmware subvert the entire software stack before OS load). Hardware enforcement is the only sufficient countermeasure.</p>
+  </section>
+
+  <!-- SECTION V -->
+  <section class="spec-section" id="s5">
+    <div class="section-header">
+      <span class="section-num">§ V</span>
+      <h2>The Ternary Logic Mapping &amp; Epistemic Hold / Solvency Protocol</h2>
+    </div>
+
+    <p>The Ternary Logic framework defines a triadic decision space T = {+1, 0, −1} governing every decision cycle. Every decision cycle must produce a committed log entry recording which state was reached, the complete decision vector, confidence metrics, raw input data, and the specific trigger condition — before the result is released to any downstream consumer.</p>
+
+    <div class="triadic-diagram">
+      <div class="triadic-state ts-act">
+        <div class="ts-value">+1</div>
+        <div class="ts-name">Act</div>
+        <div class="ts-desc">Sufficient confidence. Action aligned with operational constraints, risk thresholds, and input validity. Log entry must commit before action releases.</div>
+      </div>
+      <div class="triadic-state ts-refuse">
+        <div class="ts-value">−1</div>
+        <div class="ts-name">Refuse</div>
+        <div class="ts-desc">Hard constraint violated. Risk boundary exceeded. Validity check failed. Refusal notification must be logged before release to downstream.</div>
+      </div>
+      <div class="triadic-state ts-hold">
+        <div class="ts-value">0</div>
+        <div class="ts-name">Epistemic Hold<br>/ Solvency Protocol</div>
+        <div class="ts-desc">System cannot determine. Confidence below threshold, conflicting inputs, incomplete data, or out-of-distribution input detected. Execution suspended. All intermediate artifacts logged before any continuation.</div>
+      </div>
+    </div>
+
+    <p>Epistemic Hold is a mandatory state triggered by any of four conditions: confidence below a calibrated per-domain threshold; conflicting inputs providing contradictory evidence; incomplete data with missing, corrupted, or stale-beyond-freshness-bound fields; and out-of-distribution inputs falling outside the convex hull or statistical boundary of the training distribution, as detected by distance metrics, anomaly scores, or distribution shift detectors.</p>
+
+    <p><strong>Forced continuation prevention</strong> is enforced through three mechanisms: cryptographic time-lock functions (Wesolowski VDF — sequential squaring in a group of unknown order, not parallelizable) that require proof of elapsed time before exit from Epistemic Hold; external pressure detection through timing analysis flagging anomalous latency acceleration; and a complete audit trail of every override attempt with origin attribution, itself requiring log commitment before evaluation.</p>
+
+    <div class="logic-block">
+      <span class="lb-label">Epistemic Hold Formal Trigger Conditions</span>
+      <code>EpistemicHold(a) ⟺
+  (confidence(a) &lt; θ_domain)           <span class="comment">// Below calibrated threshold</span>
+  ∨ (∃ i,j : input_i(a) ⊕ input_j(a))  <span class="comment">// Conflicting inputs</span>
+  ∨ (∃ f : missing(f) ∨ stale(f))       <span class="comment">// Incomplete data</span>
+  ∨ (dist(input(a), D_train) > δ_ood)   <span class="comment">// Out-of-distribution</span>
+
+<span class="comment">// All of the following must be logged BEFORE continuation:</span>
+Log_Hold(a) := {
+  uncertainty_vector, calibration_metadata,
+  raw_input_bytes, ood_detector_output,
+  vdf_proof, override_audit_trail
+}</code>
+    </div>
+  </section>
+
+  <!-- SECTION VI -->
+  <section class="spec-section" id="s6">
+    <div class="section-header">
+      <span class="section-num">§ VI</span>
+      <h2>Cryptographic Non-Repudiation of Action</h2>
+    </div>
+
+    <p>Every action committed under the invariant must satisfy verifiable prior log requirements establishing an unbroken chain of cryptographic proof from system initialization through the current state. This chain begins at the boot measurement sequence (TPM PCR values) and extends through every logged decision and action via the Merkle accumulator's append-only structure.</p>
+
+    <p>For any action a executed at time t, a <strong>Merkle inclusion proof of O(log n) hash values</strong> demonstrates that the log entry for a is a leaf in the accumulator whose root was the active capability token at time t. A <strong>Merkle consistency proof of O(log n) hash values</strong> demonstrates that the accumulator state at any earlier time t' is a prefix of the accumulator state at t, confirming no entries were deleted, modified, or reordered.</p>
+
+    <div class="logic-block">
+      <span class="lb-label">Identity-Integrity-Logging Triad — Non-Repudiation Structure</span>
+      <code">Signature covers:
+  canonical_bytes(log_entry(a))
+  || TL_state ∈ {+1, 0, -1}
+  || decision_vector
+  || timestamp
+  || monotonic_counter    <span class="comment">// TPM NV counter — irreversible</span>
+  || Hash(prev_entry)     <span class="comment">// Chain link</span>
+
+Invalid states → immediate response:
+  Orphan:    exec(a) without log entry  → safe harbor + key rotation
+  Mismatch:  stored_hash ≠ recomputed   → safe harbor + quarantine
+  Sig_fail:  verify(sig, pk) = ⊥        → safe harbor + key revocation</code>
+    </div>
+
+    <p>No component of the identity-integrity-logging triad can be satisfied without the other two: an unsigned entry lacks identity attribution; a signed entry outside the Merkle accumulator lacks integrity verification; and an executed action without a prior committed entry violates the fundamental invariant. The committed log serves as behavioral proof enabling <strong>complete trace reconstruction with third-party verification</strong> independent of continued operator cooperation.</p>
+  </section>
+
+  <!-- SECTION VII -->
+  <section class="spec-section" id="s7">
+    <div class="section-header">
+      <span class="section-num">§ VII</span>
+      <h2>Cryptographic Primitives &amp; Adversarial Resistance</h2>
+    </div>
+
+    <p>Canonicalization is the first defense against ambiguity-based attacks. Every log entry is serialized through a deterministic canonical form — conforming to RFC 8785 (JSON Canonicalization Scheme) or deterministic CBOR (dCBOR) — before hashing. The canonical form defines exact field ordering (lexicographic by key for JSON), exact numeric representation (IEEE 754 double-precision), and prohibits duplicate keys, optional whitespace, or alternative representations.</p>
+
+    <div class="logic-block">
+      <span class="lb-label">Cryptographic Primitive Requirements</span>
+      <code">Canonicalization:  RFC 8785 (JCS) or dCBOR
+Hash function:     SHA-256 (≥128-bit collision resistance)
+Accumulator:       RFC 9162 (Certificate Transparency v2) Merkle tree
+Monotonic counter: TPM 2.0 NV counter (irreversible increment)
+Nonce source:      Hardware TRNG (within trust boundary)
+Signatures:        ECDSA P-256 or Ed25519 (key in HSM/enclave)
+Replay nonce:      ≥256-bit, hardware-generated per entry
+
+Byzantine channels: ≥ 3f+1 nodes to tolerate f Byzantine faults
+                    PBFT protocol (Castro-Liskov)
+                    Formally verified: Logres (Isabelle/HOL)</code>
+    </div>
+
+    <p><strong>Silent action prevention</strong> leverages observable energy consumption correlation: power consumption during periods logged as idle that exceeds the baseline profile indicates unlogged computation. Known operation types produce characteristic signatures matchable against a reference library. This provides a physical-layer tamper detection capability independent of all software-layer mechanisms.</p>
+
+    <p>Post-commit immutability is enforced through hardware WORM storage ensuring committed log segments cannot be overwritten. Software-layer enforcement through systems such as SealFS (Linux kernel module with HMAC ratchet chains) ensures that even root-level modifications to committed data are cryptographically detectable. The combination ensures the committed log is immutable in both the physical and logical senses.</p>
+  </section>
+
+  <!-- SECTION VIII -->
+  <section class="spec-section" id="s8">
+    <div class="section-header">
+      <span class="section-num">§ VIII</span>
+      <h2>Failure Modes &amp; Safe Harbor States</h2>
+    </div>
+
+    <p>This specification requires fail-closed behavior across all critical failure modes: any failure in logging, hashing, storage, key management, or communication subsystems results in immediate cessation of action execution. Failure classification is biased toward conservative interpretation — when the nature of a failure is ambiguous, the system defaults to full halt rather than degraded operation.</p>
+
+    <table class="failure-table">
+      <thead>
+        <tr>
+          <th>Failure Mode</th>
+          <th>Detection Mechanism</th>
+          <th>Required Response</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="fm-mode">Storage Failure</td>
+          <td>Write ACK timeout or read-back mismatch</td>
+          <td class="fm-response">Immediate execution halt → safe harbor</td>
+        </tr>
+        <tr>
+          <td class="fm-mode">Hash Inconsistency</td>
+          <td>Recomputed hash ≠ stored hash in active segment</td>
+          <td class="fm-response">Halt + segment quarantine + forensic investigation</td>
+        </tr>
+        <tr>
+          <td class="fm-mode">Buffer Exhaustion</td>
+          <td>Queue capacity reached, no new entries accepted</td>
+          <td class="fm-response">Automatic halt via structural backpressure</td>
+        </tr>
+        <tr>
+          <td class="fm-mode">HSM Comm Loss</td>
+          <td>Heartbeat timeout</td>
+          <td class="fm-response">Execution halt — attestation quotes cannot be generated</td>
+        </tr>
+        <tr>
+          <td class="fm-mode">Key Rotation Failure</td>
+          <td>M-of-N quorum failure or HSM unavailability</td>
+          <td class="fm-response">Grace period (current key validity), then halt</td>
+        </tr>
+        <tr>
+          <td class="fm-mode">Certificate Expiration</td>
+          <td>Validity period expired for signing cert</td>
+          <td class="fm-response">Immediate halt; pre-emptive warning thresholds required</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="logic-block">
+      <span class="lb-label">Failure State Machine — CTL Model-Checked Properties</span>
+      <code">States: {Normal, Degraded, Logging_Failure,
+         Safe_Harbor_Transition, Safe_Harbor_Steady, Recovery}
+
+Safety:  AG(state ∈ {Normal, Degraded, SH_Transition,
+                     SH_Steady, Recovery})
+
+Liveness: AG(Logging_Failure → AF(Safe_Harbor_Steady))
+          <span class="comment">// Within bounded convergence time T_safe</span>
+
+Kinetic SH:  V̇(x) ≤ −αV(x), α > 0  <span class="comment">// Lyapunov exponential convergence</span>
+Financial SH: AG(Log_Failure → AF(transactions_frozen
+                                  ∧ liquidity_preserved))</code>
+    </div>
+
+    <p>Manual override procedures require <strong>physical presence</strong> verified through local authentication (physical key, biometric sensor, or hardware token on chassis); <strong>multi-party authorization</strong> (M ≥ 2 of N organizationally independent authorities); and <strong>complete logging</strong> — all override actions must be committed to a secondary battery-backed recording device if the primary logging subsystem is inoperative, with records integrated into the primary log upon restoration.</p>
+  </section>
+
+  <!-- SECTION IX -->
+  <section class="spec-section" id="s9">
+    <div class="section-header">
+      <span class="section-num">§ IX</span>
+      <h2>Integration with Dual-Lane Architecture</h2>
+    </div>
+
+    <p>The dual-lane architecture resolves the tension between sub-millisecond latency requirements and global auditability by separating log commitment into two concurrent, independent lanes with distinct latency characteristics, durability guarantees, and failure domains.</p>
+
+    <div class="dual-lane">
+      <div class="lane-card lane-fast">
+        <div class="lane-label">Fast Lane</div>
+        <div class="lane-title">Local Hardware Commitment</div>
+        <div class="lane-spec">
+          <strong>Latency:</strong> &lt; 2 ms (strict bound)<br>
+          <strong>Implementation:</strong> FPGA / ASIC pipeline<br>
+          <strong>Storage:</strong> MRAM or battery-backed nvSRAM<br>
+          <strong>Steps:</strong> Canonicalize → Hash → Merkle update → Counter increment → NV write → Read-back verify<br>
+          <strong>No dependency on:</strong> OS, CPU scheduler, GC, network<br>
+          <strong>Invariant:</strong> AG(exec(a) → fast_committed(a))
+        </div>
+      </div>
+
+      <div class="lane-card lane-slow">
+        <div class="lane-label">Slow Lane</div>
+        <div class="lane-title">Distributed Anchoring</div>
+        <div class="lane-spec">
+          <strong>Latency:</strong> Asynchronous (minutes–hours)<br>
+          <strong>Mechanisms:</strong> RFC 3161 TSA · OpenTimestamps/Bitcoin · RFC 9162 CT logs<br>
+          <strong>Batching:</strong> Merkle trees with per-entry inclusion proofs<br>
+          <strong>Failure isolation:</strong> Does NOT block fast lane<br>
+          <strong>Gap tolerance:</strong> Domain-specific, formally bounded<br>
+          <strong>Property:</strong> ◇(fast_committed(a) → slow_anchored(a))
+        </div>
+      </div>
+    </div>
+
+    <div class="logic-block">
+      <span class="lb-label">Dual-Lane Formal Properties</span>
+      <code">// Invariant preserved by fast lane alone:
+□(exec(a) → fast_committed(a))
+
+// Slow lane provides eventual global proof:
+□(exec(a) → fast_committed(a)) ∧ ◇(fast_committed(a) → slow_anchored(a))
+
+// Gap tolerance bound:
+AG(fast_committed(a) → A[¬gap_exceeded U slow_anchored(a)])
+
+// Slow lane failure does not block fast lane:
+□(slow_failure → ¬(fast_lane_blocked))</code>
+    </div>
+
+    <p>Circuit breaker behaviors govern the interaction: when the slow lane anchoring queue depth exceeds a high-water threshold, backpressure propagates to monitoring but does not affect fast lane throughput. When the queue exceeds a critical threshold, the circuit breaker opens, suspending new anchoring attempts. Exponential backoff prevents resource exhaustion during outages. The gap between fast lane commitment and slow lane anchoring is bounded by safety-critical time constants specified per deployment domain, with rate limiting enforced when the gap approaches the tolerance bound.</p>
+  </section>
+
+  <!-- CONCLUSION -->
+  <section class="spec-section" id="conclusion">
+    <div class="section-header">
+      <span class="section-num">∎</span>
+      <h2>Conclusion</h2>
+    </div>
+
+    <div class="conclusion">
+      <div class="c-label">Binding Architectural Statement</div>
+      <p>The No Log = No Action invariant constitutes a binding architectural constraint that transforms logging from an optional telemetry service into a structurally enforced prerequisite for every externally observable effect in a Ternary Logic system. The invariant's enforcement rests on three interlocking pillars: formal temporal logic properties verified through model checking against the system's complete state space; cryptographic coupling through Merkle accumulators, digital signatures, and hardware attestation quotes that make log entries unforgeable and actor identity non-repudiable; and hardware root of trust mechanisms anchoring the entire enforcement chain in physical components resistant to software compromise, side-channel extraction, and physical tampering.</p>
+      <p>The integration of the triadic decision space into this enforcement framework ensures that Epistemic Hold — the system's admission that it does not know — receives the same structural protection as Act and Refuse. The dual-lane architecture resolves the latency-auditability tension without compromising the invariant. The fail-closed design ensures that any failure results in safe harbor transition rather than unlogged operation. The resulting system does not trust its operators, its software, or its firmware to maintain log integrity. It structurally prevents any of them from violating it.</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Active nav highlighting on scroll
+  const sections = document.querySelectorAll('section.spec-section, .invariant-callout, header.hero');
+  const navLinks = document.querySelectorAll('nav#sidebar ul li a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const id = entry.target.id;
+        const active = document.querySelector(`nav#sidebar a[href="#${id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -80% 0px' });
+
+  document.querySelectorAll('[id]').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
