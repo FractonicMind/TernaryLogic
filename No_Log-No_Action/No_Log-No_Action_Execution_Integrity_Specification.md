@@ -22,9 +22,9 @@ The fundamental limitation of traditional logging architectures is their provisi
 
 The \*\*enforcement gap\*\* in traditional systems appears at multiple levels: there is no guarantee that logging code is executed for all actions, no guarantee that executed logging code successfully persists its output, and no guarantee that persisted output accurately represents the action that was executed. Each of these guarantees must be provided through architectural mechanisms rather than procedural adherence, as procedural mechanisms are themselves subject to the same failure modes they attempt to prevent. The transformation from observability to enforcement requires \*\*synchronous, hardware-verified persistence\*\* that fundamentally alters system latency and throughput characteristics, accepting these costs as necessary for deterministic state integrity.
 
-I.2 Post-Hoc Reconstruction Limitations
+### I.2 Post-Hoc Reconstruction Limitations
 
-I.2.1 Partial Data Loss and Evidence Gaps
+#### I.2.1 Partial Data Loss and Evidence Gaps
 
 The limitations of \*\*post-hoc reconstruction\*\* become apparent when systems attempt to establish behavioral provenance from incomplete or inconsistent log data, a condition that arises predictably under partial data loss. When log entries are missing due to buffer overflow, network congestion, or storage exhaustion, reconstruction algorithms must operate upon an incomplete evidentiary substrate, producing outputs that may be technically consistent with available data yet factually incorrect regarding actual system behavior. The \*\*evidence gaps\*\* created by missing entries are fundamentally unbridgeable: no algorithmic technique can recover information that was never recorded, and the reconstruction process cannot distinguish between "no event occurred" and "event occurred but was not recorded."
 
