@@ -681,6 +681,24 @@ AG(∀a ∈ Act : exec(a) → logged(a))</div>
       <h2>Problem Definition: Optional Logging Failure</h2>
     </div>
 
+<div class="max-w-3xl mx-auto mb-16 p-1 rounded-2xl bg-gradient-to-r from-brand-cyan/20 via-brand-purple/20 to-brand-amber/20">
+    <div class="bg-brand-bg/90 backdrop-blur-sm rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6">
+        <div class="flex-shrink-0 bg-brand-card p-4 rounded-full border border-brand-cyan/30 animate-pulse">
+            <span class="text-3xl">🎧</span>
+        </div>
+        <div class="flex-grow text-center sm:text-left">
+            <h3 class="text-lg font-bold text-black">Audio Briefing — No Log = No Action</h3>
+            <p class="text-sm text-brand-muted mb-3">
+                A 4:46-minute overview of the execution integrity invariant: cryptographic enforcement, Epistemic Hold, and the dual-lane commitment architecture.
+            </p>
+            <audio controls class="w-full h-10 rounded opacity-90 hover:opacity-100 transition focus:outline-none">
+                <source src="https://fractonicmind.github.io/TernaryLogic/No_Log-No_Action/No_Log-No_Action_Non-Bypassable_Execution_Invariant.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+</div>
+
     <p>Traditional computing and control architectures treat logging as a telemetry concern, decoupled from execution by asynchronous buffering, deferred writes, and best-effort delivery semantics. In such systems, the execution path and the persistence path are independent: an action completes on the main processor pipeline while a log entry is enqueued in a memory buffer, forwarded through a network stack, and eventually written to a storage backend. This architectural separation introduces <strong>non-determinism between execution and persistence</strong>, because the temporal ordering of action completion and log commitment is not enforced by any structural constraint.</p>
 
     <p>Actions routinely complete while their corresponding log entries remain in volatile buffers, transit queues, or write-back caches, any of which may be lost to power interruption, process termination, memory pressure eviction, or network partition. The result is that the observability layer provides a probabilistic, best-effort record of system behavior rather than a deterministic, complete, and tamper-evident proof of every externally visible effect.</p>
