@@ -35,12 +35,8 @@ Together these two components tell the complete story: cryptographic enforcement
 
 ## Specifications
 
-Two independent deep-research specifications are maintained in this folder, produced by different AI systems from the same prompt and preserved for their complementary strengths.
-
----
-
-### Specification K — Execution Integrity Specification
-*Produced by Kimi — strongest on cyber-physical safe harbor, Lyapunov stability analysis, outlier detection, and forced continuation prevention*
+### Execution Integrity Specification
+*Strongest on cyber-physical safe harbor, Lyapunov stability analysis, outlier detection, and forced continuation prevention*
 
 | Format | Link |
 |--------|------|
@@ -51,8 +47,8 @@ Two independent deep-research specifications are maintained in this folder, prod
 
 ---
 
-### Specification C — Non-Bypassable Execution Invariant
-*Produced by Claude — strongest on formal verification standards, cryptographic citation rigor, non-repudiation chains, and adversarial resistance*
+### Non-Bypassable Execution Invariant
+*Strongest on formal verification standards, cryptographic citation rigor, non-repudiation chains, and adversarial resistance*
 
 | Format | Link |
 |--------|------|
@@ -63,14 +59,14 @@ Two independent deep-research specifications are maintained in this folder, prod
 
 ---
 
-### Audio Companion — 6-Minute Overview
-*Produced by Perplexity — standalone audio summary of the No Log = No Action invariant for broader audiences*
+### Audio Companion — 5:43-Minute Overview
+*Standalone audio summary of the No Log = No Action invariant for broader audiences*
 
 | Format | Link |
 |--------|------|
 | 🎧 MP3 | [No_Log-No_Action_Execution_Integrity_Specification.mp3](https://fractonicmind.github.io/TernaryLogic/No_Log-No_Action/No_Log-No_Action_Execution_Integrity_Specification.mp3) |
 
-An accessible 6-minute audio overview of the invariant — the enforcement architecture, the Epistemic Hold / Solvency Protocol, and the dual-lane commitment model explained for audiences beyond the technical specification.
+An accessible 5:43-minute audio overview of the invariant — the enforcement architecture, the Epistemic Hold / Solvency Protocol, and the dual-lane commitment model explained for audiences beyond the technical specification.
 
 ---
 
