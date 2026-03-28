@@ -352,6 +352,25 @@
         <div class="prose prose-lg max-w-none">
           <h3 class="font-tiempos text-xl font-semibold mb-4">I.1 Asynchronous Telemetry and Non-Determinism</h3>
 
+<div class="max-w-3xl mx-auto mb-16 p-1 rounded-2xl bg-gradient-to-r from-brand-cyan/20 via-brand-purple/20 to-brand-amber/20">
+    <div class="bg-brand-bg/90 backdrop-blur-sm rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6">
+        <div class="flex-shrink-0 bg-brand-card p-4 rounded-full border border-brand-cyan/30 animate-pulse">
+            <span class="text-3xl">🎧</span>
+        </div>
+        <div class="flex-grow text-center sm:text-left">
+            <h3 class="text-lg font-bold text-black">Audio Briefing — No Log = No Action</h3>
+            <p class="text-sm text-brand-muted mb-3">
+                A 5:43-minute overview of the execution integrity invariant: cryptographic enforcement, Epistemic Hold, and the dual-lane commitment architecture.
+            </p>
+            <audio controls class="w-full h-10 rounded opacity-90 hover:opacity-100 transition focus:outline-none">
+                <source src="https://fractonicmind.github.io/TernaryLogic/No_Log-No_Action/No_Log-No_Action_Execution_Integrity_Specification.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+</div>
+            
+
           <p>Traditional computing systems fundamentally rely upon <strong>asynchronous telemetry mechanisms</strong> for observability, creating an inherent architectural decoupling between the execution of operations and the persistence of their corresponding audit records. This decoupling manifests as a <strong>temporal gap</strong> between the moment an action completes and the moment its corresponding log entry becomes durable, during which any number of failure modes may intervene to prevent successful persistence.</p>
 
           <div class="pullquote">
