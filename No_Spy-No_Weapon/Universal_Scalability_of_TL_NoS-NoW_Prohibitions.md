@@ -2,6 +2,8 @@
 
 ## Executive Summary
 
+[Interactive Web Page](https://fractonicmind.github.io/TernaryLogic/No_Spy-No_Weapon/Universal_Scalability_of_TL_NoS-NoW_Prohibitions.html)   
+
 This report evaluates whether a Ternary Logic (TL) architecture with hard-coded epistemic and ethical invariants can plausibly attain universal adoption as the foundational governance layer for global decision and operational systems (OpSy).
 The analysis assumes a tri-state decision model with a mandatory Epistemic Hold (state 0), an Immutable Ledger with cryptographic provenance, and a categorical prohibition on lethal targeting, autonomous weapons, and mass civilian surveillance (No Spy, No Weapon – NoS-NoW).[1][2]
 
