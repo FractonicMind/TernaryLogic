@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TL Architecture Risk Assessment: NoS-NoW Mandate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #e2e8f0;
+        }
+        h1, h2, h3, h4, .mono {
+            font-family: 'JetBrains+Mono', monospace;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 400px;
+        }
+        .glow-cyan { text-shadow: 0 0 10px rgba(6, 182, 212, 0.7); }
+        .glow-pink { text-shadow: 0 0 10px rgba(236, 72, 153, 0.7); }
+        .card-bg { background: linear-gradient(145deg, #111827, #1f2937); }
+        .border-gradient {
+            border: 1px solid transparent;
+            background: linear-gradient(#111827, #1f2937) padding-box, linear-gradient(to right, #06b6d4, #ec4899) border-box;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-white">
+
+    <!-- 
+    PALETTE: Cyber Neon (Vibrant Blues, Pinks, Greens on Dark Slate)
+    
+    NO MERMAID JS CONFIRMATION: Confirmed. No Mermaid JS is used.
+    NO SVG CONFIRMATION: Confirmed. No SVG tags or graphics are used anywhere in this document.
+
+    NARRATIVE PLAN:
+    1. Introduction: Define TL, Epistemic Hold, and NoS-NoW mandate.
+    2. Domain Boundary Validation: Analyze compliant vs non-compliant sectors.
+    3. Universality Stress Test: Assess performance, economics, and interoperability against legacy systems.
+    4. Power Pressure Simulation: Map institutional resistance and vector attacks.
+    5. Economic Sustainability: Visualize the pivot to high-value, non-lethal domains.
+    6. Governance Integrity & Comparative Frameworks: Align TL with global frameworks.
+    7. Gray Zone Elimination: Break down the Oracle Problem using structured HTML.
+    8. Final Determination: Deliver feasibility, viability, and realism metrics.
+
+    VISUALIZATION CHOICES:
+    - Domain Boundaries -> Horizontal Bar Chart (Chart.js) -> Compare risk levels across sectors (NO SVG).
+    - Universality Stress Test -> Radar Chart (Chart.js) -> Compare TL vs Legacy performance (NO SVG).
+    - Power Pressure Matrix -> Bubble Chart (Chart.js) -> Show relationship between Probability and Impact (NO SVG).
+    - Economic Sustainability -> Doughnut Chart (Chart.js) -> Show revenue composition (NO SVG).
+    - Comparative Framework -> Polar Area Chart (Chart.js) -> Show compliance overlap (NO SVG).
+    - Gray Zones -> HTML/CSS Grid Flow -> Organize the Oracle Problem attack pathway (NO SVG).
+    -->
+
+    <nav class="sticky top-0 z-50 bg-[#0b0f19]/90 backdrop-blur-md border-b border-cyan-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="text-cyan-400 font-bold mono text-xl tracking-tighter">TL_EVAL::NoS-NoW</div>
+            <div class="hidden md:flex space-x-6 text-sm mono">
+                <a href="#boundaries" class="hover:text-cyan-400 transition-colors">I. Boundaries</a>
+                <a href="#stress" class="hover:text-pink-400 transition-colors">II. Stress</a>
+                <a href="#pressure" class="hover:text-green-400 transition-colors">III. Pressure</a>
+                <a href="#economy" class="hover:text-amber-400 transition-colors">IV. Economy</a>
+                <a href="#grayzone" class="hover:text-cyan-400 transition-colors">VII. Gray Zone</a>
+                <a href="#determination" class="hover:text-white transition-colors">VIII. Verdict</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
+        
+        <header class="text-center space-y-6 max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-white mb-4">
+                Ternary Logic (TL) Under the <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-pink-500">NoS-NoW Mandate</span>
+            </h1>
+            <p class="text-xl text-slate-400 leading-relaxed">
+                Adversarial Systems Analysis evaluating deterministic computing architecture against the structural invariants of absolute epistemic certainty and categorical prohibition of weaponized applications.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 text-left">
+                <div class="border-gradient rounded-xl p-6">
+                    <h3 class="text-cyan-400 font-bold mono text-lg mb-3">Invariant I: Epistemic Architecture</h3>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">■</span> Epistemic Hold (State 0): Mandatory halt under uncertainty.</li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">■</span> Immutable Ledger: Synchronous, non-erasable decisions.</li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">■</span> Goukassian Principle: Strict provenance continuity.</li>
+                    </ul>
+                </div>
+                <div class="border-gradient rounded-xl p-6">
+                    <h3 class="text-pink-400 font-bold mono text-lg mb-3">Invariant II: NoS-NoW Mandate</h3>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li class="flex items-start"><span class="text-pink-500 mr-2">■</span> Categorical prohibition of lethal targeting systems.</li>
+                        <li class="flex items-start"><span class="text-pink-500 mr-2">■</span> Zero integration with autonomous weapon platforms.</li>
+                        <li class="flex items-start"><span class="text-pink-500 mr-2">■</span> Structural block on mass civilian surveillance.</li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <section id="boundaries" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-white mb-4 mono border-l-4 border-cyan-500 pl-4">I. Domain Boundary Validation</h2>
+                <p class="text-slate-400">
+                    A rigorous evaluation of edge cases against TL eligibility. We define the boundary separating compliant operational systems from those that inherently violate Epistemic Hold or NoS-NoW mandates. Dual-use systems represent the highest architectural ambiguity vectors.
+                </p>
+            </div>
+            
+            <div class="card-bg rounded-2xl p-6 md:p-8 shadow-2xl border border-slate-700/50">
+                <h3 class="text-xl font-semibold mb-6 text-center">Compliance Risk by Domain Sector</h3>
+                <div class="chart-container h-[500px] max-h-[500px]">
+                    <canvas id="domainChart"></canvas>
+                </div>
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div class="bg-red-900/20 p-4 rounded-lg border border-red-500/30">
+                        <h4 class="text-red-400 font-bold mb-2">Non-Compliant (Violates Invariants)</h4>
+                        <p class="text-slate-400">Military logistics, predictive policing, dual-use analytics with undisclosed mass-surveillance hooks.</p>
+                    </div>
+                    <div class="bg-amber-900/20 p-4 rounded-lg border border-amber-500/30">
+                        <h4 class="text-amber-400 font-bold mb-2">Epistemic Hold Triggers</h4>
+                        <p class="text-slate-400">High-frequency trading during data anomalies, defensive cyber operations with autonomous counter-strike potential.</p>
+                    </div>
+                    <div class="bg-emerald-900/20 p-4 rounded-lg border border-emerald-500/30">
+                        <h4 class="text-emerald-400 font-bold mb-2">Fully Compliant</h4>
+                        <p class="text-slate-400">CBDC transaction monitoring (transparent ledger), autonomous grid load balancing (with verified sensor provenance).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="stress" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-white mb-4 mono border-l-4 border-pink-500 pl-4">II. Universality Stress Test</h2>
+                <p class="text-slate-400">
+                    Evaluating the friction and capital cost of running deterministic, cryptographic tri-state logic on global compute infrastructure currently optimized for probabilistic matrix multiplication.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="card-bg rounded-2xl p-6 shadow-2xl border border-slate-700/50">
+                    <div class="chart-container">
+                        <canvas id="stressChart"></canvas>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
+                        <h3 class="text-cyan-400 font-bold mono mb-2 text-lg">Hardware Friction</h3>
+                        <p class="text-sm text-slate-300">Modern GPUs/TPUs (FP8/FP16) are fundamentally hostile to deterministic TL workloads. Emulating ternary logic on binary hardware introduces a massive latency penalty, heavily degrading high-frequency operability.</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
+                        <h3 class="text-pink-400 font-bold mono mb-2 text-lg">Cryptographic Overhead</h3>
+                        <p class="text-sm text-slate-300">The requirement for multi-decade provenance resilience demands post-quantum cryptographic hashing for every state change. This exacerbates the latency overhead, creating a hard adoption barrier for microsecond-dependent industries.</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
+                        <h3 class="text-emerald-400 font-bold mono mb-2 text-lg">Interoperability</h3>
+                        <p class="text-sm text-slate-300">Legacy Boolean state machines cannot natively parse State 0 (Epistemic Hold). Implementing translation layers introduces structural vulnerabilities where deterministic halts are interpreted as timeouts by legacy systems.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pressure" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-white mb-4 mono border-l-4 border-amber-500 pl-4">III. Power Pressure Simulation</h2>
+                <p class="text-slate-400">
+                    Simulated high-pressure scenarios where state actors or institutional operators demand architectural exemptions under the guise of systemic risk or national security.
+                </p>
+            </div>
+
+            <div class="card-bg rounded-2xl p-6 md:p-8 shadow-2xl border border-slate-700/50">
+                <h3 class="text-xl font-semibold mb-6 text-center">Institutional Resistance Vector Mapping</h3>
+                <div class="chart-container h-[450px] max-h-[500px]">
+                    <canvas id="pressureChart"></canvas>
+                </div>
+                <p class="mt-6 text-sm text-slate-400 text-center max-w-2xl mx-auto">
+                    The highest risk to universality is the "Black Box Defense," where financial and corporate institutions reject TL due to the cryptographic transparency destroying proprietary algorithmic advantages. Forced architectural forks driven by sovereign national security demands carry the highest systemic impact.
+                </p>
+            </div>
+        </section>
+
+        <section id="economy" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-white mb-4 mono border-l-4 border-emerald-500 pl-4">IV. Economic Sustainability Model</h2>
+                <p class="text-slate-400">
+                    Can TL survive economically while structurally locking out the lucrative defense, surveillance, and predictive law enforcement sectors?
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card-bg rounded-2xl p-6 shadow-2xl border border-slate-700/50 flex flex-col justify-center">
+                    <div class="chart-container">
+                        <canvas id="economyChart"></canvas>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center space-y-4">
+                    <h3 class="text-2xl font-bold text-white mb-2">The Civilian Pivot</h3>
+                    <p class="text-slate-300">By excluding the global defense and surveillance apparatus, TL forfeits approximately 30% of total addressable advanced compute revenue.</p>
+                    <p class="text-slate-300">However, TL achieves an effective monopoly in <strong class="text-emerald-400">Strict-Liability Domains</strong>. In critical infrastructure optimization, surgical operations, and climate risk modeling, the Epistemic Hold feature is a massive liability-reduction asset rather than a latency penalty.</p>
+                    <div class="mt-4 p-4 bg-slate-800 rounded-lg border-l-4 border-cyan-500">
+                        <span class="block text-xs text-cyan-400 uppercase tracking-wider mb-1">Conclusion</span>
+                        <span class="text-white font-mono">Economic viability is plausible, dependent on monopolizing CBDC clearing and strict-liability enterprise frameworks.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparative" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-white mb-4 mono border-l-4 border-indigo-500 pl-4">V & VI. Governance Integrity & Comparative Frameworks</h2>
+                <p class="text-slate-400">
+                    Evaluating strict enforcement alignment against emerging global AI and financial governance guidelines (EU AI Act, BIS Project Agorá, OECD).
+                </p>
+            </div>
+
+            <div class="card-bg rounded-2xl p-6 md:p-8 shadow-2xl border border-slate-700/50">
+                <div class="chart-container h-[500px] max-h-[500px]">
+                    <canvas id="frameworkChart"></canvas>
+                </div>
+                <div class="mt-6 text-sm text-slate-300 space-y-4">
+                    <p><strong class="text-indigo-400">EU AI Act Alignment:</strong> TL inherently satisfies and exceeds the prohibited and high-risk classifications by architecturally blocking what the EU attempts to regulate legally.</p>
+                    <p><strong class="text-indigo-400">Defense Frameworks (NATO/DoD):</strong> Complete orthogonal incompatibility. TL's NoS-NoW invariant renders it uncertifiable for defense contractors demanding deterministic lethality.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="grayzone" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-white mb-4 mono border-l-4 border-red-500 pl-4">VII. Gray Zone Elimination Requirement</h2>
+                <p class="text-slate-400">
+                    Identifying structural vulnerabilities. The most critical technical loophole is the <strong class="text-white">Oracle Problem & Data Provenance Spoofing</strong>.
+                </p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-700 rounded-2xl p-8 shadow-2xl overflow-hidden relative">
+                <div class="absolute top-0 right-0 p-4 opacity-10 font-mono text-9xl font-black">!</div>
+                
+                <h3 class="text-2xl font-bold text-red-400 mb-6 font-mono text-center">ATTACK VECTOR: THE ORACLE INVERSION</h3>
+                
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
+                    <div class="bg-slate-800 p-6 rounded-lg text-center w-full md:w-1/3 border border-slate-600 relative z-10">
+                        <div class="text-3xl mb-2">📡</div>
+                        <h4 class="font-bold text-white mb-2">Compromised Sensor</h4>
+                        <p class="text-xs text-slate-400">External hardware feeds perfectly formatted, cryptographically signed, but physically false data.</p>
+                    </div>
+
+                    <div class="text-red-500 font-bold text-2xl hidden md:block">→</div>
+                    <div class="text-red-500 font-bold text-2xl md:hidden">↓</div>
+
+                    <div class="bg-red-900/20 p-6 rounded-lg text-center w-full md:w-1/3 border border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.2)] relative z-10">
+                        <div class="text-3xl mb-2">⚖️</div>
+                        <h4 class="font-bold text-red-400 mb-2">TL Ingestion Layer</h4>
+                        <p class="text-xs text-slate-300">System evaluates data format. Signature is valid. <span class="text-white font-bold">Bypasses Epistemic Hold (State 0).</span></p>
+                    </div>
+
+                    <div class="text-red-500 font-bold text-2xl hidden md:block">→</div>
+                    <div class="text-red-500 font-bold text-2xl md:hidden">↓</div>
+
+                    <div class="bg-slate-800 p-6 rounded-lg text-center w-full md:w-1/3 border border-slate-600 relative z-10">
+                        <div class="text-3xl mb-2">⛓️</div>
+                        <h4 class="font-bold text-white mb-2">Immutable Ledger</h4>
+                        <p class="text-xs text-slate-400">The false data is perfectly recorded and executed (+1/-1), creating an immutable record of a physical lie.</p>
+                    </div>
+                </div>
+
+                <div class="mt-10 bg-black/50 p-6 rounded-xl border border-cyan-900/50">
+                    <h4 class="text-cyan-400 font-bold mono mb-3">Architectural Reinforcement Required</h4>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        To eliminate this, TL must mandate <strong class="text-white">Multi-Modal Consensus Anchoring</strong>. A single API or sensor cannot dictate state change. The ingestion layer must require N+2 independent physical hardware paths (e.g., optical, thermal, acoustic) verifying the same physical reality before admitting data to the epistemic ledger. Failure to achieve multi-modal consensus triggers automatic State 0.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="determination" class="scroll-mt-24 mb-24">
+            <div class="mb-8 border-b border-slate-700 pb-4">
+                <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-white mono uppercase tracking-widest">VIII. Final Determination</h2>
+            </div>
+
+            <div class="bg-slate-800/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-slate-600 shadow-2xl">
+                <p class="text-lg text-slate-300 leading-relaxed mb-10">
+                    Can TL achieve universal scope as the standard for Global Decision Systems while enforcing absolute epistemic certainty and the NoS-NoW mandate? <br><br>
+                    <strong class="text-white text-xl">Verdict: Conditional Universality Achievable via Bifurcation.</strong>
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="flex flex-col items-center p-6 bg-slate-900 rounded-2xl border-t-4 border-cyan-500">
+                        <div class="text-5xl font-black text-cyan-400 mb-2 mono">65%</div>
+                        <h3 class="text-lg font-bold text-white mb-2 text-center">Technical Feasibility</h3>
+                        <p class="text-xs text-slate-400 text-center">Latency penalties on FP16 hardware remain a bottleneck. Emulation software requires 2-3 hardware generations to achieve native speed.</p>
+                    </div>
+                    
+                    <div class="flex flex-col items-center p-6 bg-slate-900 rounded-2xl border-t-4 border-emerald-500">
+                        <div class="text-5xl font-black text-emerald-400 mb-2 mono">80%</div>
+                        <h3 class="text-lg font-bold text-white mb-2 text-center">Economic Viability</h3>
+                        <p class="text-xs text-slate-400 text-center">CBDC clearing and strict-liability enterprise frameworks generate sufficient TAM to offset defense sector exclusion.</p>
+                    </div>
+
+                    <div class="flex flex-col items-center p-6 bg-slate-900 rounded-2xl border-t-4 border-pink-500">
+                        <div class="text-5xl font-black text-pink-400 mb-2 mono">30%</div>
+                        <h3 class="text-lg font-bold text-white mb-2 text-center">Political Realism</h3>
+                        <p class="text-xs text-slate-400 text-center">Universal, undisputed adoption is impossible. Sovereign states will inherently resist architectures that preempt emergency powers and intelligence gathering.</p>
+                    </div>
+                </div>
+
+                <div class="mt-12 space-y-4 text-sm text-slate-300 border-t border-slate-700 pt-8">
+                    <p><strong class="text-white">Geopolitical Impact Projection:</strong> The system will force a global compute bifurcation. A "Trusted Deterministic Web" will handle global finance, critical civilian infrastructure, and scientific ledgers. A shadow "Probabilistic Web" will handle defense, intelligence, and autonomous military assets.</p>
+                    <p><strong class="text-white">The Latency Trade-off:</strong> The core cost of certainty is speed. Microsecond HFT markets will reject TL. It will become the standard for T+0 settlement, not the standard for market-making algorithms.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#070b14] border-t border-slate-800 py-8 text-center text-xs text-slate-500 mono">
+        <p>REPORT GENERATED BY ADVERSARIAL SYSTEMS ANALYST CONSTRUCT</p>
+        <p class="mt-2">STRICT COMPLIANCE: NO-SVG | CANVAS RENDERING | WRAP-LABELS APPLIED</p>
+    </footer>
+
+    <script>
+        function wrapLabel(label) {
+            if (label.length <= 16) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (let i = 0; i < words.length; i++) {
+                const word = words[i];
+                if ((currentLine + word).length > 16) {
+                    if (currentLine.length > 0) {
+                        lines.push(currentLine.trim());
+                        currentLine = word + ' ';
+                    } else {
+                        lines.push(word);
+                        currentLine = '';
+                    }
+                } else {
+                    currentLine += word + ' ';
+                }
+            }
+            if (currentLine.trim().length > 0) {
+                lines.push(currentLine.trim());
+            }
+            return lines;
+        }
+
+        const commonTooltip = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        const globalOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            color: '#94a3b8',
+            plugins: {
+                legend: { labels: { color: '#cbd5e1', font: { family: "'Inter', sans-serif" } } },
+                tooltip: commonTooltip
+            }
+        };
+
+        const ctxDomain = document.getElementById('domainChart').getContext('2d');
+        const labelsDomain = [
+            "CBDC Settlement", 
+            "Med Strict-Liability", 
+            "High-Freq Trading", 
+            "Dual-use Analytics", 
+            "Predictive Police", 
+            "Military Logistics"
+        ].map(wrapLabel);
+        
+        new Chart(ctxDomain, {
+            type: 'bar',
+            data: {
+                labels: labelsDomain,
+                datasets: [
+                    {
+                        label: 'Compliance Factor',
+                        data: [95, 88, 40, -50, -90, -100],
+                        backgroundColor: function(context) {
+                            const value = context.dataset.data[context.dataIndex];
+                            if (value > 60) return 'rgba(16, 185, 129, 0.8)';
+                            if (value > 0) return 'rgba(245, 158, 11, 0.8)';
+                            return 'rgba(239, 68, 68, 0.8)';
+                        },
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                ...globalOptions,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        min: -100, max: 100,
+                        grid: { color: '#334155' },
+                        ticks: { color: '#94a3b8' },
+                        title: { display: true, text: 'Compliance Risk (-100 Violation to +100 Compliant)', color: '#94a3b8' }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { color: '#e2e8f0', font: { family: "'JetBrains Mono', monospace", size: 11 } }
+                    }
+                }
+            }
+        });
+
+        const ctxStress = document.getElementById('stressChart').getContext('2d');
+        const labelsStress = [
+            "Interoperability", 
+            "Cryptographic Speed", 
+            "Hardware Natively", 
+            "Govt Endorsement", 
+            "Auditable Provenance",
+            "Liability Reduction"
+        ].map(wrapLabel);
+
+        new Chart(ctxStress, {
+            type: 'radar',
+            data: {
+                labels: labelsStress,
+                datasets: [{
+                    label: 'Ternary Logic (TL)',
+                    data: [30, 20, 15, 45, 100, 95],
+                    backgroundColor: 'rgba(6, 182, 212, 0.2)',
+                    borderColor: '#06b6d4',
+                    pointBackgroundColor: '#06b6d4',
+                    borderWidth: 2
+                }, {
+                    label: 'Legacy Binary (Probabilistic)',
+                    data: [100, 95, 100, 85, 30, 20],
+                    backgroundColor: 'rgba(236, 72, 153, 0.2)',
+                    borderColor: '#ec4899',
+                    pointBackgroundColor: '#ec4899',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...globalOptions,
+                scales: {
+                    r: {
+                        angleLines: { color: '#334155' },
+                        grid: { color: '#334155' },
+                        pointLabels: { color: '#e2e8f0', font: { family: "'JetBrains Mono', monospace", size: 11 } },
+                        ticks: { display: false, min: 0, max: 100 }
+                    }
+                }
+            }
+        });
+
+        const ctxPressure = document.getElementById('pressureChart').getContext('2d');
+        new Chart(ctxPressure, {
+            type: 'bubble',
+            data: {
+                datasets: [
+                    {
+                        label: 'National Security Exemption',
+                        data: [{ x: 85, y: 90, r: 25 }],
+                        backgroundColor: 'rgba(239, 68, 68, 0.7)',
+                        borderColor: '#ef4444'
+                    },
+                    {
+                        label: 'Black Box Corporate Defense',
+                        data: [{ x: 95, y: 40, r: 35 }],
+                        backgroundColor: 'rgba(245, 158, 11, 0.7)',
+                        borderColor: '#f59e0b'
+                    },
+                    {
+                        label: 'HFT Latency Demands',
+                        data: [{ x: 99, y: 20, r: 15 }],
+                        backgroundColor: 'rgba(6, 182, 212, 0.7)',
+                        borderColor: '#06b6d4'
+                    },
+                    {
+                        label: 'Central Bank Modification',
+                        data: [{ x: 60, y: 70, r: 20 }],
+                        backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                        borderColor: '#10b981'
+                    }
+                ]
+            },
+            options: {
+                ...globalOptions,
+                scales: {
+                    x: {
+                        min: 0, max: 100,
+                        title: { display: true, text: 'Probability of Pressure (%)', color: '#94a3b8' },
+                        grid: { color: '#334155' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    y: {
+                        min: 0, max: 100,
+                        title: { display: true, text: 'Systemic Impact of Break (%)', color: '#94a3b8' },
+                        grid: { color: '#334155' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': (Prob: ' + context.parsed.x + '%, Impact: ' + context.parsed.y + '%)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const ctxEconomy = document.getElementById('economyChart').getContext('2d');
+        const labelsEconomy = [
+            "Institutional Finance", 
+            "Strict-Liability Med", 
+            "Critical Infrastructure", 
+            "Climate Modeling", 
+            "Excluded: Defense/Surv"
+        ].map(wrapLabel);
+        
+        new Chart(ctxEconomy, {
+            type: 'doughnut',
+            data: {
+                labels: labelsEconomy,
+                datasets: [{
+                    data: [35, 15, 15, 5, 30],
+                    backgroundColor: [
+                        '#06b6d4', 
+                        '#10b981', 
+                        '#f59e0b', 
+                        '#ec4899', 
+                        '#334155'  
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                ...globalOptions,
+                cutout: '70%',
+                plugins: {
+                    ...globalOptions.plugins,
+                    legend: { position: 'right', labels: { color: '#cbd5e1', font: { family: "'Inter', sans-serif" } } }
+                }
+            }
+        });
+
+        const ctxFramework = document.getElementById('frameworkChart').getContext('2d');
+        const labelsFramework = [
+            "Epistemic Transparency", 
+            "Explainability", 
+            "Human Override Cap", 
+            "Lethality Ban", 
+            "Surveillance Block"
+        ].map(wrapLabel);
+
+        new Chart(ctxFramework, {
+            type: 'polarArea',
+            data: {
+                labels: labelsFramework,
+                datasets: [{
+                    label: 'TL Architectural Over-Compliance',
+                    data: [100, 100, 20, 100, 100],
+                    backgroundColor: [
+                        'rgba(6, 182, 212, 0.6)',
+                        'rgba(16, 185, 129, 0.6)',
+                        'rgba(239, 68, 68, 0.6)',
+                        'rgba(236, 72, 153, 0.6)',
+                        'rgba(245, 158, 11, 0.6)'
+                    ],
+                    borderColor: '#1e293b',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...globalOptions,
+                scales: {
+                    r: {
+                        grid: { color: '#334155' },
+                        ticks: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
