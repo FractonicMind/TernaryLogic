@@ -330,6 +330,21 @@ Residual risk: The prohibited goods list must be maintained and updated. If the 
 
 This creates a practical problem: defensive and offensive cybersecurity teams in many organizations share personnel, tools, and infrastructure. TL governance would require **organizational separation** between defensive operations (TL-governed) and offensive operations (excluded from TL), with monitored information barriers between them. This is analogous to Chinese walls in financial services — effective in principle, porous in practice.
 
+### Supply Chain Compiler Compromise  
+**Structural Ambiguity:** Open-source TL compiler modified in repository to insert backdoors that bypass NoS-NoW checks.  
+**Exploitation Pathway:** Adversary contributes "performance optimization" patch that disables SPT under high-load conditions.  
+**Architectural Reinforcement:**   
+- **Reproducible Builds:** All compiler releases must generate bit-for-bit identical binaries across independent build environments; any deviation triggers ecosystem alert.  
+- **Formal Verification of Compiler:** The compiler itself is formally verified to preserve TL invariants during code generation (CompCert-style verification).
+
+### Epistemic Hold Induction Attack  
+**Structural Ambiguity:** Adversary floods system with ambiguous inputs to force perpetual State 0, creating DoS.  
+**Exploitation Pathway:** Sensor jamming induces uncertainty that triggers Hold, freezing financial clearing during critical settlement windows.  
+**Architectural Reinforcement:**   
+- **Graceful Degradation Modes:** Configurable "circuit breaker" levels—Epistemic Hold can degrade to Byzantine quorum (2/3 consensus) rather than full halt after t seconds.  
+- **Adversarial Input Filtering:** Pre-processing layer uses lightweight ML (outside TL critical path) to detect adversarial patterns before TL ingestion.
+
+
 ---
 
 ## VIII. Final determination
