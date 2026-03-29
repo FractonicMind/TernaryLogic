@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TL NoS-NoW Interactive Report</title>
+  <style>
+    :root{--bg:#0b1020;--panel:#121a33;--panel2:#0f1730;--text:#e8ecff;--muted:#a8b2d8;--accent:#7aa2ff;--accent2:#6ef3c5;--warn:#ffbf69;--bad:#ff6b8b;--border:rgba(255,255,255,.1)}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:linear-gradient(180deg,#081022 0%,#0b1020 100%);color:var(--text)}
+    header{padding:40px 20px 20px;max-width:1200px;margin:0 auto}
+    h1{margin:0 0 10px;font-size:clamp(28px,4vw,48px)}
+    p{line-height:1.6;color:var(--muted)}
+    .wrap{max-width:1200px;margin:0 auto;padding:0 20px 40px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+    .card{background:rgba(18,26,51,.9);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .card h2,.card h3{margin:0 0 10px}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(122,162,255,.15);color:#cfe0ff;font-size:12px;margin:4px 6px 0 0;border:1px solid rgba(122,162,255,.25)}
+    .pill.good{background:rgba(110,243,197,.12);color:#c8fff0;border-color:rgba(110,243,197,.25)}
+    .pill.warn{background:rgba(255,191,105,.12);color:#ffe2b3;border-color:rgba(255,191,105,.25)}
+    .pill.bad{background:rgba(255,107,139,.12);color:#ffd0da;border-color:rgba(255,107,139,.25)}
+    .controls{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0}
+    button{background:var(--panel2);color:var(--text);border:1px solid var(--border);padding:10px 14px;border-radius:12px;cursor:pointer}
+    button:hover{border-color:rgba(122,162,255,.5)}
+    .scenario-list{display:grid;gap:10px}
+    .scenario{border:1px solid var(--border);border-radius:14px;padding:14px;background:rgba(255,255,255,.03);cursor:pointer}
+    .scenario.active{outline:2px solid rgba(122,162,255,.45)}
+    .scenario strong{display:block;margin-bottom:4px}
+    .two{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+    @media (max-width:900px){.two{grid-template-columns:1fr}}
+    .metric{display:flex;justify-content:space-between;align-items:center;margin:10px 0;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+    .bar{height:10px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;flex:1;margin-left:12px}
+    .fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:50%}
+    .footer{padding:16px 20px 40px;color:var(--muted);text-align:center}
+    code{background:rgba(255,255,255,.07);padding:2px 6px;border-radius:6px}
+    a{color:#b9ccff}
+  </style>
+</head>
+<body>
+<header>
+  <h1>Ternary Logic under NoS-NoW</h1>
+  <p>Interactive visualization of the report's core findings: domain eligibility, universality stressors, gray zones, and adoption constraints for a TL architecture with Epistemic Hold and immutable provenance.</p>
+  <div class="controls">
+    <button onclick="showSection('overview')">Overview</button>
+    <button onclick="showSection('domains')">Edge Cases</button>
+    <button onclick="showSection('stress')">Stress Test</button>
+    <button onclick="showSection('gray')">Gray Zones</button>
+  </div>
+</header>
+<div class="wrap">
+  <section id="overview" class="section">
+    <div class="grid">
+      <div class="card">
+        <h2>Core Invariants</h2>
+        <span class="pill good">Epistemic Hold</span>
+        <span class="pill good">Immutable Ledger</span>
+        <span class="pill good">Provenance Continuity</span>
+        <span class="pill bad">No lethal targeting</span>
+        <span class="pill bad">No autonomous weapons</span>
+        <span class="pill bad">No mass civilian surveillance</span>
+      </div>
+      <div class="card">
+        <h2>Bottom Line</h2>
+        <p>Technically feasible, economically plausible in regulated civilian sectors, but politically unlikely to become the sole global standard because defense, intelligence, and speed-sensitive systems will pressure for forks and exemptions.</p>
+      </div>
+      <div class="card">
+        <h2>Adoption Outlook</h2>
+        <div class="metric"><span>Finance / CBDC</span><div class="bar"><div class="fill" style="width:86%"></div></div></div>
+        <div class="metric"><span>Healthcare / safety-critical</span><div class="bar"><div class="fill" style="width:78%"></div></div></div>
+        <div class="metric"><span>Defense / intelligence</span><div class="bar"><div class="fill" style="width:18%"></div></div></div>
+      </div>
+    </div>
+  </section>
+  <section id="domains" class="section" style="display:none">
+    <div class="two">
+      <div class="card">
+        <h2>Scenario Explorer</h2>
+        <div id="scenarios" class="scenario-list"></div>
+      </div>
+      <div class="card">
+        <h2 id="detailTitle">Select a scenario</h2>
+        <p id="detailText">Click a domain to view TL eligibility, ambiguity vectors, and structural constraints.</p>
+        <div id="tags"></div>
+      </div>
+    </div>
+  </section>
+  <section id="stress" class="section" style="display:none">
+    <div class="grid">
+      <div class="card"><h2>Technical Friction</h2><p>Latency overhead, provenance verification, and Epistemic Hold reduce competitiveness in microsecond workflows but are manageable in payments, infrastructure, and regulated compliance systems.</p></div>
+      <div class="card"><h2>Political Pressure</h2><p>National security, proprietary black-box interests, and defense procurement create strong incentives to fork or weaken the invariants.</p></div>
+      <div class="card"><h2>Hardware Path</h2><p>Near term: software emulation on binary hardware. Long term: selective ternary accelerators and ledger-specific silicon.</p></div>
+    </div>
+  </section>
+  <section id="gray" class="section" style="display:none">
+    <div class="grid">
+      <div class="card"><h2>Oracle Problem</h2><p>Immutable logs can preserve falsehoods if upstream sensors or APIs are compromised. Cross-verification and attestation are required to avoid deterministic false certainty.</p></div>
+      <div class="card"><h2>Dual-Use Drift</h2><p>Generic analytics can become surveillance through data and customer expansion. Restrict data categories, scale, and linkage paths.</p></div>
+      <div class="card"><h2>Cyber/Weapons Leakage</h2><p>Logistics, cyber defense, and intelligence analysis become non-compliant when tightly coupled to targeting or offensive action.</p></div>
+    </div>
+  </section>
+</div>
+<div class="footer">Built from the TL NoS-NoW research report.</div>
+<script>
+const scenarios = [
+  {name:'Dual-use analytics', verdict:'Compliant if bounded; non-compliant when deployed as mass surveillance.', amb:'Latent surveillance features, multi-tenant abuse.', constr:'Population caps, data-category restrictions, deployment declarations.', cls:'warn'},
+  {name:'Grid load-balancing', verdict:'Compliant with Epistemic Hold on sensor conflict.', amb:'Strategic misuse in cyber/offensive contexts.', constr:'Safe-state fallbacks, formal constraints, no offensive coupling.', cls:'good'},
+  {name:'HFT & settlement', verdict:'Settlement yes; ultra-low-latency trading mostly strained.', amb:'Market halts and microsecond penalties.', constr:'Conservative fallback modes, separate audit layer.', cls:'warn'},
+  {name:'Border screening', verdict:'Possible for local checks; risky at population scale.', amb:'Mass biometric tracking.', constr:'Retention limits, no cross-linking, manual review on uncertainty.', cls:'warn'},
+  {name:'Predictive policing', verdict:'Generally non-compliant.', amb:'Social scoring, enforcement bias, surveillance linkage.', constr:'Exclude from core TL stack.', cls:'bad'},
+  {name:'CBDC monitoring', verdict:'High compatibility with privacy-preserving limits.', amb:'Mass financial surveillance.', constr:'Tiered anonymity, ZK proofs, access controls.', cls:'good'}
+];
+const container = document.getElementById('scenarios');
+const title = document.getElementById('detailTitle');
+const text = document.getElementById('detailText');
+const tags = document.getElementById('tags');
+scenarios.forEach((s,i)=>{
+  const el = document.createElement('div');
+  el.className='scenario'+(i===0?' active':'');
+  el.innerHTML=`<strong>${s.name}</strong><span>${s.verdict}</span>`;
+  el.onclick=()=>selectScenario(i);
+  container.appendChild(el);
+});
+function selectScenario(i){
+  document.querySelectorAll('.scenario').forEach((e,j)=>e.classList.toggle('active',j===i));
+  const s = scenarios[i];
+  title.textContent = s.name;
+  text.textContent = s.verdict + ' Ambiguity: ' + s.amb + ' Constraints: ' + s.constr;
+  tags.innerHTML = `<span class="pill ${s.cls}">${s.cls==='good'?'Eligible':'Constrained'}</span><span class="pill">Ambiguity: ${s.amb}</span><span class="pill">Constraint: ${s.constr}</span>`;
+}
+function showSection(id){document.querySelectorAll('.section').forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';}
+selectScenario(0);
+</script>
+</body>
+</html>
