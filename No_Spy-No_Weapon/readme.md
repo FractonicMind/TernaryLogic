@@ -61,7 +61,7 @@ The alternative addressable market — institutional finance, CBDC clearing, cli
 **[`Universal_Scalability_of_TL_Under_the_NoS-NoW_Mandate.md`](Universal_Scalability_of_TL_Under_the_NoS-NoW_Mandate.md)**
 The primary adversarial risk assessment. Eight-section analysis covering domain boundary validation across 13 edge cases, universality stress test with quantified latency and hardware trade-offs, power pressure simulation across US/EU/China/Russia, economic sustainability model, governance integrity evaluation, comparative framework review, seven gray zone eliminations, and final three-axis determination (technical feasibility / economic viability / political realism).
 
-**[`Universal_Scalability_of_TL_Under_the_NoS-NoW_Mandate.html`](Universal_Scalability_of_TL_Under_the_NoS-NoW_Mandate.html)**
+**[`Universal_Scalability_of_TL_Under_the_NoS-NoW_Mandate.html`](https://fractonicmind.github.io/TernaryLogic/No_Spy-No_Weapon/Universal_Scalability_of_TL_Under_the_NoS-NoW_Mandate.html)**
 Interactive HTML rendering of the primary specification. Dark navy terminal aesthetic, fixed sidebar navigation, domain boundary table, risk matrix, gray zone blocks, adoption forecast grid, and trade-off summary.
 
 ---
@@ -71,14 +71,14 @@ Interactive HTML rendering of the primary specification. Dark navy terminal aest
 **[`Universal_Scalability_of_TL_NoS-NoW_Prohibitions.md`](Universal_Scalability_of_TL_NoS-NoW_Prohibitions.md)**
 Complementary deep research specification with distinct analytical strengths: strongest formal definitions of prohibited domains, most rigorous treatment of dual-use analytics with population footprint caps, and best-structured adoption velocity timeline (0–5 / 5–15 / 15+ year phases). Read alongside the primary specification for complete coverage.
 
-**[`Universal_Scalability_of_TL_NoS-NoW_Prohibitions.html`](Universal_Scalability_of_TL_NoS-NoW_Prohibitions.html)**
+**[`Universal_Scalability_of_TL_NoS-NoW_Prohibitions.html`](https://fractonicmind.github.io/TernaryLogic/No_Spy-No_Weapon/Universal_Scalability_of_TL_NoS-NoW_Prohibitions.html)**
 Interactive HTML rendering of the secondary specification.
 
 ---
 
 ### Audio
 
-**[`Universal_Scalability_of_TL_Under_the_NoS-NoW_Mandate.mp3`](Universal_Scalability_of_TL_Under_the_NoS-NoW_Mandate.mp3)**
+**[`Universal_Scalability_of_TL_Under_the_NoS-NoW_Mandate.mp3`](https://fractonicmind.github.io/TernaryLogic/No_Spy-No_Weapon/Universal_Scalability_of_TL_Under_the_NoS-NoW_Mandate.mp3)**
 
 <audio controls>
   <source src="Universal_Scalability_of_TL_Under_the_NoS-NoW_Mandate.mp3" type="audio/mpeg">
@@ -116,13 +116,6 @@ The NoS-NoW mandate operates as a structural invariant alongside the Epistemic A
 
 For the companion specification governing execution integrity and audit logging, see the [`No_Log-No_Action`](../No_Log-No_Action/) folder.
 
----
-
-## Citation
-
-Goukassian, L. (2025). Ternary Logic as an Auditable AI Governance Framework. *AI and Ethics*, Springer Nature.
-DOI: [10.1007/s43681-025-00910-6](https://doi.org/10.1007/s43681-025-00910-6)
-ORCID: [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)
 
 ---
 
