@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TL Merkle Architecture — Structural, Adversarial, and Availability-Hardened Specification</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
+
+  :root {
+    --navy-deep:    #080e1a;
+    --navy-mid:     #0d1626;
+    --navy-panel:   #111d30;
+    --navy-border:  #1a2d4a;
+    --navy-hover:   #162238;
+    --teal:         #00c6b8;
+    --teal-dim:     #008f86;
+    --teal-faint:   #00c6b812;
+    --gold:         #e8b84b;
+    --gold-dim:     #a07c2a;
+    --red:          #e05c6e;
+    --red-dim:      #8c3040;
+    --white:        #e8edf5;
+    --grey-light:   #9aabb8;
+    --grey-mid:     #4a6072;
+    --grey-faint:   #1e2e40;
+    --code-bg:      #091220;
+    --code-border:  #1e3050;
+    --tag-act:      #1a3d2a;
+    --tag-hold:     #1a2e3d;
+    --tag-refuse:   #3d1a20;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy-deep);
+    color: var(--white);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* ─── HEADER ─── */
+  .doc-header {
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--navy-border);
+    padding: 48px 0 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-header::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(0,198,184,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--teal);
+    text-transform: uppercase;
+    border: 1px solid var(--teal-dim);
+    padding: 4px 12px;
+    margin-bottom: 20px;
+    background: var(--teal-faint);
+  }
+  .doc-title {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    max-width: 720px;
+    margin: 0 auto 16px;
+    line-height: 1.3;
+  }
+  .doc-subtitle {
+    font-size: 13px;
+    color: var(--grey-light);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .doc-meta {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .doc-meta span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--grey-mid);
+    letter-spacing: 0.06em;
+  }
+  .doc-meta span b {
+    color: var(--grey-light);
+    font-weight: 500;
+  }
+
+  /* ─── TRIADIC BADGE ROW ─── */
+  .triadic-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--navy-border);
+    flex-wrap: wrap;
+  }
+  .triadic-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 5px 16px;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+  .tb-act    { background: var(--tag-act);    color: #4cbb6e; border: 1px solid #2a6040; }
+  .tb-hold   { background: var(--tag-hold);   color: var(--teal); border: 1px solid var(--teal-dim); }
+  .tb-refuse { background: var(--tag-refuse); color: var(--red); border: 1px solid var(--red-dim); }
+
+  /* ─── LAYOUT ─── */
+  .layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* ─── SIDEBAR NAV ─── */
+  .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--navy-panel);
+    border-right: 1px solid var(--navy-border);
+    padding: 28px 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--navy-border) transparent;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--navy-border); }
+  .nav-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey-mid);
+    padding: 0 20px 10px;
+  }
+  .nav-item {
+    display: block;
+    padding: 7px 20px;
+    font-size: 12px;
+    color: var(--grey-light);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .nav-item:hover {
+    color: var(--teal);
+    background: var(--teal-faint);
+    border-left-color: var(--teal-dim);
+  }
+  .nav-item.active {
+    color: var(--teal);
+    border-left-color: var(--teal);
+    background: var(--teal-faint);
+  }
+  .nav-divider {
+    height: 1px;
+    background: var(--navy-border);
+    margin: 10px 20px;
+  }
+
+  /* ─── MAIN CONTENT ─── */
+  .main-content {
+    padding: 48px 56px;
+    max-width: 860px;
+  }
+
+  /* ─── SECTION ─── */
+  .section {
+    margin-bottom: 64px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--navy-border);
+  }
+  .section-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    font-weight: 500;
+    min-width: 56px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 32px 0 12px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  h4 {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--teal);
+    margin: 24px 0 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  p {
+    color: var(--grey-light);
+    margin-bottom: 14px;
+    font-size: 14.5px;
+  }
+  p strong, p b {
+    color: var(--white);
+    font-weight: 500;
+  }
+  p em { color: var(--teal); font-style: normal; font-weight: 500; }
+
+  /* ─── CODE BLOCKS ─── */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-left: 3px solid var(--teal-dim);
+    padding: 20px 24px;
+    overflow-x: auto;
+    margin: 20px 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    line-height: 1.65;
+    color: #8ecfcc;
+    scrollbar-width: thin;
+    scrollbar-color: var(--code-border) transparent;
+  }
+  pre::-webkit-scrollbar { height: 4px; }
+  pre::-webkit-scrollbar-track { background: transparent; }
+  pre::-webkit-scrollbar-thumb { background: var(--code-border); }
+
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--teal);
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border: 1px solid var(--code-border);
+  }
+
+  /* ─── TABLES ─── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 20px 0;
+    border: 1px solid var(--navy-border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  thead tr {
+    background: var(--navy-panel);
+    border-bottom: 2px solid var(--navy-border);
+  }
+  th {
+    padding: 10px 16px;
+    text-align: left;
+    color: var(--teal);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  td {
+    padding: 9px 16px;
+    color: var(--grey-light);
+    border-bottom: 1px solid var(--grey-faint);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--navy-hover); }
+
+  /* ─── CALLOUT BOXES ─── */
+  .callout {
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-left: 3px solid;
+    font-size: 13.5px;
+  }
+  .callout-invariant {
+    background: rgba(0,198,184,0.05);
+    border-color: var(--teal);
+    color: var(--grey-light);
+  }
+  .callout-invariant strong { color: var(--teal); }
+  .callout-warning {
+    background: rgba(224,92,110,0.05);
+    border-color: var(--red);
+    color: var(--grey-light);
+  }
+  .callout-warning strong { color: var(--red); }
+  .callout-note {
+    background: rgba(232,184,75,0.05);
+    border-color: var(--gold);
+    color: var(--grey-light);
+  }
+  .callout-note strong { color: var(--gold); }
+
+  /* ─── LATENCY TABLE SPECIAL ─── */
+  .latency-table td:nth-child(2) { color: var(--gold); text-align: right; font-weight: 500; }
+  .latency-table tr:last-child td { color: var(--white); font-weight: 500; border-top: 1px solid var(--navy-border); }
+
+  /* ─── SECTION 0 GRID ─── */
+  .trust-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .trust-card {
+    background: var(--navy-panel);
+    border: 1px solid var(--navy-border);
+    padding: 16px;
+  }
+  .trust-card-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .trust-card p {
+    font-size: 13px;
+    margin-bottom: 0;
+  }
+
+  /* ─── TREE DIAGRAM ─── */
+  .tree-diagram {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .tree-panel {
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    padding: 20px;
+  }
+  .tree-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .tree-panel pre {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 11px;
+    color: #6ab0ae;
+    border-left: none;
+  }
+
+  /* ─── VERIFICATION FLOW ─── */
+  .flow-step {
+    display: flex;
+    gap: 16px;
+    margin: 10px 0;
+    align-items: flex-start;
+  }
+  .flow-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    background: var(--teal-faint);
+    border: 1px solid var(--teal-dim);
+    min-width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .flow-text {
+    font-size: 13.5px;
+    color: var(--grey-light);
+    padding-top: 4px;
+  }
+
+  /* ─── SCENARIO BOX ─── */
+  .scenario {
+    background: var(--navy-panel);
+    border: 1px solid var(--navy-border);
+    margin: 20px 0;
+  }
+  .scenario-head {
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--navy-border);
+    padding: 10px 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .scenario-body { padding: 16px 18px; }
+  .scenario-body p { font-size: 13.5px; margin-bottom: 10px; }
+  .scenario-body p:last-child { margin-bottom: 0; }
+  .scenario-state {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 2px 10px;
+    margin: 0 2px;
+    font-weight: 500;
+  }
+  .state-without { background: var(--tag-refuse); color: var(--red); border: 1px solid var(--red-dim); }
+  .state-with    { background: var(--tag-act);    color: #4cbb6e; border: 1px solid #2a6040; }
+
+  /* ─── FAILURE MODE TABLE ─── */
+  .failure-row td:first-child { color: var(--red); font-weight: 500; }
+
+  /* ─── TOC INDICATOR ─── */
+  .invariant-pill {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    color: var(--teal);
+    background: var(--teal-faint);
+    border: 1px solid var(--teal-dim);
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+
+  /* ─── FOOTER ─── */
+  .doc-footer {
+    border-top: 1px solid var(--navy-border);
+    padding: 32px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--navy-mid);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .doc-footer p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--grey-mid);
+    margin: 0;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main-content { padding: 32px 24px; }
+    .tree-diagram, .trust-grid { grid-template-columns: 1fr; }
+    .doc-footer { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="doc-header">
+  <div class="header-badge">Ternary Logic — TL Architecture Specification</div>
+  <h1 class="doc-title">Structural, Adversarial, and Availability-Hardened Merkle Architecture for Ternary Logic (TL)</h1>
+  <p class="doc-subtitle">Merkle Tree Architecture — Core Specification</p>
+  <div class="doc-meta">
+    <span><b>VERSION</b> 1.0</span>
+    <span><b>STATUS</b> Specification</span>
+    <span><b>ORCID</b> 0009-0006-5966-1243</span>
+    <span><b>FRAMEWORK</b> Global Decision Systems Architecture</span>
+  </div>
+</header>
+
+<div class="triadic-row">
+  <span class="triadic-badge tb-act">ACT +1</span>
+  <span class="triadic-badge tb-hold">EPISTEMIC HOLD 0</span>
+  <span class="triadic-badge tb-refuse">REFUSE −1</span>
+</div>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="nav-label">Sections</div>
+  <a class="nav-item" href="#sec0">§0 — System Model</a>
+  <a class="nav-item" href="#sec1">§1 — Merkle as Core Component</a>
+  <a class="nav-item" href="#sec2">§2 — Leaf Node Specification</a>
+  <a class="nav-item" href="#sec3">§3 — Tree Construction Model</a>
+  <a class="nav-item" href="#sec4">§4 — Hierarchical Integrity</a>
+  <a class="nav-item" href="#sec5">§5 — Anchoring Strategy</a>
+  <a class="nav-item" href="#sec6">§6 — Causal Integrity</a>
+  <a class="nav-item" href="#sec7">§7 — Proof Generation</a>
+  <a class="nav-item" href="#sec8">§8 — Data Availability</a>
+  <a class="nav-item" href="#sec9">§9 — Tamper Resistance</a>
+  <a class="nav-item" href="#sec10">§10 — Latency Modeling</a>
+  <a class="nav-item" href="#sec11">§11 — Formal Guarantees</a>
+  <a class="nav-item" href="#sec12">§12 — Comparative Analysis</a>
+  <a class="nav-item" href="#sec13">§13 — Failure Disclosure</a>
+</nav>
+
+<!-- MAIN -->
+<main class="main-content">
+
+  <!-- INVARIANT III -->
+  <div class="callout callout-invariant" style="margin-bottom: 40px;">
+    <strong>Invariant III — Execution Legitimacy Constraint</strong><br>
+    No transaction commit or actuation command is valid unless a corresponding Merkle-committed log entry exists and is verifiable. Any action without a committed log hash is considered structurally invalid.
+  </div>
+
+  <!-- §0 -->
+  <section class="section" id="sec0">
+    <div class="section-header">
+      <span class="section-num">§ 0</span>
+      <h2 class="section-title">System Model</h2>
+    </div>
+
+    <h3>0.1 Node Taxonomy</h3>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-card-title">Validators</div>
+        <p>Full log replicas. Construct and verify Merkle subtrees. Participate in root anchoring consensus. Explicitly modeled as potentially Byzantine. Threshold: ⌈2n/3⌉ + 1 for signed root validity.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-card-title">Auditors</div>
+        <p>Read-only, full log access. Independent forensic verification via logarithmic inclusion proofs. Explicitly untrusted — output is informational, not operative.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-card-title">Light Clients</div>
+        <p>Hold only anchored root hashes. Verify individual events via O(log n) inclusion proofs. Trust model is anchoring-dependent: minimum two independent chains required.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-card-title">Trust Boundaries</div>
+        <p><strong>Trusted:</strong> HSMs, TPMs, hardware-encrypted WAL.<br><strong>Untrusted:</strong> All software processes, including the TL execution engine.<br><strong>Conditional:</strong> TSAs, anchoring chains.</p>
+      </div>
+    </div>
+
+    <h3>0.2 Network Model</h3>
+    <p>TL assumes a <strong>partially synchronous</strong> network model (Dwork, Lynch, Stockmeyer, 1988). Safety guarantees — tamper evidence, causal ordering, Merkle integrity — hold unconditionally under asynchrony. Liveness (timely anchoring) requires synchronous periods sufficient to complete the 500 ms deferral window.</p>
+
+    <h3>0.3 Failure Model</h3>
+    <p>TL employs <strong>Byzantine Fault Tolerance (BFT)</strong> for the validator set. CFT is architecturally insufficient given the adversarial threat model. The system tolerates f = ⌊(n−1)/3⌋ Byzantine validators. Recommended minimum deployment: n = 7, tolerating f = 2.</p>
+
+    <h3>0.4 External Dependency Trust</h3>
+    <p><strong>Timestamping authorities (RFC 3161):</strong> Trusted for timestamp binding only. Minimum 2 independent TSAs; earliest consistent timestamp wins. <strong>Anchoring chains:</strong> Public append-only bulletin boards. TL requires commitment on at least two chains from distinct consensus families. <strong>Storage providers:</strong> Trusted for availability only; not for confidentiality or integrity.</p>
+  </section>
+
+  <!-- §1 -->
+  <section class="section" id="sec1">
+    <div class="section-header">
+      <span class="section-num">§ 1</span>
+      <h2 class="section-title">Merkle as a Core Structural Component of TL</h2>
+    </div>
+
+    <h3>1.1 Why Merkle Is Necessary, Not Optional</h3>
+    <p>TL's governance guarantees rest on four properties structurally impossible without a cryptographic accumulator: <strong>tamper evidence</strong>, <strong>causal ordering</strong>, <strong>selective verifiability</strong>, and <strong>immutable decision freezing</strong>. Merkle trees provide all four simultaneously with O(log n) proof size.</p>
+
+    <h3>1.2 TL Properties That Collapse Without Merkle</h3>
+    <p><strong>Immutable Ledger:</strong> Log entries are individually hashable but not mutually bound without Merkle commitment. Deletions between entries are undetectable from adjacent entries. Anchoring a Merkle root on a public chain makes suppression globally detectable.</p>
+    <p><strong>Epistemic Hold Immutability:</strong> Without a Merkle-committed, anchored hash, a malicious actor with log write access could change the triadic_outcome field and recompute a plausible log. With Merkle commitment, any field mutation invalidates every ancestor hash to the anchored root.</p>
+    <p><strong>Active Axiom Set Integrity:</strong> Without Merkle inclusion, the axiom set hash is a field in a mutable record. With Merkle inclusion, it is frozen into the anchored root. Retroactive claims that a different rule-set governed a decision are falsifiable by proof.</p>
+    <p><strong>Selective Verifiability:</strong> Without a tree structure, verifying one event requires full log access. Merkle inclusion proofs of O(log n) size enable a light client to verify one event in milliseconds — non-negotiable for regulatory use.</p>
+
+    <h3>1.3 How Merkle Freezes Epistemic Hold Outcomes</h3>
+    <p>When the decision engine produces an Epistemic Hold (0) outcome, the following sequence executes atomically (formalized in §6):</p>
+    <div class="flow-step"><div class="flow-num">1</div><div class="flow-text">Event payload serialized in canonical form (§2 determinism requirements)</div></div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="flow-text">triadic_outcome field set to 0</div></div>
+    <div class="flow-step"><div class="flow-num">3</div><div class="flow-text">Event hashed using SHA3-256</div></div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="flow-text">Leaf hash inserted into rolling Merkle buffer at position determined by Monotonic Sequence ID</div></div>
+    <div class="flow-step"><div class="flow-num">5</div><div class="flow-text">Updated subtree root computed</div></div>
+    <div class="flow-step"><div class="flow-num">6</div><div class="flow-text">Non-action record written to primary database with reference to committed leaf hash</div></div>
+    <p style="margin-top: 12px;">Step 4 occurs before or simultaneously with step 6. The outcome is frozen at the moment of decision.</p>
+
+    <h3>1.4 Concrete Scenario: Prevention of Retroactive Reinterpretation</h3>
+    <div class="scenario">
+      <div class="scenario-head">Scenario — Financial Infrastructure / Triadic State Transition</div>
+      <div class="scenario-body">
+        <p>A financial infrastructure operator processes a high-risk derivative transaction at T=0. TL decision engine (Active Axiom Set V_3) produces <strong>Epistemic Hold (0)</strong>. Transaction is not executed. At T=72h, a compliance officer claims the outcome was Act (+1).</p>
+        <p><span class="scenario-state state-without">WITHOUT MERKLE</span> The outcome field can be changed from 0 to 1, the hash recomputed, and the forensic record is ambiguous.</p>
+        <p><span class="scenario-state state-with">WITH TL MERKLE</span> At T=0 the event is hashed, Merkle-committed, and anchored within 500 ms on two independent chains. At T=72h the modified leaf hash does not reconstruct the anchored root. The retroactive reinterpretation is falsified. The original outcome 0 is the only cryptographically valid state.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- §2 -->
+  <section class="section" id="sec2">
+    <div class="section-header">
+      <span class="section-num">§ 2</span>
+      <h2 class="section-title">Canonical Leaf Node Specification</h2>
+    </div>
+
+    <h3>2.1 Schema Definition</h3>
+<pre>L_i := {
+  event_id          : UUID v4 (128-bit, RFC 4122)
+  seq_id            : uint64, monotonically increasing, globally unique per domain
+  prev_event_hash   : bytes[32], SHA3-256 of L_{i-1} canonical serialization
+  timestamp_utc     : int64, Unix epoch milliseconds, RFC 3161 TSA-bound
+  tsa_signature     : bytes, RFC 3161 timestamp token
+  hold_trigger_src  : enum { RISK_THRESHOLD | PILLAR_CONFLICT | AXIOM_BOUNDARY |
+                              ORACLE_UNVERIFIABLE | MANUAL_OVERRIDE }
+  pillar_ref        : uint8[1..8], reference to one or more of the Eight Pillars
+  risk_class        : enum { LOW | MEDIUM | HIGH | CRITICAL }
+  domain            : enum { ECONOMIC | FINANCIAL | CYBER_PHYSICAL }
+  triadic_outcome   : int8 { +1 | 0 | -1 }
+  integrity_flags   : uint32, bitmask of integrity check results
+  schema_version    : uint16, increments on any schema change
+  schema_hash       : bytes[32], SHA3-256 of canonical schema at schema_version
+  axiom_set_hash    : bytes[32], SHA3-256 of Active Axiom Set at version V_k
+  hash_algo_version : uint8 (0x01=SHA3-256, 0x02=BLAKE3, 0x10=SHA3-256+Dilithium)
+}</pre>
+
+    <h3>2.2 prev_event_hash</h3>
+    <p>Contains SHA3-256 of the immediately preceding leaf L_{i-1} in the same domain sequence. Genesis event (seq_id = 0) uses the 32-byte zero vector. Any insertion, deletion, or reordering of events invalidates prev_event_hash for all subsequent events, producing a detectable chain break. This field is distinct from the Merkle tree structure: the tree provides random-access inclusion proof; the chain provides sequential ordering proof. Both are required.</p>
+
+    <h3>2.3 Active Axiom Set Hash</h3>
+    <p>Computed as SHA3-256 over the UTF-8 encoded, canonically serialized TL rule-set document (RFC 8785 JSON Canonicalization Scheme). Any change to any rule-set field produces a new axiom_set_hash. Retroactive reinterpretation is cryptographically impossible: the leaf hash (and therefore the Merkle proof) is invalidated by any axiom set hash field change.</p>
+
+    <h3>2.4 Determinism Requirements</h3>
+    <p>Canonical serialization: <strong>Protocol Buffers v3</strong> with deterministic mode enabled. Field order: field number order. Encoding: UTF-8 strings; fixed-width little-endian numerics; raw bytes for hash fields. Non-deterministic values are explicitly prohibited. Locale-dependent encodings are prohibited. Identical byte output is required on any compliant implementation, any hardware, any locale.</p>
+
+    <h3>2.5 Privacy Requirements</h3>
+    <p>Personal data must be processed through a three-stage pipeline before leaf inclusion: <strong>(1) Redaction</strong> of free-text personal data to fixed-length placeholder with cross-referenced audit entry. <strong>(2) Pseudonymization</strong> of structured identifiers via HMAC-SHA256(pseudonymization_key, raw_identifier) with domain-specific per-period keys. <strong>(3) Prohibition</strong> of raw personal data — hash functions are not privacy-preserving against low-entropy inputs from a known universe.</p>
+
+    <h3>2.6 Immutability Enforcement</h3>
+    <p>Three interlocking mechanisms: schema_hash inclusion (schema changes invalidate all subsequent leaf hashes); full-field hashing (any field mutation propagates to root); append-only storage enforcement (Section 9). An attacker must either mutate storage (detectable by integrity checks) or forge a SHA3-256 preimage (computationally infeasible).</p>
+  </section>
+
+  <!-- §3 -->
+  <section class="section" id="sec3">
+    <div class="section-header">
+      <span class="section-num">§ 3</span>
+      <h2 class="section-title">Merkle Tree Construction Model</h2>
+    </div>
+
+    <h3>3.1 Hash Algorithm Selection</h3>
+    <p><strong>Primary:</strong> SHA3-256 (FIPS 202). 128-bit collision resistance, 256-bit preimage resistance. Sponge construction distinct from SHA-2. FIPS 140-3 hardware implementations available.<br><strong>Secondary:</strong> BLAKE3 (hash_algo_version 0x02) for performance-critical paths (~3× SHA3-256 throughput on AVX-512).<br><strong>Post-quantum hybrid:</strong> SHA3-256 + Dilithium (0x10). Phased transition support via hash_algo_version field — no rehashing of historical events required or permitted.</p>
+
+    <h3>3.2 Binary vs. Ternary Branching Analysis</h3>
+    <div class="tree-diagram">
+      <div class="tree-panel">
+        <div class="tree-label">Binary Tree (b=2) — Selected</div>
+        <pre>         Root
+        /    \
+      H01    H23
+     / \    / \
+   L0  L1  L2  L3
+
+Depth (N=10⁶): 20
+Proof size:    640 bytes
+Depth (N=10⁹): 30
+Proof size:    960 bytes</pre>
+      </div>
+      <div class="tree-panel">
+        <div class="tree-label">Ternary Tree (b=3) — Evaluated</div>
+        <pre>        Root
+      /  |  \
+   H012 H345 H678
+   /|\  /|\  /|\
+  L0 L1 L2 L3 L4 ...
+
+Depth (N=10⁶): 13
+Proof size:    832 bytes
+Depth (N=10⁹): 19
+Proof size:    1,216 bytes</pre>
+      </div>
+    </div>
+
+    <div class="callout callout-note">
+      <strong>Topology Justification:</strong> Binary branching is selected. The triadic semantics of TL are encoded in the leaf schema (triadic_outcome field) and the Active Axiom Set — not in tree topology. The tree's function is cryptographic accumulation; its topology is optimized for proof efficiency and implementation maturity. Ternary trees produce shallower depth but larger per-step proofs; net proof size is comparable. Binary trees carry universal tooling compatibility with Bitcoin/Ethereum proof infrastructure.
+    </div>
+
+    <h3>3.3 Construction Requirements</h3>
+    <p><strong>Asynchronous updates:</strong> Tree updates run on a dedicated background thread. Leaf hash computation is synchronous (required for §6 atomic commitment); subtree updates are async and do not block the critical path.</p>
+    <p><strong>Rolling buffer:</strong> B = 1,024 leaves with per-entry CRC-32C. Buffer fill triggers partial subtree computation. CRC mismatch triggers immediate anomaly signaling.</p>
+    <p><strong>Deterministic placement:</strong> Leaf position = seq_id mod current tree capacity. Enables independent reconstruction by auditors.</p>
+    <p><strong>Odd-leaf handling:</strong> Last leaf hash is duplicated to form a pair (consistent with Bitcoin convention). Documented; auditors must implement identically.</p>
+
+    <h3>3.4 Replay Protection</h3>
+    <p><strong>Event ID uniqueness:</strong> UUID v4 from HSM hardware entropy. Storage-layer uniqueness constraint rejects duplicates before leaf construction. <strong>Monotonic sequence validation:</strong> seq_id from HSM/TPM counter, incremented atomically with WAL write. Non-consecutive values trigger log suspension. <strong>Replay cache:</strong> Per-anchoring-window event_id cache persisted to WAL; restored before any new events on restart.</p>
+  </section>
+
+  <!-- §4 -->
+  <section class="section" id="sec4">
+    <div class="section-header">
+      <span class="section-num">§ 4</span>
+      <h2 class="section-title">Hierarchical Integrity Model</h2>
+    </div>
+
+    <h3>4.1 Domain Subtree Structure</h3>
+    <p>Three independent Merkle subtrees: <code>Subtree_E</code> (Economic Systems), <code>Subtree_F</code> (Financial Infrastructure), <code>Subtree_C</code> (Cyber-Physical Systems). Domain routing is determined by the domain field, derived from pillar_ref via a deterministic mapping in the Active Axiom Set. An event cannot appear in more than one subtree.</p>
+
+    <h3>4.2 Master Root Construction</h3>
+<pre>R_M := SHA3-256(
+  root_index          ||  // uint64, HSM-backed monotonic counter
+  timestamp_utc       ||  // int64, Unix epoch milliseconds
+  prev_master_root    ||  // bytes[32], hash of previous R_M
+  Subtree_E.root      ||  // bytes[32]
+  Subtree_F.root      ||  // bytes[32]
+  Subtree_C.root      ||  // bytes[32]
+  active_axiom_hash   ||  // bytes[32]
+  hash_algo_version       // uint8
+)</pre>
+    <p>Inclusion proof overhead above domain proof: 5 × 32 bytes + 9 bytes = <strong>169 bytes</strong>. A financial regulator need only verify the Subtree_F root against R_M — no access to other domain subtrees required.</p>
+
+    <h3>4.3 Root-of-Roots Chain and Subtree Continuity</h3>
+    <p>Each R_M(k) includes <code>prev_master_root = R_M(k−1)</code>, establishing a forward hash chain over all Master Roots. Any alteration of a historical Master Root invalidates all subsequent roots. Subtree sequence counters enable gap detection across anchoring cycles. Three independent layers of continuity: prev_event_hash (within-domain sequential), subtree root chaining (within-domain cross-cycle), and Master Root chaining (cross-domain cross-cycle).</p>
+  </section>
+
+  <!-- §5 -->
+  <section class="section" id="sec5">
+    <div class="section-header">
+      <span class="section-num">§ 5</span>
+      <h2 class="section-title">Anchoring Strategy</h2>
+    </div>
+
+    <h3>5.1 Timing Parameters</h3>
+    <div class="callout callout-invariant">
+      <strong>Maximum anchoring delay: 500 ms</strong> (HSM-backed timer enforcement).<br>
+      Nominal anchoring trigger: 250 ms elapsed OR 1,000 new leaves since last anchor, whichever occurs first.
+    </div>
+
+    <h3>5.2 Multi-Chain Anchoring</h3>
+    <p><strong>Chain A (proof-of-work):</strong> Bitcoin mainnet via OP_RETURN (32-byte root hash + 8-byte root_index + metadata). Finality: 6 confirmations (~60 min).</p>
+    <p><strong>Chain B (PoS with BFT finality):</strong> Ethereum mainnet or equivalent. Finality: 1 finalized epoch under Casper FFG (~12.8 min on Ethereum).</p>
+    <p>Rationale: a 51% attack on one chain does not affect the other. BFT chain provides faster light-client verification availability; PoW chain provides longer-horizon security.</p>
+
+    <h3>5.3 Time Integrity and Anti-Backdating</h3>
+    <p>RFC 3161 TSA signature obtained before anchoring transaction broadcast, binding timestamp to root hash before public commitment. Any root with timestamp_utc more than 5 seconds earlier than TSA-response time is rejected. HSM clock synchronized to GPS-disciplined NTP; maximum permitted skew: 100 ms.</p>
+
+    <h3>5.4 Deferred Anchoring Mode</h3>
+    <p>Activates during peak load (&gt;50,000 events/sec) or anchoring infrastructure outages.</p>
+    <p><strong>Cascade roots:</strong> Computed every 50 ms over accumulated leaves. Stored in WAL with timestamp and seq_id range. Not on-chain; serve as crash recovery checkpoints.</p>
+    <p><strong>Maximum deferral: 500 ms.</strong> Beyond 500 ms without successful anchor: Act (+1) outcomes suspended; Epistemic Hold (0) and Refuse (−1) continue with cascade root protection.</p>
+    <p><strong>WAL implementation:</strong> Append-only, hardware-encrypted, fsync'd after each write. Each entry: seq_id, leaf_hash, cascade_root, CRC-32C. On recovery: sequential replay from last anchored root_index, reconstruction validated against seq_id sequence, anomaly-flagged for unresolvable gaps.</p>
+
+    <div class="callout callout-warning">
+      <strong>Failure to reconcile deferred logs invalidates system integrity.</strong> Unresolvable WAL gaps produce permanent integrity gaps announced on the public verification endpoint and treated as integrity failures for all Merkle proofs spanning the affected seq_id range.
+    </div>
+
+    <h3>5.5 Reconciliation Protocol</h3>
+    <p>Reconciliation daemon monitors root_index sequence on all anchoring chains. Gap detection triggers WAL query for cascade roots covering the missing range. If cascade roots found: Master Root is reconstructed and retroactively anchored with a reconciliation flag. If absent: integrity failure declared and logged. All reconciliation events are themselves Merkle-committed TL log entries.</p>
+  </section>
+
+  <!-- §6 -->
+  <section class="section" id="sec6">
+    <div class="section-header">
+      <span class="section-num">§ 6</span>
+      <h2 class="section-title">Causal Integrity Enforcement</h2>
+    </div>
+
+    <h3>6.1 Two-Phase Commit Protocol</h3>
+<pre>Phase 1 (prepare):
+  execute engine → serialize E_i canonically
+  compute H(E_i)
+  write H(E_i) to WAL
+  fsync() — MUST complete before Phase 2
+  issue seq_id from HSM monotonic counter
+
+Phase 2 (commit):
+  write governance action record to primary DB
+  record includes: seq_id, H(E_i)
+  
+Failure modes:
+  Phase 1 fail → Phase 2 not attempted (safe)
+  Phase 2 fail → WAL entry marked orphaned (recoverable anomaly)
+  Phase 2 succeed without Phase 1 → architecturally impossible
+    (seq_id not issued without WAL fsync)</pre>
+
+    <h3>6.2 Execution Interlock</h3>
+    <p><strong>Transaction commit reference:</strong> Every Act (+1) outcome record in the primary database requires transaction_log_hash = H(E_i) and transaction_seq_id = seq_id(E_i). Records missing these fields are rejected at the database write layer.</p>
+    <p><strong>Actuation command validity:</strong> In cyber-physical domains, actuation commands are transmitted only after WAL commitment of the corresponding event. The command payload includes seq_id and H(E_i). The actuator's TL verification module verifies the inclusion proof before executing. Commands without a verifiable log entry are rejected as structurally invalid per Invariant III.</p>
+    <p><strong>Hardware enforcement:</strong> The interlock is implemented in the HSM. The HSM holds the actuation command signing key and will not sign a command unless the corresponding event has been WAL-committed. Software-level bypass does not produce a valid HSM-signed command.</p>
+  </section>
+
+  <!-- §7 -->
+  <section class="section" id="sec7">
+    <div class="section-header">
+      <span class="section-num">§ 7</span>
+      <h2 class="section-title">Proof Generation and Verification</h2>
+    </div>
+
+    <h3>7.1 Merkle Inclusion Proof Structure</h3>
+<pre>Proof_i := {
+  leaf_hash       : bytes[32]
+  siblings        : bytes[32][d]
+  directions      : bits[d]
+  root            : bytes[32]
+  root_index      : uint64
+  chain_A_tx_id   : bytes[32]
+  chain_B_tx_id   : bytes[32]
+  tsa_token       : bytes (RFC 3161)
+}
+
+Size at d=30 (N=10⁹): ~1,000 bytes + TSA token (~2 KB)
+Total: under 4 KB for any practical event count</pre>
+
+    <h3>7.2 Light Client Verification Protocol</h3>
+    <div class="flow-step"><div class="flow-num">1</div><div class="flow-text">Obtain event payload P_i from any provider</div></div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="flow-text">Obtain Proof_i from any proof provider</div></div>
+    <div class="flow-step"><div class="flow-num">3</div><div class="flow-text">Obtain anchored root R at root_index k from public endpoint, chain query, or root cache</div></div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="flow-text">Recompute leaf_hash from P_i; verify Merkle path to R; verify R against chain_A_tx_id and chain_B_tx_id; verify TSA token</div></div>
+    <div class="flow-step"><div class="flow-num">5</div><div class="flow-text">Accept if all checks pass. Report specific failure code if any check fails.</div></div>
+
+    <p style="margin-top: 16px;"><strong>Performance:</strong> Leaf + path hashing: &lt;1 ms on any modern device. Chain RPC calls: 50–500 ms (cacheable). Total data required per verification: &lt;10 KB. No full dataset download required.</p>
+
+    <h3>7.3 Example Verification Output</h3>
+<pre>Input:  event_id = "a3f2...", seq_id = 88,421,003
+        triadic_outcome = 0, domain = FINANCIAL
+
+Step 1: leaf_hash = SHA3-256(canonical_serialize(P_i))
+        = "b7c4e1..."
+
+Step 2: Verify path [30 levels]...
+        computed_root = "8e22a1..."
+
+Step 3: Fetch root at root_index=88,213 from public endpoint
+        R = "8e22a1..." ✓
+
+Step 4: Bitcoin OP_RETURN contains "8e22a1..." ✓
+        Ethereum log contains "8e22a1..." ✓
+        TSA token: timestamp = 2025-03-15T14:23:01Z ✓
+
+Result: VERIFIED — Epistemic Hold (0) committed at
+        2025-03-15T14:23:01Z under Active Axiom Set V_3</pre>
+
+    <h3>7.4 Oracle Integrity Constraint and Verification Hold</h3>
+    <div class="callout callout-note">
+      <strong>Distinction:</strong> Epistemic Hold (0) is a triadic governance decision made by the TL decision engine. Verification Hold is a pre-decision integrity suspension: the inputs required for any triadic determination are of unverifiable provenance. The triadic decision process cannot begin until Verification Hold is resolved.
+    </div>
+<pre>External input arrives
+  │
+  ▼
+Provenance validation:
+  ├─ Signed by registered oracle?
+  ├─ Signature verifiable against registry?
+  ├─ Timestamp within staleness bound (≤30s)?
+  └─ Hash committed in prior TL log entry?
+        │
+        ├─ ALL PASS → triadic decision { +1 | 0 | -1 }
+        │
+        └─ ANY FAIL → VERIFICATION HOLD
+                        │
+                        ├─ Resolution: re-authenticate or replace source
+                        └─ Timeout (default 5s) → auto-resolve to Epistemic Hold (0)
+                             hold_trigger_src = ORACLE_UNVERIFIABLE</pre>
+
+    <h3>7.5 Crypto-Shredding</h3>
+    <p>When K_t is destroyed (signed HSM deletion attestation), pre-hash event data becomes permanently unreadable. Merkle proofs remain fully valid: they authenticate the leaf hash, which was computed over canonical form <em>before</em> encryption. Post-shredding verification confirms: event occurred, triadic outcome, domain, Pillar reference, Active Axiom Set, timestamp — without reconstructing personal data.</p>
+  </section>
+
+  <!-- §8 -->
+  <section class="section" id="sec8">
+    <div class="section-header">
+      <span class="section-num">§ 8</span>
+      <h2 class="section-title">Data Availability Strategy</h2>
+    </div>
+
+    <div class="callout callout-warning">
+      <strong>A Merkle root without retrievable data fails TL governance guarantees.</strong> The Merkle tree provides tamper evidence and selective verifiability; it does not guarantee that the full event context needed for forensic reconstruction is available. Data availability must be ensured independently.
+    </div>
+
+    <h3>8.1 Storage Architecture</h3>
+    <p><strong>Primary (hot):</strong> Append-only distributed log (Kafka replication factor ≥ 3 or equivalent) co-located with validators.</p>
+    <p><strong>Secondary (warm):</strong> Geographic replicas in ≥ 3 jurisdictions. Replication target: within 5 seconds of primary write.</p>
+    <p><strong>Tertiary (cold archive):</strong> Migration after 90 days to object storage with versioning. Replicated to decentralized storage network (Filecoin or Arweave) with proof-of-storage commitment.</p>
+
+    <h3>8.2 Retention Horizon</h3>
+    <p>Minimum: <strong>10 years</strong> from event creation (EU MiFID II: 5 years; US SEC Rule 17a-4: 6 years; configure to strictest applicable jurisdiction). Configurable maximum for intergenerational review: <strong>75 years</strong>. Crypto-shredded personal data: hash records retained indefinitely; pre-hash personal data deleted per retention schedule.</p>
+
+    <h3>8.3 Disaster Recovery Protocol</h3>
+    <p><strong>Step 1:</strong> Detect via integrity check or replication monitoring. Announce on public verification endpoint.<br><strong>Step 2:</strong> Restore from secondary geographic replica; verify against Merkle roots.<br><strong>Step 3:</strong> If secondary affected, restore from decentralized cold archive using content addresses derived from leaf hashes.<br><strong>Step 4:</strong> If tertiary also affected — declare irreversible data loss. Merkle proofs remain structurally valid; payloads are unrecoverable. Permanent availability degradation flag on public endpoint.</p>
+  </section>
+
+  <!-- §9 -->
+  <section class="section" id="sec9">
+    <div class="section-header">
+      <span class="section-num">§ 9</span>
+      <h2 class="section-title">Log Truncation and Tamper Resistance</h2>
+    </div>
+
+    <h3>9.1 Integrity Check Schedule</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Interval</th><th>Scope</th><th>Response on Failure</th></tr></thead>
+        <tbody>
+          <tr><td>Continuous</td><td>WAL CRC-32C on every read</td><td>Immediate anomaly signaling</td></tr>
+          <tr><td>Hourly</td><td>Partial root recomputation over last 3,600s</td><td>Investigation triggered</td></tr>
+          <tr><td>Daily</td><td>Full root recomputation since last anchor cycle</td><td>Anomaly signal + operator notification</td></tr>
+          <tr><td>Monthly</td><td>Full history recomputation (dedicated audit node)</td><td>Disaster recovery assessment</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>9.2 Schema Governance</h3>
+    <p><strong>Signed schema registry:</strong> Append-only, threshold-signed log. Each entry requires ⌈2n/3⌉ + 1 validator signatures.<br><strong>Dual control:</strong> Schema changes require approval signatures from two independent governance authority members.<br><strong>Independent anchoring:</strong> Each schema_version's schema_hash is anchored on-chain separately from event log anchoring — public, tamper-evident record of all schema versions and effective dates.</p>
+  </section>
+
+  <!-- §10 -->
+  <section class="section" id="sec10">
+    <div class="section-header">
+      <span class="section-num">§ 10</span>
+      <h2 class="section-title">Latency and Throughput Modeling</h2>
+    </div>
+
+    <h3>10.1 Latency Budget (≤ 2,000 µs Total)</h3>
+    <div class="table-wrap">
+      <table class="latency-table">
+        <thead><tr><th>Operation</th><th>Allocation (µs)</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Canonical serialization (proto3)</td><td>80</td><td>Deterministic mode</td></tr>
+          <tr><td>SHA3-256 leaf hash</td><td>40</td><td>Hardware-accelerated</td></tr>
+          <tr><td>WAL write (fsync)</td><td>200</td><td>NVMe SSD; dominant term</td></tr>
+          <tr><td>HSM seq_id counter increment</td><td>60</td><td>TPM 2.0</td></tr>
+          <tr><td>Merkle rolling buffer insert</td><td>20</td><td>In-memory O(log n)</td></tr>
+          <tr><td>Partial subtree hash update</td><td>30</td><td>Background, amortized</td></tr>
+          <tr><td>TSA binding (async)</td><td>0</td><td>Off critical path</td></tr>
+          <tr><td>Anchoring (async)</td><td>0</td><td>Off critical path</td></tr>
+          <tr><td><strong>Total Merkle overhead</strong></td><td>430</td><td>21.5% of 2,000 µs budget</td></tr>
+          <tr><td><strong>Remaining for TL logic</strong></td><td>1,570</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>WAL fsync (200 µs) is the dominant term. Battery-backed DRAM or Intel Optane reduces this to 10–20 µs, providing 190 µs additional headroom and enabling throughput well above the baseline 10,000 events/sec target.</p>
+
+    <h3>10.2 Throughput Analysis — 10,000 Events/Sec Scenario</h3>
+    <p><strong>Configuration:</strong> 4 domain-partitioned execution threads, NVMe SSD WAL, SHA3-256 with AVX-512.<br><strong>Per-event critical path:</strong> 430 µs → 2,325 events/sec per thread.<br><strong>4-thread configuration (2×FINANCIAL, 1×ECONOMIC, 1×CYBER_PHYSICAL):</strong> Meets 10,000 events/sec target with margin.<br><strong>Worst-case peak (50,000 events/sec):</strong> WAL write volume ≈ 6.8 MB/sec — well within NVMe sequential write capacity. Buffer fills every 20 ms, triggering partial subtree computation in &lt;1 µs.</p>
+  </section>
+
+  <!-- §11 -->
+  <section class="section" id="sec11">
+    <div class="section-header">
+      <span class="section-num">§ 11</span>
+      <h2 class="section-title">Formal Integrity Guarantees</h2>
+    </div>
+
+    <h3>11.1 Core Cryptographic Properties</h3>
+    <p><strong>Collision resistance:</strong> SHA3-256 provides 2^128 classical / 2^64 quantum resistance. Computationally infeasible through 2040 horizon. Version-field migration enables algorithm replacement without rehashing historical events.</p>
+    <p><strong>Preimage resistance:</strong> 2^256 classical / 2^128 quantum. Anchored root does not leak event content.</p>
+    <p><strong>Second-preimage resistance:</strong> 2^256 classical. A committed event cannot be silently substituted with a different event with the same hash.</p>
+    <p><strong>Forward integrity:</strong> Any alteration of event E_i changes H(E_i), propagates through all subsequent prev_event_hash values and subtree roots, invalidating all subsequent anchored Master Roots. Forward integrity holds from WAL commit; anchoring makes it globally verifiable.</p>
+
+    <h3>11.2 Degradation Conditions</h3>
+    <p><strong>Simultaneous compromise of all anchoring chains:</strong> Both Chain A and Chain B must be simultaneously rewritten. Economically infeasible with distinct consensus families. Mitigation: public endpoint root archive, regulator root caches.</p>
+    <p><strong>HSM compromise:</strong> Threshold signing (multiple HSMs), hardware tamper detection, and key rotation on suspected compromise.</p>
+    <p><strong>Catastrophic hash break:</strong> hash_algo_version field enables emergency migration. Post-quantum hybrid mode (0x10) provides secondary attestation layer during transition.</p>
+
+    <h3>11.3 Post-Quantum Migration Timeline</h3>
+    <p>Full migration to post-quantum hash construction recommended before 2035, aligned with NIST PQC migration timelines. Migration is gradual: new events use the new algorithm; old events retain original algorithm identifiers; verifiers support both. No retroactive rehashing. Timeline governed by dual-control schema update process (§9).</p>
+  </section>
+
+  <!-- §12 -->
+  <section class="section" id="sec12">
+    <div class="section-header">
+      <span class="section-num">§ 12</span>
+      <h2 class="section-title">Comparative Analysis</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>System</th><th>Tree Type</th><th>Hash</th><th>Non-Inclusion</th><th>TL Relevance</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Bitcoin transactions</td><td>Binary Merkle</td><td>SHA256d</td><td>No</td>
+            <td>Proof model directly applicable; OP_RETURN anchoring used by TL</td>
+          </tr>
+          <tr>
+            <td>Ethereum state trie</td><td>Modified Patricia-Merkle</td><td>Keccak-256</td><td>Yes (MPT)</td>
+            <td>State non-inclusion valuable; trie overhead unsuitable for high-throughput append-only log</td>
+          </tr>
+          <tr>
+            <td>Certificate Transparency</td><td>Binary Merkle (append-only)</td><td>SHA-256</td><td>Partial</td>
+            <td>Closest architectural analog. TL inherits CT's append-only model, anchored root sequence, inclusion proof protocol, and independent auditor model</td>
+          </tr>
+          <tr>
+            <td>Sparse Merkle Tree</td><td>Binary (sparse 2^256)</td><td>SHA3-256</td><td>Yes (native)</td>
+            <td>Optional extension for non-inclusion proof deployments; base TL spec uses dense append-only tree</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>12.1 Certificate Transparency Alignment</h3>
+    <p>Google's Certificate Transparency (RFC 9162) is the closest architectural analog to TL's Merkle log. Key structural inheritances: append-only model, anchored root sequence (Signed Tree Heads → Master Roots), inclusion proof protocol, and independent auditor model. Key differences: TL uses multi-chain anchoring vs. CT's gossip-based consistency checking; TL leaves encode triadic governance outcomes; TL hierarchical subtree model provides domain separation absent in CT.</p>
+  </section>
+
+  <!-- §13 -->
+  <section class="section" id="sec13">
+    <div class="section-header">
+      <span class="section-num">§ 13</span>
+      <h2 class="section-title">Failure Mode Disclosure</h2>
+    </div>
+
+    <div class="callout callout-warning" style="margin-bottom: 24px;">
+      <strong>Residual Risk Statement:</strong> The following failure modes are present even under full specification compliance. All are mitigated but not eliminated. Deployers must assess residual risk against their threat model.
+    </div>
+
+    <div class="table-wrap">
+      <table class="failure-row">
+        <thead><tr><th>Failure Mode</th><th>Condition</th><th>Impact</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Hash algorithm break</td>
+            <td>Polynomial-time SHA3-256 collision found</td>
+            <td>All Merkle proofs invalid</td>
+            <td>hash_algo_version migration; post-quantum hybrid mode</td>
+          </tr>
+          <tr>
+            <td>Both anchoring chains fail</td>
+            <td>Simultaneous chain shutdown or 51% attack on both</td>
+            <td>Future roots unanchored; existing roots remain verifiable from archives</td>
+            <td>Distinct consensus families; independent root archive</td>
+          </tr>
+          <tr>
+            <td>HSM supply chain compromise</td>
+            <td>Hardware-level backdoor in HSM/TPM</td>
+            <td>Key protection and monotonic counter integrity subverted without software detection</td>
+            <td>Multi-vendor deployment; open firmware where available; physical security</td>
+          </tr>
+          <tr>
+            <td>WAL destruction before anchoring</td>
+            <td>Storage failure during deferral window</td>
+            <td>Events in destroyed range have no cryptographic record</td>
+            <td>Redundant encrypted WAL; secondary WAL replication required in production</td>
+          </tr>
+          <tr>
+            <td>Byzantine threshold exceeded</td>
+            <td>More than ⌊(n−1)/3⌋ validators simultaneously Byzantine</td>
+            <td>BFT guarantee fails; forged Master Root possible</td>
+            <td>Validator legal accountability; independent auditor monitoring; public anchoring for post-hoc detection</td>
+          </tr>
+          <tr>
+            <td>Catastrophic data loss (all tiers)</td>
+            <td>All storage tiers simultaneously unavailable</td>
+            <td>Merkle roots remain anchored; event payloads unrecoverable</td>
+            <td>Permanent availability-degradation flag; decentralized cold archive; proof-of-storage attestations</td>
+          </tr>
+          <tr>
+            <td>Implementation divergence</td>
+            <td>Canonical serialization differs between implementations</td>
+            <td>Proofs fail for correct events</td>
+            <td>Published test vectors; mandatory compliance test suite for all implementations</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>13.1 Cryptographic Dependency Transparency</h3>
+    <p>This specification depends on: SHA3-256 (FIPS 202) — collision, preimage, second-preimage resistance; RFC 3161 TSA — timestamp binding security depends on TSA private key protection; CRYSTALS-Dilithium (NIST PQC, hybrid mode) — post-quantum signature security; HMAC-SHA256 (pseudonymization) — keyed pseudonym security depends on pseudonymization key protection; CRC-32C (WAL) — error detection only, not tamper evidence.</p>
+
+    <div class="callout callout-note" style="margin-top: 24px;">
+      <strong>Note on CRC-32C:</strong> CRC-32C in the WAL is explicitly not a security control. It detects accidental corruption, not adversarial modification. WAL tamper detection relies on Merkle integrity checks defined in §9.
+    </div>
+  </section>
+
+</main>
+</div>
+
+<footer class="doc-footer">
+  <p>Ternary Logic (TL) — Global Decision Systems Architecture<br>ORCID: 0009-0006-5966-1243 · GitHub: FractonicMind</p>
+  <p>Merkle Tree Architecture Specification v1.0<br>Implementation deferred to TL SDK phase</p>
+</footer>
+
+<script>
+  // Active nav highlighting on scroll
+  const sections = document.querySelectorAll('.section');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navItems.forEach(item => item.classList.remove('active'));
+        const id = entry.target.getAttribute('id');
+        const activeItem = document.querySelector(`.nav-item[href="#${id}"]`);
+        if (activeItem) activeItem.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
