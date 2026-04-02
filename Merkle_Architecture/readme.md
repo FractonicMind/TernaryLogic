@@ -45,7 +45,7 @@ The base construction uses a binary Merkle tree for computational efficiency and
 
 ---
 
-## Concrete Scenario: AML Settlement
+## Concrete Scenario: Anti-Money Laundering (AML) Settlement
 
 A cross-border settlement system detects opaque data provenance regarding the beneficial owner of a fund transfer. TL triggers an Epistemic Hold (0), halting the settlement. An insider facing financial loss attempts to modify the database record to show Act (+1), claiming the hold was a network timeout.
 
