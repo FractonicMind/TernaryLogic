@@ -102,4 +102,4 @@ The architecture is evaluated against ten adversarial conditions:
 
 ---
 
-Ready to save to repo. Want any adjustments before you publish?
+
