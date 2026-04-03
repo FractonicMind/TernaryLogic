@@ -1,9 +1,9 @@
 # MT Hardware Architecture — Ternary Logic (TL)
 
-**Author:** Lev Goukassian
-**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)
-**Framework:** Ternary Logic (TL) — Global Decision Systems Architecture
-**Status:** Specification Complete
+**Author:** Lev Goukassian   
+**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)   
+**Framework:** Ternary Logic (TL) — Global Decision Systems Architecture   
+**Status:** Specification Complete   
 
 ---
 
