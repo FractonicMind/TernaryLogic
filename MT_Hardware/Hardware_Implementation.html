@@ -1,0 +1,2162 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Mandated Ternary: Hardware Implementation of Ternary Logic - Phase 1 Research</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tiempos+Headline:wght@400;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #3498db;
+            --muted: #95a5a6;
+            --background: #fcfcfc;
+            --surface: #ffffff;
+            --text: #2c3e50;
+            --text-muted: #7f8c8d;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        .serif {
+            font-family: 'Tiempos Headline', serif;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, 
+                rgba(44, 62, 80, 0.95) 0%, 
+                rgba(52, 73, 94, 0.85) 50%, 
+                rgba(127, 140, 141, 0.75) 100%);
+        }
+        
+        .toc-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid #e5e7eb;
+            z-index: 50;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+        
+        .toc-link {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 2px solid transparent;
+            padding-left: 1rem;
+        }
+        
+        .toc-link:hover, .toc-link.active {
+            color: var(--accent);
+            border-left-color: var(--accent);
+            background: rgba(52, 152, 219, 0.05);
+        }
+        
+        .toc-section {
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .section-number {
+            color: var(--muted);
+            font-weight: 400;
+        }
+        
+        .hero {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 2rem;
+            height: 100%;
+        }
+        
+        .bento-main {
+            grid-row: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 3rem;
+        }
+        
+        .bento-side {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .bento-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .bento-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 1024px) {
+            .toc-fixed {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .toc-fixed.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .bento-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            
+            .bento-main {
+                grid-row: 1;
+            }
+        }
+        
+        .citation {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin: 0 0.2rem;
+            transition: all 0.2s ease;
+        }
+        
+        .citation:hover {
+            background: var(--secondary);
+            transform: translateY(-1px);
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.05), rgba(52, 152, 219, 0.02));
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .data-table {
+            background: var(--surface);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+        
+        .data-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            text-align: left;
+        }
+        
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .chart-container {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .pullquote {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--accent);
+            text-align: center;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-top: 2px solid var(--accent);
+            border-bottom: 2px solid var(--accent);
+            background: rgba(52, 152, 219, 0.02);
+        }
+        
+        @media (max-width: 768px) {
+            .bento-main {
+                padding: 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .bento-card {
+                padding: 1rem;
+            }
+            
+            .data-table th, .data-table td {
+                padding: 0.75rem 0.5rem;
+            }
+            
+            .hero .flex.space-x-4 {
+                flex-wrap: wrap;
+                row-gap: 0.5rem;
+            }
+        }
+    </style>
+  <base target="_blank">
+</head>
+
+  <body>
+    <!-- Fixed Table of Contents -->
+    <nav class="toc-fixed">
+      <h3 class="text-lg font-bold text-gray-900 mb-4 serif">Contents</h3>
+
+      <div class="toc-section">Overview</div>
+      <a href="#hero" class="toc-link"><span class="section-number">0.</span> Hero</a>
+      <a href="#abstract" class="toc-link"><span class="section-number">1.</span> Abstract</a>
+      <a href="#executive-summary" class="toc-link"><span class="section-number">2.</span> Executive Summary</a>
+
+      <div class="toc-section">Foundations</div>
+      <a href="#definitions" class="toc-link"><span class="section-number">3.</span> Definitions &amp; Scope</a>
+      <a href="#baseline" class="toc-link"><span class="section-number">4.</span> Binary CMOS Limitations</a>
+
+      <div class="toc-section">Technical Analysis</div>
+      <a href="#device-physics" class="toc-link"><span class="section-number">5.</span> Device Physics</a>
+      <a href="#circuit-primitives" class="toc-link"><span class="section-number">6.</span> Circuit Primitives</a>
+      <a href="#interlock" class="toc-link"><span class="section-number">7.</span> NL=NA Interlock</a>
+      <a href="#trust-root" class="toc-link"><span class="section-number">8.</span> Hardware Root of Trust</a>
+
+      <div class="toc-section">Assessment</div>
+      <a href="#emulation-tax" class="toc-link"><span class="section-number">9.</span> Emulation Tax</a>
+      <a href="#falsifiability" class="toc-link"><span class="section-number">10.</span> Falsifiability</a>
+      <a href="#conclusion" class="toc-link"><span class="section-number">11.</span> Phase 1 Conclusion</a>
+
+      <div class="toc-section">References</div>
+      <a href="#bibliography" class="toc-link"><span class="section-number">12.</span> Bibliography</a>
+      <a href="#glossary" class="toc-link"><span class="section-number">13.</span> Glossary</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hero Section -->
+      <section id="hero" class="hero hero-gradient relative">
+        <div class="absolute inset-0 opacity-20">
+          <img src="https://kimi-web-img.moonshot.cn/img/media.springernature.com/72da71156e69dd726b7d17a33c992fa14a742d6f.png" alt="3D visualization of ternary logic gates in a semiconductor circuit" class="w-full h-full object-cover" size="wallpaper" aspect="wide" query="ternary logic gate 3d visualization" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+        </div>
+
+        <div class="relative z-10 container mx-auto px-4 sm:px-6">
+          <div class="bento-grid">
+            <div class="bento-main text-white">
+              <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold serif mb-4 sm:mb-6 leading-tight">
+                <em class="block text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal mb-2 sm:mb-4 opacity-90">Mandated Ternary</em>
+                Hardware Implementation of Ternary Logic
+              </h1>
+              <p class="text-base sm:text-lg md:text-xl opacity-90 mb-6 sm:mb-8 leading-relaxed">
+                Phase 1 — Device Physics, Circuit Primitives, and Physical Interlock Mechanisms
+              </p>
+              <div class="flex flex-wrap gap-3 sm:gap-4">
+                <span class="px-3 py-1 sm:px-4 sm:py-2 bg-white bg-opacity-20 rounded-full text-xs sm:text-sm font-medium">
+                  <i class="fas fa-microchip mr-1 sm:mr-2"></i>Memristive Devices
+                </span>
+                <span class="px-3 py-1 sm:px-4 sm:py-2 bg-white bg-opacity-20 rounded-full text-xs sm:text-sm font-medium">
+                  <i class="fas fa-shield-alt mr-1 sm:mr-2"></i>Hardware Enforcement
+                </span>
+                <span class="px-3 py-1 sm:px-4 sm:py-2 bg-white bg-opacity-20 rounded-full text-xs sm:text-sm font-medium">
+                  <i class="fas fa-lock mr-1 sm:mr-2"></i>Physical Interlocks
+                </span>
+              </div>
+            </div>
+
+            <div class="bento-side">
+              <div class="bento-card text-white">
+                <h3 class="font-bold mb-2 text-base sm:text-lg">Core Finding</h3>
+                <p class="text-xs sm:text-sm opacity-90">Conditionally feasible at device physics layer but fails to demonstrate discontinuous advantage over TSMC N2 CoWoS ReRAM baseline.</p>
+              </div>
+              <div class="bento-card text-white">
+                <h3 class="font-bold mb-2 text-base sm:text-lg">Key Constraint</h3>
+                <p class="text-xs sm:text-sm opacity-90">Non-blocking enforcement with WCET provably bounded at 99.99th percentile with σ/μ &lt; 10%.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Abstract -->
+      <section id="abstract" class="py-16 bg-white">
+        <div class="container mx-auto px-6 max-w-4xl">
+          <h2 class="text-4xl font-bold serif mb-8 text-center">1. Abstract</h2>
+
+          <div class="highlight-box">
+            <h3 class="text-2xl font-bold mb-4 serif">1.1 Core Claim</h3>
+            <p class="text-lg leading-relaxed mb-6">
+              The physical instantiation of three stable, non-volatile resistance states in memristive devices—specifically TaOx-based ReRAM with engineered Intermediate Resistance State (IRS)—is theoretically feasible for 10-year operational horizons but <strong>cannot be validated for 20-year retention with statistical confidence required for deterministic autonomous execution systems</strong>. No discontinuous advantage over the named baseline (TSMC N2 CoWoS with embedded ReRAM 1T1R, 2025 PDK) has been demonstrated at any evaluated layer.
+            </p>
+          </div>
+
+          <h3 class="text-2xl font-bold mb-4 serif">1.2 Scope and Constraints</h3>
+          <p class="text-lg leading-relaxed mb-6">
+            This Phase 1 evaluation addresses: device physics of three-state resistive switching; circuit primitives for ternary sensing and logic; physical interlock mechanisms for non-blocking enforcement; and hardware root of trust integration. The analysis adheres strictly to two global constraints: <strong>(1) non-blocking enforcement with WCET provably bounded at 99.99th percentile with σ/μ &lt; 10%</strong>, and <strong>(2) direct quantitative comparison to the fixed 2025 baseline at every layer</strong>. Machine learning inference and statistical pattern matching are explicitly excluded; target applications are deterministic autonomous execution in industrial, financial, and critical infrastructure contexts.
+          </p>
+        </div>
+      </section>
+
+      <!-- Executive Summary -->
+      <section id="executive-summary" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-6xl">
+          <h2 class="text-4xl font-bold serif mb-12 text-center">2. Executive Summary</h2>
+
+          <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white rounded-lg p-8 shadow-lg">
+              <h3 class="text-2xl font-bold mb-6 serif text-green-700">
+                <i class="fas fa-check-circle mr-2"></i>Phase 1 Findings
+              </h3>
+
+              <div class="space-y-4">
+                <div class="border-l-4 border-green-500 pl-4">
+                  <h4 class="font-bold text-green-700">Device Physics Layer</h4>
+                  <p class="text-sm">TaOx ReRAM demonstrates proven capability for binary switching with <strong>10⁴–10⁹ cycle endurance</strong> and <strong>&gt;10 year retention at 85°C</strong>. However, IRS exhibits fundamental reliability challenges with σ/μ variability of <strong>20–40%</strong> and no validated 20-year retention data.</p>
+                </div>
+
+                <div class="border-l-4 border-yellow-500 pl-4">
+                  <h4 class="font-bold text-yellow-700">Circuit Primitives</h4>
+                  <p class="text-sm">Native ternary logic requires <strong>2.5–6× area and 2–5× energy</strong> versus binary equivalents. Gate inflation factors range from <strong>2.2× to 5.8×</strong>.</p>
+                </div>
+
+                <div class="border-l-4 border-red-500 pl-4">
+                  <h4 class="font-bold text-red-700">Physical Interlock</h4>
+                  <p class="text-sm">NL=NA architecture is conceptually sound but introduces unbounded latency risks under fault conditions. 300 ms logging lane hard ceiling is a design target without demonstrated implementation.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-lg p-8 shadow-lg">
+              <h3 class="text-2xl font-bold mb-6 serif text-blue-700">
+                <i class="fas fa-exchange-alt mr-2"></i>Phase 2 Inheritance
+              </h3>
+
+              <div class="space-y-4">
+                <div class="bg-green-50 p-4 rounded-lg">
+                  <h4 class="font-bold text-green-700 mb-2">May Assume</h4>
+                  <ul class="text-sm space-y-1">
+                    <li>• Binary ReRAM device physics as validated in 12–28nm production</li>
+                    <li>• 10⁶–10⁷ cycle endurance with proper current compliance</li>
+                    <li>• 10-year retention at 85°C as demonstrated</li>
+                    <li>• Sense amplifier architectures for three-state discrimination</li>
+                  </ul>
+                </div>
+
+                <div class="bg-red-50 p-4 rounded-lg">
+                  <h4 class="font-bold text-red-700 mb-2">Must Not Assume</h4>
+                  <ul class="text-sm space-y-1">
+                    <li>• 20-year IRS retention with 95% confidence lower bound</li>
+                    <li>• σ/μ &lt; 20% for IRS variability without process control</li>
+                    <li>• WCET bounds proven at 99.99th percentile</li>
+                    <li>• Discontinuous advantage over software-implemented ternary</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg">
+            <h3 class="text-xl font-bold mb-4 text-red-700">
+              <i class="fas fa-exclamation-triangle mr-2"></i>Program Termination Conditions
+            </h3>
+            <p class="text-sm text-red-600 mb-4">Immediate termination warranted if any condition is confirmed:</p>
+            <div class="grid md:grid-cols-2 gap-4 text-sm">
+              <ul class="space-y-2">
+                <li>• TaOx σ/μ &gt; 40% at IRS operating conditions</li>
+                <li>• 10-year accelerated test at 150°C shows &lt;10 year retention</li>
+                <li>• Confirm pulse tamper-evidence requires &gt;400°C BEOL budget</li>
+                <li>• PUF inter-die Hamming distance &lt; 49%</li>
+                <li>• WCET bounds unprovable at 99.99th percentile</li>
+              </ul>
+              <ul class="space-y-2">
+                <li>• No quantified architectural advantage in Phase 2</li>
+                <li>• Binary MLC ReRAM achieves equivalent functional safety</li>
+                <li>• Wire energy dominates compute energy below 1024×1024</li>
+                <li>• Read disturb threshold &lt; 10⁶ cycles for IRS→LRS</li>
+                <li>• Foundry PUF attestation requires single-vendor trust</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Definitions and Scope -->
+      <section id="definitions" class="py-16 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+          <h2 class="text-4xl font-bold serif mb-12 text-center">3. Definitions and Scope</h2>
+
+          <div class="grid lg:grid-cols-2 gap-12">
+            <div>
+              <h3 class="text-2xl font-bold mb-6 serif">3.1 Binary CMOS Baseline</h3>
+
+              <div class="bg-gray-50 p-6 rounded-lg mb-8">
+                <h4 class="font-bold mb-3">3.1.1 Logic Levels and Noise Margins</h4>
+                <p class="mb-4">Binary CMOS at the <strong>3nm GAA node</strong> operates with nominal VDD = 0.75V <a href="https://newsletter.semianalysis.com/p/iedm2024" class="citation">391</a>, with logic levels defined as VOL &lt; 0.15V (logic-0) and VOH &gt; 0.60V (logic-1). Process variation with σVth = 50mV reduces effective noise margins by 15–20% at 3σ corners <a href="https://www.tomshardware.com/tech-industry/sram-scaling-isnt-dead-after-all-tsmcs-2nm-process-tech-claims-major-improvements" class="citation">469</a>.</p>
+
+                <div class="bg-red-100 p-4 rounded-lg mb-4">
+                  <p class="text-sm"><strong>Fundamental Limitation:</strong> Absence of native intermediate state. CMOS inverter transfer characteristic exhibits metastable switching threshold that is non-persistent and not architecturally discriminable.</p>
+                </div>
+              </div>
+
+              <div class="bg-gray-50 p-6 rounded-lg">
+                <h4 class="font-bold mb-3">3.1.2 Switching Energy</h4>
+                <p class="mb-4">Switching energy follows Esw = αCVDD², yielding Esw ≈ 0.07 fJ per toggle for minimum-size inverter. However, <strong>1 mm global wire energy exceeds 100 fJ</strong>—approximately 1,400× the gate energy.</p>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-2xl font-bold mb-6 serif">3.2 Memristor Distinction</h3>
+
+              <div class="bg-blue-50 p-6 rounded-lg mb-8">
+                <p class="mb-4"><strong>Ideal memristor</strong> (Chua, 1971) defines fundamental two-terminal relationship between charge and flux: dφ = M(q)dq <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4124699/" class="citation">363</a>. <strong>No physical device satisfies this ideal definition</strong>.</p>
+
+                <p>Practical <strong>memristive systems</strong> exhibit hysteretic I-V characteristics with memory, state retention without power, and resistance modulation through ionic migration, but with stochastic nucleation and abrupt switching not captured by ideal models.</p>
+              </div>
+
+              <div class="bg-yellow-50 p-6 rounded-lg">
+                <h4 class="font-bold mb-3">3.3 Hysteresis Window</h4>
+                <p class="mb-4">Hysteresis arises from history-dependent ionic distribution. For TaOx:</p>
+                <ul class="space-y-2 text-sm">
+                  <li>• <strong>VSET:</strong> 1.0–1.5V (HRS→LRS)</li>
+                  <li>• <strong>VRESET:</strong> −1.5 to −2.5V (LRS→HRS)</li>
+                  <li>• <strong>Hysteresis window:</strong> 0.3–0.8V (marginal for three-state discrimination)</li>
+                  <li>• <strong>Retention barrier (Ea):</strong> 1.0–1.2 eV for TaOx</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Binary CMOS Limitations -->
+      <section id="baseline" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-6xl">
+          <h2 class="text-4xl font-bold serif mb-12 text-center">4. Binary CMOS Limitations</h2>
+
+          <div class="grid lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2">
+              <div class="bg-white p-8 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-bold mb-6 serif">4.1 Why Binary CMOS Cannot Enforce Mandatory Intermediate State</h3>
+
+                <div class="space-y-4">
+                  <div class="flex items-start space-x-4">
+                    <div class="bg-red-100 p-2 rounded-full">
+                      <i class="fas fa-times text-red-600"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-bold">Metastability</h4>
+                      <p class="text-sm">Intermediate voltage regions are unstable—noise or variation drives rapid transition to rail voltages.</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start space-x-4">
+                    <div class="bg-red-100 p-2 rounded-full">
+                      <i class="fas fa-times text-red-600"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-bold">Non-Persistence</h4>
+                      <p class="text-sm">Power removal destroys state information—requires continuous power for state maintenance.</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start space-x-4">
+                    <div class="bg-red-100 p-2 rounded-full">
+                      <i class="fas fa-times text-red-600"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-bold">Software-Only Implementation</h4>
+                      <p class="text-sm">Requires explicit state machine encoding, polling loops, and timeout handling—introducing unbounded latency vulnerability.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-bold mb-6 serif">4.2 Comparative Analysis vs. 2025 Baseline</h3>
+
+                <div class="space-y-6">
+                  <div class="border-l-4 border-blue-500 pl-4">
+                    <h4 class="font-bold">Named Baseline Assessment</h4>
+                    <p class="text-sm mb-2">&#34;TSMC N2 CoWoS with embedded ReRAM 1T1R, 2025 PDK&#34; does not exist as publicly documented product.</p>
+                    <ul class="text-sm space-y-1">
+                      <li>• TSMC N2 GAA logic entered volume production H2 2025</li>
+                      <li>• TSMC ReRAM qualified at 12–28nm nodes with no disclosed N2 integration <a href="https://investor.tsmc.com/sites/ir/annual-report/2024/2024%20Annual%20Report_E.pdf" class="citation">397</a>
+                        <a href="https://www.repository.cam.ac.uk/bitstreams/f7322077-7846-405f-bf26-1e521c9e2cc3/download" class="citation">514</a>
+                        <a href="https://link.springer.com/article/10.1557/s43579-024-00660-2" class="citation">515</a>
+                      </li>
+                      <li>• Available 2025 ReRAM benchmarks provide no ternary capability</li>
+                    </ul>
+                  </div>
+
+                  <div class="bg-yellow-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-yellow-700">Conclusion</h4>
+                    <p class="text-sm text-yellow-600">MT shows no discontinuous advantage—ternary encoding offers marginal density improvement (1.58× vs. 2× for binary MLC) at substantial circuit complexity cost.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                <h4 class="font-bold mb-4">CMOS vs. MT Comparison</h4>
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm">State Persistence</span>
+                    <div class="flex space-x-1">
+                      <div class="bg-red-500 w-3 h-3 rounded-full"></div>
+                      <div class="bg-green-500 w-3 h-3 rounded-full"></div>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm">Native Intermediate State</span>
+                    <div class="flex space-x-1">
+                      <div class="bg-red-500 w-3 h-3 rounded-full"></div>
+                      <div class="bg-green-500 w-3 h-3 rounded-full"></div>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm">Hardware Enforcement</span>
+                    <div class="flex space-x-1">
+                      <div class="bg-red-500 w-3 h-3 rounded-full"></div>
+                      <div class="bg-green-500 w-3 h-3 rounded-full"></div>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm">Energy Efficiency</span>
+                    <div class="flex space-x-1">
+                      <div class="bg-green-500 w-3 h-3 rounded-full"></div>
+                      <div class="bg-yellow-500 w-3 h-3 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-blue-50 p-6 rounded-lg">
+                <h4 class="font-bold mb-3 text-blue-700">Key Metrics</h4>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between">
+                    <span>VDD (3nm GAA)</span>
+                    <strong>0.75V</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>σVth</span>
+                    <strong>50mV</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>NML/NMH</span>
+                    <strong>150mV/450mV</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Esw (gate)</span>
+                    <strong>0.07 fJ</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Esw (wire)</span>
+                    <strong>&gt;100 fJ</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Device Physics -->
+      <section id="device-physics" class="py-16 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+          <h2 class="text-4xl font-bold serif mb-12 text-center">5. Device Physics and Engineered State Requirements</h2>
+
+          <div class="grid lg:grid-cols-2 gap-12">
+            <div>
+              <h3 class="text-2xl font-bold mb-6 serif">5.1 Universal Memristive Mechanisms</h3>
+
+              <div class="space-y-6">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                  <h4 class="font-bold mb-3">Filament Formation/Rupture</h4>
+                  <p class="text-sm mb-3">Conductive pathways form through oxygen vacancy accumulation under applied electric field. The filament growth is stochastic and subject to nucleation variability.</p>
+                  <div class="bg-yellow-100 p-3 rounded text-xs">
+                    <strong>Challenge:</strong> IRS requires partial filament formation—metastable configuration with lower retention barrier.
+                  </div>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg">
+                  <h4 class="font-bold mb-3">Oxygen Vacancy Migration</h4>
+                  <p class="text-sm mb-3">Ionic transport under bias creates/removes conductive pathways. Migration velocity follows Arrhenius relationship with temperature.</p>
+                  <div class="bg-red-100 p-3 rounded text-xs">
+                    <strong>Risk:</strong> Thermal activation can cause spontaneous IRS→LRS or IRS→HRS transitions over time.
+                  </div>
+                </div>
+              </div>
+
+              <div class="highlight-box mt-8">
+                <h4 class="font-bold mb-3">Why Three States?</h4>
+                <p class="text-sm">The engineering case for exactly three states (vs. binary or quaternary) is based on: (a) TL framework requirements; (b) optimal sensing margin trade-offs; (c) reduced state encoding complexity. However, <strong>no demonstrated advantage over binary multi-level cell (MLC) configurations</strong>.</p>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-2xl font-bold mb-6 serif">5.2 TaOx Deep-Dive</h3>
+
+              <div class="bg-blue-50 p-6 rounded-lg mb-6">
+                <h4 class="font-bold mb-3">Device Stack Specification</h4>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between">
+                    <span>Bottom Electrode</span>
+                    <strong>TiN (50nm)</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>TaOx Switching Layer</span>
+                    <strong>5-10nm</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Top Electrode</span>
+                    <strong>Pt or Au (50nm)</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Operating Voltage</span>
+                    <strong>±1.0-2.5V</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Current Compliance</span>
+                    <strong>100μA-1mA</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-yellow-50 p-6 rounded-lg mb-6">
+                <h4 class="font-bold mb-3">IRS Engineering Approaches</h4>
+                <div class="space-y-3">
+                  <div>
+                    <h5 class="font-semibold text-sm">Intermediate Filament</h5>
+                    <p class="text-xs">Partial filament formation with controlled compliance current. Most published approach but suffers from high variability (σ/μ &gt; 30%).</p>
+                  </div>
+                  <div>
+                    <h5 class="font-semibold text-sm">Partial Reset</h5>
+                    <p class="text-xs">Controlled dissolution of complete filament. More reproducible but requires precise voltage control within 50mV window.</p>
+                  </div>
+                  <div>
+                    <h5 class="font-semibold text-sm">Dual Filament Regime</h5>
+                    <p class="text-xs">Two parallel filaments with different activation energies. Most robust approach but requires complex stack engineering.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-red-50 p-6 rounded-lg">
+                <h4 class="font-bold mb-3 text-red-700">Retention Challenge</h4>
+                <p class="text-sm mb-3">20-year retention projection requires Arrhenius extrapolation with Ea = 1.0-1.2 eV. However:</p>
+                <ul class="text-xs space-y-1">
+                  <li>• No 10-year accelerated test at 150°C with &lt;10% drift</li>
+                  <li>• 95% confidence lower bound not validated for IRS</li>
+                  <li>• Metastable configurations have lower effective barrier</li>
+                  <li>• Thermal budget constraints (&lt;400°C) limit post-processing</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparative Device Table -->
+          <div class="mt-12">
+            <h3 class="text-2xl font-bold mb-6 serif">5.3 Comparative Device Analysis</h3>
+
+            <div class="data-table">
+              <table class="w-full">
+                <thead>
+                  <tr>
+                    <th>Technology</th>
+                    <th>Retention</th>
+                    <th>Endurance</th>
+                    <th>Variability (σ/μ)</th>
+                    <th>IRS Credibility</th>
+                    <th>Advantage over 2025 Baseline</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="font-semibold">TaOx ReRAM</td>
+                    <td>&gt;10y @ 85°C</td>
+                    <td>10⁴-10⁹</td>
+                    <td>20-40%</td>
+                    <td><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Marginal</span></td>
+                    <td><span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">None</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-semibold">HfOx ReRAM</td>
+                    <td>&gt;10y @ 85°C</td>
+                    <td>10⁶-10¹²</td>
+                    <td>15-25%</td>
+                    <td><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Marginal</span></td>
+                    <td><span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">None</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-semibold">TiOx ReRAM</td>
+                    <td>1-5y @ 85°C</td>
+                    <td>10³-10⁶</td>
+                    <td>30-50%</td>
+                    <td><span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">No</span></td>
+                    <td><span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">None</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-semibold">PCM</td>
+                    <td>&gt;10y @ 85°C</td>
+                    <td>10⁶-10⁸</td>
+                    <td>10-20%</td>
+                    <td><span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Yes</span></td>
+                    <td><span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">None</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-semibold">MTJ</td>
+                    <td>&gt;20y @ 85°C</td>
+                    <td>&gt;10¹⁵</td>
+                    <td>5-10%</td>
+                    <td><span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Yes</span></td>
+                    <td><span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">None</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-semibold">FeFET</td>
+                    <td>&gt;10y @ 85°C</td>
+                    <td>10⁶-10⁸</td>
+                    <td>15-30%</td>
+                    <td><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Marginal</span></td>
+                    <td><span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">None</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-semibold">KIOXIA ReRAM</td>
+                    <td>&gt;10y @ 85°C</td>
+                    <td>&gt;10⁶</td>
+                    <td>10-15%</td>
+                    <td><span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Yes</span></td>
+                    <td><span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Production</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-semibold">TSMC ReRAM</td>
+                    <td>&gt;10y @ 85°C</td>
+                    <td>10⁶-10⁸</td>
+                    <td>10-20%</td>
+                    <td><span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Yes</span></td>
+                    <td><span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Production</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- TL State Mapping -->
+          <div class="mt-12">
+            <h3 class="text-2xl font-bold mb-6 serif">5.4 TL State Mapping to Physical Resistance</h3>
+
+            <div class="grid md:grid-cols-3 gap-6">
+              <div class="bg-green-50 p-6 rounded-lg text-center">
+                <div class="bg-green-500 text-white px-4 py-2 rounded-full inline-block mb-4">
+                  <i class="fas fa-arrow-right"></i> Proceed (+1)
+                </div>
+                <h4 class="font-bold mb-3">Low Resistance State (LRS)</h4>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between">
+                    <span>Resistance Range</span>
+                    <strong>1-10 kΩ</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Read Voltage</span>
+                    <strong>0.1-0.5V</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Read Current</span>
+                    <strong>10-100 μA</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-yellow-50 p-6 rounded-lg text-center">
+                <div class="bg-yellow-500 text-white px-4 py-2 rounded-full inline-block mb-4">
+                  <i class="fas fa-pause"></i> Epistemic Hold (0)
+                </div>
+                <h4 class="font-bold mb-3">Intermediate Resistance State (IRS)</h4>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between">
+                    <span>Resistance Range</span>
+                    <strong>100kΩ-1MΩ</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Read Voltage</span>
+                    <strong>0.1-0.5V</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Read Current</span>
+                    <strong>0.1-1 μA</strong>
+                  </div>
+                </div>
+                <div class="bg-red-100 p-2 rounded mt-3">
+                  <p class="text-xs text-red-700"><strong>Critical:</strong> Metastable configuration with reliability challenges</p>
+                </div>
+              </div>
+
+              <div class="bg-red-50 p-6 rounded-lg text-center">
+                <div class="bg-red-500 text-white px-4 py-2 rounded-full inline-block mb-4">
+                  <i class="fas fa-times"></i> Refuse (-1)
+                </div>
+                <h4 class="font-bold mb-3">High Resistance State (HRS)</h4>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between">
+                    <span>Resistance Range</span>
+                    <strong>1-10 MΩ</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Read Voltage</span>
+                    <strong>0.1-0.5V</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Read Current</span>
+                    <strong>10-100 nA</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="highlight-box mt-8">
+              <h4 class="font-bold mb-3">Sense Amplifier Architecture Requirements</h4>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h5 class="font-semibold mb-2">Reference Cells</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Two reference cells: LRS and HRS</li>
+                    <li>• Margining strategy for three-state discrimination</li>
+                    <li>• Temperature compensation required</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 class="font-semibold mb-2">Noise Sources</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Temperature variation (0-125°C)</li>
+                    <li>• Read disturb effects</li>
+                    <li>• Cycle-to-cycle variability</li>
+                    <li>• Random telegraph noise</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Circuit Primitives -->
+      <section id="circuit-primitives" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-6xl">
+          <h2 class="text-4xl font-bold serif mb-12 text-center">6. Circuit Primitives and Sensing Margins</h2>
+
+          <div class="grid lg:grid-cols-2 gap-12">
+            <div>
+              <h3 class="text-2xl font-bold mb-6 serif">6.1 Native Ternary Logic Gates</h3>
+
+              <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                <h4 class="font-bold mb-4">Gate Inflation Factors</h4>
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center">
+                    <span>Ternary Inverter</span>
+                    <div class="flex items-center space-x-2">
+                      <div class="bg-blue-200 h-4 rounded" style="width: 44px;"></div>
+                      <strong>2.2×</strong>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Ternary NAND</span>
+                    <div class="flex items-center space-x-2">
+                      <div class="bg-blue-300 h-4 rounded" style="width: 60px;"></div>
+                      <strong>3.0×</strong>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Ternary NOR</span>
+                    <div class="flex items-center space-x-2">
+                      <div class="bg-blue-300 h-4 rounded" style="width: 60px;"></div>
+                      <strong>3.0×</strong>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Ternary Full Adder</span>
+                    <div class="flex items-center space-x-2">
+                      <div class="bg-blue-400 h-4 rounded" style="width: 116px;"></div>
+                      <strong>5.8×</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-yellow-50 p-6 rounded-lg">
+                <h4 class="font-bold mb-3 text-yellow-700">Area and Energy Implications</h4>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between">
+                    <span>Area Overhead</span>
+                    <strong>2.5-6×</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Energy Overhead</span>
+                    <strong>2-5×</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Sense Amp Complexity</span>
+                    <strong>3-10×</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>WCET (analytical)</span>
+                    <strong>20-50 ns</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-2xl font-bold mb-6 serif">6.2 Sensing Margin Analysis</h3>
+
+              <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                <h4 class="font-bold mb-4">Reference Cell Architecture</h4>
+                <div class="space-y-4">
+                  <div class="bg-blue-100 p-4 rounded-lg">
+                    <h5 class="font-semibold text-sm mb-2">Two-Reference Scheme</h5>
+                    <p class="text-xs">Reference cells for LRS and HRS provide discrimination thresholds. IRS detected when cell resistance falls between references.</p>
+                  </div>
+
+                  <div class="bg-green-100 p-4 rounded-lg">
+                    <h5 class="font-semibold text-sm mb-2">Temperature Compensation</h5>
+                    <p class="text-xs">Reference cells track process and temperature variations, maintaining discrimination margins across operating range.</p>
+                  </div>
+
+                  <div class="bg-red-100 p-4 rounded-lg">
+                    <h5 class="font-semibold text-sm mb-2">Reliability Concerns</h5>
+                    <p class="text-xs">Distribution overlap at 10¹² cycles may cause state misidentification. Requires error correction or redundancy.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="highlight-box">
+                <h4 class="font-bold mb-3">Non-Blocking Constraint Verification</h4>
+                <p class="text-sm mb-4">All sensing and gate evaluation paths must complete within WCET bounds:</p>
+                <div class="grid grid-cols-3 gap-4 text-center">
+                  <div class="bg-green-100 p-3 rounded-lg">
+                    <div class="font-bold text-green-700">Sense Amplifier</div>
+                    <div class="text-sm">10-20 ns</div>
+                  </div>
+                  <div class="bg-green-100 p-3 rounded-lg">
+                    <div class="font-bold text-green-700">Gate Evaluation</div>
+                    <div class="text-sm">20-50 ns</div>
+                  </div>
+                  <div class="bg-yellow-100 p-3 rounded-lg">
+                    <div class="font-bold text-yellow-700">Statistical Validation</div>
+                    <div class="text-sm">Not Proven</div>
+                  </div>
+                </div>
+                <p class="text-xs text-red-600 mt-4">⚠️ WCET bounds are analytically achievable but not statistically validated at 99.99th percentile across process corners.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NL=NA Interlock -->
+      <section id="interlock" class="py-16 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+          <h2 class="text-4xl font-bold serif mb-12 text-center">7. NL=NA: Physical Interlock Architecture</h2>
+
+          <div class="pullquote">
+            &#34;No Log = No Action—the core enforcement mechanism of TL instantiated in hardware.&#34;
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-12">
+            <div>
+              <h3 class="text-2xl font-bold mb-6 serif">7.1 Confirm Pulse Specification</h3>
+
+              <div class="bg-blue-50 p-6 rounded-lg mb-6">
+                <h4 class="font-bold mb-4">Pulse Characteristics</h4>
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center">
+                    <span>Voltage Range</span>
+                    <strong>1.0-3.0V</strong>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Pulse Duration</span>
+                    <strong>10-100 ns</strong>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Rise/Fall Time</span>
+                    <strong>&lt; 5 ns</strong>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Wire Routing</span>
+                    <strong>Dedicated BEOL</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-green-50 p-6 rounded-lg mb-6">
+                <h4 class="font-bold mb-4">Window Comparator Verification</h4>
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center">
+                    <span>Voltage Tolerance</span>
+                    <strong>±5%</strong>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Timing Tolerance</span>
+                    <strong>±10%</strong>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Reference Source</span>
+                    <strong>Independent Bandgap</strong>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Power Supply</span>
+                    <strong>Not VDD</strong>
+                  </div>
+                </div>
+                <div class="bg-yellow-100 p-3 rounded mt-3">
+                  <p class="text-xs"><strong>Safety:</strong> VDD compromise must not enable false confirmation.</p>
+                </div>
+              </div>
+
+              <div class="bg-purple-50 p-6 rounded-lg">
+                <h4 class="font-bold mb-4">RC Signature Spoof Detection</h4>
+                <p class="text-sm mb-3">Legitimate pulse rise time matches RC characteristics of confirm wire length. Tamper detection threshold:</p>
+                <div class="text-center">
+                  <div class="bg-purple-200 p-3 rounded-lg">
+                    <div class="font-bold text-purple-700">Δt &gt; 2 ns</div>
+                    <div class="text-xs">Above expected RC time constant</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-2xl font-bold mb-6 serif">7.2 Attack Modeling</h3>
+
+              <div class="space-y-6">
+                <div class="bg-red-50 p-6 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-bold text-red-700 mb-3">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>Pulse Spoofing
+                  </h4>
+                  <p class="text-sm mb-3">False confirm pulse injection within window comparator tolerance.</p>
+                  <div class="bg-red-100 p-3 rounded">
+                    <p class="text-xs"><strong>Minimum Attack Energy:</strong> Requires precise voltage and timing control within 5% and 10% windows respectively.</p>
+                  </div>
+                </div>
+
+                <div class="bg-orange-50 p-6 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-bold text-orange-700 mb-3">
+                    <i class="fas fa-plug mr-2"></i>Confirm Wire Shorting
+                  </h4>
+                  <p class="text-sm mb-3">Wire shorted to ground or VDD.</p>
+                  <div class="bg-orange-100 p-3 rounded">
+                    <p class="text-xs"><strong>Detection:</strong> RC signature changes, pulse rejected, execution cell remains in safe IRS state.</p>
+                  </div>
+                </div>
+
+                <div class="bg-yellow-50 p-6 rounded-lg border-l-4 border-yellow-500">
+                  <h4 class="font-bold text-yellow-700 mb-3">
+                    <i class="fas fa-database mr-2"></i>Logging Path Failure
+                  </h4>
+                  <p class="text-sm mb-3">Logging path fails mid-write.</p>
+                  <div class="bg-yellow-100 p-3 rounded">
+                    <p class="text-xs"><strong>Safe Failure:</strong> Execution cell remains in IRS, no unauthorized transition.</p>
+                  </div>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-bold text-blue-700 mb-3">
+                    <i class="fas fa-search mr-2"></i>Read Disturb Exploitation
+                  </h4>
+                  <p class="text-sm mb-3">Repeated sub-threshold reads perturb IRS toward LRS.</p>
+                  <div class="bg-blue-100 p-3 rounded">
+                    <p class="text-xs"><strong>Threshold:</strong> &gt;10⁶ cycles required for measurable perturbation under normal read conditions.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="highlight-box mt-8">
+                <h4 class="font-bold mb-3">Degraded Mode Behavior</h4>
+                <p class="text-sm mb-3">When attack is detected, system must fail-safe:</p>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="bg-green-50 p-3 rounded">
+                    <h5 class="font-semibold text-green-700 text-sm">Primary Response</h5>
+                    <ul class="text-xs space-y-1">
+                      <li>• Fail-safe to HRS (Refuse state)</li>
+                      <li>• Tamper event logging</li>
+                      <li>• Alert generation</li>
+                    </ul>
+                  </div>
+                  <div class="bg-yellow-50 p-3 rounded">
+                    <h5 class="font-semibold text-yellow-700 text-sm">Secondary Responses</h5>
+                    <ul class="text-xs space-y-1">
+                      <li>• Power isolation</li>
+                      <li>• Self-destruct (critical systems)</li>
+                      <li>• Escalation to security controller</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hardware Root of Trust -->
+      <section id="trust-root" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-6xl">
+          <h2 class="text-4xl font-bold serif mb-12 text-center">8. Hardware Root of Trust</h2>
+
+          <div class="grid lg:grid-cols-2 gap-12">
+            <div>
+              <h3 class="text-2xl font-bold mb-6 serif">8.1 PUF Identity</h3>
+
+              <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                <h4 class="font-bold mb-4">Physical Entropy Sources</h4>
+                <div class="space-y-4">
+                  <div class="bg-blue-50 p-4 rounded-lg">
+                    <h5 class="font-semibold text-sm mb-2">Filament Nucleation Sites</h5>
+                    <p class="text-xs">Stochastic distribution of oxygen vacancies creates unique switching characteristics per device.</p>
+                  </div>
+                  <div class="bg-green-50 p-4 rounded-lg">
+                    <h5 class="font-semibold text-sm mb-2">Transistor Threshold Variation</h5>
+                    <p class="text-xs">Natural process variation in access transistors provides additional entropy source.</p>
+                  </div>
+                  <div class="bg-purple-50 p-4 rounded-lg">
+                    <h5 class="font-semibold text-sm mb-2">Dopant Distribution</h5>
+                    <p class="text-xs">Atomic-level variations in doping profiles contribute to device uniqueness.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-red-50 p-6 rounded-lg">
+                <h4 class="font-bold mb-4 text-red-700">Critical Requirements</h4>
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center">
+                    <span>Inter-die Hamming Distance</span>
+                    <strong class="text-red-600">&gt;49%</strong>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Intra-die Hamming Distance</span>
+                    <strong class="text-red-600">
+                      &lt;1%</strong>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Temperature Range</span>
+                    <strong>0-125°C</strong>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span>Voltage Range</span>
+                    <strong>±10%</strong>
+                  </div>
+                </div>
+                <div class="bg-red-100 p-3 rounded mt-3">
+                  <p class="text-xs text-red-700"><strong>Failure Mode:</strong> If foundry burns PUF values, system reduces to single-vendor trust—this is a kill condition.</p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-2xl font-bold mb-6 serif">8.2 Manufacturing Provenance</h3>
+
+              <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                <h4 class="font-bold mb-4">Secure Provisioning Chain</h4>
+                <div class="space-y-4">
+                  <div class="flex items-center space-x-4">
+                    <div class="bg-blue-500 text-white px-3 py-2 rounded-full text-sm">
+                      <i class="fas fa-industry"></i>
+                    </div>
+                    <div>
+                      <h5 class="font-semibold text-sm">Foundry Attestation</h5>
+                      <p class="text-xs">PUF public key signed at wafer sort</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-4">
+                    <div class="bg-green-500 text-white px-3 py-2 rounded-full text-sm">
+                      <i class="fas fa-database"></i>
+                    </div>
+                    <div>
+                      <h5 class="font-semibold text-sm">Attestation Database</h5>
+                      <p class="text-xs">Records fab date, node, wafer lot, die coordinates</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-4">
+                    <div class="bg-purple-500 text-white px-3 py-2 rounded-full text-sm">
+                      <i class="fas fa-link"></i>
+                    </div>
+                    <div>
+                      <h5 class="font-semibold text-sm">Chain of Custody</h5>
+                      <p class="text-xs">From foundry to deployment with cryptographic integrity</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-yellow-50 p-6 rounded-lg">
+                <h4 class="font-bold mb-4 text-yellow-700">Foundry Longevity Challenge</h4>
+                <p class="text-sm mb-3">If foundry no longer exists after 20 years:</p>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between">
+                    <span>Minimum Escrow Requirements</span>
+                    <strong>Cryptographic</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Attestation Preservation</span>
+                    <strong>20+ years</strong>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Independent Verification</span>
+                    <strong>Required</strong>
+                  </div>
+                </div>
+                <div class="bg-red-100 p-3 rounded mt-3">
+                  <p class="text-xs text-red-700"><strong>Risk:</strong> Current industry practice does not support 20-year provenance requirements.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trust Chain Integration -->
+          <div class="mt-12">
+            <h3 class="text-2xl font-bold mb-8 serif text-center">8.3 Trust Chain Integration</h3>
+
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+              <div class="flex flex-col items-center space-y-4">
+                <div class="bg-blue-500 text-white p-4 rounded-lg text-center w-full max-w-xs">
+                  <div class="font-bold">PUF</div>
+                  <div class="text-sm">Post-manufacturing physical entropy</div>
+                  <div class="text-xs">Unique per die</div>
+                </div>
+
+                <div class="text-gray-400">
+                  <i class="fas fa-arrow-down text-2xl"></i>
+                </div>
+
+                <div class="bg-green-500 text-white p-4 rounded-lg text-center w-full max-w-xs">
+                  <div class="font-bold">Foundry Attestation</div>
+                  <div class="text-sm">PUF public key signed at wafer sort</div>
+                  <div class="text-xs">No factory-programmed values</div>
+                </div>
+
+                <div class="text-gray-400">
+                  <i class="fas fa-arrow-down text-2xl"></i>
+                </div>
+
+                <div class="bg-purple-500 text-white p-4 rounded-lg text-center w-full max-w-xs">
+                  <div class="font-bold">Hardware Identity</div>
+                  <div class="text-sm">Fab date, node, wafer lot, coordinates</div>
+                  <div class="text-xs">Immutable binding</div>
+                </div>
+
+                <div class="text-gray-400">
+                  <i class="fas fa-arrow-down text-2xl"></i>
+                </div>
+
+                <div class="bg-orange-500 text-white p-4 rounded-lg text-center w-full max-w-xs">
+                  <div class="font-bold">NL=NA Interlock</div>
+                  <div class="text-sm">Confirm pulse, window comparator verified</div>
+                  <div class="text-xs">Physical enforcement</div>
+                </div>
+
+                <div class="text-gray-400">
+                  <i class="fas fa-arrow-down text-2xl"></i>
+                </div>
+
+                <div class="bg-red-500 text-white p-4 rounded-lg text-center w-full max-w-xs">
+                  <div class="font-bold">Immutable Log Entry</div>
+                  <div class="text-sm">Non-volatile write, IRS retained</div>
+                  <div class="text-xs">Power loss protection</div>
+                </div>
+
+                <div class="text-gray-400">
+                  <i class="fas fa-arrow-down text-2xl"></i>
+                </div>
+
+                <div class="bg-indigo-500 text-white p-4 rounded-lg text-center w-full max-w-xs">
+                  <div class="font-bold">Merkle Hash Chain</div>
+                  <div class="text-sm">Cryptographic integrity</div>
+                  <div class="text-xs">Tamper-evident</div>
+                </div>
+
+                <div class="text-gray-400">
+                  <i class="fas fa-arrow-down text-2xl"></i>
+                </div>
+
+                <div class="bg-gray-800 text-white p-4 rounded-lg text-center w-full max-w-xs">
+                  <div class="font-bold">TL Framework Attribution</div>
+                  <div class="text-sm">ORCID: 0009-0006-5966-1243</div>
+                  <div class="text-xs">Semantic foundation</div>
+                </div>
+              </div>
+
+              <div class="mt-8 bg-yellow-50 p-6 rounded-lg">
+                <h4 class="font-bold mb-4 text-yellow-700">
+                  <i class="fas fa-exclamation-triangle mr-2"></i>Chain Validation Requirements
+                </h4>
+                <p class="text-sm mb-4">A hostile reviewer must be able to trace any log entry from Merkle hash to PUF signature to foundry wafer lot:</p>
+                <div class="grid md:grid-cols-2 gap-4 text-sm">
+                  <ul class="space-y-2">
+                    <li class="flex items-center">
+                      <i class="fas fa-check text-green-500 mr-2"></i>
+                      PUF entropy source validated
+                    </li>
+                    <li class="flex items-center">
+                      <i class="fas fa-check text-green-500 mr-2"></i>
+                      Foundry attestation mechanism
+                    </li>
+                    <li class="flex items-center">
+                      <i class="fas fa-check text-green-500 mr-2"></i>
+                      Hardware identity binding
+                    </li>
+                    <li class="flex items-center">
+                      <i class="fas fa-check text-green-500 mr-2"></i>
+                      NL=NA interlock verification
+                    </li>
+                  </ul>
+                  <ul class="space-y-2">
+                    <li class="flex items-center">
+                      <i class="fas fa-question text-yellow-500 mr-2"></i>
+                      20-year retention validation
+                    </li>
+                    <li class="flex items-center">
+                      <i class="fas fa-question text-yellow-500 mr-2"></i>
+                      WCET bounds proven
+                    </li>
+                    <li class="flex items-center">
+                      <i class="fas fa-question text-yellow-500 mr-2"></i>
+                      Foundry escrow arrangements
+                    </li>
+                    <li class="flex items-center">
+                      <i class="fas fa-question text-yellow-500 mr-2"></i>
+                      Independent verification path
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Emulation Tax -->
+      <section id="emulation-tax" class="py-16 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+          <h2 class="text-4xl font-bold serif mb-12 text-center">9. Emulation Tax: Quantified Comparison</h2>
+
+          <div class="grid lg:grid-cols-3 gap-8">
+            <div class="bg-blue-50 p-6 rounded-lg">
+              <h3 class="text-xl font-bold mb-4 text-blue-700">
+                <i class="fas fa-code mr-2"></i>Software Implementation
+              </h3>
+              <p class="text-sm mb-4">TL triadic states as state machines on binary CMOS</p>
+              <div class="space-y-3">
+                <div class="flex justify-between">
+                  <span>Speed Loss</span>
+                  <strong>10-100×</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>Energy Loss</span>
+                  <strong>50-200×</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>Area Overhead</span>
+                  <strong>2-5×</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>Latency Penalty</span>
+                  <strong>Software Path</strong>
+                </div>
+              </div>
+              <div class="bg-red-100 p-3 rounded mt-3">
+                <p class="text-xs text-red-700"><strong>Critical:</strong> Unbounded latency vulnerability</p>
+              </div>
+            </div>
+
+            <div class="bg-green-50 p-6 rounded-lg">
+              <h3 class="text-xl font-bold mb-4 text-green-700">
+                <i class="fas fa-microchip mr-2"></i>Native MT
+              </h3>
+              <p class="text-sm mb-4">Full hardware implementation with memristive cells</p>
+              <div class="space-y-3">
+                <div class="flex justify-between">
+                  <span>Speed Loss</span>
+                  <strong>Baseline</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>Energy Loss</span>
+                  <strong>Baseline</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>Area Overhead</span>
+                  <strong>2.5-6×</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>Latency Penalty</span>
+                  <strong>Bounded</strong>
+                </div>
+              </div>
+              <div class="bg-yellow-100 p-3 rounded mt-3">
+                <p class="text-xs text-yellow-700"><strong>Risk:</strong> IRS reliability not validated</p>
+              </div>
+            </div>
+
+            <div class="bg-purple-50 p-6 rounded-lg">
+              <h3 class="text-xl font-bold mb-4 text-purple-700">
+                <i class="fas fa-puzzle-piece mr-2"></i>Hybrid Approach
+              </h3>
+              <p class="text-sm mb-4">Ternary state in memristors, binary compute for other operations</p>
+              <div class="space-y-3">
+                <div class="flex justify-between">
+                  <span>Speed Loss</span>
+                  <strong>2-5×</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>Energy Loss</span>
+                  <strong>3-8×</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>Area Overhead</span>
+                  <strong>1.5-3×</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>Latency Penalty</span>
+                  <strong>Moderate</strong>
+                </div>
+              </div>
+              <div class="bg-blue-100 p-3 rounded mt-3">
+                <p class="text-xs text-blue-700"><strong>Compromise:</strong> Balanced trade-offs</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Worked Numerical Example -->
+          <div class="mt-12">
+            <h3 class="text-2xl font-bold mb-6 serif">9.1 Worked Numerical Example</h3>
+
+            <div class="bg-gray-50 p-8 rounded-lg">
+              <h4 class="font-bold mb-6">Epistemic Hold Decision Pipeline Analysis</h4>
+
+              <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h5 class="font-semibold mb-4">Native Hardware Implementation</h5>
+                  <div class="space-y-3 text-sm">
+                    <div class="flex justify-between">
+                      <span>State Storage (ReRAM)</span>
+                      <strong>0.1 fJ</strong>
+                    </div>
+                    <div class="flex justify-between">
+                      <span>Sense Amplifier</span>
+                      <strong>1.0 fJ</strong>
+                    </div>
+                    <div class="flex justify-between">
+                      <span>Gate Evaluation</span>
+                      <strong>0.5 fJ</strong>
+                    </div>
+                    <div class="flex justify-between">
+                      <span>Confirm Pulse</span>
+                      <strong>10.0 fJ</strong>
+                    </div>
+                    <div class="border-t pt-2 mt-2">
+                      <div class="flex justify-between font-bold">
+                        <span>Total Energy</span>
+                        <strong>11.6 fJ</strong>
+                      </div>
+                      <div class="flex justify-between">
+                        <span>Latency</span>
+                        <strong>50 ns</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h5 class="font-semibold mb-4">Software Emulation on Binary CMOS</h5>
+                  <div class="space-y-3 text-sm">
+                    <div class="flex justify-between">
+                      <span>State Storage (SRAM)</span>
+                      <strong>0.5 fJ</strong>
+                    </div>
+                    <div class="flex justify-between">
+                      <span>State Machine Evaluation</span>
+                      <strong>50.0 fJ</strong>
+                    </div>
+                    <div class="flex justify-between">
+                      <span>Logging System Call</span>
+                      <strong>500.0 fJ</strong>
+                    </div>
+                    <div class="flex justify-between">
+                      <span>Context Switch</span>
+                      <strong>200.0 fJ</strong>
+                    </div>
+                    <div class="border-t pt-2 mt-2">
+                      <div class="flex justify-between font-bold">
+                        <span>Total Energy</span>
+                        <strong>750.5 fJ</strong>
+                      </div>
+                      <div class="flex justify-between">
+                        <span>Latency</span>
+                        <strong>1-10 μs</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="highlight-box mt-6">
+                <h5 class="font-bold mb-3">Emulation Tax Calculation</h5>
+                <div class="grid md:grid-cols-3 gap-4 text-center">
+                  <div class="bg-red-100 p-4 rounded-lg">
+                    <div class="font-bold text-red-700">Energy Tax</div>
+                    <div class="text-2xl font-bold text-red-600">64.7×</div>
+                    <div class="text-xs">Software vs. Hardware</div>
+                  </div>
+                  <div class="bg-orange-100 p-4 rounded-lg">
+                    <div class="font-bold text-orange-700">Latency Tax</div>
+                    <div class="text-2xl font-bold text-orange-600">20-200×</div>
+                    <div class="text-xs">Slower execution</div>
+                  </div>
+                  <div class="bg-yellow-100 p-4 rounded-lg">
+                    <div class="font-bold text-yellow-700">Area Tax</div>
+                    <div class="text-2xl font-bold text-yellow-600">2-5×</div>
+                    <div class="text-xs">Additional logic</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interconnect Implications -->
+          <div class="mt-12">
+            <h3 class="text-2xl font-bold mb-6 serif">9.2 Interconnect Scaling Limits</h3>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+              <div>
+                <h4 class="font-bold mb-4">Crossbar Energy Analysis</h4>
+                <div class="bg-blue-50 p-6 rounded-lg">
+                  <div class="space-y-4">
+                    <div>
+                      <h5 class="font-semibold text-sm mb-2">Wire Energy Scaling</h5>
+                      <p class="text-xs">Global wire energy scales with crossbar dimension (N):</p>
+                      <div class="bg-white p-2 rounded text-xs font-mono">E_wire ∝ N² × C_wire × V²</div>
+                    </div>
+                    <div>
+                      <h5 class="font-semibold text-sm mb-2">Compute Energy Scaling</h5>
+                      <p class="text-xs">Cell operation energy scales linearly:</p>
+                      <div class="bg-white p-2 rounded text-xs font-mono">E_compute ∝ N² × E_cell</div>
+                    </div>
+                    <div class="bg-yellow-100 p-3 rounded">
+                      <h5 class="font-semibold text-sm mb-2">Crossover Point</h5>
+                      <p class="text-xs">Wire energy dominates when N &gt; 512×512 for typical 3nm BEOL parameters.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 class="font-bold mb-4">Practical Limitations</h4>
+                <div class="space-y-4">
+                  <div class="bg-red-50 p-4 rounded-lg">
+                    <h5 class="font-semibold text-red-700 text-sm mb-2">Routing Congestion</h5>
+                    <p class="text-xs">Confirm pulse routing requires dedicated wires across entire array—scaling challenges beyond 1024×1024.</p>
+                  </div>
+                  <div class="bg-orange-50 p-4 rounded-lg">
+                    <h5 class="font-semibold text-orange-700 text-sm mb-2">RC Delay Constraints</h5>
+                    <p class="text-xs">Wire RC delay limits confirm pulse timing closure for large arrays.</p>
+                  </div>
+                  <div class="bg-yellow-50 p-4 rounded-lg">
+                    <h5 class="font-semibold text-yellow-700 text-sm mb-2">Power Distribution</h5>
+                    <p class="text-xs">IR drop across large arrays affects window comparator accuracy.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Falsifiability -->
+      <section id="falsifiability" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-6xl">
+          <h2 class="text-4xl font-bold serif mb-12 text-center">10. Falsifiability: Phase 1 Predictions and Failure Conditions</h2>
+
+          <div class="grid lg:grid-cols-2 gap-12">
+            <div>
+              <h3 class="text-2xl font-bold mb-6 serif">10.1 Testable Predictions</h3>
+
+              <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-blue-500">
+                  <h4 class="font-bold text-blue-700 mb-2">Device Physics</h4>
+                  <p class="text-sm">TaOx IRS variability σ/μ will exceed 20% under process corners at 125°C</p>
+                  <div class="mt-2 text-xs text-gray-600">Confidence: High | Test: Fabrication run with process variation</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-green-500">
+                  <h4 class="font-bold text-green-700 mb-2">Retention</h4>
+                  <p class="text-sm">10-year accelerated test at 150°C will show &lt;10 year retention at 95% confidence lower bound for IRS</p>
+                  <div class="mt-2 text-xs text-gray-600">Confidence: Medium | Test: High-temperature retention study</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-purple-500">
+                  <h4 class="font-bold text-purple-700 mb-2">Circuit Performance</h4>
+                  <p class="text-sm">WCET bounds for sensing paths cannot be proven at 99.99th percentile with σ/μ &lt; 10%</p>
+                  <div class="mt-2 text-xs text-gray-600">Confidence: High | Test: Statistical timing analysis</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-orange-500">
+                  <h4 class="font-bold text-orange-700 mb-2">PUF Reliability</h4>
+                  <p class="text-sm">Inter-die Hamming distance for filament-based PUF will fall below 49% requirement</p>
+                  <div class="mt-2 text-xs text-gray-600">Confidence: Medium | Test: Large-scale PUF characterization</div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-2xl font-bold mb-6 serif">10.2 Failure Conditions</h3>
+
+              <div class="space-y-3">
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <h4 class="font-bold text-red-700 mb-2">1. TaOx σ/μ &gt; 40%</h4>
+                  <p class="text-sm">IRS not reliably distinguishable from adjacent states at operating conditions</p>
+                </div>
+
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <h4 class="font-bold text-red-700 mb-2">2. Retention at 85°C &lt; 10 years</h4>
+                  <p class="text-sm">95% confidence lower bound fails 20-year requirement</p>
+                </div>
+
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <h4 class="font-bold text-red-700 mb-2">3. Confirm pulse tamper-evidence</h4>
+                  <p class="text-sm">Requires components exceeding 400°C BEOL thermal budget</p>
+                </div>
+
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <h4 class="font-bold text-red-700 mb-2">4. PUF inter-die Hamming distance &lt; 49%</h4>
+                      <p class="text-sm">Identity unreliable for cryptographic purposes</p>
+                </div>
+
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <h4 class="font-bold text-red-700 mb-2">5. WCET bounds unprovable</h4>
+                  <p class="text-sm">99.99th percentile analysis fails for any enforcement path</p>
+                </div>
+
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <h4 class="font-bold text-red-700 mb-2">6. No architectural advantage</h4>
+                  <p class="text-sm">No quantified discontinuous advantage over 2025 NVRAM baseline</p>
+                </div>
+
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <h4 class="font-bold text-red-700 mb-2">7. Binary MLC equivalence</h4>
+                  <p class="text-sm">Achieves equivalent functional safety with lower TCO</p>
+                </div>
+
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <h4 class="font-bold text-red-700 mb-2">8. Wire energy dominance</h4>
+                  <p class="text-sm">Compute energy irrelevant below 1024×1024 crossbar</p>
+                </div>
+
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <h4 class="font-bold text-red-700 mb-2">9. Read disturb threshold &lt; 10⁶</h4>
+                      <p class="text-sm">IRS→LRS transition too sensitive for practical use</p>
+                </div>
+
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <h4 class="font-bold text-red-700 mb-2">10. Single-vendor trust</h4>
+                  <p class="text-sm">Foundry PUF attestation requires single-vendor trust with no cryptographic escape</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-12 highlight-box">
+            <h3 class="text-2xl font-bold mb-6 serif">
+              <i class="fas fa-flask mr-2"></i>Phase 1 Experimental Validation Plan
+            </h3>
+
+            <div class="grid md:grid-cols-2 gap-8">
+              <div>
+                <h4 class="font-bold mb-4">Required Experiments</h4>
+                <div class="space-y-3">
+                  <div class="bg-blue-50 p-3 rounded-lg">
+                    <h5 class="font-semibold text-sm mb-2">TaOx Device Fabrication</h5>
+                    <p class="text-xs">Fabricate 3-state TaOx devices with IRS engineering and characterize variability across process corners</p>
+                  </div>
+                  <div class="bg-green-50 p-3 rounded-lg">
+                    <h5 class="font-semibold text-sm mb-2">Accelerated Retention Testing</h5>
+                    <p class="text-xs">150°C retention study with statistical confidence analysis for 20-year projection</p>
+                  </div>
+                  <div class="bg-purple-50 p-3 rounded-lg">
+                    <h5 class="font-semibold text-sm mb-2">WCET Statistical Validation</h5>
+                    <p class="text-xs">Monte Carlo timing analysis across PVT corners for 99.99th percentile bounds</p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 class="font-bold mb-4">Success Criteria</h4>
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-3">
+                    <div class="bg-green-500 text-white px-2 py-1 rounded text-xs">✓</div>
+                    <span class="text-sm">TaOx σ/μ &lt; 20% at IRS operating conditions</span>
+                  </div>
+                  <div class="flex items-center space-x-3">
+                    <div class="bg-green-500 text-white px-2 py-1 rounded text-xs">✓</div>
+                    <span class="text-sm">10-year retention validated with 95% confidence</span>
+                  </div>
+                  <div class="flex items-center space-x-3">
+                    <div class="bg-green-500 text-white px-2 py-1 rounded text-xs">✓</div>
+                    <span class="text-sm">WCET bounds proven for all enforcement paths</span>
+                  </div>
+                  <div class="flex items-center space-x-3">
+                    <div class="bg-green-500 text-white px-2 py-1 rounded text-xs">✓</div>
+                    <span class="text-sm">Discontinuous advantage over 2025 baseline</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Phase 1 Conclusion -->
+      <section id="conclusion" class="py-16 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+          <h2 class="text-4xl font-bold serif mb-12 text-center">11. Phase 1 Conclusion</h2>
+
+          <div class="grid lg:grid-cols-2 gap-12">
+            <div>
+              <h3 class="text-2xl font-bold mb-6 serif">Core Question Answer</h3>
+
+              <div class="bg-yellow-50 p-8 rounded-lg border-l-4 border-yellow-500 mb-8">
+                <h4 class="font-bold text-yellow-700 mb-4">Phase 1 Core Question</h4>
+                <p class="text-lg mb-4">Can the three TL states be physically instantiated as stable, non-volatile, hardware-enforced resistance states in memristive devices with sufficient reliability for deterministic autonomous execution systems over 20 years?</p>
+              </div>
+
+              <div class="highlight-box">
+                <h4 class="font-bold mb-4">Layer-by-Layer Assessment</h4>
+                <div class="space-y-4">
+                  <div class="flex items-center space-x-4">
+                    <div class="bg-green-500 text-white px-3 py-1 rounded text-sm">PASS</div>
+                    <div>
+                      <h5 class="font-semibold">Device Physics</h5>
+                      <p class="text-sm">TaOx binary switching validated, IRS theoretically feasible</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-4">
+                    <div class="bg-yellow-500 text-white px-3 py-1 rounded text-sm">CONDITIONAL</div>
+                    <div>
+                      <h5 class="font-semibold">Circuit Primitives</h5>
+                      <p class="text-sm">Architectures exist but with 2.5-6× area/energy overhead</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-4">
+                    <div class="bg-red-500 text-white px-3 py-1 rounded text-sm">FAIL</div>
+                    <div>
+                      <h5 class="font-semibold">Physical Interlock</h5>
+                      <p class="text-sm">NL=NA conceptually sound but WCET bounds unproven</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-4">
+                    <div class="bg-yellow-500 text-white px-3 py-1 rounded text-sm">CONDITIONAL</div>
+                    <div>
+                      <h5 class="font-semibold">Hardware Root of Trust</h5>
+                      <p class="text-sm">Architecturally compatible but PUF requirements unmet</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-4">
+                    <div class="bg-red-500 text-white px-3 py-1 rounded text-sm">FAIL</div>
+                    <div>
+                      <h5 class="font-semibold">Comparative Advantage</h5>
+                      <p class="text-sm">No discontinuous advantage over named 2025 baseline</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-2xl font-bold mb-6 serif">Phase 2 Inheritance Summary</h3>
+
+              <div class="space-y-6">
+                <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                  <h4 class="font-bold text-green-700 mb-3">
+                    <i class="fas fa-check-circle mr-2"></i>Valid Assumptions for Phase 2
+                  </h4>
+                  <ul class="space-y-2 text-sm">
+                    <li>• Binary ReRAM device physics maturity</li>
+                    <li>• 10⁶-10⁷ cycle endurance capability</li>
+                    <li>• 10-year retention at 85°C demonstrated</li>
+                    <li>• Three-state sense amplifier architectures</li>
+                    <li>• NL=NA interlock mechanisms (nominal)</li>
+                  </ul>
+                </div>
+
+                <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+                  <h4 class="font-bold text-red-700 mb-3">
+                    <i class="fas fa-times-circle mr-2"></i>Invalid Assumptions for Phase 2
+                  </h4>
+                  <ul class="space-y-2 text-sm">
+                    <li>• <strong>20-year IRS retention with 95% confidence</strong></li>
+                    <li>• <strong>σ/μ &lt; 20% for IRS variability</strong></li>
+                    <li>• <strong>WCET bounds proven at 99.99th percentile</strong></li>
+                    <li>• <strong>Discontinuous advantage over software</strong></li>
+                    <li>• <strong>Scalability beyond 512×512 without wire energy dominance</strong></li>
+                  </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+                  <h4 class="font-bold text-blue-700 mb-3">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>Constraints Inherited by Phase 2
+                  </h4>
+                  <ul class="space-y-2 text-sm">
+                    <li>• Non-blocking enforcement with bounded WCET</li>
+                    <li>• Comparative analysis against 2025 baseline</li>
+                    <li>• No workarounds for failed investigation paths</li>
+                    <li>• Statistical validation requirements</li>
+                    <li>• Foundry attestation chain limitations</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-12 text-center">
+            <div class="bg-gray-800 text-white p-8 rounded-lg">
+              <h3 class="text-2xl font-bold mb-4 serif">Final Verdict</h3>
+              <p class="text-xl mb-6 leading-relaxed">
+                Mandated Ternary hardware implementation is <strong>conditionally feasible at the device physics layer</strong> but <span class="text-red-400">fails to demonstrate discontinuous advantage</span> over the TSMC N2 CoWoS ReRAM 1T1R 2025 PDK baseline. The Intermediate Resistance State lacks validated 20-year retention with 95% confidence, and the non-blocking NL=NA interlock introduces architectural complexity without proven WCET bounds.
+              </p>
+              <div class="text-lg text-gray-300">
+                Phase 2 may proceed with constrained assumptions but must address fundamental reliability and architectural advantage questions.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bibliography -->
+      <section id="bibliography" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-6xl">
+          <h2 class="text-4xl font-bold serif mb-12 text-center">12. Bibliography</h2>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-xl font-bold mb-6 serif">High Confidence Sources</h3>
+              <div class="space-y-3">
+                <div class="bg-white p-4 rounded-lg shadow">
+                  <div class="text-sm font-semibold">[363] Chua, L.O. (2011)</div>
+                  <div class="text-xs text-gray-600">Resistance switching memories are memristors</div>
+                  <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4124699/" class="text-blue-600 text-xs">https://pmc.ncbi.nlm.nih.gov/articles/PMC4124699/</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow">
+                  <div class="text-sm font-semibold">[376] PatSnap Report (2024)</div>
+                  <div class="text-xs text-gray-600">The semiconductor industry&#39;s shift towards Resistive RAM</div>
+                  <a href="https://eureka.patsnap.com/report-the-semiconductor-industry-s-shift-towards-resistive-ram" class="text-blue-600 text-xs">PatSnap Analysis</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow">
+                  <div class="text-sm font-semibold">[382] PatSnap Report (2024)</div>
+                  <div class="text-xs text-gray-600">Resistive RAM innovations in the global market context</div>
+                  <a href="https://eureka.patsnap.com/report-resistive-ram-innovations-in-the-global-market-context" class="text-blue-600 text-xs">PatSnap Market Analysis</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow">
+                  <div class="text-sm font-semibold">[391] SemiAnalysis (2024)</div>
+                  <div class="text-xs text-gray-600">IEDM 2024: TSMC 2nm process technology analysis</div>
+                  <a href="https://newsletter.semianalysis.com/p/iedm2024" class="text-blue-600 text-xs">SemiAnalysis Newsletter</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow">
+                  <div class="text-sm font-semibold">[397] TSMC Annual Report (2024)</div>
+                  <div class="text-xs text-gray-600">2024 Annual Report</div>
+                  <a href="https://investor.tsmc.com/sites/ir/annual-report/2024/2024%20Annual%20Report_E.pdf" class="text-blue-600 text-xs">TSMC Investor Relations</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow">
+                  <div class="text-sm font-semibold">[403] Tom&#39;s Hardware (2024)</div>
+                  <div class="text-xs text-gray-600">SRAM scaling improvements in TSMC 2nm process</div>
+                  <a href="https://www.tomshardware.com/tech-industry/sram-scaling-isnt-dead-after-all-tsmcs-2nm-process-tech-claims-major-improvements" class="text-blue-600 text-xs">Tom&#39;s Hardware Analysis</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow">
+                  <div class="text-sm font-semibold">[469] IRDS (2024)</div>
+                  <div class="text-xs text-gray-600">International Roadmap for Devices and Systems</div>
+                  <div class="text-xs text-gray-500">Process variation and device scaling projections</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow">
+                  <div class="text-sm font-semibold">[514] Cambridge Repository (2024)</div>
+                  <div class="text-xs text-gray-600">ReRAM device physics and characterization</div>
+                  <a href="https://www.repository.cam.ac.uk/bitstreams/f7322077-7846-405f-bf26-1e521c9e2cc3/download" class="text-blue-600 text-xs">University of Cambridge</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow">
+                  <div class="text-sm font-semibold">[515] Springer Materials (2024)</div>
+                  <div class="text-xs text-gray-600">Resistive switching materials and devices</div>
+                  <a href="https://link.springer.com/article/10.1557/s43579-024-00660-2" class="text-blue-600 text-xs">Springer Materials Journal</a>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-bold mb-6 serif">Unverified Recall Sources</h3>
+              <div class="space-y-3">
+                <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                  <div class="text-sm font-semibold text-yellow-700">IEDM/VLSI 2025 Proceedings</div>
+                  <div class="text-xs text-yellow-600">Advanced ReRAM and emerging memory technologies</div>
+                  <div class="text-xs text-yellow-500">Conference papers not yet published</div>
+                </div>
+
+                <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                  <div class="text-sm font-semibold text-yellow-700">Foundry PDK Documentation</div>
+                  <div class="text-xs text-yellow-600">TSMC N2 CoWoS ReRAM 1T1R 2025 PDK</div>
+                  <div class="text-xs text-yellow-500">Confidential technical documentation</div>
+                </div>
+
+                <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                  <div class="text-sm font-semibold text-yellow-700">Industry Technical Reports</div>
+                  <div class="text-xs text-yellow-600">Embedded ReRAM integration studies</div>
+                  <div class="text-xs text-yellow-500">Internal research reports</div>
+                </div>
+              </div>
+
+              <div class="mt-8 bg-blue-50 p-6 rounded-lg">
+                <h4 class="font-bold mb-3 text-blue-700">
+                  <i class="fas fa-info-circle mr-2"></i>Citation Policy
+                </h4>
+                <p class="text-sm mb-3">All citations are labeled as either &#34;high confidence&#34; or &#34;unverified recall&#34; based on:</p>
+                <ul class="text-sm space-y-1">
+                  <li>• Peer-reviewed publications vs. conference proceedings</li>
+                  <li>• Foundry disclosures vs. academic research</li>
+                  <li>• Publicly available vs. confidential documentation</li>
+                  <li>• Reproducible experimental results vs. theoretical analysis</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Glossary -->
+      <section id="glossary" class="py-16 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+          <h2 class="text-4xl font-bold serif mb-12 text-center">13. Glossary</h2>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">MT</h3>
+              <p class="text-sm"><strong>Mandated Ternary</strong> - Hardware implementation architecture with physical enforcement mechanisms</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">TL</h3>
+              <p class="text-sm"><strong>Ternary Logic</strong> - Formal decision framework with Proceed/Epistemic Hold/Refuse states</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">NL=NA</h3>
+              <p class="text-sm"><strong>No Log = No Action</strong> - Physical interlock requiring confirm pulse for state transitions</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">PUF</h3>
+              <p class="text-sm"><strong>Physical Unclonable Function</strong> - Die-level identity from post-manufacturing physical entropy</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">LRS</h3>
+              <p class="text-sm"><strong>Low Resistance State</strong> - ~1-10 kΩ, represents TL Proceed (+1) state</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">IRS</h3>
+              <p class="text-sm"><strong>Intermediate Resistance State</strong> - ~100kΩ-1MΩ, represents TL Epistemic Hold (0)</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">HRS</h3>
+              <p class="text-sm"><strong>High Resistance State</strong> - ~1-10 MΩ, represents TL Refuse (-1) state</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">BEOL</h3>
+              <p class="text-sm"><strong>Back-End-Of-Line</strong> - Metal interconnect layers and passivation</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">GAA</h3>
+              <p class="text-sm"><strong>Gate-All-Around</strong> - 3nm transistor architecture with improved electrostatic control</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">CiM</h3>
+              <p class="text-sm"><strong>Compute-in-Memory</strong> - Processing within memory arrays to reduce data movement</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">ADC/DAC</h3>
+              <p class="text-sm"><strong>Analog-to-Digital/Digital-to-Analog Converter</strong> - For analog state readout</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">NVRAM</h3>
+              <p class="text-sm"><strong>Non-Volatile Random Access Memory</strong> - Retains data without power</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">ReRAM</h3>
+              <p class="text-sm"><strong>Resistive Random Access Memory</strong> - Memory based on resistance switching</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">PCM</h3>
+              <p class="text-sm"><strong>Phase Change Memory</strong> - Memory based on material phase transitions</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">MTJ</h3>
+              <p class="text-sm"><strong>Magnetic Tunnel Junction</strong> - Spintronic memory device</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">FeFET</h3>
+              <p class="text-sm"><strong>Ferroelectric Field-Effect Transistor</strong> - Memory with ferroelectric gate</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h3 class="font-bold text-blue-700 mb-3">WCET</h3>
+              <p class="text-sm"><strong>Worst-Case Execution Time</strong> - Provably bounded at 99.99th percentile with σ/μ &lt; 10%</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.toc-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Active section highlighting
+        const sections = document.querySelectorAll('section[id]');
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveSection() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveSection);
+        updateActiveSection(); // Initial call
+
+        // Mobile menu toggle (if needed)
+        function toggleMobileMenu() {
+            const toc = document.querySelector('.toc-fixed');
+            toc.classList.toggle('open');
+        }
+
+        // Close TOC when clicking outside
+        document.addEventListener('click', function(event) {
+            const toc = document.querySelector('.toc-fixed');
+            // Check if we are in mobile view and TOC is open
+            if (window.innerWidth <= 1024 && toc.classList.contains('open')) {
+                // Check if the click is outside the TOC and not on a TOC link
+                if (!toc.contains(event.target) && !event.target.closest('.toc-link')) {
+                    toc.classList.remove('open');
+                }
+            }
+        });
+
+        // Close TOC when a TOC link is clicked (in mobile view)
+        document.querySelectorAll('.toc-link').forEach(link => {
+            link.addEventListener('click', function() {
+                const toc = document.querySelector('.toc-fixed');
+                if (window.innerWidth <= 1024) {
+                    toc.classList.remove('open');
+                }
+            });
+        });
+
+        // Add mobile menu button for small screens
+        if (window.innerWidth <= 1024) {
+            const mobileMenuBtn = document.createElement('button');
+            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            mobileMenuBtn.className = 'fixed top-4 left-4 z-50 bg-blue-600 text-white p-3 rounded-lg shadow-lg lg:hidden';
+            mobileMenuBtn.onclick = toggleMobileMenu;
+            document.body.appendChild(mobileMenuBtn);
+        }
+    </script>
+  
+
+</body></html>
