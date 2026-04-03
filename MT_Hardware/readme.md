@@ -96,7 +96,7 @@ The minimum viable MT system: a 64-channel standalone enforcement IC on a mature
 ## Related TL Folders
 
 - [Merkle Tree Architecture](https://github.com/FractonicMind/TernaryLogic/blob/main/Merkle_Architecture/readme.md)
-- [No Log = No Action](https://github.com/FractonicMind/TernaryLogic/blob/main/No_Log-No_Action/readme.md)
-- [No Spy = No Weapon](https://github.com/FractonicMind/TernaryLogic/blob/main/No_Spy-No_Weapon/readme.md)
-- [Hardware Architecture - Published Papers](https://github.com/FractonicMind/TernaryLogic/tree/main/Hardware_Architecture)
+- [No Log=No Action](https://github.com/FractonicMind/TernaryLogic/blob/main/No_Log-No_Action/readme.md)
+- [No Spy, No Weapon](https://github.com/FractonicMind/TernaryLogic/blob/main/No_Spy-No_Weapon/readme.md)
+- [Hardware Architecture: Published Papers](https://github.com/FractonicMind/TernaryLogic/tree/main/Hardware_Architecture)
 - [Triadic Decision Pipelines](https://github.com/FractonicMind/Triadic_Decision_Pipelines)
