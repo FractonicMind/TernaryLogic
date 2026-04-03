@@ -1,9 +1,9 @@
-# MT Hardware Architecture — Ternary Logic (TL)
+# MT Hardware Architecture
 
-**Author:** Lev Goukassian
-**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)
-**Framework:** Ternary Logic (TL) — Global Decision Systems Architecture
-**Status:** Specification Complete
+**Author:** Lev Goukassian   
+**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)   
+**Framework:** Ternary Logic (TL): Global Decision Systems Architecture   
+**Status:** Specification Complete   
 
 ---
 
@@ -68,7 +68,7 @@ TaOx bilayer memristive devices physically instantiate all three TL states with 
 
 - **Non-volatile enforcement** of authorization-pending states without software polling
 - **Power-loss persistence** of Epistemic Hold across power cycles without reinitialization
-- **Hardware-enforced NL=NA** - No Log = No Action - the IRS cannot transition to LRS without a verified physical confirm pulse from the logging path
+- **Hardware-enforced NL=NA** No Log = No Action - the IRS cannot transition to LRS without a verified physical confirm pulse from the logging path
 
 No discontinuous advantage is claimed at the binary logic switching layer. MT does not compete on speed or density. It competes on enforceability.
 
