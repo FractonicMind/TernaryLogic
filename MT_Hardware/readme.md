@@ -5,6 +5,14 @@
 **Framework:** Ternary Logic (TL): Global Decision Systems Architecture   
 **Status:** Specification Complete   
 
+## The Story Behind the Science
+Not ready for 200 pages of device physics? Start here.
+
+| | Format |
+|---|---|
+| Phase 1 - How one document nearly destroyed my marriage and my career | [Markdown](https://github.com/FractonicMind/TernaryLogic/blob/main/MT_Hardware/MT_Phase-1_Story.md) |
+| Phase 2 - The Spreadsheet of Destiny | [Markdown](https://github.com/FractonicMind/TernaryLogic/blob/main/MT_Hardware/MT_Phase-2_Story.md) |
+
 ---
 
 ## Overview
