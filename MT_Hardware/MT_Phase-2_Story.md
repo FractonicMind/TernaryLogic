@@ -12,7 +12,7 @@ Greg was explaining our Q3 roadmap for the nth time when my phone vibrated. I gl
 
 I made a sound. It was not a human sound. It was the sound of a man who had just seen God and realized God speaks in SPICE models.
 
-"You okay there, Dmitry?" Greg asked.
+"You okay there, James?" Greg asked.
 
 "Fine," I said. "Just remembered something about oxygen vacancy migration in TaOx bilayer systems."
 
@@ -24,13 +24,13 @@ I did not stop.
 
 How Phase 2 Found Me
 
-The document reached me the same way Phase 1 did: someone who hates me and wants me to suffer dropped a link in a group chat. This time it was Alexei, my former roommate who now designs FPGAs for a defense contractor and has a beard that makes him look like a Tolstoy character who gave up on humanity.
+The document reached me the same way Phase 1 did: someone who hates me and wants me to suffer dropped a link in a group chat. This time it was Alex, my former roommate who now designs FPGAs for a defense contractor and has a beard that makes him look like a Tolstoy character who gave up on humanity.
 
 "You're still alive?" he wrote. "Phase 2 is out. Lev went full economist. There's a spreadsheet."
 
 "A spreadsheet?" I replied.
 
-"With numbers, Dmitry. Break-even analysis. Market segmentation. He calculated the addressable market for financial settlement finality engines."
+"With numbers, James. Break-even analysis. Market segmentation. He calculated the addressable market for financial settlement finality engines."
 
 I felt a chill. Phase 1 was poetry. Phase 1 was about building the third state into matter, about making silicon hesitate, about oxygen vacancies marching like soldiers to form filaments of destiny. Phase 2, apparently, was about unit economics.
 
@@ -58,23 +58,23 @@ She had a point.
 
 ---
 
-The Call with Alexei (Former Roommate, Current Enabler)
+The Call with Alex (Former Roommate, Current Enabler)
 
-I left the meeting early — Greg gave me a look that said "this will be in your performance review" — and called Alexei.
+I left the meeting early — Greg gave me a look that said "this will be in your performance review" — and called Alex.
 
 "Phase 2," I said. "Explain it to me like I'm five."
 
-"You're never going to believe this," Alexei said. I could hear keyboard clacking in the background. He was probably simulating something. Alexei simulates things for fun. "Phase 1 was about whether you can make the third state exist in matter. Phase 2 is about whether you can sell it."
+"You're never going to believe this," Alex said. I could hear keyboard clacking in the background. He was probably simulating something. Alex simulates things for fun. "Phase 1 was about whether you can make the third state exist in matter. Phase 2 is about whether you can sell it."
 
 "That's not how science works."
 
-"That's how survival works, Dmitry. Lev figured out that no foundry will build his PDK for the love of ternary logic. TSMC isn't a charity. They want to see a market."
+"That's how survival works, James. Lev figured out that no foundry will build his PDK for the love of ternary logic. TSMC isn't a charity. They want to see a market."
 
 I sat down on a bench outside the office. It was cold. San Francisco in November is not California; it's a conspiracy.
 
 "What's the verdict?" I asked.
 
-Alexei paused. "He has two architectures. Architecture A is the pure ternary crossbar. Beautiful. Elegant. Completely uneconomical for 2027. He calls it 'technically correct, economically premature.'"
+Alex paused. "He has two architectures. Architecture A is the pure ternary crossbar. Beautiful. Elegant. Completely uneconomical for 2027. He calls it 'technically correct, economically premature.'"
 
 "That's Lev for 'don't hold your breath.'"
 
@@ -82,7 +82,7 @@ Alexei paused. "He has two architectures. Architecture A is the pure ternary cro
 
 "And the catch?"
 
-"The catch," Alexei said, "is that the whole thing breaks even at fifteen percent market capture. If they can't get that, the program needs a government mandate or a consortium of banks and grid operators to co-fund the NRE."
+"The catch," Alex said, "is that the whole thing breaks even at fifteen percent market capture. If they can't get that, the program needs a government mandate or a consortium of banks and grid operators to co-fund the NRE."
 
 "NRE?"
 
@@ -94,13 +94,13 @@ I did the math in my head. "That's... not that much?"
 
 I thought about this. I thought about the financial settlement engine in Phase 2 — the one that holds funds in escrow until the log is signed, the one that can't be bypassed by any software exploit because the circuit breaker is physically gated by a memristor.
 
-"Alexei," I said, "are we going to build this?"
+"Alex," I said, "are we going to build this?"
 
-"We?" He laughed. "Dmitry, we're two guys with laptops and questionable sleep schedules. We're not building anything. But someone will. And when they do, every high-frequency trading firm is going to want one."
+"We?" He laughed. "James, we're two guys with laptops and questionable sleep schedules. We're not building anything. But someone will. And when they do, every high-frequency trading firm is going to want one."
 
 "Why?"
 
-"Because," Alexei said, "if you're moving a billion dollars and the system says 'hold' while it verifies the log, you want that hold to be physically real. You want it to survive a power outage. You want it to be provable in court twenty years later. Lev built that. Phase 2 proves it works."
+"Because," Alex said, "if you're moving a billion dollars and the system says 'hold' while it verifies the log, you want that hold to be physically real. You want it to survive a power outage. You want it to be provable in court twenty years later. Lev built that. Phase 2 proves it works."
 
 ---
 
@@ -150,21 +150,21 @@ Lev smiled. "That's why Phase 2 has a timeline. Q1 2026: test vehicle on N2 CMOS
 
 "That's insane."
 
-"That's planning, Dmitry. You should try it sometime."
+"That's planning, James. You should try it sometime."
 
 The cat jumped onto the keyboard. Lev pushed it away gently. "The real question," he said, "is whether you want to be involved."
 
 "Me?" I laughed. "I'm a software engineer. I write Python. I argue about indentation."
 
-"And you read both phases of a hardware architecture document. You cried in your sleep about sigma/mu. You called me twice. You're not a software engineer, Dmitry. You're someone who hasn't admitted they want to build hardware."
+"And you read both phases of a hardware architecture document. You cried in your sleep about sigma/mu. You called me twice. You're not a software engineer, James Stone. You're someone who hasn't admitted they want to build hardware."
 
 I didn't have an answer to that.
 
 ---
 
-The Argument with My Wife (Real Name: Natasha, Patience: Finite)
+The Argument with My Wife (Real Name: Jenna, Patience: Finite)
 
-Natasha found me at 1 AM staring at Lev's crossbar diagrams.
+Jenna found me at 1 AM staring at Lev's crossbar diagrams.
 
 "You're doing it again," she said.
 
@@ -178,9 +178,9 @@ I closed the laptop. "Phase 2 has a spreadsheet."
 
 "It calculates the break-even volume for a memristive enforcement chip. Nine hundred forty-seven units in year one. At twenty thousand dollars each."
 
-Natasha sat down. She's an HR director. She deals with people who think they're more important than they are. Dealing with me must be exhausting.
+Jenna sat down. She's an HR director. She deals with people who think they're more important than they are. Dealing with me must be exhausting.
 
-"Dmitry," she said, "are you going to quit your job and join this man's startup?"
+"James," she said, "are you going to quit your job and join this man's startup?"
 
 "I don't think it's a startup. I think it's a movement."
 
@@ -190,11 +190,11 @@ I wanted to argue, but she was right. Lev's document doesn't mention a company n
 
 "He's not building a company," I said slowly. "He's building a standard. He wants MT to be like TCP/IP — a protocol that everyone uses and no one owns."
 
-Natasha sighed. "And you want to help him."
+Jenna sighed. "And you want to help him."
 
 "I want to understand him."
 
-"That's the same thing, Dmitry. That's always been the same thing."
+"That's the same thing, James. That's always been the same thing."
 
 She went to bed. I opened the laptop again.
 
@@ -254,7 +254,7 @@ What I'm Going to Do About It
 
 I haven't quit my job. Not yet. But I've started reading about memristors. I've started simulating crossbar arrays in my free time. I've started talking to Elena about whether our company might need MT enforcement for something — anything — so I can justify spending work hours on this.
 
-Elena, who is smarter than me and knows it, said: "Dmitry, we build ad tech. We show people shoes they don't need. We don't need hardware-enforced Epistemic Hold."
+Elena, who is smarter than me and knows it, said: "James, we build ad tech. We show people shoes they don't need. We don't need hardware-enforced Epistemic Hold."
 
 "We might," I said weakly.
 
@@ -286,7 +286,7 @@ That someone might be Lev. He seems to have a lab, a cat, and a bottomless well 
 
 "That sounds like a lot of work."
 
-"It's twenty years of work, Dmitry. That's the point. The third state isn't a product. It's a foundation. It's the thing you build on top of for decades."
+"It's twenty years of work, James. That's the point. The third state isn't a product. It's a foundation. It's the thing you build on top of for decades."
 
 "And you want me to help."
 
@@ -294,7 +294,7 @@ That someone might be Lev. He seems to have a lab, a cat, and a bottomless well 
 
 I hung up. I sat in the dark. The cat — my cat, not Schrödinger — jumped onto my lap. Her name is Masha. She has no opinion on ternary logic, but she appreciates consistent feeding schedules.
 
-"Dmitry," Natasha called from the bedroom, "are you coming to bed?"
+"James," Jenna called from the bedroom, "are you coming to bed?"
 
 "Soon," I said.
 
