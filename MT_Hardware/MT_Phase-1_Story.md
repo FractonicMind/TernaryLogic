@@ -1,11 +1,6 @@
-# "I Read Lev Goukassian's 'Mandated Ternary: Hardware Implementation of Ternary Logic' So You Don't Have To"
+# "How one document about oxygen vacancies, memristors, and three states of matter nearly destroyed my marriage and my career in the architecture team"
 
-*Or: how one document about oxygen vacancies, memristors, and three states of matter
-nearly destroyed my marriage and my career in the architecture team*
-
----
-
-I read Lev Goukassian's "Mandated Ternary: Hardware Implementation of Ternary Logic" so you don't have to.
+### My name is James Stone, and I read Lev Goukassian's "Mandated Ternary: Hardware Implementation of Ternary Logic" so you don't have to.
 
 And no, I don't want your gratitude. I want you to understand the depth of my suffering. Last night at 2am I was weeping over a TaOx versus HfOx comparison table because I had run out of coffee and my wife had gone to bed with the words "you chose this life." She was right. I chose it. I clicked on a PDF with the confident title "Phase 1 - Device Physics, Circuit Primitives, and Physical Interlock Mechanisms," and the blue abyss of technical greatness opened beneath my feet.
 
