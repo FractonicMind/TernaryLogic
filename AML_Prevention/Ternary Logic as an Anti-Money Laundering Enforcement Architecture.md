@@ -1,14 +1,5 @@
 # **Ternary Logic as an Anti-Money Laundering Enforcement Architecture**
 
-**Lev Goukassian**
-
- *Independent Researcher / Ternary Logic Architecture*  
- Santa Monica, California, USA
-
-**ORCID: 0009-0006-5966-1243**
-
- **leogouk@gmail.com**
-
 ### **Abstract**
 
 **Ternary Logic (TL) as an Anti-Money Laundering Enforcement Architecture: From Post-Hoc Reporting to Pre-Action Governance**
