@@ -16,7 +16,7 @@ Not a compliance officer? Not a cryptographer? Start with this:
 
 This repository contains the complete architectural, economic, and regulatory specifications for **Ternary Logic (TL)**-a triadic state-machine architecture designed to replace legacy binary Anti-Money Laundering (AML) systems.
 
-![Three-State Decision Engine](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/3_State_Decision_Log.png)   
+![Decision Engine](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/3_State_Decision_Log.png)   
 
 TL shifts financial enforcement from **Post-Hoc Reporting** (probabilistic/reactive) to **Pre-Action Governance** (deterministic/preventative). It introduces the *Epistemic Hold* (State 0), ensuring that no economic value moves across the network until its evidentiary lineage is cryptographically verified.
 
