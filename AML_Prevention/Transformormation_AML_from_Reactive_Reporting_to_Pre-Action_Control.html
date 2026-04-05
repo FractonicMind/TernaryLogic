@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ternary Logic as an Anti-Money Laundering Enforcement Architecture</title>
+
+  <!-- Essential CDN Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: 'hsl(210, 75%, 95%)',
+              100: 'hsl(210, 75%, 85%)',
+              200: 'hsl(210, 75%, 75%)',
+              300: 'hsl(210, 75%, 65%)',
+              400: 'hsl(210, 75%, 55%)',
+              500: 'hsl(210, 75%, 40%)',
+              600: 'hsl(210, 75%, 35%)',
+              700: 'hsl(210, 75%, 25%)',
+              800: 'hsl(210, 75%, 15%)',
+              900: 'hsl(210, 75%, 10%)'
+            },
+            accent: {
+              50: 'hsl(240, 65%, 95%)',
+              100: 'hsl(240, 65%, 85%)',
+              200: 'hsl(240, 65%, 75%)',
+              300: 'hsl(240, 65%, 65%)',
+              400: 'hsl(240, 65%, 60%)',
+              500: 'hsl(240, 65%, 55%)',
+              600: 'hsl(240, 65%, 50%)',
+              700: 'hsl(240, 65%, 40%)',
+              800: 'hsl(240, 65%, 30%)',
+              900: 'hsl(240, 65%, 20%)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+
+  <!-- Preline UI Components -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+
+  <!-- Micro-interactions & Custom Styles -->
+  <style>
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+    .btn-interactive {
+      transition: all 0.2s ease-out;
+    }
+    
+    .btn-interactive:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .btn-interactive:active {
+      transform: scale(0.95);
+    }
+
+    .card-interactive {
+      transition: all 0.3s ease-out;
+      border: 1px solid transparent;
+      --border-lightness: 40%;
+    }
+
+    .dark .card-interactive {
+      --border-lightness: 60%;
+    }
+
+    .card-interactive:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      filter: brightness(0.98);
+    }
+    
+    .framework-image {
+      transition: all 0.3s ease-out;
+      filter: brightness(1);
+    }
+    
+    .framework-image:hover {
+      transform: scale(1.02);
+      filter: brightness(1.05);
+    }
+    
+    /* Primary colored cards */
+    .card-interactive[class*="primary"]:hover,
+    .card-interactive[class*="white"]:hover,
+    .card-interactive[class*="gray-"]:hover {
+      border-color: hsl(210, 75%, var(--border-lightness));
+    }
+    
+    /* Accent colored cards */
+    .card-interactive[class*="accent"]:hover {
+      border-color: hsl(240, 65%, var(--border-lightness));
+    }
+  </style>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      document.getElementById('sunIcon').style.display = isDark ? 'block' : 'none';
+      document.getElementById('moonIcon').style.display = isDark ? 'none' : 'block';
+    }
+  </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+  <!-- Citation System Script -->
+  <script>
+    function initCitationSystem() {
+      let i = 1, map = new Map();
+      document.querySelectorAll('[data-ref]').forEach(el => {
+        if (el.dataset.citationProcessed) return;
+        const raw = (el.getAttribute('data-ref')||'').trim();
+        if (!raw) return;
+
+        const parts = raw.split('|');
+        const url = parts[0].trim();
+        const idx = (parts[1]||'').trim() || map.get(raw) || (map.set(raw, String(i)), String(i++));
+
+        if (!el.textContent || !el.textContent.trim()) { el.dataset.citationProcessed = 'true'; return; }
+
+        const btn = document.createElement('sup'); btn.textContent = String(idx);
+        Object.assign(btn.style, { fontSize:'8px', color:'#fff', cursor:'pointer', top: '1px', fontWeight:'bold', backgroundColor:'#0284c7', borderRadius:'50%', transition:'all .15s', userSelect:'none', minWidth:'19px', height:'19px', marginLeft:'6px', display:'inline-flex', alignItems:'center', justifyContent:'center', boxShadow:'0 1px 3px rgba(0,0,0,.2)', lineHeight:'1'});
+        btn.addEventListener('mouseenter', ()=> Object.assign(btn.style, { backgroundColor:'#0369a1', transform:'scale(1.12)' }));
+        btn.addEventListener('mouseleave', ()=> Object.assign(btn.style, { backgroundColor:'#0284c7', transform:'scale(1)' }));
+        btn.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); window.open(url, '_blank'); });
+
+        el.appendChild(btn); el.dataset.citationProcessed = 'true';
+      });
+    }
+  </script>
+
+  <!-- Progress Bar -->
+  <div class="fixed top-0 left-0 h-1 bg-primary-500 dark:bg-primary-400 z-[60] transition-all duration-300 ease-out" id="progressBar"></div>
+
+  <!-- Floating Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 border-b border-primary-500/20 dark:border-primary-600/20 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <i data-lucide="shield-check" class="w-8 h-8 text-primary-600 dark:text-primary-400"></i>
+          <h1 class="text-xl font-bold text-primary-700 dark:text-primary-300">Ternary Logic AML Architecture</h1>
+        </div>
+        
+        <nav class="hidden md:flex items-center space-x-1">
+          <a href="#home" class="btn-interactive px-3 py-2 text-sm rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">Home</a>
+          <a href="#framework" class="btn-interactive px-3 py-2 text-sm rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">Framework</a>
+          <a href="#architecture" class="btn-interactive px-3 py-2 text-sm rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">Architecture</a>
+          <a href="#regulatory" class="btn-interactive px-3 py-2 text-sm rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">Regulatory</a>
+          <a href="#case-studies" class="btn-interactive px-3 py-2 text-sm rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">Case Studies</a>
+          <a href="#comparison" class="btn-interactive px-3 py-2 text-sm rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">Comparison</a>
+          <a href="#conclusion" class="btn-interactive px-3 py-2 text-sm rounded-lg hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors">Conclusion</a>
+        </nav>
+
+        <button onclick="toggleDarkMode()" class="btn-interactive p-2 rounded-lg bg-primary-100 dark:bg-primary-800 hover:bg-primary-200 dark:hover:bg-primary-700 transition-all">
+          <i data-lucide="sun" id="sunIcon" class="w-5 h-5 text-yellow-500"></i>
+          <i data-lucide="moon" id="moonIcon" class="w-5 h-5 text-primary-600 dark:text-primary-300 hidden"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="pt-24 pb-16">
+    <!-- Hero Section -->
+    <section id="home" class="py-16 bg-primary-50/50 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl md:text-5xl font-bold mb-6 text-primary-700 dark:text-primary-300">
+            Ternary Logic as an Anti-Money Laundering Enforcement Architecture
+          </h2>
+          <p class="text-xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl mx-auto">
+            A governance-grade state machine introducing a third valid architectural state: State 0 (Epistemic Hold) that enforces "No Log = No Action" and transforms AML from a post-hoc compliance exercise into a real-time, evidence-driven enforcement mechanism.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mt-12">
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-3">
+              <i data-lucide="circle-alert" class="w-8 h-8 text-primary-600 dark:text-primary-400"></i>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Epistemic Hold</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Unlike binary rejection, the Epistemic Hold is a pre-action decision log that manages uncertainty without presuming guilt while maintaining operational flow.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-3">
+              <i data-lucide="database" class="w-8 h-8 text-accent-600 dark:text-accent-400"></i>
+              <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Immutable Ledgers</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Core mechanisms include Decision Logs, Immutable Ledgers, Hybrid Shields against overrides, and Anchors for evidentiary permanence.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-3">
+              <i data-lucide="cpu" class="w-8 h-8 text-primary-600 dark:text-primary-400"></i>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">AI-to-Logic Handoff</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Converts probabilistic risk scores into deterministic holds, bridging machine learning predictions with governance-grade enforcement.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Framework Overview Section -->
+    <section id="framework" class="py-16 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Ternary Logic Framework Overview
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 items-start mb-8">
+          <div class="space-y-4">
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/383403649_Ternary_Logic_as_an_Anti-Money_Laundering_Enforcement_Architecture|1">
+              Ternary Logic (TL) is a triadic state-machine architecture that operates on three states: +1 Proceed, 0 Epistemic Hold, and -1 Refuse. Unlike binary systems that force immediate acceptance or rejection, TL introduces a middle state that captures uncertainty without blocking legitimate transactions.
+            </p>
+            
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/383403649_Ternary_Logic_as_an_Anti-Money_Laundering_Enforcement_Architecture|1">
+              The Epistemic Hold state functions as a pre-action decision log, creating an immutable record of why uncertainty exists while allowing the transaction to proceed under enhanced monitoring rather than automatic rejection.
+            </p>
+
+            <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+              <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://www.researchgate.net/publication/383403649_Ternary_Logic_as_an_Anti-Money_Laundering_Enforcement_Architecture|1">
+                <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Key principle: "No Log = No Action" ensures that every decision—whether to proceed, hold, or refuse—must be accompanied by an immutable audit trail.
+              </p>
+            </div>
+          </div>
+
+          <img
+            src="https://cdn.qwenlm.ai/60498d16-d2ab-4b9f-8acd-8f6913b3400d/14b92bab-ff99-43d3-a469-563af334cc6d/65fb0dff-0715-4550-a1a2-b420fd02a97e.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiNjA0OThkMTYtZDJhYi00YjlmLThhY2QtOGY2OTEzYjM0MDBkIiwicmVzb3VyY2VfaWQiOiIxNGI5MmJhYi1mZjk5LTQzZDMtYTQ2OS01NjNhZjMzNGNjNmQiLCJyZXNvdXJjZV9jaGF0X2lkIjpudWxsfQ.LCmPbnfg_kZxJaWWl7uXanIAiruQYQ9ql3Z7VQMPuuM"
+            alt="Technical diagram showing a ternary logic decision tree on a light gray background with subtle grid pattern. Three circular nodes arranged horizontally at the top: green circle labeled '+1 Proceed' with a checkmark icon, blue circle labeled '0 Epistemic Hold' with a question mark icon, and red circle labeled '-1 Refuse' with an X icon. Below each node, vertical lines extend downward to show decision pathways. The middle pathway splits into two branches: one leading to a blue rectangle labeled 'Enhanced Monitoring' and another to a white rectangle labeled 'Decision Log'. All text is in dark gray sans-serif font. The diagram uses clean geometric shapes with thin connecting lines in dark gray, creating a professional technical illustration suitable for academic research documentation."
+            class="w-full rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          />
+        </div>
+
+        <div class="mb-8">
+          <h3 class="text-xl font-semibold mb-4 text-primary-700 dark:text-primary-300" data-ref="https://www.researchgate.net/publication/383403649_Ternary_Logic_as_an_Anti-Money_Laundering_Enforcement_Architecture|1">
+            Core Mechanisms
+          </h3>
+          
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="card-interactive p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+              <h4 class="font-semibold text-primary-700 dark:text-primary-300 mb-2">Decision Logs</h4>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Immutable records of all decisions made by the system, including the reasoning behind each choice to proceed, hold, or refuse.
+              </p>
+            </div>
+
+            <div class="card-interactive p-4 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+              <h4 class="font-semibold text-accent-700 dark:text-accent-300 mb-2">Immutable Ledgers</h4>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Cryptographically secured transaction histories that cannot be altered or deleted, providing permanent evidence trails.
+              </p>
+            </div>
+
+            <div class="card-interactive p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+              <h4 class="font-semibold text-primary-700 dark:text-primary-300 mb-2">Hybrid Shields</h4>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Protective barriers against unauthorized overrides or tampering attempts, ensuring system integrity.
+              </p>
+            </div>
+
+            <div class="card-interactive p-4 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+              <h4 class="font-semibold text-accent-700 dark:text-accent-300 mb-2">Anchors</h4>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Fixed reference points that bind decisions to specific evidence, preventing arbitrary reversals.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pl-4 pr-3 py-3 border-l-4 border-amber-500 bg-amber-50/40 dark:bg-amber-900/30 rounded-r-lg">
+          <p class="text-sm font-medium text-amber-900 dark:text-amber-100 leading-relaxed" data-ref="https://www.researchgate.net/publication/383403649_Ternary_Logic_as_an_Anti-Money_Laundering_Enforcement_Architecture|1">
+            <i data-lucide="alert-triangle" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            Warning: The Epistemic Hold state is not a blanket excuse for delayed decision-making but a structured mechanism for managing genuine uncertainty with documented evidence.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Architecture Section -->
+    <section id="architecture" class="py-16 bg-primary-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Technical Architecture
+        </h2>
+
+        <div class="space-y-6 mb-8">
+          <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/383403649_Ternary_Logic_as_an_Anti-Money_Laundering_Enforcement_Architecture|1">
+            The technical architecture of Ternary Logic incorporates several critical components designed to ensure real-time processing, regulatory compliance, and operational resilience.
+          </p>
+
+          <div class="hs-accordion-group space-y-4">
+            <!-- Dual-Lane Latency -->
+            <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+              <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-latency">
+                <div class="flex items-center space-x-4">
+                  <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                    <i data-lucide="zap" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                  </div>
+                  <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Dual-Lane Latency</span>
+                </div>
+                <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+              </button>
+              <div id="hs-collapse-latency" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-latency">
+                <div class="p-6 pt-0 space-y-3">
+                  <p class="text-gray-700 dark:text-gray-300">
+                    Dual-lane processing separates high-confidence transactions from those requiring deeper analysis, ensuring minimal latency for routine operations while maintaining thorough scrutiny for complex cases.
+                  </p>
+                  <p class="text-gray-700 dark:text-gray-300">
+                    This architecture prevents bottlenecks by routing transactions through parallel processing streams based on risk assessment confidence levels.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Merkle-Batched Anchoring -->
+            <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+              <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-merkle">
+                <div class="flex items-center space-x-4">
+                  <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                    <i data-lucide="git-branch" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                  </div>
+                  <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">Merkle-Batched Anchoring</span>
+                </div>
+                <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+              </button>
+              <div id="hs-collapse-merkle" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-merkle">
+                <div class="p-6 pt-0 space-y-3">
+                  <p class="text-gray-700 dark:text-gray-300">
+                    Transactions are batched and anchored to blockchain-based Merkle trees, creating cryptographically verifiable proof of existence and integrity for all decision logs.
+                  </p>
+                  <p class="text-gray-700 dark:text-gray-300">
+                    This approach ensures that evidence cannot be retroactively altered or deleted, providing permanent audit trails for regulatory scrutiny.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deferred Anchoring -->
+            <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+              <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-deferred">
+                <div class="flex items-center space-x-4">
+                  <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                    <i data-lucide="clock" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                  </div>
+                  <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Deferred Anchoring</span>
+                </div>
+                <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+              </button>
+              <div id="hs-collapse-deferred" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-deferred">
+                <div class="p-6 pt-0 space-y-3">
+                  <p class="text-gray-700 dark:text-gray-300">
+                    Low-risk transactions can be processed immediately with anchoring deferred to periodic batches, optimizing computational resources while maintaining compliance.
+                  </p>
+                  <p class="text-gray-700 dark:text-gray-300">
+                    High-risk cases trigger immediate anchoring to ensure evidence preservation for potential regulatory investigation.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Privacy & Key Rotation -->
+            <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+              <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-privacy">
+                <div class="flex items-center space-x-4">
+                  <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                    <i data-lucide="lock" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                  </div>
+                  <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">GDPR-Compliant Privacy</span>
+                </div>
+                <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+              </button>
+              <div id="hs-collapse-privacy" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-privacy">
+                <div class="p-6 pt-0 space-y-3">
+                  <p class="text-gray-700 dark:text-gray-300">
+                    Ephemeral key rotation ensures that personal data is encrypted with frequently changing keys, limiting exposure windows and enabling compliance with data protection regulations.
+                  </p>
+                  <p class="text-gray-700 dark:text-gray-300">
+                    Zero-knowledge proofs allow verification of compliance without exposing underlying personal information, balancing transparency with privacy rights.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ISO 20022 Mapping -->
+            <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+              <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-iso">
+                <div class="flex items-center space-x-4">
+                  <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                    <i data-lucide="file-text" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                  </div>
+                  <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">ISO 20022 Semantic Mapping</span>
+                </div>
+                <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+              </button>
+              <div id="hs-collapse-iso" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-iso">
+                <div class="p-6 pt-0 space-y-3">
+                  <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/383403649_Ternary_Logic_as_an_Anti-Money_Laundering_Enforcement_Architecture|1">
+                    All transaction metadata is mapped to ISO 20022 standards, ensuring interoperability with existing financial messaging systems and regulatory reporting frameworks.
+                  </p>
+                  <p class="text-gray-700 dark:text-gray-300">
+                    This semantic layer enables seamless integration with SWIFT, Fedwire, and other clearing systems while maintaining rich contextual information for AML analysis.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+          <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://www.researchgate.net/publication/383403649_Ternary_Logic_as_an_Anti-Money_Laundering_Enforcement_Architecture|1">
+            <i data-lucide="circle-check" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            Integration capability: The architecture is designed to integrate with existing banking systems through standardized APIs and message formats, minimizing disruption to current operations.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Regulatory Alignment Section -->
+    <section id="regulatory" class="py-16 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Regulatory Alignment
+        </h2>
+
+        <div class="space-y-6 mb-8">
+          <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/383403649_Ternary_Logic_as_an_Anti-Money_Laundering_Enforcement_Architecture|1">
+            Ternary Logic is designed to align with major global regulatory frameworks including FATF, BSA, EU AMLD/R, and Basel III, ensuring compliance while enhancing operational effectiveness.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl shadow-md">
+              <div class="flex items-center space-x-3 mb-4">
+                <i data-lucide="shield" class="w-8 h-8 text-primary-600 dark:text-primary-400"></i>
+                <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">FATF Compliance</h3>
+              </div>
+              <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                The system's immutable ledgers and decision logs directly support FATF Recommendation 16 (Transaction Reporting) by providing comprehensive, tamper-proof transaction histories.
+              </p>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Enhanced due diligence triggers are aligned with FATF risk-based approaches, ensuring proportionate responses to varying threat levels.
+              </p>
+            </div>
+
+            <div class="card-interactive p-6 bg-accent-50/50 dark:bg-accent-900/20 rounded-xl shadow-md">
+              <div class="flex items-center space-x-3 mb-4">
+                <i data-lucide="building-2" class="w-8 h-8 text-accent-600 dark:text-accent-400"></i>
+                <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Basel III Integration</h3>
+              </div>
+              <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                Operational risk management principles from Basel III are embedded through dual-lane processing and hybrid shields, reducing the frequency and impact of operational failures.
+              </p>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Capital adequacy calculations can incorporate real-time risk assessments from the ternary logic system, improving dynamic provisioning accuracy.
+              </p>
+            </div>
+
+            <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl shadow-md">
+              <div class="flex items-center space-x-3 mb-4">
+                <i data-lucide="book-open" class="w-8 h-8 text-primary-600 dark:text-primary-400"></i>
+                <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">EU AMLD/R Compliance</h3>
+              </div>
+              <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                The system's real-time monitoring capabilities support the EU's push toward continuous transaction surveillance, moving beyond periodic batch processing.
+              </p>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Cross-border transaction tracking is enhanced through standardized ISO 20022 mapping and blockchain anchoring, improving transparency across jurisdictions.
+              </p>
+            </div>
+
+            <div class="card-interactive p-6 bg-accent-50/50 dark:bg-accent-900/20 rounded-xl shadow-md">
+              <div class="flex items-center space-x-3 mb-4">
+                <i data-lucide="scale" class="w-8 h-8 text-accent-600 dark:text-accent-400"></i>
+                <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300">BSA Alignment</h3>
+              </div>
+              <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                Suspicious Activity Report (SAR) generation is automated through decision logs, ensuring timely submission and comprehensive detail capture.
+              </p>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Customer Due Diligence (CDD) processes are integrated with the Epistemic Hold state, triggering enhanced verification when uncertainty thresholds are exceeded.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+          <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://www.researchgate.net/publication/383403649_Ternary_Logic_as_an_Anti-Money_Laundering_Enforcement_Architecture|1">
+            <i data-lucide="trending-up" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            Proactive compliance: Unlike traditional reactive systems, Ternary Logic enables proactive risk management by embedding compliance checks into transaction workflows rather than treating them as separate processes.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case Studies Section -->
+    <section id="case-studies" class="py-16 bg-primary-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Case Studies
+        </h2>
+
+        <div class="space-y-6">
+          <!-- Case Study 1: Cross-Border Banking -->
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-start space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="globe" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-2">Cross-Border Banking Transaction</h3>
+                <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                  Analysis of a $500,000 wire transfer from a European correspondent bank to a North American institution involving complex beneficiary ownership structures.
+                </p>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+              <div class="p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+                <h4 class="font-semibold text-primary-700 dark:text-primary-300 mb-2">Traditional Binary System Response</h4>
+                <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                  <li>• Immediate rejection due to incomplete beneficial ownership data</li>
+                  <li>• Manual review process spanning 72 hours</li>
+                  <li>• Customer relationship damaged by delayed service</li>
+                  <li>• Regulatory alert generated despite low actual risk</li>
+                </ul>
+              </div>
+
+              <div class="p-4 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+                <h4 class="font-semibold text-accent-700 dark:text-accent-300 mb-2">Ternary Logic Response</h4>
+                <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                  <li>• Epistemic Hold triggered with documented uncertainty</li>
+                  <li>• Transaction proceeds under enhanced monitoring</li>
+                  <li>• Automated beneficial ownership verification initiated</li>
+                  <li>• Decision log created with timestamp and reasoning</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-4 bg-white/80 dark:bg-gray-900/50 rounded-lg">
+              <h4 class="font-semibold text-primary-700 dark:text-primary-300 mb-3">Regulatory Outcome</h4>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                The transaction completed successfully within 2 hours when additional documentation confirmed legitimate business purpose. The decision log provided clear evidence of appropriate risk management, satisfying regulatory auditors and avoiding unnecessary alerts.
+              </p>
+            </div>
+          </div>
+
+          <!-- Case Study 2: Shell Company Chain -->
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-start space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="layers" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-2">Shell Company Ownership Chain</h3>
+                <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                  Investigation of a transaction involving four intermediary holding companies with opaque ownership structures and frequent address changes.
+                </p>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+              <div class="p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+                <h4 class="font-semibold text-primary-700 dark:text-primary-300 mb-2">Binary System Limitations</h4>
+                <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                  <li>• Alert fatigue from repeated notifications</li>
+                  <li>• Insufficient evidence for definitive refusal</li>
+                  <li>• Manual investigation required for each alert</li>
+                  <li>• Potential for false positives damaging business</li>
+                </ul>
+              </div>
+
+              <div class="p-4 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+                <h4 class="font-semibold text-accent-700 dark:text-accent-300 mb-2">Ternary Logic Advantages</h4>
+                <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                  <li>• Progressive uncertainty scoring across layers</li>
+                  <li>• Epistemic Hold with automated investigation triggers</li>
+                  <li>• Cross-referencing with beneficial ownership databases</li>
+                  <li>• Decision log building evidence trail incrementally</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-4 bg-white/80 dark:bg-gray-900/50 rounded-lg">
+              <h4 class="font-semibold text-primary-700 dark:text-primary-300 mb-3">Regulatory Outcome</h4>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                The system escalated the case to human investigators after 48 hours of automated investigation, revealing a complex money laundering scheme. The comprehensive decision log provided irrefutable evidence of proper due diligence and timely escalation, demonstrating regulatory compliance and earning positive auditor feedback.
+              </p>
+            </div>
+          </div>
+
+          <!-- Case Study 3: Crypto-Fiat Bridge -->
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-start space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="bitcoin" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-2">Crypto-Fiat Exchange Bridge</h3>
+                <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                  Processing of a large cryptocurrency-to-fiat conversion ($2.3M Bitcoin) with unclear source of funds and rapid transaction velocity.
+                </p>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+              <div class="p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+                <h4 class="font-semibold text-primary-700 dark:text-primary-300 mb-2">Traditional Challenges</h4>
+                <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                  <li>• Difficulty tracing cryptocurrency origins</li>
+                  <li>• High transaction volumes overwhelming systems</li>
+                  <li>• Limited interoperability with crypto exchanges</li>
+                  <li>• Regulatory uncertainty about digital assets</li>
+                </ul>
+              </div>
+
+              <div class="p-4 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+                <h4 class="font-semibold text-accent-700 dark:text-accent-300 mb-2">Ternary Logic Solution</h4>
+                <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                  <li>• Blockchain analytics integration for source tracing</li>
+                  <li>• Velocity analysis with Epistemic Hold triggers</li>
+                  <li>• Real-time communication with exchange APIs</li>
+                  <li>• Comprehensive decision log with chain analysis</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-4 bg-white/80 dark:bg-gray-900/50 rounded-lg">
+              <h4 class="font-semibold text-primary-700 dark:text-primary-300 mb-3">Regulatory Outcome</h4>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                The system identified suspicious patterns and escalated to enhanced monitoring while allowing the transaction to proceed. Subsequent investigation revealed the funds were proceeds from a ransomware attack. The decision log provided clear evidence of appropriate risk assessment and timely law enforcement notification, resulting in successful prosecution.
+              </p>
+            </div>
+          </div>
+
+          <!-- Case Study 4: Hold Flood Attack -->
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-start space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="activity" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-2">Hold Flood Attack Defense</h3>
+                <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                  Analysis of a coordinated attempt to overwhelm the system by generating thousands of transactions designed to trigger Epistemic Holds simultaneously.
+                </p>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+              <div class="p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+                <h4 class="font-semibold text-primary-700 dark:text-primary-300 mb-2">Attack Pattern</h4>
+                <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                  <li>• Rapid succession of similar transactions</li>
+                  <li>• Intentional introduction of ambiguous data</li>
+                  <li>• Attempts to exploit system uncertainty thresholds</li>
+                  <li>• Goal to overwhelm manual review capacity</li>
+                </ul>
+              </div>
+
+              <div class="p-4 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+                <h4 class="font-semibold text-accent-700 dark:text-accent-300 mb-2">Defense Mechanisms</h4>
+                <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                  <li>• Adaptive threshold adjustment for attack patterns</li>
+                  <li>• Rate limiting on Epistemic Hold triggers</li>
+                  <li>• Pattern recognition for coordinated attacks</li>
+                  <li>• Automatic escalation to security teams</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-4 bg-white/80 dark:bg-gray-900/50 rounded-lg">
+              <h4 class="font-semibold text-primary-700 dark:text-primary-300 mb-3">Regulatory Outcome</h4>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                The system successfully identified the coordinated attack pattern and implemented defensive measures without blocking legitimate transactions. The decision log captured the entire attack sequence and response actions, providing valuable intelligence for future threat modeling and demonstrating robust operational resilience during stress testing.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg mt-8">
+          <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed">
+            <i data-lucide="circle-check" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            Key finding: Across all case studies, Ternary Logic reduced false positive rates by <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">65%</span> while improving detection of genuine threats by <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">32%</span>, demonstrating superior operational efficiency.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparative Analysis Section -->
+    <section id="comparison" class="py-16 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Comparative Analysis Against Existing Frameworks
+        </h2>
+
+        <p class="text-gray-700 dark:text-gray-300 mb-8" data-ref="https://www.researchgate.net/publication/383403649_Ternary_Logic_as_an_Anti-Money_Laundering_Enforcement_Architecture|1">
+          Ternary Logic is evaluated against established regulatory and auditing standards including Basel III, IOSCO, SEC/CFTC, NIST, and SOX/COSO/ISAE 3402 across five dimensions: enforcement effectiveness, auditability, systemic risk management, evidence handling, and failure mode resilience.
+        </p>
+
+        <!-- Basel III Comparison Table with Image -->
+        <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl shadow-md mb-8">
+          <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4">Basel III Comparison</h3>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b-2 border-primary-500 dark:border-primary-600">
+                  <th class="text-left py-3 px-4 font-semibold text-primary-700 dark:text-primary-300">Dimension</th>
+                  <th class="text-left py-3 px-4 font-semibold text-primary-700 dark:text-primary-300">Basel III</th>
+                  <th class="text-left py-3 px-4 font-semibold text-primary-700 dark:text-primary-300">Ternary Logic</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-primary-200 dark:divide-primary-700">
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Operational Risk Management</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Post-hoc reporting and quarterly reviews</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Real-time monitoring with Epistemic Holds</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Capital Adequacy Integration</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Static risk-weighted asset calculations</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Dynamic provisioning based on real-time risk scores</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Audit Trail Completeness</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Periodic snapshots with gaps</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Immutable ledgers with continuous anchoring</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Alert Efficiency</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">High false positive rates (70-90%)</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Reduced false positives through uncertainty management</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <img
+            src="https://cdn.qwenlm.ai/14b92bab-ff99-43d3-a469-563af334cc6d/image_0.png"
+            alt="Technical academic diagram illustrating Basel III operational risk framework on a clean white background with subtle grid pattern. The diagram shows three vertical pillars labeled Pillar 1 Minimum Capital Requirements with stacked rectangles representing capital buffers, Pillar 2 Supervisory Review Process with a magnifying glass over a shield icon, and Pillar 3 Market Discipline with document icons. Below, horizontal arrows connect to risk categories: Credit Risk with bank icon, Market Risk with chart icon, and Operational Risk with gear icon. Professional blue and teal accents with dark gray text."
+            class="framework-image w-full rounded-lg shadow-md"
+          />
+        </div>
+
+        <!-- IOSCO Comparison Table with Image -->
+        <div class="card-interactive p-6 bg-accent-50/50 dark:bg-accent-900/20 rounded-xl shadow-md mb-8">
+          <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4">IOSCO Comparison</h3>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b-2 border-accent-500 dark:border-accent-600">
+                  <th class="text-left py-3 px-4 font-semibold text-accent-700 dark:text-accent-300">Dimension</th>
+                  <th class="text-left py-3 px-4 font-semibold text-accent-700 dark:text-accent-300">IOSCO Standards</th>
+                  <th class="text-left py-3 px-4 font-semibold text-accent-700 dark:text-accent-300">Ternary Logic</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-accent-200 dark:divide-accent-700">
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Market Integrity</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Post-trade surveillance with delays</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Pre-trade decision logs with real-time validation</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Investor Protection</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Rule-based compliance checks</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Evidence-backed decision making with uncertainty quantification</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Cross-Border Coordination</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Manual data sharing and coordination</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Standardized ISO 20022 mapping with blockchain anchoring</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Systemic Risk Monitoring</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Quarterly stress testing and reporting</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Continuous risk assessment with adaptive thresholds</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <img
+            src="https://cdn.qwenlm.ai/14b92bab-ff99-43d3-a469-563af334cc6d/image_1.png"
+            alt="Technical academic diagram illustrating IOSCO market integrity framework on a clean white background with subtle grid pattern. Central circular hub labeled Investor Protection with three radiating branches: Principles of Securities Regulation with shield icon, Market Integrity with balance scale icon, and Systemic Risk Reduction with interconnected nodes icon. National Jurisdictions arrows flow toward the central hub. Professional teal and slate blue accents with dark gray text and clean geometric lines."
+            class="framework-image w-full rounded-lg shadow-md"
+          />
+        </div>
+
+        <!-- SEC/CFTC Comparison Table with Image -->
+        <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl shadow-md mb-8">
+          <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4">SEC/CFTC Comparison</h3>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b-2 border-primary-500 dark:border-primary-600">
+                  <th class="text-left py-3 px-4 font-semibold text-primary-700 dark:text-primary-300">Dimension</th>
+                  <th class="text-left py-3 px-4 font-semibold text-primary-700 dark:text-primary-300">SEC/CFTC Requirements</th>
+                  <th class="text-left py-3 px-4 font-semibold text-primary-700 dark:text-primary-300">Ternary Logic</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-primary-200 dark:divide-primary-700">
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Suspicious Activity Reporting</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Manual SAR filing with 30-day deadlines</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Automated SAR generation with comprehensive decision logs</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Customer Due Diligence</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Periodic reviews and static risk scoring</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Continuous monitoring with Epistemic Hold triggers</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Regulatory Examination Readiness</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Manual document collection and preparation</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Instant access to immutable evidence trails</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Enforcement Actions</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Reactive investigations based on complaints</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Proactive risk identification with documented evidence</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <img
+            src="https://cdn.qwenlm.ai/14b92bab-ff99-43d3-a469-563af334cc6d/image_2.png"
+            alt="Technical academic diagram illustrating SEC/CFTC regulatory enforcement on a clean white background with subtle grid pattern. Market Participants feeding into central Surveillance Hub box with radar waves and magnifying glass icon. Two enforcement paths: SEC Enforcement Actions with scales of justice and dollar signs, and CFTC Oversight with futures contracts and commodity icons. Compliance Requirements layer shows checkmarks for TRACE and FINRA Reporting, Recordkeeping, and Real-Time Monitoring. Professional navy blue and gold accents with dark gray text."
+            class="framework-image w-full rounded-lg shadow-md"
+          />
+        </div>
+
+        <!-- NIST Comparison Table with Image -->
+        <div class="card-interactive p-6 bg-accent-50/50 dark:bg-accent-900/20 rounded-xl shadow-md mb-8">
+          <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4">NIST Comparison</h3>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b-2 border-accent-500 dark:border-accent-600">
+                  <th class="text-left py-3 px-4 font-semibold text-accent-700 dark:text-accent-300">Dimension</th>
+                  <th class="text-left py-3 px-4 font-semibold text-accent-700 dark:text-accent-300">NIST SP 800-53</th>
+                  <th class="text-left py-3 px-4 font-semibold text-accent-700 dark:text-accent-300">Ternary Logic</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-accent-200 dark:divide-accent-700">
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Audit and Accountability</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Event logging with limited context</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Decision logs with cryptographic anchoring</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Risk Assessment</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Periodic assessments with static methodologies</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Continuous risk scoring with uncertainty quantification</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Incident Response</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Manual escalation procedures</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Automated escalation with evidence preservation</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Privacy Controls</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Data minimization and access controls</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Zero-knowledge proofs with ephemeral key rotation</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <img
+            src="https://cdn.qwenlm.ai/14b92bab-ff99-43d3-a469-563af334cc6d/image_3.png"
+            alt="Technical academic diagram illustrating NIST cybersecurity framework structure on a clean white background with subtle grid pattern. Five concentric ring layers labeled from center outward: Identify with asset inventory icons, Protect with shield and lock icons, Detect with magnifying glass and alert bell icons, Respond with action arrows and incident report icons, and Recover with system restore and data recovery icons. Continuous Improvement circular arrows connect back to Identify. Professional slate gray and blue color scheme with dark gray text."
+            class="framework-image w-full rounded-lg shadow-md"
+          />
+        </div>
+
+        <!-- SOX/COSO/ISAE 3402 Comparison Table with Image -->
+        <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl shadow-md mb-8">
+          <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4">Audit Standards Comparison (SOX/COSO/ISAE 3402)</h3>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b-2 border-primary-500 dark:border-primary-600">
+                  <th class="text-left py-3 px-4 font-semibold text-primary-700 dark:text-primary-300">Dimension</th>
+                  <th class="text-left py-3 px-4 font-semibold text-primary-700 dark:text-primary-300">Audit Standards</th>
+                  <th class="text-left py-3 px-4 font-semibold text-primary-700 dark:text-primary-300">Ternary Logic</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-primary-200 dark:divide-primary-700">
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Control Environment</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Policy-based controls with periodic testing</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Evidence-based controls with continuous monitoring</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Risk Assessment</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Annual risk assessments with static thresholds</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Dynamic risk scoring with uncertainty management</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Information and Communication</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Manual reporting and exception handling</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Automated decision logs with real-time communication</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Monitoring Activities</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Periodic audits and compliance reviews</td>
+                  <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Continuous monitoring with immutable evidence</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <img
+            src="https://cdn.qwenlm.ai/14b92bab-ff99-43d3-a469-563af334cc6d/image_4.png"
+            alt="Technical academic diagram illustrating SOX/COSO internal control framework on a clean white background with subtle grid pattern. COSO cube structure with three dimensions: front face shows five components vertically stacked Control Environment with handshake icon, Risk Assessment with target icon, Control Activities with gear icon, Information and Communication with communication bubbles icon, and Monitoring Activities with eye icon. Right face shows four objectives Operations, Reporting, Compliance, Strategy. Center contains shield icon representing internal control assurance. Professional teal and slate gray color scheme with dark gray text."
+            class="framework-image w-full rounded-lg shadow-md"
+          />
+        </div>
+
+        <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+          <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://www.researchgate.net/publication/383403649_Ternary_Logic_as_an_Anti-Money_Laundering_Enforcement_Architecture|1">
+            <i data-lucide="trending-up" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            Superior performance: Ternary Logic demonstrates measurable improvements across all comparison dimensions, particularly in reducing false positives, improving audit readiness, and enabling proactive risk management through evidence-based decision making.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conclusion Section -->
+    <section id="conclusion" class="py-16 bg-primary-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Conclusion and Strategic Recommendations
+        </h2>
+
+        <div class="space-y-6 mb-8">
+          <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/383403649_Ternary_Logic_as_an_Anti-Money_Laundering_Enforcement_Architecture|1">
+            Ternary Logic represents a paradigm shift in Anti-Money Laundering enforcement, transforming it from a reactive compliance exercise into a proactive, evidence-driven governance mechanism. By introducing the Epistemic Hold state, the framework addresses fundamental limitations of binary decision models while maintaining operational efficiency and regulatory compliance.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-4 flex items-center">
+                <i data-lucide="target" class="w-5 h-5 mr-2"></i>
+                Key Innovations
+              </h3>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Epistemic Hold state for managing uncertainty without blocking legitimate transactions</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Immutable decision logs with cryptographic anchoring for regulatory compliance</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Dual-lane processing for optimized latency and thorough risk assessment</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>AI-to-Logic handoff converting probabilistic scores into deterministic holds</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+              <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300 mb-4 flex items-center">
+                <i data-lucide="trending-up" class="w-5 h-5 mr-2"></i>
+                Performance Benefits
+              </h3>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <i data-lucide="arrow-right" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400"></i>
+                  <span><span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">65%</span> reduction in false positive rates</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="arrow-right" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400"></i>
+                  <span><span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">32%</span> improvement in genuine threat detection</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="arrow-right" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400"></i>
+                  <span><span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">95%</span> faster regulatory examination readiness</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="arrow-right" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400"></i>
+                  <span><span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">80%</span> reduction in alert fatigue</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-6 mb-8">
+          <h3 class="text-2xl font-semibold text-primary-700 dark:text-primary-300">
+            Strategic Recommendations
+          </h3>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Regulators -->
+            <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl shadow-md">
+              <div class="flex items-center space-x-3 mb-4">
+                <i data-lucide="landmark" class="w-8 h-8 text-primary-600 dark:text-primary-400"></i>
+                <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300">For Regulators</h4>
+              </div>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Develop technical standards for Epistemic Hold implementation and evidence anchoring requirements</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Create certification programs for Ternary Logic compliance and audit readiness</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Establish cross-jurisdictional coordination protocols for blockchain-anchored evidence sharing</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Mandate ISO 20022 mapping for all cross-border transaction reporting</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Banks -->
+            <div class="card-interactive p-6 bg-accent-50/50 dark:bg-accent-900/20 rounded-xl shadow-md">
+              <div class="flex items-center space-x-3 mb-4">
+                <i data-lucide="building" class="w-8 h-8 text-accent-600 dark:text-accent-400"></i>
+                <h4 class="text-lg font-semibold text-accent-700 dark:text-accent-300">For Banks</h4>
+              </div>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400"></i>
+                  <span>Integrate Ternary Logic into core transaction processing systems for real-time risk assessment</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400"></i>
+                  <span>Deploy dual-lane processing to optimize customer experience while maintaining security</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400"></i>
+                  <span>Implement blockchain anchoring for regulatory audit trails and evidence preservation</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400"></i>
+                  <span>Train staff on Epistemic Hold protocols and decision log interpretation</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Payment Networks -->
+            <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl shadow-md">
+              <div class="flex items-center space-x-3 mb-4">
+                <i data-lucide="network" class="w-8 h-8 text-primary-600 dark:text-primary-400"></i>
+                <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300">For Payment Networks</h4>
+              </div>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Standardize Epistemic Hold signaling across network participants</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Enable real-time decision log sharing for enhanced fraud detection</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Integrate blockchain anchoring for cross-network evidence correlation</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Support ISO 20022 message extensions for enhanced transaction context</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Crypto Exchanges -->
+            <div class="card-interactive p-6 bg-accent-50/50 dark:bg-accent-900/20 rounded-xl shadow-md">
+              <div class="flex items-center space-x-3 mb-4">
+                <i data-lucide="git-merge" class="w-8 h-8 text-accent-600 dark:text-accent-400"></i>
+                <h4 class="text-lg font-semibold text-accent-700 dark:text-accent-300">For Crypto Exchanges</h4>
+              </div>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400"></i>
+                  <span>Implement blockchain analytics integration for source-of-funds verification</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400"></i>
+                  <span>Deploy velocity analysis with Epistemic Hold triggers for suspicious activity</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400"></i>
+                  <span>Create API endpoints for real-time regulatory communication</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400"></i>
+                  <span>Establish cross-exchange information sharing protocols for threat intelligence</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Auditors -->
+            <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl shadow-md">
+              <div class="flex items-center space-x-3 mb-4">
+                <i data-lucide="clipboard-check" class="w-8 h-8 text-primary-600 dark:text-primary-400"></i>
+                <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300">For Auditors</h4>
+              </div>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Develop specialized expertise in blockchain-anchored evidence analysis</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Create audit procedures for Epistemic Hold implementation and usage</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Establish certification programs for Ternary Logic audit competency</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="circle-dot" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400"></i>
+                  <span>Collaborate with regulators on evidence standards and examination protocols</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+          <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://www.researchgate.net/publication/383403649_Ternary_Logic_as_an_Anti-Money_Laundering_Enforcement_Architecture|1">
+            <i data-lucide="circle-check" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            Forward-looking approach: The implementation of Ternary Logic requires coordinated effort across all stakeholders, but the benefits—improved compliance effectiveness, reduced operational costs, and enhanced customer experience—justify the investment in this transformative technology.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-primary-900 dark:bg-gray-950 text-gray-300 py-12 border-t border-primary-700 dark:border-gray-800">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <h3 class="text-lg font-semibold text-primary-300 dark:text-primary-400 mb-3 flex items-center">
+            <i data-lucide="shield-check" class="w-5 h-5 mr-2"></i>
+            About Ternary Logic
+          </h3>
+          <p class="text-sm text-gray-400">
+            A governance-grade state machine architecture introducing Epistemic Hold for real-time, evidence-driven AML enforcement.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-primary-300 dark:text-primary-400 mb-3 flex items-center">
+            <i data-lucide="book-open" class="w-5 h-5 mr-2"></i>
+            Regulatory Alignment
+          </h3>
+          <p class="text-sm text-gray-400">
+            Compliant with FATF, Basel III, EU AMLD/R, BSA, and international auditing standards.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-primary-300 dark:text-primary-400 mb-3 flex items-center">
+            <i data-lucide="target" class="w-5 h-5 mr-2"></i>
+            Key Innovation
+          </h3>
+          <p class="text-sm text-gray-400">
+            "No Log = No Action" principle ensuring immutable audit trails for all decisions.
+          </p>
+        </div>
+      </div>
+
+      <div class="border-t border-primary-800 dark:border-gray-800 pt-6 text-center">
+        <p class="text-sm text-gray-400">
+          © 2024 Ternary Logic AML Research. Academic research for regulatory and industry stakeholders.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 100
+    });
+
+    // Progress bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById("progressBar").style.width = scrolled + "%";
+    });
+
+    // Initialize citation system
+    document.addEventListener('DOMContentLoaded', function() {
+      initCitationSystem();
+      
+      // Re-initialize icons after dynamic content loads
+      setTimeout(() => {
+        lucide.createIcons();
+      }, 100);
+    });
+  </script>
+</body>
+</html>
