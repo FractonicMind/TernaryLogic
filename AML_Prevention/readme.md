@@ -18,7 +18,8 @@ This repository contains the complete architectural, economic, and regulatory sp
 
 TL shifts financial enforcement from **Post-Hoc Reporting** (probabilistic/reactive) to **Pre-Action Governance** (deterministic/preventative). It introduces the *Epistemic Hold* (State 0), ensuring that no economic value moves across the network until its evidentiary lineage is cryptographically verified.
 
-![Three-State Decision Engine](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/3_State_Decision_Log.png)
+![Three-State Decision Engine](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/3_State_Decision_Log.png)   
+
 
 ![Dual-Lane Latency Architecture](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/AML_Dual_Latency.jpg)
 
