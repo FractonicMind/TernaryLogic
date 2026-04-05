@@ -18,7 +18,21 @@ This repository contains the complete architectural, economic, and regulatory sp
 
 TL shifts financial enforcement from **Post-Hoc Reporting** (probabilistic/reactive) to **Pre-Action Governance** (deterministic/preventative). It introduces the *Epistemic Hold* (State 0), ensuring that no economic value moves across the network until its evidentiary lineage is cryptographically verified.
 
+![Three-State Decision Engine](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/3_State_Decision_Log.png)
+
+![Dual-Lane Latency Architecture](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/AML_Dual_Latency.jpg)
+
+---
+
 ## Repository Navigation
+
+### Synthesis
+
+**[Transformation\_AML\_from\_Reactive\_Reporting\_to\_Pre-Action\_Control.md](https://github.com/FractonicMind/TernaryLogic/tree/main/AML_Prevention/Transformation_AML_from_Reactive_Reporting_to_Pre-Action_Control.md)**: The complete synthesis document. Covers systemic AML failure, the triadic architecture, technical implementation, regulatory alignment (Basel III, FATF, MiCA, BSA, SEC/CFTC, NIST, SOX), and strategic recommendations by stakeholder. The single best entry point for institutional audiences.
+
+**[Transformation AML - HTML](https://fractonicmind.github.io/TernaryLogic/AML_Prevention/Transformation_AML_from_Reactive_Reporting_to_Pre-Action_Control.html)**: Interactive version with five regulatory framework diagrams (Basel III, IOSCO, SEC/CFTC, NIST, SOX/COSO) and the Dual-Lane Latency architecture visual.
+
+---
 
 ### 📂 01-Executive-Strategy
 
