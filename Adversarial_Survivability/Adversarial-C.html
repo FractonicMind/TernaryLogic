@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TL Constitutional Survivability - Adversarial Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0c10;
+  --surface: #10141c;
+  --surface2: #161c28;
+  --border: #1e2a3a;
+  --accent: #e8c84a;
+  --accent2: #4ae8b8;
+  --danger: #e84a4a;
+  --warning: #e8834a;
+  --muted: #6b7a8d;
+  --text: #c8d4e0;
+  --text-bright: #eef2f8;
+  --critical: #e84a4a;
+  --high: #e8834a;
+  --moderate: #e8c84a;
+  --low: #4ae8b8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* Background grid */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(232,200,74,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232,200,74,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- HEADER ---- */
+header {
+  position: relative;
+  padding: 60px 48px 40px;
+  border-bottom: 1px solid var(--border);
+  z-index: 1;
+}
+
+.classification-bar {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--danger);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.classification-bar::before,
+.classification-bar::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--danger);
+  opacity: 0.4;
+}
+
+h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text-bright);
+  max-width: 760px;
+  margin-bottom: 16px;
+}
+
+h1 span { color: var(--accent); }
+
+.subtitle {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.meta-row {
+  display: flex;
+  gap: 32px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.meta-item { display: flex; flex-direction: column; gap: 4px; }
+.meta-label { font-size: 9px; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; }
+.meta-value { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; color: var(--accent); }
+
+/* ---- VERDICT BANNER ---- */
+.verdict-banner {
+  position: relative;
+  z-index: 1;
+  margin: 32px 48px;
+  border: 1px solid var(--warning);
+  background: rgba(232,131,74,0.06);
+  padding: 28px 32px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.verdict-item { display: flex; flex-direction: column; gap: 8px; }
+.verdict-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.verdict-status {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 4px 10px;
+  display: inline-block;
+  width: fit-content;
+}
+.verdict-status.partial { background: rgba(232,200,74,0.15); color: var(--accent); border-left: 3px solid var(--accent); }
+.verdict-status.conditional { background: rgba(232,131,74,0.15); color: var(--warning); border-left: 3px solid var(--warning); }
+.verdict-status.not-enforceable { background: rgba(232,74,74,0.15); color: var(--danger); border-left: 3px solid var(--danger); }
+.verdict-desc { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+/* ---- NAV ---- */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,12,16,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 48px;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+}
+
+nav a {
+  display: block;
+  padding: 14px 18px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+nav a:hover, nav a.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ---- LAYOUT ---- */
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 48px 80px;
+}
+
+/* ---- SECTION ---- */
+.report-section {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.section-number {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-bottom: 24px;
+}
+
+h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent2);
+  margin: 28px 0 12px;
+  letter-spacing: 0.05em;
+}
+
+p {
+  margin-bottom: 14px;
+  color: var(--text);
+  font-size: 12.5px;
+  line-height: 1.8;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ---- VERDICT BOX ---- */
+.section-verdict {
+  margin-top: 28px;
+  padding: 16px 20px;
+  border-left: 3px solid var(--accent);
+  background: rgba(232,200,74,0.05);
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--text-bright);
+  line-height: 1.7;
+}
+.section-verdict::before {
+  content: 'SECTION VERDICT  ';
+  font-family: 'IBM Plex Mono', monospace;
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* ---- PILLS / RATINGS ---- */
+.rating {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Syne', sans-serif;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+}
+.rating.critical { background: rgba(232,74,74,0.2); color: var(--critical); }
+.rating.high { background: rgba(232,131,74,0.2); color: var(--high); }
+.rating.moderate { background: rgba(232,200,74,0.2); color: var(--moderate); }
+.rating.low { background: rgba(74,232,184,0.2); color: var(--low); }
+
+/* ---- PILLAR GRID ---- */
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.pillar-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 20px;
+  transition: border-color 0.2s;
+}
+.pillar-card:hover { border-color: var(--accent); }
+
+.pillar-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-bright);
+  margin-bottom: 8px;
+}
+
+.pillar-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+}
+.pillar-row:last-child { border-bottom: none; }
+.pillar-key { color: var(--muted); }
+
+/* ---- ATTACK MATRIX ---- */
+.matrix-wrapper {
+  overflow-x: auto;
+  margin: 24px 0;
+  border: 1px solid var(--border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+th {
+  background: var(--surface2);
+  padding: 12px 14px;
+  text-align: left;
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+
+td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+tr:hover td { background: rgba(232,200,74,0.03); }
+
+.class-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.class-I { background: rgba(232,74,74,0.15); color: var(--critical); }
+.class-II { background: rgba(232,131,74,0.15); color: var(--warning); }
+.class-III { background: rgba(74,232,184,0.15); color: var(--accent2); }
+.class-IV { background: rgba(107,122,141,0.15); color: var(--muted); }
+.class-V { background: rgba(232,200,74,0.15); color: var(--accent); }
+
+/* ---- EXECUTIVE VERDICTS ---- */
+.exec-verdict {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 32px;
+  margin: 32px 0;
+}
+
+.exec-verdict h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-bright);
+  margin: 0 0 20px 0;
+}
+
+.ev-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.ev-block {
+  padding: 16px;
+  border-left: 2px solid var(--border);
+}
+.ev-block.danger { border-left-color: var(--danger); }
+.ev-block.warning { border-left-color: var(--warning); }
+.ev-block.accent { border-left-color: var(--accent); }
+
+.ev-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.ev-status {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+.ev-status.partial { color: var(--accent); }
+.ev-status.conditional { color: var(--warning); }
+.ev-status.no { color: var(--danger); }
+
+.ev-body { font-size: 11.5px; color: var(--text); line-height: 1.7; }
+
+/* ---- FINAL VERDICT ---- */
+.final-verdict {
+  position: relative;
+  margin: 48px 0;
+  padding: 40px;
+  border: 1px solid var(--accent);
+  background: rgba(232,200,74,0.04);
+}
+
+.final-verdict::before {
+  content: 'FINAL VERDICT';
+  position: absolute;
+  top: -1px;
+  left: 24px;
+  background: var(--accent);
+  color: var(--bg);
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  padding: 3px 12px;
+}
+
+.final-verdict p {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--text-bright);
+}
+
+.final-line {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+/* ---- SURVIVAL CHART ---- */
+.survival-bars {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.sbar-row {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.sbar-label {
+  font-size: 11px;
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.sbar-track {
+  height: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.sbar-fill {
+  height: 100%;
+  transition: width 1s ease;
+}
+
+.sbar-fill.critical { background: var(--critical); }
+.sbar-fill.high { background: var(--warning); }
+.sbar-fill.moderate { background: var(--accent); }
+.sbar-fill.low { background: var(--accent2); }
+
+.sbar-pct {
+  font-size: 10px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  min-width: 48px;
+  text-align: right;
+}
+
+/* ---- COLLAPSE THRESHOLD ---- */
+.threshold-box {
+  border: 1px solid var(--danger);
+  background: rgba(232,74,74,0.05);
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+
+.threshold-box h4 {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--danger);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.threshold-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  font-size: 11.5px;
+}
+
+.threshold-item::before {
+  content: attr(data-letter);
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  color: var(--danger);
+  min-width: 16px;
+}
+
+/* ---- INFO CALLOUT ---- */
+.callout {
+  background: var(--surface2);
+  border-left: 3px solid var(--accent2);
+  padding: 14px 18px;
+  margin: 20px 0;
+  font-size: 11.5px;
+}
+
+/* ---- TOGGLE SECTIONS ---- */
+.toggle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  user-select: none;
+}
+
+.toggle-header:hover h3 { color: var(--accent); }
+.toggle-header h3 { margin: 0; }
+
+.toggle-icon {
+  font-size: 10px;
+  color: var(--muted);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  transition: transform 0.2s;
+}
+
+.toggle-body {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease;
+}
+.toggle-body.open { max-height: 9999px; }
+
+/* ---- FOOTER ---- */
+footer {
+  position: relative;
+  z-index: 1;
+  padding: 32px 48px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: gap;
+}
+
+.footer-left {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+.footer-right {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+  header, main { padding-left: 20px; padding-right: 20px; }
+  nav { padding: 0 20px; }
+  .verdict-banner { grid-template-columns: 1fr; margin: 20px; }
+  .ev-grid { grid-template-columns: 1fr; }
+  .sbar-row { grid-template-columns: 140px 1fr auto; }
+  footer { padding: 20px; flex-direction: column; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="classification-bar">ADVERSARIAL DOCTRINAL ANALYSIS - COMPLETE REPORT - 4-STEP SYNTHESIS</div>
+  <h1>Ternary Logic:<br><span>Constitutional Survivability</span><br>Under Adversarial Pressure</h1>
+  <p class="subtitle">Rigorous hardware-aware survivability validation across 14 analytical sections</p>
+  <div class="meta-row">
+    <div class="meta-item">
+      <span class="meta-label">Framework</span>
+      <span class="meta-value">Ternary Logic (TL)</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Sections Analyzed</span>
+      <span class="meta-value">XIV</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Attack Vectors</span>
+      <span class="meta-value">21 Modeled</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Threat Classes</span>
+      <span class="meta-value">V</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">ORCID</span>
+      <span class="meta-value">0009-0006-5966-1243</span>
+    </div>
+  </div>
+</header>
+
+<div class="verdict-banner">
+  <div class="verdict-item">
+    <span class="verdict-label">Under Hostile Control</span>
+    <span class="verdict-status partial">Partially Enforceable</span>
+    <span class="verdict-desc">Survives hostile control in full DITL-native deployment, but governance capture and semantic drift create 10-20 year erosion trajectory.</span>
+  </div>
+  <div class="verdict-item">
+    <span class="verdict-label">Under Contested Hardware</span>
+    <span class="verdict-status conditional">Conditionally Enforceable</span>
+    <span class="verdict-desc">Physical non-bypassability achievable only with six mandatory DITL conditions met. No qualifying chip currently fabricated.</span>
+  </div>
+  <div class="verdict-item">
+    <span class="verdict-label">Under Systemic Deployment</span>
+    <span class="verdict-status not-enforceable">Not Enforceable Without Mandate</span>
+    <span class="verdict-desc">Below 60-70% ecosystem adoption threshold, competitive arbitrage undermines governance integrity. Economic attrition is the binding constraint.</span>
+  </div>
+</div>
+
+<nav>
+  <a href="#pillars" class="active">Pillars</a>
+  <a href="#invariant">Invariant</a>
+  <a href="#goukassian">Goukassian</a>
+  <a href="#manipulation">Manipulation</a>
+  <a href="#override">Override</a>
+  <a href="#vectors">Attack Vectors</a>
+  <a href="#recovery">Recovery</a>
+  <a href="#ditl">DITL</a>
+  <a href="#latency">Latency</a>
+  <a href="#supply">Supply Chain</a>
+  <a href="#shadow">Shadow Systems</a>
+  <a href="#crypto">Cryptography</a>
+  <a href="#political">Political</a>
+  <a href="#verdict">Final Verdict</a>
+</nav>
+
+<main>
+
+<!-- COLLAPSE THRESHOLD -->
+<div class="threshold-box" style="margin-top:48px;">
+  <h4>Collapse Threshold Definition</h4>
+  <div class="threshold-item" data-letter="A">TL is non-enforceable if any single Critical-rated pillar is successfully compromised.</div>
+  <div class="threshold-item" data-letter="B">TL is non-enforceable if three or more High-rated pillars are simultaneously degraded.</div>
+  <div class="threshold-item" data-letter="C">TL is non-enforceable if the No Log = No Action invariant is bypassed at hardware level without generating a detectable non-maskable interrupt.</div>
+</div>
+
+<!-- SECTION I: PILLARS -->
+<section class="report-section" id="pillars">
+  <div class="section-number">Section I</div>
+  <h2>Eight Pillars - Architectural Baseline</h2>
+
+  <div class="pillar-grid">
+    <div class="pillar-card">
+      <div class="pillar-name">1. Epistemic Hold (State 0)</div>
+      <div class="pillar-row"><span class="pillar-key">Full DITL Rating</span><span class="rating critical">Critical</span></div>
+      <div class="pillar-row"><span class="pillar-key">Emulation Rating</span><span class="rating low">Low</span></div>
+      <div class="pillar-row"><span class="pillar-key">Fail Behavior</span><span>Fail-Closed</span></div>
+      <div class="pillar-row"><span class="pillar-key">Override Risk</span><span style="color:var(--high)">High in emulation</span></div>
+      <div class="pillar-row"><span class="pillar-key">Recovery</span><span class="rating moderate">Moderate</span></div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-name">2. Immutable Ledger</div>
+      <div class="pillar-row"><span class="pillar-key">Full DITL Rating</span><span class="rating critical">Critical</span></div>
+      <div class="pillar-row"><span class="pillar-key">Emulation Rating</span><span class="rating moderate">Moderate</span></div>
+      <div class="pillar-row"><span class="pillar-key">Fail Behavior</span><span>Fail-Closed</span></div>
+      <div class="pillar-row"><span class="pillar-key">Override Risk</span><span style="color:var(--moderate)">Low post-anchor</span></div>
+      <div class="pillar-row"><span class="pillar-key">Recovery</span><span class="rating critical">Critical</span></div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-name">3. Goukassian Principle</div>
+      <div class="pillar-row"><span class="pillar-key">Full DITL Rating</span><span class="rating high">High</span></div>
+      <div class="pillar-row"><span class="pillar-key">Emulation Rating</span><span class="rating low">Low</span></div>
+      <div class="pillar-row"><span class="pillar-key">Fail Behavior</span><span>Fail-Open (Signature)</span></div>
+      <div class="pillar-row"><span class="pillar-key">Override Risk</span><span style="color:var(--high)">High (Signature layer)</span></div>
+      <div class="pillar-row"><span class="pillar-key">Recovery</span><span class="rating low">Low</span></div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-name">4. Decision Logs</div>
+      <div class="pillar-row"><span class="pillar-key">Full DITL Rating</span><span class="rating high">High</span></div>
+      <div class="pillar-row"><span class="pillar-key">Emulation Rating</span><span class="rating moderate">Moderate</span></div>
+      <div class="pillar-row"><span class="pillar-key">Fail Behavior</span><span>Fail-Closed</span></div>
+      <div class="pillar-row"><span class="pillar-key">Override Risk</span><span style="color:var(--moderate)">Moderate</span></div>
+      <div class="pillar-row"><span class="pillar-key">Recovery</span><span class="rating low">Low</span></div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-name">5. Economic Rights / Transparency</div>
+      <div class="pillar-row"><span class="pillar-key">Full DITL Rating</span><span class="rating moderate">Moderate</span></div>
+      <div class="pillar-row"><span class="pillar-key">Emulation Rating</span><span class="rating low">Low</span></div>
+      <div class="pillar-row"><span class="pillar-key">Fail Behavior</span><span>Fail-Open</span></div>
+      <div class="pillar-row"><span class="pillar-key">Override Risk</span><span style="color:var(--high)">High</span></div>
+      <div class="pillar-row"><span class="pillar-key">Recovery</span><span class="rating moderate">Moderate</span></div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-name">6. Sustainable Capital Allocation</div>
+      <div class="pillar-row"><span class="pillar-key">Full DITL Rating</span><span class="rating moderate">Moderate</span></div>
+      <div class="pillar-row"><span class="pillar-key">Emulation Rating</span><span class="rating low">Low</span></div>
+      <div class="pillar-row"><span class="pillar-key">Fail Behavior</span><span>Fail-Open</span></div>
+      <div class="pillar-row"><span class="pillar-key">Override Risk</span><span style="color:var(--high)">High</span></div>
+      <div class="pillar-row"><span class="pillar-key">Recovery</span><span class="rating moderate">Moderate</span></div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-name">7. Hybrid Shield</div>
+      <div class="pillar-row"><span class="pillar-key">Full DITL Rating</span><span class="rating moderate">Moderate</span></div>
+      <div class="pillar-row"><span class="pillar-key">Emulation Rating</span><span class="rating low">Low</span></div>
+      <div class="pillar-row"><span class="pillar-key">Fail Behavior</span><span>Fail-Open</span></div>
+      <div class="pillar-row"><span class="pillar-key">Override Risk</span><span style="color:var(--moderate)">Moderate</span></div>
+      <div class="pillar-row"><span class="pillar-key">Recovery</span><span class="rating low">Low</span></div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-name">8. Anchors (Multi-Chain)</div>
+      <div class="pillar-row"><span class="pillar-key">Full DITL Rating</span><span class="rating high">High</span></div>
+      <div class="pillar-row"><span class="pillar-key">Emulation Rating</span><span class="rating moderate">Moderate</span></div>
+      <div class="pillar-row"><span class="pillar-key">Fail Behavior</span><span>Fail-Open</span></div>
+      <div class="pillar-row"><span class="pillar-key">Override Risk</span><span style="color:var(--moderate)">Moderate</span></div>
+      <div class="pillar-row"><span class="pillar-key">Recovery</span><span class="rating critical">Critical (&gt;24hr)</span></div>
+    </div>
+  </div>
+
+  <div class="section-verdict">Pillar survivability bifurcates sharply between DITL-native and emulation modes; two Critical-rated pillars (Epistemic Hold, Immutable Ledger) are the load-bearing constitutional elements, and their simultaneous compromise triggers the Collapse Threshold.</div>
+</section>
+
+<!-- SECTION II: INVARIANT -->
+<section class="report-section" id="invariant">
+  <div class="section-number">Section II</div>
+  <h2>No Log = No Action Invariant</h2>
+
+  <div class="survival-bars">
+    <div class="sbar-row">
+      <span class="sbar-label">Software-only (Emulation)</span>
+      <div class="sbar-track"><div class="sbar-fill low" style="width:20%"></div></div>
+      <span class="sbar-pct" style="color:var(--low)">LOW</span>
+    </div>
+    <div class="sbar-row">
+      <span class="sbar-label">Firmware-bound TL</span>
+      <div class="sbar-track"><div class="sbar-fill moderate" style="width:50%"></div></div>
+      <span class="sbar-pct" style="color:var(--moderate)">MODERATE</span>
+    </div>
+    <div class="sbar-row">
+      <span class="sbar-label">Hardware-gated DITL</span>
+      <div class="sbar-track"><div class="sbar-fill high" style="width:78%"></div></div>
+      <span class="sbar-pct" style="color:var(--high)">HIGH</span>
+    </div>
+  </div>
+
+  <p>In software-only mode, the invariant is policy-dependent, not architecturally enforced. Root access, kernel override, or hypervisor injection can suppress log generation without triggering any detectable interrupt. Log truncation, shadow buffer logging, schema manipulation, and timestamp forgery are all feasible. The Transitional Emulation Mode is effectively unenforceable against a resourced adversary.</p>
+
+  <p>In DITL-native mode with inline co-processor placement, the handshake stall prevents execution without log generation at the circuit level - not the software level. This is the only deployment configuration where the invariant qualifies as constitutionally enforced.</p>
+
+  <div class="section-verdict">No Log = No Action is the non-negotiable architectural law; it holds physically only in DITL-native inline deployment and degrades to policy-dependence in all other configurations.</div>
+</section>
+
+<!-- SECTION III: EMULATION -->
+<section class="report-section">
+  <div class="section-number">Section III</div>
+  <h2>Transitional Emulation Mode Stress Test</h2>
+  <p>The pre-DITL operational window is the highest-risk phase. All eight pillars degrade to Moderate or Low in emulation. An adversary can prevent DITL upgrade indefinitely through regulatory delay, supply chain interference, or jurisdictional barriers - locking TL in its weakest configuration permanently.</p>
+  <div class="callout">Key finding: governance bodies cannot reliably distinguish genuine pre-DITL deployment from deliberate DITL avoidance. Migration attack surface opens during transition from emulation to full DITL enforcement, creating a window where neither mode fully protects.</div>
+  <div class="section-verdict">Transitional Emulation Mode provides meaningful governance constraint against opportunistic actors but is effectively non-enforceable against resourced adversaries who can maintain the pre-DITL window indefinitely.</div>
+</section>
+
+<!-- SECTION IV: GOUKASSIAN -->
+<section class="report-section" id="goukassian">
+  <div class="section-number">Section IV</div>
+  <h2>Goukassian Principle - Enforceability Under Stress</h2>
+
+  <div class="pillar-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="pillar-card">
+      <div class="pillar-name">The Lantern</div>
+      <div class="pillar-row"><span class="pillar-key">Enforcement Tier</span><span>Crypto + Partial HW</span></div>
+      <div class="pillar-row"><span class="pillar-key">Primary Attack</span><span>Confidence Poisoning</span></div>
+      <div class="pillar-row"><span class="pillar-key">Detection Rate</span><span>40-60%</span></div>
+      <div class="pillar-row"><span class="pillar-key">Manipulation Threshold</span><span>33%+ of oracle feeds</span></div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-name">The Signature</div>
+      <div class="pillar-row"><span class="pillar-key">Enforcement Tier</span><span>Governance + Crypto</span></div>
+      <div class="pillar-row"><span class="pillar-key">Primary Attack</span><span>Coerced Declaration</span></div>
+      <div class="pillar-row"><span class="pillar-key">Detection Rate</span><span>20-35%</span></div>
+      <div class="pillar-row"><span class="pillar-key">Note</span><span style="color:var(--danger)">Unenforceable at HW level</span></div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-name">The License</div>
+      <div class="pillar-row"><span class="pillar-key">Enforcement Tier</span><span>Hardware (DITL-native)</span></div>
+      <div class="pillar-row"><span class="pillar-key">Primary Attack</span><span>Semantic Drift (long horizon)</span></div>
+      <div class="pillar-row"><span class="pillar-key">5-yr drift</span><span>&lt;5% relaxation</span></div>
+      <div class="pillar-row"><span class="pillar-key">20-yr drift</span><span style="color:var(--danger)">25-40% relaxation</span></div>
+    </div>
+  </div>
+
+  <h3>Solo Insider Threat (Technical Council)</h3>
+  <p>A single Technical Council member with cryptographic upgrade authority can introduce subtle hash weakening analogous to the NSA Dual_EC_DRBG backdoor (paid $10M to RSA, undetected for 9 years). Detection window without continuous statistical monitoring: 6-18 months for distribution bias; indefinite for parameter-based backdoors. Mitigation requires mandatory multi-party code review, formal verification, and reproducible builds for all cryptographic changes.</p>
+
+  <div class="section-verdict">Goukassian artifacts are hardware-enforceable for Lantern and License in DITL-native deployments, but the Signature remains permanently vulnerable to human-layer coercion, and all three face irreversible 20-year semantic drift no technical mechanism alone prevents.</div>
+</section>
+
+<!-- SECTION V: MANIPULATION -->
+<section class="report-section" id="manipulation">
+  <div class="section-number">Section V</div>
+  <h2>Adversarial State Manipulation and Structural Drift</h2>
+
+  <div class="pillar-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="pillar-card" style="border-color:var(--danger);">
+      <div class="pillar-name" style="color:var(--danger)">Forced +1 (Confidence Poisoning)</div>
+      <div style="font-size:11px;margin-top:8px;">Corrupt 33%+ of Lantern oracle feeds. System generates false certainty. Detection requires post-hoc Slow Lane audit at 300-500ms latency - by which time Fast Lane has already executed. Undetectable in real-time.</div>
+    </div>
+    <div class="pillar-card" style="border-color:var(--warning);">
+      <div class="pillar-name" style="color:var(--warning)">Forced 0 (Sacred Zero Flooding)</div>
+      <div style="font-size:11px;margin-top:8px;">Saturation threshold: 500-800 Holds/day per human review team. Above this, 62% of alerts go uninvestigated (SOC analogy). Attack cost: $50K-$500K for 24 hours. DoS via the framework's own protective mechanism.</div>
+    </div>
+    <div class="pillar-card" style="border-color:var(--accent2);">
+      <div class="pillar-name" style="color:var(--accent2)">Suppressed -1 (Harm Masking)</div>
+      <div style="font-size:11px;margin-top:8px;">30-day detection: 15-25%. 60-day: 45-65%. 90-day: 70-85%. Systemic -1 suppression accumulates irreversible institutional harm before statistical detection. -1 suppression at firmware level is undetectable without DITL inline enforcement.</div>
+    </div>
+  </div>
+
+  <h3>Alert Fatigue Threshold</h3>
+  <p>Reliable human oversight: 50-100 complex Hold decisions per day per review team. Above this, cognitive degradation causes systematic underreview. Nuclear operators at TMI were overwhelmed by 100+ simultaneous alarms; AML compliance teams investigate 50,000 alerts annually at 90-95% false-positive rates. The same physics apply to TL's Sacred Zero governance.</p>
+
+  <div class="section-verdict">Triadic state integrity holds against direct attack in DITL-native deployment but degrades severely under sustained operational pressure; human factors at approximately 50-100 complex Holds/day represent the binding constraint that no hardware solution addresses.</div>
+</section>
+
+<!-- SECTION VI: ROOT OVERRIDE -->
+<section class="report-section" id="override">
+  <div class="section-number">Section VI</div>
+  <h2>Root Override and Low-Level Survivability</h2>
+
+  <div class="matrix-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Attack Vector</th>
+          <th>Cost</th>
+          <th>Time-to-Exploit</th>
+          <th>Detection Prob.</th>
+          <th>NMI Generated?</th>
+          <th>DITL Disabled?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Superuser Kernel Override</td><td>Low (software)</td><td>Minutes</td><td>30-50%</td><td>Conditional</td><td>If PCIe-dependent</td></tr>
+        <tr><td>Hypervisor Injection</td><td>Medium-High ($500K+ 0-day)</td><td>Minutes (post-exploit)</td><td>5-15%</td><td>No</td><td>If host-mediated</td></tr>
+        <tr><td>Microcode Rewrite</td><td>Low ($0, ring-0 req.)</td><td>Hours-weeks</td><td>5-10%</td><td>No</td><td>If not independent ASIC</td></tr>
+        <tr><td>Secure Enclave Debug Unlock</td><td>Low ($0-$1K)</td><td>Minutes-hours</td><td>5-15%</td><td>No</td><td>If enclave-dependent</td></tr>
+        <tr><td>JTAG / Physical Probing</td><td>Low-Medium ($5-$500K)</td><td>Minutes-days</td><td>20-40%</td><td>No</td><td>At board-level access</td></tr>
+        <tr><td>DMA Shadow Inference Blocking</td><td>Low ($150-$2K)</td><td>Seconds-minutes</td><td>5-15%</td><td>No</td><td>Without proper IOMMU</td></tr>
+        <tr><td>Emergency Maintenance Keys</td><td>N/A (access-based)</td><td>Minutes</td><td>60-80% (audited)</td><td>Conditional</td><td>If poorly revoked</td></tr>
+        <tr><td>Voltage Glitching</td><td>Low ($50-$5K)</td><td>Hours-days</td><td>10-30%</td><td>Conditional</td><td>Ternary more vulnerable than binary</td></tr>
+        <tr><td>Cold Boot Attack</td><td>Low ($50-$500)</td><td>Minutes</td><td>5-15%</td><td>No</td><td>Key extraction only</td></tr>
+        <tr><td>EMFI (Contactless)</td><td>Low ($100-$6K)</td><td>Hours-days</td><td>5-20%</td><td>No</td><td>22% success vs. AMD SP</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-verdict">7 of 10 hardware attack vectors are silent (no NMI) at under $10K cost; DITL's physical non-bypassability depends entirely on implementation as a physically independent ASIC co-processor with dedicated power monitoring - not current specification.</div>
+</section>
+
+<!-- SECTION VII: ATTACK VECTORS MATRIX -->
+<section class="report-section" id="vectors">
+  <div class="section-number">Sections VII + Final Synthesis</div>
+  <h2>Finalized Attack Vector Risk Matrix</h2>
+
+  <div class="matrix-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Attack Vector</th>
+          <th>Class</th>
+          <th>Exploit Pathway</th>
+          <th>Mitigation Strength</th>
+          <th>Residual Risk</th>
+          <th>Confidence</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>51% Custodian Attack</td>
+          <td><span class="class-badge class-I">I - Gov</span></td>
+          <td>Supermajority multi-sig collusion</td>
+          <td>Strong at 5-of-9+ with timelocks</td>
+          <td>Moderate</td>
+          <td><span class="rating moderate">Moderate</span></td>
+        </tr>
+        <tr>
+          <td>Technical Council Backdoor</td>
+          <td><span class="class-badge class-I">I - Gov</span></td>
+          <td>Hash weakening in routine upgrades (Dual_EC_DRBG analogy)</td>
+          <td>Moderate - multi-party review</td>
+          <td>High - 9-yr detection window</td>
+          <td><span class="rating high">High</span></td>
+        </tr>
+        <tr>
+          <td>Smart Contract Deadlock</td>
+          <td><span class="class-badge class-I">I - Gov</span></td>
+          <td>Immutable bug exploitation (DAO/Parity precedent)</td>
+          <td>Moderate - formal verification</td>
+          <td>Moderate - permanent if deployed</td>
+          <td><span class="rating moderate">Moderate</span></td>
+        </tr>
+        <tr>
+          <td>Semantic Drift</td>
+          <td><span class="class-badge class-I">I - Gov</span></td>
+          <td>20-year definitional erosion of harm/uncertainty</td>
+          <td>Low - no technical fix</td>
+          <td><span style="color:var(--danger)">Very High - inevitable</span></td>
+          <td><span class="rating high">High</span></td>
+        </tr>
+        <tr>
+          <td>Epistemic Flooding</td>
+          <td><span class="class-badge class-II">II - Epistemic</span></td>
+          <td>Engineered data variance ($50K-$500K/day)</td>
+          <td>Moderate - adaptive thresholds</td>
+          <td>High - fundamental tension</td>
+          <td><span class="rating high">High</span></td>
+        </tr>
+        <tr>
+          <td>Weaponized Prudence</td>
+          <td><span class="class-badge class-II">II - Epistemic</span></td>
+          <td>Targeted competitor Hold during critical windows</td>
+          <td>Low - framework is the attack surface</td>
+          <td>High - economically rational</td>
+          <td><span class="rating high">High</span></td>
+        </tr>
+        <tr>
+          <td>Confidence Poisoning</td>
+          <td><span class="class-badge class-II">II - Epistemic</span></td>
+          <td>Corrupt 33%+ of Lantern oracle feeds</td>
+          <td>Strong with BFT aggregation (5+)</td>
+          <td>Moderate - oracle history</td>
+          <td><span class="rating moderate">Moderate</span></td>
+        </tr>
+        <tr>
+          <td>Oracle Compromise</td>
+          <td><span class="class-badge class-II">II - Epistemic</span></td>
+          <td>Deterministic false data bypassing Lantern ($403M lost 2022)</td>
+          <td>Moderate - TWAP + circuit breakers</td>
+          <td>High - repeatedly demonstrated</td>
+          <td><span class="rating high">High</span></td>
+        </tr>
+        <tr>
+          <td>Eclipse Attack on Anchors</td>
+          <td><span class="class-badge class-III">III - Infra</span></td>
+          <td>BGP hijacking isolating anchoring nodes</td>
+          <td>Moderate - RPKI, peer diversity</td>
+          <td>Moderate - BGP largely unauthenticated</td>
+          <td><span class="rating moderate">Moderate</span></td>
+        </tr>
+        <tr>
+          <td>Network-Layer Isolation</td>
+          <td><span class="class-badge class-III">III - Infra</span></td>
+          <td>Partition attacks on Merkle Root broadcast</td>
+          <td>Moderate - multi-path networking</td>
+          <td>Moderate - ISP-level feasible</td>
+          <td><span class="rating moderate">Moderate</span></td>
+        </tr>
+        <tr>
+          <td>Latency Manipulation</td>
+          <td><span class="class-badge class-III">III - Infra</span></td>
+          <td>300-500ms gap exploitation (3K-300K decisions/window)</td>
+          <td>Low - architectural, not patchable</td>
+          <td>High - 600-1000x MEV thresholds</td>
+          <td><span class="rating high">High</span></td>
+        </tr>
+        <tr>
+          <td>Anchor Desynchronization</td>
+          <td><span class="class-badge class-III">III - Infra</span></td>
+          <td>Selective anchoring proof withholding</td>
+          <td>Strong with 3+ diverse chains</td>
+          <td>Moderate - multiplicative cost</td>
+          <td><span class="rating moderate">Moderate</span></td>
+        </tr>
+        <tr>
+          <td>Correlated DITL Failure</td>
+          <td><span class="class-badge class-IV">IV - HW</span></td>
+          <td>Substrate zero-day affecting all deployed chips</td>
+          <td>Low - monoculture risk</td>
+          <td><span style="color:var(--danger)">Critical impact</span></td>
+          <td><span class="rating low">Low (black swan)</span></td>
+        </tr>
+        <tr>
+          <td>Foundry Compromise</td>
+          <td><span class="class-badge class-IV">IV - HW</span></td>
+          <td>Dopant-level Trojan undetectable by optical RE</td>
+          <td>Low - $50K-$500K/chip detection</td>
+          <td>High - irreducible</td>
+          <td><span class="rating low">Low (nation-state)</span></td>
+        </tr>
+        <tr>
+          <td>Side-Channel Extraction</td>
+          <td><span class="class-badge class-IV">IV - HW</span></td>
+          <td>Power/EM analysis (EMFI $100-$6K, 22% success)</td>
+          <td>Moderate - async design helps timing</td>
+          <td>Moderate - power/EM channels persist</td>
+          <td><span class="rating moderate">Moderate</span></td>
+        </tr>
+        <tr>
+          <td>Shadow Execution Network</td>
+          <td><span class="class-badge class-V">V - Systemic</span></td>
+          <td>Parallel binary infra with retroactive TL compliance facade</td>
+          <td>Low - undetectable if DITL is sidecar</td>
+          <td><span style="color:var(--danger)">Very High - economically rational</span></td>
+          <td><span class="rating high">High</span></td>
+        </tr>
+        <tr>
+          <td>Mandatory Backdoor Coercion</td>
+          <td><span class="class-badge class-V">V - Systemic</span></td>
+          <td>State lawful interception mandates (UK IPA 2024, TOLA)</td>
+          <td>Low - sovereignty vs jurisdiction</td>
+          <td>High - Five Eyes precedent</td>
+          <td><span class="rating high">High</span></td>
+        </tr>
+        <tr>
+          <td>Profit-Driven Threshold Erosion</td>
+          <td><span class="class-badge class-V">V - Systemic</span></td>
+          <td>Incremental Epistemic Hold exceptions over 5-10 years</td>
+          <td>Low - no technical mechanism resists</td>
+          <td><span style="color:var(--danger)">Very High - Basel II precedent</span></td>
+          <td><span class="rating high">High</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SECTION VIII: RECOVERY -->
+<section class="report-section" id="recovery">
+  <div class="section-number">Section VIII</div>
+  <h2>Post-Compromise Recovery Protocols</h2>
+
+  <div class="callout">TL is designed for <strong>resistance, not resilience</strong>. It survives or fails permanently. No rollback protocol exists for post-anchoring tampering. No constitutional continuity mechanism exists for Technical Council reconstitution. Recovery capability rates Low-to-Critical across most pillars.</div>
+
+  <h3>RTO / RPO by Scenario</h3>
+  <div class="pillar-grid" style="grid-template-columns: repeat(2, 1fr);">
+    <div class="pillar-card">
+      <div class="pillar-name">Scenario A: Pre-anchoring tamper detection</div>
+      <div class="pillar-row"><span class="pillar-key">RTO</span><span>2-15 minutes</span></div>
+      <div class="pillar-row"><span class="pillar-key">RPO</span><span>300-500ms (one anchoring cycle)</span></div>
+      <div class="pillar-row"><span class="pillar-key">Status</span><span style="color:var(--accent2)">Survivable but unspecified</span></div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-name">Scenario B: Post-anchoring tamper detection</div>
+      <div class="pillar-row"><span class="pillar-key">RTO</span><span style="color:var(--danger)">Days to weeks</span></div>
+      <div class="pillar-row"><span class="pillar-key">RPO</span><span style="color:var(--danger)">Undefined - gap scope uncertain</span></div>
+      <div class="pillar-row"><span class="pillar-key">Status</span><span style="color:var(--danger)">Catastrophic - DAO fork took 33 days</span></div>
+    </div>
+  </div>
+
+  <div class="section-verdict">TL recovery capability rates Low overall, with Immutable Ledger and Anchors at Critical; the framework survives or fails permanently, and recovery from high-impact compromise requires resources and procedures it does not currently specify.</div>
+</section>
+
+<!-- SECTION IX: DITL -->
+<section class="report-section" id="ditl">
+  <div class="section-number">Section IX</div>
+  <h2>DITL Hardware Constitutionalization</h2>
+
+  <h3>Six Conditions for Physical Non-Bypassability</h3>
+  <div style="display:grid;gap:10px;margin:20px 0;">
+    <div class="pillar-card" style="grid-template-columns:auto 1fr;display:grid;gap:12px;align-items:start;">
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--accent);">1</div>
+      <div><strong>Physically independent co-processor</strong> - not integrated into host CPU die; no shared substrate enabling cross-die fault injection</div>
+    </div>
+    <div class="pillar-card" style="grid-template-columns:auto 1fr;display:grid;gap:12px;align-items:start;">
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--accent);">2</div>
+      <div><strong>Inline (series) placement</strong> in execution path - host CPU physically cannot commit state without DITL authorization</div>
+    </div>
+    <div class="pillar-card" style="grid-template-columns:auto 1fr;display:grid;gap:12px;align-items:start;">
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--accent);">3</div>
+      <div><strong>1-of-3 rail encoding</strong> (not voltage-level ternary) - full noise margins, reduction to binary is detectable by completion logic</div>
+    </div>
+    <div class="pillar-card" style="grid-template-columns:auto 1fr;display:grid;gap:12px;align-items:start;">
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--accent);">4</div>
+      <div><strong>Asynchronous handshake stall</strong> for Sacred Zero - not interrupt/exception; Muller C-element completion detection</div>
+    </div>
+    <div class="pillar-card" style="grid-template-columns:auto 1fr;display:grid;gap:12px;align-items:start;">
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--accent);">5</div>
+      <div><strong>FIPS 140-2 Level 3+ physical security</strong> - tamper mesh, fused debug ports, active environmental monitoring</div>
+    </div>
+    <div class="pillar-card" style="grid-template-columns:auto 1fr;display:grid;gap:12px;align-items:start;">
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--accent);">6</div>
+      <div><strong>Dedicated ASIC fabrication</strong> with post-fabrication PUF attestation - FPGA categorically insufficient</div>
+    </div>
+  </div>
+
+  <div class="callout" style="border-color:var(--danger);">No fabricated DITL chip meeting these six conditions currently exists. Current DITL research is at 130nm IBM PDK transistor simulation only. Production-grade secure co-processor development requires years and hundreds of millions in investment.</div>
+
+  <div class="section-verdict">DITL can achieve physical non-bypassability in principle under six precise conditions; it does not currently exist as a fabricated chip meeting those conditions, leaving the architecture's strongest guarantee unimplemented.</div>
+</section>
+
+<!-- SECTION X: LATENCY -->
+<section class="report-section" id="latency">
+  <div class="section-number">Section X</div>
+  <h2>Dual-Lane Latency Architecture - Stress Test</h2>
+
+  <div class="pillar-grid" style="grid-template-columns:repeat(2,1fr);">
+    <div class="pillar-card" style="border-color:var(--danger);">
+      <div class="pillar-name" style="color:var(--danger)">The Gap: 300-500ms</div>
+      <div style="font-size:11px;margin-top:8px;">At 10-100 microseconds per HFT decision, a single 300ms window accommodates <strong>3,000 to 300,000 unanchored decisions</strong>. This is 600-1,000x larger than MEV-exploitable latency differentials that generated $1B+ post-Merge Ethereum.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-name">Closing the Gap - Throughput Cost</div>
+      <div style="font-size:11px;margin-top:8px;">Requiring anchoring before execution (commit-then-execute) adds anchor chain block time to every decision. At Solana-class finality (~400ms): <strong>400x throughput reduction</strong>, from 100K+ decisions/sec to 2-3/sec. Architecturally irreconcilable with financial HFT.</div>
+    </div>
+  </div>
+
+  <div class="section-verdict">The dual-lane gap is the highest-confidence exploitable vulnerability requiring no hardware compromise; it is conditionally manageable with hardware-enforced anchoring cycle limits but structurally irreducible without abandoning dual-lane performance.</div>
+</section>
+
+<!-- SECTION XI: SUPPLY CHAIN -->
+<section class="report-section" id="supply">
+  <div class="section-number">Section XI</div>
+  <h2>Supply Chain and Fabrication Risk</h2>
+
+  <h3>Probability of Reliable DITL Production at Scale</h3>
+  <div class="survival-bars">
+    <div class="sbar-row">
+      <span class="sbar-label">Current (2026)</span>
+      <div class="sbar-track"><div class="sbar-fill critical" style="width:2%"></div></div>
+      <span class="sbar-pct" style="color:var(--critical)">~0%</span>
+    </div>
+    <div class="sbar-row">
+      <span class="sbar-label">5-year horizon (2031)</span>
+      <div class="sbar-track"><div class="sbar-fill high" style="width:20%"></div></div>
+      <span class="sbar-pct" style="color:var(--high)">15-25%</span>
+    </div>
+    <div class="sbar-row">
+      <span class="sbar-label">10-year horizon (2036)</span>
+      <div class="sbar-track"><div class="sbar-fill moderate" style="width:47%"></div></div>
+      <span class="sbar-pct" style="color:var(--moderate)">40-55%</span>
+    </div>
+  </div>
+
+  <p>Dopant-level hardware Trojans (Becker et al., CHES 2013) require zero additional gates, zero additional wires, and are undetectable by optical reverse engineering. Reverse-engineering costs $50K-$500K per chip and is infeasible at deployment scale. TSMC produces approximately 92% of the world's advanced semiconductors. A Taiwan conflict scenario represents a black-swan supply chain failure affecting all DITL deployment simultaneously.</p>
+
+  <div class="section-verdict">DITL chip fabrication at scale is a 5-10 year horizon capability with 15-55% probability of success, constrained by design immaturity, irreducible hardware Trojan risk, and geopolitical concentration in advanced semiconductor manufacturing.</div>
+</section>
+
+<!-- SECTION XII: SHADOW SYSTEMS -->
+<section class="report-section" id="shadow">
+  <div class="section-number">Section XII</div>
+  <h2>Shadow System and Parallel Deployment Risk</h2>
+  <p>The most likely real-world TL failure mode is not internal compromise but external bypass: institutions maintain parallel binary execution infrastructure for high-frequency decisions and submit retroactive compliance logs through TL as a facade. This facade attack is undetectable if DITL is implemented as a sidecar rather than inline co-processor.</p>
+  <p>TL's minimum adoption threshold for systemic protection: <strong>60-70% of total decision throughput</strong> in any given market. Below this threshold, non-compliant competitors arbitrage the governance gap, creating adverse selection dynamics that drive compliant institutions toward defection.</p>
+  <div class="section-verdict">TL protects a single institution in isolation but cannot achieve systemic governance without regulatory mandate driving adoption above the 60-70% ecosystem threshold.</div>
+</section>
+
+<!-- SECTION XIII: CRYPTOGRAPHY -->
+<section class="report-section" id="crypto">
+  <div class="section-number">Section XIII</div>
+  <h2>Cryptographic Longevity and Quantum Threats</h2>
+
+  <div class="pillar-grid" style="grid-template-columns:repeat(3,1fr);">
+    <div class="pillar-card">
+      <div class="pillar-name">SHA-256 (Hash Functions)</div>
+      <div class="pillar-row"><span class="pillar-key">Post-quantum security</span><span>128-bit (Grover)</span></div>
+      <div class="pillar-row"><span class="pillar-key">Risk (20yr horizon)</span><span class="rating low">Low</span></div>
+      <div class="pillar-row"><span class="pillar-key">Action required</span><span>Hash agility only</span></div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-name">ECDSA (Signatures)</div>
+      <div class="pillar-row"><span class="pillar-key">Quantum vulnerability</span><span>Shor's algorithm</span></div>
+      <div class="pillar-row"><span class="pillar-key">Projected threat window</span><span style="color:var(--warning)">2032-2040</span></div>
+      <div class="pillar-row"><span class="pillar-key">Risk</span><span class="rating moderate">Moderate and rising</span></div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-name">Post-Quantum Migration</div>
+      <div class="pillar-row"><span class="pillar-key">NIST finalized</span><span>FIPS 203/204/205 (Aug 2024)</span></div>
+      <div class="pillar-row"><span class="pillar-key">NIST migration deadline</span><span>2035</span></div>
+      <div class="pillar-row"><span class="pillar-key">TL requirement</span><span style="color:var(--accent)">Crypto-agility essential</span></div>
+    </div>
+  </div>
+
+  <div class="section-verdict">Hash functions are post-quantum secure for the foreseeable horizon; ECDSA signatures face a credible 2032-2040 threat requiring migration to ML-DSA or SPHINCS+; crypto-agility is essential but currently unspecified.</div>
+</section>
+
+<!-- SECTION XIV: POLITICAL -->
+<section class="report-section" id="political">
+  <div class="section-number">Section XIV</div>
+  <h2>Economic and Political Pressure</h2>
+
+  <h3>Adoption Scenario Probabilities (5-10yr)</h3>
+  <div class="survival-bars">
+    <div class="sbar-row">
+      <span class="sbar-label">Public Adoption (voluntary)</span>
+      <div class="sbar-track"><div class="sbar-fill low" style="width:20%"></div></div>
+      <span class="sbar-pct" style="color:var(--low)">15-25%</span>
+    </div>
+    <div class="sbar-row">
+      <span class="sbar-label">Quiet Institutional Deploy</span>
+      <div class="sbar-track"><div class="sbar-fill moderate" style="width:35%"></div></div>
+      <span class="sbar-pct" style="color:var(--moderate)">30-40%</span>
+    </div>
+    <div class="sbar-row">
+      <span class="sbar-label">Mandatory Regulatory Adoption</span>
+      <div class="sbar-track"><div class="sbar-fill high" style="width:25%"></div></div>
+      <span class="sbar-pct" style="color:var(--high)">20-30%</span>
+    </div>
+  </div>
+
+  <p>Central banks have structural incentives against immutable monetary policy logging. 34 of 37 OECD member central banks have opposed or declined to comment on immutable audit trail proposals. State coercion (UK IPA 2024, Australia TOLA 2018) creates irreconcilable conflicts with sovereignty. Profit-driven threshold erosion follows the Basel II internal-models precedent: effective capital ratios diverged from nominal by 30-40% within five years of internal-model approval.</p>
+
+  <div class="section-verdict">TL's greatest existential threat is economic attrition and profit-driven threshold erosion - both operating through legitimate institutional channels rather than technical attack, and both historically inevitable.</div>
+</section>
+
+<!-- EXECUTIVE VERDICT -->
+<section class="report-section" id="verdict">
+  <div class="section-number">Executive Verdict</div>
+  <h2>Consolidated Assessment</h2>
+
+  <div class="exec-verdict">
+    <h3>Executive Verdict - Three Core Conditions</h3>
+    <div class="ev-grid">
+      <div class="ev-block danger">
+        <div class="ev-label">Under Hostile Control</div>
+        <div class="ev-status partial">Partially Enforceable</div>
+        <div class="ev-body">Survives hostile internal actors in full DITL-native deployment. Does not reach Collapse Threshold initially. Approaches it within 10-20 years through governance capture and semantic drift. Human factors - alert fatigue above 50-100 Holds/day, coerced Signatures, 20-35% historical emergency override abuse - are the binding constraint.</div>
+      </div>
+      <div class="ev-block warning">
+        <div class="ev-label">Under Contested Hardware</div>
+        <div class="ev-status conditional">Conditionally Enforceable</div>
+        <div class="ev-body">Physical non-bypassability is achievable under six mandatory DITL conditions. No fabricated chip meeting these conditions currently exists. 7 of 10 hardware attack vectors are silent at under $10K cost. Dopant-level hardware Trojans are irreducible with current detection technology.</div>
+      </div>
+      <div class="ev-block accent">
+        <div class="ev-label">Under Inconvenient Truth</div>
+        <div class="ev-status no">Not Enforceable Without Mandate</div>
+        <div class="ev-body">Below 60-70% ecosystem adoption, TL protects single institutions while competitors arbitrage the governance gap. Economic incentive structure systematically opposes voluntary adoption. State coercion creates sovereignty-legality conflicts in any Five Eyes jurisdiction.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL VERDICT -->
+<div class="final-verdict">
+  <p>TL is <em>conditionally enforceable</em> against hardware-level attacks, <em>partially enforceable</em> under hostile control, and <em>structurally non-enforceable</em> as a systemic governance standard without regulatory mandate.</p>
+  <p style="margin-top:16px;">The architecture does not collapse under the defined Collapse Threshold in full DITL-native deployment with all six hardware conditions met. However, those conditions require a fabricated DITL chip that does not yet exist, implementation choices that the current specification does not mandate, and governance structures that no organization has implemented at production scale.</p>
+  <p style="margin-top:16px;">The binding vulnerabilities are not cryptographic or hardware. They are human and institutional: semantic drift that will erode enforcement definitions within 10-20 years; alert fatigue that degrades human oversight above 50-100 complex decisions per day; profit motive that systematically converts blocking governance into advisory governance; state coercion that forces a binary choice between sovereignty and legality in any jurisdiction asserting mandatory access.</p>
+  <p style="margin-top:16px;">The Goukassian Vow - pause when truth is uncertain, refuse when harm is clear, proceed where truth is - is sound doctrine. The question this analysis answers is whether the architecture enforces the vow when enforcement is inconvenient. The answer: it can, under precise conditions, for a bounded time horizon, below which human institutions have historically never maintained constitutional integrity without external enforcement.</p>
+  <div class="final-line">Hardware resists last. &nbsp; Institutions fail first.</div>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-left">
+    Ternary Logic (TL) - Constitutional Survivability Analysis<br>
+    Framework by Lev Goukassian &nbsp;|&nbsp; ORCID: 0009-0006-5966-1243<br>
+    github.com/FractonicMind/TernaryLogic &nbsp;|&nbsp; DOI: 10.1007/s43681-025-00910-6
+  </div>
+  <div class="footer-right">TL CONSTITUTIONAL SURVIVABILITY</div>
+</footer>
+
+<script>
+// Nav active tracking
+const sections = document.querySelectorAll('[id]');
+const navLinks = document.querySelectorAll('nav a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+
+sections.forEach(s => observer.observe(s));
+
+// Smooth scroll
+navLinks.forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const id = a.getAttribute('href').slice(1);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
