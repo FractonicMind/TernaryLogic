@@ -51,7 +51,6 @@ Together they model **24 attack vectors across five threat classes** - governanc
 
 - **Markdown:** [TL_Constitutional_Survivability_Under_Adversarial_Pressure.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Adversarial_Survivability/TL_Constitutional_Survivability_Under_Adversarial_Pressure.md)
 - **HTML Render:** [TL_Constitutional_Survivability_Under_Adversarial_Pressure.html](https://fractonicmind.github.io/TernaryLogic/Adversarial_Survivability/TL_Constitutional_Survivability_Under_Adversarial_Pressure.html)
-- **Audio Summary:** [TL_Constitutional_Survivability_Under_Adversarial_Pressure.mp3](https://fractonicmind.github.io/TernaryLogic/Adversarial_Survivability/TL_Constitutional_Survivability_Under_Adversarial_Pressure.mp3)
 
 ---
 
