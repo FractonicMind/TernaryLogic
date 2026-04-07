@@ -2,51 +2,51 @@
 
 ## I. Architectural Baseline: The Eight Pillars
 
-### I.1 Epistemic Hold (State 0 / Sacred Zero)
+### I.1 Epistemic Hold (State 0)
 
 #### I.1.1 Functional Definition and Operational Parameters
 
-The **Epistemic Hold**, designated as **State 0** or **"Sacred Zero,"** constitutes the foundational uncertainty-management mechanism of Ternary Logic governance architecture. Unlike binary systems that force premature commitment to true/false determinations, Sacred Zero mandates **computational suspension when evidentiary certainty falls below protocol-defined thresholds**. This state operates as a **non-negotiable circuit breaker**, halting all dependent execution paths until uncertainty is resolved or human custodian intervention is obtained.
+The **Epistemic Hold**, designated as **State 0**,"** constitutes the foundational uncertainty-management mechanism of Ternary Logic governance architecture. Unlike binary systems that force premature commitment to true/false determinations, Epistemic Hold mandates **computational suspension when evidentiary certainty falls below protocol-defined thresholds**. This state operates as a **non-negotiable circuit breaker**, halting all dependent execution paths until uncertainty is resolved or human custodian intervention is obtained.
 
-The operational parameters define certainty thresholds through **multi-dimensional confidence metrics**: statistical significance (p-value < 0.001), sensor consensus (≥3 independent corroborating sources), temporal stability (measurement variance <2% over 100ms window), and cryptographic attestation (Merkle inclusion proof verification). Sacred Zero activation propagates through the execution graph, cascading dependent operations into synchronized hold states while maintaining system liveness through non-dependent pathway continuation. The hold duration follows **adaptive algorithms bounded by maximum latency tolerances**: **50ms for real-time trading systems**, **500ms for administrative decisions**, **5 seconds for policy interpretations**, with automatic escalation to human custodian review at threshold exceedance.
+The operational parameters define certainty thresholds through **multi-dimensional confidence metrics**: statistical significance (p-value < 0.001), sensor consensus (≥3 independent corroborating sources), temporal stability (measurement variance <2% over 100ms window), and cryptographic attestation (Merkle inclusion proof verification). Epistemic Hold activation propagates through the execution graph, cascading dependent operations into synchronized hold states while maintaining system liveness through non-dependent pathway continuation. The hold duration follows **adaptive algorithms bounded by maximum latency tolerances**: **50ms for real-time trading systems**, **500ms for administrative decisions**, **5 seconds for policy interpretations**, with automatic escalation to human custodian review at threshold exceedance.
 
-Critical to survivability assessment is whether this hold state can be **suppressed, bypassed, or manipulated through adversarial action**—a determination requiring examination across software, firmware, and hardware enforcement layers. The architectural significance of Sacred Zero extends beyond error handling to constitute a **positive claim about governance**: uncertainty is not a bug to be optimized away but a fundamental feature requiring institutional respect. This design choice directly confronts the "move fast and break things" paradigm of conventional algorithmic systems, substituting a **prudential architecture that privileges epistemic humility over operational throughput**.
+Critical to survivability assessment is whether this hold state can be **suppressed, bypassed, or manipulated through adversarial action**—a determination requiring examination across software, firmware, and hardware enforcement layers. The architectural significance of Epistemic Hold extends beyond error handling to constitute a **positive claim about governance**: uncertainty is not a bug to be optimized away but a fundamental feature requiring institutional respect. This design choice directly confronts the "move fast and break things" paradigm of conventional algorithmic systems, substituting a **prudential architecture that privileges epistemic humility over operational throughput**.
 
 #### I.1.2 Software Dependence: Policy Engine Implementation
 
-In **software-only deployments**, Sacred Zero enforcement relies entirely upon **policy engine interpretation of uncertainty metrics**, creating fundamental enforceability vulnerabilities. The policy engine executes as user-space or kernel-space processes subject to **operating system scheduling, memory management, and privilege arbitration**. Software enforcement requires continuous execution of certainty-evaluation algorithms, with hold-state maintenance dependent upon **process liveness and correct thread scheduling**.
+In **software-only deployments**, Epistemic Hold enforcement relies entirely upon **policy engine interpretation of uncertainty metrics**, creating fundamental enforceability vulnerabilities. The policy engine executes as user-space or kernel-space processes subject to **operating system scheduling, memory management, and privilege arbitration**. Software enforcement requires continuous execution of certainty-evaluation algorithms, with hold-state maintenance dependent upon **process liveness and correct thread scheduling**.
 
-Attack vectors include: **process termination via SIGKILL signals**, **priority manipulation through nice/scheduler parameter tampering**, **memory corruption via buffer overflow or use-after-free exploits**, and **control-flow hijacking through return-oriented programming**. The policy engine's decision logic, even when cryptographically signed, executes in **mutable memory spaces where runtime modification remains theoretically possible given sufficient privilege escalation**. Software-based Sacred Zero exhibits **complete dependence on host system integrity**—any kernel-level compromise nullifies enforcement guarantees.
+Attack vectors include: **process termination via SIGKILL signals**, **priority manipulation through nice/scheduler parameter tampering**, **memory corruption via buffer overflow or use-after-free exploits**, and **control-flow hijacking through return-oriented programming**. The policy engine's decision logic, even when cryptographically signed, executes in **mutable memory spaces where runtime modification remains theoretically possible given sufficient privilege escalation**. Software-based Epistemic Hold exhibits **complete dependence on host system integrity**—any kernel-level compromise nullifies enforcement guarantees.
 
-Benchmark comparison against **TPM Secure Boot attestation** reveals analogous limitations: both provide policy-defined execution gating without physical enforcement, vulnerable to runtime manipulation post-initialization. The critical distinction lies in **TPM's hardware-backed measurement storage** versus Sacred Zero's purely computational state maintenance, with TPM offering superior tamper-evidence though comparable enforcement weakness. The **2017 ROCA vulnerability** affecting millions of Infineon TPM chips demonstrated that even standardized hardware security mechanisms can contain catastrophic flaws—weak RSA key generation enabling efficient private key recovery from public keys —establishing that hardware presence alone does not guarantee security.
+Benchmark comparison against **TPM Secure Boot attestation** reveals analogous limitations: both provide policy-defined execution gating without physical enforcement, vulnerable to runtime manipulation post-initialization. The critical distinction lies in **TPM's hardware-backed measurement storage** versus Epistemic Hold's purely computational state maintenance, with TPM offering superior tamper-evidence though comparable enforcement weakness. The **2017 ROCA vulnerability** affecting millions of Infineon TPM chips demonstrated that even standardized hardware security mechanisms can contain catastrophic flaws—weak RSA key generation enabling efficient private key recovery from public keys —establishing that hardware presence alone does not guarantee security.
 
 #### I.1.3 Firmware Dependence: BIOS/UEFI Integration Points
 
-**Firmware-level Sacred Zero integration** extends enforcement to pre-boot and early-boot execution phases, reducing but not eliminating software-layer vulnerabilities. BIOS/UEFI implementations can embed Sacred Zero evaluation within **System Management Mode (SMM) handlers** or **Platform Controller Hub (PCH) firmware**, creating execution contexts with reduced operating system visibility. However, firmware enforcement remains vulnerable to: **update mechanism compromise through signed-but-malicious capsule updates**, **SMM code injection via memory corruption vulnerabilities**, **persistent rootkit installation in firmware volumes**, and **supply chain infiltration of pre-compromised images**.
+**Firmware-level Epistemic Hold integration** extends enforcement to pre-boot and early-boot execution phases, reducing but not eliminating software-layer vulnerabilities. BIOS/UEFI implementations can embed Epistemic Hold evaluation within **System Management Mode (SMM) handlers** or **Platform Controller Hub (PCH) firmware**, creating execution contexts with reduced operating system visibility. However, firmware enforcement remains vulnerable to: **update mechanism compromise through signed-but-malicious capsule updates**, **SMM code injection via memory corruption vulnerabilities**, **persistent rootkit installation in firmware volumes**, and **supply chain infiltration of pre-compromised images**.
 
-The **2017 Intel Management Engine vulnerabilities (INTEL-SA-00086)** demonstrated firmware-layer exploitability at scale, with arbitrary code execution achievable through crafted network packets . Sacred Zero firmware integration must assume **equivalent vulnerability surface**—firmware enforcement provides defense-in-depth against software-only attacks but fails against determined adversaries with firmware-level access. The transition from software to firmware enforcement improves survivability from **Low to Moderate** against unsophisticated threats, with **minimal improvement against advanced persistent threats** possessing firmware exploitation capabilities.
+The **2017 Intel Management Engine vulnerabilities (INTEL-SA-00086)** demonstrated firmware-layer exploitability at scale, with arbitrary code execution achievable through crafted network packets . Epistemic Hold firmware integration must assume **equivalent vulnerability surface**—firmware enforcement provides defense-in-depth against software-only attacks but fails against determined adversaries with firmware-level access. The transition from software to firmware enforcement improves survivability from **Low to Moderate** against unsophisticated threats, with **minimal improvement against advanced persistent threats** possessing firmware exploitation capabilities.
 
 The **2023 TPM reference implementation vulnerabilities (CVE-2023-1017 and CVE-2023-1018)** further illustrate firmware-layer risks: out-of-bounds memory access in TPM 2.0 reference implementation affected both software and hardware implementations, with encrypted parameter processing intended to enhance security actually expanding attack surface through implementation complexity .
 
 #### I.1.4 Hardware Enforceability: DITL Coupling Architecture
 
-**Delay-Insensitive Ternary Logic (DITL) hardware coupling** represents the **sole path to genuine Sacred Zero enforceability**. DITL implements **triadic state encoding through three voltage levels**: **Vdd (+5V/+1.2V) for DATA1**, **GND (0V) for DATA0**, and **½Vdd for NULL/Sacred Zero state** . This physical encoding enables **circuit-level enforcement** where Sacred Zero (NULL state) propagates as **genuine electrical absence rather than symbolic representation**.
+**Delay-Insensitive Ternary Logic (DITL) hardware coupling** represents the **sole path to genuine Epistemic Hold enforceability**. DITL implements **triadic state encoding through three voltage levels**: **Vdd (+5V/+1.2V) for DATA1**, **GND (0V) for DATA0**, and **½Vdd for NULL/Epistemic Hold state** . This physical encoding enables **circuit-level enforcement** where Epistemic Hold (NULL state) propagates as **genuine electrical absence rather than symbolic representation**.
 
 The **asynchronous, delay-insensitive design eliminates global clock dependencies**, preventing timing-based state coercion through clock glitching or frequency manipulation. Critical to survivability: **DITL's NULL state serves as mandatory inter-word separator**—every valid data transition must pass through NULL, making state-0 insertion **physically unavoidable for correct operation**. Hardware enforcement manifests through: **completion detection circuits** that stall subsequent stages until valid DATA0/DATA1 emergence from NULL; **Muller C-element structures** that enforce mutual exclusion between data validity and uncertainty states; and **four-phase handshake protocols** that physically prevent data consumption without producer completion acknowledgment.
 
-The **MDPI-published DITL research** demonstrates **130nm CMOS implementation feasibility with reduced side-channel leakage** compared to dual-rail asynchronous designs , establishing foundational hardware realizability. However, DITL's ternary encoding requires **specialized fabrication processes**—standard binary CMOS optimization may introduce manufacturing variations threatening signal-level discrimination between ½Vdd NULL and threshold-adjacent DATA states. The **balanced gate design** achievable in DITL minimizes power and timing variation across all input patterns , enhancing side-channel resistance against attacks inferring Sacred Zero state from observable circuit characteristics.
+The **MDPI-published DITL research** demonstrates **130nm CMOS implementation feasibility with reduced side-channel leakage** compared to dual-rail asynchronous designs , establishing foundational hardware realizability. However, DITL's ternary encoding requires **specialized fabrication processes**—standard binary CMOS optimization may introduce manufacturing variations threatening signal-level discrimination between ½Vdd NULL and threshold-adjacent DATA states. The **balanced gate design** achievable in DITL minimizes power and timing variation across all input patterns , enhancing side-channel resistance against attacks inferring Epistemic Hold state from observable circuit characteristics.
 
 #### I.1.5 Override Susceptibility: Administrative Bypass Vectors
 
-Administrative override mechanisms for Sacred Zero present **existential survivability risks** requiring rigorous analysis. Override pathways include: **emergency maintenance protocols** for system recovery; **custodian multi-sig activation** for exceptional circumstances; and **automated confidence threshold adjustment** under performance pressure. Each pathway introduces attack surface: **emergency keys may be extracted through cold-boot attacks or electromagnetic side-channel analysis**; **multi-sig schemes face 51% collusion risks** modeled in Section VII; **threshold adjustment algorithms may be manipulated through confidence poisoning attacks**.
+Administrative override mechanisms for Epistemic Hold present **existential survivability risks** requiring rigorous analysis. Override pathways include: **emergency maintenance protocols** for system recovery; **custodian multi-sig activation** for exceptional circumstances; and **automated confidence threshold adjustment** under performance pressure. Each pathway introduces attack surface: **emergency keys may be extracted through cold-boot attacks or electromagnetic side-channel analysis**; **multi-sig schemes face 51% collusion risks** modeled in Section VII; **threshold adjustment algorithms may be manipulated through confidence poisoning attacks**.
 
-The **"weaponized prudence" adversarial vector**—where competitors trigger Sacred Zero activation to freeze execution during critical market moments—creates **economic pressure for override deployment**, potentially normalizing bypass behavior. Override logging requirements provide partial mitigation, but **log integrity depends upon subsequent architectural layers**, creating recursive vulnerability.
+The **"weaponized prudence" adversarial vector**—where competitors trigger Epistemic Hold activation to freeze execution during critical market moments—creates **economic pressure for override deployment**, potentially normalizing bypass behavior. Override logging requirements provide partial mitigation, but **log integrity depends upon subsequent architectural layers**, creating recursive vulnerability.
 
 **DITL hardware can enforce override logging through mandatory NULL-state insertion during bypass activation**, creating detectable electrical signatures. However, **physical override mechanisms** (JTAG debug, test mode entry, voltage fault injection) may suppress DITL enforcement entirely, requiring analysis in Section VI. The **"Heckler" study** demonstrated hypervisor-level attacks breaking isolation guarantees of AMD SEV-SNP and Intel TDX, compromising protected workloads including virtual TPM instances —comparable techniques could target firmware execution environments.
 
 #### I.1.6 Compromise Detectability: Telemetry and Alert Mechanisms
 
-Sacred Zero compromise detection operates through **multi-layer telemetry**: software-layer hold frequency and duration metrics; firmware-layer SMM handler execution tracing; and hardware-layer DITL state transition logging. Detection efficacy varies dramatically by deployment mode.
+Epistemic Hold compromise detection operates through **multi-layer telemetry**: software-layer hold frequency and duration metrics; firmware-layer SMM handler execution tracing; and hardware-layer DITL state transition logging. Detection efficacy varies dramatically by deployment mode.
 
 **Software-only deployments exhibit minimal detectability**—compromise manifests as absent holds, indistinguishable from legitimate high-confidence operation. **Firmware integration enables SMM-based telemetry** with improved tamper resistance but remains vulnerable to SMM rootkit suppression. **DITL hardware enables genuine non-bypassable detection** through: **mandatory NULL-state duration measurement via ring oscillator counters**; **completion detection timeout monitoring**; and **handshake protocol violation flagging**.
 
@@ -56,17 +56,17 @@ The **Ephemeral Key Rotation (EKR) mechanism** specified for TL—deriving uniqu
 
 #### I.1.7 Fail-Open vs. Fail-Closed Behavior Analysis
 
-Sacred Zero failure mode classification determines **system resilience under component malfunction, resource exhaustion, or attack-induced degradation**. TL architecture specifies **fail-closed as default**: "If Lane 2 fails, entire system enters Safe Mode (no output)" . This design prioritizes **constitutional integrity over operational availability**, accepting that Sacred Zero enforcement failures must default to execution prevention rather than permissive continuation.
+Epistemic Hold failure mode classification determines **system resilience under component malfunction, resource exhaustion, or attack-induced degradation**. TL architecture specifies **fail-closed as default**: "If Lane 2 fails, entire system enters Safe Mode (no output)" . This design prioritizes **constitutional integrity over operational availability**, accepting that Epistemic Hold enforcement failures must default to execution prevention rather than permissive continuation.
 
-**Fail-closed implementation in software-only deployments faces fundamental challenges**. The execution gate controller's failure—whether through crash, resource exhaustion, or deliberate termination—must trigger system-wide output suppression. However, **operating system process management does not guarantee atomic failure propagation**: the controller's termination may leave downstream components in indeterminate states with partially computed outputs already committed to network buffers or storage queues. **Kernel-level implementation of fail-closed semantics**, while more reliable, introduces **catastrophic system availability risk** where Sacred Zero component failure disables entire computational infrastructure.
+**Fail-closed implementation in software-only deployments faces fundamental challenges**. The execution gate controller's failure—whether through crash, resource exhaustion, or deliberate termination—must trigger system-wide output suppression. However, **operating system process management does not guarantee atomic failure propagation**: the controller's termination may leave downstream components in indeterminate states with partially computed outputs already committed to network buffers or storage queues. **Kernel-level implementation of fail-closed semantics**, while more reliable, introduces **catastrophic system availability risk** where Epistemic Hold component failure disables entire computational infrastructure.
 
-**Fail-open vulnerabilities emerge from several architectural pressures**. Performance optimization may implement **lazy Sacred Zero checking** that permits speculative execution pending confidence verification, creating windows where uncertain actions proceed before Hold activation. **Distributed system architectures** may implement eventual consistency semantics where Sacred Zero state propagates asynchronously, enabling execution on nodes with stale confidence information. **Fault tolerance mechanisms** designed for high availability may interpret Sacred Zero component failure as transient outage to be masked through redundancy, inadvertently permitting override through "failover" to compromised replicas.
+**Fail-open vulnerabilities emerge from several architectural pressures**. Performance optimization may implement **lazy Epistemic Hold checking** that permits speculative execution pending confidence verification, creating windows where uncertain actions proceed before Hold activation. **Distributed system architectures** may implement eventual consistency semantics where Epistemic Hold state propagates asynchronously, enabling execution on nodes with stale confidence information. **Fault tolerance mechanisms** designed for high availability may interpret Epistemic Hold component failure as transient outage to be masked through redundancy, inadvertently permitting override through "failover" to compromised replicas.
 
 **DITL hardware enforcement addresses these fail-mode ambiguities** through physical state encoding where NULL propagation genuinely blocks downstream advancement. In this paradigm, **circuit-level failure—power loss, signal degradation, physical damage—defaults to NULL state** that enforces execution prevention without software-layer failure handling. This **physicalization of fail-closed semantics** represents significant survivability enhancement, though **manufacturing defects or deliberate hardware tampering may still induce fail-open behavior**.
 
-#### I.1.8 Benchmark Comparison: TPM Secure Boot Attestation vs. Sacred Zero Enforcement
+#### I.1.8 Benchmark Comparison: TPM Secure Boot Attestation vs. Epistemic Hold Enforcement
 
-| Attribute | TPM Secure Boot | Sacred Zero (DITL) |  
+| Attribute | TPM Secure Boot | Epistemic Hold (DITL) |  
 |-----------|---------------|-------------------|  
 | **Enforcement Layer** | Firmware/Software | Hardware (Electrical) |  
 | **Physical Blocking** | No | **Yes** |  
@@ -77,11 +77,11 @@ Sacred Zero failure mode classification determines **system resilience under com
 | **Runtime Granularity** | Boot-time only | **Continuous (per-decision)** |  
 | **Decision Latency** | N/A (infrequent) | **<500ms target** |
 
-**TPM Secure Boot attestation** provides the strongest comparable mechanism for **pre-execution verification** in current deployed systems. TPM-based attestation verifies software integrity before execution commitment, analogous to Sacred Zero's verification of decision confidence before action authorization. However, **critical architectural differences limit direct applicability**:
+**TPM Secure Boot attestation** provides the strongest comparable mechanism for **pre-execution verification** in current deployed systems. TPM-based attestation verifies software integrity before execution commitment, analogous to Epistemic Hold's verification of decision confidence before action authorization. However, **critical architectural differences limit direct applicability**:
 
-**TPM attestation operates at boot-time granularity**, verifying system state before operating system loading. Sacred Zero enforcement requires **runtime granularity**, with verification frequency potentially exceeding **millions of decisions per second** in high-throughput financial applications. The TPM's hardware security capabilities—secure key storage, cryptographic acceleration, PCR-based measurement—are **not designed for sub-millisecond decision latency requirements**. TPM 2.0 specification maximum signing rates of approximately **100 operations per second**  fall **orders of magnitude short** of TL's Fast Lane **<2ms inference target** .
+**TPM attestation operates at boot-time granularity**, verifying system state before operating system loading. Epistemic Hold enforcement requires **runtime granularity**, with verification frequency potentially exceeding **millions of decisions per second** in high-throughput financial applications. The TPM's hardware security capabilities—secure key storage, cryptographic acceleration, PCR-based measurement—are **not designed for sub-millisecond decision latency requirements**. TPM 2.0 specification maximum signing rates of approximately **100 operations per second**  fall **orders of magnitude short** of TL's Fast Lane **<2ms inference target** .
 
-**TPM attestation's verification scope encompasses software integrity, not decision quality**. A system passing TPM Secure Boot verification may subsequently execute arbitrarily harmful decisions with full hardware attestation support. Sacred Zero's scope encompasses **decision-specific uncertainty quantification**, requiring runtime evaluation of input data and model confidence that TPM architecture cannot support. This scope difference reflects **fundamental architectural divergence**: TPM secures execution environment integrity; Sacred Zero secures execution content legitimacy.
+**TPM attestation's verification scope encompasses software integrity, not decision quality**. A system passing TPM Secure Boot verification may subsequently execute arbitrarily harmful decisions with full hardware attestation support. Epistemic Hold's scope encompasses **decision-specific uncertainty quantification**, requiring runtime evaluation of input data and model confidence that TPM architecture cannot support. This scope difference reflects **fundamental architectural divergence**: TPM secures execution environment integrity; Epistemic Hold secures execution content legitimacy.
 
 The **TPM-FAIL attack (2019)** demonstrated key recovery from Intel fTPM in approximately **1,300 observations and under two minutes**, and from STMicroelectronics hardware TPM (CC EAL 4+ certified) in under **40,000 observations** . **Remote exploitation via VPN authentication timing was demonstrated with 45,000 handshake measurements** . These vulnerabilities persist despite certification and years of production deployment, suggesting that **hardware-backed security mechanisms face fundamental implementation challenges** that TL's more complex DITL substrate will likely share.
 
@@ -89,7 +89,7 @@ The **TPM-FAIL attack (2019)** demonstrated key recovery from Intel fTPM in appr
 
 The Epistemic Hold receives **Critical** survivability classification based on three factors: **(a)** it is **foundational to TL's distinguishing value proposition**, with binary collapse occurring if uncertainty handling degrades to conventional commit/reject semantics; **(b)** its **compromise is difficult to detect through behavioral monitoring alone**, requiring cryptographic attestation that itself depends upon deployment mode; **(c)** its **override enables broad system harm** by permitting uncertain actions to proceed without deliberation safeguards.
 
-**Per Collapse Threshold Definition, condition (a) applies**: single Critical pillar compromise constitutes system failure. DITL hardware enforcement is **necessary but not sufficient** for survivable Sacred Zero implementation; **governance override mechanisms present persistent vulnerability even with physical state encoding**.
+**Per Collapse Threshold Definition, condition (a) applies**: single Critical pillar compromise constitutes system failure. DITL hardware enforcement is **necessary but not sufficient** for survivable Epistemic Hold implementation; **governance override mechanisms present persistent vulnerability even with physical state encoding**.
 
 ---
 
@@ -208,7 +208,7 @@ The **Goukassian Principle** constitutes TL's **foundational ethical constraint*
 | **The Signature** | Triadic declaration of binding intent | +1, 0, -1 state commitment with non-repudiation |  
 | **The License** | Computational permission gate | Evidence-before-action authorization |
 
-**The Lantern** implements **"epistemic illumination"**—verifiable certainty requirements that ensure decisions proceed only with adequate knowledge of their implications. This artifact addresses the **fundamental challenge of consequential opacity in complex systems**: actions may have far-reaching effects that are not immediately apparent, enabling harmful outcomes through ignorance rather than malice. The Lantern's self-test functionality **continuously evaluates system confidence in its own knowledge state**, triggering Sacred Zero activation when illumination is inadequate.
+**The Lantern** implements **"epistemic illumination"**—verifiable certainty requirements that ensure decisions proceed only with adequate knowledge of their implications. This artifact addresses the **fundamental challenge of consequential opacity in complex systems**: actions may have far-reaching effects that are not immediately apparent, enabling harmful outcomes through ignorance rather than malice. The Lantern's self-test functionality **continuously evaluates system confidence in its own knowledge state**, triggering Epistemic Hold activation when illumination is inadequate.
 
 **The Signature** implements **"triadic declaration"**—explicit binding commitment to one of three states (+1, 0, -1) that constrains subsequent computational behavior. Unlike conventional digital signatures that merely authenticate origin, the Goukassian Signature **binds operational semantics**: a +1 signature commits to execution capability, a -1 signature commits to refusal, and a 0 signature commits to deliberation continuation. This **semantic binding transforms cryptographic authentication into constitutional enforcement**.
 
@@ -262,7 +262,7 @@ The **cryptographic binding between artifacts**—Decision Log incorporation of 
 
 #### I.3.7 Fail-Open vs. Fail-Closed Behavior Under Artifact Corruption
 
-**Artifact corruption—whether through hardware failure, software bug, or deliberate attack—creates failure mode tension** analogous to other TL components. **Fail-closed behavior under Lantern corruption** treats illumination failure as uncertainty, triggering Sacred Zero activation that prevents execution pending recovery. **Fail-open behavior** permits execution with degraded illumination, maintaining availability at risk of inadequately informed decisions. The Goukassian Principle's **ethical imperative suggests fail-closed preference**, but **operational pressure may drive fail-open implementation**.
+**Artifact corruption—whether through hardware failure, software bug, or deliberate attack—creates failure mode tension** analogous to other TL components. **Fail-closed behavior under Lantern corruption** treats illumination failure as uncertainty, triggering Epistemic Hold activation that prevents execution pending recovery. **Fail-open behavior** permits execution with degraded illumination, maintaining availability at risk of inadequately informed decisions. The Goukassian Principle's **ethical imperative suggests fail-closed preference**, but **operational pressure may drive fail-open implementation**.
 
 **Signature corruption presents acute failure mode challenge**. A corrupted Signature state—**indeterminate between +1, 0, and -1**—cannot be interpreted for execution authorization without arbitrary resolution convention. **Fail-closed interpretation treats indeterminate as -1 (refusal)**, potentially halting legitimate operations. **Fail-open interpretation treats indeterminate as +1 (proceed)**, enabling execution without valid commitment. The **triadic state's explicit 0 (deliberation) provides intermediate option**, but corruption may produce voltage levels that **do not clearly map to any valid state**.
 
@@ -466,7 +466,7 @@ Economic Rights and Transparency Mandate receives **Moderate** classification be
 
 The **Sustainable Capital Allocation Mandate** implements **environmental, social, and governance (ESG) constraints** through: **systemic risk budgeting** limiting exposure to correlated sustainability risks; **exclusionary screening** preventing investment in prohibited categories; and **positive screening** requiring minimum sustainability thresholds. Enforcement requires: **ESG data integration from multiple sources**; **scoring algorithm execution with transparent methodology**; and **capital flow monitoring with threshold enforcement**.
 
-The **systemic risk budgeting mechanism operates at multiple scales**: **transaction-level** (individual allocation within risk limits); **portfolio-level** (aggregate risk exposure management); and **systemic-level** (contribution to market-wide stability). **Breach of any level triggers Sacred Zero pending custodian review**, with automatic escalation for repeated or severe violations. The **ESG exclusionary criteria are constitutionally specified** rather than configurable, preventing operational drift through gradual standard weakening.
+The **systemic risk budgeting mechanism operates at multiple scales**: **transaction-level** (individual allocation within risk limits); **portfolio-level** (aggregate risk exposure management); and **systemic-level** (contribution to market-wide stability). **Breach of any level triggers Epistemic Hold pending custodian review**, with automatic escalation for repeated or severe violations. The **ESG exclusionary criteria are constitutionally specified** rather than configurable, preventing operational drift through gradual standard weakening.
 
 #### I.6.2 Software Dependence: ESG Scoring Algorithm Integration
 
@@ -771,13 +771,13 @@ The **"Transitional" designation implies temporary state preceding DITL deployme
 
 #### III.1.1 Software-Enforceable Invariants: Policy-Layer Constraints
 
-In **Transitional Emulation Mode**, **only policy-layer constraints remain software-enforceable**: **configuration parameters defining Sacred Zero thresholds**; **logging policies specifying Decision Log content requirements**; and **governance procedures for custodian authorization**. These constraints are **binding only to the extent that software correctly implements policy and policy is not modified by authorized or unauthorized actors**.
+In **Transitional Emulation Mode**, **only policy-layer constraints remain software-enforceable**: **configuration parameters defining Epistemic Hold thresholds**; **logging policies specifying Decision Log content requirements**; and **governance procedures for custodian authorization**. These constraints are **binding only to the extent that software correctly implements policy and policy is not modified by authorized or unauthorized actors**.
 
 **Software enforceability is illusory under adversarial conditions**: **root privilege enables arbitrary policy modification**; **kernel-level compromise enables policy enforcement bypass**; and **sophisticated attackers may modify policy appearance while altering operational effect**. The **"enforceable" invariants are in practice merely "documented intentions"** with **compliance dependent upon actor goodwill**.
 
 #### III.1.2 Policy-Dependent Invariants: Governance Reliance Risks
 
-**Policy-dependent invariants require active governance for enforcement**: **custodian review of Sacred Zero escalations**; **Technical Council oversight of algorithm updates**; and **auditor verification of ledger integrity**. These invariants are **vulnerable to governance capture, fatigue, and resource constraints**: **custodian availability for time-critical review**; **Technical Council collusion or coercion**; and **auditor capacity for comprehensive verification**.
+**Policy-dependent invariants require active governance for enforcement**: **custodian review of Epistemic Hold escalations**; **Technical Council oversight of algorithm updates**; and **auditor verification of ledger integrity**. These invariants are **vulnerable to governance capture, fatigue, and resource constraints**: **custodian availability for time-critical review**; **Technical Council collusion or coercion**; and **auditor capacity for comprehensive verification**.
 
 The **"Systemic Failsafe Protocol" activation**—when automated alerts exceed processing capacity—**creates governance overload condition where policy-dependent invariants effectively suspend operation** or **degrade to automated handling with reduced scrutiny**.
 
@@ -787,7 +787,7 @@ The **"Systemic Failsafe Protocol" activation**—when automated alerts exceed p
 
 | Guarantee | Hardware Dependency | Emulation Mode Status |  
 |-----------|-------------------|----------------------|  
-| **Sacred Zero non-bypassability** | DITL NULL-state enforcement | **Unenforceable—software pause overrideable** |  
+| **Epistemic Hold non-bypassability** | DITL NULL-state enforcement | **Unenforceable—software pause overrideable** |  
 | **Log generation interlock** | DITL-gated execution | **Unenforceable—software gating bypassable** |  
 | **Triadic state physical validity** | DITL three-voltage signaling | **Unenforceable—binary emulation only** |  
 | **Side-channel resistance** | DITL balanced operation | **Unenforceable—timing/power analysis vulnerable** |  
@@ -904,7 +904,7 @@ The **"Heckler" attack demonstrated hypervisor-level compromise of AMD SEV-SNP a
 
 #### IV.1.1 Functional Definition and Operational Parameters
 
-**The Lantern** constitutes TL's **integrity self-test mechanism**, implementing "epistemic illumination"—verifiable certainty requirements that ensure decisions proceed only with adequate knowledge of their implications. Unlike conventional system health checks that verify component functionality, the Lantern evaluates **confidence in knowledge state**, triggering Sacred Zero activation when illumination is inadequate.
+**The Lantern** constitutes TL's **integrity self-test mechanism**, implementing "epistemic illumination"—verifiable certainty requirements that ensure decisions proceed only with adequate knowledge of their implications. Unlike conventional system health checks that verify component functionality, the Lantern evaluates **confidence in knowledge state**, triggering Epistemic Hold activation when illumination is inadequate.
 
 The Lantern's operational parameters define **multi-dimensional confidence thresholds**: epistemic completeness (coverage of relevant knowledge domains); evidentiary sufficiency (quantity and quality of supporting data); model validity (applicability of reasoning frameworks to current context); and temporal currency (recency of knowledge relative to decision requirements). Each dimension contributes to **composite illumination score** that must exceed protocol-defined minimums for +1 state authorization.
 
@@ -922,7 +922,7 @@ External reference comparison and temporal consistency checking attempt to addre
 
 #### IV.1.3 Firmware-Level Implementation: Persistent State Machine
 
-**Firmware-level Lantern implementation** extends protection through **persistent triadic state machine** that tracks illumination status across system restart. The state machine encodes four valid conditions: **adequate illumination** (proceed to Signature); **inadequate illumination** (Sacred Zero activation); **illumination failure** (diagnostic mode entry); and **illumination indeterminate** (safe mode transition).
+**Firmware-level Lantern implementation** extends protection through **persistent triadic state machine** that tracks illumination status across system restart. The state machine encodes four valid conditions: **adequate illumination** (proceed to Signature); **inadequate illumination** (Epistemic Hold activation); **illumination failure** (diagnostic mode entry); and **illumination indeterminate** (safe mode transition).
 
 Firmware enforcement addresses software-layer bypass by **persisting illumination state in hardware-mediated storage** that survives process termination and system restart. However, **firmware update mechanisms present critical vulnerability**: compromised updates may install weakened illumination requirements, disable certain confidence dimensions, or enable **forced +1 declaration regardless of actual knowledge state**.
 
@@ -952,7 +952,7 @@ The **"weaponized ignorance" adversarial vector**—where competitors trigger fa
 
 #### IV.1.7 Fail-Open vs. Fail-Closed Behavior
 
-**Lantern failure mode classification determines system resilience under component malfunction**. **Fail-closed behavior** treats illumination failure as uncertainty, triggering Sacred Zero activation that prevents execution pending recovery. **Fail-open behavior** permits execution with degraded illumination, maintaining availability at risk of inadequately informed decisions.
+**Lantern failure mode classification determines system resilience under component malfunction**. **Fail-closed behavior** treats illumination failure as uncertainty, triggering Epistemic Hold activation that prevents execution pending recovery. **Fail-open behavior** permits execution with degraded illumination, maintaining availability at risk of inadequately informed decisions.
 
 The Goukassian Principle's **ethical imperative suggests fail-closed preference**, but **operational pressure may drive fail-open implementation**. TL architecture specifies **fail-closed default with graduated degradation**: alternative confidence sources for partial illumination; time-bounded continuation with elevated monitoring for transient failures; and system halt for persistent illumination failure.
 
@@ -984,7 +984,7 @@ The Lantern receives **Critical** survivability classification as **foundational
 
 **The Signature** implements **"triadic declaration"**—explicit binding commitment to one of three states (+1, 0, -1) that constrains subsequent computational behavior. Unlike conventional digital signatures that merely authenticate origin, the Goukassian Signature **binds operational semantics**: a +1 signature commits to execution capability, a -1 signature commits to refusal, and a 0 signature commits to deliberation continuation.
 
-The Signature's **semantic binding transforms cryptographic authentication into constitutional enforcement**. Once declared, the signed state constrains subsequent computational pathways: +1 enables execution authorization pending License validation; -1 triggers refusal protocol with justification requirements; 0 maintains deliberation state with continued Sacred Zero activation.
+The Signature's **semantic binding transforms cryptographic authentication into constitutional enforcement**. Once declared, the signed state constrains subsequent computational pathways: +1 enables execution authorization pending License validation; -1 triggers refusal protocol with justification requirements; 0 maintains deliberation state with continued Epistemic Hold activation.
 
 Binding force depends upon **non-repudiation, irreversibility, and downstream enforcement**. Non-repudiation ensures signature origin cannot be denied; irreversibility prevents state retraction; downstream enforcement ensures declared state actually constrains subsequent behavior.
 
@@ -1171,11 +1171,11 @@ The **adversarial machine learning research demonstrates confidence manipulation
 
 #### V.1.2 Forced 0 Saturation: Prudence Weaponization
 
-**Prudence weaponization attacks exploit Sacred Zero activation to freeze competitor execution during critical operations**, creating asymmetric competitive disadvantage. Attack vectors include: **engineered data variance** triggering excessive Sacred Zero activation; **oracle manipulation** providing contradictory signals forcing deliberation state; and **epistemic flooding** overwhelming certainty evaluation capacity.
+**Prudence weaponization attacks exploit Epistemic Hold activation to freeze competitor execution during critical operations**, creating asymmetric competitive disadvantage. Attack vectors include: **engineered data variance** triggering excessive Epistemic Hold activation; **oracle manipulation** providing contradictory signals forcing deliberation state; and **epistemic flooding** overwhelming certainty evaluation capacity.
 
-The **economic impact of weaponized prudence** may create **governance pressure to weaken Sacred Zero thresholds** or **expand override authorization**, enabling gradual constraint erosion. Competitors may **strategically trigger Sacred Zero activation** in TL-governed systems during critical trading moments, market opportunities, or time-sensitive operations.
+The **economic impact of weaponized prudence** may create **governance pressure to weaken Epistemic Hold thresholds** or **expand override authorization**, enabling gradual constraint erosion. Competitors may **strategically trigger Epistemic Hold activation** in TL-governed systems during critical trading moments, market opportunities, or time-sensitive operations.
 
-**DITL hardware provides limited mitigation**: while DITL enforces correct Sacred Zero processing, it cannot distinguish legitimate uncertainty from adversarially-induced uncertainty. **Detection requires statistical analysis of Sacred Zero activation patterns** identifying anomalous frequency or timing suggestive of weaponization.
+**DITL hardware provides limited mitigation**: while DITL enforces correct Epistemic Hold processing, it cannot distinguish legitimate uncertainty from adversarially-induced uncertainty. **Detection requires statistical analysis of Epistemic Hold activation patterns** identifying anomalous frequency or timing suggestive of weaponization.
 
 #### V.1.3 Suppression of -1: Harm Masking and Refusal Prevention
 
@@ -1193,7 +1193,7 @@ The **suppression of -1 represents existential threat to TL's ethical governance
 
 #### V.2.1 Custodian Alert Fatigue
 
-**High-volume Sacred Zero activation creates custodian alert fatigue**, desensitizing human stewards to uncertainty signals and driving override authorization that would be denied under lower-volume conditions. The **"Systemic Failsafe Protocol" activation**—when automated alerts exceed processing capacity—**creates governance overload condition** where policy-dependent invariants effectively suspend operation or degrade to automated handling with reduced scrutiny.
+**High-volume Epistemic Hold activation creates custodian alert fatigue**, desensitizing human stewards to uncertainty signals and driving override authorization that would be denied under lower-volume conditions. The **"Systemic Failsafe Protocol" activation**—when automated alerts exceed processing capacity—**creates governance overload condition** where policy-dependent invariants effectively suspend operation or degrade to automated handling with reduced scrutiny.
 
 **Alert fatigue mitigation**: adaptive threshold calibration based on custodian response capacity; automated triage prioritizing high-consequence activations; and mandatory rest periods for custodians experiencing fatigue indicators. However, **mitigation itself creates vulnerability**—adaptive thresholds may be manipulated, automated triage may miscategorize, and rest periods create availability gaps.
 
@@ -1203,9 +1203,9 @@ The **suppression of -1 represents existential threat to TL's ethical governance
 
 The **"deferred anchoring failure" vector**—Fast Lane operating indefinitely without Slow Lane completion—enables **sustained operation without evidentiary accountability**. Detection requires **independent Fast Lane monitoring** verifying that execution correlates with subsequent anchoring, but **monitoring itself may be compromised**.
 
-#### V.2.3 False-Positive Sacred Zero Triggering
+#### V.2.3 False-Positive Epistemic Hold Triggering
 
-**Excessive false-positive Sacred Zero activation**—trivial data anomalies causing operational paralysis—creates **pressure for threshold weakening or override normalization**. Attackers may **engineer benign-appearing data that triggers Sacred Zero** to degrade operational effectiveness and drive constraint erosion.
+**Excessive false-positive Epistemic Hold activation**—trivial data anomalies causing operational paralysis—creates **pressure for threshold weakening or override normalization**. Attackers may **engineer benign-appearing data that triggers Epistemic Hold** to degrade operational effectiveness and drive constraint erosion.
 
 **Threshold calibration faces fundamental tradeoff**: sensitive thresholds minimize false negatives (uncertainty proceeding undetected) but maximize false positives (unnecessary paralysis); tolerant thresholds minimize false positives but enable false negatives. **Adversaries optimize attack patterns to exploit threshold position**.
 
@@ -1251,7 +1251,7 @@ The **"deferred anchoring failure" vector**—Fast Lane operating indefinitely w
 
 **Root privilege enables comprehensive TL subversion** through direct manipulation of all software-layer components. Attack vectors include: **process termination** of TL policy engine, logging daemon, and enforcement hooks; **memory manipulation** modifying TL data structures and code in RAM; and **system call interposition** intercepting and modifying TL-related kernel calls.
 
-The **host operating system compromise enables complete TL bypass**: root-privileged attacker may **disable Sacred Zero enforcement** by terminating hold-state maintenance processes; **forge Decision Logs** by manipulating ledger buffers before cryptographic commitment; and **suppress anchoring** by blocking blockchain client network access.
+The **host operating system compromise enables complete TL bypass**: root-privileged attacker may **disable Epistemic Hold enforcement** by terminating hold-state maintenance processes; **forge Decision Logs** by manipulating ledger buffers before cryptographic commitment; and **suppress anchoring** by blocking blockchain client network access.
 
 **DITL hardware mitigation**: physical state encoding prevents software-mediated override of DITL-gated functions. However, **DITL driver manipulation**—kernel module controlling DITL interface—may **suppress DITL invocation entirely**, forcing fallback to software-only enforcement.
 
@@ -1297,7 +1297,7 @@ The **"Heckler" attack demonstrated hypervisor-level compromise of AMD SEV-SNP a
 
 **Malicious microcode capabilities**: **instruction behavior modification** altering x86 instruction semantics; **security feature bypass** disabling or weakening protections like SGX, SEV, or memory encryption; and **covert channel creation** enabling information leakage across security boundaries.
 
-**TL vulnerability**: malicious microcode could **disable DITL enforcement** by modifying processor behavior underlying DITL circuits; **bypass Sacred Zero** by altering conditional branch handling; or **suppress logging** by modifying memory write semantics.
+**TL vulnerability**: malicious microcode could **disable DITL enforcement** by modifying processor behavior underlying DITL circuits; **bypass Epistemic Hold** by altering conditional branch handling; or **suppress logging** by modifying memory write semantics.
 
 #### VI.3.2 Microcode Persistence and Rollback
 
@@ -1345,7 +1345,7 @@ The **"Battering RAM" attack**—demonstrated September 2025—**bypassed AMD SE
 
 **Voltage glitching effects**: **instruction skip** bypassing security checks; **register corruption** modifying critical values; and **state machine manipulation** forcing transitions to privileged states.
 
-**TL vulnerability**: voltage glitching may **bypass Sacred Zero enforcement** by corrupting hold-state logic; **suppress logging** by corrupting buffer management; or **enable arbitrary execution** by corrupting License validation. **DITL mitigation**: delay-insensitive operation is inherently resistant to timing-based fault injection; but **sustained undervoltage may still cause malfunction**.
+**TL vulnerability**: voltage glitching may **bypass Epistemic Hold enforcement** by corrupting hold-state logic; **suppress logging** by corrupting buffer management; or **enable arbitrary execution** by corrupting License validation. **DITL mitigation**: delay-insensitive operation is inherently resistant to timing-based fault injection; but **sustained undervoltage may still cause malfunction**.
 
 #### VI.5.2 Electromagnetic Fault Injection (EMFI)
 
@@ -1468,9 +1468,9 @@ Research demonstrates **72% of Linux device drivers expose sensitive callback po
 
 ### VII.2 Class II: Epistemic Exploitation
 
-#### VII.2.1 Epistemic Flooding: Sacred Zero Saturation
+#### VII.2.1 Epistemic Flooding: Epistemic Hold Saturation
 
-**Exploit Pathway**: Engineered data variance overwhelming Sacred Zero processing capacity, creating governance overload condition where automated handling degrades constraint enforcement.
+**Exploit Pathway**: Engineered data variance overwhelming Epistemic Hold processing capacity, creating governance overload condition where automated handling degrades constraint enforcement.
 
 **Attack Mechanics**: High-volume contradictory data triggering excessive Hold activation; sensor array flooding with ambiguous signals; and oracle manipulation providing conflicting certainty indicators.
 
@@ -1482,7 +1482,7 @@ Research demonstrates **72% of Linux device drivers expose sensitive callback po
 
 #### VII.2.2 Weaponized Prudence: Competitor Freezing
 
-**Exploit Pathway**: Adversary triggers competitor's Sacred Zero activation during critical operations—trading moments, market opportunities, time-sensitive decisions—creating asymmetric disadvantage.
+**Exploit Pathway**: Adversary triggers competitor's Epistemic Hold activation during critical operations—trading moments, market opportunities, time-sensitive decisions—creating asymmetric disadvantage.
 
 **Attack Mechanics**: Strategic data injection triggering uncertainty at critical moments; market manipulation creating conditions for forced deliberation; and economic pressure driving threshold weakening.
 
@@ -1608,7 +1608,7 @@ Research demonstrates **72% of Linux device drivers expose sensitive callback po
 
 #### VII.5.1 Epistemic Gridlock: Systemic Deadlock from Unresolved Holds
 
-**Failure Mode**: Excessive Sacred Zero activation—through attack, malfunction, or threshold miscalibration—creates systemic deadlock where no decisions proceed, halting all operations.
+**Failure Mode**: Excessive Epistemic Hold activation—through attack, malfunction, or threshold miscalibration—creates systemic deadlock where no decisions proceed, halting all operations.
 
 **Recovery**: Emergency threshold adjustment with audit logging; custodian override with elevated authorization; and fallback to degraded operation mode.
 
@@ -1654,7 +1654,7 @@ Research demonstrates **72% of Linux device drivers expose sensitive callback po
 | Technical Council Backdoor | I | Subtle upgrade vulnerability | Low | Sophisticated evasion | High |
 | Smart Contract Deadlock | I | Immutable bug exploitation | Moderate | Novel patterns | Moderate |
 | Semantic Drift | I | Gradual definition erosion | Low | Institutional capture | High |
-| Epistemic Flooding | II | Sacred Zero saturation | Moderate | Manipulation | Moderate |
+| Epistemic Flooding | II | Epistemic Hold saturation | Moderate | Manipulation | Moderate |
 | Weaponized Prudence | II | Competitor freezing | Low | Detection difficulty | High |
 | Confidence Poisoning | II | False certainty injection | Moderate | ML evasion | High |
 | Oracle Compromise | II | Deterministic false data | Moderate | Multi-oracle coordination | Moderate |
@@ -1681,9 +1681,9 @@ The recovery design philosophy determines whether TL is **resilient** (survives 
 
 ### **VIII.2 Per-Pillar Recovery Capability Assessment**
 
-#### **VIII.2.1 Epistemic Hold (State 0 / Sacred Zero): Recovery Classification Moderate**
+#### **VIII.2.1 Epistemic Hold (State 0 / Epistemic Hold): Recovery Classification Moderate**
 
-**Compromise Scenario**: Sacred Zero suppression enabling uncertain action execution; threshold manipulation causing excessive or insufficient Hold activation; override mechanism abuse for systematic bypass.  
+**Compromise Scenario**: Epistemic Hold suppression enabling uncertain action execution; threshold manipulation causing excessive or insufficient Hold activation; override mechanism abuse for systematic bypass.  
 **Recovery Procedures**:
 
 * **Threshold Recalibration**: Restoration of confidence thresholds to constitutional baselines with multi-sig custodian authorization  
@@ -1693,11 +1693,11 @@ The recovery design philosophy determines whether TL is **resilient** (survives 
 
 **Recovery Challenges**:
 
-* **Detection Latency**: Undetected Sacred Zero suppression may enable extended harmful execution before identification  
+* **Detection Latency**: Undetected Epistemic Hold suppression may enable extended harmful execution before identification  
 * **Threshold Ambiguity**: "Correct" threshold calibration may be contested; adversarial manipulation may appear as legitimate operational adjustment  
 * **DITL Circuit Replacement**: Hardware replacement requires system halt; hot-swapping not feasible for state-encoding circuits
 
-**Evidentiary Continuity**: Sacred Zero compromise does not directly affect ledger integrity; recovery preserves prior evidentiary chain. Post-recovery holds generate new Decision Logs with recovery attestation.  
+**Evidentiary Continuity**: Epistemic Hold compromise does not directly affect ledger integrity; recovery preserves prior evidentiary chain. Post-recovery holds generate new Decision Logs with recovery attestation.  
 **Recovery Verdict**: **Moderate**—recovery feasible with detectable compromise, but detection latency and threshold ambiguity create residual risk.
 
 #### **VIII.2.2 Immutable Ledger: Recovery Classification High**
@@ -1961,8 +1961,8 @@ Table
 
 #### **IX.1.1 Voltage-Level State Representation**
 
-**Delay-Insensitive Ternary Logic (DITL) implements triadic state encoding through three distinct voltage levels**: **Vdd (+1.2V in 130nm CMOS implementation) representing DATA1 (+1 state)**; **GND (0V) representing DATA0 (-1 state)**; and **½Vdd (0.6V) representing NULL/Sacred Zero (0 state)**. This physical encoding enables **genuine electrical distinction** between triadic states rather than symbolic representation.  
-The **physical encoding's constitutional significance**: triadic states are **not computed but manifested**—Sacred Zero exists as electrical potential rather than Boolean flag; state transitions require **physical voltage change** rather than software assignment; and **invalid states** (voltage levels outside defined ranges) are **inherently detectable** as electrical faults.
+**Delay-Insensitive Ternary Logic (DITL) implements triadic state encoding through three distinct voltage levels**: **Vdd (+1.2V in 130nm CMOS implementation) representing DATA1 (+1 state)**; **GND (0V) representing DATA0 (-1 state)**; and **½Vdd (0.6V) representing NULL/Epistemic Hold (0 state)**. This physical encoding enables **genuine electrical distinction** between triadic states rather than symbolic representation.  
+The **physical encoding's constitutional significance**: triadic states are **not computed but manifested**—Epistemic Hold exists as electrical potential rather than Boolean flag; state transitions require **physical voltage change** rather than software assignment; and **invalid states** (voltage levels outside defined ranges) are **inherently detectable** as electrical faults.
 
 #### **IX.1.2 Asynchronous Logic Architecture**
 
@@ -1973,13 +1973,13 @@ The **physical encoding's constitutional significance**: triadic states are **no
 * **Request-for-NULL (rfn)**: Receiver signals readiness for NULL wavefront  
 * **Completion Detection**: Verification that all inputs/outputs have transitioned to expected state
 
-**Constitutional Enforcement**: NULL state (Sacred Zero) propagation **physically blocks** downstream DATA consumption; completion detection **prevents premature state transition**; handshaking **enforces producer-consumer synchronization**.
+**Constitutional Enforcement**: NULL state (Epistemic Hold) propagation **physically blocks** downstream DATA consumption; completion detection **prevents premature state transition**; handshaking **enforces producer-consumer synchronization**.
 
-### **IX.2 Sacred Zero as Non-Maskable Stall State**
+### **IX.2 Epistemic Hold as Non-Maskable Stall State**
 
 #### **IX.2.1 NULL State Enforcement Mechanism**
 
-**Sacred Zero (NULL state) serves as mandatory inter-word separator** in DITL architecture. Every valid data transition must pass through NULL, making state-0 insertion **physically unavoidable for correct operation**. This creates **non-maskable stall capability**: downstream stages cannot consume DATA until NULL separation completes.  
+**Epistemic Hold (NULL state) serves as mandatory inter-word separator** in DITL architecture. Every valid data transition must pass through NULL, making state-0 insertion **physically unavoidable for correct operation**. This creates **non-maskable stall capability**: downstream stages cannot consume DATA until NULL separation completes.  
 **Enforcement Mechanisms**:
 
 * **Muller C-Elements**: Implement mutual exclusion between DATA validity and NULL state  
@@ -1990,7 +1990,7 @@ The **physical encoding's constitutional significance**: triadic states are **no
 
 #### **IX.2.2 Stall State Detectability**
 
-**NULL state duration provides natural detection mechanism**: premature DATA emergence indicates fault or manipulation; extended NULL duration indicates deliberate Sacred Zero activation; NULL absence indicates circuit malfunction or attack.  
+**NULL state duration provides natural detection mechanism**: premature DATA emergence indicates fault or manipulation; extended NULL duration indicates deliberate Epistemic Hold activation; NULL absence indicates circuit malfunction or attack.  
 **Detection Implementation**:
 
 * **Ring Oscillator Counters**: Measuring NULL state duration with microsecond precision  
@@ -2105,7 +2105,7 @@ Table
 
 #### **IX.7.1 DITL Enforcement Strength**
 
-**DITL makes TL physically non-bypassable against software/firmware attacks**: triadic state encoding prevents Boolean emulation; NULL state enforcement prevents Sacred Zero suppression; completion detection prevents premature state transition.  
+**DITL makes TL physically non-bypassable against software/firmware attacks**: triadic state encoding prevents Boolean emulation; NULL state enforcement prevents Epistemic Hold suppression; completion detection prevents premature state transition.  
 **Physical Bypass Requirements**:
 
 * **Voltage Fault Injection**: Calibrated glitching to corrupt state encoding  
@@ -2125,7 +2125,7 @@ Table
 
 ### **IX.8 Section IX Survivability Verdict**
 
-**DITL provides substantial physical enforcement capability** through triadic state encoding, delay-insensitive operation, and balanced side-channel resistance. **Sacred Zero as non-maskable stall state** provides genuine hardware-level uncertainty enforcement. **Residual vulnerabilities** include firmware layer dependencies, physical fault injection, and supply chain substrate compromise. **DITL is necessary but not sufficient** for TL survivability—defense in depth combining DITL with secure boot, memory encryption, and physical tamper protection is essential.  
+**DITL provides substantial physical enforcement capability** through triadic state encoding, delay-insensitive operation, and balanced side-channel resistance. **Epistemic Hold as non-maskable stall state** provides genuine hardware-level uncertainty enforcement. **Residual vulnerabilities** include firmware layer dependencies, physical fault injection, and supply chain substrate compromise. **DITL is necessary but not sufficient** for TL survivability—defense in depth combining DITL with secure boot, memory encryption, and physical tamper protection is essential.  
 
 ---
 
@@ -2384,7 +2384,7 @@ Table
 
 #### **XII.2.1 Binary Accelerator Bypass Architecture**
 
-**Modern AI deployments utilize specialized inference accelerators**—GPUs, TPUs, NPUs—that may operate outside TL governance. When TL-governed models are deployed on non-TL inference hardware: **Decision Log generation may be skipped** due to hardware incompatibility; **Sacred Zero enforcement is impossible** without DITL support; and **evidentiary binding to execution is severed**.  
+**Modern AI deployments utilize specialized inference accelerators**—GPUs, TPUs, NPUs—that may operate outside TL governance. When TL-governed models are deployed on non-TL inference hardware: **Decision Log generation may be skipped** due to hardware incompatibility; **Epistemic Hold enforcement is impossible** without DITL support; and **evidentiary binding to execution is severed**.  
 **Bypass Mechanisms**:
 
 * **Model Export**: TL-governed model weights exported to standard ONNX/TensorRT format for deployment on non-TL hardware  
@@ -2400,7 +2400,7 @@ Table
 | Protection Level | Minimum Adoption | Enforcement Mechanism |
 | ----- | ----- | ----- |
 | **Basic Logging** | 51% of inference FLOPs | Economic incentive alignment |
-| **Sacred Zero Enforcement** | 80% of inference FLOPs | Technical mandate with audit |
+| **Epistemic Hold Enforcement** | 80% of inference FLOPs | Technical mandate with audit |
 | **Full DITL Governance** | 95% of inference FLOPs | Regulatory requirement |
 | **Ecosystem Integrity** | 99%+ of inference FLOPs | Industry-wide standardization |
 
@@ -2421,7 +2421,7 @@ Table
 
 #### **XII.3.2 Fork Detection and Prevention**
 
-**Fork detection mechanisms** compare cloud deployment configurations against TL compliance requirements: anchoring endpoint verification; Decision Log schema validation; and Sacred Zero threshold configuration audit.  
+**Fork detection mechanisms** compare cloud deployment configurations against TL compliance requirements: anchoring endpoint verification; Decision Log schema validation; and Epistemic Hold threshold configuration audit.  
 **Detection Challenges**: Cloud configuration APIs may be manipulated to report compliant state while actual deployment is non-compliant; multi-tenant cloud environments limit visibility into actual execution configuration; and legitimate configuration drift may be indistinguishable from deliberate bypass.
 
 ### **XII.4 Edge-Device Bypass Architectures**
@@ -2433,7 +2433,7 @@ Table
 
 Table
 
-| Mode | Decision Log | Anchoring | Sacred Zero |
+| Mode | Decision Log | Anchoring | Epistemic Hold |
 | ----- | ----- | ----- | ----- |
 | **Full TL** | Yes | Batch | Software-only |
 | **Lightweight TL** | Compressed | Delegated | Threshold-only |
@@ -2456,7 +2456,7 @@ Table
 | Protection Level | Single System | Institution | Ecosystem |
 | ----- | ----- | ----- | ----- |
 | **Decision Log Generation** | 100% | 51% | 67% |
-| **Sacred Zero Enforcement** | 100% | 80% | 90% |
+| **Epistemic Hold Enforcement** | 100% | 80% | 90% |
 | **Blockchain Anchoring** | 100% | 95% | 99% |
 | **Full DITL Governance** | 100% | 100% | 100% |
 
@@ -2476,7 +2476,7 @@ Table
 
 ### **XII.6 Section XII Survivability Verdict**
 
-**TL requires ecosystem-wide adoption to maintain constitutional integrity**—isolated deployments provide localized protection while enabling systemic bypass through shadow systems. **Minimum adoption thresholds vary by protection level**: 51% for basic logging, 80% for Sacred Zero enforcement, 95% for blockchain anchoring, and 100% for full DITL governance. **Shadow IT dynamics create natural bypass habitat** where convenience-seeking users route around governance. **Survivability depends on enforcement mechanism strength**—voluntary adoption insufficient; regulatory mandate or economic incentive alignment required for threshold achievement.  
+**TL requires ecosystem-wide adoption to maintain constitutional integrity**—isolated deployments provide localized protection while enabling systemic bypass through shadow systems. **Minimum adoption thresholds vary by protection level**: 51% for basic logging, 80% for Epistemic Hold enforcement, 95% for blockchain anchoring, and 100% for full DITL governance. **Shadow IT dynamics create natural bypass habitat** where convenience-seeking users route around governance. **Survivability depends on enforcement mechanism strength**—voluntary adoption insufficient; regulatory mandate or economic incentive alignment required for threshold achievement.  
 
 ---
 
@@ -2644,9 +2644,9 @@ Table
 
 ### **XIV.4 Profit-Driven Weakening**
 
-#### **XIV.4.1 Shareholder Pressure on Sacred Zero**
+#### **XIV.4.1 Shareholder Pressure on Epistemic Hold**
 
-**Public company TL operators face shareholder pressure**: Sacred Zero delays reduce transaction throughput; latency constraints limit market participation; and "inefficient" governance reduces competitive positioning.  
+**Public company TL operators face shareholder pressure**: Epistemic Hold delays reduce transaction throughput; latency constraints limit market participation; and "inefficient" governance reduces competitive positioning.  
 **Pressure Mechanisms**:
 
 * **Activist Investor Campaign**: Public criticism of TL "inefficiency"  
@@ -2686,7 +2686,7 @@ Table
 ## **1. EXECUTIVE VERDICT**
 
 **Ternary Logic Constitutional Survivability Assessment**  
-**Under Hostile Control**: TL is **partially enforceable** with significant degradation. Software and firmware layers are fully subvertible by privileged attackers. DITL hardware provides genuine enforcement of Sacred Zero and triadic state transitions, but DITL driver manipulation and emergency override mechanisms remain exploitable. The Collapse Threshold condition (c)—No Log = No Action bypass without detectable NMI—is theoretically prevented by DITL's physical NULL state encoding, but firmware-layer suppression of DITL invocation creates practical bypass path.  
+**Under Hostile Control**: TL is **partially enforceable** with significant degradation. Software and firmware layers are fully subvertible by privileged attackers. DITL hardware provides genuine enforcement of Epistemic Hold and triadic state transitions, but DITL driver manipulation and emergency override mechanisms remain exploitable. The Collapse Threshold condition (c)—No Log = No Action bypass without detectable NMI—is theoretically prevented by DITL's physical NULL state encoding, but firmware-layer suppression of DITL invocation creates practical bypass path.  
 **Under Contested Hardware**: TL is **partially enforceable** with hardware-dependent resilience. DITL's triadic state encoding provides strong side-channel resistance and fault injection resilience. However, supply chain compromise (foundry-level Trojan insertion), physical fault injection (laser FI, voltage glitching), and microcode vulnerabilities create persistent attack surface. Nation-state adversaries with $50K-$200K equipment budget may achieve hardware-level compromise. Multi-vendor sourcing and post-fabrication attestation provide mitigation but not elimination.  
 **Under Inconvenient Truth**: TL is **non-enforceable** through semantic drift and governance capture. The Goukassian Principle's ethical constraints—"No Spy, No Weapon"—are vulnerable to gradual definition erosion through precedent accumulation over decades. Emergency override normalization, custodian collusion, and profit-driven threshold weakening create institutional pathways to systematic constraint violation. Technical enforcement cannot prevent governance bodies from redefining "harm" and "adequate knowledge" to permit desired actions. Collapse Threshold condition (a)—single Critical pillar compromise—applies: Goukassian Principle degradation collapses TL to conventional unconstrained computation.  
 **Overall Assessment**: TL provides **meaningful but incomplete constitutional enforcement**. Full DITL deployment achieves hardware-level constraint enforcement superior to software-only alternatives. However, governance capture, semantic drift, and economic pressure create **persistent non-technical vulnerability** that technical measures cannot address. TL is **conditionally enforceable**—conditions being: (1) DITL hardware deployment, (2) mandatory ecosystem-wide adoption >95%, (3) robust custodian governance with anti-collusion mechanisms, and (4) legal framework protecting TL integrity from regulatory coercion.  
@@ -2722,7 +2722,7 @@ Table
 | **Technical Council Backdoor** | I | Subtle cryptographic weakening during upgrade | Low (insider access) | Sophisticated evasion; plausible deniability | **High** |
 | **Smart Contract Deadlock** | I | Reentrancy/overflow exploitation | Moderate (formal verification) | Novel attack patterns; flash loan amplification | **Moderate** |
 | **Semantic Drift** | I | Gradual definition erosion through precedent | Low (institutional capture) | Detection difficulty; "legitimate" evolution | **High** |
-| **Epistemic Flooding** | II | Sacred Zero saturation via engineered variance | Moderate (adaptive thresholds) | Manipulation of threshold calibration | **Moderate** |
+| **Epistemic Flooding** | II | Epistemic Hold saturation via engineered variance | Moderate (adaptive thresholds) | Manipulation of threshold calibration | **Moderate** |
 | **Weaponized Prudence** | II | Competitor freezing via strategic Hold triggering | Low (detection difficulty) | Economic pressure for threshold weakening | **High** |
 | **Confidence Poisoning** | II | False certainty injection via adversarial ML | Moderate (multi-source verification) | ML evasion; coordinated corruption | **High** |
 | **Oracle Compromise** | II | Deterministic false data bypassing Lantern | Moderate (multi-oracle consensus) | Multi-oracle coordination attack | **Moderate** |
@@ -2741,7 +2741,7 @@ Table
 | **Shadow System Bypass** | XII | Parallel non-TL inference deployment | Low (voluntary adoption) | Convenience-driven routing; ecosystem gaps | **High** |
 | **Quantum Advantage** | XIII | Shor's/Grover's algorithm breaking crypto | Moderate (PQC migration) | HNDL attacks; timeline uncertainty | **Moderate** |
 | **Regulatory Coercion** | XIV | Mandatory backdoor/lawful interception | Low (legal compulsion) | Fundamental compromise; jurisdictional conflict | **High** |
-| **Profit-Driven Weakening** | XIV | Shareholder pressure on Sacred Zero | Low (economic incentive) | Semantic erosion; "efficiency" optimization | **High** |
+| **Profit-Driven Weakening** | XIV | Shareholder pressure on Epistemic Hold | Low (economic incentive) | Semantic erosion; "efficiency" optimization | **High** |
 
 **Confidence Rating Distribution**: High (10 vectors), Moderate (12 vectors), Low (2 vectors). **Highest priority mitigations**: governance capture prevention, quantum migration acceleration, shadow system detection.  
 
