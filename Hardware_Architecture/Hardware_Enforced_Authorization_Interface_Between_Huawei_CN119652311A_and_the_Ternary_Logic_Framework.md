@@ -7,7 +7,6 @@ Santa Monica, California, USA
 
 **ORCID: 0009-0006-5966-1243**
 
-**leogouk@gmail.com**
 
 ---
 
