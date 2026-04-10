@@ -2,147 +2,131 @@
 
 **From Abstract Governance to Physical Enforcement — The Silicon Layer**
 
-## Core Thesis and Scope
+## Why Hardware? Why Now?
 
-The Ternary Logic framework mandates that no consequential action may proceed without a cryptographically attested, hardware-logged authorization signal. This folder is where that mandate meets physics.
+The Ternary Logic framework mandates that no consequential action may proceed without a cryptographically attested, hardware-logged authorization signal. That mandate means nothing if it only lives in software.
 
-The foundational hierarchy is: **software policies can be overridden. Firmware can be rewritten. Physical hardware constraints resist last.** The documents in this folder specify, from device physics through circuit-level implementation to adversarial analysis, what it actually takes to enforce ternary governance in silicon.
+Software policies can be overridden. Firmware can be rewritten. Physical hardware constraints resist last.
 
-Three distinct but connected questions are answered here:
+This is the folder where the TL governance mandate meets physics. Three questions drive everything here:
 
-**(a)** Why is native ternary hardware necessary at all, and what is the quantified cost of emulating it on binary CMOS?
+**First:** Why is native ternary hardware necessary at all, and what is the quantified cost of emulating it on binary CMOS?
 
-**(b)** How does hardware-enforced ternary authorization apply in financial execution pipelines, where milliseconds and auditability are both mandatory?
+**Second:** How does hardware-enforced ternary authorization work in financial execution pipelines, where milliseconds and court-admissible auditability are both mandatory?
 
-**(c)** How does a specific, patent-identified ternary arithmetic unit — Huawei CN119652311A — interface with the TL authorization layer at the circuit level, and what are the exact conditions under which that interface is secure?
+**Third:** How does a specific, patent-identified ternary arithmetic unit — Huawei CN119652311A — interface with the TL authorization layer at the circuit level, and what are the exact conditions under which that interface is secure?
 
-The named fabrication baseline throughout this folder is **TSMC N2 CoWoS ReRAM 1T1R 2025 PDK, Arrhenius 20-year retention at 85°C**.
-
----
-
-## What This Folder Contains
-
-This folder contains three research documents in multiple formats, one audio companion, six technical images, and one non-technical entry point — together forming a complete specification of the TL hardware enforcement layer.
+The named fabrication baseline throughout is **TSMC N2 CoWoS ReRAM 1T1R 2025 PDK, Arrhenius 20-year retention at 85°C**.
 
 ---
 
-## Document I: The Transition to Mandated Ternary Architectures via Memristive Hysteresis
+## The Case for Native Ternary Silicon
 
-**The foundational device physics and architectural feasibility case.**
+Binary chips are built for speed, not safety. They have no physical state for uncertainty. When you want to enforce a "wait, let me think about this" state in a governance system built on binary hardware, you pay a tax.
 
-This report establishes why native ternary hardware is not a performance optimization but a governance necessity. The central finding is a quantified emulation tax: implementing ternary safety logic on binary CMOS consumes **approximately 15x more energy** and incurs **approximately 5x higher latency** than native implementation. This tax is not an engineering inconvenience — it is an architectural argument for the entire TL hardware program.
+The research report *"The Transition to Mandated Ternary Architectures via Memristive Hysteresis"* quantifies that tax precisely: emulating ternary safety logic on binary CMOS consumes **approximately 15x more energy** and incurs **approximately 5x higher latency** than a native implementation. This is not an engineering inconvenience — it is the economic argument for the entire TL hardware program.
 
-The report covers TaOx RRAM as the primary memristive candidate, with comparative analysis of HfOx, PCM, and MTJ technologies. It derives the stability conditions for the intermediate Null state via partial filament rupture, establishing the physical basis for Epistemic Hold as a hardware-enforced checkpoint rather than a software flag. The agentic AI catalyst argument — that safe autonomous systems require a verifiable, tamper-resistant hesitation state — is developed in full. A roadmap to 2027 covers memristor-based compute-in-memory, spintronic logic, and FeFET architectures.
+The solution is Tantalum Oxide (TaOx) RRAM — a memristive device that can be engineered to maintain a stable, intermediate resistance state via partial filament rupture. This intermediate state is the Epistemic Hold: not a software flag, not a register value, but a physical absence of current flow that no downstream circuit can proceed past without the correct ionic configuration being present in the TaOx film.
 
-**Key findings:** 15.2x energy emulation tax. 5.2x latency emulation tax. ~30% on-chip wire congestion reduction from ternary radix adoption. TSMC N2 CoWoS and Intel 18A PowerVia as target foundry platforms.
+The report also develops the agentic AI catalyst argument: autonomous systems that operate in closed loops of perception, planning, and action need a verifiable hesitation state. A software condition can be overwritten. A physical memristive state requires voltage pulses applied directly to device electrodes to change — electrodes that are not reachable from the compute layer's signal lines.
+
+**Key findings:** 15.2x energy emulation tax. 5.2x latency emulation tax. ~30% on-chip wire congestion reduction from ternary radix adoption. A roadmap to 2027 covering memristor-based compute-in-memory, spintronic logic, and FeFET architectures.
 
 - **Markdown:** [The_Transition_to_Mandated_Ternary_Architecture.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Hardware_Architecture/The%20Transition%20to%20Mandated%20Ternary%20Architecture.md)
-- **HTML Render:** [The_Transition_to_Mandated_Ternary_Architecture.html](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/The%20Transition%20to%20Mandated%20Ternary%20Architecture.html)
+- **HTML:** [The_Transition_to_Mandated_Ternary_Architecture.html](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/The%20Transition%20to%20Mandated%20Ternary%20Architecture.html)
 - **PDF:** [The_Transition_to_Mandated_Ternary_Architectures_via_Memristive_Hysteresis.pdf](https://github.com/FractonicMind/TernaryLogic/blob/main/Hardware_Architecture/The%20Transition%20to%20Mandated%20Ternary%20Architectures%20via%20Memristive%20Hysteresis.pdf)
 
 ---
 
-## Document II: Atomic Auditability in Financial Execution Pipelines via Hardware-Enforced Ternary States
+## Ternary Authorization in Financial Pipelines
 
-**Hardware-enforced ternary authorization applied to financial execution.**
+The paper *"Atomic Auditability in Financial Execution Pipelines via Hardware-Enforced Ternary States"* takes the device physics above and puts it to work where the stakes are concrete: financial transaction execution.
 
-This paper specifies how the TL hardware enforcement layer operates in the context of financial transaction pipelines, where sub-millisecond latency and court-admissible auditability are simultaneously mandatory. The central mechanism is a dual-lane architecture: the Fast Lane handles execution at native CNFET speeds; the Slow Lane handles cryptographic anchoring at memristive authorization speeds. The paper derives the timing constraints governing both lanes and specifies the Epistemic Hold mechanics in trading and settlement contexts.
+The core tension in financial systems is that execution must be fast and authorization must be auditable. These two requirements point in opposite directions when you try to enforce them at hardware speed. The paper resolves this through a dual-lane architecture: a Fast Lane that handles execution at native CNFET speeds, and a Slow Lane that handles cryptographic anchoring at memristive authorization speeds — both running simultaneously, with the commit gate as the physical boundary between them.
 
-The NULL Convention Logic / DITL formalism is developed at circuit level: half-Vdd NULL state encoding, Muller C-element mutual exclusion enforcement, and four-phase handshake protocol preventing data consumption without producer completion acknowledgment. This provides circuit-theoretic grounding for the third state — Epistemic Hold is not a register value or software condition but the physical absence of a valid DATA wavefront that completion detection circuits cannot proceed past.
+The NULL Convention Logic / DITL formalism is developed at circuit level. Half-Vdd NULL state encoding, Muller C-element mutual exclusion, and four-phase handshake protocol — together these make Epistemic Hold not a condition the system checks, but a condition the system physically cannot proceed past without the correct wavefront present.
 
-The paper also develops the COMPUTED_RESULT_DISCARDED forensic log event, providing a specific evidentiary marker for cases where computation completed before authorization was granted or failed.
+Every discarded computation leaves a forensic trace: the COMPUTED_RESULT_DISCARDED log event provides a specific evidentiary marker for cases where arithmetic completed before authorization was granted or failed. You cannot audit what you cannot see. This event makes the invisible visible.
 
 **Available at:** SSRN / Zenodo 18716142
 
 - **Markdown:** [Atomic_Auditability_in_Financial_Execution_Pipelines_via_Hardware_Enforced_Ternary_States.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Hardware_Architecture/Atomic%20Auditability%20in%20Financial%20Execution%20Pipelines%20via%20Hardware-Enforced%20Ternary%20States.md)
-- **HTML Render:** [Atomic_Auditability_in_Financial_Execution_Pipelines_via_Hardware_Enforced_Ternary_States.html](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/Atomic_Auditability_in_Financial_Execution_Pipelines_via_Hardware_Enforced_Ternary_States.html)
+- **HTML:** [Atomic_Auditability_in_Financial_Execution_Pipelines_via_Hardware_Enforced_Ternary_States.html](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/Atomic_Auditability_in_Financial_Execution_Pipelines_via_Hardware_Enforced_Ternary_States.html)
 - **PDF:** [Atomic_Auditability_in_Financial_Execution_Pipelines_via_Hardware_Enforced_Ternary_States.pdf](https://github.com/FractonicMind/TernaryLogic/blob/main/Hardware_Architecture/Atomic%20Auditability%20in%20Financial%20Execution%20Pipelines%20via%20Hardware-Enforced%20Ternary%20States.pdf)
 - **Word:** [Atomic_Auditability_in_Financial_Execution_Pipelines_via_Hardware_Enforced_Ternary_States.docx](https://github.com/FractonicMind/TernaryLogic/blob/main/Hardware_Architecture/Atomic%20Auditability%20in%20Financial%20Execution%20Pipelines%20via%20Hardware-Enforced%20Ternary%20States.docx)
 
 ---
 
-## Document III: Hardware-Enforced Authorization Interface Between Huawei CN119652311A and the Ternary Logic Framework
+## The Interface That Closes the Enforcement Gap
 
-**The circuit-level interface specification. The primary hardware deliverable of this folder.**
+Two ternary systems. One computes. One enforces. Neither talks to the other.
 
-Huawei patent CN119652311A (filed September 2023, published March 2025) implements ternary arithmetic at the gate level using seven carbon nanotube field-effect transistors with three distinct threshold voltages and three voltage-mapped output states: 0V (State -1 / Refuse), 1.65V (State 0 / Null), and 3.3V (State +1 / Commit). The TL framework requires that no action may proceed without hardware-logged authorization. These two systems share a state vocabulary. They do not share enforcement.
+Huawei patent CN119652311A (filed September 2023, published March 2025) implements ternary arithmetic at the gate level using seven carbon nanotube field-effect transistors with three voltage-mapped output states: 0V (Refuse), 1.65V (Null), and 3.3V (Commit). The TL framework requires that no action may proceed without hardware-logged authorization. These two systems share a state vocabulary. They do not share enforcement.
 
-This paper specifies the hardware binding that closes that gap.
+*"Hardware-Enforced Authorization Interface Between Huawei CN119652311A and the Ternary Logic Framework"* specifies the hardware binding that closes that gap — circuit-level, process-node-specific, adversarially analyzed.
 
 ![CN119652311A and TL Framework connected through RRAM commit bridge](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/RRAM.jpg)
 *Figure 1. CN119652311A (blue, left) and the Ternary Logic Authorization Framework (purple, right) connected through an RRAM commit bridge. The interface enforces that no arithmetic result propagates without a confirmed TL authorization signal.*
 
-A four-dimensional Phase 0 compatibility pre-screen (state semantics, timing domain, information-theoretic throughput, thermal-mechanical stability) establishes viability with zero permanent state-semantics incompatibility and a timing mismatch of 500:1 to 10,000:1 resolved by a buffered epoch-level commit architecture.
+A four-dimensional pre-screen establishes that the integration is viable: zero permanent state-semantics incompatibility, a timing mismatch of 500:1 to 10,000:1 resolved by a buffered epoch-level commit architecture, 64 Gbps CoWoS inter-die bandwidth in substantial surplus, and conditional thermal compliance below 250 mW.
 
 ![Three-chip ternary state vocabulary on TSMC N2 CoWoS: +1 Commit (green), 0 Null/Epistemic Hold (yellow), -1 Refuse (red)](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/TSMC-N2.png)
 *Figure 2. Physical state vocabulary on TSMC N2 CoWoS interconnect. Green (+1 / Commit), yellow (0 / Null / Epistemic Hold), red (-1 / Refuse). The authorization interface gates which of these states may propagate to the action path.*
 
-Phase 1 specifies the complete circuit-level interface for all three authorization states, selecting a memristive-gated pass transistor as the primary commit gate over a rejected CMOS AND gate, defining a 20–100 kΩ Null resistance window, and deriving a 5 ns RC spoof detection threshold from TaOx activation energy (Ea = 1.1–1.7 eV).
+The commit gate rejects the obvious solution — a CMOS AND gate — because an AND gate can be bypassed via laser fault injection. The selected architecture is a memristive-gated pass transistor: the TaOx memristor current directly biases the pass transistor gate. There is no logic gate to inject through. There is literally no electrical path unless the conductive filament is formed.
 
 ![Commit gate logic: Huawei Arithmetic Output AND TL Memristive State produces +1 (Commit/Execute) in 100-200 ns](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/AND.jpg)
 *Figure 3. Logical representation of the commit gate. Execution proceeds only when both the CN119652311A arithmetic output and the TL memristive authorization state are simultaneously +1. Gate latency is 100–200 ns at the TSMC N2 baseline.*
 
-Phase 2 establishes the four-layer authority hierarchy and proves that the CN119652311A arithmetic layer cannot override TL physical blocks across the CoWoS inter-die boundary.
+The RC spoof detection threshold is set at 5 ns — derived from the activation energy for oxygen vacancy migration in TaOx (Ea = 1.1–1.7 eV). Any resistance transition completing faster than 5 ns is physically impossible through legitimate filament dynamics and is classified as a spoofed or fault-injected state, triggering immediate Refuse.
 
 ![Four-layer CoWoS stack: CN119652311A compute layer, TL Authorization Framework, CoWoS interposer interface](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/TSMC.jpg)
 *Figure 4. Physical layer stack. The Ternary Logic Authorization Framework layer (middle, blue) interposes between the CN119652311A compute layer (bottom) and the CoWoS interposer interface (top). Non-volatile TaOx memory provides state backing across power cycles.*
 
-Phase 2 also catalogues 14 failure modes and demonstrates via quantified attack surface scoring that the combined system is a net-negative security outcome without five mandatory mitigations and net-equal to standalone TL with all five present.
+Every authorization event is logged in a 948-bit, 10-field entry with SHA3-256 PUF binding derived from the ReRAM array's own stochastic cell-to-cell resistance variability. The log is chained via Merkle accumulator. An eFuse overflow flag fires permanently if the audit trail is ever truncated.
 
 ![Latency overhead analysis: ternary authorization path introduces approximately 25% overhead under representative governance workloads](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/LOA.png)
 *Figure 5. Latency overhead analysis. The ternary authorization path introduces approximately 25% overhead relative to a binary pass-through baseline. This overhead is bounded and predictable under WCET non-blocking constraints.*
 
-**The central security finding is stated without softening:** without all five mandatory mitigations, the integration is worse than either standalone system. With all five, it is the first architecture where ternary arithmetic and physically non-bypassable authorization share a defined hardware boundary.
+The central security finding is stated without softening: **without all five mandatory mitigations, the integrated system is worse than either standalone system.** With all five, it is net-equal to standalone TL and strictly superior to standalone CN119652311A against the unauthorized-execution threat.
 
 ![Hot carrier injection in CNTFET pass transistor: threshold voltage shift and time-dependent degradation](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/HCJ.jpg)
 *Figure 6. Hot carrier injection mechanism in the CNTFET pass transistor of the commit gate. Threshold voltage shift (ΔVth) grows over time, degrading the window comparator's ability to classify resistance states at the Null window boundaries. Mitigation: conservative voltage margins and periodic PUF recalibration.*
 
 **Five mandatory mitigations:** JTAG fuse lockdown with commit-gate routing; active mesh shielding over TaOx cells; split-trust manufacturing across separate foundry jurisdictions; post-fabrication dual-PUF attestation; CRC-8 plus decoupling capacitor array on CoWoS interposer.
 
-**Five open experimental unknowns:** Refuse state dwell fraction; TaOx Null convergence at N2; RC spoof 5 ns threshold pulsed-IV confirmation; ReRAM PUF stability over 20 years at 85°C; custom UBM TiN/TaN adhesion qualification.
+**Five open experimental unknowns** — nothing is assumed away: Refuse state dwell fraction; TaOx Null convergence at N2; RC spoof 5 ns threshold pulsed-IV confirmation; ReRAM PUF stability over 20 years at 85°C; custom UBM TiN/TaN adhesion qualification.
 
-**Three falsifiable predictions** extending SSRN 6249918 Section 13 are provided with full test methods, pass criteria, and failure interpretations.
+Three falsifiable predictions extending SSRN 6249918 Section 13 are provided with full test methods, pass criteria, and failure interpretations.
 
 - **Markdown:** [Hardware_Enforced_Authorization_Interface_Between_Huawei_CN119652311A_and_the_Ternary_Logic_Framework.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Hardware_Architecture/Hardware_Enforced_Authorization_Interface_Between_Huawei_CN119652311A_and_the_Ternary_Logic_Framework.md)
-- **HTML Render:** [Hardware_Enforced_Authorization_Interface_Between_Huawei_CN119652311A_and_the_Ternary_Logic_Framework.html](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/Hardware_Enforced_Authorization_Interface_Between_Huawei_CN119652311A_and_the_Ternary_Logic_Framework.html)
-- **Audio Companion:** [Huawei_Ternary_Logic_and_Ionic_Security_Clash.mp3](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/Huawei_Ternary_Logic_and_Ionic_Security_Clash.mp3)
+- **HTML:** [Hardware_Enforced_Authorization_Interface_Between_Huawei_CN119652311A_and_the_Ternary_Logic_Framework.html](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/Hardware_Enforced_Authorization_Interface_Between_Huawei_CN119652311A_and_the_Ternary_Logic_Framework.html)
+- **Audio:** [Huawei_Ternary_Logic_and_Ionic_Security_Clash.mp3](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/Huawei_Ternary_Logic_and_Ionic_Security_Clash.mp3)
 
 ---
 
-## Non-Technical Entry Point
+## Read the Whole Thing in 10 Minutes Without an Engineering Degree
 
-**For readers who want the ideas without the device physics.**
+Somewhere around 2:47 AM on a Tuesday, someone stumbled into the hardware interface specification while searching for a pancake recipe. What followed was eleven napkins of diagrams, three cups of coffee, and a surprisingly accurate explanation of why there are three kinds of zero and why oxygen vacancies matter to AI safety.
 
-This companion piece follows the structure and content of Document III faithfully but delivers it through a narrator who discovers the paper at 2:47 AM while searching for a pancake recipe. The three-kinds-of-zero problem, the timing mismatch between carbon nanotubes and oxygen vacancy diffusion, the RC spoof detection threshold, the net-negative security finding, and the recursion counter lock at 8 are all explained — accurately — through the lens of someone experiencing them for the first time.
-
-Linda's realization that the trash-avoidance loop is precisely the Epistemic Hold is, unexpectedly, one of the clearest explanations of the concept in the repository.
+Linda's realization that avoiding taking out the trash is precisely the Epistemic Hold — the computation happened, the authorization has not — is genuinely one of the clearest explanations of the concept anywhere in this repository.
 
 - [I_Read_The_Hardware_Interface_Spec_So_You_Dont_Have_To.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Hardware_Architecture/I_Read_The_Hardware_Interface_Spec_So_You_Dont_Have_To.md)
 
 ---
 
-## Terminology Rule
+## Three Terms That Are Never the Same Thing
 
-Three terms refer to distinct constructs at different abstraction levels of the stack. They are not interchangeable anywhere in this folder.
+Everywhere in this folder, three terms refer to distinct constructs at different abstraction levels of the stack. They are not interchangeable.
 
 - **State 0** — the zero-valued ternary arithmetic output at the CN119652311A arithmetic layer
 - **Null** — the intermediate physical resistance condition at the TaOx resistance window layer (20–100 kΩ)
 - **Epistemic Hold** — the authorization-pending state at the TL governance layer
 
----
-
-## Relationship to Other Folders
-
-This folder sits at the base of the TL enforcement hierarchy.
-
-The **Adversarial_Survivability** folder stress-tests TL's constitutional architecture against hostile operators and contested hardware. Its conclusion — that hardware resists last, but only if it exists and is deployed inline — is the condition this folder is designed to meet.
-
-The **No_Log_No_Action**, **No_Spy_No_Weapon**, and **Merkle_Architecture** folders specify the upper layers of the enforcement stack. The hardware commitment gate specified in Document III is the physical substrate on which those invariants depend.
-
-The **AML_Prevention** folder applies the dual-lane latency architecture from Document II to anti-money laundering enforcement, demonstrating that the Epistemic Hold can be operationalized in regulatory compliance contexts without sacrificing throughput.
+The same value. Three completely different things. Conflating them is not a stylistic error — it breaks the architecture.
 
 ---
 
-> **"The stone age didn't end because we ran out of stones. The binary age won't end because we run out of zeros and ones, but because the cost of emulating safety becomes higher than the cost of building it."**
+> *"The stone age didn't end because we ran out of stones. The binary age won't end because we run out of zeros and ones, but because the cost of emulating safety becomes higher than the cost of building it."*
 >
 > — Lev Goukassian, Creator of Ternary Logic
