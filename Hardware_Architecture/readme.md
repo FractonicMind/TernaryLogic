@@ -1,6 +1,6 @@
 # Ternary Logic (TL): Hardware Architecture
 
-**From Abstract Governance to Physical Enforcement — The Silicon Layer**
+**From Abstract Governance to Physical Enforcement. The Silicon Layer**
 
 ## Why Hardware? Why Now?
 
