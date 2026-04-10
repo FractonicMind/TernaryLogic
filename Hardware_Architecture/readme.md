@@ -67,9 +67,35 @@ The paper also develops the COMPUTED_RESULT_DISCARDED forensic log event, provid
 
 Huawei patent CN119652311A (filed September 2023, published March 2025) implements ternary arithmetic at the gate level using seven carbon nanotube field-effect transistors with three distinct threshold voltages and three voltage-mapped output states: 0V (State -1 / Refuse), 1.65V (State 0 / Null), and 3.3V (State +1 / Commit). The TL framework requires that no action may proceed without hardware-logged authorization. These two systems share a state vocabulary. They do not share enforcement.
 
-This paper specifies the hardware binding that closes that gap. A four-dimensional Phase 0 compatibility pre-screen (state semantics, timing domain, information-theoretic throughput, thermal-mechanical stability) establishes viability with zero permanent state-semantics incompatibility and a timing mismatch of 500:1 to 10,000:1 resolved by a buffered epoch-level commit architecture. Phase 1 specifies the complete circuit-level interface for all three authorization states, selecting a memristive-gated pass transistor as the primary commit gate over a rejected CMOS AND gate, defining a 20–100 kΩ Null resistance window, and deriving a 5 ns RC spoof detection threshold from TaOx activation energy (Ea = 1.1–1.7 eV). Phase 2 proves that the CN119652311A arithmetic layer cannot override TL physical blocks across the CoWoS inter-die boundary, catalogues 14 failure modes, and demonstrates via quantified attack surface scoring that the combined system is a net-negative security outcome without five mandatory mitigations and net-equal to standalone TL with all five present.
+This paper specifies the hardware binding that closes that gap.
+
+![CN119652311A and TL Framework connected through RRAM commit bridge](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/RRAM.jpg)
+*Figure 1. CN119652311A (blue, left) and the Ternary Logic Authorization Framework (purple, right) connected through an RRAM commit bridge. The interface enforces that no arithmetic result propagates without a confirmed TL authorization signal.*
+
+A four-dimensional Phase 0 compatibility pre-screen (state semantics, timing domain, information-theoretic throughput, thermal-mechanical stability) establishes viability with zero permanent state-semantics incompatibility and a timing mismatch of 500:1 to 10,000:1 resolved by a buffered epoch-level commit architecture.
+
+![Three-chip ternary state vocabulary on TSMC N2 CoWoS: +1 Commit (green), 0 Null/Epistemic Hold (yellow), -1 Refuse (red)](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/TSMC-N2.png)
+*Figure 2. Physical state vocabulary on TSMC N2 CoWoS interconnect. Green (+1 / Commit), yellow (0 / Null / Epistemic Hold), red (-1 / Refuse). The authorization interface gates which of these states may propagate to the action path.*
+
+Phase 1 specifies the complete circuit-level interface for all three authorization states, selecting a memristive-gated pass transistor as the primary commit gate over a rejected CMOS AND gate, defining a 20–100 kΩ Null resistance window, and deriving a 5 ns RC spoof detection threshold from TaOx activation energy (Ea = 1.1–1.7 eV).
+
+![Commit gate logic: Huawei Arithmetic Output AND TL Memristive State produces +1 (Commit/Execute) in 100-200 ns](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/AND.jpg)
+*Figure 3. Logical representation of the commit gate. Execution proceeds only when both the CN119652311A arithmetic output and the TL memristive authorization state are simultaneously +1. Gate latency is 100–200 ns at the TSMC N2 baseline.*
+
+Phase 2 establishes the four-layer authority hierarchy and proves that the CN119652311A arithmetic layer cannot override TL physical blocks across the CoWoS inter-die boundary.
+
+![Four-layer CoWoS stack: CN119652311A compute layer, TL Authorization Framework, CoWoS interposer interface](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/TSMC.jpg)
+*Figure 4. Physical layer stack. The Ternary Logic Authorization Framework layer (middle, blue) interposes between the CN119652311A compute layer (bottom) and the CoWoS interposer interface (top). Non-volatile TaOx memory provides state backing across power cycles.*
+
+Phase 2 also catalogues 14 failure modes and demonstrates via quantified attack surface scoring that the combined system is a net-negative security outcome without five mandatory mitigations and net-equal to standalone TL with all five present.
+
+![Latency overhead analysis: ternary authorization path introduces approximately 25% overhead under representative governance workloads](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/LOA.png)
+*Figure 5. Latency overhead analysis. The ternary authorization path introduces approximately 25% overhead relative to a binary pass-through baseline. This overhead is bounded and predictable under WCET non-blocking constraints.*
 
 **The central security finding is stated without softening:** without all five mandatory mitigations, the integration is worse than either standalone system. With all five, it is the first architecture where ternary arithmetic and physically non-bypassable authorization share a defined hardware boundary.
+
+![Hot carrier injection in CNTFET pass transistor: threshold voltage shift and time-dependent degradation](https://fractonicmind.github.io/TernaryLogic/Hardware_Architecture/HCJ.jpg)
+*Figure 6. Hot carrier injection mechanism in the CNTFET pass transistor of the commit gate. Threshold voltage shift (ΔVth) grows over time, degrading the window comparator's ability to classify resistance states at the Null window boundaries. Mitigation: conservative voltage margins and periodic PUF recalibration.*
 
 **Five mandatory mitigations:** JTAG fuse lockdown with commit-gate routing; active mesh shielding over TaOx cells; split-trust manufacturing across separate foundry jurisdictions; post-fabrication dual-PUF attestation; CRC-8 plus decoupling capacitor array on CoWoS interposer.
 
@@ -95,21 +121,6 @@ Linda's realization that the trash-avoidance loop is precisely the Epistemic Hol
 
 ---
 
-## Technical Images
-
-Six images support Document III. All are referenced by figure number in both the .md and .html versions.
-
-| File | Figure | Content |
-|------|--------|---------|
-| [RRAM.jpg](https://github.com/FractonicMind/TernaryLogic/blob/main/Hardware_Architecture/RRAM.jpg) | Figure 1 | CN119652311A and TL Framework connected through RRAM commit bridge |
-| [TSMC-N2.png](https://github.com/FractonicMind/TernaryLogic/blob/main/Hardware_Architecture/TSMC-N2.png) | Figure 2 | Three-chip ternary state vocabulary on TSMC N2 CoWoS: +1 (green), 0 (yellow), -1 (red) |
-| [AND.jpg](https://github.com/FractonicMind/TernaryLogic/blob/main/Hardware_Architecture/AND.jpg) | Figure 3 | Commit gate logic: Huawei Arithmetic Output AND TL Memristive State → +1 (Commit) |
-| [TSMC.jpg](https://github.com/FractonicMind/TernaryLogic/blob/main/Hardware_Architecture/TSMC.jpg) | Figure 4 | Four-layer CoWoS stack: CN119652311A compute / TL authorization / CoWoS interposer |
-| [LOA.png](https://github.com/FractonicMind/TernaryLogic/blob/main/Hardware_Architecture/LOA.png) | Figure 5 | Latency overhead analysis: ~25% authorization overhead under WCET non-blocking constraints |
-| [HCJ.jpg](https://github.com/FractonicMind/TernaryLogic/blob/main/Hardware_Architecture/HCJ.jpg) | Figure 6 | Hot carrier injection in CNTFET pass transistor: threshold voltage shift and time-dependent degradation |
-
----
-
 ## Terminology Rule
 
 Three terms refer to distinct constructs at different abstraction levels of the stack. They are not interchangeable anywhere in this folder.
@@ -132,6 +143,6 @@ The **AML_Prevention** folder applies the dual-lane latency architecture from Do
 
 ---
 
-> *"The stone age didn't end because we ran out of stones. The binary age won't end because we run out of zeros and ones, but because the cost of emulating safety becomes higher than the cost of building it."*
+> **"The stone age didn't end because we ran out of stones. The binary age won't end because we run out of zeros and ones, but because the cost of emulating safety becomes higher than the cost of building it."**
 >
 > — Lev Goukassian, Creator of Ternary Logic
