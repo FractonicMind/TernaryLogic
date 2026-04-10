@@ -1,11 +1,11 @@
 # Hardware-Enforced Authorization Interface Between Huawei CN119652311A and the Ternary Logic Framework
 
-**Lev Goukassian**
+**Lev Goukassian**   
 
-*Independent Researcher / Ternary Logic Architecture*
-Santa Monica, California, USA
+*Independent Researcher / Ternary Logic Architecture*   
+Santa Monica, California, USA   
 
-**ORCID: 0009-0006-5966-1243**
+**ORCID: 0009-0006-5966-1243**   
 
 
 ---
