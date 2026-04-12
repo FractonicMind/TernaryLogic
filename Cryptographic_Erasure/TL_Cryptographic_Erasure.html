@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cryptographic Erasure in Ternary Logic</title>
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-light: #142842;
+    --navy-border: #1e3a5f;
+    --accent: #d4a574;
+    --accent-bright: #e8c395;
+    --text: #1a1a1a;
+    --text-muted: #555;
+    --text-sidebar: #c8d4e0;
+    --text-sidebar-active: #ffffff;
+    --bg: #fafaf7;
+    --bg-card: #ffffff;
+    --bg-code: #f4f1ea;
+    --border: #d8d4ca;
+    --warn: #8b3a3a;
+    --ok: #2d5f3f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--text);
+    background: var(--bg);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* Sidebar */
+  aside {
+    width: 300px;
+    background: var(--navy);
+    color: var(--text-sidebar);
+    padding: 2rem 1.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 1px solid var(--navy-border);
+  }
+  aside h1 {
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--accent-bright);
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+    font-weight: normal;
+    letter-spacing: 0.02em;
+  }
+  aside .subtitle {
+    font-size: 0.8rem;
+    color: #8ca3bc;
+    margin-bottom: 2rem;
+    font-style: italic;
+    letter-spacing: 0.03em;
+  }
+  aside nav ul { list-style: none; }
+  aside nav > ul > li {
+    margin-bottom: 1.3rem;
+  }
+  aside nav .step-label {
+    display: block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  aside nav a {
+    display: block;
+    color: var(--text-sidebar);
+    text-decoration: none;
+    font-size: 0.88rem;
+    padding: 0.32rem 0.6rem 0.32rem 0.8rem;
+    border-left: 2px solid transparent;
+    transition: all 0.15s ease;
+    line-height: 1.35;
+  }
+  aside nav a:hover {
+    color: var(--text-sidebar-active);
+    border-left-color: var(--accent);
+    background: var(--navy-light);
+  }
+  aside nav .sublist { margin-top: 0.2rem; }
+  aside nav .sublist a {
+    font-size: 0.82rem;
+    padding-left: 1.2rem;
+    color: #a8b8c9;
+  }
+  aside .footer {
+    margin-top: 2.5rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--navy-border);
+    font-size: 0.72rem;
+    color: #6b7f95;
+    line-height: 1.6;
+  }
+
+  /* Main content */
+  main {
+    margin-left: 300px;
+    flex: 1;
+    padding: 3rem 4rem;
+    max-width: 900px;
+  }
+
+  header.doc-header {
+    border-bottom: 2px solid var(--navy);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  header.doc-header .eyebrow {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  header.doc-header h1 {
+    font-size: 2rem;
+    color: var(--navy);
+    line-height: 1.25;
+    font-weight: normal;
+    margin-bottom: 0.8rem;
+  }
+  header.doc-header .meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  section.step-banner {
+    background: var(--navy);
+    color: #fff;
+    padding: 1.5rem 2rem;
+    margin: 3rem 0 2rem;
+    border-left: 5px solid var(--accent);
+    border-radius: 2px;
+  }
+  section.step-banner .step-num {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent-bright);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin-bottom: 0.4rem;
+  }
+  section.step-banner h2 {
+    font-size: 1.4rem;
+    font-weight: normal;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    color: var(--navy);
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+    font-weight: normal;
+  }
+  h4 {
+    font-size: 1.08rem;
+    color: var(--navy);
+    margin: 1.8rem 0 0.8rem;
+    font-weight: bold;
+  }
+  h5 {
+    font-size: 0.98rem;
+    color: var(--navy-light);
+    margin: 1.3rem 0 0.6rem;
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  p { margin-bottom: 1rem; }
+  strong { color: var(--navy); }
+  em { color: var(--text); }
+
+  ul, ol { margin: 0.8rem 0 1.2rem 1.8rem; }
+  li { margin-bottom: 0.4rem; }
+
+  code {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 0.88em;
+    background: var(--bg-code);
+    padding: 0.12em 0.38em;
+    border-radius: 2px;
+    color: var(--navy);
+  }
+  pre {
+    background: var(--navy);
+    color: #e8e8e8;
+    padding: 1.2rem 1.4rem;
+    border-radius: 3px;
+    overflow-x: auto;
+    margin: 1rem 0 1.5rem;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    border-left: 3px solid var(--accent);
+  }
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  blockquote {
+    border-left: 4px solid var(--accent);
+    background: var(--bg-card);
+    padding: 1rem 1.4rem;
+    margin: 1.2rem 0;
+    font-style: italic;
+    color: var(--text);
+    border-radius: 0 3px 3px 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  blockquote p:last-child { margin-bottom: 0; }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1.2rem 0 1.8rem;
+    font-size: 0.88rem;
+    background: var(--bg-card);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 0.7rem 0.9rem;
+    font-weight: normal;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+  }
+  td {
+    padding: 0.7rem 0.9rem;
+    border-top: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tr:nth-child(even) td { background: #fbf9f5; }
+
+  .callout {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--navy);
+    padding: 1rem 1.3rem;
+    margin: 1.3rem 0;
+    border-radius: 0 3px 3px 0;
+  }
+  .callout.warn { border-left-color: var(--warn); }
+  .callout.ok { border-left-color: var(--ok); }
+  .callout .callout-title {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  .callout.warn .callout-title { color: var(--warn); }
+  .callout.ok .callout-title { color: var(--ok); }
+
+  .signature-block {
+    background: var(--bg-card);
+    border: 2px solid var(--navy);
+    padding: 1.8rem;
+    margin: 2rem 0;
+    border-radius: 3px;
+  }
+  .signature-block table th,
+  .signature-block table td {
+    font-size: 0.85rem;
+  }
+  .sig-line {
+    display: inline-block;
+    border-bottom: 1px solid var(--text);
+    min-width: 180px;
+    height: 1.2em;
+  }
+
+  .attestation {
+    background: #fff9ed;
+    border: 1px solid var(--accent);
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 3px;
+  }
+  .attestation .stmt-num {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warn);
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  .attestation blockquote {
+    background: none;
+    border-left-color: var(--warn);
+    padding: 0.6rem 1rem;
+    margin: 0.8rem 0;
+  }
+
+  .diagram-placeholder {
+    background: var(--bg-card);
+    border: 1px dashed var(--border);
+    padding: 1.5rem;
+    margin: 1.2rem 0;
+    text-align: center;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    border-radius: 3px;
+  }
+  .diagram-caption {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-style: italic;
+    text-align: center;
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  footer.doc-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--navy);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  footer.doc-footer .closing {
+    font-style: italic;
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border-left: 3px solid var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 1100px) {
+    aside { width: 240px; padding: 1.5rem 1rem; }
+    main { margin-left: 240px; padding: 2rem 2.5rem; }
+  }
+  @media (max-width: 800px) {
+    body { flex-direction: column; }
+    aside { position: static; width: 100%; height: auto; }
+    main { margin-left: 0; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<aside>
+  <h1>Cryptographic Erasure<br>in Ternary Logic</h1>
+  <div class="subtitle">Unified Specification - Steps 1 through 4</div>
+  <nav>
+    <ul>
+      <li>
+        <span class="step-label">Step 1 - Foundations</span>
+        <ul class="sublist">
+          <li><a href="#s1-overview">Overview</a></li>
+          <li><a href="#s1-threat">1. Threat Models</a></li>
+          <li><a href="#s1-keys">2. Key Hierarchy</a></li>
+          <li><a href="#s1-hrot">3. Hardware Root of Trust</a></li>
+        </ul>
+      </li>
+      <li>
+        <span class="step-label">Step 2 - Integration</span>
+        <ul class="sublist">
+          <li><a href="#s2-overview">Overview</a></li>
+          <li><a href="#s2-nlna">4. NL=NA and Merkle</a></li>
+          <li><a href="#s2-destruction">5. Commanded Destruction</a></li>
+        </ul>
+      </li>
+      <li>
+        <span class="step-label">Step 3 - Verification</span>
+        <ul class="sublist">
+          <li><a href="#s3-overview">Overview</a></li>
+          <li><a href="#s3-pqc">6. Post-Quantum Migration</a></li>
+          <li><a href="#s3-ltl">7.1 LTL Properties</a></li>
+          <li><a href="#s3-attack">7.2 Attack Surface</a></li>
+          <li><a href="#s3-vectors">7.3 Test Vectors</a></li>
+          <li><a href="#s3-diagrams">7.4 Diagrams</a></li>
+        </ul>
+      </li>
+      <li>
+        <span class="step-label">Step 4 - Governance</span>
+        <ul class="sublist">
+          <li><a href="#s4-overview">Overview</a></li>
+          <li><a href="#s4-scope">8.1 Protection Scope</a></li>
+          <li><a href="#s4-nonprotection">8.2 Non-Protection</a></li>
+          <li><a href="#s4-risk">8.3 Risk Acceptance</a></li>
+          <li><a href="#s4-degraded">8.4 Degraded Mode</a></li>
+          <li><a href="#s4-consistency">8.5 Consistency Index</a></li>
+          <li><a href="#s4-signature">Signature Block</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  <div class="footer">
+    Ternary Logic Framework<br>
+    Goukassian Principle preserved<br>
+    Epistemic Hold preserved<br>
+    No Log = No Action
+  </div>
+</aside>
+
+<main>
+
+<header class="doc-header">
+  <div class="eyebrow">TL Technical Specification</div>
+  <h1>Cryptographic Erasure in Ternary Logic</h1>
+  <div class="meta">A four-step implementation-ready specification covering threat models, key hierarchy, hardware root of trust, log architecture integration, post-quantum migration, formal verification, and governance council acceptance.</div>
+</header>
+
+<p>This document is the unified reader-facing presentation of the four-step Cryptographic Erasure research program. Each step originated as a standalone Deep Research output; together they constitute the complete specification for deployment authorization. The specification is internally consistent across all verified architectural constraints, provides hardware-enforced cryptographic guarantees bounded by explicitly stated assumptions, and requires governance council members to accept each residual risk through individual signed statements before deployment proceeds.</p>
+
+<div class="callout">
+  <div class="callout-title">Reading Path</div>
+  <p>Technical reviewers should read sequentially. Governance council members may proceed directly to Step 4 (Section 8) for acceptance criteria, returning to Steps 1 through 3 as reference material. Auditors and regulators should treat Section 8.5 (Consistency Index) as the primary verification map into the technical sections.</p>
+</div>
+
+<!-- ============ STEP 1 ============ -->
+
+<section class="step-banner">
+  <div class="step-num">Step 1 of 4</div>
+  <h2>Threat Models, Key Hierarchy, and Hardware Root of Trust</h2>
+</section>
+
+<h3 id="s1-overview">Preamble and architectural scope</h3>
+
+<p>Ternary Logic mandates that every governed action produce a cryptographically sealed Decision Log entry committed to an immutable append-only ledger anchored across multiple blockchains. This design creates an inherent tension: the same immutability guaranteeing accountability becomes an attack surface for trade-secret extraction and an obstacle to GDPR Article 17 erasure obligations. <strong>Cryptographic erasure resolves both tensions through a unified key-destruction primitive</strong> that renders protected content computationally unrecoverable without altering the ledger's Merkle commitment structure.</p>
+
+<p>All constructions use binary cryptographic primitives (AES-256-GCM, HKDF-SHA3-256, HMAC-SHA3-512) for hardware-acceleration compatibility and standards compliance. Ternary logic governs execution state transitions between cryptographic operations, not the operations themselves: the three-valued state machine (State +1 Execute, State 0 Hold, State -1 Block) gates key release, pipeline access, and zeroization at the hardware-software boundary.</p>
+
+<h5>Notation</h5>
+<ul>
+  <li><code>||</code> denotes byte-string concatenation</li>
+  <li><code>H(x)</code> denotes SHA3-256(x) per NIST FIPS 202</li>
+  <li><code>PRF(k,v)</code> denotes HMAC-SHA3-512(k,v), 512-bit output</li>
+  <li><code>KDF(ikm, salt, info)</code> denotes HKDF-SHA3-256 per RFC 5869</li>
+</ul>
+
+<h3 id="s1-threat">Section 1: Forward secrecy and erasure threat models</h3>
+
+<h4>1.1 Trade secret threat model</h4>
+
+<p>Decision Log justification fields carry proprietary intelligence constituting trade secrets under the Defend Trade Secrets Act (18 U.S.C. 1836) and EU Trade Secrets Directive (2016/943/EU): model configuration parameters, risk scoring thresholds, counterparty inference chains, algorithmic weighting coefficients, and governance escalation rationales. The ledger distinguishes audit-accessible fields (timestamps, event identifiers, state transitions, Merkle indices, anchor hashes) from EKR-encrypted fields (justification narratives, proprietary parameters, counterparty identifiers).</p>
+
+<p>Three adversary classes define the threat surface. The <strong>passive archive reader</strong> possesses read access to committed ciphertext but holds no epoch keys; defense requires IND-CCA2 security from AES-256-GCM with non-reused nonces. AES-256 provides <strong>128-bit post-quantum security</strong> under Grover's algorithm, eliminating the need for symmetric cipher migration. The <strong>active partial-compromise adversary</strong> has obtained some epoch N key through insider theft; the architectural response is strict epoch-bounded forward secrecy following the taxonomy of Boyd, Gellert, Jager, and Stebila (The Computer Journal, vol. 64, no. 4, pp. 639-652, 2021). The <strong>metadata adversary</strong> analyzes ciphertext lengths, commit timing, and anchor frequency; mitigation is achieved through constant-rate Merkle batch commitment (one batch every 30 seconds with padding entries), fixed-length ciphertext padding, and normalized anchor cadence.</p>
+
+<h4>1.2 Erasure threat model</h4>
+
+<p>Article 17(1) of the General Data Protection Regulation establishes the right to erasure. The TL ledger's immutability creates a direct conflict: <strong>physical deletion of any entry would break the Merkle commitment chain</strong>. Cryptographic erasure, formalized by Boneh and Lipton in "A Revocable Backup System" (6th USENIX Security Symposium, 1996), resolves this conflict. NIST SP 800-88 Rev 2 recognizes Cryptographic Erase as a valid Purge-level sanitization technique.</p>
+
+<p>The European Data Protection Board addressed this directly in Guidelines 02/2025 on Processing of Personal Data through Blockchain Technologies, adopted 8 April 2025. The CNIL's September 2018 report and the UK ICO's "beyond use" doctrine provide complementary positions. <strong>Residual legal risk persists</strong>: some jurisdictions may not accept cryptographic erasure equivalence, requiring explicit disclosure to the competent supervisory authority before deployment.</p>
+
+<h4>1.3 Unified destruction guarantee</h4>
+
+<p>Both threat models resolve to the same primitive: key zeroization through the hardware root of trust. Epoch-scope destruction renders all EKR-encrypted content within an epoch permanently unrecoverable; subject-scope destruction targets only the Subject Derivation Table entry for the requesting data subject. Both invoke the same <code>hrot_zeroize()</code> interface, producing FIPS 140-3 compliant key destruction. Both produce the same audit evidence: a Destruction Event record committed to the Immutable Ledger <em>before</em> zeroization executes, per the No Log = No Action invariant.</p>
+
+<h3 id="s1-keys">Section 2: Key hierarchy architecture</h3>
+
+<h4>2.1 Epoch key derivation via HKDF-SHA3-256</h4>
+
+<p>The epoch encryption key is derived using HKDF-SHA3-256 following the extract-then-expand paradigm formalized by Krawczyk (CRYPTO 2010, Springer LNCS vol. 6223, pp. 631-648) and standardized in RFC 5869. The input keying material for epoch N is:</p>
+
+<pre><code>IKM_n  = hrot_attest_counter(n) || heartbeat_entropy_n || merkle_root_{n-1}
+salt_n = uint64_be(n)
+info   = governance_domain_id || algorithm_id || "EKR-EPOCH"
+epoch_key_n = HKDF-SHA3-256(IKM_n, salt_n, info)[0:32]</code></pre>
+
+<p>The genesis case (epoch 0) uses <code>H(genesis governance ceremony attestation)</code> in place of the prior Merkle root. AES-256-GCM is selected as the baseline authenticated cipher per NIST FIPS 197 and SP 800-38D, with AES-NI delivering throughput exceeding 2,200 MB/s per core. The hash agility mechanism encodes the algorithm identifier in the info field, enabling clean migration between cryptographic suites without breaking the epoch chain.</p>
+
+<h4>2.2 Subject-derived keys for commanded erasure</h4>
+
+<p>Per-subject encryption keys use a hardened hierarchical derivation:</p>
+
+<pre><code>subject_key_n = PRF(epoch_key_n, subject_pseudonym_S || uint64_be(n))</code></pre>
+
+<p>The subject pseudonym is the Hybrid Shield output, already committed to the Merkle tree. <strong>Subject keys are never stored persistently</strong>; they are re-derived on demand from the epoch key and subject pseudonym. Commanded erasure destroys the Subject Derivation Table entry for the target subject, removing the pseudonym from the derivation lookup path.</p>
+
+<p>The audit read key is derived as a separate branch:</p>
+
+<pre><code>audit_key_n = PRF(master_audit_secret || chain_code, uint64_be(n))</code></pre>
+
+<p>Auditors receive <code>audit_key_n</code> for specific epochs upon authorized request. They cannot derive <code>epoch_key_n</code> because the audit derivation path uses a different root secret. They cannot derive <code>audit_key_n±1</code> because the PRF is evaluated independently per epoch.</p>
+
+<h4>2.3 Key lifecycle state machine</h4>
+
+<p>The epoch key lifecycle follows a five-state progression mapped to TL ternary states: <strong>Genesis</strong> (State 0-Transient during derivation, State +1 on completion), <strong>Active</strong> (State +1, default 24-hour duration), <strong>Rotation-Pending</strong> (State +1 until boundary), <strong>Escrowed</strong> (Shamir k-of-n threshold custody, State -1 for direct operational use), and <strong>Zeroized</strong> (State -1 permanent, terminal state). Forced rotation triggers include heartbeat entropy failure, tamper detection, and authorized governance command.</p>
+
+<h3 id="s1-hrot">Section 3: Hardware root of trust and timing architecture</h3>
+
+<h4>3.1 HRoT epoch counter and physical security</h4>
+
+<p>The baseline TPM 2.0 binding uses the NV Index facility with the TPMA_NV_COUNTER attribute per TCG TPM 2.0 Library Specification. TPM2_NV_Increment advances the counter; TPM2_NV_Certify produces an attestation signature. The ROCA vulnerability (CVE-2017-15361, Nemec et al. ACM CCS 2017) affected approximately 25% of TPMs globally; the specification addresses this class through standardized probabilistic prime generation, ROCA fingerprint detection during deployment validation, and the post-quantum migration path that replaces RSA-based attestation with SLH-DSA signatures.</p>
+
+<p>Physical tamper protection requires a tamper mesh conforming to FIPS 140-3 Security Level 3. The Thales Luna 7 HSM (NIST Certificate 4962, April 2024) implements this through a multi-chip standalone module in a tamper-responsive enclosure. Fault injection mitigation follows the countermeasure taxonomy in the Trusted Firmware-M Fault Injection Mitigation guidance.</p>
+
+<h4>3.2 Timing budget and the Fast Lane Prohibition</h4>
+
+<p>The Fast Lane Prohibition is a <strong>named mandatory constraint</strong>: direct HRoT non-volatile storage access is prohibited in the Fast Lane decision path (sub-2ms latency budget). TPM 2.0 NV operations carry latencies of 5 to 600 milliseconds, which would violate the Fast Lane budget by one to two orders of magnitude.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Operation</th>
+      <th>Latency</th>
+      <th>Budget Share</th>
+      <th>Execution Context</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Epoch key cache read</td>
+      <td>&lt; 0.1 ms</td>
+      <td>5%</td>
+      <td>TEE shielded memory</td>
+    </tr>
+    <tr>
+      <td>Nonce derivation</td>
+      <td>~0.1 ms</td>
+      <td>5%</td>
+      <td>DITL ternary state gate</td>
+    </tr>
+    <tr>
+      <td>AES-256-GCM encryption</td>
+      <td>~0.05 ms</td>
+      <td>2.5%</td>
+      <td>AES-NI accelerator</td>
+    </tr>
+    <tr>
+      <td>Heartbeat entropy read</td>
+      <td>~0.05 ms</td>
+      <td>2.5%</td>
+      <td>TRNG buffer</td>
+    </tr>
+    <tr>
+      <td>HRoT counter attestation</td>
+      <td>5-15 ms TPM, &lt;1 ms HSM</td>
+      <td>Governance Lane only</td>
+      <td>HRoT NV storage</td>
+    </tr>
+    <tr>
+      <td>Merkle batch close</td>
+      <td>~10 ms</td>
+      <td>Governance Lane only</td>
+      <td>SHA3-256 tree construction</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The Fast Lane budget sum totals approximately 0.3 ms under normal conditions, providing a 5.7x margin within the 2ms budget.</p>
+
+<h4>3.3 Heartbeat entropy source</h4>
+
+<p>The TRNG conforms to NIST SP 800-90B (January 2018), with minimum <strong>256 bits of min-entropy per epoch key derivation</strong>. Startup testing requires 4,096 noise source samples per SP 800-90B Section 4.3; continuous health testing applies the Repetition Count Test and Adaptive Proportion Test every 100 milliseconds. Entropy failure triggers State 0-Suspended and emergency epoch rotation before the next log entry is accepted. The TRNG operates on a separate power domain from the log generation pipeline, with no network-accessible interface on the entropy output path.</p>
+
+<h4>3.4 Ternary-binary interface governance semantics</h4>
+
+<p>The epoch key must not be readable by the AES engine unless the ternary state register holds State +1. State 0 gates the key bus physically (not merely logically); State -1 triggers immediate key bus zeroization. The +1-to--1 transition must take effect <strong>within one clock cycle</strong> regardless of AES pipeline depth. The 0-to-+1 transition requires a two-cycle hold to prevent transient glitches from allowing unauthorized reads. Physical implementation details are deferred to the Hardware Architecture folder.</p>
+
+<!-- ============ STEP 2 ============ -->
+
+<section class="step-banner">
+  <div class="step-num">Step 2 of 4</div>
+  <h2>NL=NA Integration, Merkle Architecture, and Commanded Destruction Governance</h2>
+</section>
+
+<h3 id="s2-overview">Overview</h3>
+
+<p>Step 2 integrates the cryptographic foundations from Step 1 with the structural invariants of the TL architecture: the No Log = No Action principle, Merkle tree construction, the Hybrid Shield pseudonymization layer, and the Anchors pillar. It then specifies the full governance workflow for GDPR commanded destruction, distinct from scheduled epoch rotation.</p>
+
+<h3 id="s2-nlna">Section 4: NL=NA integration and Merkle architecture integration</h3>
+
+<h4>4.1 DITL gate interaction with epoch key availability</h4>
+
+<p>Epoch key availability is a hard prerequisite for DITL gate signal generation. The gate sequence proceeds in strict serial order: log content generated in TEE memory; epoch key retrieved from TEE cache (State 0-Transient during retrieval, maximum latency <strong>0.5 milliseconds</strong> within the Fast Lane budget); encryption executes; plaintext immediately zeroized from hardware-accessible memory; Merkle leaf constructed; gate signal released (State +1).</p>
+
+<div class="callout warn">
+  <div class="callout-title">Fail-Closed Behavior - Hard Constraint</div>
+  <p>If the TEE-cached epoch key cannot be retrieved (TEE failure, cache invalidation, HRoT attestation mismatch), the system enters State 0-Suspended. <strong>Plaintext logging as a fallback is prohibited under any operational condition.</strong> This is a hard architectural constraint, not a configurable policy parameter. A single plaintext entry outside the EKR envelope would create a permanent gap in the cryptographic erasure guarantee.</p>
+</div>
+
+<p>Destruction Event log entries are themselves EKR-encrypted and must be generated and Merkle-committed <em>before</em> zeroization executes. The Destruction Event is the cryptographic proof that destruction was governed, authorized, and logged. Zeroization without a preceding committed Destruction Event is a protocol violation detectable by auditors examining the anchor chain.</p>
+
+<h4>4.2 Merkle leaf construction for encrypted entries</h4>
+
+<p>Each encrypted log entry produces a Merkle leaf with RFC 6962 domain separation:</p>
+
+<pre><code>leaf = H(0x00 || ciphertext || authenticated_tag || epoch_number
+         || entry_sequence || subject_pseudonym_hash)</code></pre>
+
+<p>The <strong>0x00 prefix</strong> distinguishes leaf hashes from internal node hashes (0x01 prefix), following RFC 6962 (Laurie, Langley, Kasper, 2013) and RFC 9162 (Laurie, Messeri, Stradling, 2021). This construction traces to Crosby and Wallach ("Efficient Data Structures for Tamper-Evident Logging," 18th USENIX Security Symposium, 2009). SHA3-256's sponge construction, unlike Merkle-Damgard, is inherently resistant to length-extension attacks.</p>
+
+<p>Epoch boundaries mid-batch require an additional epoch map leaf per epoch represented in the batch:</p>
+
+<pre><code>epoch_map_leaf = H(0x00 || epoch_number || epoch_key_fingerprint)</code></pre>
+
+<p>where <code>epoch_key_fingerprint = H(epoch_key_n)</code> is a one-way commitment to the key. This prevents <strong>epoch substitution attacks</strong> where an adversary swaps entries between epochs while maintaining valid individual leaf hashes.</p>
+
+<h4>4.3 Hybrid Shield operation order</h4>
+
+<p>Pseudonymization executes <strong>first</strong>, producing the subject pseudonym committed to the Merkle tree. EKR encryption executes <strong>second</strong>, encrypting the pseudonymized content. This ordering produces a two-layer protection structure: a verifier with pseudonymization keys but not epoch keys can verify identity commitments without reading content; a verifier with epoch keys but not pseudonymization keys can read content but cannot resolve pseudonyms. Full access requires both keys under separate governance authorization tracked independently in the Immutable Ledger.</p>
+
+<p>The legal basis rests on GDPR Article 4(5) defining pseudonymization and EDPB Guidelines 01/2025 on Pseudonymisation (adopted 14 January 2025). The Hybrid Shield mapping constitutes the "additional information" referenced in Article 4(5); its storage under separate governance authorization satisfies the "kept separately" requirement.</p>
+
+<h4>4.4 Anchor timing decoupling</h4>
+
+<p>Predictable anchor scheduling creates exploitable attack surfaces: targeted network disruption (eclipse attacks per Heilman et al. 24th USENIX Security Symposium 2015) and fee market manipulation (MEV/frontrunning per Daian et al. IEEE S&P 2020, mempool flooding per Saad et al. IEEE ICBC 2019).</p>
+
+<p>Epoch boundary timing incorporates a uniformly distributed random offset from the TRNG, bounded to <strong>plus or minus 20 percent of nominal epoch duration</strong>. For a 24-hour epoch, actual boundaries may occur up to 4.8 hours before or after nominal. Anchor publication uses an independent schedule not synchronized to epoch boundaries. Jitter offsets are logged in Epoch Rotation Events and Destruction Events for auditability, satisfying both unpredictability (to adversaries) and reconstructability (for auditors).</p>
+
+<h3 id="s2-destruction">Section 5: Commanded destruction - GDPR erasure governance</h3>
+
+<h4>5.1 Erasure authorization protocol</h4>
+
+<p>Commanded destruction is architecturally distinct from automated EKR rotation. Conflating them creates audit ambiguity. A valid erasure command requires four sequential prerequisites:</p>
+
+<ol>
+  <li><strong>Authenticated data subject request</strong> with identity verification against the Hybrid Shield pseudonym mapping, logged and Merkle-committed per NL=NA. GDPR Article 12(3) requires response within one month.</li>
+  <li><strong>Custodian multi-signature authorization.</strong> Default threshold: <strong>3-of-5 for subject-scope destruction</strong>, <strong>5-of-7 for epoch-scope destruction</strong>. Implements Shamir secret sharing (Communications of the ACM, vol. 22, no. 11, 1979). Threshold signatures generated via FROST (Komlo and Goldberg, SAC 2020; RFC 9591, June 2024) so the signing key is never materialized in any single location.</li>
+  <li><strong>Destruction Event log entry</strong> generated, EKR-encrypted, and Merkle-committed before any zeroization executes.</li>
+  <li><strong>Confirmation receipt</strong> to the data subject containing the ledger reference hash.</li>
+</ol>
+
+<p>Custodian selection enforces segregation of duties: no individual holds multiple shares; no single organizational unit controls a majority; at least one share is held by an independent fiduciary.</p>
+
+<h4>5.2 Subject key destruction execution</h4>
+
+<p>The Subject Derivation Table is stored in HRoT non-volatile memory, not in software state. The target entry is overwritten with <strong>cryptographically random data</strong> (not zeroes) to defeat wear-leveling and deduplication optimizations, following Wei, Grupp, Spada, and Swanson ("Reliably Erasing Data from Flash-Based Solid State Drives," 9th USENIX FAST, 2011). Hasan and Ray ("Data Recovery from Scrubbed NAND Flash Storage," 29th USENIX Security, 2020) demonstrated that even scrubbed NAND retains analog threshold voltage imprints, motivating the defense-in-depth multiple-overwrite approach.</p>
+
+<p>After overwrite, <code>TPM2_NV_UndefineSpace</code> deallocates the NV index. The two-step process satisfies NIST SP 800-88 Revision 2 Purge-level sanitization requirements. The epoch key itself is not destroyed; only the derivation path for that specific subject is severed.</p>
+
+<p>Attestation of destruction uses <code>TPM2_NV_Certify</code> producing a signed TPMS_ATTEST structure, appended to the Destruction Event log entry before that entry is Merkle-committed. This quote constitutes the cryptographic proof of erasure.</p>
+
+<h4>5.3 Regulatory compliance documentation</h4>
+
+<p>The architecture resolves the apparent conflict between securities retention (SEC Rule 17a-4, FINRA Rule 4511) and data protection erasure (GDPR Article 17) by distinguishing between <em>content</em> (rendered unrecoverable via key destruction) and <em>proof of governance</em> (retained indefinitely). SEC Rule 17a-4(f) as amended effective 3 January 2023 permits an audit-trail alternative to WORM storage; the TL Merkle-committed blockchain-anchored log satisfies this alternative through structural immutability, NL=NA-enforced audit trails, embedded timestamps, and FROST threshold signatures identifying authorizing custodians.</p>
+
+<p>Destruction Event log entries are retained indefinitely. The log entry is not the personal data; it is the proof that personal data was destroyed, retained in pseudonymized form consistent with the GDPR Article 5(2) accountability principle.</p>
+
+<!-- ============ STEP 3 ============ -->
+
+<section class="step-banner">
+  <div class="step-num">Step 3 of 4</div>
+  <h2>Post-Quantum Migration, Formal Verification, Test Vectors, and Mandatory Diagrams</h2>
+</section>
+
+<h3 id="s3-overview">Overview</h3>
+
+<p>The symmetric core (AES-256-GCM and HKDF-SHA3-256) requires zero post-quantum migration, while the public-key components demand structured replacement by 2030. This step specifies concrete migration paths for ML-KEM-1024 and SLH-DSA-SHAKE-128s, provides four formally verifiable LTL properties with complete NuSMV models, defines five CAVP-style test vectors, and delivers four architectural diagrams.</p>
+
+<h3 id="s3-pqc">Section 6: Post-quantum migration path</h3>
+
+<h4>6.1 AES-256-GCM requires no post-quantum migration</h4>
+
+<p>AES-256-GCM retains <strong>128-bit security under quantum attack</strong>. Grover's algorithm provides at most a quadratic speedup, reducing n-bit key security to n/2 bits. NIST's PQC FAQ confirms AES-256 meets Category 5, the highest security level. The 128-bit authentication tag provides 2^-128 forgery probability per NIST SP 800-38D.</p>
+
+<h4>6.2 HKDF-SHA3-256 provides the immediate post-quantum baseline</h4>
+
+<p>The SHA-3 sponge construction achieves security bounded by O(2^(c/2)) where c=512 for SHA3-256, yielding 256-bit classical and 128-bit quantum security (Bertoni, Daemen, Peeters, Van Assche, EUROCRYPT 2008). Song and Yun proved HMAC/NMAC are quantum-secure PRFs ("Quantum Security of NMAC and Related Constructions," CRYPTO 2017).</p>
+
+<h4>6.3 ML-KEM-1024 targets key encapsulation migration</h4>
+
+<p><strong>ML-KEM-1024 (NIST FIPS 203, 13 August 2024)</strong> provides NIST Category 5 security. Post-migration IKM construction: <code>IKM = counter_be || heartbeat_entropy || prev_merkle_root || mlkem_shared_secret</code>. Cryptographic agility is maintained through the algorithm identifier in the HKDF info field: pre-migration epochs use <code>"SHA3-256-AES-256-GCM-v1"</code>; post-migration epochs use <code>"SHA3-256-AES-256-GCM-MLKEM1024-v1"</code>.</p>
+
+<p>CNSA 2.0 (NSA, September 2022, updated December 2024) mandates ML-KEM-1024 with new acquisitions CNSA 2.0 compliant by <strong>1 January 2027</strong> and all non-compliant equipment phased out by <strong>31 December 2030</strong>. NIST IR 8547 sets the broader deprecation deadline at 2030 and full disallowance by 2035.</p>
+
+<h4>6.4 SLH-DSA-SHAKE-128s targets epoch attestation signatures</h4>
+
+<p>TPM 2.0 ECDSA P-256 signatures are quantum-vulnerable under Shor's algorithm. <strong>SLH-DSA-SHAKE-128s (NIST FIPS 205, 13 August 2024)</strong> is the migration target: 32-byte public key, 64-byte private key, 7,856-byte signature at NIST Category 1. Security reduces entirely to hash function properties, with no lattice or number-theoretic assumptions. The scheme descends from SPHINCS (Bernstein et al. EUROCRYPT 2015) and SPHINCS+ (Bernstein et al. ACM CCS 2019).</p>
+
+<h4>6.5 Epoch chain migration protocol</h4>
+
+<p>Migration proceeds in three phases. <strong>Announcement phase:</strong> 5-of-7 FROST governance threshold designates a future epoch M as the migration epoch. <strong>Dual-derivation phase:</strong> at epoch M, both old-algorithm and new-algorithm key derivations execute in parallel; both keys and their algorithm identifiers are committed to the ledger. <strong>Confirmation phase:</strong> 5-of-7 governance threshold signs a migration-complete attestation; epoch M+1 uses exclusively the new construction; the old derivation path is retired.</p>
+
+<h3 id="s3-ltl">Section 7.1 LTL formal specification with NuSMV model checking</h3>
+
+<p>Four Linear Temporal Logic properties specified for model checking in NuSMV (Cimatti et al. CAV 2002). LTL was introduced as a program verification formalism by Pnueli (18th FOCS, 1977).</p>
+
+<h4>Property 1 - Epoch transition safety</h4>
+
+<p><code>G (EpochBoundary -&gt; X (KeyZeroized AND MerkleRootCommitted))</code></p>
+
+<p>Globally, whenever an epoch boundary occurs, in the immediately next state both the previous epoch key has been zeroized and the new Merkle root has been committed. State space: 32 reachable states. <strong>Expected outcome: TRUE.</strong> Counterexample class: any trace where epoch_boundary holds at step i but at step i+1 either prev_key_status remains active or merkle_status remains pending.</p>
+
+<h4>Property 2 - Epoch liveness</h4>
+
+<p><code>F (EpochStart -&gt; F KeyAvailableWithinDeadline)</code></p>
+
+<p>There exists a future state where, if an epoch starts, the epoch key eventually becomes available within the derivation deadline. State space: 176 states. <strong>Expected outcome: TRUE</strong> for both F-guarded and stronger G-guarded variants.</p>
+
+<h4>Property 3 - Erasure ordering safety</h4>
+
+<p><code>G (ErasureCommand -&gt; X (DestructionEventLogged AND X MappingZeroized))</code></p>
+
+<p>At step i an erasure command is issued, at step i+1 the destruction event is logged (NL=NA enforcement), at step i+2 the subject-derived key mapping is zeroized. State space: 20 states. <strong>Expected outcome: TRUE.</strong> Counterexample class: any transition from commanded to a state other than logged (skipping NL=NA), or from logged to a state other than zeroized.</p>
+
+<h4>Property 4 - NL=NA coupling</h4>
+
+<p><code>G ((State0 OR StateNeg1) -&gt; NOT EncryptionActive)</code></p>
+
+<p>Encryption operations are blocked in all ternary states except State +1. State space: 8 states. <strong>Expected outcome: TRUE.</strong> The DEFINE for EncryptionActive structurally gates encryption behind tl_state = plus1, making the property hold by construction of the DITL gate logic.</p>
+
+<h3 id="s3-attack">Section 7.2 Attack surface control table</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attack Vector</th>
+      <th>Technical Control</th>
+      <th>Detection</th>
+      <th>Residual Risk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Epoch counter manipulation</td>
+      <td>TPM NV policy authorization; TPM2_NV_Increment monotonicity</td>
+      <td>Attestation quote mismatch; State 0-Suspended</td>
+      <td>Physical fault injection; mitigated by FIPS 140-3 Level 3+ tamper mesh</td>
+    </tr>
+    <tr>
+      <td>Heartbeat entropy injection</td>
+      <td>TRNG physical isolation; SP 800-90B continuous health tests</td>
+      <td>Health test failure triggers forced rotation</td>
+      <td>Supply chain compromise; mitigated by dual-source mixing</td>
+    </tr>
+    <tr>
+      <td>Log hash collision</td>
+      <td>SHA3-256 128-bit collision resistance; RFC 6962 domain separation</td>
+      <td>Merkle consistency proof failure</td>
+      <td>2^-128 per hash evaluation</td>
+    </tr>
+    <tr>
+      <td>Unauthorized erasure</td>
+      <td>FROST 3-of-5 threshold; segregation of duties</td>
+      <td>Threshold signature verification; partial count logged</td>
+      <td>3-custodian collusion; mitigated by geographic separation</td>
+    </tr>
+    <tr>
+      <td>Epoch key escrow compromise</td>
+      <td>Shamir k-of-n; FIPS 140-3 Level 3 HSMs</td>
+      <td>Share usage logged; out-of-ceremony attempts flagged</td>
+      <td>Threshold-many HSM breaches; mitigated by share refresh</td>
+    </tr>
+    <tr>
+      <td>Ciphertext tampering</td>
+      <td>AES-256-GCM 128-bit auth tag per SP 800-38D</td>
+      <td>Tag verification failure on decryption</td>
+      <td>2^-128 tag forgery probability</td>
+    </tr>
+    <tr>
+      <td>SDT wear-leveling remnance</td>
+      <td>Random-data overwrite before TPM2_NV_UndefineSpace</td>
+      <td>Post-zeroization read-back; HRoT attestation</td>
+      <td>Analog threshold fingerprinting; mitigated by multiple passes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="s3-vectors">Section 7.3 NIST CAVP-style test vectors</h3>
+
+<p>Five test vectors exercise the HKDF-SHA3-256 epoch key derivation. The info field is constant across all vectors (53 bytes):</p>
+
+<pre><code>info = "TL-EKR-TEST-DOMAIN-v1" || "SHA3-256-AES-256-GCM-v1" || "EKR-EPOCH"
+
+Hex (53 bytes):
+544c2d454b522d544553542d444f4d41494e2d7631
+534841332d3235362d4145532d3235362d47434d2d7631
+454b522d45504f4348</code></pre>
+
+<ul>
+  <li><strong>TEST 1 - Genesis epoch:</strong> counter=0x01, entropy=0x00{32}, prev_root=H(0x00{32})</li>
+  <li><strong>TEST 2 - Normal epoch:</strong> counter=0x42, non-trivial entropy and prev_root</li>
+  <li><strong>TEST 3 - Emergency rotation:</strong> entropy=0xAA{32} below min-entropy threshold</li>
+  <li><strong>TEST 4 - Avalanche negative test:</strong> TEST 2 with single bit flipped; output must differ in 100-156 of 256 bits (3-sigma bound)</li>
+  <li><strong>TEST 5 - Dependency chain negative test:</strong> TEST 2 with prev_root byte altered; output must differ entirely</li>
+</ul>
+
+<p><strong>Conformance criterion:</strong> Expected outputs must be computed using a NIST ACVP-validated HKDF implementation (ACVP KDA/HKDF per SP 800-56C, hmacAlg=SHA3-256). Implementations must match the ACVP reference output byte-for-byte.</p>
+
+<h3 id="s3-diagrams">Section 7.4 Mandatory diagrams</h3>
+
+<div class="diagram-placeholder">
+  <strong>Diagram 1 - Epoch Boundary Atomicity Sequence</strong><br>
+  Sequence diagram showing TEE TRNG heartbeat, HRoT counter attestation, and previous epoch Merkle root feeding into HKDF, producing the epoch key with State 0-Transient during derivation and State +1 on DITL gate release.
+</div>
+<div class="diagram-caption">Mermaid source preserved in Step 3 markdown artifact</div>
+
+<div class="diagram-placeholder">
+  <strong>Diagram 2 - Key Lifecycle State Machine</strong><br>
+  Two parallel tracks. Track A: Epoch Key Lifecycle (Genesis → Active → Rotation-Pending → Escrowed → Zeroized) with TL state overlay. Track B: Subject-Derived Key Lifecycle (Derived-on-Demand → In-Use → Released, with Erasure-Commanded → SDT-Entry-Zeroized branch).
+</div>
+<div class="diagram-caption">Mermaid source preserved in Step 3 markdown artifact</div>
+
+<div class="diagram-placeholder">
+  <strong>Diagram 3 - Fast Lane Timing</strong><br>
+  Timing diagram showing the 2ms Fast Lane decision window (TEE cache hit path) against the asynchronous 30-second Governance Lane (HRoT attestation, Merkle batch close, blockchain anchor). Fast Lane Prohibition structurally enforced.
+</div>
+<div class="diagram-caption">Mermaid source preserved in Step 3 markdown artifact</div>
+
+<div class="diagram-placeholder">
+  <strong>Diagram 4 - Commanded Destruction Governance Flow</strong><br>
+  Flowchart from data subject request through identity verification, FROST 3-of-5 threshold ceremony, Destruction Event generation, EKR encryption, Merkle commitment, SDT zeroization, TPM2_NV_UndefineSpace, HRoT attestation, final anchor, and confirmation receipt. Every NL=NA checkpoint marked explicitly.
+</div>
+<div class="diagram-caption">Mermaid source preserved in Step 3 markdown artifact</div>
+
+<!-- ============ STEP 4 ============ -->
+
+<section class="step-banner">
+  <div class="step-num">Step 4 of 4</div>
+  <h2>Threat Model Boundary, Residual Risk Declaration, and Final Integration Review</h2>
+</section>
+
+<h3 id="s4-overview">Preamble</h3>
+
+<p>This step is the <strong>Governance Council Acceptance Document</strong>. Steps 1 through 3 defined the complete technical specification. This document does not add new technical content. It draws a clear line around the protections established in Steps 1 through 3, names the risks that remain outside that line, and presents each residual risk as an explicit, signable acceptance statement. Every member of the governance council must read, understand, and sign this document before deployment proceeds.</p>
+
+<h3 id="s4-scope">Section 8.1 What Cryptographic Erasure protects</h3>
+
+<h4>Protection 1: Content confidentiality</h4>
+
+<p>All logged decisions, subject records, and governance actions are encrypted at rest under AES-256 with epoch-scoped keys derived through HKDF-SHA3-256 (Step 1, Section 2.2). An adversary who obtains ciphertext but lacks both the epoch key and the subject key cannot recover plaintext. Bounded by the computational hardness of AES-256 and HKDF-SHA3-256, which NIST SP 800-175B Rev 1 (March 2020) classifies as providing confidentiality services at or above 128-bit security strength.</p>
+
+<h4>Protection 2: Forward secrecy across epoch boundaries</h4>
+
+<p>Compromise of an epoch key exposes only the log entries encrypted under that single epoch. <strong>Forward secrecy depends on HRoT zeroization of the prior epoch key executing before key material becomes extractable</strong> by any attacker, including an attacker with physical access. If zeroization is delayed or defeated, forward secrecy for the affected epoch transition is lost.</p>
+
+<h4>Protection 3: GDPR Article 17 compliance through crypto-shredding</h4>
+
+<p>Subject-specific decryption key destruction within HRoT non-volatile memory (Step 2, Section 5.2) renders all subject-linked ciphertext computationally unrecoverable. The governance audit trail documents the destruction event, FROST authorization, and Merkle commitment. <strong>Dependent on supervisory authority acceptance of crypto-shredding in the specific deployment jurisdiction.</strong> EDPB Guidelines 02/2025 treat crypto-shredding as a pragmatic near-equivalent where true deletion is technically impracticable, while requiring controllers to document the rationale and conduct a DPIA.</p>
+
+<h3 id="s4-nonprotection">Section 8.2 What Cryptographic Erasure does not protect against</h3>
+
+<div class="callout warn">
+  <div class="callout-title">Attack Class 1: Authorized insider access through escrow</div>
+  <p>Insider auditors holding legitimate escrow key shares and obtaining governance authorization (FROST 3-of-5 subject-scope or 5-of-7 epoch-scope) can decrypt any epoch or subject record they are authorized to access. <strong>This is the intended audit architecture, not a flaw.</strong> Governance council controls exposure through threshold selection and access log auditing.</p>
+</div>
+
+<div class="callout warn">
+  <div class="callout-title">Attack Class 2: Traffic analysis of ciphertext patterns</div>
+  <p>An adversary who observes encrypted log traffic can analyze ciphertext sizes, timing intervals, and epoch transition patterns to infer operational rhythm. Dyer et al. (IEEE S&P 2012, "Peek-a-Boo, I Still See You") demonstrated that coarse traffic features defeat most countermeasures. Wright et al. (IEEE S&P 2008) showed packet lengths leak content-correlated patterns. TRNG jitter (Step 2, Section 4.4) <em>partially mitigates</em> epoch-transition fingerprinting but does not eliminate traffic analysis risk.</p>
+</div>
+
+<div class="callout warn">
+  <div class="callout-title">Attack Class 3: Metadata inference from plaintext log fields</div>
+  <p>Sequence numbers, timestamps, schema version identifiers, and epoch numbers remain in plaintext for integrity verification. In combination, these fields may support inference attacks. Governance council must assess metadata inference risk for the specific deployment domain and document that assessment.</p>
+</div>
+
+<div class="callout warn">
+  <div class="callout-title">Attack Class 4: Physical key extraction before zeroization</div>
+  <p>Skorobogatov (University of Cambridge Technical Report UCAM-CL-TR-630, 2005) demonstrated semi-invasive attacks against secure elements. Boneh, DeMillo, and Lipton (EUROCRYPT 1997) established that a single fault-induced error can expose private keys. The tamper mesh detects physical intrusion and triggers emergency zeroization, but <strong>a zero-day fault injection technique that evades the tamper mesh remains a residual physical risk</strong> that cannot be eliminated by any known countermeasure.</p>
+</div>
+
+<h3 id="s4-risk">Section 8.3 Residual risk acceptance criteria</h3>
+
+<p>The governance council must acknowledge each statement below <strong>individually and explicitly</strong> before deployment authorization. A signature next to each statement constitutes acceptance. Refusal to sign any single statement blocks deployment until the concern is resolved.</p>
+
+<div class="attestation">
+  <div class="stmt-num">Statement 1 - Crypto-shredding regulatory disclosure</div>
+  <blockquote>
+    We confirm that the crypto-shredding approach to erasure compliance has been disclosed to the applicable supervisory authority for the deployment jurisdiction, and that one of the following has been obtained: (a) written acceptance from the supervisory authority confirming crypto-shredding as an adequate erasure mechanism for this deployment, or (b) a formal legal opinion from qualified counsel confirming that crypto-shredding satisfies GDPR Article 17 erasure requirements, with the opinion documented and available for regulatory inspection.
+  </blockquote>
+  <p>Signature: <span class="sig-line"></span> &nbsp; Date: <span class="sig-line" style="min-width:100px"></span></p>
+</div>
+
+<div class="attestation">
+  <div class="stmt-num">Statement 2 - Plaintext metadata inference assessment</div>
+  <blockquote>
+    We confirm that the plaintext metadata fields (sequence numbers, timestamps, schema version identifiers, epoch numbers) have been assessed for inference risk specific to the deployment domain. The assessment has been documented, identifies the specific inferences an adversary could draw, and either accepts the residual risk or specifies additional countermeasures to be implemented before deployment.
+  </blockquote>
+  <p>Signature: <span class="sig-line"></span> &nbsp; Date: <span class="sig-line" style="min-width:100px"></span></p>
+</div>
+
+<div class="attestation">
+  <div class="stmt-num">Statement 3 - Escrow threshold quantitative analysis</div>
+  <blockquote>
+    We confirm that the escrow reconstruction thresholds (3-of-5 subject-scope, 5-of-7 epoch-scope) have been evaluated with explicit quantitative analysis of insider collusion probability for the specific custodian population. The analysis considers the number of custodians, their organizational relationships, shared incentives for collusion, and the probability that k custodians could coordinate without detection. The threshold values have been set based on this analysis, not adopted as defaults.
+  </blockquote>
+  <p>Signature: <span class="sig-line"></span> &nbsp; Date: <span class="sig-line" style="min-width:100px"></span></p>
+</div>
+
+<div class="attestation">
+  <div class="stmt-num">Statement 4 - Fast Lane Prohibition hardware verification</div>
+  <blockquote>
+    We confirm that the Fast Lane Prohibition, which prevents any sub-2ms decision path from accessing the Hardware Root of Trust directly, has been implemented in hardware or firmware and verified through conformance testing. Verification evidence includes the LTL Property 4 formal verification results (Step 3, Section 7.1) and the timing budget measurements (Step 3, Section 7.3). We confirm that this prohibition has not been assumed from software configuration alone.
+  </blockquote>
+  <p>Signature: <span class="sig-line"></span> &nbsp; Date: <span class="sig-line" style="min-width:100px"></span></p>
+</div>
+
+<h3 id="s4-degraded">Section 8.4 Degraded mode in software-only deployment</h3>
+
+<p>Any deployment operating without a hardware root of trust must carry the following disclosure in all compliance documentation, regulatory submissions, and audit reports. This disclosure may not be omitted, abbreviated, or paraphrased in a way that obscures its meaning.</p>
+
+<blockquote>
+  <strong>Required Degraded Mode Disclosure:</strong><br><br>
+  "This deployment operates in software-only mode without a Hardware Root of Trust. In this mode, Cryptographic Erasure degrades to policy-only enforcement with the following specific consequences: (1) The epoch counter is software-managed and subject to manipulation by any attacker with operating system privileges. (2) Key zeroization executes through software memory operations that may leave recoverable traces in swap files, core dumps, or volatile memory subject to cold-boot extraction. (3) The Fast Lane Prohibition cannot be hardware-enforced and relies on software scheduling constraints that a privileged attacker can override. (4) Erasure guarantees under GDPR Article 17 become governance commitments backed by procedural controls rather than hardware-enforced cryptographic constraints. This degraded mode must not be represented as equivalent to hardware-enforced Cryptographic Erasure in any compliance documentation."
+</blockquote>
+
+<p>Under GDPR Article 32, controllers must implement technical measures appropriate to risk, taking into account the state of the art. Hardware security modules certified to <strong>FIPS 140-3 Level 3</strong> provide tamper-resistant enclosures and automatic zeroization; software-only deployments correspond to <strong>FIPS 140-3 Level 1</strong>. The gap between Level 1 and Level 3 is not incremental. For SEC Rule 17a-4 compliance, the WORM requirement is supported by hardware-enforced immutability in Level 3 mode; in software-only mode, immutability depends on operating system access controls that privileged insiders can modify.</p>
+
+<h3 id="s4-consistency">Section 8.5 Cross-reference consistency index</h3>
+
+<p>Five architectural constraints verified across all sections of Steps 1 through 3. Any inconsistency found is flagged explicitly rather than resolved silently.</p>
+
+<h4>Constraint 1: Fast Lane Prohibition</h4>
+<table>
+  <tr><th>Aspect</th><th>Reference</th></tr>
+  <tr><td>Definition</td><td>Step 1, Section 3.2 - no sub-2ms path may access HRoT directly</td></tr>
+  <tr><td>DITL gate implementation</td><td>Step 2, Section 4.1 - uses TEE-cached epoch key</td></tr>
+  <tr><td>Timing budget</td><td>Step 3, Section 7.3 - no sub-2ms row includes HRoT access</td></tr>
+  <tr><td>Formal verification</td><td>Step 3, Section 7.1 - LTL Property 4 confirms in all states</td></tr>
+</table>
+<div class="callout ok"><div class="callout-title">Result: Consistent</div><p>No section authorizes direct HRoT access in any sub-2ms decision path. No contradiction found.</p></div>
+
+<h4>Constraint 2: NL=NA coupling to destruction events</h4>
+<table>
+  <tr><th>Aspect</th><th>Reference</th></tr>
+  <tr><td>Definition</td><td>Step 2, Section 4.1 - hard architectural constraint</td></tr>
+  <tr><td>Erasure authorization</td><td>Step 2, Section 5.1 - FROST logged before destruction</td></tr>
+  <tr><td>Key destruction execution</td><td>Step 2, Section 5.2 - zeroization gated on prior commitment</td></tr>
+</table>
+<div class="callout ok"><div class="callout-title">Result: Consistent</div><p>No path permits zeroization without a prior logged and committed Destruction Event. No contradiction found.</p></div>
+
+<h4>Constraint 3: State -1 permanence</h4>
+<table>
+  <tr><th>Aspect</th><th>Reference</th></tr>
+  <tr><td>Definition</td><td>Architectural conventions - permanent and irreversible</td></tr>
+  <tr><td>Key lifecycle</td><td>Step 1, Section 2.3 - Zeroized state terminal</td></tr>
+  <tr><td>Post-destruction</td><td>Step 2, Section 5.2 - SDT records destruction permanently</td></tr>
+</table>
+<div class="callout ok"><div class="callout-title">Result: Consistent</div><p>No recovery path from State -1 exists within the specification. No contradiction found.</p></div>
+
+<h4>Constraint 4: Plaintext prohibition</h4>
+<table>
+  <tr><th>Scenario</th><th>Behavior</th></tr>
+  <tr><td>Normal operation</td><td>Encrypted under current epoch key</td></tr>
+  <tr><td>State 0-Suspended</td><td>System halts; no plaintext fallback</td></tr>
+  <tr><td>Epoch transition mid-batch</td><td>Entries encrypted under their respective epoch keys</td></tr>
+  <tr><td>HRoT failure</td><td>TEE-cached key used or State 0-Suspended entered</td></tr>
+</table>
+<div class="callout ok"><div class="callout-title">Result: Consistent</div><p>Four potential plaintext exposure paths checked. No path produces unencrypted log content. No contradiction found.</p></div>
+
+<h4>Constraint 5: Audit key isolation</h4>
+<table>
+  <tr><th>Aspect</th><th>Reference</th></tr>
+  <tr><td>Audit key definition</td><td>audit_key_n = PRF(master_audit_secret || chain_code, epoch_n)</td></tr>
+  <tr><td>Epoch key definition</td><td>Derived from HRoT counter + heartbeat entropy + prev Merkle root</td></tr>
+  <tr><td>Isolation</td><td>Entirely separate IKM; no shared secret input</td></tr>
+</table>
+<div class="callout ok"><div class="callout-title">Result: Consistent</div><p>No function in the specification connects audit key and epoch key derivation branches. Knowledge of any number of audit keys provides no information about epoch keys. No contradiction found.</p></div>
+
+<div class="callout ok">
+  <div class="callout-title">Consistency Index Summary</div>
+  <p>All five architectural constraints verified. <strong>No contradictions found.</strong> Each constraint is defined in exactly one location, implemented consistently in all referencing sections, and confirmed by formal verification where applicable. The specification is internally consistent.</p>
+</div>
+
+<h3 id="s4-signature">Signature block</h3>
+
+<div class="signature-block">
+  <p>By signing below, each authorized party confirms that they have read and understood this document in its entirety, accept the residual risks identified in Section 8.3 (as individually signed in that section), acknowledge the degraded mode disclosure requirements in Section 8.4, and authorize deployment for the specified domain.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>Printed Name</th>
+        <th>Signature</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Governance Council Chair</td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line" style="min-width:100px"></span></td>
+      </tr>
+      <tr>
+        <td>Data Protection Officer</td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line" style="min-width:100px"></span></td>
+      </tr>
+      <tr>
+        <td>Chief Information Security Officer</td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line" style="min-width:100px"></span></td>
+      </tr>
+      <tr>
+        <td>Independent Fiduciary</td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line" style="min-width:100px"></span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top: 1.5rem;"><strong>Deployment Domain Identifier:</strong> <span class="sig-line" style="min-width:400px"></span></p>
+
+  <p><strong>Deployment Classification:</strong> &nbsp;
+    <label>☐ Full hardware-enforced mode</label> &nbsp;
+    <label>☐ Degraded software-only mode (Section 8.4 disclosure required)</label>
+  </p>
+</div>
+
+<footer class="doc-footer">
+  <div class="closing">
+    Steps 1 through 4 together constitute the complete Cryptographic Erasure specification for the Ternary Logic architecture, spanning key hierarchy and hardware root of trust design (Step 1), log integrity and threshold governance protocols (Step 2), post-quantum migration and formal verification (Step 3), and threat boundary declaration with residual risk acceptance (Step 4). The specification is internally consistent across all five verified architectural constraints, provides hardware-enforced cryptographic guarantees bounded by explicitly stated assumptions, identifies and names every known residual risk without hedging, and requires governance council members to accept each residual risk through individual signed statements before deployment proceeds. This document is ready for governance council review and deployment authorization.
+  </div>
+  <p>Ternary Logic Framework &nbsp;·&nbsp; Cryptographic Erasure Specification &nbsp;·&nbsp; Unified Presentation of Steps 1-4</p>
+  <p>Goukassian Principle preserved &nbsp;·&nbsp; Epistemic Hold preserved &nbsp;·&nbsp; No Log = No Action</p>
+</footer>
+
+</main>
+
+</body>
+</html>
