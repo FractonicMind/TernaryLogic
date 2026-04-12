@@ -6,7 +6,7 @@ This is the structural paradox at the heart of Ternary Logic (TL): the same immu
 
 The answer is not deletion. It is **key destruction**. When the encryption key is gone, the ciphertext remains - structurally intact, Merkle-verified, blockchain-anchored - but computationally unrecoverable. The ledger keeps its promise of immutability. The data subject gets their erasure. The trade secret disappears from any adversary without the key.
 
-This folder documents TL's unified **Cryptographic Erasure** architecture, covering two trigger paths against a shared key destruction substrate.
+This specification documents TL's unified **Cryptographic Erasure** architecture, covering two trigger paths against a shared key destruction substrate.
 
 ---
 
@@ -27,7 +27,7 @@ Both paths require a Destruction Event log entry to be committed to the Immutabl
 
 ## Audio Introduction
 
-🎧 [Shredding Immutable Data with Ternary Logic](https://raw.githubusercontent.com/FractonicMind/TernaryLogic/main/Cryptographic_Erasure/Shredding%20Immutable%20Data%20with%20Ternary%20Logic.mp3)
+🎧 [Shredding Immutable Data with Ternary Logic](https://fractonicmind.github.io/TernaryLogic/Cryptographic_Erasure/Shredding_Immutable_Data_with_Ternary_Logic.mp3)
 
 ---
 
@@ -77,22 +77,22 @@ The full specification is produced as a dual-spec: two independent research runs
 
 ### Primary Specification (Spec A)
 
-**Step 1 - Threat Models, Key Hierarchy, and Hardware Root of Trust**
+**Step 1 - Threat Models, Key Hierarchy, and Hardware Root of Trust**   
 [TL_CE_Threat_Models_Key_Hierarchy_HRoT.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Cryptographic_Erasure/TL_CE_Threat_Models_Key_Hierarchy_HRoT.md)
 
 Establishes the three-class trade-secret threat model, the GDPR erasure threat model with EDPB Guidelines 02/2025 and CNIL blockchain guidance, the unified destruction guarantee, the HKDF-SHA3-256 epoch key derivation construction, the PRF-based subject-derived key hierarchy, the five-state key lifecycle mapped to TL ternary states, the Fast Lane Prohibition with benchmark-cited timing budget, and the SP 800-90B heartbeat entropy specification.
 
-**Step 2 - NL=NA Integration, Merkle Architecture, and Commanded Destruction**
+**Step 2 - NL=NA Integration, Merkle Architecture, and Commanded Destruction**   
 [TL_CE_NL_NA_Merkle_Integration_Commanded_Destruction.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Cryptographic_Erasure/TL_CE_NL_NA_Merkle_Integration_Commanded_Destruction.md)
 
 Specifies the DITL gate interaction with epoch key availability, the RFC 6962 domain-separated Merkle leaf construction, the epoch map mechanism preventing epoch substitution attacks, Hybrid Shield operation ordering, anchor timing decoupling with TRNG jitter, the FROST 3-of-5 and 5-of-7 threshold erasure authorization protocol, Subject Derivation Table zeroization with random-data overwrite, and the dual-regime SEC Rule 17a-4 and GDPR Article 17 compliance framework.
 
-**Step 3 - Post-Quantum Migration, Formal Verification, Test Vectors, and Diagrams**
+**Step 3 - Post-Quantum Migration, Formal Verification, Test Vectors, and Diagrams**   
 [TL_CE_Post_Quantum_Formal_Verification_Test_Vectors_Diagrams.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Cryptographic_Erasure/TL_CE_Post_Quantum_Formal_Verification_Test_Vectors_Diagrams.md)
 
 Covers ML-KEM-1024 and SLH-DSA-SHAKE-128s migration paths with CNSA 2.0 deadlines, the three-phase epoch chain migration protocol, four NuSMV-verified LTL properties with complete model code, the full attack surface control table with seven vectors, five NIST CAVP-style test vectors including avalanche and dependency chain negative cases, and four mandatory Mermaid diagrams covering epoch boundary atomicity, key lifecycle state machine, Fast Lane timing separation, and commanded destruction governance flow.
 
-**Step 4 - Threat Boundary, Residual Risk, and Integration Review**
+**Step 4 - Threat Boundary, Residual Risk, and Integration Review**   
 [TL_CE_Threat_Boundary_Residual_Risk_Integration_Review.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Cryptographic_Erasure/TL_CE_Threat_Boundary_Residual_Risk_Integration_Review.md)
 
 The governance council acceptance document. Names the three explicit protections (content confidentiality, forward secrecy, GDPR compliance), the four non-protection boundaries (authorized insider access, traffic analysis, metadata inference, physical key extraction), four signable residual risk acceptance statements, the degraded mode disclosure required for software-only deployments, and a five-constraint cross-reference consistency index verifying the specification is internally contradiction-free.
@@ -101,22 +101,22 @@ The governance council acceptance document. Names the three explicit protections
 
 ### Parallel Specification (Spec B)
 
-**Step 1 - Architectural Blueprint: Threat Model, Key Hierarchy, and Hardware Root of Trust**
+**Step 1 - Architectural Blueprint: Threat Model, Key Hierarchy, and Hardware Root of Trust**   
 [TL_CE_Architectural_Blueprint_Threat_Model_Key_Hierarchy_HRoT.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Cryptographic_Erasure/TL_CE_Architectural_Blueprint_Threat_Model_Key_Hierarchy_HRoT.md)
 
 A dual-horizon threat model treating current regulatory adversaries and quantum adversaries as simultaneous planning horizons. Produces pseudocode for all three derivation functions (epoch key, subject key, audit key) alongside state transition tables, and includes an explicit platform divergence analysis comparing TPM 2.0, Thales Luna 7 HSM, and RISC-V Keystone TEE on attestation latency and Fast Lane enforcement requirements.
 
-**Step 2 - Architecting Contradiction: GDPR Erasure and SEC Recordkeeping in Ternary Logic**
+**Step 2 - Architecting Contradiction: GDPR Erasure and SEC Recordkeeping in Ternary Logic**   
 [TL_CE_Architecting_Contradiction_GDPR_SEC_Compliance.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Cryptographic_Erasure/TL_CE_Architecting_Contradiction_GDPR_SEC_Compliance.md)
 
 Addresses the apparent conflict between GDPR Article 17 (erasure) and SEC Rule 17a-4 (mandatory retention) and resolves it architecturally: the Destruction Event log entry is proof of erasure, not the erased content, so its retention does not contradict the erasure it documents. Specifies auditor verification procedures for structural integrity confirmation without epoch key access, using Merkle inclusion proofs, consistency proofs, and epoch map validation.
 
-**Step 3 - Post-Quantum Migration, Formal Verification, Attack Surface, and Diagrams**
+**Step 3 - Post-Quantum Migration, Formal Verification, Attack Surface, and Diagrams**   
 [TL_CE_Post_Quantum_Verification_Attack_Surface_Diagrams.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Cryptographic_Erasure/TL_CE_Post_Quantum_Verification_Attack_Surface_Diagrams.md)
 
 Parallel coverage of ML-KEM-1024 and SLH-DSA migration, four LTL formal properties, seven-row attack surface control matrix, five NIST CAVP-style test vectors, and four Mermaid diagrams. Notable contribution: the platform divergence table carried forward from Step 1 clarifying that low-latency HSM and TEE platforms must enforce the Fast Lane Prohibition logically even when hardware latency would physically permit HRoT access in the sub-2ms window.
 
-**Step 4 - Defining the Guardrails: A Governance Framework for Ternary Logic Cryptographic Erasure**
+**Step 4 - Defining the Guardrails: A Governance Framework for Ternary Logic Cryptographic Erasure**   
 [TL_CE_Defining_the_Guardrails.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Cryptographic_Erasure/TL_CE_Defining_the_Guardrails.md)
 
 Governance framework covering deployment checklist, custodian ceremony runbooks for epoch rotation and subject-scope erasure, incident response procedures mapped to TL states, and a consolidated cross-reference index linking every requirement to its originating standard across FIPS 140-3, FIPS 203, FIPS 205, SP 800-38D, SP 800-90B, SEC 17a-4, FINRA 4511, and GDPR Articles 17 and 5(2).
@@ -133,11 +133,13 @@ The Ephemeral Key Rotation mechanism was identified in the Constitutional Surviv
 
 ## Published Research
 
-**First Paper:** Goukassian, L. (2025). Auditable AI: Tracing the Ethical History of a Model. *AI and Ethics*, Springer Nature. [https://doi.org/10.1007/s43681-025-00910-6](https://doi.org/10.1007/s43681-025-00910-6)
+**First Paper:** Goukassian, L. (2025). Auditable AI: Tracing the Ethical History of a Model. *AI and Ethics*, Springer Nature.   
+[https://doi.org/10.1007/s43681-025-00910-6](https://doi.org/10.1007/s43681-025-00910-6)
 
 **Second Paper:** Accepted April 1, 2026. A Ternary Logic Framework for Institutional Governance. *AI and Ethics*, Springer Nature.
 
-**SSRN Working Paper:** Atomic Auditability in Financial Execution Pipelines via Hardware-Enforced Ternary States. [https://doi.org/10.5281/zenodo.18716142](https://doi.org/10.5281/zenodo.18716142)
+**SSRN Working Paper:** Atomic Auditability in Financial Execution Pipelines via Hardware-Enforced Ternary States.    
+[https://doi.org/10.5281/zenodo.18716142](https://doi.org/10.5281/zenodo.18716142)
 
 ---
 
