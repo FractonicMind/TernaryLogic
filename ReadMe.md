@@ -3,7 +3,7 @@
 **Epistemic Hold Technology for Economic Decision-Making**
 
 [![Published](https://img.shields.io/badge/Published-AI%20and%20Ethics%20%7C%20Springer%20Nature-blue.svg)](https://doi.org/10.1007/s43681-025-00910-6)
-[![Accepted](https://img.shields.io/badge/Accepted-AI%20and%20Ethics%20%7C%20Springer%20Nature-brightgreen.svg)](https://doi.org/10.1007/s43681-025-00910-6)
+[![Accepted](https://img.shields.io/badge/Accepted-Enforcement Gap in Global Economic Systems-brightgreen.svg)](Enforcement Gap in Global Economic Systems)
 [![Mandatory Reading](https://img.shields.io/badge/MANDATORY-Read%20First-red?style=flat-square&labelColor=darkred)](docs/Mandatory.md)
 [![ZENODO](https://img.shields.io/badge/ZENODO-Notarized%20Constitutional%20Core-purple?style=flat-square)](https://zenodo.org/records/17613006)
 [![Test Coverage](https://img.shields.io/badge/Test%20Coverage-81%25-brightgreen?style=flat-square)](tests/)
