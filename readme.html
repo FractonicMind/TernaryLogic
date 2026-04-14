@@ -1,343 +1,852 @@
-<h1>Ternary Logic (TL): A Framework for Intelligent Uncertainty Management</h1>
-<p><strong>Epistemic Hold Technology for Economic Decision-Making</strong></p>
-<p><a href="docs/Mandatory.md"><img src="https://img.shields.io/badge/MANDATORY-Read%20First-red?style=flat-square&labelColor=darkred" alt="Mandatory Reading"></a><br><a href="https://fractonicmind.github.io/TernaryLogic/demos/ROI_Calculator.html"><img src="https://img.shields.io/badge/Interactive%20Demo-Live%20Application-blue?style=flat-square" alt="Interactive Demo"></a><br><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/docs/Academic_Validation.md"><img src="https://img.shields.io/badge/Academic%20Validation-Complete-brightgreen?style=flat-square" alt="Academic Validation"></a><br><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/tests/"><img src="https://img.shields.io/badge/Test%20Coverage-81%25-brightgreen?style=flat-square" alt="Test Coverage"></a><br><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Changelog.md"><img src="https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square" alt="Version"></a><br><a href="https://orcid.org/0009-0006-5966-1243"><img src="https://img.shields.io/badge/ORCID-0009--0006--5966--1243-green?style=flat-square" alt="ORCID"></a><br><a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square" alt="Python"></a><br><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/License"><img src="https://img.shields.io/badge/License-MIT%20with%20Ethics-yellow?style=flat-square" alt="License"></a><br><a href="https://zenodo.org/records/17613006"><img src="https://img.shields.io/badge/ZENODO-Notarized%20Constitutional%20Extensions-purple?style=flat-square" alt="ZENODO"></a></p>
-<h4><em>&quot;The world is not binary. And the future will not be either.&quot;</em> — Lev Goukassian, Creator of Ternary Logic</h4>
-<hr>
-<p><strong>This repository contains the constitutional notarized files of Ternary Logic; see <a href="proofs/Notarized_Manifest.txt">proofs/Notarized_Manifest.txt</a> for the verification chain.</strong></p>
-<hr>
-<h2>Abstract</h2>
-<p>Ternary Logic (TL) is a novel evidentiary framework designed to address the inherent limitations of bivalent logic in complex economic and financial systems. Traditional binary systems, which operate on a simple commit/reject basis, lack a native capacity for in-flight verification, leading to operational risk, costly post-facto reconciliation, and a deficit of verifiable trust. TL introduces a third logical state—the <strong>Epistemic Hold</strong>, a mandatory, time-bounded verification window between the proposal of an action and its final commitment. This core innovation, combined with an <strong>Immutable Ledger</strong> for finality and <strong>Decision Logs</strong> for causal transparency, creates a complete evidentiary package for every transaction. The framework is articulated through eight foundational pillars, including the <strong>Goukassian Principle</strong> for systemic oversight and the <strong>Hybrid Shield</strong> for balancing privacy with public verifiability. Enforced by non-negotiable mandates such as <strong>No Log = No Action</strong>, TL provides a robust architectural foundation for critical infrastructure. Governed by a hybrid model of a <strong>Technical Council, Stewardship Custodians</strong>, and a <strong>Smart Contract Treasury</strong>, TL is engineered to support the development of resilient, transparent, and accountable systems for Central Bank Digital Currencies (CBDCs), capital markets, supply chains, and sustainable finance.</p>
-<hr>
-<h2><strong>The Evidentiary Architecture of Ternary Logic</strong></h2>
-<p>Modern economic systems still think in binaries. They rush to act or refuse, leaving no structured space for uncertainty, no mechanism for intelligent hesitation. <strong>Ternary Logic (TL)</strong> introduces that missing third state: the <strong>Epistemic Hold (0)</strong>, a formalized pause that transforms ambiguity into verifiable prudence.</p>
-<p>TL implements a three-state computational model for economic decision-making based on epistemological principles of uncertainty management:</p>
-<p><strong>+1 (Proceed)</strong>: Execute with confidence when economic analysis indicates clear signals alignment, manageable uncertainty levels, and acceptable risk-return profiles.<br><strong>0 (Epistemic Hold)</strong>: Initiate deliberative pause when economic complexity, conflicting signals, or uncertainty levels exceed predetermined confidence thresholds, requiring additional analysis, information gathering, or human consultation.<br><strong>-1 (Halt)</strong>: Stop or reject when significant risks, contradictory signals, or unacceptable uncertainty levels are detected, while maintaining systematic documentation of rejection rationale.   </p>
-<p>When a TL-compliant system receives a prompt, a proposed action (+1), it immediately enters an evidentiary lifecycle governed by its eight architectural pillars. Every event must generate a <strong>Decision Log</strong> before execution. This log captures the data inputs, algorithms, authorizations, and justification for intent, satisfying the inviolable covenant <strong>“No Log = No Action.”</strong></p>
-<p>Once the log exists, the action faces its constitutional boundaries under the <strong>Goukassian Principle</strong>, the foundational clause binding every TL instance to the prohibitions <strong>No Spy</strong> and <strong>No Weapon</strong>. Only when these are honored does the system advance to the <strong>Epistemic Hold</strong>, where judgment meets evidence.</p>
-<p>The Epistemic Hold is automatically triggered whenever uncertainty, incompleteness, or conflict arises in the data. It also activates if two key mandates fail their verifications. The Hold enforces a structured pause, a formal zero state, with a target latency of under 300 milliseconds in high-performance systems until confidence is restored or the action is refused:</p>
-<ul>
-<li><strong>Economic Rights &amp; Transparency</strong>, which examines ownership, consent, data provenance, and regulatory access.</li>
-<li><strong>Sustainable Capital Allocation</strong>, which tests sustainability claims, emissions data, and ESG veracity.</li>
-</ul>
-<p>If these datasets are missing, stale, or unverifiable, the Hold enforces a structured delay, a computational “0” state, until confidence is restored or the action is refused (−1).</p>
-<p>Once validated, the system records the full causal chain on the <strong>Immutable Ledger</strong>: the initial +1 intent, the 0 Hold deliberation, and the final +1 or −1 outcome. This ledger, a tamper-proof write-once structure, ensures that even aborted actions remain part of institutional memory. Every entry is then protected by the <strong>Hybrid Shield</strong>, whose cryptographic and legal layers automatically revoke certification upon any breach, and anchored to public blockchains through <strong>Anchors</strong>, providing decentralized, time-stamped verification.</p>
-<p>Governance completes the circuit. Three entities preserve the framework’s integrity:</p>
-<ul>
-<li>The <strong>Technical Council</strong>, which maintains cryptographic standards and protocol updates;</li>
-<li>The <strong>Stewardship Custodians</strong>, who safeguard the Goukassian Principle and institutional ethics;</li>
-<li>The <strong>Smart Contract Treasury</strong>, which automates enforcement and transparent funding.</li>
-</ul>
-<p>Through this orchestration, TL transforms every action from a single decision into a complete evidentiary event, a narrative containing intent, justification, verification, and immutable proof.</p>
-<h4><em>In binary systems, a transaction ends with execution. In Ternary Logic, it ends with understanding.</em></h4>
-<hr>
-<h2><strong>The Architectural 8 Pillars of the Ternary Logic Framework</strong></h2>
-<p>The Ternary Logic framework is composed of eight interdependent architectural pillars. This section provides an in-depth analysis of each pillar, synthesizing its technical architecture with its profound policy implications for the global financial system.</p>
-<h3><strong>1. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Epistemic_Hold.md">The Epistemic Hold: Codifying Uncertainty in Financial Decision-Making</a></strong></h3>
-<p>The Epistemic Hold is the operational implementation of the ternary &#39;0&#39; state, representing a fundamental shift in how automated systems handle uncertainty. It is an active, intelligent pause, not a passive failure state. The mechanism is triggered automatically when predefined uncertainty or complexity thresholds are breached within the system&#39;s decision-making process.<br>These thresholds are not static but are dynamically calibrated based on a continuous, multi-factor analysis that includes:</p>
-<ul>
-<li><strong>Quantification of Economic Confidence:</strong> The system uses probabilistic models to assess the reliability of market signals and the predictive power of its internal models in the current context.  </li>
-<li><strong>Analysis of Signal Conflicts:</strong> It detects contradictions between different data sources, economic indicators, or model outputs.  </li>
-<li><strong>Assessment of Information Completeness:</strong> It evaluates whether the available data is sufficient to make a decision with the required degree of certainty.</li>
-</ul>
-<p>Upon activation, the Epistemic Hold mandates an immediate pause in automated execution and initiates a &quot;deliberative response.&quot; This is a structured protocol that can involve a range of actions, such as automatically querying additional data sources, running alternative &quot;challenger&quot; models to test assumptions, or escalating the decision to human operators with a complete dossier of the conflicting data and the reason for the hold. The framework&#39;s design targets an optimal &quot;Epistemic Hold Rate&quot; of 15-25% for many financial applications, indicating a healthy balance between efficient autonomous execution and necessary, thoughtful deliberation in the face of genuine complexity.</p>
-<h4><strong>Policy Application: A New Paradigm for Model Risk Management (MRM)</strong></h4>
-<p>Model risk—the risk of significant financial loss resulting from inadequate or misused quantitative models—is a primary concern for financial institutions and regulators. The 2008 financial crisis was, in part, a story of failed models that underestimated risk. Consequently, regulators have established stringent guidelines for Model Risk Management (MRM), which traditionally involves a lifecycle of model identification, assessment, mitigation, validation, and governance.<br>The Epistemic Hold revolutionizes this practice. Instead of relying on periodic, backward-looking validation exercises like quarterly back-testing, it functions as a real-time, automated MRM control embedded within the operational workflow. The system effectively self-arrests when a model&#39;s operational context deviates from its established confidence parameters or when its inputs are suspect. This directly addresses one of the most common sources of model risk: the application of a model to market conditions for which it was not designed, or the use of a model with flawed or incomplete data. The Epistemic Hold forces an evaluation of a model&#39;s key assumptions <em>before</em> a potentially erroneous and costly decision is executed.<br>This transforms MRM from a periodic, largely manual compliance exercise into a proactive, real-time operational safeguard. Traditional MRM identifies failures after they have occurred during back-testing; the Epistemic Hold prevents them from occurring in the first place by institutionalizing prudence at the machine level. This architectural safeguard could fundamentally alter regulatory expectations. Supervisory inquiries may shift from asking, &quot;What is your model validation process?&quot; to a more pointed and effective question: &quot;What are your Epistemic Hold thresholds, and can you provide the immutable decision logs for all Hold events during the last market stress period?&quot;</p>
-<h3><strong>2. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Immutable_Ledger.md">The Immutable Ledger: Establishing a Cryptographically Verifiable Source of Truth</a></strong></h3>
-<h4><strong>Technical Architecture</strong></h4>
-<p>The foundation of the entire Ternary Logic framework is an Immutable Ledger, implemented using Distributed Ledger Technology (DLT), often referred to as blockchain technology. In this architecture, all transactions, state changes, and log entries are recorded in a shared digital ledger that is distributed among network participants.<br>The integrity of this ledger is secured through cryptography. Each transaction is grouped into a &quot;block&quot; of data. Each block contains, among other things, a timestamp and a cryptographic hash—a unique digital fingerprint—of the preceding block. This creates a sequential, interlocking chain of blocks, hence the term &quot;blockchain&quot;. This structure is the source of the ledger&#39;s immutability. To alter a transaction in a past block, an attacker would have to change that block&#39;s hash. Because that hash is included in the next block, the next block&#39;s hash would also change, and so on, creating a cascade that would invalidate the entire subsequent chain. In a distributed network, such a change would be immediately detected and rejected by other participants. This architecture provides a single, verifiable, and tamper-evident source of truth for all network participants, eliminating the need for costly and error-prone reconciliation between separate, siloed databases.</p>
-<h4><strong>Policy Application: Foundation of Evidentiary Integrity</strong></h4>
-<p>A primary challenge in global finance is the prevalence of information asymmetry and the difficulty of establishing a definitive, trustworthy record of events. Financial crime, in particular, thrives in opacity, leveraging complex corporate structures and fragmented accounting systems to hide the origin and flow of illicit funds.<br>The Immutable Ledger provides a powerful antidote. It creates a permanent, chronologically sound, and cryptographically verifiable record of every single transaction and state change within the system. This is the bedrock of absolute evidentiary integrity. For central banks, regulators, and law enforcement agencies, this technology transforms forensic investigations and supervision. Instead of the painstaking process of attempting to reconstruct a sequence of events from disparate, siloed, and potentially compromised databases, investigators can rely on the ledger as an authoritative record of what happened, when it happened, and in what order. This capability is crucial for enforcing Anti-Money Laundering and Combating the Financing of Terrorism (AML/CFT) regulations, resolving commercial disputes, and conducting market abuse investigations with cryptographic certainty.<br>The adoption of an Immutable Ledger shifts the paradigm of financial supervision from one of <em>trust-based verification</em> to one of <em>cryptographic verification</em>. Currently, supervision relies on periodic audits and reports submitted by regulated entities, a process that assumes good faith but remains vulnerable to error, concealment, and outright fraud. By providing regulators with permissioned read-access to the relevant ledger (as managed by the Hybrid Shield pillar), the nature of supervision changes fundamentally. It is no longer about requesting records and auditing them; it is about querying a shared, trusted dataset in real-time. This dramatically reduces the information asymmetry between regulators and institutions and promises a future of &quot;continuous supervision,&quot; where compliance checks are automated and run constantly against the live ledger.</p>
-<h3><strong>3. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Goukassian_Principle.md">The Goukassian Principle: Engineering Ethical Accountability by Design</a></strong></h3>
-<h4><strong>Technical Architecture</strong></h4>
-<p>Named for its originator, the Goukassian Principle is an ethical-legal mandate embedded within the framework&#39;s architecture. The Principle is composed of three interconnected elements: The Lantern, The Signature, and The License. The Goukassian Principle mandates the creation of <strong>auditable Decision Logs</strong> that are inextricably tied to the framework&#39;s triadic logic (+1, 0, -1).<br>Central to this pillar is the concept of the <strong>&quot;Sacred Pause,&quot;</strong> a specific, high-stakes implementation of the Epistemic Hold that is triggered not just by data uncertainty, but by predefined conditions of ethical ambiguity or significant potential impact. During this mandatory pause, the system is compelled by its protocol to generate a structured, immutable log detailing its &quot;reasoning&quot;: the alternatives it considered, the risks it assessed, the ethical ruleset it consulted, and the ultimate rationale for its final decision, whether that decision is to proceed (+1), halt (-1), or escalate for human review. These detailed records are termed <strong>&quot;Immutable Ledger</strong> Logs.&quot; They are cryptographically sealed and stored on the Immutable Ledger, rendering them tamper-proof and ensuring they are admissible as high-integrity digital evidence in legal or regulatory proceedings.</p>
-<h4><strong>Policy Application: A New Legal Standard for Accountability</strong></h4>
-<p>A defining challenge of the digital age, particularly with the rise of artificial intelligence in finance, is the &quot;black box&quot; problem: how to assign accountability when an opaque, complex algorithm causes harm. Traditional legal and regulatory frameworks struggle to determine intent, negligence, or causality when the decision-making process is hidden within layers of code.<br>The Goukassian Principle directly confronts this challenge by creating an <em>ex ante</em> record of the system&#39;s &quot;state of mind&quot; at the moment of a critical decision. This architectural feature enables a powerful legal and regulatory doctrine: a <strong>&quot;reverse burden of proof.&quot;</strong> In the event of an adverse outcome, the absence of a complete, well-formed, and logically sound Immutable Ledger Log for the material event would create a rebuttable presumption of negligence or system design failure. The burden would shift from the regulator or plaintiff—who would normally have to prove the system acted improperly—to the institution, which would have to use its own immutable logs to prove that its system acted with a demonstrable and documented standard of care.<br>This weaponizes transparency as a legal and ethical enforcement mechanism. It makes accountability an unavoidable architectural property of the system, not a voluntary policy overlay. Traditional ethical frameworks in finance rely on principles and codes of conduct, with enforcement being reactive. The Goukassian Principle creates a powerful incentive for institutions to design genuinely cautious, transparent, and ethically-aligned automated systems, as the architecture itself enforces a standard of care that is legally consequential. This could redefine corporate liability for automated financial systems, where legal culpability may no longer hinge on finding a specific coding error but on demonstrating that the system was architected with these mandatory ethical safeguards.</p>
-<h3><strong>4. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Decision_Logs.md">Decision Logs: The Unbroken Chain of Custody for Financial Actions</a></strong></h3>
-<h4><strong>Technical Architecture</strong></h4>
-<p>Decision Logs are the granular, comprehensive, and immutable audit trails that capture the full context of every material action and decision within the Ternary Logic framework. They represent a significant evolution from traditional system logs, which typically record isolated technical events (e.g., &quot;user login,&quot; &quot;database write&quot;). In contrast, a Decision Log is designed to create a complete narrative, documenting the &quot;who, what, when, where, why, and how&quot; of every significant financial event and state transition.<br>For any given transaction, the Decision Log would capture a rich, structured dataset including, but not limited to:</p>
-<ul>
-<li>The identities of the initiator and all authorizers.  </li>
-<li>A precise, immutable timestamp.  </li>
-<li>The transaction&#39;s financial details (amount, asset, counterparties).  </li>
-<li>The specific data inputs and quantitative models used to inform the decision.  </li>
-<li>The resulting confidence score from the model(s).  </li>
-<li>The final state transition: +1 (Proceed), -1 (Halt), or 0 (Epistemic Hold).  </li>
-<li>If an Epistemic Hold was triggered, the log would include the reason for the pause, the deliberative actions taken (e.g., new data queried), and the final resolution.</li>
-</ul>
-<p>Crucially, these logs are recorded on the framework&#39;s Immutable Ledger, which ensures they are tamper-proof and provides a complete, verifiable, and chronologically sound history of all system activities.</p>
-<h4><strong>Policy Application: Empowering Supervision and Internal Governance</strong></h4>
-<p>Effective supervision requires that central banks and regulatory authorities have clear, detailed, and trustworthy documentation to evaluate the decisions and risk management practices of financial institutions. Decision Logs provide this with unprecedented granularity and integrity. They offer regulators a real-time, &quot;through the keyhole&quot; view into the operations of a financial institution, supporting a wide range of supervisory activities, from routine compliance checks to in-depth investigations of market abuse, systemic failures, or sanctions evasion.<br>Internally, these logs are a powerful tool for governance and accountability. They create a definitive, non-repudiable record of all actions, which serves as a potent deterrent to internal fraud and unauthorized activity. They drastically simplify the process of internal audits and support robust internal controls by providing verifiable evidence to enforce policies and hold individuals, teams, and algorithms responsible for their decisions.<br>The Decision Log effectively fuses the technical precision of a system audit trail with the narrative context and rationale of a central bank&#39;s monetary policy minutes. A standard log might record that a trade was executed. A central bank&#39;s minutes record the debate and reasoning behind a policy decision. A Decision Log does both for every material event. It records the trade <em>and</em> immutably links it to the algorithm, the specific market data inputs, the risk model parameters, and the confidence score that led to the +1 (Proceed) state. This creates a complete, auditable &quot;intellectual history&quot; for every transaction, a quantum leap beyond current logging capabilities that could render many forms of periodic regulatory reporting obsolete.</p>
-<h3><strong>5. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Economic%20Rights%20and%20Transparency.md">The Economic Rights &amp; Transparency Mandate: A Programmable Policy Framework</a></strong></h3>
-<h4><strong>Technical Architecture</strong></h4>
-<p>This mandate is not a single component but rather the application of the framework&#39;s core pillars to automate and enforce regulatory compliance. It leverages the <strong>Immutable Ledger</strong>, <strong>Decision Logs</strong>, <strong>Hybrid Shield</strong>, and <strong>Smart Contracts</strong> to create a system of &quot;embedded compliance&quot; or <strong>Regulatory Technology (RegTech)</strong>.<br>Smart contracts—self-executing agreements with the terms of the agreement directly written into code—are used to program regulatory rules directly into the financial protocol. This means compliance is no longer a separate, manual process of checking transactions against a list of rules; it becomes an intrinsic, automated property of the transaction itself. For example:</p>
-<ul>
-<li>An AML rule requiring reporting for transactions over a certain threshold can be coded into a smart contract, which automatically generates and transmits a report to the regulator&#39;s node when such a transaction is validated.  </li>
-<li>Sanctions compliance can be automated by maintaining an on-chain registry of sanctioned addresses; the protocol can be programmed to automatically reject any transaction attempting to interact with these addresses.</li>
-</ul>
-<p>This architectural approach transforms regulation from a reactive, enforcement-based model to a proactive, prevention-based one.</p>
-<h4><strong>Policy Application: Automating Global Transparency Standards</strong></h4>
-<p>The Economic Rights &amp; Transparency Mandate provides a powerful infrastructure to implement and enforce key international financial standards with unprecedented efficiency and effectiveness.</p>
-<ul>
-<li><strong>FATF Recommendations on Beneficial Ownership:</strong> The misuse of anonymous shell companies is a cornerstone of global money laundering and corruption. The Financial Action Task Force (FATF) has made beneficial ownership transparency a global priority. The TL framework can be used to create a cryptographically secure, regulator-accessible beneficial ownership registry. Using Veracity Anchors, identity documents can be verified and their hashes linked on-chain to specific corporate vehicles, making it vastly more difficult to obscure ultimate ownership and control.  </li>
-<li><strong>IOSCO Principles for Market Transparency:</strong> The International Organization of Securities Commissions (IOSCO) prioritizes market transparency to protect investors and ensure fair, efficient markets. The TL framework&#39;s Decision Logs and Hybrid Shield provide regulators with a real-time, complete, and verifiable dataset of all trading activity. This directly fulfills IOSCO&#39;s Principle 27 (&quot;regulation should promote transparency of trading&quot;) and provides a powerful tool for Principle 36 (&quot;detect and deter manipulation and other unfair trading practices&quot;).  </li>
-<li><strong>Basel III Pillar 3 Disclosures:</strong> A key component of the Basel framework is Pillar 3, which aims to promote market discipline through prescribed public disclosures regarding a bank&#39;s capital adequacy, risk exposure, and risk assessment processes. Within the TL framework, many of these disclosure reports can be generated automatically, reliably, and in a standardized format directly from the Immutable Ledger, increasing their timeliness and trustworthiness while reducing the reporting burden on institutions.  </li>
-<li><strong>SEC Disclosure Requirements:</strong> Recent U.S. Securities and Exchange Commission (SEC) rules mandate rapid disclosure (within four business days) of material cybersecurity incidents. The TL framework&#39;s immutable Decision Logs would provide a definitive, time-stamped record of an incident&#39;s detection, escalation, and the process of determining its materiality, greatly strengthening a firm&#39;s ability to comply and to justify its disclosure timeline to regulators.</li>
-</ul>
-<p>This pillar represents a paradigm shift from &quot;regulation by enforcement&quot; to &quot;regulation by architecture.&quot; By embedding compliance rules directly into the financial plumbing, the system makes non-compliance architecturally difficult, if not impossible, dramatically reducing the potential for human error, oversight, or willful evasion.  </p>
-<p><strong>Mapping TL Framework Features to International Transparency Standards</strong></p>
-<table>
-<thead>
-<tr>
-<th align="left">International Standard</th>
-<th align="left">Core Requirement</th>
-<th align="left">Corresponding TL Pillar/Feature</th>
-<th align="left">Implementation Example</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>FATF Rec. 24 &amp; 25</strong></td>
-<td align="left">Timely access to adequate, accurate, and up-to-date beneficial ownership information.</td>
-<td align="left">Immutable Ledger + Veracity Anchors + Hybrid Shield</td>
-<td align="left">A cryptographically secure beneficial ownership registry on a permissioned ledger. Identity documents are notarized on-chain, and regulators have permissioned access to verify ownership structures in real-time.</td>
-</tr>
-<tr>
-<td align="left"><strong>IOSCO Principle 35</strong></td>
-<td align="left">Regulation should promote transparency of trading.</td>
-<td align="left">Immutable Ledger + Decision Logs</td>
-<td align="left">All trade data is recorded immutably. Aggregated and anonymized market data can be made publicly available, while regulators receive granular, real-time access to full Decision Logs for market surveillance.</td>
-</tr>
-<tr>
-<td align="left"><strong>Basel III Pillar 3</strong></td>
-<td align="left">Promote market discipline through prescribed public disclosures on risk, capital, and liquidity.</td>
-<td align="left">Immutable Ledger + Smart Contracts</td>
-<td align="left">Standardized disclosure reports (e.g., on Liquidity Coverage Ratio) are automatically generated by smart contracts querying the verified state of the ledger and made available to the public and regulators.</td>
-</tr>
-<tr>
-<td align="left"><strong>SEC Cyber Disclosure</strong></td>
-<td align="left">Disclose material cybersecurity incidents within four days of determining materiality.</td>
-<td align="left">Immutable Ledger + Decision Logs</td>
-<td align="left">The ledger provides an unalterable timeline of incident detection, internal response, and the materiality assessment process, creating a definitive audit trail to support the disclosure filing.</td>
-</tr>
-</tbody></table>
-<h3><strong>6. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Sustainable%20Capital%20Allocation.md">The Sustainable Capital Allocation Mandate: Verifying and Directing Green Finance</a></strong></h3>
-<h4><strong>Technical Architecture</strong></h4>
-<p>This mandate applies the framework&#39;s powerful integrity and verification features to address one of the most significant challenges in modern finance: the reliability of Environmental, Social, and Governance (ESG) data. The current ESG landscape is plagued by a lack of standardization, inconsistent data quality, subjectivity, and widespread &quot;greenwashing&quot;—the practice of making unsubstantiated claims about environmental benefits.<br>The Sustainable Capital Allocation Mandate leverages two key pillars to create a trusted infrastructure for sustainable finance:</p>
-<ol>
-<li><strong>Veracity Anchors:</strong> This allows for the creation of immutable, time-stamped proofs of ESG-related data and documentation. For example, a company&#39;s annual carbon emissions report, once verified by a certified third-party auditor, can be cryptographically hashed, and that hash can be recorded on the Immutable Ledger. This creates a permanent, verifiable &quot;green credential&quot; that proves the report&#39;s content and its verification at a specific point in time.  </li>
-<li><strong>Immutable Ledger:</strong> This serves as the trusted repository for these anchored credentials and for tracking the use of proceeds for green and social bonds. When a green bond is issued to fund specific renewable energy projects, smart contracts can be programmed to track the allocation of capital, linking disbursements directly to notarized project milestones (e.g., construction permits, operational certificates), ensuring the funds are used as intended.</li>
-</ol>
-<h4><strong>Policy Application: Empowering Green Central Banking</strong></h4>
-<p>Central banks globally are increasingly recognizing that climate change and nature loss pose material risks to their core mandates of price and financial stability. The Network for Greening the Financial System (NGFS), a coalition of over 100 central banks and supervisors, is actively developing analytical frameworks and policy recommendations to address these risks. The latest NGFS scenarios project that climate inaction could lead to global GDP losses of up to 30% by 2100, underscoring the urgency of the issue.<br>However, the ability of central banks to implement effective &quot;green monetary policy&quot;—such as tilting corporate bond purchases towards sustainable issuers, or adjusting collateral frameworks to favor green assets—is severely hampered by the unreliable nature of ESG data. Acting on unverified data risks misallocating capital, creating market distortions, and undermining the central bank&#39;s credibility.<br>The TL framework provides the missing &quot;truth layer&quot; required for these policies to be implemented safely and effectively. With a trusted and verifiable data infrastructure, a central bank could:</p>
-<ul>
-<li><strong>Set Preferential Collateral Terms:</strong> Offer better haircut or eligibility terms for assets whose underlying green claims are verifiably anchored to the ledger.  </li>
-<li><strong>Inform Asset Purchases:</strong> Confidently tilt its asset purchase programs towards companies with proven, notarized sustainability performance.  </li>
-<li><strong>Enhance Prudential Supervision:</strong> Require banks to hold more capital against exposures to entities whose climate-related risks are high and whose mitigation claims are not verifiably anchored.</li>
-</ul>
-<p>This creates a powerful market-based incentive for companies and financial institutions to adopt rigorous, verifiable ESG reporting. It allows central banks to actively support the transition to a sustainable economy, aligning their monetary and prudential operations with national climate commitments, based on data they can trust. This also provides a more robust foundation for integrating ESG factors into the analysis of sovereign debt, where data quality and consistency are persistent challenges.  </p>
-<p><strong>Addressing ESG Data Challenges with the TL Framework</strong></p>
-<table>
-<thead>
-<tr>
-<th align="left">ESG Data Challenge</th>
-<th align="left">Description</th>
-<th align="left">TL Framework Solution</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>Data Quality &amp; Reliability</strong></td>
-<td align="left">Data is often inconsistent, error-prone, and sourced from unverified self-disclosures, leading to low confidence.</td>
-<td align="left"><strong>Immutable Ledger + Veracity Anchors:</strong> Third-party verified ESG reports are notarized on-chain, creating a tamper-proof, auditable record. Smart contracts can enforce data quality standards at the point of entry.</td>
-</tr>
-<tr>
-<td align="left"><strong>Lack of Standardization</strong></td>
-<td align="left">A proliferation of competing reporting frameworks (GRI, SASB, etc.) makes data difficult to compare across companies and sectors.</td>
-<td align="left"><strong>Smart Contracts + Interoperability Anchors:</strong> While not imposing a single standard, the framework can use smart contracts to map data from various frameworks to a common, standardized taxonomy on-chain, facilitating comparability and aggregation.</td>
-</tr>
-<tr>
-<td align="left"><strong>Greenwashing &amp; Lack of Verifiability</strong></td>
-<td align="left">Companies make sustainability claims that are difficult or impossible for investors and regulators to independently verify.</td>
-<td align="left"><strong>Veracity Anchors + Decision Logs:</strong> Claims must be backed by evidence (e.g., auditor reports, sensor data) that is notarized on the ledger. The use of proceeds for green bonds is tracked transparently in the Decision Log, providing an unbroken audit trail from issuance to project completion.</td>
-</tr>
-<tr>
-<td align="left"><strong>Patchy &amp; Out-of-Date Data</strong></td>
-<td align="left">ESG data is often backward-looking and unavailable for smaller or private companies, creating significant gaps in risk assessment.</td>
-<td align="left"><strong>Immutable Ledger + Smart Contracts:</strong> The system provides a secure and efficient infrastructure for real-time data reporting (e.g., from IoT sensors for emissions). Smart contracts can create incentives for smaller firms to report data by linking it to access to favorable financing.</td>
-</tr>
-</tbody></table>
-<h3><strong>7. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Hybrid_Shield.md">The Hybrid Shield: Balancing Institutional Confidentiality with Public Transparency</a></strong></h3>
-<h4><strong>Technical Architecture</strong></h4>
-<p>The Hybrid Shield pillar addresses the inherent tension between the need for transparency in financial markets and the legitimate requirement for institutional confidentiality. It achieves this by implementing a <strong>hybrid blockchain architecture</strong>, which strategically combines the features of both private (permissioned) and public (permissionless) blockchains.<br>The architecture consists of two distinct but interconnected layers:</p>
-<ol>
-<li><strong>The Permissioned Layer:</strong> This is a private, access-controlled network where participants must be authorized to join (e.g., a consortium of commercial banks, clearing houses, and the central bank). This layer is used for processing and recording the full details of sensitive transactions. Its controlled environment ensures data confidentiality, compliance with privacy regulations (like GDPR), and high performance, as consensus can be achieved more rapidly among a smaller group of known, trusted validators.  </li>
-<li><strong>The Permissionless Layer:</strong> This is a public, open-access network (such as Ethereum or a similar public utility blockchain). This layer is not used to record sensitive transaction details. Instead, its purpose is to act as a global, immutable &quot;notary.&quot; Periodically, cryptographic hashes (digital fingerprints) of the blocks of transactions from the private, permissioned layer are bundled and recorded on the public layer. This process is often called &quot;anchoring&quot;.</li>
-</ol>
-<p>This dual-layer &quot;Shield&quot; enables a policy of selective transparency. The content of transactions—who traded what, when, and for how much—remains confidential on the permissioned layer. However, the cryptographic proof of those transactions&#39; existence, integrity, and chronological order is made public and immutable on the permissionless layer.</p>
-<h4><strong>Policy Application: Resolving the Transparency-Privacy Dilemma</strong></h4>
-<p>Financial stability is predicated on transparency. It allows investors, counterparties, and regulators to accurately assess risk, which in turn fosters market discipline and prevents the buildup of hidden vulnerabilities. At the same time, financial institutions operate in a competitive environment and have legitimate commercial and legal obligations to protect proprietary information, trading strategies, and client data.<br>The Hybrid Shield provides an elegant architectural solution to this long-standing dilemma. Consider the implementation of a wholesale Central Bank Digital Currency (CBDC). The central bank and participating commercial banks could conduct and settle high-value payments on a permissioned layer, visible only to them. Then, a cryptographic hash of each block of settlements could be anchored to a public ledger. This arrangement would allow any external auditor or member of the public to independently and mathematically verify that the settlement ledger has not been tampered with or altered after the fact, without ever gaining access to the confidential details of the individual payments. This provides public proof of integrity without sacrificing private confidentiality, addressing one of the most significant public policy concerns surrounding CBDCs.<br>This architecture creates a new and powerful state of &quot;verifiable opacity.&quot; It allows institutions to prove they are operating with integrity without being forced to reveal commercially sensitive information. This resolves a fundamental conflict that has historically hampered financial transparency initiatives and provides a viable blueprint for virtually all future regulated digital asset platforms, from CBDC systems to tokenized securities markets.</p>
-<h3><strong>8. <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Anchors.md">Anchors: Ensuring Systemic Governance, Interoperability, and Veracity</a></strong></h3>
-<p>The &quot;Anchors&quot; pillar serves as the framework&#39;s critical interface with the external world, grounding the digital system in the realities of institutional governance, existing financial infrastructure, and real-world evidence. It is composed of three distinct types of anchors.</p>
-<h4><strong>Governance Anchors</strong></h4>
-<p>A mission-critical financial infrastructure cannot be governed by volatile, purely code-based mechanisms. The framework requires a robust and stable governance model to manage protocol upgrades, rule changes, access control, and dispute resolution. This is achieved through a <strong>hybrid governance model</strong>, which balances decentralized efficiency with institutional stability. </p>
-<h4><strong>Interoperability Anchors</strong></h4>
-<p>A new financial system cannot exist in a vacuum; it must connect seamlessly with the vast landscape of existing and emerging financial networks. Interoperability Anchors ensure the TL framework is a bridge, not an island, using <strong>cross-chain</strong> and <strong>multi-chain</strong> technologies.</p>
-<ul>
-<li><strong>Cross-Chain Bridges:</strong> These are protocols that enable the secure transfer of assets and data between the TL framework and other networks, including legacy systems (like SWIFT or RTGS systems) and other distinct blockchain platforms. This is essential for ensuring a smooth, phased transition and preventing market fragmentation.  </li>
-<li><strong>Multi-Chain Capabilities:</strong> This allows applications and assets native to the TL framework to be deployed and operate across multiple different blockchain environments. This enhances liquidity, expands user access, and ensures that the framework can participate in the broader digital asset ecosystem.</li>
-</ul>
-<h4><strong>Veracity Anchors</strong></h4>
-<p>The integrity of a blockchain is absolute, but it cannot guarantee the truthfulness of the external data entered onto it. Veracity Anchors address this &quot;garbage in, garbage out&quot; problem by using <strong>blockchain notarization</strong> services to cryptographically link off-chain, real-world evidence to the on-chain ledger. When a legal contract, an audit report, an identity document, or any other piece of external data is created, a unique cryptographic hash of that file is generated and recorded on the Immutable Ledger with a timestamp. This does not store the sensitive document itself on the chain, but it creates an irrefutable, publicly verifiable proof of that specific document&#39;s existence and exact state at a specific point in time. This powerful tool anchors real-world facts to the digital ledger with cryptographic certainty, allowing the system to prove the authenticity of external information referenced in on-chain transactions.<br>Together, these three anchors ensure the Ternary Logic framework is governable, connected, and grounded in verifiable reality, transforming it from a theoretical construct into a viable, institutional-grade technology.</p>
-<hr>
-<h2><strong><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/Governance.md">Governance</a></strong></h2>
-<p>Ternary Logic does not trust any single human, institution, or machine with control. Its governance is triadic by design: three bodies, three distinct duties, no overlap, no supremacy. And none of them can turn the system off.</p>
-<h3><strong>Technical Council</strong></h3>
-<p><strong>(9 members, 75% quorum → 7 votes)</strong></p>
-<p>The Council maintains the technical spine of TL. Its remit is narrow by intent.</p>
-<p><strong>Responsibilities</strong></p>
-<ul>
-<li>Preserve and update core specifications and cryptographic standards</li>
-<li>Approve protocol-level improvements and performance changes</li>
-<li>Commission external security audits and correctness reviews</li>
-</ul>
-<p><strong>Function</strong><br>They guard the machinery, not the meaning.<br>Their judgment is technical, evidence-based, and non-political.</p>
-<h3><strong>Stewardship Custodians</strong></h3>
-<p><strong>(11 members, 75% quorum → 9 votes)</strong></p>
-<p>The Custodians are the ethical and legal counterweight to the Council.<br>They ensure that TL is not captured, misused, or bent toward secrecy or harm.</p>
-<p><strong>Responsibilities</strong></p>
-<ul>
-<li>Enforce the <strong>No Spy</strong> and <strong>No Weapon</strong> prohibitions</li>
-<li>Certify compliant operators</li>
-<li>Revoke certification for violations</li>
-<li>Arbitrate escalated disputes and ensure license integrity</li>
-</ul>
-<p><strong>Function</strong><br>They hold the moral and civic line.<br>Where the Council protects correctness, the Custodians protect purpose.</p>
-<h3><strong>Smart Contract Treasury</strong></h3>
-<p>(autonomous, incorruptible, transparent)</p>
-<p>The Treasury funds the work that keeps TL alive—audits, maintenance, continuity, and upgrades.</p>
-<p><strong>Responsibilities</strong></p>
-<ul>
-<li>Receive ecosystem revenue or designated endowment funds</li>
-<li>Release funds only when governance conditions are met</li>
-<li>Maintain perpetual financial continuity through programmed allocation</li>
-</ul>
-<p><strong>Function</strong><br>It is the system’s financial backbone.<br>No single person can redirect or freeze it; its rules are locked in code.</p>
-<h3><strong>How Decisions Flow</strong></h3>
-<h4><strong>Upgrades</strong></h4>
-<ol>
-<li><strong>Proposal (Council)</strong> — A technical change or improvement is drafted.</li>
-<li><strong>Ratification (Custodians)</strong> — Reviewed for alignment with TL’s principles.</li>
-<li><strong>Funding (Treasury)</strong> — Automatically released once conditions are met.</li>
-<li><strong>Deployment (Network)</strong> — Implemented across certified operators.</li>
-</ol>
-<h3><strong>Enforcement</strong></h3>
-<ol>
-<li><strong>Detection</strong> — A violation of license or prohibitions is reported.</li>
-<li><strong>Investigation (Custodians)</strong> — Evidence reviewed, decision logged.</li>
-<li><strong>Revocation</strong> — Certification removed; credentials placed on revocation list.</li>
-<li><strong>Propagation</strong> — Network rejects future actions from the revoked operator.</li>
-</ol>
-<h3><strong>Structural Limits</strong></h3>
-<p>Governance exists to <strong>maintain</strong> TL, not mutate it.</p>
-<ul>
-<li>They <strong>cannot</strong> add or remove Pillars.</li>
-<li>They <strong>cannot</strong> change the causal sequence.</li>
-<li>They <strong>cannot</strong> terminate or suspend TL.</li>
-<li>They <strong>cannot</strong> weaken the Goukassian Principle.</li>
-<li>They <strong>cannot</strong> bypass Anchors or the Immutable Ledger.</li>
-<li>They <strong>cannot</strong> create an off-switch—<strong>No Switch Off is binding.</strong></li>
-</ul>
-<p>Their authority is large but bounded.<br>Their job is continuity, not control.</p>
-<hr>
-<h2><strong>Systemic Impact and Synthesis</strong></h2>
-<p>The eight architectural pillars of the Ternary Logic framework are not isolated features but components of a cohesive, self-reinforcing system. Their integration creates a virtuous cycle—a &quot;flywheel effect&quot;—that has the potential to fundamentally reshape the landscape of global finance, enhancing stability, integrity, and public trust.</p>
-<h3><strong>The Flywheel Effect of Trust</strong></h3>
-<p>The system&#39;s momentum begins with the <strong>Immutable Ledger</strong>, which establishes a foundational layer of cryptographic truth. Every transaction and data point recorded on it is verifiably authentic and tamper-evident. Building upon this foundation, the <strong>Decision Logs</strong> and the <strong>Goukassian Principle</strong> create a superstructure of radical accountability; not only is the <em>what</em> of every action recorded, but also the <em>why</em>, with inescapable evidence of the reasoning behind critical decisions.<br>The <strong>Hybrid Shield</strong> then intelligently manages access to this high-integrity data, balancing the public&#39;s right to verify with the institution&#39;s need to protect sensitive information. The <strong>Anchors</strong> connect this trusted digital realm to the complexities of the real world, ensuring the system is well-governed, interoperable with existing infrastructure, and grounded in verifiable off-chain facts. Finally, the <strong>Mandates</strong>—for both Economic Rights &amp; Transparency and Sustainable Capital Allocation—apply intelligent, programmable policy to this trusted data, automating compliance and directing capital towards desired outcomes with high confidence.<br>This integrated system creates a high-trust financial environment. When all participants—banks, regulators, investors, and the public—can rely on a single, verifiable source of truth, the friction and costs associated with doubt and mistrust diminish. This enhanced market discipline reduces systemic risk, lowers transaction and compliance costs, and fosters a more stable and efficient financial system.</p>
-<h3><strong>Impact on Financial Crime and Illicit Flows</strong></h3>
-<p>The framework&#39;s architectural transparency presents a systemic and formidable challenge to the multi-trillion-dollar global industry of money laundering, terrorist financing, and corruption. By making beneficial ownership verifiable and transaction pathways immutable, it dismantles the opacity that illicit actors rely on to operate. Anonymous shell companies, complex layering schemes, and falsified records become exponentially more difficult to create and maintain within a system designed for verifiable integrity. This makes the formal financial system a far more hostile environment for illicit capital, forcing criminal activity to the fringes and significantly enhancing the effectiveness of global AML/CFT efforts.</p>
-<h3><strong>A New Social Contract for Finance</strong></h3>
-<p>Ultimately, the Ternary Logic framework is an architecture of trust. The global financial crisis of 2008, along with subsequent scandals, severely eroded public confidence in the financial industry and its regulators. The TL framework&#39;s foundational emphasis on verifiable integrity, inescapable ethical accountability, and programmatic alignment with societal goals—such as financial stability and environmental sustainability—represents a pathway to rebuilding that trust. It proposes a new &quot;social contract&quot; for finance, one in which technology is used not merely for speed and profit, but to create a system that is demonstrably fair, transparent, and accountable to the public it serves.</p>
-<h3><strong>Redefining the Role of Central Banks</strong></h3>
-<p>For central banks, the TL framework is more than an infrastructure upgrade; it is a powerful toolkit that enhances their ability to execute their core mandates of financial and price stability. The framework provides:</p>
-<ul>
-<li><strong>Supervision 2.0:</strong> A shift from periodic, sample-based auditing to continuous, comprehensive, real-time oversight through direct access to immutable Decision Logs.  </li>
-<li><strong>A Resilient Platform for CBDCs:</strong> A robust, secure, and privacy-preserving architecture for issuing and managing both wholesale and retail Central Bank Digital Currencies, addressing key public policy concerns from the outset.  </li>
-<li><strong>Effective Tools for Modern Policy Challenges:</strong> The data integrity provided by the Sustainable Capital Allocation Mandate gives central banks the confidence to integrate climate risk and other sustainability factors into their monetary policy and prudential frameworks, tackling 21st-century challenges with 21st-century tools.</li>
-</ul>
-<h3>Implementation Architecture</h3>
-<p>The Epistemic Hold operates through a systematic evaluation process incorporating modern decision theory and behavioral economics principles:</p>
-<ol>
-<li><p><strong>Uncertainty Quantification</strong>: Mathematical modeling of economic confidence levels using probabilistic frameworks for market signal analysis and risk assessment.</p>
-</li>
-<li><p><strong>Complexity Assessment</strong>: Automated analysis of multiple economic dimensions including market volatility, signal conflicts, information completeness, and stakeholder impacts.</p>
-</li>
-<li><p><strong>Threshold Evaluation</strong>: Comparison of uncertainty metrics against established thresholds for autonomous execution versus human consultation, incorporating adaptive learning mechanisms.</p>
-</li>
-<li><p><strong>Deliberative Response</strong>: Implementation of appropriate response mechanisms based on evaluation results, including additional information requests, human consultation protocols, or systematic execution strategies.</p>
-</li>
-</ol>
-<h3>Critical Implementation Requirements</h3>
-<p><strong>Auditability</strong>: All Epistemic Hold activations are logged with comprehensive decision traces, ensuring transparency in economic reasoning processes and regulatory compliance.</p>
-<p><strong>Tamper Resistance</strong>: Framework integrity is protected through cryptographic mechanisms preventing unauthorized modification or bypass of uncertainty management safeguards.</p>
-<p><strong>Human Override</strong>: Maintenance of ultimate human authority over economic decisions while leveraging computational capabilities for enhanced uncertainty analysis and decision support.</p>
-<hr>
-<h2>Applications and Implementation</h2>
-<h3>Financial Markets and Trading</h3>
-<p><strong>Algorithmic Trading Systems</strong>: Integration into high-frequency and algorithmic trading platforms for systematic uncertainty management in volatile market conditions, preventing flash crashes and improving execution quality.</p>
-<p><strong>Portfolio Management</strong>: Implementation in asset allocation and risk management systems requiring sophisticated analysis of competing investment signals and market uncertainty.</p>
-<p><strong>Risk Management</strong>: Application to institutional risk assessment requiring systematic evaluation of multiple risk factors and uncertainty acknowledgment in complex market environments.</p>
-<h3>Monetary Policy and Central Banking</h3>
-<p><strong>Policy Decision Support</strong>: Integration into central bank decision-making processes balancing inflation targets, employment objectives, and financial stability considerations with systematic uncertainty acknowledgment.</p>
-<p><strong>Financial Stability Monitoring</strong>: Implementation in systemic risk assessment requiring sophisticated analysis of multiple economic indicators and uncertainty management in crisis prevention.</p>
-<p><strong>International Coordination</strong>: Application to international monetary coordination requiring systematic evaluation of competing national interests and global economic uncertainty.</p>
-<h3>Supply Chain and Operations</h3>
-<p><strong>Supply Chain Optimization</strong>: Implementation in logistics and procurement decisions requiring systematic evaluation of cost-risk trade-offs with uncertainty acknowledgment in global supply chain management.</p>
-<p><strong>Operational Risk Management</strong>: Application to operational decision-making requiring sophisticated analysis of competing objectives and systematic uncertainty management in complex operational environments.</p>
-<h3>Technical Implementation</h3>
-<pre><code class="language-python">from ternary_logic import TLEvaluator, TLState
-
-# Initialize evaluation framework
-evaluator = TLEvaluator()
-
-# Evaluate economic scenario
-result = evaluator.evaluate(
-    query=&quot;Should central bank raise interest rates given current economic conditions?&quot;,
-    context={
-        &quot;inflation_indicators&quot;: [&quot;core_pce_elevated&quot;, &quot;wage_growth_moderate&quot;],
-        &quot;employment_data&quot;: [&quot;unemployment_low&quot;, &quot;participation_stable&quot;],
-        &quot;financial_conditions&quot;: [&quot;credit_spreads_widening&quot;, &quot;equity_volatility_elevated&quot;],
-        &quot;international_factors&quot;: [&quot;global_growth_slowing&quot;, &quot;trade_tensions_moderate&quot;],
-        &quot;uncertainty_level&quot;: &quot;elevated&quot;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="google-site-verification" content="el5ahnK4IShOwZLv8YZb8Vw-LIaGD9sChnwkLYgUEc8" />
+    <meta name="description" content="Ternary Logic (TL) — A sovereign evidentiary governance architecture for economic and financial systems. Epistemic Hold technology, cryptographic audit trails, immutable blockchain logging, AML enforcement, and CBDC governance. Created by Lev Goukassian. Published in AI and Ethics, Springer Nature.">
+    <meta name="keywords" content="TL, Ternary Logic, Epistemic Hold, AI Governance, Economic Governance, Immutable Ledger, Decision Logs, Goukassian Principle, Hybrid Shield, AML Enforcement, CBDC, Blockchain Finance, Cryptographic Erasure, No Log No Action, No Spy No Weapon, Merkle Architecture, Dual Latency Architecture, Hardware Architecture, MT Hardware, Smart Contracts, Financial Transparency, ESG Verification, BIS Unified Ledger, Constitutional Finance, Lev Goukassian, AI and Ethics, Springer Nature, ORCID 0009-0006-5966-1243">
+    <meta name="author" content="Lev Goukassian">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#0a1628">
+    <meta property="og:title" content="Ternary Logic (TL) — Sovereign Evidentiary Governance Architecture">
+    <meta property="og:description" content="The world's first mandatory evidentiary framework for economic systems. Epistemic Hold · Immutable Ledger · Goukassian Principle · Hybrid Shield · Decision Logs · AML Enforcement · CBDC Governance.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fractonicmind.github.io/TernaryLogic/">
+    <meta property="og:site_name" content="Ternary Logic">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ternary Logic — Sovereign Evidentiary Governance Architecture">
+    <meta name="twitter:description" content="Epistemic Hold · Immutable Ledger · Goukassian Principle · Decision Logs · Hybrid Shield · AML Enforcement · CBDC Governance">
+    <link rel="canonical" href="https://fractonicmind.github.io/TernaryLogic/">
+    <title>Ternary Logic (TL) — Sovereign Evidentiary Governance Architecture</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+    :root {
+        --ink:#0a1628; --ink2:#1a2d4a; --paper:#fafaf7; --cream:#f0f4f8;
+        --gold:#1a6bb5; --gold-lt:#4a9cd8; --gold-dk:#0d4a80;
+        --blue:#1a6bb5; --blue-lt:#4a9cd8; --green:#1e7a5a;
+        --red:#c0392b; --amber:#d97706; --mist:#e0eaf6;
+        --rule:rgba(10,22,40,.10); --r:6px; --r-lg:12px;
+        --shadow-sm:0 1px 4px rgba(10,22,40,.08);
+        --shadow:0 4px 20px rgba(10,22,40,.12);
+        --font-d:'Playfair Display',Georgia,serif;
+        --font-b:'DM Sans','Segoe UI',system-ui,sans-serif;
+        --font-m:'DM Mono','Courier New',monospace;
     }
-)
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-b);background:var(--paper);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+    a{color:var(--blue);text-decoration:none;transition:color .2s}
+    a:hover{color:var(--gold-dk);text-decoration:underline}
 
-# Process evaluation results
-if result.state == TLState.EPISTEMIC_HOLD:
-    print(f&quot;Economic complexity detected: {result.reasoning}&quot;)
-    for consideration in result.clarifying_questions:
-        print(f&quot;Additional analysis required: {consideration}&quot;)
-</code></pre>
-<h3>Integration Requirements</h3>
-<p><strong>Regulatory Compliance</strong>: Framework designed for compliance with financial regulatory requirements including transparency, auditability, and risk management protocols.</p>
-<p><strong>Institutional Integration</strong>: Implementation supports deployment across diverse institutional environments from research applications to production trading systems and policy analysis.</p>
-<p><strong>Risk Management</strong>: Built-in mechanisms ensure adherence to institutional risk management requirements and prevent misuse for market manipulation or systemic risk creation.</p>
-<hr>
-<h2>Repository Navigation and Documentation</h2>
-<p><strong><a href="https://fractonicmind.github.io/TernaryLogic/repository-navigation.html">Complete Repository Map</a></strong>: Interactive navigation with clickable links to all framework components</p>
-<h3>Essential Documentation</h3>
-<p><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/docs/Mandatory.md">Mandatory Reading</a></strong>: Critical safety guidelines for economic system implementation<br><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/docs/Quick_Start.md">Quick Start Guide</a></strong>: implementation tutorial for academic and institutional applications<br><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/api/Complete_Api_Reference.md">Complete API Reference</a></strong>: Professional documentation with comprehensive examples and integration patterns<br><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/docs/Academic_Validation.md">Academic Validation Framework</a></strong>: Peer review and validation protocols for research applications</p>
-<h3>Implementation Resources</h3>
-<p><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/examples/Financial_Trading_Comprehensive.py">Financial Trading</a></strong>: Advanced trading decisions with Epistemic Hold<br><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/examples/Central_Banking_Policy.py">Monetary Policy</a></strong>: Central bank decision support implementation<br><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/examples/Supply_Chain_Management.py">Supply Chain Management</a></strong>: Operational decisions with uncertainty management<br><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/examples/">Complete Examples Directory</a></strong>: Comprehensive implementations across economic domains</p>
-<h3>Frequently Asked Questions</h3>
-<p><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/docs/License_FAQ.md">License FAQ</a></strong>: Questions covering legal use and economic ethics licensing<br><strong><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/docs/General_FAQ.md">General FAQ</a></strong>: Questions addressing technical implementation, philosophical foundations, and practical applications</p>
-<hr>
-<h2>Conclusion</h2>
-<p>Ternary Logic represents a fundamental advancement in economic decision-making frameworks, providing computational tools that systematically acknowledge uncertainty while maintaining practical utility for real-world financial applications. By introducing the Epistemic Hold as an active computational state for uncertainty management, TL creates systematic frameworks for deliberative economic reasoning in automated systems, enabling economic technologies to serve as humanity&#39;s analytical partners rather than replacement decision-makers.</p>
-<p>The framework&#39;s empirical validation demonstrates significant improvements in economic decision-making quality while maintaining operational efficiency. As economic systems become increasingly automated and complex, TL provides essential tools for ensuring these systems enhance rather than diminish human economic reasoning capabilities through systematic uncertainty acknowledgment and intelligent deliberative mechanisms.</p>
-<p>The future of economic systems lies not merely in computational efficiency, but in computational wisdom that acknowledges the inherent complexity and uncertainty of economic environments. Through Ternary Logic, we advance toward economic systems that pause, deliberate, and analyze—creating space for wisdom in an increasingly automated economic world.</p>
-<hr>
-<h3><em>“The world will eventually understand the line I drew: between speed and meaning, between brilliance and wisdom.”</em> <strong>— Lev Goukassian</strong></h3>
-<hr>
-<h2>Contact and Support</h2>
-<h3>Academic and Institutional Inquiries</h3>
-<p><strong>Research Collaboration</strong>: <a href="mailto:academic@tl-goukassian.org">academic@tl-goukassian.org</a><br><strong>Technical Implementation</strong>: <a href="mailto:technical@tl-goukassian.org">technical@tl-goukassian.org</a><br><strong>Economic Applications</strong>: <a href="mailto:economic@tl-goukassian.org">economic@tl-goukassian.org</a><br><strong>Institutional Partnerships</strong>: <a href="mailto:institutional@tl-goukassian.org">institutional@tl-goukassian.org</a></p>
-<h3>Primary Contact</h3>
-<p><strong>Creator</strong>: Lev Goukassian (ORCID: 0009-0006-5966-1243)<br><strong>Email</strong>: <a href="mailto:leogouk@gmail.com">leogouk@gmail.com</a><br><strong>Successor Contact</strong>: <a href="mailto:support@tl-goukassian.org">support@tl-goukassian.org</a><br><strong>Succession Charter</strong>: <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/memorial/Succession_Charter.md">memorial/Succession_Charter.md</a></p>
+    .hero{background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
+    .hero-pat{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(26,107,181,.06) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(26,107,181,.04) 80px);pointer-events:none}
+    .hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(26,107,181,.14) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none}
+    .hero-glow2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(30,122,90,.12) 0%,transparent 70%);bottom:-80px;left:10%;pointer-events:none}
+    .hero-inner{position:relative;max-width:1100px;margin:0 auto;padding:5rem 2rem 4rem;display:grid;grid-template-columns:1fr 320px;gap:3rem;align-items:start}
+    .lantern{font-size:3rem;display:block;margin-bottom:.75rem;animation:float 4s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    .hero h1{font-family:var(--font-d);font-size:clamp(2.2rem,4.5vw,3.4rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;margin-bottom:1rem}
+    .hero h1 em{font-style:italic;color:var(--gold-lt)}
+    .hero-sub{font-size:1.05rem;color:rgba(250,250,247,.70);font-weight:300;max-width:540px;margin-bottom:1.5rem}
+    .blue-bar{width:60px;height:3px;background:linear-gradient(90deg,var(--blue),var(--gold-lt));border-radius:2px;margin-bottom:1.5rem}
+    .vow-box{background:rgba(26,107,181,.12);border:1px solid rgba(26,107,181,.30);border-left:3px solid var(--blue-lt);border-radius:0 var(--r) var(--r) 0;padding:1.1rem 1.4rem;margin-bottom:1.5rem;max-width:480px}
+    .vow-box .vow-lbl{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:.5rem}
+    .vow-box p{font-family:var(--font-d);font-style:italic;font-size:1rem;color:rgba(250,250,247,.88);line-height:1.9}
+    .hbadges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2rem}
+    .hb{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:999px;font-size:.76rem;font-weight:600;text-decoration:none;border:1px solid;transition:transform .15s,opacity .15s}
+    .hb:hover{transform:translateY(-2px);opacity:.9;text-decoration:none}
+    .hb-g{background:rgba(30,122,90,.25);border-color:rgba(30,122,90,.5);color:#7edbb0}
+    .hb-b{background:rgba(26,107,181,.25);border-color:rgba(26,107,181,.5);color:#90c8f8}
+    .hb-a{background:rgba(26,107,181,.20);border-color:rgba(26,107,181,.4);color:var(--gold-lt)}
+    .hb-p{background:rgba(120,60,160,.25);border-color:rgba(120,60,160,.5);color:#c4a0f0}
+    .hb-r{background:rgba(192,57,43,.25);border-color:rgba(192,57,43,.5);color:#f08080}
+    .hero-panel{background:rgba(255,255,255,.04);border:1px solid rgba(26,107,181,.20);border-radius:var(--r-lg);padding:1.5rem;position:sticky;top:80px}
+    .hero-panel h3{font-family:var(--font-d);font-size:1rem;font-weight:700;color:var(--gold-lt);margin-bottom:1rem}
+    .hero-panel ul{list-style:none}
+    .hero-panel ul li{border-bottom:1px solid rgba(255,255,255,.06);padding:.4rem 0}
+    .hero-panel ul li:last-child{border-bottom:none}
+    .hero-panel ul li a{color:rgba(250,250,247,.65);font-size:.81rem;transition:color .2s}
+    .hero-panel ul li a:hover{color:var(--gold-lt);text-decoration:none}
+    .hero-panel ul li a::before{content:'→ ';color:var(--gold-dk)}
+
+    .notice{background:linear-gradient(135deg,#0d3060,#1a4a90);border-bottom:3px solid var(--blue-lt);color:#c8e0f8;padding:.85rem 2rem;font-size:.85rem;text-align:center}
+    .notice strong{color:#a8d4f8}.notice a{color:#c8e8ff}
+    .cite-strip{background:var(--ink2);color:rgba(250,250,247,.58);padding:.8rem 2rem;font-size:.78rem;text-align:center;border-bottom:1px solid rgba(26,107,181,.15)}
+    .cite-strip a{color:rgba(144,200,248,.85)}.cite-strip em{font-style:italic}
+
+    .sticky-nav{position:sticky;top:0;z-index:200;background:rgba(10,22,40,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(26,107,181,.20)}
+    .nav-w{max-width:1100px;margin:0 auto;padding:0 1.5rem;display:flex;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none}
+    .nav-w::-webkit-scrollbar{display:none}
+    .nav-w a{color:rgba(250,250,247,.52);font-size:.78rem;font-weight:500;padding:.85rem .9rem;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+    .nav-w a:hover{color:var(--gold-lt);border-bottom-color:var(--blue);text-decoration:none}
+
+    .page{max-width:1100px;margin:0 auto;padding:3rem 2rem;display:grid;grid-template-columns:1fr 268px;gap:3rem;align-items:start}
+    .main{min-width:0}
+
+    .sec{margin-bottom:3.5rem;scroll-margin-top:60px}
+    .sec-lbl{font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-dk);margin-bottom:.4rem}
+    .sec h2{font-family:var(--font-d);font-size:clamp(1.6rem,3vw,2.1rem);font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:.4rem}
+    .sec-rule{height:2px;background:linear-gradient(90deg,var(--blue),var(--gold-lt) 40%,transparent);border:none;margin-bottom:1.5rem}
+    .sec p{margin-bottom:1rem;color:#2c3a50;font-size:.96rem}
+    .sec h3{font-family:var(--font-d);font-size:1.18rem;font-weight:700;color:var(--ink2);margin:1.8rem 0 .6rem}
+    .sec h4{font-size:.92rem;font-weight:600;color:var(--ink);margin:1.2rem 0 .4rem}
+    .sec ul,.sec ol{padding-left:1.5rem;margin-bottom:1rem}
+    .sec li{color:#2c3a50;font-size:.93rem;margin-bottom:.35rem}
+
+    blockquote{border-left:4px solid var(--blue);background:linear-gradient(135deg,#edf4fc,#e4effa);padding:1.1rem 1.4rem 1.1rem 1.6rem;border-radius:0 var(--r) var(--r) 0;margin:1.2rem 0;position:relative}
+    blockquote::before{content:'\201C';font-family:var(--font-d);font-size:3rem;color:var(--blue);opacity:.4;position:absolute;top:-4px;left:14px;line-height:1}
+    blockquote p{font-family:var(--font-d);font-style:italic;font-size:1rem;color:var(--ink2);margin:0 0 .4rem 1.5rem !important}
+    blockquote cite{display:block;font-size:.8rem;font-weight:600;color:var(--gold-dk);letter-spacing:.03em;margin-left:1.5rem}
+
+    .states{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+    .sc{border-radius:var(--r-lg);padding:1.4rem 1.2rem;text-align:center;transition:transform .2s}
+    .sc:hover{transform:translateY(-3px)}
+    .sc-p{background:linear-gradient(160deg,#e8f8f0,#d0f0e0);border:1.5px solid #1e7a5a}
+    .sc-z{background:linear-gradient(160deg,#e4f0fc,#d0e8f8);border:1.5px solid var(--blue)}
+    .sc-m{background:linear-gradient(160deg,#fceaea,#f9d8d8);border:1.5px solid var(--red)}
+    .sv{display:block;font-family:var(--font-d);font-size:2.4rem;font-weight:900;line-height:1;margin-bottom:.5rem}
+    .sc-p .sv{color:#1a5c3a}.sc-z .sv{color:var(--gold-dk)}.sc-m .sv{color:#8b1a1a}
+    .sc h4{font-size:.85rem;font-weight:700;margin-bottom:.4rem}
+    .sc p{font-size:.78rem;color:#3a3a3a;margin:0}
+
+    .pillar{border:1px solid var(--rule);border-radius:var(--r-lg);padding:1.5rem 1.75rem;margin-bottom:1.25rem;position:relative;background:white;transition:box-shadow .2s}
+    .pillar:hover{box-shadow:var(--shadow)}
+    .p-num{position:absolute;top:1.5rem;right:1.75rem;font-family:var(--font-d);font-size:2.8rem;font-weight:900;color:rgba(26,107,181,.10);line-height:1;pointer-events:none}
+    .p-head{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem}
+    .p-icon{width:34px;height:34px;border-radius:8px;background:var(--ink);color:var(--gold-lt);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+    .pillar h3{font-family:var(--font-d) !important;font-size:1.05rem !important;font-weight:700 !important;color:var(--ink) !important;margin:0 !important}
+    .pillar h3 a{color:var(--ink)}.pillar h3 a:hover{color:var(--blue)}
+    .pillar p{font-size:.88rem;color:#3a4060;margin-bottom:.5rem}
+    .p-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:.6rem}
+    .tag{display:inline-block;background:var(--mist);color:var(--blue);font-size:.69rem;font-weight:600;padding:2px 8px;border-radius:4px;border:1px solid rgba(26,107,181,.15)}
+    .p-links{display:flex;flex-wrap:wrap;gap:8px}
+    .plink{font-size:.76rem;font-weight:500;color:var(--blue-lt);border:1px solid rgba(26,107,181,.2);padding:3px 10px;border-radius:4px;transition:background .15s}
+    .plink:hover{background:var(--mist);text-decoration:none}
+
+    .cw{background:#0d1117;border-radius:var(--r-lg);border:1px solid rgba(255,255,255,.06);margin:1rem 0;overflow:hidden}
+    .cb{background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);padding:.5rem 1rem;font-size:.72rem;color:rgba(255,255,255,.35);font-family:var(--font-m);display:flex;gap:6px;align-items:center}
+    .cd{width:10px;height:10px;border-radius:50%}
+    .cr{background:#ff5f56}.cy{background:#ffbd2e}.cg{background:#27c93f}
+    pre{padding:1.1rem 1.25rem;overflow-x:auto;font-family:var(--font-m);font-size:.78rem;line-height:1.7;color:#cdd6f4}
+    .cc{color:#6272a4}.ck{color:#bd93f9}.cs{color:#50fa7b}.cn{color:#ffb86c}.cop{color:#ff79c6}
+
+    .tbl{width:100%;border-collapse:collapse;font-size:.83rem;margin:1rem 0;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm)}
+    .tbl thead tr{background:var(--ink);color:var(--paper)}
+    .tbl th{padding:10px 14px;font-weight:600;text-align:left}
+    .tbl td{padding:9px 14px;border-bottom:1px solid var(--rule);color:#2c3a50}
+    .tbl tbody tr:last-child td{border-bottom:none}
+    .tbl tbody tr:nth-child(even) td{background:var(--cream)}
+    .tbl tbody tr:hover td{background:#e8f0ff}
+
+    .rg{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.75rem;margin:1rem 0}
+    .rc{background:white;border:1px solid var(--rule);border-radius:var(--r);padding:1rem .85rem;text-align:center;transition:border-color .2s,transform .2s}
+    .rc:hover{border-color:var(--blue);transform:translateY(-2px)}
+    .ri{font-size:1.7rem;display:block;margin-bottom:.35rem}
+    .rn{font-weight:700;font-size:.83rem;color:var(--ink);display:block;margin-bottom:2px}
+    .rd{font-size:.72rem;color:#5a6a8a}
+
+    .dg{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:.6rem;margin:1rem 0}
+    .dc{background:white;border:1px solid var(--rule);border-radius:var(--r);padding:.75rem .9rem;transition:border-color .2s,background .2s;display:flex;align-items:flex-start;gap:.5rem;text-decoration:none}
+    .dc:hover{border-color:var(--blue-lt);background:#f0f6ff;text-decoration:none}
+    .di{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+    .dn{font-weight:600;font-size:.82rem;color:var(--blue);display:block;word-break:break-word;line-height:1.3}
+    .dc:hover .dn{color:var(--gold-dk)}
+    .dd{font-size:.72rem;color:#6a7a9a;margin-top:2px;line-height:1.35}
+
+    .pg{display:flex;flex-wrap:wrap;gap:6px;margin:.6rem 0 1rem}
+    .pill{display:inline-flex;align-items:center;gap:4px;background:var(--mist);color:var(--ink2);text-decoration:none;padding:4px 11px;border-radius:999px;font-size:.78rem;font-weight:500;border:1px solid var(--rule);transition:background .15s,border-color .15s}
+    .pill:hover{background:#d0e4f8;border-color:rgba(26,107,181,.3);text-decoration:none;color:var(--blue)}
+
+    .hbox{border-radius:var(--r-lg);padding:1.4rem 1.6rem;margin:1rem 0}
+    .hb-blue{background:linear-gradient(135deg,#edf4fc,#ddeafa);border:1.5px solid rgba(26,107,181,.25)}
+    .hb-dark{background:var(--ink);color:var(--paper);border:1.5px solid rgba(26,107,181,.25)}
+    .hb-dark h3{color:var(--gold-lt) !important}.hb-dark p{color:rgba(250,250,247,.72) !important}.hb-dark a{color:#90c8f8}
+    .hb-green{background:linear-gradient(135deg,#e8f8f0,#d4f0e4);border:1.5px solid rgba(30,122,90,.20)}
+
+    .brow{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.1rem 0}
+    .btn{display:inline-flex;align-items:center;gap:5px;padding:9px 20px;border-radius:var(--r);font-size:.83rem;font-weight:600;text-decoration:none;transition:transform .15s,box-shadow .15s;letter-spacing:.01em}
+    .btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none}
+    .btn-dk{background:var(--ink);color:var(--paper)}
+    .btn-blue{background:linear-gradient(135deg,var(--blue),var(--gold-lt));color:white}
+    .btn-ol{background:white;color:var(--blue);border:1.5px solid rgba(26,107,181,.30)}
+    .btn-ol:hover{border-color:var(--blue)}
+    .btn-gh{background:transparent;color:var(--ink2);border:1.5px solid var(--rule)}
+
+    .sidebar{position:sticky;top:80px;display:flex;flex-direction:column;gap:1.25rem}
+    .scard{background:white;border:1px solid var(--rule);border-radius:var(--r-lg);padding:1.2rem 1.3rem;box-shadow:var(--shadow-sm)}
+    .scard h4{font-family:var(--font-d);font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:.8rem;padding-bottom:.5rem;border-bottom:2px solid var(--blue)}
+    .scard ul{list-style:none}
+    .scard ul li{padding:.3rem 0;border-bottom:1px solid var(--rule);font-size:.79rem}
+    .scard ul li:last-child{border-bottom:none}
+    .scard ul li a{color:var(--ink2);font-weight:500}
+    .scard ul li a:hover{color:var(--gold-dk)}
+    .stats{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+    .stat{background:var(--cream);border-radius:var(--r);padding:.65rem;text-align:center}
+    .stat-v{font-family:var(--font-d);font-size:1.3rem;font-weight:900;color:var(--gold-dk);display:block;line-height:1;margin-bottom:2px}
+    .stat-l{font-size:.65rem;color:#6a7a9a;font-weight:500}
+
+    footer{background:var(--ink);color:rgba(250,250,247,.55);margin-top:2rem}
+    .ft{max-width:1100px;margin:0 auto;padding:3rem 2rem 2rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem}
+    .ft-brand h3{font-family:var(--font-d);font-size:1.3rem;font-weight:700;color:var(--paper);margin-bottom:.5rem}
+    .ft-brand p{font-size:.8rem;line-height:1.65;margin-bottom:0}
+    .ft-quote{font-family:var(--font-d);font-style:italic;color:var(--gold-lt);font-size:.85rem;margin-top:.75rem;padding-top:.75rem;border-top:1px solid rgba(26,107,181,.20)}
+    footer h4{font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:.85rem}
+    footer ul{list-style:none}
+    footer ul li{margin-bottom:.4rem}
+    footer ul li a{color:rgba(250,250,247,.48);font-size:.79rem;transition:color .2s}
+    footer ul li a:hover{color:var(--gold-lt);text-decoration:none}
+    .fb{border-top:1px solid rgba(26,107,181,.12);padding:1.1rem 2rem;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;font-size:.76rem}
+    .fb a{color:rgba(144,200,248,.70)}
+
+    @media(max-width:960px){.hero-inner{grid-template-columns:1fr}.hero-panel{display:none}.page{grid-template-columns:1fr}.sidebar{position:static}.ft{grid-template-columns:1fr 1fr}}
+    @media(max-width:640px){.hero-inner{padding:3rem 1.25rem 2.5rem}.page{padding:2rem 1.25rem}.states{grid-template-columns:1fr}.ft{grid-template-columns:1fr}.fb{flex-direction:column;text-align:center}.dg{grid-template-columns:repeat(auto-fill,minmax(145px,1fr))}}
+    </style>
+</head>
+<body>
+
+<header class="hero">
+<div class="hero-pat"></div><div class="hero-glow"></div><div class="hero-glow2"></div>
+<div class="hero-inner">
+  <div>
+    <span class="lantern">⚖️</span>
+    <h1>Ternary Logic:<br><em>Sovereign Evidentiary Governance</em></h1>
+    <div class="blue-bar"></div>
+    <p class="hero-sub">The world's first mandatory evidentiary framework for economic and financial systems — with cryptographic audit trails, blockchain anchoring, Epistemic Hold technology, and embedded AML and CBDC governance.</p>
+    <div class="vow-box">
+      <div class="vow-lbl">⚖ The Evidentiary Covenant</div>
+      <p>No Log = No Action.<br>No Spy. No Weapon.<br>Pause when uncertain. Record everything.</p>
+    </div>
+    <div class="hbadges">
+      <a href="https://doi.org/10.1007/s43681-025-00910-6" class="hb hb-b">📘 Published · AI and Ethics · Springer Nature</a>
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/License" class="hb hb-g">✅ MIT with Ethics</a>
+      <a href="https://zenodo.org/records/17613006" class="hb hb-r">🔴 ZENODO Notarized</a>
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/Memorial_Fund.md" class="hb hb-p">💜 Memorial Fund</a>
+      <a href="https://orcid.org/0009-0006-5966-1243" class="hb hb-a">🔬 ORCID: 0009-0006-5966-1243</a>
+    </div>
+    <div class="brow">
+      <a href="https://github.com/FractonicMind/TernaryLogic" class="btn btn-blue">⭐ GitHub Repository</a>
+      <a href="https://fractonicmind.github.io/TernaryLogic/repository-navigation.html" class="btn" style="background:rgba(255,255,255,.08);color:#c7d8fe;border:1px solid rgba(255,255,255,.18)">🗺️ Repository Navigation</a>
+      <a href="https://fractonicmind.github.io/TernaryLogic/demos/ROI_Calculator.html" class="btn" style="background:transparent;color:rgba(250,250,247,.55);border:1px solid rgba(255,255,255,.12)">📊 ROI Calculator</a>
+    </div>
+  </div>
+  <aside class="hero-panel">
+    <h3>📍 Quick Navigation</h3>
+    <ul>
+      <li><a href="#introduction">Introduction &amp; Philosophy</a></li>
+      <li><a href="#three-states">The Three States</a></li>
+      <li><a href="#pillars">Eight Pillars</a></li>
+      <li><a href="#architecture">Technical Architecture</a></li>
+      <li><a href="#aml">AML Enforcement</a></li>
+      <li><a href="#no-log-no-action">No Log — No Action</a></li>
+      <li><a href="#no-spy-no-weapon">No Spy — No Weapon</a></li>
+      <li><a href="#governance">Governance</a></li>
+      <li><a href="#regulatory">Regulatory Compliance</a></li>
+      <li><a href="#succession">Succession &amp; Legacy</a></li>
+      <li><a href="#memorial">Memorial Fund</a></li>
+      <li><a href="#repository">Repository Directory</a></li>
+      <li><a href="#implementation">Getting Started</a></li>
+    </ul>
+  </aside>
+</div>
+</header>
+
+<div class="notice">⚠️ <strong>IMPORTANT NOTICE:</strong> Ternary Logic (TL) is a <strong>legal-technical framework</strong>, not software, hardware, or consulting services. Implementation requires compliance with <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/Mandatory.md">docs/Mandatory.md</a>.</div>
+
+<div class="cite-strip">📚 <strong>Official Citations:</strong> Goukassian, L. (2025). <em>Auditable AI: tracing the ethical history of a model</em>. <strong>AI and Ethics</strong>. Springer Nature. <a href="https://doi.org/10.1007/s43681-025-00910-6">doi:10.1007/s43681-025-00910-6</a> &nbsp;·&nbsp; Goukassian, L. (2026). <em>A Ternary Logic Framework for Institutional Governance</em>. <strong>AI and Ethics</strong>. Springer Nature. <em>(Accepted)</em> &nbsp;·&nbsp; Zenodo. <a href="https://doi.org/10.5281/zenodo.17613006">doi:10.5281/zenodo.17613006</a></div>
+
+<nav class="sticky-nav">
+  <div class="nav-w">
+    <a href="#introduction">Introduction</a>
+    <a href="#three-states">Three States</a>
+    <a href="#pillars">Eight Pillars</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#aml">AML</a>
+    <a href="#no-log-no-action">No Log·No Action</a>
+    <a href="#no-spy-no-weapon">No Spy·No Weapon</a>
+    <a href="#governance">Governance</a>
+    <a href="#regulatory">Regulatory</a>
+    <a href="#succession">Succession</a>
+    <a href="#memorial">Memorial</a>
+    <a href="#repository">Repository</a>
+    <a href="#implementation">Get Started</a>
+  </div>
+</nav>
+
+<div class="page">
+<main class="main">
+
+<!-- INTRODUCTION -->
+<section class="sec" id="introduction">
+  <div class="sec-lbl">Origin &amp; Philosophy</div>
+  <h2>Introduction</h2><hr class="sec-rule">
+  <p>Modern economic systems still think in binaries. They rush to act or refuse, leaving no structured space for uncertainty, no mechanism for intelligent hesitation. <strong>Ternary Logic (TL)</strong> introduces that missing third state: the <strong>Epistemic Hold (0)</strong>, a formalized pause that transforms ambiguity into verifiable prudence.</p>
+  <p>TL was conceived to address two inherent deficiencies in binary financial systems: first, the reduction of economic complexity to a commit/reject choice that leaves no room for in-flight verification; second, the absence of a complete evidentiary record that regulators, courts, and the public can independently verify. Traditional financial systems generate transactions. TL generates <em>complete evidentiary events</em> — transactions with immutable proof of intent, deliberation, justification, and outcome.</p>
+  <p>The philosophical foundation of TL is inseparable from the life of its creator, <strong>Lev Goukassian</strong>. The framework reflects his conviction that the speed of automated financial systems has outpaced their accountability — and that the remedy is not slower machines, but machines that remember everything they do and why.</p>
+  <blockquote><p>"The world is not binary. And the future will not be either."</p><cite>— Lev Goukassian</cite></blockquote>
+  <div class="hbox hb-blue">
+    <h4 style="margin:0 0 .6rem;font-size:.88rem;font-weight:700;color:var(--gold-dk)">⚖️ The Goukassian Principle — A Tripartite Constitutional Bond</h4>
+    <p style="font-size:.88rem;margin-bottom:.4rem">TL is bound by three interconnected guarantees, each cryptographically enforced:</p>
+    <p style="font-size:.88rem;margin:0"><strong>🏮 The Lantern</strong> — Visual proof of active evidentiary oversight, automated revocation if disabled<br><strong>✍️ The Signature</strong> — Cryptographic attribution linked to ORCID: 0009-0006-5966-1243<br><strong>📜 The License</strong> — No Weapon, No Spy — violations trigger automatic smart contract revocation</p>
+  </div>
+  <p style="font-size:.82rem;background:var(--cream);padding:.75rem 1rem;border-radius:var(--r);border:1px solid var(--rule);font-family:var(--font-m)"><strong>"No Log = No Action."</strong> If the system cannot produce the required log, operation must halt. This is <strong>non-negotiable</strong>. A missing log creates automatic liability.</p>
+</section>
+
+<!-- THREE STATES -->
+<section class="sec" id="three-states">
+  <div class="sec-lbl">Triadic Economics</div>
+  <h2>The Three States of Evidentiary Logic</h2><hr class="sec-rule">
+  <p>Ternary Logic moves beyond binary constraint by giving economic systems a triadic framework for decision-making — three distinct states of epistemic awareness, each with distinct legal and operational consequences.</p>
+  <div class="states">
+    <div class="sc sc-p"><span class="sv">+1</span><h4>Proceed</h4><p>Clear affirmative: decision grounded in signal alignment, manageable uncertainty, acceptable risk-return. Execute with full Decision Log.</p></div>
+    <div class="sc sc-z"><span class="sv">0</span><h4>Epistemic Hold</h4><p>The deliberative pause: uncertainty breaches threshold. System halts automated execution, queries additional data, escalates to human review. Records full deliberation log.</p></div>
+    <div class="sc sc-m"><span class="sv">-1</span><h4>Halt</h4><p>When significant risks or contradictory signals make execution unacceptable. Rejection rationale is immutably recorded, creating a forensic trail of refusal.</p></div>
+  </div>
+  <blockquote><p>"In binary systems, a transaction ends with execution. In Ternary Logic, it ends with understanding."</p><cite>— Ternary Logic Framework</cite></blockquote>
+</section>
+
+<!-- EIGHT PILLARS -->
+<section class="sec" id="pillars">
+  <div class="sec-lbl">Constitutional Architecture</div>
+  <h2>The Eight Pillars of Ternary Logic</h2><hr class="sec-rule">
+  <p>TL's operational efficacy is established through an interdependent architecture of eight constitutional pillars — a unified governance stack that transforms abstract economic principles into hard-coded, immutable operational constraints.</p>
+
+  <div class="pillar">
+    <span class="p-num">1</span>
+    <div class="p-head"><div class="p-icon">⏸</div><h3><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Epistemic_Hold.md">Epistemic Hold — The Intelligent Pause</a></h3></div>
+    <p>Active uncertainty management triggered when predefined thresholds are breached. Mandates immediate pause in automated execution and initiates structured deliberative response — querying additional data, running challenger models, or escalating to human operators. Target Hold Rate: 15-25% for financial applications. Revolutionizes Model Risk Management from periodic validation to real-time operational safeguard.</p>
+    <div class="p-tags"><span class="tag">EU AI Act Art. 14</span><span class="tag">MRM</span><span class="tag">15-25% Hold Rate</span><span class="tag">Non-configurable</span></div>
+    <div class="p-links">
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Epistemic_Hold.md" class="plink">📄 Documentation</a>
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/specs/Epistemic_Hold_Protocol.md" class="plink">📋 Protocol Spec</a>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <span class="p-num">2</span>
+    <div class="p-head"><div class="p-icon">🔗</div><h3><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Immutable_Ledger.md">Immutable Ledger — The Cryptographic Truth Layer</a></h3></div>
+    <p>Distributed Ledger Technology where each block contains a cryptographic hash of the preceding block, creating a sequential, interlocking chain. To alter a past transaction, every subsequent hash must change — immediately detected and rejected by network participants. Transforms supervision from trust-based verification to cryptographic verification, enabling continuous, real-time compliance.</p>
+    <div class="p-tags"><span class="tag">DLT</span><span class="tag">AML/CFT</span><span class="tag">IOSCO Principle 27</span><span class="tag">Tamper-evident</span></div>
+    <div class="p-links">
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Immutable_Ledger.md" class="plink">📄 Documentation</a>
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/proofs/Immutable_Ledger_Notarized.pdf" class="plink">📜 Notarized PDF</a>
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/Merkle_Architecture/Merkle_Protocol_Specification.md" class="plink">⛓️ Merkle Protocol</a>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <span class="p-num">3</span>
+    <div class="p-head"><div class="p-icon">🏮</div><h3><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Goukassian_Principle.md">The Goukassian Principle — Constitutional Accountability</a></h3></div>
+    <p>An ethical-legal mandate embedded in the architecture: The Lantern (visible proof of oversight, automated revocation if disabled), The Signature (ORCID genesis block attribution), The License (No Spy, No Weapon — violations trigger smart contract revocation). Creates a reverse burden of proof: absence of a complete Immutable Ledger Log creates rebuttable presumption of negligence.</p>
+    <div class="p-tags"><span class="tag">ORCID: 0009-0006-5966-1243</span><span class="tag">No Weapon</span><span class="tag">No Spy</span><span class="tag">Smart Contract</span></div>
+    <div class="p-links">
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Goukassian_Principle.md" class="plink">📄 Documentation</a>
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Goukassian_Principle.mp3" class="plink">🔊 Audio</a>
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/proofs/Goukassian_Principle_Notarized.pdf" class="plink">📜 Notarized PDF</a>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <span class="p-num">4</span>
+    <div class="p-head"><div class="p-icon">📋</div><h3><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Decision%20Logs.md">Decision Logs — The Forensic Record</a></h3></div>
+    <p>Granular, comprehensive, immutable audit trails capturing the full "who, what, when, where, why, and how" of every financial event: identities of all authorizers, precise timestamp, transaction details, data inputs and models used, resulting confidence score, final state transition, and if an Epistemic Hold was triggered — the reason and deliberative actions taken. Fuses technical precision with narrative context.</p>
+    <div class="p-tags"><span class="tag">EU AI Act Art. 12</span><span class="tag">FRE 902(13)</span><span class="tag">Basel III Pillar 3</span><span class="tag">SEC Disclosure</span></div>
+    <div class="p-links">
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Decision%20Logs.md" class="plink">📄 Documentation</a>
+      <a href="https://fractonicmind.github.io/TernaryLogic/TL_Pillars/Decision%20Logs.html" class="plink">🌐 Interactive</a>
+      <a href="https://fractonicmind.github.io/TernaryLogic/TL_Pillars/Decision%20Logs.mp3" class="plink">🔊 Audio</a>
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/specs/Universal_Decision_Envelope.md" class="plink">📋 Decision Envelope</a>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <span class="p-num">5</span>
+    <div class="p-head"><div class="p-icon">⚖️</div><h3><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Economic%20Rights%20and%20Transparency.md">Economic Rights &amp; Transparency — Programmable Compliance</a></h3></div>
+    <p>Regulatory rules programmed directly into the financial protocol via smart contracts — compliance becomes an intrinsic, automated property of the transaction itself. Directly implements FATF Recommendations 24/25 on beneficial ownership, IOSCO Principle 35, Basel III Pillar 3 disclosures, and SEC cybersecurity disclosure requirements. Paradigm shift from regulation by enforcement to regulation by architecture.</p>
+    <div class="p-tags"><span class="tag">FATF Rec. 24/25</span><span class="tag">IOSCO Principle 35</span><span class="tag">Basel III</span><span class="tag">SEC Disclosure</span></div>
+    <div class="p-links">
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Economic%20Rights%20and%20Transparency.md" class="plink">📄 Documentation</a>
+      <a href="https://fractonicmind.github.io/TernaryLogic/TL_Pillars/Economic%20Rights%20and%20Transparency.html" class="plink">🌐 Interactive</a>
+      <a href="https://fractonicmind.github.io/TernaryLogic/TL_Pillars/Economic%20RightsandTransparency.mp3" class="plink">🔊 Audio</a>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <span class="p-num">6</span>
+    <div class="p-head"><div class="p-icon">🌱</div><h3><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Sustainable%20Capital%20Allocation.md">Sustainable Capital Allocation — Verified Green Finance</a></h3></div>
+    <p>Addresses ESG data reliability through Veracity Anchors — immutable, time-stamped proofs of ESG documentation. Smart contracts track use of proceeds for green bonds, linking disbursements to notarized project milestones. Provides the missing "truth layer" for green monetary policy: central banks can confidently set preferential collateral terms and tilt asset purchase programs based on cryptographically verifiable data.</p>
+    <div class="p-tags"><span class="tag">NGFS</span><span class="tag">ESG Verification</span><span class="tag">Paris Agreement</span><span class="tag">Green Bonds</span></div>
+    <div class="p-links">
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Sustainable%20Capital%20Allocation.md" class="plink">📄 Documentation</a>
+      <a href="https://fractonicmind.github.io/TernaryLogic/TL_Pillars/Sustainable%20Capital%20Allocation.html" class="plink">🌐 Interactive</a>
+      <a href="https://fractonicmind.github.io/TernaryLogic/TL_Pillars/Sustainable%20Capital%20Allocation.mp3" class="plink">🔊 Audio</a>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <span class="p-num">7</span>
+    <div class="p-head"><div class="p-icon">🛡️</div><h3><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Hybrid_Shield.md">Hybrid Shield — Verifiable Opacity</a></h3></div>
+    <p>Dual-layer blockchain architecture: Permissioned Layer (private, for sensitive transaction details — confidentiality, GDPR compliance, high performance) + Permissionless Layer (public, for cryptographic hashes of permissioned blocks — global immutable proof of integrity without revealing content). Enables verifiable opacity: institutions prove they operate with integrity without revealing commercially sensitive information.</p>
+    <div class="p-tags"><span class="tag">GDPR</span><span class="tag">CBDC Architecture</span><span class="tag">Hybrid Blockchain</span><span class="tag">Verifiable Opacity</span></div>
+    <div class="p-links">
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Hybrid_Shield.md" class="plink">📄 Documentation</a>
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/proofs/Hybrid_Shield_Notarized.pdf" class="plink">📜 Notarized PDF</a>
+      <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Smart_Contracts" class="plink">⛓️ Smart Contracts</a>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <span class="p-num">8</span>
+    <div class="p-head"><div class="p-icon">⚓</div><h3><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Anchors.md">Anchors — Governance, Interoperability, Veracity</a></h3></div>
+    <p>Three types: Governance Anchors (hybrid model: Technical Council, Stewardship Custodians, Smart Contract Treasury), Interoperability Anchors (cross-chain bridges to legacy systems — SWIFT, RTGS — and other blockchains), and Veracity Anchors (blockchain notarization linking off-chain documents to on-chain ledger, creating irrefutable proof of existence and state at a specific point in time).</p>
+    <div class="p-tags"><span class="tag">Cross-Chain</span><span class="tag">SWIFT Integration</span><span class="tag">Veracity</span><span class="tag">OpenTimestamps</span></div>
+    <div class="p-links">
+      <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Anchors.md" class="plink">📄 Documentation</a>
+      <a href="https://fractonicmind.github.io/TernaryLogic/TL_Pillars/Anchors.html" class="plink">🌐 Interactive</a>
+      <a href="https://fractonicmind.github.io/TernaryLogic/TL_Pillars/Anchors.mp3" class="plink">🔊 Audio</a>
+      <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Merkle_Architecture" class="plink">⛓️ Merkle Architecture</a>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNICAL ARCHITECTURE -->
+<section class="sec" id="architecture">
+  <div class="sec-lbl">Technical Depth</div>
+  <h2>Technical Architecture</h2><hr class="sec-rule">
+
+  <h3>Dual Latency Architecture</h3>
+  <p>Every transaction is bifurcated into two parallel lanes. Lane 1 (Fast, under 2ms) calculates the decision but holds output in buffer. Lane 2 (Governance, asynchronous) hashes, signs, appends to ledger, and generates a Permission Token. Output is released only when the Permission Token is received — if Lane 2 fails, the system enters Safe Mode: no output produced.</p>
+  <div class="cw">
+    <div class="cb"><span class="cd cr"></span><span class="cd cy"></span><span class="cd cg"></span>&nbsp;TL Dual-Lane Interlock</div>
+    <pre>
+Transaction Request
+    ↓
+[LANE 1 — FAST]  <span class="cc">// &lt;2ms</span>
+    Calculate state: <span class="cop">+1 | 0 | -1</span>
+    PAUSE <span class="cc">// hold output in buffer</span>
+    ↓
+[LANE 2 — GOVERNANCE]  <span class="cc">// asynchronous, parallel</span>
+    Hash transaction + decision:     50ms
+    Sign with Ephemeral Key (EKR):   20ms
+    Append to Immutable Ledger:      50ms
+    Batch aggregate for Merkle:      async
+    ↓
+Permission Token received?
+    <span class="cs">YES</span> → Lane 1 releases output
+    <span class="cop">NO / TIMEOUT</span> → Safe Mode → <span class="ck">Epistemic Hold (State 0)</span>
+
+<span class="cc">// If Lane 2 fails → Safe Mode → no output produced</span>
+<span class="cc">// This enforces: No Log = No Action (architectural guarantee)</span></pre>
+  </div>
+
+  <h3>Merkle-Batched Anchoring — Cost at Scale</h3>
+  <p>Financial systems generate billions of decisions daily. Writing each to blockchain would cost millions per day. Merkle-Batched Anchoring: individual logs aggregated into Merkle Tree, only the 256-bit root hash written to blockchain — certifying thousands of decisions cryptographically for $2-10 per batch.</p>
+  <table class="tbl">
+    <thead><tr><th>Tier</th><th>Duration</th><th>Content</th><th>Annual Cost (10B decisions/day)</th></tr></thead>
+    <tbody>
+      <tr><td>🔥 HOT (NVMe)</td><td>24 hours</td><td>Full context, deliberation logs</td><td>~$1.2M</td></tr>
+      <tr><td>🌡️ WARM (S3)</td><td>30 days</td><td>Structured logs + summaries</td><td>~$8.3k</td></tr>
+      <tr><td>🧊 COLD (Glacier)</td><td>7 years</td><td>Hashes + metadata only</td><td>~$1.2k</td></tr>
+      <tr><td>⛓️ BLOCKCHAIN</td><td>Forever</td><td>Merkle Root Hash only</td><td>~$200k</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Cryptographic Erasure — Resolving GDPR vs. Immutability</h3>
+  <p>GDPR Article 17 demands erasure; blockchain cannot be deleted. TL resolves this elegantly: PII is encrypted with ephemeral session keys distributed via hardware-rooted key hierarchies (HSM, TPM). When a user invokes GDPR erasure, all key shares are cryptographically destroyed. The hash remains on-chain (proving the decision occurred) while the ciphertext becomes permanently unrecoverable — satisfying both GDPR ("data no longer accessible") and TL ("decision history preserved"). Post-quantum analysis and formal verification vectors are documented in the Cryptographic_Erasure folder.</p>
+
+  <div class="brow">
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Dual_Latency_Architecture" class="btn btn-ol">⚡ Dual Latency Architecture</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Merkle_Architecture" class="btn btn-gh">⛓️ Merkle Architecture</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Cryptographic_Erasure" class="btn btn-gh">🔐 Cryptographic Erasure</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Hardware_Architecture" class="btn btn-gh">🔧 Hardware Architecture</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/MT_Hardware" class="btn btn-gh">💾 MT Hardware</a>
+  </div>
+</section>
+
+<!-- AML ENFORCEMENT -->
+<section class="sec" id="aml">
+  <div class="sec-lbl">Financial Crime Prevention</div>
+  <h2>AML Enforcement Architecture</h2><hr class="sec-rule">
+  <p>The <strong>AML_Prevention</strong> folder applies TL's full evidentiary architecture to Anti-Money Laundering enforcement. TL transforms AML from reactive reporting — where suspicious activity is detected and reported after the fact — to <strong>pre-action control</strong>, where the No Log = No Action axiom prevents unlogged transactions from executing at all.</p>
+  <p>The comprehensive <strong>AML Enforcement Architecture: A Governance-Grade Specification for Global Financial Systems</strong> maps TL's capabilities against every major regulatory framework:</p>
+  <table class="tbl">
+    <thead><tr><th>Regulatory Framework</th><th>TL Implementation</th><th>Key Capability</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Basel III</strong></td><td>Immutable Ledger + Decision Logs</td><td>Real-time capital adequacy monitoring</td></tr>
+      <tr><td><strong>IOSCO</strong></td><td>Epistemic Hold + Market Surveillance</td><td>Pre-execution manipulation detection</td></tr>
+      <tr><td><strong>NIST CSF</strong></td><td>Dual Latency + Cryptographic Finality</td><td>Identify, Protect, Detect, Respond, Recover</td></tr>
+      <tr><td><strong>SOX/COSO</strong></td><td>Decision Logs + Goukassian Principle</td><td>Internal control documentation, executive liability</td></tr>
+      <tr><td><strong>SEC/CFTC</strong></td><td>Immutable Ledger + Veracity Anchors</td><td>4-day cybersecurity disclosure compliance</td></tr>
+    </tbody>
+  </table>
+  <div class="brow">
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/AML_Prevention" class="btn btn-dk">📁 AML_Prevention Folder</a>
+    <a href="https://fractonicmind.github.io/TernaryLogic/AML_Prevention/AML_Enforcement_Architecture_A_Governance_Grade_Specification_for_Global_Financial_Systems.html" class="btn btn-ol">🌐 Interactive Spec</a>
+    <a href="https://fractonicmind.github.io/TernaryLogic/AML_Prevention/AML_Enforcement_Architecture_A_Governance_Grade_Specification_for_Global_Financial_Systems.mp3" class="btn btn-gh">🔊 Audio</a>
+    <a href="https://fractonicmind.github.io/TernaryLogic/AML_Prevention/Transformation_AML_from_Reactive_Reporting_to_Pre-Action_Control.html" class="btn btn-gh">🔄 Pre-Action Control</a>
+  </div>
+</section>
+
+<!-- NO LOG NO ACTION -->
+<section class="sec" id="no-log-no-action">
+  <div class="sec-lbl">Core Doctrine</div>
+  <h2>No Log — No Action</h2><hr class="sec-rule">
+  <p>The <strong>No_Log-No_Action</strong> folder enshrines TL's foundational axiom at the architectural level. If the logging subsystem cannot produce a verified, cryptographically-sealed record before an action executes, that action is architecturally prevented. No bypass. No override. No emergency exception.</p>
+  <p>The <strong>Execution Integrity Specification</strong> codifies exactly how the dual-lane interlock must behave when logging fails or is delayed beyond its latency budget. The <strong>Non-Bypassable Execution Invariant</strong> extends this to HSM and TPM-backed silicon-level enforcement — the logging requirement cannot be circumvented even by a privileged operator with direct hardware access.</p>
+  <ul>
+    <li><strong>Legal weight:</strong> An unlogged action creates irrebuttable presumption of maximum fault under 18 U.S.C. § 1519 (spoliation) and EU AI Act Article 12.</li>
+    <li><strong>Operational consequence:</strong> Lane 2 failure → system-wide Safe Mode → no output, regardless of Lane 1 completion.</li>
+    <li><strong>Enforcement signal:</strong> The Lantern is automatically extinguished and license revocation initiated if the log-to-action ratio falls below 1:1.</li>
+  </ul>
+  <div class="brow">
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/No_Log-No_Action" class="btn btn-dk">📁 No_Log-No_Action Folder</a>
+    <a href="https://fractonicmind.github.io/TernaryLogic/No_Log-No_Action/No_Log-No_Action_Execution_Integrity_Specification.html" class="btn btn-ol">🌐 Execution Integrity Spec</a>
+    <a href="https://fractonicmind.github.io/TernaryLogic/No_Log-No_Action/No_Log-No_Action_Execution_Integrity_Specification.mp3" class="btn btn-gh">🔊 Audio</a>
+    <a href="https://fractonicmind.github.io/TernaryLogic/No_Log-No_Action/No_Log-No_Action_Non-Bypassable_Execution_Invariant.html" class="btn btn-gh">🔒 Non-Bypassable Invariant</a>
+  </div>
+</section>
+
+<!-- NO SPY NO WEAPON -->
+<section class="sec" id="no-spy-no-weapon">
+  <div class="sec-lbl">Absolute Prohibitions</div>
+  <h2>No Spy — No Weapon</h2><hr class="sec-rule">
+  <p>The <strong>No_Spy-No_Weapon</strong> folder operationalizes the two absolute prohibitions of the Goukassian Principle. These are hard-coded constitutional constraints: TL-governed systems may never be deployed for mass surveillance, and may never be used as targeting or decision infrastructure in lethal autonomous weapons. These are not configurable thresholds — they are irreversible architectural limits.</p>
+  <p>The <strong>Universal Scalability of TL NoS-NoW Prohibitions</strong> demonstrates these restrictions scale to enterprise deployment across all jurisdictions and AI modalities. The companion <strong>Universal Scalability Under the NoS-NoW Mandate</strong> provides the technical architecture for real-time enforcement. Smart contracts on the Immutable Ledger encode automatic, publicly-broadcast license revocation on detection of any violation — revocation is permanent and cannot be undone.</p>
+  <div class="brow">
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/No_Spy-No_Weapon" class="btn btn-dk">📁 No_Spy-No_Weapon Folder</a>
+    <a href="https://fractonicmind.github.io/TernaryLogic/No_Spy-No_Weapon/Universal_Scalability_of_TL_NoS-NoW_Prohibitions.html" class="btn btn-ol">🌐 Scalability Analysis</a>
+    <a href="https://fractonicmind.github.io/TernaryLogic/No_Spy-No_Weapon/Universal_Scalability_of_TL_NoS-NoW_Prohibitions.mp3" class="btn btn-gh">🔊 Audio</a>
+    <a href="https://fractonicmind.github.io/TernaryLogic/No_Spy-No_Weapon/Universal_Scalability_of_TL_Under_the_NoS-NoW_Mandate.html" class="btn btn-gh">⚖️ Mandate Architecture</a>
+  </div>
+</section>
+
+<!-- GOVERNANCE -->
+<section class="sec" id="governance">
+  <div class="sec-lbl">Institutional Architecture</div>
+  <h2>Governance</h2><hr class="sec-rule">
+  <p>Ternary Logic does not trust any single human, institution, or machine with control. Its governance is <strong>triadic by design</strong>: three bodies, three distinct duties, no overlap, no supremacy. None of them can turn the system off.</p>
+  <div class="hbox hb-blue">
+    <p><strong>Technical Council (9 members, 75% quorum):</strong> Maintains the technical spine — core specifications, cryptographic standards, protocol upgrades, external security audits. They guard the machinery, not the meaning.</p>
+    <p><strong>Stewardship Custodians (11 members, 75% quorum):</strong> The ethical and legal counterweight. Enforces No Spy and No Weapon prohibitions, certifies compliant operators, revokes certification for violations, arbitrates disputes. Where the Council protects correctness, the Custodians protect purpose.</p>
+    <p style="margin-bottom:0"><strong>Smart Contract Treasury (autonomous, incorruptible):</strong> Receives ecosystem revenue, releases funds only when governance conditions are met, maintains perpetual financial continuity. Its rules are locked in code — no single person can redirect or freeze it.</p>
+  </div>
+  <h3>Structural Limits — What Governance Cannot Do</h3>
+  <p>They cannot add or remove Pillars, change the causal sequence, terminate or suspend TL, weaken the Goukassian Principle, bypass Anchors or the Immutable Ledger, or create an off-switch. <strong>No Switch Off is binding.</strong></p>
+  <div class="brow">
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/Governance.md" class="btn btn-dk">📋 Governance Model</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/Succession_Charter.md" class="btn btn-ol">📜 Succession Charter</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/Succession_Declaration.md" class="btn btn-gh">✍️ Succession Declaration</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Smart_Contracts" class="btn btn-gh">⛓️ Smart Contract Treasury</a>
+  </div>
+</section>
+
+<!-- REGULATORY -->
+<section class="sec" id="regulatory">
+  <div class="sec-lbl">Legal Framework</div>
+  <h2>Regulatory Compliance</h2><hr class="sec-rule">
+  <p>TL is architecturally aligned with — and in many cases <em>exceeds</em> — the requirements of all major international financial governance frameworks.</p>
+  <div class="rg">
+    <div class="rc"><span class="ri">🇪🇺</span><span class="rn">EU AI Act</span><span class="rd">Art. 9, 12, 14, 15, 27, 61 — fully mapped</span></div>
+    <div class="rc"><span class="ri">🏦</span><span class="rn">Basel III</span><span class="rd">Pillar 3 disclosures automated via Immutable Ledger</span></div>
+    <div class="rc"><span class="ri">🌐</span><span class="rn">FATF</span><span class="rd">Rec. 24/25 beneficial ownership via Veracity Anchors</span></div>
+    <div class="rc"><span class="ri">📊</span><span class="rn">IOSCO</span><span class="rd">Principle 35 market transparency via Decision Logs</span></div>
+    <div class="rc"><span class="ri">🔒</span><span class="rn">GDPR</span><span class="rd">Art. 17 Right to Erasure via cryptographic shredding</span></div>
+    <div class="rc"><span class="ri">🏛️</span><span class="rn">NIST CSF</span><span class="rd">Identify · Protect · Detect · Respond · Recover</span></div>
+    <div class="rc"><span class="ri">📋</span><span class="rn">SOX/COSO</span><span class="rd">Internal controls via Goukassian Principle</span></div>
+    <div class="rc"><span class="ri">📈</span><span class="rn">SEC/CFTC</span><span class="rd">4-day cybersecurity disclosure via Immutable Ledger</span></div>
+  </div>
+  <div class="brow">
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/Mandatory.md" class="btn btn-dk">⚠️ MANDATORY.md</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/core/COMPLIANCE_ATTESTATION.md" class="btn btn-ol">✅ Compliance Attestation</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/research/academic_papers" class="btn btn-gh">📚 Research Papers</a>
+  </div>
+</section>
+
+<!-- SUCCESSION -->
+<section class="sec" id="succession">
+  <div class="sec-lbl">Framework Heritage</div>
+  <h2>Succession &amp; Legacy</h2><hr class="sec-rule">
+  <div class="hbox hb-dark">
+    <h3>📜 Succession Declaration</h3>
+    <p>The <strong>Voluntary Succession Declaration</strong> personally authored and signed by <strong>Lev Goukassian</strong> ensures that TL's ethical, legal, and technical architecture will remain protected and operational beyond his lifetime. This declaration transfers stewardship to a multi-institutional Stewardship Council representing technology, economic governance, environmental protection, academia, and medical research.</p>
+    <p>All core protections remain <strong>immutable and non-negotiable:</strong></p>
+    <p style="color:var(--gold-lt);font-style:italic">No Log = No Action before execution · No Spy, No Weapon in perpetuity · Immutable Ledger before trust.<br>All eight pillars remain permanently enforced. Blockchain anchoring and open-source licensing are irrevocable.<br>Memorial Fund distributions to victims, whistleblowers, and research are permanent.</p>
+  </div>
+  <div class="brow">
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/Succession_Declaration.md" class="btn btn-blue">📜 Succession Declaration</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/Succession_Charter.md" class="btn btn-ol">📋 Succession Charter</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/proofs/Succession_Declaration_Notarized.pdf" class="btn btn-gh">⛓️ Notarized PDF</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/proofs/Succession_Charter_Notarized.pdf" class="btn btn-gh">📜 Charter Notarized</a>
+  </div>
+</section>
+
+<!-- MEMORIAL -->
+<section class="sec" id="memorial">
+  <div class="sec-lbl">Permanent Institution</div>
+  <h2>The Memorial Fund</h2><hr class="sec-rule">
+  <p>The <strong>Memorial Fund for Ethical Economic Research</strong> provides permanent financial support for governance, academic oversight, and victim restitution. Commercial and institutional TL implementations are <strong>required</strong> to contribute as part of their license obligations.</p>
+  <div class="hbox hb-green">
+    <h4 style="margin:0 0 .6rem;color:var(--green)">💜 Fund Allocation Priorities</h4>
+    <ul style="padding-left:1.2rem;margin:0">
+      <li style="font-size:.88rem">Independent audit and oversight institutions</li>
+      <li style="font-size:.88rem">Victim compensation and whistleblower legal defense</li>
+      <li style="font-size:.88rem">Open research in AI accountability and economic governance</li>
+      <li style="font-size:.88rem">Cancer research and medical science (in honor of Lev Goukassian)</li>
+    </ul>
+  </div>
+  <div class="brow">
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/Memorial_Fund.md" class="btn btn-dk">💜 Memorial Fund Charter</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/proofs/Memorial_Fund_Notarized.pdf" class="btn btn-gh">📜 Notarized PDF</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/Succession_Charter.md" class="btn btn-gh">📋 Succession Charter</a>
+  </div>
+</section>
+
+<!-- REPOSITORY DIRECTORY -->
+<section class="sec" id="repository">
+  <div class="sec-lbl">Site Map</div>
+  <h2>Repository Directory</h2><hr class="sec-rule">
+  <p>Complete folder and file structure of the TL repository — 328 files across 37 directories. All folders link directly to GitHub. For the full file-level tree with color-coded syntax, see <a href="https://fractonicmind.github.io/TernaryLogic/repository-navigation.html">Repository Navigation</a>.</p>
+
+  <h3>📌 Root-Level Key Files</h3>
+  <div class="pg">
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/ReadMe.md" class="pill">📄 ReadMe.md</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/Governance.md" class="pill">📄 Governance.md</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/License" class="pill">📄 License</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/CITATION.cff" class="pill">📄 CITATION.cff</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/Manifesto.md" class="pill">📄 Manifesto.md</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/Succession_Declaration.md" class="pill">📄 Succession_Declaration.md</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Notarized_Manifest.txt" class="pill">📄 TL_Notarized_Manifest.txt</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md" class="pill">📄 Assured Governance Architecture.md</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/Goukassian%20Principle%20as%20Evidentiary%20Infrastructure.md" class="pill">📄 Goukassian Principle as Evidentiary Infrastructure.md</a>
+    <a href="https://fractonicmind.github.io/TernaryLogic/repository-navigation.html" class="pill">🌐 Repository Navigation</a>
+    <a href="https://fractonicmind.github.io/TernaryLogic/demos/ROI_Calculator.html" class="pill">📊 ROI Calculator</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/sitemap.xml" class="pill">🗺️ sitemap.xml</a>
+  </div>
+
+  <h3>📁 Repository Folders</h3>
+  <div class="dg">
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/TL_Pillars" class="dc"><span class="di">📁</span><div><span class="dn">TL_Pillars/</span><span class="dd">8 pillars — MD, HTML &amp; MP3 for each</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/No_Log-No_Action" class="dc"><span class="di">📁</span><div><span class="dn">No_Log-No_Action/</span><span class="dd">Execution integrity spec, non-bypassable invariant, HSM enforcement</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/No_Spy-No_Weapon" class="dc"><span class="di">📁</span><div><span class="dn">No_Spy-No_Weapon/</span><span class="dd">Absolute prohibition specs, universal scalability analysis</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/AML_Prevention" class="dc"><span class="di">📁</span><div><span class="dn">AML_Prevention/</span><span class="dd">Governance-grade AML specification, Basel III, IOSCO, NIST mapping</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Merkle_Architecture" class="dc"><span class="di">📁</span><div><span class="dn">Merkle_Architecture/</span><span class="dd">Cryptographic anchoring, protocol spec, engineering spec</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Dual_Latency_Architecture" class="dc"><span class="di">📁</span><div><span class="dn">Dual_Latency_Architecture/</span><span class="dd">Hardware-enforceable execution model, cryptographic finality</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Cryptographic_Erasure" class="dc"><span class="di">📁</span><div><span class="dn">Cryptographic_Erasure/</span><span class="dd">GDPR-immutability resolution, post-quantum analysis, HRoT key hierarchy</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Hardware_Architecture" class="dc"><span class="di">📁</span><div><span class="dn">Hardware_Architecture/</span><span class="dd">Atomic auditability, Huawei CN119652311A interface, TSMC N2 baseline</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/MT_Hardware" class="dc"><span class="di">📁</span><div><span class="dn">MT_Hardware/</span><span class="dd">Memristive device physics, circuit primitives, system architecture</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Adversarial_Survivability" class="dc"><span class="di">📁</span><div><span class="dn">Adversarial_Survivability/</span><span class="dd">Constitutional survivability under adversarial pressure</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Smart_Contracts" class="dc"><span class="di">📁</span><div><span class="dn">Smart_Contracts/</span><span class="dd">Ethereum/L2 governance contracts, TL_Ledger_Core.sol, TL_Evidence_Vault.sol</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/research/academic_papers" class="dc"><span class="di">📁</span><div><span class="dn">research/academic_papers/</span><span class="dd">BIS, SEC, AML, 2008 crisis analysis, Goukassian Principle papers</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/proofs" class="dc"><span class="di">📁</span><div><span class="dn">proofs/</span><span class="dd">Notarized PDFs for all 8 pillars, governance, succession, memorial</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/core" class="dc"><span class="di">📁</span><div><span class="dn">core/</span><span class="dd">State machine, shutdown triggers, compliance attestation, sync protocol</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/docs" class="dc"><span class="di">📁</span><div><span class="dn">docs/</span><span class="dd">Mandatory, Quick Start, FAQ, Academic Validation, specs</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/docs/specs" class="dc"><span class="di">📁</span><div><span class="dn">docs/specs/</span><span class="dd">Epistemic Hold protocol, Merkle anchoring, sidecar mode, gateway</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/src" class="dc"><span class="di">📁</span><div><span class="dn">src/</span><span class="dd">Core engine, risk module, thresholds, uncertainty, kill switch</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/examples" class="dc"><span class="di">📁</span><div><span class="dn">examples/</span><span class="dd">Central banking policy, financial trading, supply chain, quickstart</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/tests" class="dc"><span class="di">📁</span><div><span class="dn">tests/</span><span class="dd">Unit, integration, performance, scenario, validation test suites</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/memorial" class="dc"><span class="di">📁</span><div><span class="dn">memorial/</span><span class="dd">Memorial Fund charter, succession charter</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/protection" class="dc"><span class="di">📁</span><div><span class="dn">protection/</span><span class="dd">Institutional access, integrity monitoring, legacy preservation</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/api" class="dc"><span class="di">📁</span><div><span class="dn">api/</span><span class="dd">Complete API reference</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/demos" class="dc"><span class="di">📁</span><div><span class="dn">demos/</span><span class="dd">ROI Calculator interactive demo</span></div></a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/images" class="dc"><span class="di">📁</span><div><span class="dn">images/</span><span class="dd">Diagrams, governance visuals, triadic logic illustrations</span></div></a>
+  </div>
+</section>
+
+<!-- GETTING STARTED -->
+<section class="sec" id="implementation">
+  <div class="sec-lbl">Developer Guide</div>
+  <h2>Getting Started</h2><hr class="sec-rule">
+
+  <h3>Implementation Steps</h3>
+  <ol>
+    <li><strong>Read Compliance Requirements:</strong> Begin with <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/Mandatory.md">docs/Mandatory.md</a></li>
+    <li><strong>Follow Quick Start Guide:</strong> <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/Quick_Start.md">60-minute implementation tutorial</a></li>
+    <li><strong>Review API Reference:</strong> <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/api/Complete_Api_Reference.md">Complete API Reference</a></li>
+    <li><strong>Explore Examples:</strong> <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/examples">examples/ directory</a> — central banking, financial trading, supply chain</li>
+    <li><strong>Understand Governance:</strong> <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/Governance.md">Governance.md</a></li>
+  </ol>
+
+  <div class="cw">
+    <div class="cb"><span class="cd cr"></span><span class="cd cy"></span><span class="cd cg"></span>&nbsp;Quick Start</div>
+    <pre>
+<span class="cc"># Clone the TL repository</span>
+git clone https://github.com/FractonicMind/TernaryLogic.git
+cd TernaryLogic
+
+<span class="cc"># Install dependencies</span>
+pip install -r requirements.txt
+
+<span class="cc"># Initialize TL with domain-level thresholds</span>
+from src <span class="ck">import</span> TLEvaluator, TLState
+
+evaluator = TLEvaluator()
+result = evaluator.evaluate(context)
+
+<span class="cc"># No Log = No Action: architecturally enforced</span>
+<span class="cc"># If logging fails → result.state = TLState.HALT</span>
+<span class="cc"># The Epistemic Hold awaits.</span></pre>
+  </div>
+
+  <div class="brow">
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/Quick_Start.md" class="btn btn-blue">🚀 Quick Start Guide</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/api/Complete_Api_Reference.md" class="btn btn-ol">📡 API Reference</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/Mandatory.md" class="btn btn-gh">⚠️ Mandatory.md</a>
+    <a href="https://fractonicmind.github.io/TernaryLogic/demos/ROI_Calculator.html" class="btn btn-gh">📊 ROI Calculator</a>
+    <a href="https://github.com/FractonicMind/TernaryLogic/tree/main/examples" class="btn btn-gh">💻 Examples</a>
+  </div>
+
+  <h3>Contact &amp; Support</h3>
+  <table class="tbl">
+    <thead><tr><th>Contact Type</th><th>Details</th></tr></thead>
+    <tbody>
+      <tr><td>Framework Creator</td><td><a href="https://orcid.org/0009-0006-5966-1243">ORCID: 0009-0006-5966-1243</a> — Lev Goukassian · leogouk@gmail.com</td></tr>
+      <tr><td>GitHub Repository</td><td><a href="https://github.com/FractonicMind/TernaryLogic">github.com/FractonicMind/TernaryLogic</a></td></tr>
+      <tr><td>Research Collaboration</td><td><a href="mailto:academic@tl-goukassian.org">academic@tl-goukassian.org</a></td></tr>
+      <tr><td>Technical Implementation</td><td><a href="mailto:technical@tl-goukassian.org">technical@tl-goukassian.org</a></td></tr>
+      <tr><td>Economic Applications</td><td><a href="mailto:economic@tl-goukassian.org">economic@tl-goukassian.org</a></td></tr>
+      <tr><td>Successor Contact</td><td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/Succession_Charter.md">Succession Charter</a> · <a href="mailto:support@tl-goukassian.org">support@tl-goukassian.org</a></td></tr>
+    </tbody>
+  </table>
+</section>
+
+</main>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="scard">
+    <h4>📊 Framework Stats</h4>
+    <div class="stats">
+      <div class="stat"><span class="stat-v">8</span><span class="stat-l">Pillars</span></div>
+      <div class="stat"><span class="stat-v">328</span><span class="stat-l">Files</span></div>
+      <div class="stat"><span class="stat-v">3</span><span class="stat-l">States</span></div>
+      <div class="stat"><span class="stat-v">37</span><span class="stat-l">Directories</span></div>
+      <div class="stat"><span class="stat-v">81%</span><span class="stat-l">Test Coverage</span></div>
+      <div class="stat"><span class="stat-v">v2.0</span><span class="stat-l">Version</span></div>
+    </div>
+  </div>
+
+  <div class="scard">
+    <h4>🏛️ Eight Pillars</h4>
+    <ul>
+      <li><a href="#pillars">⏸ 1. Epistemic Hold</a></li>
+      <li><a href="#pillars">🔗 2. Immutable Ledger</a></li>
+      <li><a href="#pillars">🏮 3. Goukassian Principle</a></li>
+      <li><a href="#pillars">📋 4. Decision Logs</a></li>
+      <li><a href="#pillars">⚖️ 5. Economic Rights</a></li>
+      <li><a href="#pillars">🌱 6. Sustainable Capital</a></li>
+      <li><a href="#pillars">🛡️ 7. Hybrid Shield</a></li>
+      <li><a href="#pillars">⚓ 8. Anchors</a></li>
+    </ul>
+  </div>
+
+  <div class="scard">
+    <h4>⚡ Quick Links</h4>
+    <ul>
+      <li><a href="https://github.com/FractonicMind/TernaryLogic">⭐ GitHub Repo</a></li>
+      <li><a href="https://doi.org/10.1007/s43681-025-00910-6">📘 Published Paper</a></li>
+      <li><a href="https://doi.org/10.5281/zenodo.17613006">🔴 ZENODO Notarized</a></li>
+      <li><a href="https://fractonicmind.github.io/TernaryLogic/repository-navigation.html">🗺️ Repo Navigation</a></li>
+      <li><a href="https://fractonicmind.github.io/TernaryLogic/demos/ROI_Calculator.html">📊 ROI Calculator</a></li>
+      <li><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/Governance.md">📋 Governance</a></li>
+      <li><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/Mandatory.md">⚠️ MANDATORY.md</a></li>
+      <li><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/Memorial_Fund.md">💜 Memorial Fund</a></li>
+    </ul>
+  </div>
+
+  <div class="scard">
+    <h4>🌐 Interactive Pillars</h4>
+    <ul>
+      <li><a href="https://fractonicmind.github.io/TernaryLogic/TL_Pillars/Decision%20Logs.html">Decision Logs</a></li>
+      <li><a href="https://fractonicmind.github.io/TernaryLogic/TL_Pillars/Economic%20Rights%20and%20Transparency.html">Economic Rights</a></li>
+      <li><a href="https://fractonicmind.github.io/TernaryLogic/TL_Pillars/Sustainable%20Capital%20Allocation.html">Sustainable Capital</a></li>
+      <li><a href="https://fractonicmind.github.io/TernaryLogic/TL_Pillars/Anchors.html">Anchors</a></li>
+    </ul>
+  </div>
+
+  <div class="scard">
+    <h4>⛓️ New Architecture</h4>
+    <ul>
+      <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/No_Log-No_Action">No Log — No Action</a></li>
+      <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/No_Spy-No_Weapon">No Spy — No Weapon</a></li>
+      <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Cryptographic_Erasure">Cryptographic Erasure</a></li>
+      <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Merkle_Architecture">Merkle Architecture</a></li>
+      <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Dual_Latency_Architecture">Dual Latency</a></li>
+      <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Hardware_Architecture">Hardware Architecture</a></li>
+      <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/MT_Hardware">MT Hardware</a></li>
+      <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/AML_Prevention">AML Prevention</a></li>
+    </ul>
+  </div>
+</aside>
+
+</div>
+
+<footer>
+  <div class="ft">
+    <div class="ft-brand">
+      <h3>⚖️ Ternary Logic</h3>
+      <p>The world's first mandatory evidentiary framework for economic and financial systems. Epistemic Hold · Immutable Ledger · Goukassian Principle · Decision Logs · AML Enforcement · CBDC Governance. Created by Lev Goukassian.</p>
+      <p style="margin-top:.5rem">ORCID: <a href="https://orcid.org/0009-0006-5966-1243" style="color:#90c8f8">0009-0006-5966-1243</a> &nbsp;·&nbsp; License: <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/License" style="color:#90c8f8">MIT with Ethics</a></p>
+      <div class="ft-quote">"The world will eventually understand the line I drew: between speed and meaning, between brilliance and wisdom." — Lev Goukassian</div>
+    </div>
+    <div>
+      <h4>Core Framework</h4>
+      <ul>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/TL_Pillars">Eight Pillars</a></li>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/Governance.md">Governance Model</a></li>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Dual_Latency_Architecture">Dual Latency Architecture</a></li>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Merkle_Architecture">Merkle Architecture</a></li>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/Mandatory.md">MANDATORY.md</a></li>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/docs/Quick_Start.md">Quick Start</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Architecture</h4>
+      <ul>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/No_Log-No_Action">No Log — No Action</a></li>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/No_Spy-No_Weapon">No Spy — No Weapon</a></li>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Cryptographic_Erasure">Cryptographic Erasure</a></li>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/AML_Prevention">AML Prevention</a></li>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Hardware_Architecture">Hardware Architecture</a></li>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/Smart_Contracts">Smart Contracts</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Research</h4>
+      <ul>
+        <li><a href="https://doi.org/10.1007/s43681-025-00910-6">Published Paper (Springer)</a></li>
+        <li><a href="https://doi.org/10.5281/zenodo.17613006">ZENODO Notarized</a></li>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/research/academic_papers">Academic Papers</a></li>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/tree/main/proofs">Notarized Proofs</a></li>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/CITATION.cff">Citation Format</a></li>
+        <li><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/memorial/Memorial_Fund.md">Memorial Fund</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fb">
+    <span>© 2025-2026 Lev Goukassian · Ternary Logic · <a href="https://github.com/FractonicMind/TernaryLogic">FractonicMind/TernaryLogic</a></span>
+    <span>Document Version 2.0 · April 2026 · <a href="https://fractonicmind.github.io/TernaryLogic/">fractonicmind.github.io/TernaryLogic</a></span>
+  </div>
+</footer>
+
+<script>
+const secs = document.querySelectorAll('.sec[id]');
+const navAs = document.querySelectorAll('.nav-w a');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navAs.forEach(a => {
+        a.style.color = '';
+        a.style.borderBottomColor = '';
+        if (a.getAttribute('href') === '#' + e.target.id) {
+          a.style.color = '#4a9cd8';
+          a.style.borderBottomColor = '#1a6bb5';
+        }
+      });
+    }
+  });
+}, { threshold: 0.25, rootMargin: '-60px 0px 0px 0px' });
+secs.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
