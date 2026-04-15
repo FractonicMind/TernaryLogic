@@ -1,4 +1,8 @@
-**This is how I write the stories.**
+**This Is How I Write the Stories.**
+
+***A conversation with DeepSeek about Ternary Logic, narrative as distribution layer, and the stories that help me sleep.***
+
+---
 
 **Lev:** Based on the attached document (read it carefully, twice), write a humorous, light-novel style story. One continuous story, no chapters. 
 
