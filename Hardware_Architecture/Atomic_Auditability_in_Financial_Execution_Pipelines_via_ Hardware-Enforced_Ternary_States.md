@@ -97,7 +97,7 @@ This paper presents a hardware architecture for **Atomic Auditability** in high-
 
 [VI.4 Dual-Rail Encoding Tax	29](#vi.4-dual-rail-encoding-tax)
 
-[VII. Formal Constraint: The Goukassian Promise	29](#vii.-formal-constraint:-the-goukassian-promise)
+[VII. Formal Constraint: The Goukassian Principle	29](#vii.-formal-constraint:-the-goukassian-principle)
 
 [VII.1 System Invariant Definition	30](#vii.1-system-invariant-definition)
 
@@ -428,11 +428,11 @@ The **“Dual-Rail Encoding Tax”**—2 wires per bit—is the most visible DIT
 The routing congestion increase is substantial but manageable in contemporary processes. Key mitigations: **(a)** concentrated placement of Ternary Governance Core with short local interconnects; **(b)** hierarchical completion detection reducing global wire count; **(c)** selective DITL application—only execution authorization paths require full dual-rail, data paths can employ single-rail with DITL-wrapped interfaces.  
  The justification for accepting this tax is **risk elimination**. For a major exchange processing 10 million orders per second with average trade value $50,000, a single Ghost Fill event—say, 1000 unrecorded trades during a system failure—represents **$50 million of un-audited risk exposure**. The dual-rail area cost, amortized across millions of trades, is negligible compared to this risk.
 
-## **VII. Formal Constraint: The Goukassian Promise** {#vii.-formal-constraint:-the-goukassian-promise}
+## **VII. Formal Constraint: The Goukassian Principle** {#vii.-formal-constraint:-the-goukassian-principle}
 
 ### **VII.1 System Invariant Definition** {#vii.1-system-invariant-definition}
 
-The **Goukassian Promise** is the fundamental safety invariant of the ternary execution architecture:  
+The **Goukassian Principle** is the fundamental safety invariant of the ternary execution architecture:  
  **No execution signal may propagate unless the system has entered, recorded, and exited a physically enforced escrow state.**  
  This invariant subsumes multiple specific safety properties: **audit precedence** (execution requires prior audit record), **non-bypassability** (no path around Escrow), and **recoverability** (Escrow state persists through failures).
 
@@ -445,7 +445,7 @@ In **Linear Temporal Logic (LTL)**, with predicates:
 * **record**: audit evidence written to non-volatile storage  
 * **exit\_escrow**: system exits Escrow state with verification token
 
-The Goukassian Promise is expressed:  
+The Goukassian Principle is expressed:  
  ▫execute◇enter\_escrowrecordexit\_escrow  
  **Temporal operator semantics:**
 
@@ -461,10 +461,10 @@ The nested structure ensures that **every execution is preceded by escrow entry,
 
 ### **VII.3 Runtime Enforcement via SystemVerilog Assertions** {#vii.3-runtime-enforcement-via-systemverilog-assertions}
 
-**SystemVerilog Assertions (SVA)** provide hardware-implementable monitoring of the Goukassian Promise \- \`\`\`systemverilog  
+**SystemVerilog Assertions (SVA)** provide hardware-implementable monitoring of the Goukassian Principle \- \`\`\`systemverilog  
  // Sequence: proper escrow protocol completion sequence escrow\_protocol; enter\_escrow \#\#\[1:$\] record \#\#\[1:$\] exit\_escrow; endsequence  
- // Property: execute implies prior completed escrow protocol property goukassian\_promise; @(posedge clk or async\_handshake) disable iff (reset) execute |-\> ($past(escrow\_protocol, 1)); endproperty  
- // Assertion: runtime check assert property (goukassian\_promise) else $error(“Goukassian Promise violated: execute without escrow”);  
+ // Property: execute implies prior completed escrow protocol property goukassian\_principle; @(posedge clk or async\_handshake) disable iff (reset) execute |-\> ($past(escrow\_protocol, 1)); endproperty  
+ // Assertion: runtime check assert property (goukassian\_principle) else $error(“Goukassian Principle violated: execute without escrow”);  
  // Cover: verification that protocol is exercised cover property (escrow\_protocol \#\#1 execute);  
  \`\`\`  
  The implementation uses SVA’s **clocked and unclocked forms**: the async\_handshake sensitivity captures DITL’s asynchronous nature, while disable iff handles reset conditions. The $past system function verifies that the escrow\_protocol sequence completed in the cycle immediately preceding execute.  
@@ -472,9 +472,9 @@ The nested structure ensures that **every execution is preceded by escrow entry,
 
 ### **VII.4 Hardware Verification Integration** {#vii.4-hardware-verification-integration}
 
-The Goukassian Promise is verified at **multiple complementary levels**:
+The Goukassian Principle is verified at **multiple complementary levels**:
 
-| Verification Method | Application | Goukassian Promise Coverage |
+| Verification Method | Application | Goukassian Principle Coverage |
 | ----- | ----- | ----- |
 | **Formal model checking** | Property verification on abstracted design | Complete for bounded transaction sequences; state space reduction via cone-of-influence and data abstraction |
 | **Simulation-based assertion monitoring** | RTL and gate-level simulation with real workloads | Statistical sampling of transaction space; immediate violation detection with waveform capture |
