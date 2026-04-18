@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ternary Logic Technical Council Governance Analysis</title>
+
+  <!-- Essential CDN Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: 'hsl(210, 75%, 95%)',
+              100: 'hsl(210, 75%, 85%)',
+              200: 'hsl(210, 75%, 75%)',
+              300: 'hsl(210, 75%, 65%)',
+              400: 'hsl(210, 75%, 55%)',
+              500: 'hsl(210, 75%, 40%)',
+              600: 'hsl(210, 75%, 35%)',
+              700: 'hsl(210, 75%, 25%)',
+              800: 'hsl(210, 75%, 15%)',
+              900: 'hsl(210, 75%, 10%)'
+            },
+            accent: {
+              50: 'hsl(240, 65%, 95%)',
+              100: 'hsl(240, 65%, 85%)',
+              200: 'hsl(240, 65%, 75%)',
+              300: 'hsl(240, 65%, 65%)',
+              400: 'hsl(240, 65%, 60%)',
+              500: 'hsl(240, 65%, 55%)',
+              600: 'hsl(240, 65%, 50%)',
+              700: 'hsl(240, 65%, 40%)',
+              800: 'hsl(240, 65%, 30%)',
+              900: 'hsl(240, 65%, 20%)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- Preline UI Components -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+
+  <!-- Micro-interactions & Custom Styles -->
+  <style>
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+    .btn-interactive {
+      transition: all 0.2s ease-out;
+    }
+    
+    .btn-interactive:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .btn-interactive:active {
+      transform: scale(0.95);
+    }
+
+    .card-interactive {
+      transition: all 0.3s ease-out;
+      border: 1px solid transparent;
+      --border-lightness: 40%;
+    }
+
+    .dark .card-interactive {
+      --border-lightness: 60%;
+    }
+
+    .card-interactive:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      filter: brightness(0.98);
+    }
+    
+    /* Primary colored cards */
+    .card-interactive[class*="primary"]:hover,
+    .card-interactive[class*="white"]:hover,
+    .card-interactive[class*="gray-"]:hover {
+      border-color: hsl(210, 75%, var(--border-lightness));
+    }
+    
+    /* Accent colored cards */
+    .card-interactive[class*="accent"]:hover {
+      border-color: hsl(240, 65%, var(--border-lightness));
+    }
+  </style>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      document.getElementById('sunIcon').style.display = isDark ? 'block' : 'none';
+      document.getElementById('moonIcon').style.display = isDark ? 'none' : 'block';
+    }
+  </script>
+</head>
+
+<body class="dark:bg-gray-900 bg-gray-50 text-gray-900 dark:text-gray-100 min-h-screen">
+  <!-- Citation System Script -->
+  <script>
+    function initCitationSystem() {
+      let i = 1, map = new Map();
+      document.querySelectorAll('[data-ref]').forEach(el => {
+        if (el.dataset.citationProcessed) return;
+        const raw = (el.getAttribute('data-ref')||'').trim();
+        if (!raw) return;
+
+        const parts = raw.split('|');
+        const url = parts[0].trim();
+        const idx = (parts[1]||'').trim() || map.get(raw) || (map.set(raw, String(i)), String(i++));
+
+        if (!el.textContent || !el.textContent.trim()) { el.dataset.citationProcessed = 'true'; return; }
+
+        const btn = document.createElement('sup'); btn.textContent = String(idx);
+        Object.assign(btn.style, { fontSize:'8px', color:'#fff', cursor:'pointer', top: '1px', fontWeight:'bold', backgroundColor:'#0284c7', borderRadius:'50%', transition:'all .15s', userSelect:'none', minWidth:'19px', height:'19px', marginLeft:'6px', display:'inline-flex', alignItems:'center', justifyContent:'center', boxShadow:'0 1px 3px rgba(0,0,0,.2)', lineHeight:'1'});
+        btn.addEventListener('mouseenter', ()=> Object.assign(btn.style, { backgroundColor:'#0369a1', transform:'scale(1.12)' }));
+        btn.addEventListener('mouseleave', ()=> Object.assign(btn.style, { backgroundColor:'#0284c7', transform:'scale(1)' }));
+        btn.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); window.open(url, '_blank'); });
+
+        el.appendChild(btn); el.dataset.citationProcessed = 'true';
+      });
+    }
+  </script>
+
+  <!-- Progress bar -->
+  <div class="fixed top-0 left-0 h-1 bg-primary-500 dark:bg-primary-400 z-[60] transition-all duration-300 ease-out" id="progressBar"></div>
+
+  <!-- Floating Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur bg-gray-50/90 dark:bg-gray-900/90 border-b border-primary-500/20 dark:border-primary-600/20">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <h1 class="text-xl font-bold text-primary-700 dark:text-primary-300">Ternary Logic Technical Council Analysis</h1>
+        
+        <nav class="hidden md:flex items-center space-x-6">
+          <a href="#overview" class="text-sm text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Overview</a>
+          <a href="#architecture" class="text-sm text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Architecture</a>
+          <a href="#security" class="text-sm text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Security</a>
+          <a href="#vulnerabilities" class="text-sm text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Vulnerabilities</a>
+          <a href="#quorum" class="text-sm text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Quorum</a>
+          <a href="#resilience" class="text-sm text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Resilience</a>
+          <a href="#conclusion" class="text-sm text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Conclusion</a>
+        </nav>
+
+        <button onclick="toggleDarkMode()" class="btn-interactive p-2 rounded-lg bg-primary-100 dark:bg-primary-800 text-primary-600 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-700 transition-all">
+          <i data-lucide="sun" id="sunIcon" class="w-5 h-5"></i>
+          <i data-lucide="moon" id="moonIcon" class="w-5 h-5" style="display:none;"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="pt-24 pb-16">
+    <!-- Hero Section -->
+    <section class="py-16 bg-gradient-to-br from-primary-50/50 to-accent-50/30 dark:from-gray-900 dark:to-gray-800" id="overview">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl md:text-5xl font-bold mb-6 text-primary-700 dark:text-primary-300" data-aos="fade-up">
+            Technical Council Governance Analysis
+          </h2>
+          <p class="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+            Evaluating the technical soundness, defensibility against post-2023 vulnerabilities, and long-term survivability of Ternary Logic's constitutional governance framework under software-only conditions.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mt-12">
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md" data-aos="fade-up" data-aos-delay="200">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="shield-check" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Security Focus</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Comprehensive analysis of immediate technical risks and post-2023 vulnerabilities in smart contract upgradeability standards
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md" data-aos="fade-up" data-aos-delay="300">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="target" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Constitutional Boundaries</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Strict adherence to non-negotiable constraints: no God Mode, immutable mandates, and janitor-not-architect boundary
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md" data-aos="fade-up" data-aos-delay="400">
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="cpu" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Software-Only Assumption</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Analysis operates under software-only governance without deployed DITL hardware enforcement as of Q2 2026
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Architecture Section -->
+    <section class="py-16 bg-white/80 dark:bg-gray-900" id="architecture">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300" data-aos="fade-up">
+          Technical Architecture Overview
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 items-start mb-12">
+          <div class="space-y-6">
+            <p class="text-gray-700 dark:text-gray-300" data-aos="fade-up">
+              The Technical Council operates within Ternary Logic's tri-cameral constitutional framework, designed to balance innovation velocity with security rigor through asymmetric vote rights architecture. Under software-only conditions, the council's effectiveness relies entirely on smart contract governance mechanisms without hardware-enforced constraints.
+            </p>
+
+            <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg" data-aos="fade-up" data-aos-delay="100">
+              <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed">
+                <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Key Finding: Exclusive proposal power without veto creates asymmetric influence dynamics requiring careful quorum design and execution monitoring
+              </p>
+            </div>
+
+            <p class="text-gray-700 dark:text-gray-300" data-aos="fade-up" data-aos-delay="200">
+              The council's operational foundation depends on upgradeable smart contract infrastructure, specifically leveraging EIP-2535 (Diamond Standard) and EIP-1822 (UUPS) patterns for flexible governance execution. These standards enable rapid response to emerging threats while maintaining constitutional continuity.
+            </p>
+          </div>
+
+          <img
+            src="https://cdn.qwenlm.ai/60498d16-d2ab-4b9f-8acd-8f6913b3400d/c3188c91-bc8a-46dd-b8d1-dd8475bef750/bc8e44a7-2914-453a-8db5-eeb67e5a1a34.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiNjA0OThkMTYtZDJhYi00YjlmLThhY2QtOGY2OTEzYjM0MDBkIiwicmVzb3VyY2VfaWQiOiJjMzE4OGM5MS1iYzhhLTQ2ZGQtYjhkMS1kZDg0NzViZWY3NTAiLCJyZXNvdXJjZV9jaGF0X2lkIjpudWxsfQ.G1nYhBzY2p_S8oN5kOlnaCeHOcN9fCW1l6T_THYzMnM"
+            alt="Technical Council governance architecture diagram showing a central hexagonal node labeled 'Technical Council' in deep blue color (#1a5490) connected to three peripheral circular nodes arranged in a triangular formation. The top node labeled 'Proposal Engine' in medium blue (#2563eb) connects with a thick arrow to the central node. The bottom left node labeled 'Execution Layer' in light blue (#60a5fa) connects with a dashed arrow to the central node. The bottom right node labeled 'Audit Module' in purple (#7c3aed) connects with a dotted arrow to the central node. All arrows are dark blue (#1e40af) with arrowheads pointing toward the central node. The background is a soft gradient from white to light gray (#f3f4f6). Connection lines use thin gray lines (#d1d5db). The diagram emphasizes the flow of governance decisions from proposal through execution with continuous audit oversight."
+            class="w-full rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          />
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md" data-aos="fade-up">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="layers" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-base font-semibold text-primary-700 dark:text-primary-300">Layered Governance</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Multi-layered decision-making process with clear separation between proposal, approval, and execution phases
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-accent-50/50 dark:bg-gray-800 rounded-xl shadow-md" data-aos="fade-up" data-aos-delay="100">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="lock" class="w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h3 class="text-base font-semibold text-accent-700 dark:text-accent-300">Immutable Mandates</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Core constitutional principles protected by software-defined immutability without hardware enforcement
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md" data-aos="fade-up" data-aos-delay="200">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="zap" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-base font-semibold text-primary-700 dark:text-primary-300">Adaptive Response</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Rapid adaptation capabilities enabled by upgradeable smart contract patterns while preserving constitutional integrity
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Security Framework Section -->
+    <section class="py-16 bg-primary-50/50 dark:bg-gray-800" id="security">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300" data-aos="fade-up">
+          Security Framework & Cryptographic Readiness
+        </h2>
+
+        <div class="mb-12">
+          <p class="text-gray-700 dark:text-gray-300 mb-6" data-aos="fade-up">
+            The Technical Council's security posture must withstand both immediate post-2023 vulnerabilities and long-term threats from state-level actors and AI-assisted adversarial strategies. Post-quantum cryptographic readiness under NIST FIPS 203/204/205 standards represents a critical defense layer.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md" data-aos="fade-up">
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-4" data-ref="https://s3-eu-west-1.amazonaws.com/figshare-production-eu-qnl-ror-storage2312-eu-west-1/coversheet/48073987/1/A_Survey_and_Comparison_of_PostQuantum_and_Quantum_Blockchains.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA3OGA3B5WN66LM3CB/20260403/eu-west-1/s3/aws4_request&X-Amz-Date=20260403T113441Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=03b0414df3616f64da7bfe7432d419989ef44fe5301b3d46f2afa9c98eeb3ed7|67">
+                Post-Quantum Cryptography Integration
+              </h3>
+              <p class="text-sm text-gray-700 dark:text-gray-300 mb-4">
+                Post-quantum cryptography replaces vulnerable factorization-based public key schemes with quantum-resistant alternatives for encryption and signature verification. This transition addresses fundamental cryptographic weaknesses that could compromise governance integrity in quantum computing environments.
+              </p>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Implementation requires careful migration planning to ensure backward compatibility while establishing quantum-resistant communication channels between council members and external stakeholders.
+              </p>
+            </div>
+
+            <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md" data-aos="fade-up" data-aos-delay="100">
+              <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300 mb-4" data-ref="https://ieeexplore.ieee.org/iel7/9739/10536630/10288193.pdf|24">
+                Quantum-Safe Smart Contracts
+              </h3>
+              <p class="text-sm text-gray-700 dark:text-gray-300 mb-4">
+                Integration of lightweight quantum blind signatures and quantum key distribution (QKD) into classical smart contracts provides enhanced security for governance transactions. This hybrid approach combines proven classical mechanisms with quantum-safe primitives.
+              </p>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Implementation complexity requires rigorous testing and validation to prevent unintended interactions between quantum and classical components.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pl-4 pr-3 py-3 border-l-4 border-amber-500 bg-amber-50/40 dark:bg-amber-900/30 rounded-r-lg mb-8" data-aos="fade-up">
+          <p class="text-sm font-medium text-amber-900 dark:text-amber-100 leading-relaxed" data-ref="https://lobehub.com/zh/skills/comeonoliver-skillshub-solidity-audit|20">
+            <i data-lucide="alert-triangle" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            Critical Risk: Compromised keys remain the #1 loss source in 2025-2026. Defense requires storing keys in HSM or hardware wallets with multisig (≥ 3/5) for all critical operations
+          </p>
+        </div>
+
+        <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md" data-aos="fade-up">
+          <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-4">
+            AI-Assisted Threat Landscape
+          </h3>
+          <div class="space-y-4">
+            <p class="text-sm text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/html/2502.05206v6|25">
+              LLM-Assisted Attacks leverage large language models to implement sophisticated attack algorithms or strategies, effectively turning AI models into tools for conducting adversarial activities against governance systems.
+            </p>
+            <p class="text-sm text-gray-700 dark:text-gray-300" data-ref="https://www.mdpi.com/2624-800X/5/3/53|28">
+              Automated cybersecurity compliance and threat response using AI, blockchain, and smart contracts represent both defensive opportunities and attack vectors requiring careful implementation oversight.
+            </p>
+            <p class="text-sm text-gray-700 dark:text-gray-300" data-ref="https://www.sciencedirect.com/science/article/pii/S0167404824005261|27">
+              Attack graph construction using Large Language Models converts textual cyber threat intelligence reports into structured representations, enabling more sophisticated threat modeling and response planning.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vulnerability Analysis Section -->
+    <section class="py-16 bg-white/80 dark:bg-gray-900" id="vulnerabilities">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300" data-aos="fade-up">
+          Immediate Vulnerability Assessment
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+          <div class="space-y-6">
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300" data-aos="fade-up">
+              Smart Contract Upgradeability Risks
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300" data-aos="fade-up" data-aos-delay="100" data-ref="https://arxiv.org/pdf/2507.20175|15">
+              Standards encoding upgrade patterns, notably EIP-2535 (Diamond) and UUPS proxies, embed storage-slot constants and upgrade guards that make layout violations detectable. However, implementation flaws can still create exploitable vulnerabilities.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300" data-aos="fade-up" data-aos-delay="200" data-ref="https://arxiv.org/pdf/2504.02719|13">
+              The Diamond Pattern (EIP-2535) and EIP-1538 approaches are classified as providing very high flexibility for smart contract upgrades. While beneficial for rapid response, this flexibility increases attack surface area requiring enhanced security monitoring.
+            </p>
+
+            <div class="pl-4 pr-3 py-3 border-l-4 border-amber-500 bg-amber-50/40 dark:bg-amber-900/30 rounded-r-lg" data-aos="fade-up" data-aos-delay="300">
+              <p class="text-sm font-medium text-amber-900 dark:text-amber-100 leading-relaxed" data-ref="https://www.cnblogs.com/ljbguanli/p/19463108|83">
+                <i data-lucide="circle-alert" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Risk Factor: Users interact with Proxy contracts which forward calls via delegatecall to Implementation contracts. This delegation mechanism creates potential for malicious code injection if upgrade controls fail
+              </p>
+            </div>
+          </div>
+
+          <div class="card-interactive p-6 bg-accent-50/50 dark:bg-gray-800 rounded-xl shadow-md" data-aos="fade-up">
+            <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300 mb-4" data-ref="https://www.linkedin.com/pulse/owasp-reveals-top-10-smart-contract-vulnerabilities-vrd0e|21">
+              OWASP Top 10 Smart Contract Vulnerabilities 2026
+            </h3>
+            <p class="text-sm text-gray-700 dark:text-gray-300 mb-4">
+              The 2026 rankings and vulnerability categories are based on real-world exploit data and security incident trends collected throughout 2025. Understanding these patterns is essential for proactive defense against known attack vectors.
+            </p>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Regular security audits and vulnerability assessments must align with evolving threat landscapes to maintain effective protection against emerging attack techniques.
+            </p>
+          </div>
+        </div>
+
+        <div class="hs-accordion-group space-y-4">
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-meve-attack">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="trending-up" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">MEV-Based Governance Manipulation</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-meve" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-meve-attack">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.sec.gov/Archives/edgar/data/2073505/000182912625004777/kraneshares_s1.htm|16">
+                  Although based on widely available information given that transactions in the mempool are publicly visible, any potential perception of MEV as unfair remains a concern for governance fairness and legitimacy.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300">
+                  MEV extraction opportunities can incentivize strategic voting behavior that prioritizes profit over constitutional adherence, potentially undermining the council's democratic legitimacy.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-timelock-bypass">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="clock" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">Timelock Bypass Vulnerabilities</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+            </button>
+            <div id="hs-collapse-timelock" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-timelock-bypass">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300">
+                  Timelock mechanisms designed to prevent rushed governance decisions can be bypassed through sophisticated multi-step attacks that exploit timing windows and cross-contract interactions.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300">
+                  Implementation of dynamic timelock adjustment based on proposal complexity and risk assessment can mitigate some bypass vectors while maintaining operational efficiency.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-delegatecall-inconsistencies">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="git-merge" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Delegatecall Inconsistencies</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-delegatecall" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-delegatecall-inconsistencies">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.cnblogs.com/ljbguanli/p/19463108|83">
+                  Delegatecall forwarding mechanisms can introduce inconsistent state management if implementation contracts are not carefully audited for storage layout compatibility.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300">
+                  Storage collision between proxy and implementation contracts can lead to unpredictable behavior, requiring rigorous upgrade validation procedures.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quorum System Analysis Section -->
+    <section class="py-16 bg-accent-50/50 dark:bg-gray-800" id="quorum">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-accent-700 dark:text-accent-300" data-aos="fade-up">
+          Quorum Robustness & Byzantine Fault Tolerance
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 items-start mb-12">
+          <img
+            src="https://cdn.qwenlm.ai/60498d16-d2ab-4b9f-8acd-8f6913b3400d/c3188c91-bc8a-46dd-b8d1-dd8475bef750/7f778d20-5580-4437-9ad6-e12dce4806b3.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiNjA0OThkMTYtZDJhYi00YjlmLThhY2QtOGY2OTEzYjM0MDBkIiwicmVzb3VyY2VfaWQiOiJjMzE4OGM5MS1iYzhhLTQ2ZGQtYjhkMS1kZDg0NzViZWY3NTAiLCJyZXNvdXJjZV9jaGF0X2lkIjpudWxsfQ.G1nYhBzY2p_S8oN5kOlnaCeHOcN9fCW1l6T_THYzMnM"
+            alt="Byzantine Fault Tolerance quorum system diagram showing a central circular cluster of nine evenly spaced nodes arranged in a regular nonagon shape. Seven nodes are highlighted in bright green color (#22c55e) representing active participants, while two nodes remain unhighlighted in gray color (#9ca3af) representing inactive or compromised nodes. Each active node displays a small checkmark icon in white color. A bold black arrow labeled '7-of-9' points from the central area toward the highlighted green nodes. The background is a soft gradient from white to light gray (#f3f4f6). Thin connecting lines in light gray (#d1d5db) link all nodes to show network connectivity. The diagram emphasizes the quorum threshold requirement where seven out of nine nodes must agree for governance decisions to pass."
+            class="w-full rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          />
+
+          <div class="space-y-6">
+            <p class="text-gray-700 dark:text-gray-300" data-aos="fade-up" data-ref="https://link.springer.com/article/10.1007/s44227-024-00054-9|6">
+              The Technical Council employs a 7-of-9 quorum system designed to incorporate Byzantine Fault Tolerance (BFT) principles for improved Oracle reliability. This configuration allows the system to tolerate up to two Byzantine failures while maintaining operational integrity.
+            </p>
+
+            <div class="pl-4 pr-3 py-3 border-l-4 border-accent-500 bg-accent-50/40 dark:bg-accent-900/30 rounded-r-lg" data-aos="fade-up" data-aos-delay="100">
+              <p class="text-sm font-medium text-accent-900 dark:text-accent-100 leading-relaxed" data-ref="https://arxiv.org/html/2204.03181v3|7">
+                <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                BFT consensus algorithms provide safety and liveness guarantees for distributed systems that must operate despite faulty or malicious nodes, making them ideal for governance resilience
+              </p>
+            </div>
+
+            <p class="text-gray-700 dark:text-gray-300" data-aos="fade-up" data-aos-delay="200" data-ref="https://www.mdpi.com/2504-2289/9/8/196|8">
+              Adjustable quorum size dynamically adjusts thresholds based on network conditions, improving scalability while maintaining fault tolerance. This adaptive approach can optimize performance during varying load conditions.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md" data-aos="fade-up">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="shield" class="w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h3 class="text-base font-semibold text-accent-700 dark:text-accent-300">Fault Tolerance</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              With 7-of-9 quorum, the system tolerates up to 2 Byzantine failures while maintaining consensus integrity
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md" data-aos="fade-up" data-aos-delay="100">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="gauge" class="w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h3 class="text-base font-semibold text-accent-700 dark:text-accent-300">Scalability</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Dynamic quorum adjustment optimizes performance during varying network load conditions
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md" data-aos="fade-up" data-aos-delay="200">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="users" class="w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h3 class="text-base font-semibold text-accent-700 dark:text-accent-300">Distributed Authority</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              Decentralized decision-making prevents single-point-of-failure scenarios in governance execution
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+          <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300 mb-4" data-ref="https://dl.acm.org/doi/10.1145/3503042|49">
+            Blockchain BFT Implementation
+          </h3>
+          <p class="text-sm text-gray-700 dark:text-gray-300 mb-4">
+            A blockchain builds a Byzantine fault-tolerant (BFT) system in which decentralized nodes run a protocol to reach an agreement on the common system state. This distributed consensus mechanism provides the foundation for secure governance operations.
+          </p>
+          <p class="text-sm text-gray-700 dark:text-gray-300">
+            The Technical Council's quorum system must integrate seamlessly with underlying blockchain consensus to ensure consistent state management across all governance actions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Long-term Resilience Section -->
+    <section class="py-16 bg-white/80 dark:bg-gray-900" id="resilience">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300" data-aos="fade-up">
+          Long-term Constitutional Resilience
+        </h2>
+
+        <div class="mb-12">
+          <p class="text-gray-700 dark:text-gray-300 mb-6" data-aos="fade-up">
+            Survivability against advanced persistent threats, including AI-assisted capture attempts, requires multi-layered defense strategies that account for both technological and social engineering attack vectors.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md" data-aos="fade-up">
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-4" data-ref="https://arxiv.org/pdf/2503.16248|64">
+                Context Manipulation Defense
+              </h3>
+              <p class="text-sm text-gray-700 dark:text-gray-300 mb-4">
+                Context manipulation attacks exploit the full spectrum of context surfaces in unified AI agent systems. Defense mechanisms must monitor and validate all input contexts to prevent adversarial manipulation.
+              </p>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Implementation requires continuous monitoring of proposal contexts and automated detection of anomalous pattern changes that could indicate AI-assisted manipulation attempts.
+              </p>
+            </div>
+
+            <div class="card-interactive p-6 bg-accent-50/50 dark:bg-gray-800 rounded-xl shadow-md" data-aos="fade-up" data-aos-delay="100">
+              <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300 mb-4" data-ref="https://arxiv.org/html/2506.05376v2|39">
+                AI Red Teaming Priorities
+              </h3>
+              <p class="text-sm text-gray-700 dark:text-gray-300 mb-4">
+                Realistic attack vectors for AI products deserve increased priority in red teaming research to identify potential vulnerabilities before adversaries can exploit them.
+              </p>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Regular red team exercises should simulate AI-assisted governance capture attempts to test system resilience and identify improvement areas.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hs-accordion-group space-y-4">
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-cross-chain-security">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="link" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Cross-Chain Relay Security</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-cross-chain" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-cross-chain-security">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/html/2408.00243v1|34">
+                  Updater contracts maintain lists of recent block headers from sender chains, verify proofs submitted by relay nodes, and coordinate secure cross-chain communication. This infrastructure is essential for multi-chain governance coordination.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300">
+                  Cross-chain relay security requires robust proof verification mechanisms and continuous monitoring for anomalous transaction patterns that could indicate relay compromise.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-anchor-host-selection">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="server" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">Anchor Host Chain Selection</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+            </button>
+            <div id="hs-collapse-anchor" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-anchor-host-selection">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.arxiv.org/list/cs/recent?skip=2260&show=1000|73">
+                  Cross-chain bridges and their economic consequences must be carefully evaluated when selecting anchor host chains. Bridge security directly impacts governance system integrity across interconnected networks.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300">
+                  Economic incentives and bridge design choices can create attack vectors that adversaries might exploit to influence governance outcomes on connected chains.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-game-theory-analysis">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="brain" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Game Theory & Rational Behavior</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-game-theory" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-game-theory-analysis">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/pdf/1902.07895|48">
+                  Game theory analysis of Byzantine Fault Tolerant blockchains reveals that processes exhibit either rational or Byzantine behavior. Understanding these behavioral patterns is crucial for designing resilient governance mechanisms.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300">
+                  Incentive structures must align rational actor behavior with constitutional preservation goals while minimizing opportunities for Byzantine exploitation.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 pl-4 pr-3 py-3 border-l-4 border-amber-500 bg-amber-50/40 dark:bg-amber-900/30 rounded-r-lg">
+          <p class="text-sm font-medium text-amber-900 dark:text-amber-100 leading-relaxed" data-ref="https://www.researchgate.net/publication/381504650_DAO_voting_mechanism_resistant_to_whale_and_collusion_problems|11">
+            <i data-lucide="triangle-alert" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            Warning: Quadratic voting alone, while mitigating simple whale domination, is still vulnerable to collusion (coordinated groups). Defense requires additional mechanisms to detect and prevent coordinated manipulation attempts
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conclusion & Recommendations Section -->
+    <section class="py-16 bg-primary-50/50 dark:bg-gray-800" id="conclusion">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300" data-aos="fade-up">
+          Conclusion & Constitutional Recommendations
+        </h2>
+
+        <div class="space-y-8">
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md" data-aos="fade-up">
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4">
+              Technical Soundness Assessment
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              The Technical Council's architectural foundation demonstrates reasonable technical soundness under software-only conditions. The combination of asymmetric vote rights, 7-of-9 quorum system, and upgradeable smart contract infrastructure provides a balanced approach to governance agility and security.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300">
+              However, immediate vulnerabilities in EIP-2535 and UUPS implementations require urgent attention, particularly regarding delegatecall inconsistencies and storage layout compatibility. These technical gaps represent the most pressing threats to constitutional continuity.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="card-interactive p-6 bg-accent-50/50 dark:bg-gray-800 rounded-xl shadow-md" data-aos="fade-up">
+              <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300 mb-4">
+                Current Defensibility Rating
+              </h3>
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-700 dark:text-gray-300">Post-2023 Vulnerabilities</span>
+                  <span class="text-sm font-semibold text-amber-600 dark:text-amber-400">Moderate Risk</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-700 dark:text-gray-300">MEV Manipulation</span>
+                  <span class="text-sm font-semibold text-amber-600 dark:text-amber-400">Medium Risk</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-700 dark:text-gray-300">Timelock Bypass</span>
+                  <span class="text-sm font-semibold text-amber-600 dark:text-amber-400">Low-Medium Risk</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-700 dark:text-gray-300">Quorum Resilience</span>
+                  <span class="text-sm font-semibold text-green-600 dark:text-green-400">High Resilience</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md" data-aos="fade-up" data-aos-delay="100">
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-4">
+                Long-term Survivability Factors
+              </h3>
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-700 dark:text-gray-300">Post-Quantum Readiness</span>
+                  <span class="text-sm font-semibold text-green-600 dark:text-green-400">Excellent</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-700 dark:text-gray-300">AI-Assisted Attack Defense</span>
+                  <span class="text-sm font-semibold text-yellow-600 dark:text-yellow-400">Needs Improvement</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-700 dark:text-gray-300">Cross-Chain Security</span>
+                  <span class="text-sm font-semibold text-amber-600 dark:text-amber-400">Moderate Risk</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-700 dark:text-gray-300">Game Theory Alignment</span>
+                  <span class="text-sm font-semibold text-green-600 dark:text-green-400">Good</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md" data-aos="fade-up">
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4">
+              Constitutionally Compliant Recommendations for Governance.md Article II
+            </h3>
+            
+            <div class="space-y-4">
+              <div class="p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+                <h4 class="font-semibold text-primary-700 dark:text-primary-300 mb-2" data-ref="https://lobehub.com/zh/skills/comeonoliver-skillshub-solidity-audit|20">
+                  Recommendation 1: Enhanced Key Management Protocol
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">
+                  Implement mandatory HSM or hardware wallet storage for all governance keys with minimum 3/5 multisig requirements for critical operations. This addresses the #1 loss source identified in 2025-2026 security incidents.
+                </p>
+              </div>
+
+              <div class="p-4 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+                <h4 class="font-semibold text-accent-700 dark:text-accent-300 mb-2" data-ref="https://s3-eu-west-1.amazonaws.com/figshare-production-eu-qnl-ror-storage2312-eu-west-1/coversheet/48073987/1/A_Survey_and_Comparison_of_PostQuantum_and_Quantum_Blockchains.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA3OGA3B5WN66LM3CB/20260403/eu-west-1/s3/aws4_request&X-Amz-Date=20260403T113441Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=03b0414df3616f64da7bfe7432d419989ef44fe5301b3d46f2afa9c98eeb3ed7|67">
+                  Recommendation 2: Mandatory Post-Quantum Migration Timeline
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">
+                  Establish phased migration to NIST FIPS 203/204/205 post-quantum cryptographic standards with quarterly compliance audits. Include quantum-safe communication channels for all governance communications.
+                </p>
+              </div>
+
+              <div class="p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+                <h4 class="font-semibold text-primary-700 dark:text-primary-300 mb-2" data-ref="https://www.linkedin.com/pulse/owasp-reveals-top-10-smart-contract-vulnerabilities-vrd0e|21">
+                  Recommendation 3: Continuous Security Monitoring Framework
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">
+                  Implement continuous monitoring aligned with OWASP Top 10 Smart Contract Vulnerabilities 2026. Establish automated alerting for suspicious transaction patterns and delegatecall inconsistencies.
+                </p>
+              </div>
+
+              <div class="p-4 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+                <h4 class="font-semibold text-accent-700 dark:text-accent-300 mb-2" data-ref="https://arxiv.org/html/2506.05376v2|39">
+                  Recommendation 4: AI Red Team Exercise Program
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">
+                  Conduct quarterly AI-assisted red team exercises targeting governance capture scenarios. Document findings and implement defensive measures based on exercise results.
+                </p>
+              </div>
+
+              <div class="p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+                <h4 class="font-semibold text-primary-700 dark:text-primary-300 mb-2" data-ref="https://www.mdpi.com/2504-2289/9/8/196|8">
+                  Recommendation 5: Adaptive Quorum Optimization
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">
+                  Implement dynamic quorum adjustment mechanisms that respond to network conditions while maintaining 7-of-9 minimum threshold. Optimize performance during varying load conditions without compromising security.
+                </p>
+              </div>
+
+              <div class="p-4 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+                <h4 class="font-semibold text-accent-700 dark:text-accent-300 mb-2" data-ref="https://www.researchgate.net/publication/381504650_DAO_voting_mechanism_resistant_to_whale_and_collusion_problems|11">
+                  Recommendation 6: Collusion Detection Enhancement
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">
+                  Augment quadratic voting mechanisms with advanced collusion detection algorithms. Implement real-time monitoring for coordinated voting patterns that could indicate strategic manipulation.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg" data-aos="fade-up">
+            <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed">
+              <i data-lucide="circle-check" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+              Final Assessment: The Technical Council framework demonstrates strong foundational design with manageable vulnerabilities that can be addressed through targeted improvements. No constitutional violations were identified, and all recommendations maintain the non-negotiable constraints of no God Mode, immutable mandates, and janitor-not-architect boundary.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-primary-900 dark:bg-gray-950 text-gray-300 py-12">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <h3 class="text-lg font-semibold text-primary-300 dark:text-primary-400 mb-4">About This Research</h3>
+          <p class="text-sm text-gray-400">
+            Comprehensive analysis of Ternary Logic's Technical Council governance framework evaluating technical soundness, security defensibility, and long-term survivability under software-only conditions.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-primary-300 dark:text-primary-400 mb-4">Key Focus Areas</h3>
+          <ul class="text-sm text-gray-400 space-y-2">
+            <li>• Post-2023 Vulnerability Assessment</li>
+            <li>• Byzantine Fault Tolerance</li>
+            <li>• Post-Quantum Cryptography</li>
+            <li>• AI-Assisted Threat Defense</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-primary-300 dark:text-primary-400 mb-4">Constitutional Principles</h3>
+          <ul class="text-sm text-gray-400 space-y-2">
+            <li>• No God Mode</li>
+            <li>• Immutable Mandates</li>
+            <li>• Janitor-Not-Architect Boundary</li>
+            <li>• Software-Only Governance</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 pt-8 text-center">
+        <p class="text-sm text-gray-500">
+          Research conducted under strict adherence to Ternary Logic constitutional constraints • Educational purposes only
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Progress Bar Script -->
+  <script>
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    });
+  </script>
+
+  <!-- Initialize Libraries -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize AOS
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100
+      });
+
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Initialize Preline components
+      setTimeout(() => {
+        HSStaticMethods.autoInit();
+      }, 100);
+
+      // Initialize citation system
+      initCitationSystem();
+    });
+  </script>
+</body>
+</html>
+
