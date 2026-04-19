@@ -713,10 +713,10 @@ The single non-negotiable observation is that the Three Mandates are **procedura
 
 ## Footnotes (consolidated)
 
-[1] Optimism Collective OPerating Manual; Lemma Solutions governance analysis.
-[2] IAEA governance structure, iaea.org/about/governance.
-[3] IETF RFC 8711 IASA 2.0.
-[4] WTO Appellate Body: CRS LSB10385; Columbia Journal of Transnational Law; CSIS analysis.
+[1] Optimism Collective OPerating Manual; Lemma Solutions governance analysis.   
+[2] IAEA governance structure, iaea.org/about/governance.   
+[3] IETF RFC 8711 IASA 2.0.   
+[4] WTO Appellate Body: CRS LSB10385; Columbia Journal of Transnational Law; CSIS analysis.   
 [5] Castro and Liskov, "Practical Byzantine Fault Tolerance," 1999.
 [6] European Parliament EPRS BRI(2025)767211; AFCO resolution April 2022.
 [7] The Block, Build Finance DAO hostile governance takeover, February 14, 2022.
