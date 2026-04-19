@@ -717,56 +717,56 @@ The single non-negotiable observation is that the Three Mandates are **procedura
 [2] IAEA governance structure, iaea.org/about/governance.   
 [3] IETF RFC 8711 IASA 2.0.   
 [4] WTO Appellate Body: CRS LSB10385; Columbia Journal of Transnational Law; CSIS analysis.   
-[5] Castro and Liskov, "Practical Byzantine Fault Tolerance," 1999.
-[6] European Parliament EPRS BRI(2025)767211; AFCO resolution April 2022.
-[7] The Block, Build Finance DAO hostile governance takeover, February 14, 2022.
-[8] Unchained Crypto; The Block; Blocmates - Compound Proposal 289, July 2024.
-[9] Immunefi, "Hack Analysis: Beanstalk Governance Attack April 2022."
-[10] OpenZeppelin Governor and TimelockController documentation; Compound Governance documentation.
-[11] ERC-2535 Diamond Standard, Final status, GitHub ethereum/ercs PR #5802.
-[12] Cyfrin CodeHawks Beanstalk "The Finale" audit, May 2024.
-[13] ChainScore Labs EIP-2535 vulnerability analysis.
-[14] Nick Mudge, Ethereum Magicians forum, ERC-8109 proposal.
-[15] EIP-1822 UUPS, Stagnant status, eips.ethereum.org/EIPS/eip-1822.
-[16] ERC-7201 Namespaced Storage Layout, Final status; OpenZeppelin Contracts v5.
-[17] OpenZeppelin Security Advisory GHSA-5vp3-v4hc-gx76 / CVE-2021-41264; Iosiro disclosure.
-[18] EIP-6780 SELFDESTRUCT changes, Cancun March 2024.
-[19] Halborn, PAID Network hack analysis, March 2021.
-[20] Audius governance takeover post-mortem, July 23, 2022.
-[21] b10c Mining Centralization Index; BeInCrypto reporting on Foundry/AntPool.
-[22] ethernodes.org; Messari validator decentralization reports; Dune staking dashboards.
-[23] Ethereum mainnet finality post-mortem May 11-12, 2023, Offchain Labs.
-[24] Cointelegraph; Crypto Economy - Ethereum Fusaka/Prysm v7.0.0 incident, late 2025.
-[25] IBC Protocol blog, IBC v2 announcement; Succinct SP1 IBC Eureka launch April 10, 2025.
-[26] NIST, "NIST Releases First 3 Finalized Post-Quantum Encryption Standards," August 13, 2024.
-[27] NSA CNSA 2.0 Algorithms, May 30, 2025; NIST IR 8547 IPD.
-[28] EIP-8051 ML-DSA precompile, EIP-7619 Falcon-512 - both Draft as of Q2 2026.
-[29] Gidney, "How to factor 2048 bit RSA integers with less than a million noisy qubits," May 2025.
-[30] Parliament Act 1911; LawTeacher; UOLLB analysis.
-[31] Canadian Senate, Senate of Canada / The Canadian Encyclopedia.
-[32] Tsebelis, "Veto Players: How Political Institutions Work," Princeton University Press, 2002.
-[33] Incode / Hong Kong Police announcement February 5, 2024 - deepfake CFO fraud $25.6M.
-[34] NIST Dual_EC_DRBG; Wikipedia; Cryptography Engineering blog; IACR eprint 2015/767.
-[35] Security Council Report, "In Hindsight: The Security Council in 2024"; "Living with the Veto," April 2026.
-[36] ISO/IEC OOXML fast-track; Martin Bryan resignation 2008.
-[37] XZ Utils / Jia Tan: research.swtch.com/xz-timeline; Securelist; SoftwareSeni; Linux Foundation April 2026 report.
-[38] ICANN NomCom; AFRINIC Board elections intervention, June 2025.
-[39] Barroso / Goldman Sachs, July 2016 European media reporting.
-[40] CardinalOps 2024; JAMA 2024 drug-allergy alert study; Verizon PSR series.
-[41] Diel et al., Computers in Human Behavior Reports, December 2024; arXiv:2501.15654.
-[42] Global Risk Institute Quantum Threat Timeline Report 2025, seventh edition, April 2026.
-[43] MakerDAO ESM documentation; sky-ecosystem/esm GitHub; July 25, 2024 executive vote.
-[44] Compound Pause Guardian; docs.compound.finance/governance.
-[45] Aave v3 Guardian; aave.com/docs/ecosystem/governance; aave.com/docs/developers/safety-module.
-[46] UMA Optimistic Oracle v3; oSnap documentation; Gitcoin DAO integration reports.
-[47] Ethereum Attestation Service; docs.attest.org; eas-contracts GitHub.
-[48] UMA Optimistic Oracle v3 liveness and bond parameters; docs.uma.xyz.
-[49] RISC Zero R0VM 2.0; Succinct SP1 ISP1Verifier; docs.succinct.xyz.
-[50] Fei Protocol / Tribe DAO dissolution August 2022; Delphi Digital; Protos.
-[51] L2BEAT Stages Framework June 2023; Vitalik Buterin January 23, 2025.
-[52] RockLogic/Lido slashing incident April 13, 2023; blog.lido.fi post-mortem.
-[53] Medalla testnet incident August 14-19, 2020; Prysmatic Labs post-mortem.
-[54] SSV Network mass slashing September 10, 2025; ssv.network blog.
-[55] Polkadot slashing tiers and 27-day grace period; docs.polkadot.com; web3.foundation research.
-[56] Bitcoin Gold May 2018; Ethereum Classic August 2020; Verge February 2021 - multiple public post-mortems.
-[57] MakerDAO Oracle Security Module; docs.makerdao.com; March 30, 2024 ETH price delay demonstration.
+[5] Castro and Liskov, "Practical Byzantine Fault Tolerance," 1999.   
+[6] European Parliament EPRS BRI(2025)767211; AFCO resolution April 2022.   
+[7] The Block, Build Finance DAO hostile governance takeover, February 14, 2022.   
+[8] Unchained Crypto; The Block; Blocmates - Compound Proposal 289, July 2024.   
+[9] Immunefi, "Hack Analysis: Beanstalk Governance Attack April 2022."   
+[10] OpenZeppelin Governor and TimelockController documentation; Compound Governance documentation.   
+[11] ERC-2535 Diamond Standard, Final status, GitHub ethereum/ercs PR #5802.   
+[12] Cyfrin CodeHawks Beanstalk "The Finale" audit, May 2024.   
+[13] ChainScore Labs EIP-2535 vulnerability analysis.   
+[14] Nick Mudge, Ethereum Magicians forum, ERC-8109 proposal.   
+[15] EIP-1822 UUPS, Stagnant status, eips.ethereum.org/EIPS/eip-1822.   
+[16] ERC-7201 Namespaced Storage Layout, Final status; OpenZeppelin Contracts v5.   
+[17] OpenZeppelin Security Advisory GHSA-5vp3-v4hc-gx76 / CVE-2021-41264; Iosiro disclosure.   
+[18] EIP-6780 SELFDESTRUCT changes, Cancun March 2024.   
+[19] Halborn, PAID Network hack analysis, March 2021.   
+[20] Audius governance takeover post-mortem, July 23, 2022.   
+[21] b10c Mining Centralization Index; BeInCrypto reporting on Foundry/AntPool.   
+[22] ethernodes.org; Messari validator decentralization reports; Dune staking dashboards.   
+[23] Ethereum mainnet finality post-mortem May 11-12, 2023, Offchain Labs.   
+[24] Cointelegraph; Crypto Economy - Ethereum Fusaka/Prysm v7.0.0 incident, late 2025.   
+[25] IBC Protocol blog, IBC v2 announcement; Succinct SP1 IBC Eureka launch April 10, 2025.   
+[26] NIST, "NIST Releases First 3 Finalized Post-Quantum Encryption Standards," August 13, 2024.   
+[27] NSA CNSA 2.0 Algorithms, May 30, 2025; NIST IR 8547 IPD.   
+[28] EIP-8051 ML-DSA precompile, EIP-7619 Falcon-512 - both Draft as of Q2 2026.   
+[29] Gidney, "How to factor 2048 bit RSA integers with less than a million noisy qubits," May 2025.   
+[30] Parliament Act 1911; LawTeacher; UOLLB analysis.   
+[31] Canadian Senate, Senate of Canada / The Canadian Encyclopedia.   
+[32] Tsebelis, "Veto Players: How Political Institutions Work," Princeton University Press, 2002.   
+[33] Incode / Hong Kong Police announcement February 5, 2024 - deepfake CFO fraud $25.6M.   
+[34] NIST Dual_EC_DRBG; Wikipedia; Cryptography Engineering blog; IACR eprint 2015/767.   
+[35] Security Council Report, "In Hindsight: The Security Council in 2024"; "Living with the Veto," April 2026.   
+[36] ISO/IEC OOXML fast-track; Martin Bryan resignation 2008.   
+[37] XZ Utils / Jia Tan: research.swtch.com/xz-timeline; Securelist; SoftwareSeni; Linux Foundation April 2026 report.   
+[38] ICANN NomCom; AFRINIC Board elections intervention, June 2025.   
+[39] Barroso / Goldman Sachs, July 2016 European media reporting.   
+[40] CardinalOps 2024; JAMA 2024 drug-allergy alert study; Verizon PSR series.   
+[41] Diel et al., Computers in Human Behavior Reports, December 2024; arXiv:2501.15654.   
+[42] Global Risk Institute Quantum Threat Timeline Report 2025, seventh edition, April 2026.   
+[43] MakerDAO ESM documentation; sky-ecosystem/esm GitHub; July 25, 2024 executive vote.   
+[44] Compound Pause Guardian; docs.compound.finance/governance.   
+[45] Aave v3 Guardian; aave.com/docs/ecosystem/governance; aave.com/docs/developers/safety-module.   
+[46] UMA Optimistic Oracle v3; oSnap documentation; Gitcoin DAO integration reports.   
+[47] Ethereum Attestation Service; docs.attest.org; eas-contracts GitHub.   
+[48] UMA Optimistic Oracle v3 liveness and bond parameters; docs.uma.xyz.   
+[49] RISC Zero R0VM 2.0; Succinct SP1 ISP1Verifier; docs.succinct.xyz.   
+[50] Fei Protocol / Tribe DAO dissolution August 2022; Delphi Digital; Protos.   
+[51] L2BEAT Stages Framework June 2023; Vitalik Buterin January 23, 2025.   
+[52] RockLogic/Lido slashing incident April 13, 2023; blog.lido.fi post-mortem.   
+[53] Medalla testnet incident August 14-19, 2020; Prysmatic Labs post-mortem.   
+[54] SSV Network mass slashing September 10, 2025; ssv.network blog.   
+[55] Polkadot slashing tiers and 27-day grace period; docs.polkadot.com; web3.foundation research.   
+[56] Bitcoin Gold May 2018; Ethereum Classic August 2020; Verge February 2021 - multiple public post-mortems.   
+[57] MakerDAO Oracle Security Module; docs.makerdao.com; March 30, 2024 ETH price delay demonstration.   
