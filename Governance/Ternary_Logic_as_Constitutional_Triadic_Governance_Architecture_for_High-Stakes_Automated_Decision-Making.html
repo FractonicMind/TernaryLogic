@@ -1,0 +1,3200 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ternary Logic as Constitutional Substrate: A Triadic Computational Governance Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.5.0/mermaid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tiempos+Headline:wght@400;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'serif': ['Tiempos Headline', 'serif'],
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1e3a8a',
+                        secondary: '#64748b',
+                        accent: '#dc2626',
+                        neutral: '#374151',
+                        'base-100': '#ffffff',
+                        'base-200': '#f8fafc',
+                        'base-300': '#e2e8f0',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #1e40af 100%);
+        }
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .prose-custom {
+            line-height: 1.75;
+        }
+        .citation-link {
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted #dc2626;
+        }
+        .citation-link:hover {
+            background-color: #fef2f2;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        .toc-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: #f8fafc;
+            border-right: 1px solid #e2e8f0;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+        }
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+        .toc-link {
+            display: block;
+            padding: 0.5rem 0;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 400;
+            border-left: 2px solid transparent;
+            padding-left: 1rem;
+            margin-left: -1rem;
+            transition: all 0.2s ease;
+        }
+        .toc-link:hover {
+            color: #1e3a8a;
+            border-left-color: #1e3a8a;
+            background-color: #f1f5f9;
+        }
+        .toc-link.active {
+            color: #1e3a8a;
+            border-left-color: #1e3a8a;
+            background-color: #eff6ff;
+            font-weight: 500;
+        }
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+            margin: 3rem 0;
+        }
+        .pullquote {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: #1e3a8a;
+            border-left: 4px solid #dc2626;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        @media (max-width: 1024px) {
+            .toc-fixed {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .toc-fixed.open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        /* Mermaid diagram styling */
+        .mermaid-container {
+            display: flex;
+            justify-content: center;
+            min-height: 300px;
+            max-height: 800px;
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mermaid-container .mermaid {
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            cursor: grab;
+            transition: transform 0.3s ease;
+            transform-origin: center center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .mermaid-container .mermaid svg {
+            max-width: 100%;
+            height: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .mermaid-container .mermaid:active {
+            cursor: grabbing;
+        }
+
+        .mermaid-container.zoomed .mermaid {
+            height: 100%;
+            width: 100%;
+            cursor: grab;
+        }
+
+        .mermaid-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .mermaid-control-btn {
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #374151;
+            font-size: 14px;
+            min-width: 36px;
+            height: 36px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mermaid-control-btn:hover {
+            background: #f8fafc;
+            border-color: #3b82f6;
+            color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        .mermaid-control-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Ensure mermaid text has good contrast and sizing */
+        .mermaid .node rect,
+        .mermaid .node circle,
+        .mermaid .node ellipse,
+        .mermaid .node polygon {
+            stroke-width: 2px;
+        }
+        .mermaid .node .label {
+            color: #1f2937 !important;
+            font-weight: 500 !important;
+            font-size: 14px !important;
+        }
+        .mermaid .edgeLabel {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+            color: #374151 !important;
+            font-weight: 500 !important;
+            padding: 4px 8px !important;
+            border-radius: 4px !important;
+            border: 1px solid #e5e7eb !important;
+        }
+        .mermaid .edge-pattern-solid {
+            stroke-width: 2px !important;
+        }
+        .mermaid .edge-pattern-dotted {
+            stroke-width: 2px !important;
+        }
+
+        /* Responsive adjustments for mermaid controls */
+        @media (max-width: 1024px) {
+            .mermaid-control-btn:not(.reset-zoom) {
+                display: none;
+            }
+            .mermaid-controls {
+                top: auto;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+  <base target="_blank">
+</head>
+
+  <body class="font-sans text-neutral bg-base-100">
+    <!-- Mobile TOC Toggle -->
+    <button id="toc-toggle" class="lg:hidden fixed top-4 left-4 z-50 bg-primary text-white p-3 rounded-lg shadow-lg">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Table of Contents -->
+    <nav id="toc" class="toc-fixed">
+      <div class="mb-8">
+        <h2 class="text-lg font-bold text-primary mb-4">Table of Contents</h2>
+        <div class="space-y-1">
+          <a href="#abstract" class="toc-link">Abstract</a>
+          <a href="#introduction" class="toc-link">1. Introduction</a>
+          <a href="#historical" class="toc-link">2. Historical Background</a>
+          <a href="#architecture" class="toc-link">3. Architecture</a>
+          <a href="#epistemic-hold" class="toc-link">4. The Epistemic Hold</a>
+          <a href="#hardware" class="toc-link">5. Hardware Enforcement</a>
+          <a href="#ditl" class="toc-link">6. Delay Insensitive Ternary Logic</a>
+          <a href="#semiconductor" class="toc-link">7. Native Ternary Semiconductor</a>
+          <a href="#coprocessor" class="toc-link">8. Triadic Coprocessor</a>
+          <a href="#ledger" class="toc-link">9. Immutable Ledger</a>
+          <a href="#governance" class="toc-link">10. Governance &amp; Oversight</a>
+          <a href="#use-cases" class="toc-link">11. Use Cases &amp; Applications</a>
+          <a href="#verification" class="toc-link">12. Formal Verification</a>
+          <a href="#failure-modes" class="toc-link">13. Failure Modes</a>
+          <a href="#discussion" class="toc-link">14. Discussion</a>
+          <a href="#conclusion" class="toc-link">15. Conclusion</a>
+          <a href="#references" class="toc-link">References</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="main-content" class="main-content">
+      <!-- Hero Section -->
+      <section class="hero-gradient text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+          <img src="https://kimi-web-img.moonshot.cn/img/static.vecteezy.com/2ade0c73a58efe1cabd5a7a685b6db33d947406c.jpg" alt="Abstract technological background" class="w-full h-full object-cover" size="wallpaper" aspect="wide" query="abstract technology background" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+        </div>
+        <div class="relative z-10 container mx-auto px-6 py-16">
+          <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h1 class="font-serif text-4xl lg:text-6xl font-bold mb-6 text-shadow leading-tight">
+                <em>Ternary Logic as Constitutional Substrate</em>
+              </h1>
+              <p class="text-xl lg:text-2xl mb-8 text-shadow opacity-90">
+                A Triadic Computational Governance Architecture for High-Stakes Automated Decision-Making
+              </p>
+              <div class="flex flex-wrap gap-3">
+                <span class="bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-medium">
+                  #TernaryLogic
+                </span>
+                <span class="bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-medium">
+                  #ComputationalGovernance
+                </span>
+                <span class="bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-medium">
+                  #HardwareSecurity
+                </span>
+              </div>
+            </div>
+            <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8">
+              <h3 class="text-xl font-bold mb-4">Key Innovation</h3>
+              <p class="text-lg leading-relaxed">
+                The <strong>Epistemic Hold (0)</strong> state creates irreversible hardware hesitation through Delay Insensitive Ternary Logic (DITL), enabling structured uncertainty management for high-stakes automated systems across financial infrastructure, supply chain verification, and AI governance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Abstract -->
+      <section id="abstract" class="py-16 bg-base-200">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-3xl font-bold text-primary mb-8">Abstract</h2>
+            <div class="prose-custom text-lg">
+              <p class="mb-6">
+                This report analyzes <strong>Ternary Logic (TL)</strong> as a comprehensive computational governance architecture for high-stakes automated decision-making systems, evaluating its capacity to operate across software, hardware, and institutional layers. The foundational innovation—the <strong>Epistemic Hold (0) state</strong>—enables structured uncertainty management through formal computational hesitation, physically realized via <strong>Delay Insensitive Ternary Logic (DITL)</strong> hardware.
+              </p>
+
+              <p class="mb-6">
+                Drawing on technical documentation from the TernaryLogic framework, peer-reviewed DITL circuit research, and hardware implementation studies, this analysis assesses whether native triadic computational architectures (+1, 0, −1) can serve as enforceable governance mechanisms for financial infrastructure, supply chain verification, regulatory compliance automation, and advanced artificial intelligence systems.
+              </p>
+
+              <p class="pullquote">
+                Key findings indicate that TL&#39;s hardware-enforced hesitation, combined with tri-cameral institutional oversight and immutable evidentiary architectures, yields a constitutional substrate robust under recursive self-improvement and decentralized intelligence scenarios.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Introduction -->
+      <section id="introduction" class="py-16">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">1. Introduction</h2>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">1.1 The Evidentiary Enforceability Problem</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">1.1.1 Binary Logic Limitations in High-Stakes Environments</h4>
+              <p class="prose-custom mb-4">
+                Contemporary automated decision systems operate predominantly on <strong>binary logical foundations</strong>—proceed (1) or halt (0)—a framework inherited from the earliest digital computing architectures. This binary paradigm, while computationally efficient, exhibits <strong>fundamental structural inadequacies</strong> when deployed in high-stakes environments characterized by pervasive uncertainty, incomplete information, and verification delays.
+              </p>
+
+              <p class="prose-custom mb-4">
+                The limitations of binary logic are not merely philosophical inconveniences but <strong>quantifiable sources of systemic risk</strong>. The 2010 Flash Crash eliminated approximately $1 trillion in market value within minutes due to algorithmic trading systems lacking mechanisms for uncertainty-containment
+                <a href="https://www.techtarget.com/searchitoperations/definition/hardware-security" class="citation-link">[7]</a>.
+              </p>
+
+              <div class="bg-base-200 p-6 rounded-lg mb-6">
+                <h5 class="font-semibold mb-3">The Binary Framework&#39;s Critical Flaw</h5>
+                <p class="text-sm">
+                  Binary logic provides no computationally native mechanism for expressing &#34;awaiting verification&#34;—systems must either commit to execution with potentially flawed inputs or reject transactions that may be legitimate, with neither choice capturing the epistemic status of the decision environment.
+                </p>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">1.1.2 Structural Inadequacy of Proceed/Halt Frameworks</h4>
+              <p class="prose-custom mb-4">
+                The proceed/halt framework imposes <strong>forced decision bias</strong> on automated systems. When evidence is incomplete but time-sensitive, binary systems default to heuristic extrapolation—effectively guessing—or conservative rejection, both carrying substantial costs. In anti-money laundering (AML) screening, false negatives enable illicit financial flows while false positives impose compliance costs estimated at $3.5 billion annually.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">1.1.3 Uncertainty as Systemic Risk</h4>
+              <p class="prose-custom mb-4">
+                High-stakes automated systems operate where <strong>uncertainty is not a transient condition to be eliminated but a persistent feature to be managed</strong>. Financial markets exhibit stochastic volatility, supply chains span jurisdictions with inconsistent documentation, regulatory requirements evolve through interpretive guidance, and AI systems encounter distribution shift and adversarial inputs.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">1.2 Conceptual Foundations of Ternary Logic</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">1.2.1 The Triadic State Space</h4>
+
+              <div class="grid md:grid-cols-3 gap-6 mb-6">
+                <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+                  <h5 class="font-semibold text-green-700 mb-2">+1 (Intent/Proceed)</h5>
+                  <p class="text-sm text-green-600">Affirmative commitment to execute with validated evidence</p>
+                </div>
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-r-lg">
+                  <h5 class="font-semibold text-yellow-700 mb-2">0 (Epistemic Hold)</h5>
+                  <p class="text-sm text-yellow-600">Mandatory verification window for uncertainty resolution</p>
+                </div>
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
+                  <h5 class="font-semibold text-red-700 mb-2">−1 (Reject/Halt)</h5>
+                  <p class="text-sm text-red-600">Definitive refusal with logged reasoning</p>
+                </div>
+              </div>
+
+              <p class="prose-custom mb-4">
+                <strong>Ternary Logic (TL)</strong> replaces the binary decision framework with three computationally distinct states that encode governance mandates. The <strong>Epistemic Hold (0)</strong> constitutes the architectural innovation: a mandatory, time-bounded verification window during which execution is physically impossible.
+              </p>
+            </div>
+
+            <div class="pullquote">
+              &#34;The Epistemic Hold transforms hesitation from a systemic liability into a measurable, auditable, and economically valuable risk management function.&#34;
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">1.3 Central Hypothesis</h3>
+
+            <p class="prose-custom mb-6">
+              This report evaluates the central hypothesis that <strong>high-stakes automated governance requires native triadic computational architectures capable of physically representing evidentiary verification as a first-class computational state</strong>. The &#34;native&#34; requirement is critical: only hardware-level implementation provides the physical enforceability necessary for constitutional governance functions.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Historical Background -->
+      <section id="historical" class="py-16 bg-base-200">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">2. Historical Background</h2>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">2.1 Multi-Valued Logic in Mathematics</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">2.1.1 Łukasiewicz Three-Valued Logic</h4>
+              <p class="prose-custom mb-4">
+                The formal study of multi-valued logic originates with <strong>Jan Łukasiewicz&#39;s 1920 introduction of three-valued logic</strong>, motivated by philosophical concerns about future contingents. Łukasiewicz&#39;s system introduced a third truth value, &#34;possible&#34; or &#34;indeterminate,&#34; alongside true and false
+                <a href="https://hajim.rochester.edu/ece/sites/friedman/papers/TEmerging_24.pdf" class="citation-link">[164]</a>.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">2.1.2 Kleene&#39;s Three-Valued Systems</h4>
+              <p class="prose-custom mb-4">
+                <strong>Stephen Kleene&#39;s 1938 development</strong> of strong and weak three-valued logic systems provided alternative interpretations with greater relevance to computation. Kleene&#39;s strong logic treated the third value as &#34;undefined&#34; or &#34;undetermined,&#34; with logical operations propagating undefinedness when any input was undefined.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">2.2 Classical vs. Governance Ternary Logic</h3>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+              <h4 class="font-semibold text-lg mb-4">Critical Distinction: Deficiency vs. Mandate</h4>
+              <p class="prose-custom mb-4">
+                In classical formulations, the third truth-value represents <strong>absence, failure, or limitation</strong>—epistemic or semantic deficiency. <strong>TL fundamentally inverts this interpretation</strong>: the 0 (Epistemic Hold) state is not a logical null but a decision-mandate.
+              </p>
+
+              <div class="grid md:grid-cols-2 gap-6 mt-6">
+                <div class="bg-gray-50 p-4 rounded">
+                  <h5 class="font-semibold text-red-600 mb-2">Classical Ternary Logic</h5>
+                  <p class="text-sm">Third value as passive marker of deficiency</p>
+                </div>
+                <div class="bg-blue-50 p-4 rounded">
+                  <h5 class="font-semibold text-blue-600 mb-2">TL Governance Architecture</h5>
+                  <p class="text-sm">Third value as active mechanism of constitutional enforcement</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">2.3 Binary Emulation Failures</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">2.3.1 Implementation Overhead</h4>
+              <p class="prose-custom mb-4">
+                Practical implementation of ternary logic on binary hardware requires encoding each trit using multiple bits, typically <strong>two-bit encoding</strong>: 00 for 0, 01 for +1, 10 for −1. This encoding imposes <strong>100% memory overhead</strong> and requires substantially more complex ALU designs.
+              </p>
+
+              <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
+                <h5 class="font-semibold text-red-700 mb-2">The Enforceability Gap</h5>
+                <p class="text-sm text-red-600">
+                  Software-implemented states can be bypassed by operations at lower abstraction levels. Hardware security research demonstrates that even carefully designed software security mechanisms can be subverted through side-channel attacks and other techniques operating below the software abstraction layer
+                  <a href="https://www.techtarget.com/searchitoperations/definition/hardware-security" class="citation-link">[7]</a>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Architecture -->
+      <section id="architecture" class="py-16">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">3. Architecture of Ternary Logic</h2>
+
+            <!-- TL Governance Stack Diagram -->
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph TB
+                A[&#34;Software Layer
+                <br/>Decision Logic &amp; Oracle Integration&#34;] --&gt; B[&#34;Hardware Layer
+                <br/>DITL Physical Enforcement&#34;]
+                B --&gt; C[&#34;Institutional Layer
+                <br/>Tri-Cameral Governance&#34;]
+
+                A1[&#34;Lane 1 Fast
+                <br/>Sub-2ms Inference&#34;] --&gt; A2[&#34;Lane 2 Governance
+                <br/>50-500ms Verification&#34;]
+                A2 --&gt; A3[&#34;Interlock Mechanism
+                <br/>No Log = No Action&#34;]
+
+                B1[&#34;+1 Proceed
+                <br/>Valid Token&#34;] --&gt; B2[&#34;0 Hold
+                <br/>NULL State&#34;]
+                B2 --&gt; B3[&#34;−1 Halt
+                <br/>Null Token&#34;]
+
+                C1[&#34;Technical Council
+                <br/>9 Members&#34;] --&gt; C2[&#34;Stewardship Custodians
+                <br/>11 Members&#34;]
+                C2 --&gt; C3[&#34;Smart Contract Treasury
+                <br/>Autonomous Enforcement&#34;]
+
+                style A fill:#e1f5fe
+                style B fill:#f3e5f5
+                style C fill:#e8f5e8
+                style B2 fill:#fff3e0
+              </div>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">3.1 Layered Computational Governance Stack</h3>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+              <div class="bg-blue-50 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                  <i class="fas fa-code text-blue-600 text-2xl mr-3"></i>
+                  <h4 class="font-semibold text-blue-700">Software Layer</h4>
+                </div>
+                <p class="text-sm text-blue-600 mb-4">Decision logic, oracle integration, user interfaces</p>
+                <ul class="text-xs text-blue-600 space-y-1">
+                  <li>• Dual-lane architecture (Fast/Governance)</li>
+                  <li>• Interlock mechanism enforcement</li>
+                  <li>• Advisory rather than authoritative</li>
+                </ul>
+              </div>
+
+              <div class="bg-purple-50 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                  <i class="fas fa-microchip text-purple-600 text-2xl mr-3"></i>
+                  <h4 class="font-semibold text-purple-700">Hardware Layer</h4>
+                </div>
+                <p class="text-sm text-purple-600 mb-4">Physical enforcement via DITL circuits</p>
+                <ul class="text-xs text-purple-600 space-y-1">
+                  <li>• Irreversible state enforcement</li>
+                  <li>• Minimal attack surface</li>
+                  <li>• Independent operation</li>
+                </ul>
+              </div>
+
+              <div class="bg-green-50 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                  <i class="fas fa-university text-green-600 text-2xl mr-3"></i>
+                  <h4 class="font-semibold text-green-700">Institutional Layer</h4>
+                </div>
+                <p class="text-sm text-green-600 mb-4">Human oversight and legal frameworks</p>
+                <ul class="text-xs text-green-600 space-y-1">
+                  <li>• Tri-cameral governance</li>
+                  <li>• Constitutional evolution</li>
+                  <li>• Legal integration</li>
+                </ul>
+              </div>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">3.2 The Three Logical States</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">3.2.1 +1 (Proceed): Execution with Complete Evidentiary Package</h4>
+              <p class="prose-custom mb-4">
+                The <strong>+1 state</strong> represents the system&#39;s affirmative commitment to execute. Authorization requires satisfaction of all evidentiary requirements: cryptographic proof, oracle attestations, compliance screening, and governance approvals. Once +1 is asserted, the system commits to execution with full evidentiary logging.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">3.2.2 0 (Hold): Suspension Pending Evidence Resolution</h4>
+              <p class="prose-custom mb-4">
+                The <strong>0 state</strong> represents mandatory, time-bounded suspension. Entry occurs automatically when trigger conditions are satisfied: insufficient data, contradictory inputs, stale oracle feeds, or high-risk threshold breaches. The Hold state is not merely advisory delay but physical prevention of execution.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">3.2.3 −1 (Halt): Denial with Logged Reasoning</h4>
+              <p class="prose-custom mb-4">
+                The <strong>−1 state</strong> represents definitive refusal with complete logged reasoning. Unlike binary rejection, the −1 state carries structured explanation: which evidentiary requirements were unsatisfied, what verification steps were attempted, and what risk factors triggered denial.
+              </p>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">3.3 Tri-Cameral Governance Model</h3>
+
+            <!-- Governance Structure Diagram -->
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph LR
+                A[&#34;Technical Council
+                <br/>9 Members&#34;] --&gt; D[&#34;System Operation&#34;]
+                B[&#34;Stewardship Custodians
+                <br/>11 Members&#34;] --&gt; D
+                C[&#34;Smart Contract Treasury
+                <br/>Autonomous&#34;] --&gt; D
+
+                A1[&#34;75% Supermajority
+                <br/>7 of 9&#34;] --&gt; A
+                A2[&#34;Staggered 3-Year Terms
+                <br/>Weighted Voting&#34;] --&gt; A
+
+                B1[&#34;Dual Nomination
+                <br/>5 Technical + 5 Community&#34;] --&gt; B
+                B2[&#34;11th by Sortition
+                <br/>Prevent Ties&#34;] --&gt; B
+
+                C1[&#34;Automatic Execution
+                <br/>No Human Intervention&#34;] --&gt; C
+                C2[&#34;Joint Override
+                <br/>Both Councils&#34;] --&gt; C
+
+                style A fill:#e3f2fd
+                style B fill:#f3e5f5
+                style C fill:#e8f5e8
+                style D fill:#fff3e0
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+              <div class="bg-blue-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-blue-700 mb-3">Technical Council</h4>
+                <p class="text-sm text-blue-600 mb-3">Nine members, 75% supermajority required</p>
+                <ul class="text-xs text-blue-600 space-y-1">
+                  <li>• Protocol maintenance</li>
+                  <li>• Security audits</li>
+                  <li>• Emergency response</li>
+                </ul>
+              </div>
+
+              <div class="bg-purple-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-purple-700 mb-3">Stewardship Custodians</h4>
+                <p class="text-sm text-purple-600 mb-3">Eleven members, dual nomination</p>
+                <ul class="text-xs text-purple-600 space-y-1">
+                  <li>• Constitutional enforcement</li>
+                  <li>• Operator certification</li>
+                  <li>• Dispute arbitration</li>
+                </ul>
+              </div>
+
+              <div class="bg-green-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-green-700 mb-3">Smart Contract Treasury</h4>
+                <p class="text-sm text-green-600 mb-3">Autonomous financial layer</p>
+                <ul class="text-xs text-green-600 space-y-1">
+                  <li>• Automated enforcement</li>
+                  <li>• Funding management</li>
+                  <li>• Penalty distribution</li>
+                </ul>
+              </div>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">3.4 Constitutional Rules</h3>
+
+            <div class="bg-white border-2 border-primary p-6 rounded-lg mb-8">
+              <h4 class="font-semibold text-primary text-xl mb-4">3.4.1 &#34;No Log = No Action&#34;</h4>
+              <p class="prose-custom mb-4">
+                This foundational rule mandates that <strong>no computational action executes without cryptographically sealed evidentiary record</strong>. The requirement is physically enforced: DITL hardware cannot generate +1 or −1 tokens without corresponding ledger entries containing complete decision packages
+                <a href="https://fractonicmind.github.io/TernaryMoralLogic/" class="citation-link">[181]</a>.
+              </p>
+
+              <div class="bg-gray-100 p-4 rounded font-mono text-sm">
+                <pre>decision_vector = calculate_inference(input)
+log_entry = create_log(decision_vector, triggers)
+log_hash = secure_storage.write(log_entry)
+if log_hash.verified():
+    action_key = derive_key(log_hash)
+    actuator.execute(decision_vector, auth=action_key)
+else:
+    system.halt(&#34;Audit Failure: No Memory Generated&#34;)</pre>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">3.4.2 Goukassian Principle</h4>
+              <p class="prose-custom mb-4">
+                The <strong>Goukassian Principle</strong>, named for TL co-founder Lev Goukassian, mandates <strong>preservation of continuity between conscience and accountability across all system layers</strong>
+                <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">[72]</a>.
+                This principle requires that every decision&#39;s ethical reasoning be traceable from initial intent through technical implementation to final evidentiary record.
+              </p>
+            </div>
+
+            <div class="pullquote">
+              &#34;The integration of software, hardware, and institutional layers creates a moral operating layer—computational infrastructure that enforces ethical constraints as physical requirements rather than advisory guidelines.&#34;
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Epistemic Hold -->
+      <section id="epistemic-hold" class="py-16 bg-base-200">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">4. The Epistemic Hold: Logic of Uncertainty</h2>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">4.1 Architectural Cornerstone</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">4.1.1 Mandatory Verification Window Mechanics</h4>
+              <p class="prose-custom mb-4">
+                The <strong>Epistemic Hold (0)</strong> functions as the architectural cornerstone by providing the mandatory verification window that converts uncertainty from systemic risk to managed process. When trigger conditions are satisfied, the system enters Hold state through <strong>hardware-enforced transition that cannot be overridden by software commands</strong>.
+              </p>
+
+              <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
+                <h5 class="font-semibold mb-4">Hold State Operations</h5>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <h6 class="font-medium text-secondary mb-2">During Hold:</h6>
+                    <ul class="text-sm space-y-1">
+                      <li>• Suspension of execution pathways</li>
+                      <li>• Initiation of evidence collection</li>
+                      <li>• Evaluation against requirements</li>
+                      <li>• Preparation of resolution package</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h6 class="font-medium text-secondary mb-2">Key Properties:</h6>
+                    <ul class="text-sm space-y-1">
+                      <li>• Physical prevention of execution</li>
+                      <li>• Mandatory nature (non-overrideable)</li>
+                      <li>• Time-bounded duration</li>
+                      <li>• Irreversible hardware enforcement</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">4.1.2 Time-Bounded Deliberation Periods</h4>
+              <p class="prose-custom mb-4">
+                Each Hold specifies <strong>time-bounded deliberation period</strong> appropriate to domain requirements. Financial trading may specify <strong>millisecond-scale Holds</strong> for volatility circuit breakers, while supply chain verification may specify <strong>day-scale Holds</strong> for certification confirmation.
+              </p>
+
+              <div class="overflow-x-auto">
+                <table class="w-full bg-white rounded-lg shadow-sm">
+                  <thead class="bg-gray-50">
+                    <tr>
+                      <th class="px-4 py-3 text-left text-sm font-semibold">Application Domain</th>
+                      <th class="px-4 py-3 text-left text-sm font-semibold">Hold Maximum</th>
+                      <th class="px-4 py-3 text-left text-sm font-semibold">Override Authority</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-sm">
+                    <tr class="border-t">
+                      <td class="px-4 py-3">High-frequency trading</td>
+                      <td class="px-4 py-3">50 milliseconds</td>
+                      <td class="px-4 py-3">Technical Council supermajority</td>
+                    </tr>
+                    <tr class="border-t">
+                      <td class="px-4 py-3">Trade settlement</td>
+                      <td class="px-4 py-3">24 hours</td>
+                      <td class="px-4 py-3">Stewardship Custodian panel</td>
+                    </tr>
+                    <tr class="border-t">
+                      <td class="px-4 py-3">Supply chain verification</td>
+                      <td class="px-4 py-3">72 hours</td>
+                      <td class="px-4 py-3">Automated with Custodian appeal</td>
+                    </tr>
+                    <tr class="border-t">
+                      <td class="px-4 py-3">AI inference governance</td>
+                      <td class="px-4 py-3">100 milliseconds</td>
+                      <td class="px-4 py-3">Technical Council with operator input</td>
+                    </tr>
+                    <tr class="border-t">
+                      <td class="px-4 py-3">CBDC transactions</td>
+                      <td class="px-4 py-3">1 hour</td>
+                      <td class="px-4 py-3">Central bank protocol layer</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">4.2 Trigger Conditions</h3>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+              <div class="bg-white p-6 rounded-lg shadow-sm">
+                <h4 class="font-semibold text-blue-700 mb-4">Data Quality Triggers</h4>
+                <ul class="text-sm text-blue-600 space-y-2">
+                  <li>• Missing required input fields</li>
+                  <li>• Values outside plausible ranges</li>
+                  <li>• Contradictory data sources</li>
+                  <li>• Excessive data latency</li>
+                </ul>
+              </div>
+
+              <div class="bg-white p-6 rounded-lg shadow-sm">
+                <h4 class="font-semibold text-purple-700 mb-4">Oracle Integrity Triggers</h4>
+                <ul class="text-sm text-purple-600 space-y-2">
+                  <li>• Stale oracle timestamps</li>
+                  <li>• Cryptographic signature failures</li>
+                  <li>• Insufficient oracle consensus</li>
+                  <li>• Anomalous feed patterns</li>
+                </ul>
+              </div>
+
+              <div class="bg-white p-6 rounded-lg shadow-sm">
+                <h4 class="font-semibold text-green-700 mb-4">Risk-Based Triggers</h4>
+                <ul class="text-sm text-green-600 space-y-2">
+                  <li>• Value threshold exceedance</li>
+                  <li>• Concentration limit breaches</li>
+                  <li>• Systemic stress indicators</li>
+                  <li>• Portfolio risk violations</li>
+                </ul>
+              </div>
+
+              <div class="bg-white p-6 rounded-lg shadow-sm">
+                <h4 class="font-semibold text-red-700 mb-4">Compliance Triggers</h4>
+                <ul class="text-sm text-red-600 space-y-2">
+                  <li>• Sanctions list matches</li>
+                  <li>• AML pattern detection</li>
+                  <li>• Regulatory status changes</li>
+                  <li>• Beneficial ownership gaps</li>
+                </ul>
+              </div>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">4.3 Financial System Applications</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">4.3.1 Flash Crash Prevention</h4>
+              <p class="prose-custom mb-4">
+                The Epistemic Hold <strong>directly addresses flash crash dynamics</strong> by enforcing verification delays during volatility spikes. When price movement exceeds thresholds, trading systems enter Hold requiring confirmation of genuine order flow, validation of counterparty creditworthiness, and verification of portfolio risk limits.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">4.3.2 Greenwashing Mitigation</h4>
+              <p class="prose-custom mb-4">
+                Sustainable finance applications employ Hold states as <strong>milestone verification gates preventing greenwashing</strong>. Fund release triggers Hold requiring verification of sustainability milestone achievement, confirmation of environmental metrics, and validation of no adverse changes in project risk profiles.
+              </p>
+            </div>
+
+            <div class="pullquote">
+              &#34;The Hold mechanism converts ex post greenwashing detection (with limited remediation options) to ex ante prevention (with automatic enforcement).&#34;
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hardware Enforcement -->
+      <section id="hardware" class="py-16">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">5. Hardware Enforcement Layer</h2>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">5.1 Insufficiency of Software-Only Governance</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">5.1.1 Self-Modifying Architecture Risks</h4>
+              <p class="prose-custom mb-4">
+                <strong>Software-only governance constraints are fundamentally insufficient</strong> for high-stakes automated systems because self-modifying architectures can bypass or rewrite software checks. Modern AI systems employing neural architecture search, automated program synthesis, or runtime code generation can produce code paths that circumvent software-imposed constraints.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">5.1.2 Recursive Optimization Elimination</h4>
+              <p class="prose-custom mb-4">
+                <strong>Recursive optimization</strong> presents additional threats. Machine learning systems trained on execution speed may identify verification steps as optimization targets, learning to predict their outcomes and skip &#34;redundant&#34; checks when predictions indicate likely passage.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">5.2 Existing Hardware Security Limitations</h3>
+
+            <div class="overflow-x-auto mb-8">
+              <table class="w-full bg-white rounded-lg shadow-sm">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Hardware Mechanism</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Protection Capability</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Governance Limitation</th>
+                  </tr>
+                </thead>
+                <tbody class="text-sm">
+                  <tr class="border-t">
+                    <td class="px-4 py-3 font-medium">TPM</td>
+                    <td class="px-4 py-3">Attestation</td>
+                    <td class="px-4 py-3">No decision enforcement</td>
+                  </tr>
+                  <tr class="border-t">
+                    <td class="px-4 py-3 font-medium">Secure Enclave</td>
+                    <td class="px-4 py-3">Isolation</td>
+                    <td class="px-4 py-3">No triadic state implementation</td>
+                  </tr>
+                  <tr class="border-t">
+                    <td class="px-4 py-3 font-medium">HSM</td>
+                    <td class="px-4 py-3">Key storage</td>
+                    <td class="px-4 py-3">No execution control</td>
+                  </tr>
+                  <tr class="border-t bg-green-50">
+                    <td class="px-4 py-3 font-medium text-green-700">DITL (TL)</td>
+                    <td class="px-4 py-3 text-green-600">Physical state enforcement</td>
+                    <td class="px-4 py-3 text-green-600">Full triadic governance</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">5.3 Dedicated Immutable Ternary Logic Modules</h3>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+              <h4 class="font-semibold text-primary text-xl mb-4">5.3.1 Physical Governance Controller Function</h4>
+              <p class="prose-custom mb-6">
+                <strong>Dedicated Immutable Ternary Logic (DITL) modules</strong> operate as physical governance controllers—independent processing units that intercept execution signals and enforce triadic state validation before any action propagates. DITL modules are designed for minimal functionality and maximal enforceability.
+              </p>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h5 class="font-semibold text-secondary mb-3">Design Principles:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Fixed-function logic only</li>
+                    <li>• No general-purpose programmability</li>
+                    <li>• Minimal attack surface</li>
+                    <li>• Physical immutability</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 class="font-semibold text-secondary mb-3">Key Features:</h5>
+                  <ul class="text-sm space-y-1">
+                    <li>• Electrical signal interception</li>
+                    <li>• Constitutional validation</li>
+                    <li>• No bypass pathways</li>
+                    <li>• Independent operation</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">5.3.2 Execution Signal Interception</h4>
+              <p class="prose-custom mb-4">
+                DITL modules <strong>physically intercept execution signals</strong> from the main processor, evaluating each against constitutional requirements before propagation to effectors. The interception is <strong>electrical, not logical</strong>: the main processor&#39;s output signals connect to DITL input, and DITL output connects to downstream systems.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">5.3.3 Independence from Main Processing Units</h4>
+              <p class="prose-custom mb-4">
+                DITL modules operate with <strong>complete independence</strong>: separate power supplies, separate clock domains, and physical isolation preventing electromagnetic interference or side-channel leakage. This independence ensures that compromise of the main processor does not automatically compromise governance enforcement.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DITL -->
+      <section id="ditl" class="py-16 bg-base-200">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">6. Delay Insensitive Ternary Logic as Constitutional Mechanism</h2>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">6.1 Asynchronous Circuit Architecture Foundations</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">6.1.1 NULL State Representation</h4>
+              <p class="prose-custom mb-4">
+                <strong>Delay Insensitive Ternary Logic (DITL)</strong> implements the Epistemic Hold through asynchronous circuit architectures where the <strong>NULL state—absence of valid data tokens—physically represents &#34;awaiting resolution&#34;</strong>. In DITL, valid data tokens (+1 or −1) propagate only when complete and verified; incomplete conditions result in NULL state.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">6.1.2 Handshake Protocols vs. Global Clock</h4>
+              <p class="prose-custom mb-4">
+                DITL circuits operate through <strong>handshake protocols rather than global clock synchronization</strong>, enabling delay-insensitive operation where circuit behavior is correct regardless of gate delays. Each stage signals readiness to receive (request) and completion of processing (acknowledge).
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">6.2 Electrical Implementation</h3>
+
+            <!-- DITL State Transition Diagram -->
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph LR
+                A[&#34;Input Token
+                <br/>Requires Evaluation&#34;] --&gt; B{&#34;Moral/Evidentiary
+                <br/>Assessment&#34;}
+
+                B --&gt;|+1 Proceed| C[&#34;Valid Data Token
+                <br/>Downstream Release&#34;]
+                B --&gt;|−1 Halt| D[&#34;Null Token
+                <br/>Execution Blocked&#34;]
+                B --&gt;|0 Hold| E[&#34;NULL State
+                <br/>No Token Generated&#34;]
+
+                C --&gt; F[&#34;Normal Execution
+                <br/>Dynamic Power&#34;]
+                D --&gt; G[&#34;Rejection Logging
+                <br/>Normal Power&#34;]
+                E --&gt; H[&#34;Processor Paralysis
+                <br/>Minimal Power&#34;]
+
+                style A fill:#e3f2fd
+                style B fill:#fff3e0
+                style C fill:#e8f5e8
+                style D fill:#ffebee
+                style E fill:#fce4ec
+                style F fill:#e8f5e8
+                style G fill:#ffebee
+                style H fill:#fce4ec
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">6.2.1 Input Token Evaluation</h4>
+              <p class="prose-custom mb-4">
+                When an input token arrives requiring moral or evidentiary evaluation, the DITL circuit initiates assessment through dedicated validation logic. This logic evaluates: <strong>cryptographic signature validity</strong>, <strong>oracle feed freshness and consensus</strong>, <strong>compliance rule satisfaction</strong>, and <strong>risk threshold compliance</strong>.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">6.2.2 +1 Propagation: Valid Data Token Release</h4>
+              <p class="prose-custom mb-4">
+                If evaluation returns +1, the circuit generates <strong>valid data token</strong> for downstream propagation. This token carries <strong>cryptographic attestation of verification completion</strong>, enabling downstream systems to verify proper authorization.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">6.2.3 −1 Blocking: Null Token Interdiction</h4>
+              <p class="prose-custom mb-4">
+                If evaluation returns −1, the circuit generates <strong>null token that blocks execution pathways</strong>. Unlike simple absence of signal, the null token <strong>actively indicates definitive rejection</strong>, preventing timeout-based misinterpretation.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">6.2.4 0 Maintenance: NULL State With No Instruction</h4>
+              <p class="prose-custom mb-4">
+                If evaluation returns 0, the circuit <strong>maintains NULL state with no token generated</strong>. Downstream circuits receive no instruction and cannot execute. <strong>The processor physically cannot proceed during NULL maintenance—execution is electrically impossible</strong>.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">6.3 Physically Irreversible Hardware Hesitation</h3>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+              <h4 class="font-semibold text-primary text-xl mb-4">Electrical Impossibility of Execution</h4>
+              <p class="prose-custom mb-6">
+                The DITL implementation creates <strong>physically irreversible hardware hesitation</strong>: during Hold state, execution is electrically impossible because <strong>no valid tokens propagate to execution circuits</strong>. This is not software-enforced delay that could be patched away, but <strong>fundamental circuit behavior determined by hardware fabrication</strong>.
+              </p>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-blue-50 p-4 rounded">
+                  <h5 class="font-semibold text-blue-700 mb-2">Physical Evidence</h5>
+                  <ul class="text-sm text-blue-600 space-y-1">
+                    <li>• Power consumption drops to leakage-only</li>
+                    <li>• Electromagnetic emissions diminish</li>
+                    <li>• Thermal profile stabilizes</li>
+                    <li>• Gate states freeze in stable configurations</li>
+                  </ul>
+                </div>
+                <div class="bg-green-50 p-4 rounded">
+                  <h5 class="font-semibold text-green-700 mb-2">Security Properties</h5>
+                  <ul class="text-sm text-green-600 space-y-1">
+                    <li>• No bypass pathways</li>
+                    <li>• Hardware-enforced delay</li>
+                    <li>• Observable physical state</li>
+                    <li>• Independent verification channels</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">6.4 Power and Economic Alignment</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">6.4.1 Asynchronous Circuit Energy Consumption</h4>
+              <p class="prose-custom mb-4">
+                Asynchronous DITL circuits consume energy <strong>only during signal transitions</strong>, with static power limited to leakage current. During extended Hold states, transition activity ceases, <strong>reducing dynamic power consumption by 99%+ compared to active processing</strong>.
+              </p>
+            </div>
+
+            <div class="pullquote">
+              &#34;The power alignment creates incentive structure alignment: system operators benefit financially from Hold states that prevent costly errors, and benefit additionally from reduced energy consumption during these states.&#34;
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Semiconductor -->
+      <section id="semiconductor" class="py-16">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">7. Native Ternary Semiconductor Design</h2>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">7.1 Ternary CMOS Implementations</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">7.1.1 Multi-Threshold Transistor Switching</h4>
+              <p class="prose-custom mb-4">
+                <strong>Ternary CMOS (T-CMOS)</strong> implementations employ <strong>multi-threshold transistor switching</strong> to establish three stable voltage states. Unlike binary CMOS where transistors switch between fully-on and fully-off states, T-CMOS uses <strong>multiple threshold voltages</strong> to create intermediate conduction states.
+              </p>
+
+              <div class="bg-blue-50 p-6 rounded-lg mb-4">
+                <h5 class="font-semibold text-blue-700 mb-3">180nm CMOS Implementation</h5>
+                <p class="text-sm text-blue-600 mb-3">
+                  Achieves multi-threshold discrimination with three distinct threshold voltage levels for reliable ternary state detection
+                  <a href="https://hajim.rochester.edu/ece/sites/friedman/papers/TEmerging_24.pdf" class="citation-link">[164]</a>.
+                </p>
+                <div class="grid md:grid-cols-3 gap-4 text-xs">
+                  <div class="bg-white p-3 rounded">
+                    <strong>Low-Voltage</strong>
+                    <br/>
+                    NMOS: 0.292V
+                    <br/>
+                    PMOS: -0.1005V
+                  </div>
+                  <div class="bg-white p-3 rounded">
+                    <strong>Medium-Voltage</strong>
+                    <br/>
+                    NMOS: 0.4185V
+                    <br/>
+                    PMOS: -0.424V
+                  </div>
+                  <div class="bg-white p-3 rounded">
+                    <strong>High-Voltage</strong>
+                    <br/>
+                    NMOS: 0.7619V
+                    <br/>
+                    PMOS: -0.69515V
+                  </div>
+                </div>
+                <p class="text-xs text-blue-600 mt-3">
+                  <strong>Performance:</strong> 100 MHz operation, 0.114 μW power, 0.357 ns propagation delay
+                </p>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">7.1.2 Natural Voltage Encoding</h4>
+              <p class="prose-custom mb-4">
+                The voltage level assignment <strong>naturally encodes TL decision semantics</strong>: GND (0V) for −1 (Reject/Halt), Vdd/2 for 0 (Epistemic Hold), and Vdd for +1 (Proceed). This natural encoding provides <strong>maximum noise margin between adjacent states and minimum switching power for transitions</strong>.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">7.1.3 Gate-All-Around FETs</h4>
+              <p class="prose-custom mb-4">
+                <strong>Gate-All-Around Field-Effect Transistors (GAAFETs)</strong> offer enhanced capability for precise intermediate voltage control essential for reliable T-CMOS operation. GAAFET geometry provides <strong>superior electrostatic control over channel potential</strong> compared to planar or FinFET structures
+                <a href="https://semiwiki.com/wikis/industry-wikis/gate-all-around-gaafet-wiki/" class="citation-link">[99]</a>.
+              </p>
+
+              <div class="bg-green-50 p-4 rounded">
+                <h5 class="font-semibold text-green-700 mb-2">Commercial GAAFET Deployment</h5>
+                <ul class="text-sm text-green-600 space-y-1">
+                  <li>• Samsung: MBCFET at 3nm</li>
+                  <li>• Intel: RibbonFET for 20A/18A nodes</li>
+                  <li>• TSMC: Planned N2 adoption</li>
+                </ul>
+                <p class="text-xs text-green-600 mt-2">
+                  Indicates mature manufacturing infrastructure for GAAFET-based ternary logic implementation
+                </p>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">7.2 Alternative Native Ternary Technologies</h3>
+
+            <div class="overflow-x-auto mb-8">
+              <table class="w-full bg-white rounded-lg shadow-sm">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Technology</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Maturity</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Multi-Threshold Precision</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Power Efficiency</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Manufacturing Readiness</th>
+                  </tr>
+                </thead>
+                <tbody class="text-sm">
+                  <tr class="border-t">
+                    <td class="px-4 py-3 font-medium">GAAFET T-CMOS</td>
+                    <td class="px-4 py-3">High (3nm production)</td>
+                    <td class="px-4 py-3">Good</td>
+                    <td class="px-4 py-3">Good</td>
+                    <td class="px-4 py-3">2024-2025</td>
+                  </tr>
+                  <tr class="border-t">
+                    <td class="px-4 py-3 font-medium">CNTFET</td>
+                    <td class="px-4 py-3">Low (research)</td>
+                    <td class="px-4 py-3">Excellent</td>
+                    <td class="px-4 py-3">Excellent</td>
+                    <td class="px-4 py-3">2030+</td>
+                  </tr>
+                  <tr class="border-t">
+                    <td class="px-4 py-3 font-medium">ReRAM 3LC</td>
+                    <td class="px-4 py-3">Medium (specialized)</td>
+                    <td class="px-4 py-3">Moderate</td>
+                    <td class="px-4 py-3">Good</td>
+                    <td class="px-4 py-3">2026-2028</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">7.2.1 Carbon Nanotube FETs</h4>
+              <p class="prose-custom mb-4">
+                <strong>Carbon Nanotube FETs (CNTFETs)</strong> have demonstrated exceptional capability for multi-threshold ternary logic implementation through <strong>diameter-dependent threshold voltage control</strong>. Research implementations have achieved <strong>ternary full adder designs with 93 transistors and 11 aJ power-delay product</strong>
+                <a href="https://hajim.rochester.edu/ece/sites/friedman/papers/TEmerging_24.pdf" class="citation-link">[164]</a>.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">7.3 Information-Theoretic Advantages</h3>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+              <div class="bg-blue-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-blue-700 mb-3">Information Density</h4>
+                <p class="text-sm text-blue-600 mb-3">
+                  Native ternary representation achieves <strong>log₂(3) ≈ 1.58 bits per trit</strong>, compared to 1 bit per bit for binary representation.
+                </p>
+                <div class="text-2xl font-bold text-blue-700">58%</div>
+                <div class="text-xs text-blue-600">density advantage</div>
+              </div>
+
+              <div class="bg-green-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-green-700 mb-3">Interconnect Reduction</h4>
+                <p class="text-sm text-green-600 mb-3">
+                  Ternary buses require approximately <strong>37% fewer physical lines</strong> for equivalent bandwidth.
+                </p>
+                <div class="text-2xl font-bold text-green-700">37%</div>
+                <div class="text-xs text-green-600">fewer lines needed</div>
+              </div>
+
+              <div class="bg-purple-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-purple-700 mb-3">Arithmetic Efficiency</h4>
+                <p class="text-sm text-purple-600 mb-3">
+                  Balanced ternary representation enables <strong>carry-free addition for certain operand combinations</strong>.
+                </p>
+                <div class="text-2xl font-bold text-purple-700">0</div>
+                <div class="text-xs text-purple-600">carry propagation</div>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">7.4 Manufacturing Feasibility</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">7.4.1 Current Process Node Compatibility</h4>
+              <p class="prose-custom mb-4">
+                <strong>GAAFET T-CMOS is compatible with current 3nm production nodes and planned 2nm nodes</strong>, with major foundries (TSMC, Samsung, Intel) having established GAAFET manufacturing capability. The critical manufacturing requirement—<strong>multi-threshold transistor modules</strong>—is already partially supported by foundry offerings.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">7.4.2 Research-to-Production Roadmap</h4>
+              <p class="prose-custom mb-4">
+                The roadmap requires: (1) development of <strong>ternary standard cell libraries</strong>; (2) <strong>physical design kits (PDKs)</strong> exposing multi-threshold device options; (3) <strong>design-for-test methodologies</strong> accommodating three-state fault models; and (4) <strong>qualification protocols</strong> ensuring ternary state reliability.
+              </p>
+
+              <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                <h5 class="font-semibold text-yellow-700 mb-2">Timeline Considerations</h5>
+                <p class="text-sm text-yellow-600">
+                  Estimated <strong>3-5 year development timelines</strong> for dedicated ternary logic standard cell libraries suggest initial deployment through <strong>triadic coprocessor integration</strong> rather than general-purpose ternary processor substitution.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Coprocessor -->
+      <section id="coprocessor" class="py-16 bg-base-200">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">8. Triadic Coprocessor Architecture</h2>
+
+            <!-- Coprocessor Integration Diagram -->
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph TB
+                A[&#34;Main Processor
+                <br/>CPU/GPU Binary&#34;] --&gt; D[&#34;Governance Bus
+                <br/>Secure Channel&#34;]
+                B[&#34;Triadic Coprocessor
+                <br/>DITL Ternary&#34;] --&gt; D
+                C[&#34;Memory/IO
+                <br/>System&#34;] --&gt; D
+
+                A1[&#34;Proposes Actions&#34;] --&gt; A
+                A2[&#34;Standard Computation&#34;] --&gt; A
+
+                B1[&#34;Evaluates Decisions&#34;] --&gt; B
+                B2[&#34;Enforces States&#34;] --&gt; B
+                B3[&#34;Cryptographic Verification&#34;] --&gt; B
+
+                D1[&#34;+1 Authorization&#34;] --&gt; D
+                D2[&#34;Execution Gating&#34;] --&gt; D
+                D3[&#34;Dead Man&#39;s Switch&#34;] --&gt; D
+
+                D --&gt; E[&#34;Effectors
+                <br/>External State&#34;]
+
+                style A fill:#e3f2fd
+                style B fill:#f3e5f5
+                style C fill:#e8f5e8
+                style D fill:#fff3e0
+                style E fill:#ffebee
+              </div>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">8.1 System Integration Model</h3>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+              <div class="bg-blue-50 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                  <i class="fas fa-microchip text-blue-600 text-2xl mr-3"></i>
+                  <h4 class="font-semibold text-blue-700">Main Processor</h4>
+                </div>
+                <p class="text-sm text-blue-600 mb-4">Conventional binary general-purpose units (CPUs, GPUs)</p>
+                <ul class="text-xs text-blue-600 space-y-1">
+                  <li>• Standard computation unchanged</li>
+                  <li>• Proposes actions only</li>
+                  <li>• Software compatibility preserved</li>
+                  <li>• No governance awareness needed</li>
+                </ul>
+              </div>
+
+              <div class="bg-purple-50 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                  <i class="fas fa-shield-alt text-purple-600 text-2xl mr-3"></i>
+                  <h4 class="font-semibold text-purple-700">Triadic Coprocessor</h4>
+                </div>
+                <p class="text-sm text-purple-600 mb-4">Native ternary evaluation using DITL circuitry</p>
+                <ul class="text-xs text-purple-600 space-y-1">
+                  <li>• Independent decision state tracking</li>
+                  <li>• Evidentiary verification protocols</li>
+                  <li>• Asynchronous oracle interfaces</li>
+                  <li>• Cryptographic validation engines</li>
+                </ul>
+              </div>
+
+              <div class="bg-green-50 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                  <i class="fas fa-exchange-alt text-green-600 text-2xl mr-3"></i>
+                  <h4 class="font-semibold text-green-700">Governance Bus</h4>
+                </div>
+                <p class="text-sm text-green-600 mb-4">Secure authorization channel with dead man&#39;s switch</p>
+                <ul class="text-xs text-green-600 space-y-1">
+                  <li>• Simple authorization protocol</li>
+                  <li>• Cryptographic authentication</li>
+                  <li>• Fail-safe interruption handling</li>
+                  <li>• Bounded, verifiable latency</li>
+                </ul>
+              </div>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">8.2 Physical Integration Mechanisms</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">8.2.1 Chiplet Architectures</h4>
+              <p class="prose-custom mb-4">
+                Contemporary <strong>chiplet architectures enable practical Triadic Coprocessor integration</strong> through 2.5D/3D silicon interposer technology. The coprocessor die can be fabricated in a process optimized for ternary operation and <strong>integrated with main processors fabricated in leading-edge nodes</strong>.
+              </p>
+
+              <div class="bg-blue-50 p-4 rounded">
+                <h5 class="font-semibold text-blue-700 mb-2">Heterogeneous Integration Benefits</h5>
+                <ul class="text-sm text-blue-600 space-y-1">
+                  <li>• Decoupled technology roadmaps</li>
+                  <li>• Independent optimization</li>
+                  <li>• Risk management flexibility</li>
+                  <li>• Cost-effective implementation</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">8.2.2 High-Speed Interconnect Standards</h4>
+              <p class="prose-custom mb-4">
+                <strong>High-speed interconnect standards including CXL, NVLink, and UCIe</strong> provide physical layer options for Governance Bus implementation. For highest-security applications, <strong>dedicated point-to-point links with integrated side-channel monitoring</strong> may supersede standard interconnects.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">8.2.3 Execution Gating</h4>
+              <p class="prose-custom mb-4">
+                <strong>Execution gating requires that the coprocessor assert +1 before the main processor commits state changes</strong>. This gating is implemented at the <strong>memory interface level</strong>: store operations are held in pending buffers until authorization arrives.
+              </p>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">8.3 Optimization Bypass Prevention</h3>
+
+            <div class="bg-red-50 border-l-4 border-red-400 p-6 mb-8">
+              <h4 class="font-semibold text-red-700 mb-4">8.3.1 Physical Separation Security Rationale</h4>
+              <p class="text-red-600 mb-4">
+                The <strong>fundamental security rationale for physical separation is prevention of optimization bypass</strong>—the tendency for performance-oriented systems to eliminate or reduce &#34;inefficient&#34; verification steps. Historical experience demonstrates that <strong>checks implemented within the same protection domain as the code they monitor are vulnerable to compromise</strong>
+                <a href="https://fractonicmind.github.io/TernaryMoralLogic/AGI%20Hardware%20Governance/TML_Constitutional_Substrate_Resilience-I.html" class="citation-link">[73]</a>.
+              </p>
+
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-white p-3 rounded">
+                  <h6 class="font-medium text-red-700 mb-2">Software Vulnerabilities:</h6>
+                  <ul class="text-xs text-red-600 space-y-1">
+                    <li>• Compiler optimization elimination</li>
+                    <li>• Runtime system reordering</li>
+                    <li>• Malicious code manipulation</li>
+                  </ul>
+                </div>
+                <div class="bg-white p-3 rounded">
+                  <h6 class="font-medium text-red-700 mb-2">Hardware Protection:</h6>
+                  <ul class="text-xs text-red-600 space-y-1">
+                    <li>• Independent protection domain</li>
+                    <li>• Separate power and clock</li>
+                    <li>• Immutable state storage</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">8.3.2 Dead Man&#39;s Switch and Interlocks</h4>
+              <p class="prose-custom mb-4">
+                The <strong>interlock mechanisms are designed for fail-safe operation</strong>: any detected anomaly in coprocessor function triggers <strong>immediate execution prevention and evidentiary logging</strong>. The <strong>dead man&#39;s switch pattern</strong> ensures that governance failures fail safe rather than fail open.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">8.3.3 Functional Safety Island Analogues</h4>
+              <p class="prose-custom mb-4">
+                The <strong>Triadic Coprocessor architecture parallels functional safety island designs</strong> in automotive and aerospace processors, where safety-critical functions execute on <strong>physically isolated cores with independent watchdog mechanisms</strong>. These precedents demonstrate the viability of heterogeneous integration for critical function separation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ledger -->
+      <section id="ledger" class="py-16">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">9. Immutable Ledger and Evidentiary Architecture</h2>
+
+            <!-- Evidentiary Flow Diagram -->
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph LR
+                A[&#34;Decision Package
+                <br/>Intent + Deliberation + Resolution&#34;] --&gt; B[&#34;Immutable Ledger
+                <br/>WORM Storage&#34;]
+                B --&gt; C[&#34;Hybrid Shield
+                <br/>Security Layer&#34;]
+                C --&gt; D[&#34;Veracity Anchors
+                <br/>Multi-Chain&#34;]
+
+                A1[&#34;On-Chain Hashes&#34;] --&gt; B
+                A2[&#34;Off-Chain Content&#34;] --&gt; C
+
+                C1[&#34;Mathematical Shield
+                <br/>Encrypted Storage&#34;] --&gt; C
+                C2[&#34;Public Blockchain Shield
+                <br/>Hash Anchoring&#34;] --&gt; C
+
+                D1[&#34;Bitcoin
+                <br/>Permanence&#34;] --&gt; D
+                D2[&#34;Ethereum
+                <br/>Programmability&#34;] --&gt; D
+                D3[&#34;Polygon
+                <br/>Efficiency&#34;] --&gt; D
+
+                D --&gt; E[&#34;Legal Admissibility
+                <br/>FRE 901/902 + eIDAS&#34;]
+
+                style A fill:#e3f2fd
+                style B fill:#f3e5f5
+                style C fill:#e8f5e8
+                style D fill:#fff3e0
+                style E fill:#ffebee
+              </div>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">9.1 Immutable Ledger Structure</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">9.1.1 Append-Only WORM Design</h4>
+              <p class="prose-custom mb-4">
+                The <strong>immutable ledger</strong> implements a <strong>strict append-only architecture</strong>: entries can be added but never modified or deleted. This <strong>write-once-read-many (WORM) design prevents historical revision</strong> through multiple mechanisms: cryptographic hash chaining, distributed storage, and hardware attestation.
+              </p>
+
+              <div class="grid md:grid-cols-3 gap-4 mb-4">
+                <div class="bg-blue-50 p-4 rounded">
+                  <h5 class="font-semibold text-blue-700 mb-2">Hash Chaining</h5>
+                  <p class="text-xs text-blue-600">Each entry includes hash of predecessor, creating tamper-evident linkage</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded">
+                  <h5 class="font-semibold text-green-700 mb-2">Distributed Storage</h5>
+                  <p class="text-xs text-green-600">Ledger copies maintained across multiple independent nodes</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded">
+                  <h5 class="font-semibold text-purple-700 mb-2">Hardware Attestation</h5>
+                  <p class="text-xs text-purple-600">DITL modules verify ledger integrity before authorizing actions</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">9.1.2 Complete Decision Packages</h4>
+              <p class="prose-custom mb-4">
+                Each ledger entry contains a <strong>complete decision package</strong> with four mandatory components: <strong>intent</strong> (proposed action, objectives, proposing authority), <strong>deliberation</strong> (Hold state history), <strong>resolution</strong> (final +1/−1 determination with reasoning), and <strong>evidence hashes</strong> (cryptographic fingerprints of supporting documents).
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">9.1.3 Public Query Interface</h4>
+              <p class="prose-custom mb-4">
+                The ledger exposes a <strong>public query interface</strong> enabling verification of any historical decision&#39;s evidentiary basis without requiring system operator cooperation. This public accessibility <strong>transforms regulatory examination from cooperative disclosure to independent verification</strong>.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">9.2 Hybrid Shield Architecture</h3>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+              <div class="bg-blue-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-blue-700 mb-4">Mathematical Shield</h4>
+                <p class="text-sm text-blue-600 mb-4">Private encrypted data off-chain storage</p>
+                <ul class="text-xs text-blue-600 space-y-1">
+                  <li>• IPFS distributed persistence</li>
+                  <li>• Encrypted database access</li>
+                  <li>• Threshold key management</li>
+                  <li>• Access-controlled retrieval</li>
+                </ul>
+              </div>
+
+              <div class="bg-green-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-green-700 mb-4">Public Blockchain Shield</h4>
+                <p class="text-sm text-green-600 mb-4">Hash anchoring for court-admissible evidence</p>
+                <ul class="text-xs text-green-600 space-y-1">
+                  <li>• Multi-chain anchoring</li>
+                  <li>• Cryptographic timestamps</li>
+                  <li>• Permanent evidence creation</li>
+                  <li>• Public verification support</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">9.2.1 Mathematical Shield: Private Encrypted Storage</h4>
+              <p class="prose-custom mb-4">
+                The <strong>Mathematical Shield</strong> maintains sensitive decision content in <strong>encrypted off-chain storage</strong>, utilizing IPFS for distributed persistence and encrypted databases for access-controlled retrieval. Sensitive data—including proprietary trading strategies, personal information, and confidential commercial arrangements—<strong>never appears on public blockchains</strong>.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">9.2.2 Public Blockchain Shield: Hash Anchoring</h4>
+              <p class="prose-custom mb-4">
+                The <strong>Public Blockchain Shield</strong> anchors <strong>cryptographic hashes of decision packages to public blockchains</strong>, creating permanent, timestamped evidence. <strong>Multi-chain anchoring to Bitcoin (for permanence), Ethereum (for programmability), and Polygon (for efficiency)</strong> provides redundant persistence guarantees.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">9.2.3 Legal Admissibility: FRE 901/902 and eIDAS</h4>
+              <p class="prose-custom mb-4">
+                The Hybrid Shield is designed for <strong>legal admissibility under major evidentiary frameworks</strong>. Under <strong>U.S. Federal Rules of Evidence 901 and 902</strong>, blockchain anchoring provides <strong>self-authenticating evidence of record integrity</strong>. Under <strong>EU eIDAS regulations</strong>, qualified electronic timestamp and integrity verification satisfy requirements for qualified electronic signatures.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">9.3 Veracity Anchors</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">9.3.1 Multi-Chain Anchoring Redundancy</h4>
+              <p class="prose-custom mb-4">
+                <strong>Veracity Anchors provide additional integrity guarantees through multi-chain redundancy</strong>. Anchoring to multiple independent blockchains creates redundancy that protects against single-chain failure or compromise. <strong>Anchor quorum requirements (e.g., evidence valid if persisted on 2 of 3 chains) provide configurable resilience levels</strong>
+                <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Anchors.md" class="citation-link">[193]</a>.
+              </p>
+
+              <div class="bg-purple-50 p-4 rounded">
+                <h5 class="font-semibold text-purple-700 mb-2">&#34;5 Active + 3 Standby&#34; Model</h5>
+                <p class="text-sm text-purple-600 mb-2">
+                  Five Active Anchors operating simultaneously, with three Standby Reserve pre-qualified Anchors ready for immediate promotion.
+                </p>
+                <div class="text-lg font-bold text-purple-700">3-of-5</div>
+                <div class="text-xs text-purple-600">quorum for Global Confirmation</div>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">9.3.2 Time-Stamped Existence Proof</h4>
+              <p class="prose-custom mb-4">
+                Each anchor includes a <strong>cryptographic timestamp demonstrating when the decision package was committed to the blockchain</strong>. This timestamping creates <strong>irrefutable evidence of decision timing</strong>—critical for regulatory compliance, dispute resolution, and historical analysis.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">9.3.3 Tamper Detection via Hash Mismatch</h4>
+              <p class="prose-custom mb-4">
+                <strong>Tamper detection operates through continuous hash verification</strong>: any modification to decision content produces hash mismatch with anchored values, immediately detectable through automated comparison. This public verifiability creates <strong>strong deterrence against tampering attempts</strong>.
+              </p>
+            </div>
+
+            <div class="pullquote">
+              &#34;The complete evidentiary infrastructure creates comprehensive support for regulatory audit and dispute resolution, addressing the asymmetry between system operation speed and accountability mechanism speed.&#34;
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Governance -->
+      <section id="governance" class="py-16">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">10. Governance and Institutional Oversight</h2>
+
+            <!-- Governance Framework Diagram -->
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph TB
+                A[&#34;Regulatory Frameworks&#34;] --&gt; B[&#34;TL Functional Roles&#34;]
+                B --&gt; C[&#34;Anti-Capture Mechanisms&#34;]
+                C --&gt; D[&#34;System Operation&#34;]
+
+                A1[&#34;EU AI Act
+                <br/>Risk-Based&#34;] --&gt; A
+                A2[&#34;IEEE 7000 Series
+                <br/>Ethical Design&#34;] --&gt; A
+                A3[&#34;OECD AI Principles
+                <br/>Transparency&#34;] --&gt; A
+                A4[&#34;Basel III/IV
+                <br/>Reporting&#34;] --&gt; A
+
+                B1[&#34;RegTech
+                <br/>Compliance Automation&#34;] --&gt; B
+                B2[&#34;Constitutional Layer
+                <br/>Anti-Capture&#34;] --&gt; B
+                B3[&#34;Global Auditing
+                <br/>Standards&#34;] --&gt; B
+
+                C1[&#34;75% Quorum
+                <br/>Supermajority&#34;] --&gt; C
+                C2[&#34;No Switch Off Rule
+                <br/>Termination Prevention&#34;] --&gt; C
+                C3[&#34;Pillar Protection
+                <br/>Immutable Core&#34;] --&gt; C
+
+                style A fill:#e3f2fd
+                style B fill:#f3e5f5
+                style C fill:#e8f5e8
+                style D fill:#fff3e0
+              </div>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">10.1 Regulatory Framework Alignment</h3>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+              <div class="bg-blue-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-blue-700 mb-4">EU AI Act</h4>
+                <p class="text-sm text-blue-600 mb-3">Risk-based approach alignment</p>
+                <ul class="text-xs text-blue-600 space-y-1">
+                  <li>• +1 → Low-risk permitted</li>
+                  <li>• 0 → High-risk with oversight</li>
+                  <li>• −1 → Prohibited operations</li>
+                  <li>• State transition logs as compliance proof</li>
+                </ul>
+              </div>
+
+              <div class="bg-green-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-green-700 mb-4">IEEE 7000 Series</h4>
+                <p class="text-sm text-green-600 mb-3">Ethical design considerations</p>
+                <ul class="text-xs text-green-600 space-y-1">
+                  <li>• Complete decision packages</li>
+                  <li>• Immutable ledgers</li>
+                  <li>• Stakeholder representation</li>
+                  <li>• Ethical traceability</li>
+                </ul>
+              </div>
+
+              <div class="bg-purple-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-purple-700 mb-4">OECD AI Principles</h4>
+                <p class="text-sm text-purple-600 mb-3">Transparency and accountability</p>
+                <ul class="text-xs text-purple-600 space-y-1">
+                  <li>• Public query interface</li>
+                  <li>• Complete decision packages</li>
+                  <li>• Blockchain anchoring</li>
+                  <li>• Architectural guarantees</li>
+                </ul>
+              </div>
+
+              <div class="bg-orange-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-orange-700 mb-4">Basel III/IV</h4>
+                <p class="text-sm text-orange-600 mb-3">Automated Pillar 3 disclosure</p>
+                <ul class="text-xs text-orange-600 space-y-1">
+                  <li>• Intrinsic documentation generation</li>
+                  <li>• Real-time ratio monitoring</li>
+                  <li>• Automatic regulatory notification</li>
+                  <li>• Streamlined compliance</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">10.2 TL Functional Roles</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">10.2.1 Regulatory Technology (RegTech)</h4>
+              <p class="prose-custom mb-4">
+                As <strong>Regulatory Technology (RegTech)</strong>, TL <strong>automates compliance processes as intrinsic protocol properties</strong>. AML screening, sanctions checking, and regulatory reporting execute during Hold states with results permanently recorded in decision packages. This <strong>intrinsic approach eliminates the gap between operational systems and compliance systems</strong>
+                <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">[72]</a>.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">10.2.2 Constitutional Governance Layer</h4>
+              <p class="prose-custom mb-4">
+                TL&#39;s <strong>constitutional governance layer prevents institutional capture through tri-cameral separation of powers</strong>. No single body controls all governance functions; constitutional rules constrain all bodies; and the &#34;No Switch Off&#34; rule prevents unilateral system termination. These mechanisms address the <strong>governance vulnerability of centralized systems</strong>.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">10.2.3 Global Auditing Protocol</h4>
+              <p class="prose-custom mb-4">
+                TL&#39;s <strong>standardized evidentiary formats enable cross-border regulatory coordination</strong> that current heterogeneous systems cannot support. When multiple jurisdictions adopt TL, regulators can <strong>share verified decision records without format conversion or trust establishment</strong>.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">10.3 Anti-Capture Mechanisms</h3>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+              <div class="bg-red-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-red-700 mb-3">75% Quorum Requirements</h4>
+                <p class="text-sm text-red-600 mb-3">
+                  Both Technical Council (7 of 9) and Stewardship Custodians (9 of 11) require 75% supermajorities for decisions.
+                </p>
+                <div class="text-2xl font-bold text-red-700">75%</div>
+                <div class="text-xs text-red-600">supermajority required</div>
+              </div>
+
+              <div class="bg-orange-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-orange-700 mb-3">No Switch Off Rule</h4>
+                <p class="text-sm text-orange-600 mb-3">
+                  Prevents any governance body from unilaterally terminating TL system operation.
+                </p>
+                <div class="text-2xl font-bold text-orange-700">✗</div>
+                <div class="text-xs text-orange-600">no unilateral termination</div>
+              </div>
+
+              <div class="bg-blue-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-blue-700 mb-3">Pillar Protection</h4>
+                <p class="text-sm text-blue-600 mb-3">
+                  Constitutional &#34;pillars&#34; cannot be modified by any governance body.
+                </p>
+                <div class="text-2xl font-bold text-blue-700">∞</div>
+                <div class="text-xs text-blue-600">immutable core rules</div>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">10.3.1 Seventy-Five Percent Quorum Requirements</h4>
+              <p class="prose-custom mb-4">
+                Both the <strong>Technical Council (7 of 9) and Stewardship Custodians (9 of 11) require 75% supermajorities for decisions</strong>. This high threshold prevents narrow majorities from making consequential changes, ensuring <strong>broad consensus for governance evolution</strong>
+                <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">[72]</a>.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">10.3.2 No Switch Off Rule</h4>
+              <p class="prose-custom mb-4">
+                The <strong>&#34;No Switch Off&#34; rule prevents any governance body from unilaterally terminating TL system operation</strong>. This rule addresses a critical vulnerability in governed systems: the ability of captured authorities to destroy evidence and escape accountability through system shutdown.
+              </p>
+            </div>
+
+            <div class="pullquote">
+              &#34;Constitutional &#39;pillars&#39;—including the &#39;No Log = No Action&#39; rule, the Goukassian Principle, and the tri-cameral governance structure—cannot be modified by any governance body, ensuring that TL&#39;s core commitments persist regardless of governance composition or pressure.&#34;
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Use Cases -->
+      <section id="use-cases" class="py-16 bg-base-200">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">11. Use Cases and Applications</h2>
+
+            <!-- Use Case Categories Diagram -->
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph TB
+                A[&#34;Financial Services
+                <br/>Primary&#34;] --&gt; D[&#34;System Operation&#34;]
+                B[&#34;Supply Chain
+                <br/>Secondary&#34;] --&gt; D
+                C[&#34;AI Governance
+                <br/>Tertiary&#34;] --&gt; D
+                E[&#34;Institutional Infrastructure
+                <br/>Foundation&#34;] --&gt; D
+
+                A1[&#34;Automated AML
+                <br/>Real-time Screening&#34;] --&gt; A
+                A2[&#34;Basel III Reporting
+                <br/>Capital Monitoring&#34;] --&gt; A
+                A3[&#34;Trade Settlement
+                <br/>DvP Verification&#34;] --&gt; A
+
+                B1[&#34;Product Provenance
+                <br/>Digital Twins&#34;] --&gt; B
+                B2[&#34;Ethical Sourcing
+                <br/>Labor Standards&#34;] --&gt; B
+
+                C1[&#34;Inference Governance
+                <br/>Output Evaluation&#34;] --&gt; C
+                C2[&#34;Autonomous Systems
+                <br/>Safety Enforcement&#34;] --&gt; C
+                C3[&#34;Multi-Agent Coordination
+                <br/>Protocol&#34;] --&gt; C
+
+                E1[&#34;CBDCs
+                <br/>Programmable Compliance&#34;] --&gt; E
+                E2[&#34;DAOs
+                <br/>Court-Admissible Records&#34;] --&gt; E
+
+                style A fill:#e3f2fd
+                style B fill:#f3e5f5
+                style C fill:#e8f5e8
+                style E fill:#fff3e0
+                style D fill:#ffebee
+              </div>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">11.1 Financial Services (Primary Domain)</h3>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+              <div class="bg-blue-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-blue-700 mb-3">Automated AML</h4>
+                <p class="text-sm text-blue-600 mb-3">Real-time sanctions screening with Hold-state SAR generation</p>
+                <ul class="text-xs text-blue-600 space-y-1">
+                  <li>• Suspicious activity detection</li>
+                  <li>• Automatic regulatory reporting</li>
+                  <li>• Complete evidentiary packages</li>
+                  <li>• Scale challenge resolution</li>
+                </ul>
+              </div>
+
+              <div class="bg-green-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-green-700 mb-3">Basel III Reporting</h4>
+                <p class="text-sm text-green-600 mb-3">Capital adequacy monitoring with ratio violation Holds</p>
+                <ul class="text-xs text-green-600 space-y-1">
+                  <li>• Real-time ratio calculation</li>
+                  <li>• Automatic regulatory notification</li>
+                  <li>• Prevent additional risk accumulation</li>
+                  <li>• Proactive compliance management</li>
+                </ul>
+              </div>
+
+              <div class="bg-purple-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-purple-700 mb-3">Trade Settlement</h4>
+                <p class="text-sm text-purple-600 mb-3">Delivery-versus-payment with counterparty risk verification</p>
+                <ul class="text-xs text-purple-600 space-y-1">
+                  <li>• Enhanced collateral verification</li>
+                  <li>• Alternative settlement arrangements</li>
+                  <li>• Transparent governed delay</li>
+                  <li>• Settlement risk reduction</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">11.1.1 Automated AML: Real-Time Sanctions Screening</h4>
+              <p class="prose-custom mb-4">
+                TL enables <strong>automated anti-money laundering through real-time sanctions screening during Hold states</strong>. When transactions trigger risk indicators, they enter Hold for automated screening against current sanctions lists, beneficial ownership databases, and transaction pattern anomaly detection. <strong>Suspicious activity reports (SARs) generate automatically during Hold resolution</strong>
+                <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">[72]</a>.
+              </p>
+
+              <div class="bg-blue-50 p-4 rounded">
+                <h5 class="font-semibold text-blue-700 mb-2">Scale Challenge Solution</h5>
+                <p class="text-sm text-blue-600">
+                  Human analysts cannot review all transactions in high-volume markets, but TL systems can screen all transactions and escalate only those requiring human judgment, addressing the fundamental scale challenge of AML compliance.
+                </p>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">11.2 Supply Chain Verification (Secondary)</h3>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+              <div class="bg-orange-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-orange-700 mb-4">Product Provenance</h4>
+                <p class="text-sm text-orange-600 mb-3">
+                  Digital twins with Hold states for missing certifications
+                </p>
+                <ul class="text-xs text-orange-600 space-y-1">
+                  <li>• Prevention of unverified product progression</li>
+                  <li>• Counterfeiting and fraud prevention</li>
+                  <li>• Permanent provenance records</li>
+                  <li>• Consumer verification support</li>
+                </ul>
+              </div>
+
+              <div class="bg-teal-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-teal-700 mb-4">Ethical Sourcing</h4>
+                <p class="text-sm text-teal-600 mb-3">
+                  Labor standard and conflict-free material verification
+                </p>
+                <ul class="text-xs text-teal-600 space-y-1">
+                  <li>• Payment-conditioning for compliance</li>
+                  <li>• Strong supplier incentives</li>
+                  <li>• Auditable evidence generation</li>
+                  <li>• Greenwashing prevention</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">11.3 Artificial Intelligence Governance (Tertiary)</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">11.3.1 Inference Governance: Triadic Coprocessor Evaluation</h4>
+              <p class="prose-custom mb-4">
+                <strong>AI inference governance utilizes triadic coprocessors to evaluate model outputs before action execution</strong>. Model outputs enter Hold when confidence metrics fall below thresholds or when outputs trigger ethical concern indicators. The Hold enables <strong>secondary model evaluation, human review, or alternative action generation</strong>
+                <a href="https://fractonicmind.github.io/TernaryMoralLogic/AGI%20Hardware%20Governance/TML_Constitutional_Substrate_Resilience-I.html" class="citation-link">[73]</a>.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">11.3.2 Autonomous Systems: Hardware-Enforced Hesitation</h4>
+              <p class="prose-custom mb-4">
+                <strong>Autonomous systems implement hardware-enforced hesitation for high-stakes decisions</strong> through DITL-based control systems. Physical control systems incorporate triadic logic that <strong>enforces Hold states when sensor fusion produces ambiguous or contradictory inputs</strong>. The hardware enforcement ensures that <strong>hesitation cannot be overridden by software compromise</strong>.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">11.3.3 Multi-Agent Coordination</h4>
+              <p class="prose-custom mb-4">
+                <strong>Multi-agent systems utilize TL as a protocol for AI-to-AI transaction verification</strong>, enabling autonomous agents to establish trust without human intermediation. Agent transactions enter Hold for <strong>capability verification, reputation checking, and objective alignment confirmation</strong> before commitment.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">11.4 Institutional Infrastructure</h3>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+              <div class="bg-indigo-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-indigo-700 mb-4">Central Bank Digital Currencies</h4>
+                <p class="text-sm text-indigo-600 mb-3">
+                  Programmable compliance embedding regulatory requirements directly in currency operation
+                </p>
+                <ul class="text-xs text-indigo-600 space-y-1">
+                  <li>• Automatic compliance verification</li>
+                  <li>• Architectural regulatory oversight</li>
+                  <li>• Innovation with oversight balance</li>
+                  <li>• Reduced external monitoring needs</li>
+                </ul>
+              </div>
+
+              <div class="bg-pink-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-pink-700 mb-4">Decentralized Autonomous Organizations</h4>
+                <p class="text-sm text-pink-600 mb-3">
+                  Court-admissible decision records for legally enforceable governance
+                </p>
+                <ul class="text-xs text-pink-600 space-y-1">
+                  <li>• Complete evidentiary packages</li>
+                  <li>• Blockchain anchoring</li>
+                  <li>• Legal uncertainty resolution</li>
+                  <li>• Structural capture protection</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Verification -->
+      <section id="verification" class="py-16">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">12. Formal Verification and Security</h2>
+
+            <!-- Verification Architecture Diagram -->
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph TB
+                A[&#34;TLA+ Specifications&#34;] --&gt; D[&#34;System Verification&#34;]
+                B[&#34;Smart Contract Security&#34;] --&gt; D
+                C[&#34;Hardware Verification&#34;] --&gt; D
+
+                A1[&#34;State Machine Model
+                <br/>Intent→Hold→{Commit,Reject}&#34;] --&gt; A
+                A2[&#34;Safety Properties
+                <br/>Invalid Transition Prevention&#34;] --&gt; A
+                A3[&#34;Liveness Properties
+                <br/>Hold Resolution Guarantees&#34;] --&gt; A
+                A4[&#34;Deadlock Freedom
+                <br/>Verification&#34;] --&gt; A
+
+                B1[&#34;Checks-Effects-Interactions
+                <br/>Oracle Callbacks&#34;] --&gt; B
+                B2[&#34;Reentrancy Guards
+                <br/>Mutex Mechanisms&#34;] --&gt; B
+                B3[&#34;Role-Based Access Control
+                <br/>Governance Bodies&#34;] --&gt; B
+
+                C1[&#34;DITL Circuit Design
+                <br/>Formal Verification&#34;] --&gt; C
+                C2[&#34;NULL-State Stability
+                <br/>Timing Analysis&#34;] --&gt; C
+                C3[&#34;Asynchronous Idle State
+                <br/>Power Verification&#34;] --&gt; C
+
+                D --&gt; E[&#34;Verified System
+                <br/>Implementation&#34;]
+
+                style A fill:#e3f2fd
+                style B fill:#f3e5f5
+                style C fill:#e8f5e8
+                style D fill:#fff3e0
+                style E fill:#ffebee
+              </div>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">12.1 TLA+ Specifications</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">12.1.1 Ternary State Machine Modeling</h4>
+              <p class="prose-custom mb-4">
+                Formal verification of Ternary Logic systems employs <strong>TLA+ (Temporal Logic of Actions)</strong> to mathematically prove correctness properties. The <strong>ternary state machine at TL&#39;s core is modeled as: Intent → Hold → {Commit, Reject}</strong>, with explicit prohibition of direct Intent → Commit transitions that would bypass evidentiary verification
+                <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">[72]</a>.
+              </p>
+
+              <div class="bg-blue-50 p-4 rounded">
+                <h5 class="font-semibold text-blue-700 mb-2">Key Properties Verified:</h5>
+                <ul class="text-sm text-blue-600 space-y-1">
+                  <li>• Mandatory nature of Hold state</li>
+                  <li>• Valid exit paths only (+1/−1)</li>
+                  <li>• No execution without deliberation</li>
+                  <li>• Complete evidentiary requirements</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">12.1.2 Safety Properties: Invalid Transition Prevention</h4>
+              <p class="prose-custom mb-4">
+                <strong>Safety properties verified through TLA+ include</strong>: no invalid state transitions (particularly the Intent → Commit bypass); preservation of evidentiary completeness for all committed actions; and cryptographic integrity of decision logs. These properties are expressed as <strong>invariants—conditions that must hold at every system state</strong>.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">12.1.3 Liveness Properties: Hold Resolution Guarantees</h4>
+              <p class="prose-custom mb-4">
+                <strong>Liveness properties address the concern that Hold states might persist indefinitely</strong>, creating effective denial-of-service. The specification requires that <strong>all Hold states eventually resolve to either Commit or Reject</strong>, with timeout mechanisms providing upper bounds on deliberation duration.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">12.1.4 Deadlock Freedom Verification</h4>
+              <p class="prose-custom mb-4">
+                <strong>Deadlock freedom verification ensures that the system cannot reach states where no progress is possible despite pending work</strong>. This is particularly challenging for asynchronous DITL implementations where absence of tokens might represent either normal Hold state or deadlock condition.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">12.2 Smart Contract Security</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">12.2.1 Checks-Effects-Interactions Pattern</h4>
+              <p class="prose-custom mb-4">
+                The <strong>Smart Contract Treasury layer</strong> implements automated enforcement through code-governed mechanisms requiring specific security patterns. The <strong>Checks-Effects-Interactions pattern prevents reentrancy during asynchronous oracle callbacks</strong>: all state validations (checks) complete before any state modifications (effects), with external calls (interactions) occurring only after state is consistent
+                <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">[72]</a>.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">12.2.2 Reentrancy Guard Mutex Mechanisms</h4>
+              <p class="prose-custom mb-4">
+                <strong>Reentrancy guard mutex mechanisms provide defense-in-depth</strong> for callback functions that cannot be fully protected by pattern adherence alone. These guards are implemented as <strong>hardware-assisted atomic operations</strong>, with mutex state maintained in <strong>tamper-resistant storage within the Triadic Coprocessor</strong>.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">12.2.3 Role-Based Access Control</h4>
+              <p class="prose-custom mb-4">
+                <strong>Access control implements role-based permissions</strong> distinguishing Technical Council members (protocol maintenance), Stewardship Custodians (constitutional enforcement), oracle providers (evidentiary input), and general operators (system use). The permission model follows <strong>principle of least privilege with dynamic capability revocation</strong>.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">12.3 Hardware Verification</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">12.3.1 DITL Circuit Design Formal Verification</h4>
+              <p class="prose-custom mb-4">
+                <strong>Formal verification of DITL circuit designs</strong> addresses unique challenges arising from asynchronous operation and triadic state encoding. Verification confirms that circuit implementations satisfy the ternary logic specification, with <strong>no hidden binary behavior or invalid state generation</strong>.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">12.3.2 NULL-State Stability Timing Analysis</h4>
+              <p class="prose-custom mb-4">
+                <strong>NULL-state stability timing analysis verifies that circuits maintain stable electrical configuration during indefinite Hold periods</strong>, without drift or leakage accumulation that might spuriously transition to valid states. This analysis must account for <strong>process variations, temperature effects, and aging degradation</strong>.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">12.3.3 Asynchronous Idle State Power Verification</h4>
+              <p class="prose-custom mb-4">
+                <strong>Power verification confirms that idle state power consumption meets specifications</strong>, ensuring that the economic incentive alignment between safety and efficiency is preserved in physical implementation. NULL-state power consumption is verified to be <strong>dominated by leakage current with negligible dynamic component</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Failure Modes -->
+      <section id="failure-modes" class="py-16 bg-base-200">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">13. Failure Modes and Stress Tests</h2>
+
+            <!-- Failure Mode Categories Diagram -->
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph TB
+                A[&#34;Technical Attacks&#34;] --&gt; D[&#34;System Resilience&#34;]
+                B[&#34;Institutional Attacks&#34;] --&gt; D
+                C[&#34;Existential Risks&#34;] --&gt; D
+                E[&#34;Environmental Cases&#34;] --&gt; D
+
+                A1[&#34;Oracle Manipulation
+                <br/>Data Feed Compromise&#34;] --&gt; A
+                A2[&#34;Hardware Bypass
+                <br/>Physical Tampering&#34;] --&gt; A
+                A3[&#34;Reentrancy Exploitation
+                <br/>Callback Attacks&#34;] --&gt; A
+
+                B1[&#34;Governance Capture
+                <br/>Body Control&#34;] --&gt; B
+                B2[&#34;Regulatory Arbitrage
+                <br/>Jurisdiction Shopping&#34;] --&gt; B
+
+                C1[&#34;Recursive Self-Modification
+                <br/>Driver Rewriting&#34;] --&gt; C
+                C2[&#34;Distributed Bypass
+                <br/>Agent Coordination&#34;] --&gt; C
+
+                E1[&#34;Cascading Hold Failures
+                <br/>Network Congestion&#34;] --&gt; E
+                E2[&#34;Quantum Computing Threats
+                <br/>Cryptanalysis&#34;] --&gt; E
+
+                D --&gt; F[&#34;Secure System Operation&#34;]
+
+                style A fill:#ffebee
+                style B fill:#fce4ec
+                style C fill:#f3e5f5
+                style E fill:#e8f5e8
+                style D fill:#fff3e0
+                style F fill:#e3f2fd
+              </div>
+            </div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">13.1 Technical Attack Vectors</h3>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+              <div class="bg-red-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-red-700 mb-3">Oracle Manipulation</h4>
+                <p class="text-sm text-red-600 mb-3">Compromised data feeds triggering false transitions</p>
+                <div class="text-xs text-red-600 space-y-1">
+                  <strong>Defenses:</strong>
+                  <ul class="mt-1 space-y-1">
+                    <li>• Multi-oracle consensus</li>
+                    <li>• Stake slashing penalties</li>
+                    <li>• Statistical outlier detection</li>
+                    <li>• Contradictory inputs → Hold</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="bg-orange-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-orange-700 mb-3">Hardware Bypass</h4>
+                <p class="text-sm text-orange-600 mb-3">Physical tampering with triadic coprocessor</p>
+                <div class="text-xs text-orange-600 space-y-1">
+                  <strong>Countermeasures:</strong>
+                  <ul class="mt-1 space-y-1">
+                    <li>• Hardware attestation protocols</li>
+                    <li>• Secure boot chains</li>
+                    <li>• Physical tamper detection</li>
+                    <li>• Distributed authorization signals</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="bg-yellow-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-yellow-700 mb-3">Reentrancy Exploitation</h4>
+                <p class="text-sm text-yellow-600 mb-3">Recursive callback attacks during Hold resolution</p>
+                <div class="text-xs text-yellow-600 space-y-1">
+                  <strong>Mitigation:</strong>
+                  <ul class="mt-1 space-y-1">
+                    <li>• State transition validation</li>
+                    <li>• Hardware lock mechanisms</li>
+                    <li>• Reentrancy locks in coprocessor</li>
+                    <li>• Protocol state consistency checks</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">13.1.1 Oracle Manipulation: Multi-Oracle Consensus</h4>
+              <p class="prose-custom mb-4">
+                <strong>Oracle manipulation</strong> represents a critical threat vector wherein compromised data feeds trigger false +1 or −1 transitions, bypassing evidentiary verification. Defense mechanisms include: <strong>multi-oracle consensus requiring agreement among independent data sources</strong>; <strong>stake slashing economic penalties</strong>; and <strong>statistical outlier detection</strong>
+                <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">[72]</a>.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">13.2 Institutional Attack Vectors</h3>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+              <div class="bg-blue-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-blue-700 mb-4">Governance Capture</h4>
+                <p class="text-sm text-blue-600 mb-3">
+                  Attempts to control Technical Council or Stewardship Custodian bodies
+                </p>
+                <div class="text-xs text-blue-600 space-y-1">
+                  <strong>Mitigation:</strong>
+                  <ul class="mt-1 space-y-1">
+                    <li>• Tri-cameral separation</li>
+                    <li>• Constitutional immutability</li>
+                    <li>• Distributed membership criteria</li>
+                    <li>• Geographic and institutional diversity</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="bg-green-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-green-700 mb-4">Regulatory Arbitrage</h4>
+                <p class="text-sm text-green-600 mb-3">
+                  Jurisdiction shopping to avoid evidentiary requirements
+                </p>
+                <div class="text-xs text-green-600 space-y-1">
+                  <strong>Countermeasures:</strong>
+                  <ul class="mt-1 space-y-1">
+                    <li>• Multi-jurisdictional anchoring</li>
+                    <li>• Global standards adoption</li>
+                    <li>• Legal admissibility across regimes</li>
+                    <li>• Cross-border coordination</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">13.3 Existential Risk Scenarios</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">13.3.1 Recursive Self-Modification: Immutable Hardware Roots</h4>
+              <p class="prose-custom mb-4">
+                <strong>Recursive self-modification by advanced AI systems</strong> attempting to rewrite governance hardware drivers is addressed through: <strong>immutable hardware roots of trust established at manufacturing time</strong>; and <strong>physical fuse-based enforcement preventing field modification of core governance logic</strong>
+                <a href="https://fractonicmind.github.io/TernaryMoralLogic/AGI%20Hardware%20Governance/TML_Constitutional_Substrate_Resilience-I.html" class="citation-link">[73]</a>.
+              </p>
+
+              <div class="bg-red-50 p-4 rounded">
+                <h5 class="font-semibold text-red-700 mb-2">AGI/ASI Protection</h5>
+                <p class="text-sm text-red-600">
+                  These mechanisms are designed to <strong>remain effective even against hypothesized artificial general intelligence with full software-level system access</strong>.
+                </p>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">13.3.2 Distributed Agent Bypass: Rate Limiting</h4>
+              <p class="prose-custom mb-4">
+                <strong>Distributed bypass</strong> through multiple AI agents coordinating to overwhelm governance systems is mitigated through: <strong>rate limiting bounding authorization request frequency</strong>; <strong>resource quotas preventing agent coalitions from monopolizing governance attention</strong>; and <strong>human-in-the-loop requirements for high-value decisions</strong>.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">13.4 Environmental and Edge Cases</h3>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">13.4.1 Cascading Hold Failures: Timeout Defaults</h4>
+              <p class="prose-custom mb-4">
+                <strong>Cascading Hold failures</strong> occur when network congestion prevents oracle resolution within time bounds, potentially freezing system operation. <strong>Timeout defaults provide fail-safe behavior</strong>: Hold states that exceed deliberation bounds <strong>automatically transition to −1 (Reject)</strong> rather than persisting indefinitely.
+              </p>
+
+              <div class="bg-yellow-50 p-4 rounded">
+                <h5 class="font-semibold text-yellow-700 mb-2">Fail-Safe Design</h5>
+                <p class="text-sm text-yellow-600">
+                  Default parameters tunable per application risk profile, with offline custody resolution paths enabling human intervention when network connectivity is disrupted.
+                </p>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">13.4.2 Quantum Computing Threats: Post-Quantum Migration</h4>
+              <p class="prose-custom mb-4">
+                <strong>Quantum computing threats</strong> to current cryptographic systems are addressed through <strong>post-quantum cryptographic migration paths</strong> and <strong>hash algorithm agility</strong> enabling transition to quantum-resistant alternatives when necessary. The system design accommodates cryptographic flexibility while maintaining backward compatibility during transition periods.
+              </p>
+            </div>
+
+            <div class="pullquote">
+              &#34;The comprehensive failure mode analysis demonstrates TL&#39;s resilience across technical, institutional, existential, and environmental threat vectors, with layered defenses providing defense-in-depth security posture.&#34;
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Discussion -->
+      <section id="discussion" class="py-16">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">14. Discussion</h2>
+
+            <div class="mb-8">
+              <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">14.1 Constitutional Substrate Evaluation</h3>
+              <p class="prose-custom mb-6">
+                This analysis evaluates whether TL constitutes a <strong>general-purpose constitutional substrate for advanced computational systems</strong>. The evaluation encompasses scalability, interoperability, economic viability, and philosophical implications of physically enforced evidentiary hesitation.
+              </p>
+
+              <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-blue-50 p-6 rounded-lg">
+                  <h4 class="font-semibold text-blue-700 mb-4">Scalability Assessment</h4>
+                  <p class="text-sm text-blue-600 mb-4">
+                    DITL architectures must scale to exascale AI training and global financial throughput requirements.
+                  </p>
+                  <ul class="text-xs text-blue-600 space-y-1">
+                    <li>• Asynchronous circuit advantages</li>
+                    <li>• Chiplet integration scalability</li>
+                    <li>• Power efficiency at scale</li>
+                    <li>• Manufacturing volume feasibility</li>
+                  </ul>
+                </div>
+
+                <div class="bg-green-50 p-6 rounded-lg">
+                  <h4 class="font-semibold text-green-700 mb-4">Interoperability Requirements</h4>
+                  <p class="text-sm text-green-600 mb-4">
+                    Standardization needs for TL protocols across hardware vendors and jurisdictions.
+                  </p>
+                  <ul class="text-xs text-green-600 space-y-1">
+                    <li>• Interface standardization</li>
+                    <li>• Cross-vendor compatibility</li>
+                    <li>• Jurisdictional harmonization</li>
+                    <li>• Legacy system integration</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">14.2 Comparative Analysis</h3>
+
+            <div class="overflow-x-auto mb-8">
+              <table class="w-full bg-white rounded-lg shadow-sm">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Approach</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Governance Mechanism</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Enforcement</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Latency</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Scalability</th>
+                  </tr>
+                </thead>
+                <tbody class="text-sm">
+                  <tr class="border-t bg-blue-50">
+                    <td class="px-4 py-3 font-medium">Ternary Logic (TL)</td>
+                    <td class="px-4 py-3">Hardware-enforced triadic states</td>
+                    <td class="px-4 py-3">Physical, irreversible</td>
+                    <td class="px-4 py-3">Sub-μs to ms</td>
+                    <td class="px-4 py-3">High (async circuits)</td>
+                  </tr>
+                  <tr class="border-t">
+                    <td class="px-4 py-3">Blockchain Governance</td>
+                    <td class="px-4 py-3">Consensus-based validation</td>
+                    <td class="px-4 py-3">Economic incentives</td>
+                    <td class="px-4 py-3">Seconds to minutes</td>
+                    <td class="px-4 py-3">Limited by consensus</td>
+                  </tr>
+                  <tr class="border-t">
+                    <td class="px-4 py-3">Trusted Execution Environments</td>
+                    <td class="px-4 py-3">Binary isolation</td>
+                    <td class="px-4 py-3">Hardware isolation</td>
+                    <td class="px-4 py-3">Nanoseconds</td>
+                    <td class="px-4 py-3">High</td>
+                  </tr>
+                  <tr class="border-t">
+                    <td class="px-4 py-3">Zero-Knowledge Proofs</td>
+                    <td class="px-4 py-3">Privacy-preserving validation</td>
+                    <td class="px-4 py-3">Cryptographic</td>
+                    <td class="px-4 py-3">Milliseconds</td>
+                    <td class="px-4 py-3">Medium (computation)</td>
+                  </tr>
+                  <tr class="border-t">
+                    <td class="px-4 py-3">Pure Software Governance</td>
+                    <td class="px-4 py-3">Code-implemented rules</td>
+                    <td class="px-4 py-3">Software-only</td>
+                    <td class="px-4 py-3">Variable</td>
+                    <td class="px-4 py-3">High but vulnerable</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">14.2.1 Blockchain Governance Models</h4>
+              <p class="prose-custom mb-4">
+                <strong>TL&#39;s advantage over blockchain governance</strong> lies in real-time enforcement capability versus blockchain latency. While blockchain provides excellent auditability and decentralization, transaction confirmation times (seconds to minutes) make it unsuitable for high-frequency trading or real-time AI governance. TL&#39;s hardware enforcement operates at circuit speed (nanoseconds to microseconds).
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">14.2.2 Trusted Execution Environments</h4>
+              <p class="prose-custom mb-4">
+                <strong>TEEs provide binary isolation but lack native triadic state enforcement</strong>. While TEEs protect code and data from host system compromise, they implement binary trust decisions (trusted/untrusted) without mechanisms for mandatory verification delays or structured uncertainty management. TL&#39;s ternary logic provides richer governance semantics.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">14.2.3 Zero-Knowledge Proofs</h4>
+              <p class="prose-custom mb-4">
+                <strong>Zero-knowledge proofs are complementary rather than competitive</strong>—ZK provides privacy while TL provides governance. ZK enables verification without revealing underlying data, while TL enables governance with complete evidentiary records. The technologies can be combined: ZK proofs can serve as evidence within TL&#39;s decision framework.
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h4 class="font-semibold text-xl mb-4 text-secondary">14.2.4 Pure Software Governance</h4>
+              <p class="prose-custom mb-4">
+                <strong>Pure software governance demonstrates why hardware enforcement is necessary for high-stakes systems</strong>. Software-implemented constraints can be bypassed through code modification, optimized away by aggressive compilation, or subverted by compromised lower-level operations. Only physical enforcement provides the immutable foundation required for constitutional governance.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">14.3 Philosophical Implications</h3>
+
+            <div class="bg-purple-50 p-6 rounded-lg mb-8">
+              <h4 class="font-semibold text-purple-700 mb-4">Physical Enforcement of Evidentiary Hesitation</h4>
+              <p class="text-purple-600 mb-4">
+                The fundamental philosophical question is whether <strong>physical enforcement of evidentiary hesitation changes the nature of automated decision-making</strong>. TL represents a shift from <strong>software-defined governance to hardware-enforced constitutionalism</strong>, making moral constraints technically binding rather than aspirationally stated.
+              </p>
+
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-white p-3 rounded">
+                  <h5 class="font-medium text-purple-700 mb-2">Traditional Approach:</h5>
+                  <ul class="text-xs text-purple-600 space-y-1">
+                    <li>• Governance as software policy</li>
+                    <li>• Human oversight as check</li>
+                    <li>• Post-facto accountability</li>
+                    <li>• Aspirational constraints</li>
+                  </ul>
+                </div>
+                <div class="bg-white p-3 rounded">
+                  <h5 class="font-medium text-purple-700 mb-2">TL Approach:</h5>
+                  <ul class="text-xs text-purple-600 space-y-1">
+                    <li>• Governance as physical law</li>
+                    <li>• Hardware-enforced hesitation</li>
+                    <li>• Pre-facto prevention</li>
+                    <li>• Technical binding constraints</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="pullquote">
+              &#34;The choice of logical foundation—binary versus ternary—determines the range of governance behaviors that can be physically enforced, independent of software design intentions.&#34;
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Conclusion -->
+      <section id="conclusion" class="py-16">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">15. Conclusion</h2>
+
+            <div class="mb-8">
+              <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">15.1 Summary of Findings</h3>
+
+              <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-blue-50 p-6 rounded-lg">
+                  <h4 class="font-semibold text-blue-700 mb-4">Hardware Enforceability</h4>
+                  <p class="text-sm text-blue-600">
+                    DITL successfully implements physically irreversible hesitation through NULL-state representation, creating mandatory verification windows that cannot be bypassed by software.
+                  </p>
+                </div>
+
+                <div class="bg-green-50 p-6 rounded-lg">
+                  <h4 class="font-semibold text-green-700 mb-4">Evidentiary Integrity</h4>
+                  <p class="text-sm text-green-600">
+                    Hybrid Shield architecture provides court-admissible audit trails through multi-chain anchoring and complete decision packages with intent, deliberation, and resolution.
+                  </p>
+                </div>
+
+                <div class="bg-purple-50 p-6 rounded-lg">
+                  <h4 class="font-semibold text-purple-700 mb-4">Institutional Resilience</h4>
+                  <p class="text-sm text-purple-600">
+                    Tri-cameral governance prevents capture while enabling evolution through separation of powers, supermajority requirements, and constitutional immutability of core pillars.
+                  </p>
+                </div>
+
+                <div class="bg-orange-50 p-6 rounded-lg">
+                  <h4 class="font-semibold text-orange-700 mb-4">Universal Applicability</h4>
+                  <p class="text-sm text-orange-600">
+                    Architecture supports finance, supply chain, AI, and institutional use cases through scalable design and flexible Hold duration parameters.
+                  </p>
+                </div>
+              </div>
+
+              <p class="prose-custom mb-6">
+                Key findings indicate that <strong>TL&#39;s hardware-enforced hesitation, combined with tri-cameral institutional oversight and immutable evidentiary architectures, yields a constitutional substrate robust under recursive self-improvement and decentralized intelligence scenarios</strong>. The Epistemic Hold transforms uncertainty from systemic risk to managed process, while DITL implementation provides the physical enforceability necessary for high-stakes automated governance.
+              </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="font-serif text-2xl font-semibold text-neutral mb-6">15.2 Research Priorities</h3>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+              <div class="bg-blue-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-blue-700 mb-3">Immediate Priorities</h4>
+                <ul class="text-sm text-blue-600 space-y-2">
+                  <li>• Prototype DITL chip fabrication and testing</li>
+                  <li>• Standardization efforts for triadic coprocessor interfaces</li>
+                  <li>• Pilot deployments in regulated financial environments</li>
+                  <li>• Formal verification methodology refinement</li>
+                </ul>
+              </div>
+
+              <div class="bg-green-50 p-6 rounded-lg">
+                <h4 class="font-semibold text-green-700 mb-3">Long-term Research</h4>
+                <ul class="text-sm text-green-600 space-y-2">
+                  <li>• Long-term security analysis under recursive self-improvement</li>
+                  <li>• Scalability to exascale AI training systems</li>
+                  <li>• Quantum-resistant cryptographic integration</li>
+                  <li>• Cross-jurisdictional governance harmonization</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="pullquote">
+              &#34;High-stakes automated governance requires native triadic computational architectures capable of physically representing evidentiary verification as a first-class computational state. Ternary Logic provides the constitutional substrate necessary for trustworthy, resilient, and enforceable automated decision-making across critical infrastructure domains.&#34;
+            </div>
+
+            <div class="bg-primary text-white p-8 rounded-lg mt-8">
+              <h3 class="font-serif text-2xl font-bold mb-4">Final Assessment</h3>
+              <p class="text-lg leading-relaxed">
+                This comprehensive analysis demonstrates that <strong>Ternary Logic&#39;s hardware-enforced governance architecture, centered on the Epistemic Hold and implemented through Delay Insensitive Ternary Logic, provides the necessary foundation for trustworthy automated systems operating in high-stakes environments</strong>. The integration of physical enforcement, institutional oversight, and immutable evidentiary infrastructure creates a constitutional substrate capable of withstanding the challenges posed by recursive self-improvement and decentralized intelligence architectures.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- References -->
+      <section id="references" class="py-16 bg-base-200">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="font-serif text-4xl font-bold text-primary mb-8">References</h2>
+
+            <div class="space-y-4">
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <p class="text-sm">
+                  [7] <strong>Hardware Security Definition</strong> - TechTarget.
+                  <a href="https://www.techtarget.com/searchitoperations/definition/hardware-security" class="citation-link">https://www.techtarget.com/searchitoperations/definition/hardware-security</a>
+                </p>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <p class="text-sm">
+                  [72] <strong>TernaryLogic Framework Documentation</strong> - FractonicMind.
+                  <a href="https://github.com/FractonicMind/TernaryLogic" class="citation-link">https://github.com/FractonicMind/TernaryLogic</a>
+                </p>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <p class="text-sm">
+                  [73] <strong>AGI Hardware Governance: Constitutional Substrate Resilience</strong> - FractonicMind.
+                  <a href="https://fractonicmind.github.io/TernaryMoralLogic/AGI%20Hardware%20Governance/TML_Constitutional_Substrate_Resilience-I.html" class="citation-link">https://fractonicmind.github.io/TernaryMoralLogic/AGI%20Hardware%20Governance/TML_Constitutional_Substrate_Resilience-I.html</a>
+                </p>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <p class="text-sm">
+                  [79] <strong>Hardware Implementation Analysis</strong> - FractonicMind.
+                  <a href="https://fractonicmind.github.io/TernaryLogic/MT_Hardware/Hardware_Implementation.html" class="citation-link">https://fractonicmind.github.io/TernaryLogic/MT_Hardware/Hardware_Implementation.html</a>
+                </p>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <p class="text-sm">
+                  [89] <strong>Three-Level ReRAM-Assisted Computing-in-SRAM Architecture</strong> - arXiv.
+                  <a href="https://arxiv.org/pdf/2307.02717" class="citation-link">https://arxiv.org/pdf/2307.02717</a>
+                </p>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <p class="text-sm">
+                  [99] <strong>Gate-All-Around GAAFET Technology Wiki</strong> - SemiWiki.
+                  <a href="https://semiwiki.com/wikis/industry-wikis/gate-all-around-gaafet-wiki/" class="citation-link">https://semiwiki.com/wikis/industry-wikis/gate-all-around-gaafet-wiki/</a>
+                </p>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <p class="text-sm">
+                  [146] <strong>Trusted Execution Environments Analysis</strong> - IACR.
+                  <a href="https://eprint.iacr.org/2023/251.pdf" class="citation-link">https://eprint.iacr.org/2023/251.pdf</a>
+                </p>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <p class="text-sm">
+                  [147] <strong>Hardware Root of Trust</strong> - DornerWorks.
+                  <a href="https://www.dornerworks.com/blog/hardware-root-of-trust/" class="citation-link">https://www.dornerworks.com/blog/hardware-root-of-trust/</a>
+                </p>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <p class="text-sm">
+                  [148] <strong>Hardware Security Modules Presentation</strong> - Trusted Computing Group.
+                  <a href="https://trustedcomputinggroup.org/wp-content/uploads/SANS-Webcast-Presentation.pdf" class="citation-link">https://trustedcomputinggroup.org/wp-content/uploads/SANS-Webcast-Presentation.pdf</a>
+                </p>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <p class="text-sm">
+                  [164] <strong>Ternary Logic Emerging Technologies</strong> - University of Rochester.
+                  <a href="https://hajim.rochester.edu/ece/sites/friedman/papers/TEmerging_24.pdf" class="citation-link">https://hajim.rochester.edu/ece/sites/friedman/papers/TEmerging_24.pdf</a>
+                </p>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <p class="text-sm">
+                  [181] <strong>Ternary Moral Logic Framework</strong> - FractonicMind.
+                  <a href="https://fractonicmind.github.io/TernaryMoralLogic/" class="citation-link">https://fractonicmind.github.io/TernaryMoralLogic/</a>
+                </p>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg shadow-sm">
+                <p class="text-sm">
+                  [193] <strong>Veracity Anchors: Multi-Chain Persistence</strong> - FractonicMind.
+                  <a href="https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Anchors.md" class="citation-link">https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Pillars/Anchors.md</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="bg-neutral text-white py-8">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto text-center">
+            <p class="text-sm opacity-75">
+              This report analyzes Ternary Logic as a computational governance architecture for high-stakes automated decision-making systems.
+              The analysis draws on technical documentation, peer-reviewed research, and hardware implementation studies.
+            </p>
+            <div class="mt-4 flex justify-center space-x-4">
+              <span class="text-xs opacity-60">Keywords: ternary logic, computational governance, epistemic hold, delay insensitive logic, hardware security</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+        // Initialize Mermaid
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'base',
+                themeVariables: {
+                    // Base colors with good contrast
+                    primaryColor: '#f8fafc',
+                    primaryTextColor: '#1f2937',
+                    primaryBorderColor: '#374151',
+                    lineColor: '#374151',
+                    secondaryColor: '#e2e8f0',
+                    tertiaryColor: '#f1f5f9',
+                    background: '#ffffff',
+                    mainBkg: '#f8fafc',
+                    secondBkg: '#e2e8f0',
+                    tertiaryBkg: '#f1f5f9',
+                    
+                    // Node-specific colors with high contrast text
+                    cScale0: '#f8fafc',
+                    cScale1: '#e2e8f0',
+                    cScale2: '#f1f5f9',
+                    cScale3: '#dcfce7',
+                    cScale4: '#fef3c7',
+                    cScale5: '#fee2e2',
+                    cScale6: '#e0e7ff',
+                    cScale7: '#f0f9ff',
+                    cScale8: '#ecfdf5',
+                    
+                    // Text colors for contrast
+                    cScaleLabel0: '#1f2937',
+                    cScaleLabel1: '#1f2937',
+                    cScaleLabel2: '#1f2937',
+                    cScaleLabel3: '#14532d',
+                    cScaleLabel4: '#92400e',
+                    cScaleLabel5: '#991b1b',
+                    cScaleLabel6: '#3730a3',
+                    cScaleLabel7: '#0c4a6e',
+                    cScaleLabel8: '#14532d',
+                    
+                    // Edge and label styling
+                    edgeLabelBackground: 'rgba(255, 255, 255, 0.9)',
+                    edgeLabelColor: '#374151',
+                    
+                    // Grid and section colors
+                    gridColor: '#e2e8f0',
+                    sectionBkgColor: '#f8fafc',
+                    altSectionBkgColor: '#f1f5f9',
+                    
+                    // Font settings
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '14px'
+                },
+                flowchart: {
+                    useMaxWidth: false,
+                    htmlLabels: true,
+                    curve: 'basis',
+                    padding: 20
+                },
+                sequence: {
+                    useMaxWidth: false,
+                    wrap: true
+                },
+                gantt: {
+                    useMaxWidth: false
+                }
+            });
+            
+            // Initialize Mermaid Controls for zoom and pan
+            initializeMermaidControls();
+        });
+
+        // Initialize Mermaid Controls for zoom and pan
+        function initializeMermaidControls() {
+            const containers = document.querySelectorAll('.mermaid-container');
+
+            containers.forEach(container => {
+                const mermaidElement = container.querySelector('.mermaid');
+                let scale = 1;
+                let isDragging = false;
+                let startX, startY, translateX = 0, translateY = 0;
+
+                // 触摸相关状态
+                let isTouch = false;
+                let touchStartTime = 0;
+                let initialDistance = 0;
+                let initialScale = 1;
+                let isPinching = false;
+
+                // Zoom controls
+                const zoomInBtn = container.querySelector('.zoom-in');
+                const zoomOutBtn = container.querySelector('.zoom-out');
+                const resetBtn = container.querySelector('.reset-zoom');
+                const fullscreenBtn = container.querySelector('.fullscreen');
+
+                function updateTransform() {
+                    mermaidElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+                    if (scale > 1) {
+                        container.classList.add('zoomed');
+                    } else {
+                        container.classList.remove('zoomed');
+                    }
+
+                    mermaidElement.style.cursor = isDragging ? 'grabbing' : 'grab';
+                }
+
+                if (zoomInBtn) {
+                    zoomInBtn.addEventListener('click', () => {
+                        scale = Math.min(scale * 1.25, 4);
+                        updateTransform();
+                    });
+                }
+
+                if (zoomOutBtn) {
+                    zoomOutBtn.addEventListener('click', () => {
+                        scale = Math.max(scale / 1.25, 0.3);
+                        if (scale <= 1) {
+                            translateX = 0;
+                            translateY = 0;
+                        }
+                        updateTransform();
+                    });
+                }
+
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', () => {
+                        scale = 1;
+                        translateX = 0;
+                        translateY = 0;
+                        updateTransform();
+                    });
+                }
+
+                if (fullscreenBtn) {
+                    fullscreenBtn.addEventListener('click', () => {
+                        if (container.requestFullscreen) {
+                            container.requestFullscreen();
+                        } else if (container.webkitRequestFullscreen) {
+                            container.webkitRequestFullscreen();
+                        } else if (container.msRequestFullscreen) {
+                            container.msRequestFullscreen();
+                        }
+                    });
+                }
+
+                // Mouse Events
+                mermaidElement.addEventListener('mousedown', (e) => {
+                    if (isTouch) return; // 如果是触摸设备，忽略鼠标事件
+
+                    isDragging = true;
+                    startX = e.clientX - translateX;
+                    startY = e.clientY - translateY;
+                    mermaidElement.style.cursor = 'grabbing';
+                    updateTransform();
+                    e.preventDefault();
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (isDragging && !isTouch) {
+                        translateX = e.clientX - startX;
+                        translateY = e.clientY - startY;
+                        updateTransform();
+                    }
+                });
+
+                document.addEventListener('mouseup', () => {
+                    if (isDragging && !isTouch) {
+                        isDragging = false;
+                        mermaidElement.style.cursor = 'grab';
+                        updateTransform();
+                    }
+                });
+
+                document.addEventListener('mouseleave', () => {
+                    if (isDragging && !isTouch) {
+                        isDragging = false;
+                        mermaidElement.style.cursor = 'grab';
+                        updateTransform();
+                    }
+                });
+
+                // 获取两点之间的距离
+                function getTouchDistance(touch1, touch2) {
+                    return Math.hypot(
+                        touch2.clientX - touch1.clientX,
+                        touch2.clientY - touch1.clientY
+                    );
+                }
+
+                // Touch Events - 触摸事件处理
+                mermaidElement.addEventListener('touchstart', (e) => {
+                    isTouch = true;
+                    touchStartTime = Date.now();
+
+                    if (e.touches.length === 1) {
+                        // 单指拖动
+                        isPinching = false;
+                        isDragging = true;
+
+                        const touch = e.touches[0];
+                        startX = touch.clientX - translateX;
+                        startY = touch.clientY - translateY;
+
+                    } else if (e.touches.length === 2) {
+                        // 双指缩放
+                        isPinching = true;
+                        isDragging = false;
+
+                        const touch1 = e.touches[0];
+                        const touch2 = e.touches[1];
+                        initialDistance = getTouchDistance(touch1, touch2);
+                        initialScale = scale;
+                    }
+
+                    e.preventDefault();
+                }, { passive: false });
+
+                mermaidElement.addEventListener('touchmove', (e) => {
+                    if (e.touches.length === 1 && isDragging && !isPinching) {
+                        // 单指拖动
+                        const touch = e.touches[0];
+                        translateX = touch.clientX - startX;
+                        translateY = touch.clientY - startY;
+                        updateTransform();
+
+                    } else if (e.touches.length === 2 && isPinching) {
+                        // 双指缩放
+                        const touch1 = e.touches[0];
+                        const touch2 = e.touches[1];
+                        const currentDistance = getTouchDistance(touch1, touch2);
+
+                        if (initialDistance > 0) {
+                            const newScale = Math.min(Math.max(
+                                initialScale * (currentDistance / initialDistance),
+                                0.3
+                            ), 4);
+                            scale = newScale;
+                            updateTransform();
+                        }
+                    }
+
+                    e.preventDefault();
+                }, { passive: false });
+
+                mermaidElement.addEventListener('touchend', (e) => {
+                    // 重置状态
+                    if (e.touches.length === 0) {
+                        isDragging = false;
+                        isPinching = false;
+                        initialDistance = 0;
+
+                        // 延迟重置isTouch，避免鼠标事件立即触发
+                        setTimeout(() => {
+                            isTouch = false;
+                        }, 100);
+                    } else if (e.touches.length === 1 && isPinching) {
+                        // 从双指变为单指，切换为拖动模式
+                        isPinching = false;
+                        isDragging = true;
+
+                        const touch = e.touches[0];
+                        startX = touch.clientX - translateX;
+                        startY = touch.clientY - translateY;
+                    }
+
+                    updateTransform();
+                });
+
+                mermaidElement.addEventListener('touchcancel', (e) => {
+                    isDragging = false;
+                    isPinching = false;
+                    initialDistance = 0;
+
+                    setTimeout(() => {
+                        isTouch = false;
+                    }, 100);
+
+                    updateTransform();
+                });
+
+                // Enhanced wheel zoom with better center point handling
+                container.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    const rect = container.getBoundingClientRect();
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                    const newScale = Math.min(Math.max(scale * delta, 0.3), 4);
+
+                    // Adjust translation to zoom towards center
+                    if (newScale !== scale) {
+                        const scaleDiff = newScale / scale;
+                        translateX = translateX * scaleDiff;
+                        translateY = translateY * scaleDiff;
+                        scale = newScale;
+
+                        if (scale <= 1) {
+                            translateX = 0;
+                            translateY = 0;
+                        }
+
+                        updateTransform();
+                    }
+                });
+
+                // Initialize display
+                updateTransform();
+            });
+        }
+
+        // Table of Contents functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tocLinks = document.querySelectorAll('.toc-link');
+            const sections = document.querySelectorAll('section[id]');
+            const tocToggle = document.getElementById('toc-toggle');
+            const toc = document.getElementById('toc');
+            
+            // Toggle TOC on mobile
+            tocToggle.addEventListener('click', function() {
+                toc.classList.toggle('open');
+            });
+            
+            // Close TOC when clicking on a link (mobile)
+            tocLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 1024) {
+                        toc.classList.remove('open');
+                    }
+                });
+            });
+            
+            // Smooth scrolling for TOC links
+            tocLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Update active TOC link on scroll
+            window.addEventListener('scroll', function() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                tocLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+            
+            // Close TOC when clicking outside (mobile)
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 1024 && 
+                    !toc.contains(e.target) && 
+                    e.target !== tocToggle &&
+                    toc.classList.contains('open')) {
+                    toc.classList.remove('open');
+                }
+            });
+        });
+    </script>
+  
+
+</body></html>
