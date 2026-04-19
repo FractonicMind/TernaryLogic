@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TL Constitutional Governance | Ternary Logic Research</title>
+<style>
+  :root {
+    --sidebar-bg: #0a1628;
+    --sidebar-width: 280px;
+    --accent-gold: #d4a574;
+    --accent-gold-dim: #a07850;
+    --body-bg: #0f1e38;
+    --content-bg: #0d1a30;
+    --card-bg: #111f35;
+    --card-border: #1e3050;
+    --text-primary: #e8e4da;
+    --text-secondary: #9aabbb;
+    --text-muted: #5a7080;
+    --verified-color: #5bc8a0;
+    --high-color: #7ab8f5;
+    --novel-color: #c99af0;
+    --speculative-color: #f5c542;
+    --gap-color: #f0846a;
+    --critical-color: #e05555;
+    --constitutional-tension: #f0a050;
+    --link-color: #7ab8f5;
+    --divider: #1e3050;
+    --font-body: Georgia, 'Times New Roman', serif;
+    --font-label: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono: 'Courier New', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--body-bg);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.75;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--divider);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #sidebar::-webkit-scrollbar { width: 4px; }
+  #sidebar::-webkit-scrollbar-track { background: transparent; }
+  #sidebar::-webkit-scrollbar-thumb { background: var(--divider); border-radius: 2px; }
+
+  .sidebar-header {
+    padding: 24px 20px 16px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .sidebar-logo {
+    font-family: var(--font-label);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 8px;
+  }
+
+  .sidebar-title {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.4;
+    font-style: italic;
+  }
+
+  .sidebar-meta {
+    font-family: var(--font-label);
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  .sidebar-nav { padding: 12px 0; flex: 1; }
+
+  .nav-section {
+    margin-bottom: 4px;
+  }
+
+  .nav-section-label {
+    font-family: var(--font-label);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    padding: 10px 20px 4px;
+    display: block;
+  }
+
+  .nav-section-number {
+    display: inline-block;
+    background: var(--accent-gold);
+    color: var(--sidebar-bg);
+    font-size: 9px;
+    font-family: var(--font-label);
+    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    border-radius: 2px;
+    margin-right: 6px;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 5px 20px 5px 20px;
+    font-family: var(--font-label);
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s, background 0.15s;
+    line-height: 1.4;
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+    background: rgba(212,165,116,0.06);
+  }
+
+  .nav-link.sub {
+    padding-left: 32px;
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+
+  .nav-link.sub:hover { color: var(--text-secondary); }
+
+  .nav-divider {
+    height: 1px;
+    background: var(--divider);
+    margin: 8px 20px;
+  }
+
+  .sidebar-footer {
+    padding: 14px 20px;
+    border-top: 1px solid var(--divider);
+    font-family: var(--font-label);
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+  }
+
+  .sidebar-footer a {
+    color: var(--accent-gold-dim);
+    text-decoration: none;
+  }
+
+  /* ── MAIN CONTENT ── */
+  #main {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    min-height: 100vh;
+    background: var(--content-bg);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, #0a1628 0%, #0f1e38 40%, #0d1a30 100%);
+    border-bottom: 1px solid var(--divider);
+    padding: 56px 60px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(212,165,116,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-label);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 16px;
+  }
+
+  .hero-title {
+    font-family: var(--font-body);
+    font-size: 32px;
+    font-weight: normal;
+    color: var(--text-primary);
+    line-height: 1.3;
+    max-width: 720px;
+    margin-bottom: 16px;
+  }
+
+  .hero-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 640px;
+    line-height: 1.6;
+    font-style: italic;
+    margin-bottom: 28px;
+  }
+
+  .hero-meta-grid {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hero-meta-label {
+    font-family: var(--font-label);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .hero-meta-value {
+    font-family: var(--font-label);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .hero-meta-value a {
+    color: var(--accent-gold-dim);
+    text-decoration: none;
+  }
+
+  /* ── SECTION CONTAINERS ── */
+  .report-section {
+    padding: 48px 60px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .report-section:last-child { border-bottom: none; }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .section-badge {
+    background: var(--accent-gold);
+    color: var(--sidebar-bg);
+    font-family: var(--font-label);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .section-heading-group { flex: 1; }
+
+  .section-label {
+    font-family: var(--font-label);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-family: var(--font-body);
+    font-size: 24px;
+    font-weight: normal;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .section-question {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* ── CONTENT BLOCKS ── */
+  .content-body { max-width: 820px; }
+
+  .content-body h2 {
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: normal;
+    color: var(--text-primary);
+    margin: 36px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .content-body h3 {
+    font-family: var(--font-label);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin: 28px 0 10px;
+  }
+
+  .content-body p {
+    margin-bottom: 14px;
+    font-size: 15px;
+    color: var(--text-primary);
+  }
+
+  .content-body ul, .content-body ol {
+    margin: 0 0 16px 20px;
+    font-size: 15px;
+  }
+
+  .content-body li { margin-bottom: 6px; }
+
+  .content-body strong { color: var(--text-primary); }
+
+  .content-body em { color: var(--text-secondary); }
+
+  /* ── CONFIDENCE MARKERS ── */
+  .marker {
+    display: inline-block;
+    font-family: var(--font-label);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 1px 6px;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-left: 3px;
+  }
+
+  .marker-verified { background: rgba(91,200,160,0.15); color: var(--verified-color); border: 1px solid rgba(91,200,160,0.3); }
+  .marker-high { background: rgba(122,184,245,0.15); color: var(--high-color); border: 1px solid rgba(122,184,245,0.3); }
+  .marker-novel { background: rgba(201,154,240,0.15); color: var(--novel-color); border: 1px solid rgba(201,154,240,0.3); }
+  .marker-speculative { background: rgba(245,197,66,0.15); color: var(--speculative-color); border: 1px solid rgba(245,197,66,0.3); }
+  .marker-gap { background: rgba(240,132,106,0.15); color: var(--gap-color); border: 1px solid rgba(240,132,106,0.3); }
+  .marker-tension { background: rgba(240,160,80,0.15); color: var(--constitutional-tension); border: 1px solid rgba(240,160,80,0.3); }
+  .marker-violation { background: rgba(224,85,85,0.15); color: var(--critical-color); border: 1px solid rgba(224,85,85,0.3); }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-left: 3px solid var(--accent-gold);
+    background: rgba(212,165,116,0.05);
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .callout-tension {
+    border-left-color: var(--constitutional-tension);
+    background: rgba(240,160,80,0.05);
+  }
+
+  .callout-violation {
+    border-left-color: var(--critical-color);
+    background: rgba(224,85,85,0.05);
+  }
+
+  .callout-novel {
+    border-left-color: var(--novel-color);
+    background: rgba(201,154,240,0.05);
+  }
+
+  .callout-quote {
+    border-left-color: var(--accent-gold-dim);
+    background: rgba(212,165,116,0.04);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--text-secondary);
+  }
+
+  .callout-label {
+    font-family: var(--font-label);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 6px;
+  }
+
+  .callout-tension .callout-label { color: var(--constitutional-tension); }
+  .callout-violation .callout-label { color: var(--critical-color); }
+  .callout-novel .callout-label { color: var(--novel-color); }
+
+  .callout p { margin-bottom: 0; font-size: 14px; }
+
+  /* ── VERDICT CARDS ── */
+  .verdict-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .verdict-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 16px;
+  }
+
+  .verdict-card-title {
+    font-family: var(--font-label);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--verified-color);
+    margin-bottom: 10px;
+  }
+
+  .verdict-card-title.fragile { color: var(--speculative-color); }
+  .verdict-card-title.unenforceable { color: var(--critical-color); }
+
+  .verdict-card ul {
+    margin: 0;
+    padding-left: 14px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .verdict-card li { margin-bottom: 5px; }
+
+  /* ── TABLES ── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 20px 0;
+    border: 1px solid var(--divider);
+    border-radius: 4px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead {
+    background: var(--sidebar-bg);
+  }
+
+  th {
+    font-family: var(--font-label);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--divider);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--divider);
+    color: var(--text-secondary);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .priority-critical { color: var(--critical-color); font-family: var(--font-label); font-size: 11px; font-weight: 700; }
+  .priority-high { color: var(--speculative-color); font-family: var(--font-label); font-size: 11px; font-weight: 700; }
+  .priority-moderate { color: var(--high-color); font-family: var(--font-label); font-size: 11px; }
+
+  /* ── PREAMBLE BLOCK ── */
+  .preamble-block {
+    background: linear-gradient(135deg, #0a1628 0%, #0f1e38 100%);
+    border: 1px solid var(--accent-gold-dim);
+    border-radius: 4px;
+    padding: 32px 36px;
+    margin: 28px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .preamble-block::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(212,165,116,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .preamble-label {
+    font-family: var(--font-label);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 14px;
+  }
+
+  .preamble-text {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-primary);
+    font-style: italic;
+  }
+
+  /* ── LAYER DIAGRAM ── */
+  .layer-diagram {
+    margin: 28px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .layer-block {
+    border-radius: 4px;
+    padding: 20px 24px;
+    border: 1px solid;
+  }
+
+  .layer-block.hardware {
+    background: rgba(91,200,160,0.06);
+    border-color: rgba(91,200,160,0.25);
+  }
+
+  .layer-block.governance {
+    background: rgba(122,184,245,0.06);
+    border-color: rgba(122,184,245,0.25);
+  }
+
+  .layer-title {
+    font-family: var(--font-label);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .layer-block.hardware .layer-title { color: var(--verified-color); }
+  .layer-block.governance .layer-title { color: var(--high-color); }
+
+  .layer-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .layer-item {
+    font-family: var(--font-label);
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    border: 1px solid;
+  }
+
+  .layer-block.hardware .layer-item {
+    background: rgba(91,200,160,0.1);
+    border-color: rgba(91,200,160,0.3);
+    color: var(--verified-color);
+  }
+
+  .layer-block.governance .layer-item {
+    background: rgba(122,184,245,0.1);
+    border-color: rgba(122,184,245,0.3);
+    color: var(--high-color);
+  }
+
+  .layer-connector {
+    text-align: center;
+    font-family: var(--font-label);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 4px 0;
+  }
+
+  /* ── KEY FINDING CARDS ── */
+  .finding-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .finding-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 18px;
+  }
+
+  .finding-section {
+    font-family: var(--font-label);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 10px;
+  }
+
+  .finding-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ── DOWNLOAD LINKS ── */
+  .doc-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+  }
+
+  .doc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-label);
+    font-size: 11px;
+    color: var(--accent-gold-dim);
+    text-decoration: none;
+    border: 1px solid var(--accent-gold-dim);
+    padding: 6px 12px;
+    border-radius: 2px;
+    transition: all 0.15s;
+  }
+
+  .doc-link:hover {
+    color: var(--accent-gold);
+    border-color: var(--accent-gold);
+    background: rgba(212,165,116,0.05);
+  }
+
+  .doc-link-icon { font-size: 12px; }
+
+  /* ── FOOTNOTES ── */
+  .footnotes {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--divider);
+  }
+
+  .footnotes-title {
+    font-family: var(--font-label);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .footnote {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 4px;
+    padding-left: 20px;
+    text-indent: -20px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    #sidebar { display: none; }
+    #main { margin-left: 0; }
+    .hero, .report-section { padding: 28px 24px; }
+    .verdict-grid, .finding-row { grid-template-columns: 1fr; }
+    .hero-meta-grid { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<aside id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">Ternary Logic · Governance</div>
+    <div class="sidebar-title">Constitutional Architecture Research</div>
+    <div class="sidebar-meta">ORCID 0009-0006-5966-1243 · Q2 2026</div>
+  </div>
+
+  <nav class="sidebar-nav">
+
+    <div class="nav-section">
+      <span class="nav-section-label">Overview</span>
+      <a href="#overview" class="nav-link">About this Document</a>
+      <a href="#tension" class="nav-link">Core Honest Tension</a>
+      <a href="#layers" class="nav-link">Two-Layer Architecture</a>
+    </div>
+
+    <div class="nav-divider"></div>
+
+    <div class="nav-section">
+      <span class="nav-section-label"><span class="nav-section-number">1</span> Technical Council</span>
+      <a href="#s1-equil" class="nav-link sub">1.1 Three-Body Equilibrium</a>
+      <a href="#s1-vote" class="nav-link sub">1.2 Vote Rights Architecture</a>
+      <a href="#s1-diamond" class="nav-link sub">1.3 Diamond Standard (EIP-2535)</a>
+      <a href="#s1-uups" class="nav-link sub">1.4 UUPS Upgradeability</a>
+      <a href="#s1-software" class="nav-link sub">1.5 Software Honesty Problem</a>
+      <a href="#s1-anchors" class="nav-link sub">1.6 Host Chain Selection</a>
+      <a href="#s1-pqc" class="nav-link sub">1.7 Post-Quantum Readiness</a>
+      <a href="#s1-verdict" class="nav-link sub">1.8 Verdict</a>
+    </div>
+
+    <div class="nav-divider"></div>
+
+    <div class="nav-section">
+      <span class="nav-section-label"><span class="nav-section-number">2</span> Stewardship Custodians</span>
+      <a href="#s2-vote" class="nav-link sub">2.1 Vote Rights Architecture</a>
+      <a href="#s2-capture" class="nav-link sub">2.2 Capture Vector Analysis</a>
+      <a href="#s2-nomc" class="nav-link sub">2.3 Nominating Committee</a>
+      <a href="#s2-fatigue" class="nav-link sub">2.4 Governance Fatigue</a>
+      <a href="#s2-ai" class="nav-link sub">2.5 Human-AI Frontier &amp; APGT</a>
+      <a href="#s2-hold" class="nav-link sub">2.6 Time-Bound Epistemic Hold</a>
+      <a href="#s2-succession" class="nav-link sub">2.7 Succession &amp; Continuity</a>
+      <a href="#s2-verdict" class="nav-link sub">2.8 Verdict</a>
+    </div>
+
+    <div class="nav-divider"></div>
+
+    <div class="nav-section">
+      <span class="nav-section-label"><span class="nav-section-number">3</span> Smart Contract Treasury</span>
+      <a href="#s3-vote" class="nav-link sub">3.1 Vote Rights Architecture</a>
+      <a href="#s3-governance" class="nav-link sub">3.2 On-Chain Governance 2026</a>
+      <a href="#s3-fiduciary" class="nav-link sub">3.3 Autonomous Fiduciary</a>
+      <a href="#s3-slashing" class="nav-link sub">3.4 Revocation &amp; Slashing</a>
+      <a href="#s3-ditl" class="nav-link sub">3.5 DITL Constitutional Floor</a>
+      <a href="#s3-transition" class="nav-link sub">3.6 Transitional Governance</a>
+      <a href="#s3-zombie" class="nav-link sub">3.7 Zombie Governance</a>
+      <a href="#s3-verdict" class="nav-link sub">3.8 Verdict</a>
+    </div>
+
+    <div class="nav-divider"></div>
+
+    <div class="nav-section">
+      <span class="nav-section-label"><span class="nav-section-number">4</span> Synthesis</span>
+      <a href="#s4-layers" class="nav-link sub">4.1 Two-Layer Synthesis</a>
+      <a href="#s4-integrity" class="nav-link sub">4.2 Constitutional Integrity</a>
+      <a href="#s4-verdict" class="nav-link sub">4.3 Synthesis Verdict</a>
+      <a href="#s4-priority" class="nav-link sub">Priority Update Table</a>
+    </div>
+
+    <div class="nav-divider"></div>
+
+    <div class="nav-section">
+      <span class="nav-section-label">Source Files</span>
+      <a href="Technical_Council.md" class="nav-link sub">Technical_Council.md</a>
+      <a href="Stewardship_Custodians.md" class="nav-link sub">Stewardship_Custodians.md</a>
+      <a href="Smart_Contract_Treasury.md" class="nav-link sub">Smart_Contract_Treasury.md</a>
+      <a href="Governance_Synthesis.md" class="nav-link sub">Governance_Synthesis.md</a>
+      <a href="C-Governance_Full.md" class="nav-link sub">C-Governance_Full.md</a>
+    </div>
+
+  </nav>
+
+  <div class="sidebar-footer">
+    Ternary Logic Framework<br>
+    Lev Goukassian<br>
+    <a href="https://orcid.org/0009-0006-5966-1243">ORCID 0009-0006-5966-1243</a><br>
+    AI and Ethics, Springer Nature<br>
+    DOI: 10.1007/s43681-025-00910-6
+  </div>
+</aside>
+
+<!-- ══════════ MAIN ══════════ -->
+<main id="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Ternary Logic · Constitutional Governance · Deep Research Series</div>
+    <h1 class="hero-title">Constitutional Architecture, Stewardship Survivability, and On-Chain Enforcement</h1>
+    <p class="hero-subtitle">A four-section deep research program examining whether the TL governance architecture is technically sound, capture-resistant, and constrained within the janitor role over multi-decade adversarial horizons.</p>
+    <div class="hero-meta-grid">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Author</span>
+        <span class="hero-meta-value">Lev Goukassian</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">ORCID</span>
+        <span class="hero-meta-value"><a href="https://orcid.org/0009-0006-5966-1243">0009-0006-5966-1243</a></span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Research Date</span>
+        <span class="hero-meta-value">Q2 2026</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Published In</span>
+        <span class="hero-meta-value"><a href="https://doi.org/10.1007/s43681-025-00910-6">AI and Ethics, Springer Nature</a></span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Hardware Reference</span>
+        <span class="hero-meta-value"><a href="https://doi.org/10.5281/zenodo.18716142">DOI: 10.5281/zenodo.18716142</a></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ OVERVIEW ══ -->
+  <div class="report-section" id="overview">
+    <div class="section-header">
+      <div class="section-heading-group">
+        <div class="section-label">Research Program</div>
+        <h2 class="section-title">About This Document</h2>
+      </div>
+    </div>
+    <div class="content-body">
+      <p>This unified document consolidates four standalone research reports produced in a single deep-research session. Each section was researched and produced independently, with its own verdict, confidence markers, and footnotes. The four sections are reproduced here without modification.</p>
+
+      <div class="doc-links">
+        <a href="Technical_Council.md" class="doc-link"><span class="doc-link-icon">&#x2193;</span> Technical_Council.md</a>
+        <a href="Stewardship_Custodians.md" class="doc-link"><span class="doc-link-icon">&#x2193;</span> Stewardship_Custodians.md</a>
+        <a href="Smart_Contract_Treasury.md" class="doc-link"><span class="doc-link-icon">&#x2193;</span> Smart_Contract_Treasury.md</a>
+        <a href="Governance_Synthesis.md" class="doc-link"><span class="doc-link-icon">&#x2193;</span> Governance_Synthesis.md</a>
+        <a href="C-Governance_Full.md" class="doc-link"><span class="doc-link-icon">&#x2193;</span> C-Governance_Full.md</a>
+      </div>
+
+      <div id="tension">
+        <h2>Core Honest Tension</h2>
+        <div class="callout callout-quote">
+          <p>Any software can be modified - by humans, by advanced AI systems, or by state-level adversaries with sufficient access. This is not a theoretical risk. It is an architectural fact. Constitutional governance written in smart contract code is only as strong as the hardware beneath it.</p>
+          <br>
+          <p>The sole path to genuine enforcement of the Immutable Mandates is DITL hardware - where the Epistemic Hold is not a policy commitment but a physical voltage state (NULL / half-Vdd) that cannot be overridden by software, root access, kernel compromise, or firmware manipulation.</p>
+          <br>
+          <p>This does not invalidate the constitutional governance architecture. It locates it honestly: software governance provides accountability, auditability, and coordination. Hardware governance provides enforcement. Both are necessary. Neither alone is sufficient.</p>
+        </div>
+      </div>
+
+      <div id="layers">
+        <h2>Two-Layer Architecture</h2>
+        <div class="layer-diagram">
+          <div class="layer-block hardware">
+            <div class="layer-title">Layer 1 - DITL Hardware Floor (Physical Enforcement) <span class="marker marker-gap">GAP-ARCHITECTURAL: Not yet in production</span></div>
+            <div class="layer-items">
+              <span class="layer-item">Epistemic Hold = NULL / half-Vdd</span>
+              <span class="layer-item">No Log = No Action (Goukassian Principle)</span>
+              <span class="layer-item">No Switch Off = absence of kill circuit</span>
+              <span class="layer-item">Atomic Auditability</span>
+              <span class="layer-item">Ghost Governance elimination</span>
+              <span class="layer-item">Side-channel resistance</span>
+            </div>
+          </div>
+          <div class="layer-connector">&#x2191; Hardware enforces what governance cannot guarantee &nbsp;|&nbsp; Governance adapts what hardware cannot evolve &#x2193;</div>
+          <div class="layer-block governance">
+            <div class="layer-title">Layer 2 - Constitutional Governance (Coordination and Accountability)</div>
+            <div class="layer-items">
+              <span class="layer-item">Technical Council (propose)</span>
+              <span class="layer-item">Stewardship Custodians (veto)</span>
+              <span class="layer-item">Smart Contract Treasury (execute)</span>
+              <span class="layer-item">Diamond Standard (EIP-2535)</span>
+              <span class="layer-item">Joint-Approval Type 3</span>
+              <span class="layer-item">5+ Anchor Host Chains</span>
+              <span class="layer-item">Decision Logs / Immutable Ledger</span>
+              <span class="layer-item">Time-Bound Epistemic Hold</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 1 ══ -->
+  <div class="report-section" id="s1">
+    <div class="section-header">
+      <div class="section-badge">Section 1</div>
+      <div class="section-heading-group">
+        <div class="section-label">Technical Council</div>
+        <h2 class="section-title">Protocol Stewardship and Upgrade Authority</h2>
+        <div class="section-question">Is the Technical Council technically sound, currently defensible, and adequate to govern protocol evolution without becoming a capture vector or a single point of failure?</div>
+      </div>
+    </div>
+    <div class="content-body">
+
+      <div id="s1-equil">
+        <h2>1.1 Tri-Cameral Design and Three-Body Equilibrium</h2>
+        <p>The tri-cameral architecture is defensible in principle but has no exact analogue in decentralized protocol governance as of Q2 2026. <span class="marker marker-verified">VERIFIED</span></p>
+        <p>The closest production precedent is Optimism's bicameral design (Token House plus Citizens House plus Developer Advisory Board). Outside decentralized protocols, the WTO Dispute Settlement Body is directly cautionary: the Appellate Body has been non-functional since December 10, 2019 because a single member state refused to approve new appointments - a body requiring affirmative appointment to maintain quorum is a body vulnerable to attritional collapse. <span class="marker marker-high">HIGH</span></p>
+        <p>Nine members sits at the lower bound of BFT safety: Castro-Liskov PBFT requires n &ge; 3f+1, meaning a 9-member Council tolerates f=2 Byzantine members. Three compromised members breaks safety. <span class="marker marker-verified">VERIFIED</span></p>
+      </div>
+
+      <div id="s1-vote">
+        <h2>1.2 Vote Rights Architecture</h2>
+        <div class="callout callout-tension">
+          <div class="callout-label">Constitutional Tension</div>
+          <p>The exclusive proposal right combined with no Custodian counter-proposal right reproduces the EU Commission agenda-setting dominance pattern. Capture will likely appear as narrowing of the proposal space, not override of veto.</p>
+        </div>
+        <p>Type 1 emergency Anchor migration authority (unilateral Technical Council, simple majority, no Custodian involvement) is the <strong>single largest capture vector in the governance architecture</strong>. <span class="marker marker-high">HIGH</span></p>
+        <p>The Build Finance DAO takeover (February 2022, $470K, 3.8% turnout), Compound Proposal 289 (July 2024, $24M, weekend timing), and Beanstalk attack (April 2022, $182M, emergencyCommit path) each demonstrate that emergency-or-unilateral pathways are the primary exploit surface.</p>
+        <div class="callout callout-novel">
+          <div class="callout-label">Recommended Without God Mode</div>
+          <p>Require any Type 1 emergency Anchor migration to be accompanied by a mandatory, non-censorable Custodian notification with a minimum 72-hour observation window before execution finality, during which Custodians may escalate to a Type 2 reversal vote.</p>
+        </div>
+        <p>Non-censorable forwarding of queued Type 3 proposals is technically enforceable on-chain via Governor + TimelockController patterns. <span class="marker marker-verified">VERIFIED</span></p>
+      </div>
+
+      <div id="s1-diamond">
+        <h2>1.3 Diamond Standard (EIP-2535)</h2>
+        <p>ERC-2535 is <strong>Final status</strong> (PR #5802 merged). <span class="marker marker-verified">VERIFIED</span> No confirmed mainnet post-mortem of a major exploit attributable specifically to the EIP-2535 diamond pattern was located for 2023 through Q2 2026. <span class="marker marker-gap">GAP-RESEARCH</span></p>
+        <p>Industry consensus 2025-2026 has shifted away from diamonds for governance-tier contracts unless the 24KB size limit forces the pattern. Nick Mudge is now proposing ERC-8109 as a simplified successor. <span class="marker marker-high">HIGH</span> The immutable Diamond Proxy plus four UUPS facets is architecturally sound for "maintain but not mutate."</p>
+      </div>
+
+      <div id="s1-uups">
+        <h2>1.4 UUPS (EIP-1822) Upgradeability</h2>
+        <p>ERC-1822 is formally <strong>Stagnant</strong>. <span class="marker marker-verified">VERIFIED</span> UUPS in practice uses OpenZeppelin UUPSUpgradeable with EIP-1967 storage slots and ERC-7201 namespaced storage (Final status). Post-Cancun EIP-6780 (March 2024) largely neutralizes the "destroy implementation, brick proxy" variant.</p>
+        <p>Joint-Approval before upgradeTo execution is enforceable on-chain. The residual risk is authorized but malicious implementation content - not detectable by any on-chain check, requiring off-chain audit before Custodian approval. <span class="marker marker-gap">GAP-ARCHITECTURAL</span></p>
+      </div>
+
+      <div id="s1-software">
+        <h2>1.5 The Software Honesty Problem</h2>
+        <div class="callout">
+          <div class="callout-label">Hardware Resists Last. Institutions Fail First.</div>
+          <p>Software governance becomes effectively unenforceable at the moment a sufficiently-resourced adversary can modify binaries running on validators, censor finality-relevant transactions, or compromise key material of a quorum of governance participants faster than revocation can occur. DITL hardware enforcement changes exactly one thing: it makes the physical Escrow state non-software-overridable.</p>
+        </div>
+        <p>Foundry USA plus AntPool control approximately 57% of Bitcoin hashrate as of Q2 2026. Lido plus Coinbase control more than 33% of staked ETH. Post-Fusaka Prysm v7.0.0 bug (late 2025) brought Ethereum within 9% of losing finality supermajority. <span class="marker marker-verified">VERIFIED</span></p>
+      </div>
+
+      <div id="s1-anchors">
+        <h2>1.6 Host Chain Selection and Relay Integrity</h2>
+        <p>Defensible minimum anchor set as of Q2 2026: Bitcoin, Ethereum, Cardano (Nakamoto coefficient 22), Polkadot (Nakamoto coefficient 178), Tezos (coefficient 14). <span class="marker marker-high">HIGH</span></p>
+        <div class="callout callout-tension">
+          <div class="callout-label">Constitutional Tension - Relay Infrastructure</div>
+          <p>The "any one honest prover plus safe source chain equals integrity" property is achievable in production only for Ethereum-Cosmos through IBC Eureka (Succinct SP1, launched April 10, 2025). All major 2022 relay failures (Wormhole $320M, Ronin $624M, Nomad $190M, Multichain $125-210M, Orbit Chain $81.5M) involved federated multisig operator sets. Governance.md contains no protocol-level deadlock resolution mechanism if relay infrastructure is compromised.</p>
+        </div>
+      </div>
+
+      <div id="s1-pqc">
+        <h2>1.7 Post-Quantum Readiness</h2>
+        <p>Governance.md is <strong>silent on post-quantum cryptography</strong>. ECDSA secp256k1, BLS12-381, and KZG commitments are all Shor-vulnerable. <span class="marker marker-verified">VERIFIED</span></p>
+        <p>NIST finalized FIPS 203 (ML-KEM), 204 (ML-DSA), 205 (SLH-DSA) on August 13, 2024. NSA CNSA 2.0 deprecates classical primitives after 2030 and disallows after 2035. Gidney (May 2025) reduced the RSA-2048 cracking requirement to under 1 million noisy physical qubits. <span class="marker marker-high">HIGH</span></p>
+        <p>A PQC migration can be executed within Article V without violating Article I - it is a Type 3 major cryptographic upgrade, not a modification of the Immutable List. ML-DSA-87 is the NSA CNSA 2.0 primary selection. <span class="marker marker-high">HIGH</span></p>
+      </div>
+
+      <div id="s1-verdict">
+        <h2>1.8 Technical Council Verdict</h2>
+        <div class="verdict-grid">
+          <div class="verdict-card">
+            <div class="verdict-card-title">Robust</div>
+            <ul>
+              <li>Tri-cameral separation of proposal, veto, and treasury</li>
+              <li>7-of-9 quorum BFT-defensible under standard assumptions</li>
+              <li>Non-censorable Type 3 forwarding enforceable on-chain</li>
+              <li>No pause()/kill() in Protocol Contract</li>
+              <li>Diamond Proxy with permanently renounced upgradeability</li>
+            </ul>
+          </div>
+          <div class="verdict-card">
+            <div class="verdict-card-title fragile">Fragile</div>
+            <ul>
+              <li>Type 1 emergency Anchor migration (largest capture vector)</li>
+              <li>Exclusive proposal rights without counter-proposal (EU Commission pattern)</li>
+              <li>7-of-9 quorum under coordinated absence (WTO Appellate Body pattern)</li>
+              <li>Federated relay infrastructure (2022 collapse cohort)</li>
+              <li>No time-bound escalation for urgent proposals under veto</li>
+            </ul>
+          </div>
+          <div class="verdict-card">
+            <div class="verdict-card-title unenforceable">Outdated</div>
+            <ul>
+              <li>No PQC migration schedule (NIST 2030 deprecation)</li>
+              <li>Diamond Standard reference ignores ERC-7201 and ERC-8109</li>
+              <li>EIP-1822 Stagnant status unacknowledged</li>
+            </ul>
+          </div>
+        </div>
+        <p><strong>Constitutional integrity:</strong> The Technical Council's defined scope keeps it within the janitor role. No part of its specified authority crosses into architect territory. <span class="marker marker-high">HIGH</span> No [CONSTITUTIONAL VIOLATION] identified.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 2 ══ -->
+  <div class="report-section" id="s2">
+    <div class="section-header">
+      <div class="section-badge">Section 2</div>
+      <div class="section-heading-group">
+        <div class="section-label">Stewardship Custodians</div>
+        <h2 class="section-title">Mandate Guardianship Over Multi-Decade Horizons</h2>
+        <div class="section-question">Can the Stewardship Custodians survive the capture vectors in Article VII over a multi-decade time horizon against adversaries that now include advanced AI systems?</div>
+      </div>
+    </div>
+    <div class="content-body">
+
+      <div id="s2-vote">
+        <h2>2.1 Vote Rights Architecture</h2>
+        <p>The mandatory veto obligation is <strong>enforceable only at the social and legal layer, not on-chain</strong>. Smart contract voting logic cannot distinguish a principled vote from a compelled one. <span class="marker marker-verified">VERIFIED</span></p>
+        <div class="callout callout-tension">
+          <div class="callout-label">Constitutional Tension - Publication Requirement</div>
+          <p>The publication-of-reasons requirement creates accountability records and raises reputational cost of sham vetoes, but published veto justifications become a training corpus for adversarial circumvention optimization. Transparency is constitutionally required and ethically correct, yet provides operational intelligence to patient adversaries.</p>
+        </div>
+        <p>The nuclear Two-Man Rule combined with Permissive Action Links is the closest mission-critical analog: has not failed catastrophically in 63 years. Its durability comes from <strong>physical enforcement of the separation, not procedural enforcement</strong> - exactly the move the Atomic Auditability paper proposes for Epistemic Hold. <span class="marker marker-verified">VERIFIED</span></p>
+      </div>
+
+      <div id="s2-capture">
+        <h2>2.2 Capture Vector Analysis</h2>
+        <p><strong>State capture:</strong> NIST / Dual_EC_DRBG (2004-2014) - NSA employees in the standards committee; $10M payment to RSA disclosed; 9 years from standardization to retraction. A captured Custodian majority that defers to state technical expertise would not have prevented Dual_EC. <span class="marker marker-verified">VERIFIED</span></p>
+        <p><strong>Corporate capture:</strong> ISO/IEC OOXML fast-track (2006-2008) - diversity requirements did not prevent capture; the adversary populated each diversity category with aligned members. Basel III weakening (2023-2024) via industry consultation demonstrates multi-decade erosion. <span class="marker marker-verified">VERIFIED</span></p>
+        <p><strong>Insider collusion:</strong> XZ Utils / "Jia Tan" (2021-2024) - 2.6-year multi-year social engineering of open-source maintainer via sockpuppet pressure campaigns. Linux Foundation April 2026 report explicitly warns this template is being replicated. <span class="marker marker-verified">VERIFIED</span></p>
+      </div>
+
+      <div id="s2-nomc">
+        <h2>2.3 Nominating Committee Integrity</h2>
+        <p>The three external experts on the Nominating Committee are selected and approved by existing Custodians - this is the capture entry point. The Federalist Society pipeline produced 86% affiliation in circuit and Supreme Court appointees over four years without formal entity overlap. <span class="marker marker-high">HIGH</span></p>
+        <p>Cool-down periods: Wright and Booker (2010) found perceived independence does not significantly increase beyond a 1-year period. Barroso joined Goldman Sachs two months after his EU cooling-off window expired (July 2016). The 4-year cool-down is better than shorter alternatives but does not close the capture vector. <span class="marker marker-verified">VERIFIED</span></p>
+      </div>
+
+      <div id="s2-fatigue">
+        <h2>2.4 Governance Fatigue and Temporal Degradation</h2>
+        <p>Alert fatigue across comparable oversight functions: approximately 62% of security alerts ignored entirely (CardinalOps 2024); EHR drug-allergy alert override rates reach 96%; 331 alerts required on average to prevent 1 adverse drug event (JAMA 2024). <span class="marker marker-verified">VERIFIED</span></p>
+        <p>What degrades first under overload: review of edge cases requiring judgment; proactive anti-capture surveillance is deferred for reactive vote-on-proposal work; investigation depth drops before investigation count. <span class="marker marker-high">HIGH</span></p>
+      </div>
+
+      <div id="s2-ai">
+        <h2>2.5 Human-AI Adversarial Frontier and APGT Ceiling</h2>
+        <p>The Stewardship Custodian architecture has <strong>no defenses against AI-assisted capture that are qualitatively different from defenses against human-only capture</strong>. <span class="marker marker-high">HIGH</span></p>
+        <p>Diel et al. (Computers in Human Behavior Reports, December 2024), meta-analysis of 56 studies with 86,155 participants: overall human detection of synthetic media at 55.54% (95% CI 48.87-62.10), with every modality's confidence interval crossing chance. The January 2024 Hong Kong deepfake CFO fraud ($25.6M via multi-person synthetic video conference) is the canonical operational precedent. <span class="marker marker-verified">VERIFIED</span></p>
+        <div class="callout callout-violation">
+          <div class="callout-label">APGT Ceiling Assessment</div>
+          <p>The APGT ceiling (state-level legal compulsion over 30%+ of Custodian jurisdictions + AI synthetic evidence at Q2 2026 detection rates + harvest-now-decrypt-later): the 75% supermajority fails (3-member compelled bloc achieves paralysis); mandatory veto obligation fails under forged evidence. <strong>The Immutable Mandates themselves require DITL hardware enforcement - software-layer governance alone is insufficient against APGT.</strong></p>
+        </div>
+        <p>Global Risk Institute Quantum Threat Timeline Report 2025 (seventh edition, April 2026): 28-49% probability of CRQC within 10 years. <span class="marker marker-verified">VERIFIED</span></p>
+        <p><strong>Honest conclusion: The Stewardship Custodian model assumes a threat environment that has already changed as of Q2 2026.</strong> <span class="marker marker-gap">GAP-ARCHITECTURAL</span></p>
+      </div>
+
+      <div id="s2-hold">
+        <h2>2.6 The Time-Bound Epistemic Hold in Governance</h2>
+        <p>Default-to-rejection is the correct failure mode - aligned with nuclear weapons surety "always/never" doctrine, IAEA safeguards default, FDA Emergency Use Authorization, and financial market circuit breakers. The NASA Challenger case is the cautionary counter-example: Marshall's Larry Mulloy inverted the burden of proof. <span class="marker marker-verified">VERIFIED</span></p>
+        <p>The dual written justification requirement during hold is <strong>not enforceable on-chain</strong>. It is a social and legal commitment only. <span class="marker marker-verified">VERIFIED</span></p>
+        <p><strong>Governance-layer vs. hardware-layer Epistemic Hold:</strong> The governance version is time-bounded and procedural, defaults to rejection after a window, and can be modified by any adversary with sufficient access. The hardware version is a physical voltage state, instantiated as {0,0} dual-rail NCL NULL/Spacer, and cannot be modified by software, root access, kernel compromise, or firmware manipulation. <strong>Same principle, different layers. Escrow is a state, not a delay.</strong> <span class="marker marker-verified">VERIFIED</span></p>
+      </div>
+
+      <div id="s2-succession">
+        <h2>2.7 Succession and Long-Term Continuity</h2>
+        <p>Bitcoin Core maintainer chain: Satoshi's last email April 23, 2011; Lead Maintainer role formally vacant since 2022; the protocol continues regardless. MakerDAO's Endgame Plan (March 2023, 76% in favor) explicitly targets governance ossification as an endpoint. <span class="marker marker-verified">VERIFIED</span></p>
+        <p><strong>The Treasury can sustain system operation indefinitely, but it cannot adapt to new threats.</strong> If quorum becomes permanently unachievable, the system enters constitutional zombie state: operationally alive, architecturally frozen. <span class="marker marker-high">HIGH</span></p>
+      </div>
+
+      <div id="s2-verdict">
+        <h2>2.8 Stewardship Custodians Verdict</h2>
+        <div class="verdict-grid">
+          <div class="verdict-card">
+            <div class="verdict-card-title">Robust</div>
+            <ul>
+              <li>Staggered 4-year terms with 8-year cap and 4-year cool-down</li>
+              <li>Tri-cameral simultaneous-capture requirement</li>
+              <li>Publication-of-reasoning as accountability record</li>
+              <li>Default-to-rejection on expired Time-Bound Epistemic Hold</li>
+            </ul>
+          </div>
+          <div class="verdict-card">
+            <div class="verdict-card-title fragile">Fragile</div>
+            <ul>
+              <li>9-of-11 quorum vulnerable to 3-member attrition (WTO pattern)</li>
+              <li>Nominating Committee external-expert selection (ICANN/FedSoc pattern)</li>
+              <li>Mandatory veto obligation: social layer only</li>
+              <li>Anti-capture review: alert-fatigue vulnerable</li>
+            </ul>
+          </div>
+          <div class="verdict-card">
+            <div class="verdict-card-title unenforceable">Unenforceable (APGT)</div>
+            <ul>
+              <li>Any defense depending on evidence authentication</li>
+              <li>Classical cryptography for persistent records (HNDL posture)</li>
+              <li>Investigation depth under alert-fatigue pressure</li>
+              <li>Undetected covert coordination among minority</li>
+            </ul>
+          </div>
+        </div>
+        <p><strong>DITL hardware reduces dependence on human Custodian action for direct prevention of Mandate violation</strong> - No Spy, No Weapon, and No Switch Off enforced at the physical layer remove the need for case-by-case Custodian adjudication. Accountability, coordination, and public reasoning remain human work. <span class="marker marker-high">HIGH</span></p>
+        <p><strong>Constitutional integrity:</strong> Custodians stay within the janitor role textually. Functionally, under multi-decade sustained pressure, the binding veto risks becoming architectural through procedural innovation. Any such crossing must be flagged [CONSTITUTIONAL VIOLATION] and remediated by re-scoping. <span class="marker marker-verified">VERIFIED</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 3 ══ -->
+  <div class="report-section" id="s3">
+    <div class="section-header">
+      <div class="section-badge">Section 3</div>
+      <div class="section-heading-group">
+        <div class="section-label">Smart Contract Treasury</div>
+        <h2 class="section-title">Autonomous Fiduciary and the DITL Hardware Floor</h2>
+        <div class="section-question">How does on-chain Treasury enforcement interact with DITL hardware enforcement, and what is the honest minimum viable governance architecture that does not depend on software alone?</div>
+      </div>
+    </div>
+    <div class="content-body">
+
+      <div id="s3-vote">
+        <h2>3.1 Vote Rights Architecture</h2>
+        <p>The Treasury's complete absence of vote rights is constitutionally coherent and architecturally distinctive. <strong>No comparable autonomous on-chain treasury with no admin key, no pause guardian, and no emergency shutdown has survived adversarial testing in production as of Q2 2026.</strong> <span class="marker marker-high">HIGH</span></p>
+        <p>Every major production treasury retains privileged override: MakerDAO ESM (300,000 MKR burn threshold, god-mode by design - a [CONSTITUTIONAL VIOLATION] if replicated in TL); Compound Pause Guardian multisig; Aave dual emergency multisigs. <span class="marker marker-verified">VERIFIED</span></p>
+        <p>Milestone verification reduces to trust in oracle, attester, or dispute-game. Four categories: EXTCODEHASH verification (trustless for bytecode, not intent); EAS attestation (trust concentrated in attester set); UMA Optimistic Oracle v3 (bond plus liveness plus dispute); zkVM proofs (SP1, RISC Zero) for deterministic computation only. <span class="marker marker-verified">VERIFIED</span></p>
+        <div class="callout callout-novel">
+          <div class="callout-label">Novel Finding</div>
+          <p>Three-party autonomous fiduciary (Technical Council proposes, Custodians approve, Treasury autonomously executes) has no production precedent. Rule-encoding expressiveness is the single load-bearing design constraint of the entire Treasury architecture.</p>
+        </div>
+      </div>
+
+      <div id="s3-governance">
+        <h2>3.2 On-Chain Governance Current State (Q2 2026)</h2>
+        <p>Most sophisticated production implementations converge on: off-chain discussion plus Snapshot temperature check plus on-chain vote plus timelock plus selective guardian veto. None has eliminated the guardian role without restricting governance scope or retaining a small-multisig upgrade path.</p>
+        <p>Tornado Cash governance takeover (May 20, 2023): malicious proposal payload minted 1.2M votes to attacker; withdrawn after social pressure. Demonstrated that the two-body structure is only as strong as the technical review of the proposal payload bytecode, not only its English description. <span class="marker marker-verified">VERIFIED</span></p>
+        <p>No multi-chamber on-chain governance with 75%+75% co-equal supermajorities across two independent bodies has survived adversarial production testing. <span class="marker marker-gap">GAP-RESEARCH</span></p>
+      </div>
+
+      <div id="s3-fiduciary">
+        <h2>3.3 The Treasury as Autonomous Fiduciary</h2>
+        <p>Compound Proposal 62 (September 2021, ~$62M unrecovered): when the distribution bug was identified, the 7-day governance delay permitted continued permissionless drip() calls. Timelock amplified the loss. <strong>Autonomy without circuit-breakers amplifies errors.</strong> <span class="marker marker-verified">VERIFIED</span></p>
+        <p>MakerDAO's Emergency Shutdown Module is explicitly what TL cannot have under Article VIII No Switch Off. A halt mechanism is a [CONSTITUTIONAL VIOLATION]. <span class="marker marker-verified">VERIFIED</span></p>
+        <p>MakerDAO Oracle Security Module (1-hour price delay, permissionless poke(), no single admin override) is the strongest production precedent for time-delay mitigation without god-mode. Applied to TL: every Treasury disbursement could queue for a publicly-observable window during which permissionless actors submit compromise-attestations. <span class="marker marker-novel">NOVEL</span></p>
+      </div>
+
+      <div id="s3-slashing">
+        <h2>3.4 Revocation Contract and Automated Slashing</h2>
+        <p>Production false-positive precedents: Medalla testnet (August 2020, 3,000+ slashing events from Prysm clock-skew bug, participation dropped from 80% to 5%); RockLogic/Lido (April 2023, 11 validators, infrastructure misconfiguration, ~11.19 ETH penalties); SSV Network (September 2025, 40 validators, Ankr maintenance misconfiguration). <span class="marker marker-verified">VERIFIED</span></p>
+        <p><strong>Polkadot's 27-day pre-enforcement grace period</strong> is the direct production precedent for rule-level mitigation: slashing conditions enter an "unapplied state transition" for 27 days during which governance can reverse, without requiring a god-mode override. TL should encode a minimum 7-day pre-enforcement delay on all revocations as a rule, not a pause. <span class="marker marker-verified">VERIFIED</span></p>
+      </div>
+
+      <div id="s3-ditl">
+        <h2>3.5 DITL as the Honest Constitutional Floor</h2>
+        <div class="callout">
+          <div class="callout-label">Fabrication Status</div>
+          <p><span class="marker marker-gap">GAP-ARCHITECTURAL</span> As of Q2 2026, no production deployment of DITL or NCL governance/safety hardware has been located. DITL remains at design specification, transistor-level simulation, FPGA demonstration, and small research-ASIC stages. Theseus Logic Inc. (Karl Fant, 1996) is defunct. No NCL governance silicon is in production.</p>
+        </div>
+        <p>Why the Escrow state cannot be overridden by software: the {0,0} dual-rail state at half-Vdd configures specific CMOS transistors to block signal propagation. No software call can override the physical voltage configuration; bypass requires physical die-level probe access. <span class="marker marker-high">HIGH</span></p>
+        <div class="callout callout-novel">
+          <div class="callout-label">Ghost Governance - Novel Finding</div>
+          <p>Ghost Governance is the direct analogue of Ghost Fills: governance actions that execute without corresponding immutable audit evidence. The Atomic Auditability definition is Executed(T) implies Auditable(T) with temporal overlap on the same physical commit boundary. DITL eliminates Ghost Governance by construction via the same property that eliminates Ghost Fills in trading systems.</p>
+        </div>
+        <p><strong>Residual hardware vulnerabilities (Section VIII of Atomic Auditability paper, without minimization):</strong> C-element hysteresis drift (threshold voltage drift from aging, temperature, radiation); dual-rail crosstalk (wire spacing, adjacent-signal coupling); completion detection metastability (near-simultaneous input arrival). These are physical-design problems with known engineering mitigations, not architectural defects. <span class="marker marker-verified">VERIFIED</span></p>
+      </div>
+
+      <div id="s3-transition">
+        <h2>3.6 Transitional Governance (Pre-DITL)</h2>
+        <p>Every software timelock and multisig delay is <strong>explicitly a speed bump, not an Escrow state</strong> per the Atomic Auditability paper's critical distinction. A speed bump imposes delay but can be bypassed via alternative paths. An Escrow state physically blocks execution. <span class="marker marker-verified">VERIFIED</span></p>
+        <p>An adversary with established software-layer access loses that access after DITL hardware deployment - creating specific incentive to prevent the DITL upgrade. Constitutional text should commit to DITL migration as a non-discretionary constitutional objective and require Joint-Approval on delays beyond a published schedule. <span class="marker marker-novel">NOVEL</span></p>
+      </div>
+
+      <div id="s3-zombie">
+        <h2>3.7 Zombie Governance - Treasury During Layer 1 Compromise</h2>
+        <p>Under Article VIII No Switch Off, the Treasury cannot be halted during L1 compromise. This is a [CONSTITUTIONAL TENSION] but the intended constitutional behavior: the constitution accepts continued operation during compromise as the cost of absolute uncompromised autonomy. <span class="marker marker-high">HIGH</span></p>
+        <p>Production 51% attack data: Ethereum Classic August 2020 - three attacks within one month, approximately $7M combined. Verge February 2021 - 560,000+ block reorganization (approximately 200 days of history erased). <span class="marker marker-verified">VERIFIED</span></p>
+        <p>Maximum financial exposure during a 30-day compromise window is bounded only by per-epoch disbursement rules - a strong argument for mandatory per-epoch caps encoded directly in the Treasury facet. <span class="marker marker-novel">NOVEL</span></p>
+      </div>
+
+      <div id="s3-verdict">
+        <h2>3.8 Smart Contract Treasury Verdict</h2>
+        <p><strong>Enforceable guarantees without DITL:</strong> Software-layer enforcement against adversaries without root access; not enforceable against supply-chain compromise, firmware access, or node-operator compromise; auditable provided audit nodes are not compromised.</p>
+        <p><strong>Enforceable guarantees with DITL:</strong> Physical-layer enforcement against any software-only adversary; still vulnerable to residual hardware vulnerabilities (hysteresis drift, crosstalk, metastability).</p>
+        <p><strong>Constitutional integrity:</strong> The Treasury stays within the janitor role. Rule-encoding expressiveness is the load-bearing design constraint. If rules lack circuit-breakers and per-epoch caps, emergent architectural authority can arise from rule-bound autonomy under adversarial conditions. <span class="marker marker-novel">NOVEL</span></p>
+        <div class="callout callout-quote">
+          <p>"The Treasury is not a wallet with a committee. It is a financial perpetual motion machine that funds its own conscience, dispensing virtue on a proof-of-work basis." - Lev Goukassian</p>
+        </div>
+        <p>The Treasury's guarantees are physics when hardware is real, and trust when it is not.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 4 ══ -->
+  <div class="report-section" id="s4">
+    <div class="section-header">
+      <div class="section-badge">Section 4</div>
+      <div class="section-heading-group">
+        <div class="section-label">Integrated Synthesis</div>
+        <h2 class="section-title">Constitutional Integrity Assessment and Recommended Updates</h2>
+        <div class="section-question">What does the complete TL governance architecture guarantee, what requires DITL hardware, and does the architecture remain within the janitor role or accumulate architectural authority?</div>
+      </div>
+    </div>
+    <div class="content-body">
+
+      <div id="s4-layers">
+        <h2>4.1 Two-Layer Architecture Synthesis</h2>
+
+        <h3>What Layer 2 can do that Layer 1 cannot</h3>
+        <p>Adapt - rotate members, certify new nodes, schedule PQC migrations, rotate Anchor chains under threat, arbitrate edge cases, evolve operational parameters. Layer 1 cannot adapt. A fabricated chip is a fabricated chip. <span class="marker marker-verified">VERIFIED</span></p>
+
+        <h3>What Layer 1 enforces that Layer 2 cannot guarantee</h3>
+        <p>Physical blocking of execution; hardware-level Mandate enforcement below the software stack; tamper-resistance against root access and firmware compromise; Ghost Governance elimination. Layer 2 cannot physically enforce anything. A constitutional text is a coordination device that a captured, coerced, or quorum-starved institution can fail to apply. <span class="marker marker-high">HIGH</span></p>
+
+        <h3>Failure modes when one layer is compromised</h3>
+        <p><strong>Case A - Layer 1 intact, Layer 2 compromised:</strong> Execution remains physically bounded by the Mandates. But no body can coordinate evolution. The system enters a constitutional zombie state: operationally alive, architecturally unable to evolve. The Treasury keeps executing autonomous rules against a milestone set that no body can amend. <span class="marker marker-high">HIGH</span></p>
+        <p><strong>Case B - Layer 1 absent or compromised, Layer 2 intact:</strong> The Mandates become procedural commitments only. This is the current pre-DITL state of the framework. An operator under state-level legal compulsion, a captured multisig, or a firmware-compromised node can violate the Mandates while the constitutional text remains satisfied on paper. <span class="marker marker-verified">VERIFIED</span></p>
+      </div>
+
+      <div id="s4-integrity">
+        <h2>4.2 Constitutional Integrity Assessment</h2>
+        <div class="callout callout-tension">
+          <div class="callout-label">Rule-Accretion Pathway to Architectural Authority</div>
+          <p>The three bodies, acting through their constitutionally permitted channels, can cross the janitor/architect boundary through rule-encoding accretion. Three pathways identified: (1) the interpretive-lock pathway - operational rules that cumulatively narrow the Eight Pillars' practical meaning without amending Article I; (2) the budget-as-constitution pathway - Treasury milestone rules that structurally defund research directions without formally prohibiting them; (3) the precedent-accretion pathway - Custodian veto patterns establishing de facto constitutional interpretations narrower than Article I's text. This is a present [CONSTITUTIONAL TENSION] and a future [CONSTITUTIONAL VIOLATION] absent structural remedies.</p>
+        </div>
+        <p><strong>Five structural remedies that do not require God Mode:</strong></p>
+        <ul>
+          <li><strong>Constitutional interpretation clause:</strong> operational rules interpreted against Article I, never the reverse; any rule narrowing a Pillar's practical meaning is void.</li>
+          <li><strong>Mandatory Pillar Impact Statements</strong> on every Type 3 proposal, certifying cumulative active rules do not narrow any Pillar's scope.</li>
+          <li><strong>Sunset clauses on operational rules</strong> with auto-expiry and explicit re-approval, breaking rule-accretion path dependence.</li>
+          <li><strong>Rotating Pillar Interpretation Panel</strong> with advisory jurisdiction only, publication obligation on interpretive drift, no proposal or veto authority.</li>
+          <li><strong>Custodian counter-proposal right</strong> narrowly scoped to formally vetoed proposals - the direct structural response to the EU Commission agenda-setting precedent.</li>
+        </ul>
+      </div>
+
+      <div id="s4-verdict">
+        <h2>4.3 Synthesis Verdict</h2>
+
+        <h3>Preamble for Governance.md</h3>
+        <div class="preamble-block">
+          <div class="preamble-label">Proposed Governance.md Preamble</div>
+          <div class="preamble-text">
+            The Ternary Logic framework guarantees, at the governance layer, a tri-cameral separation of powers in which no single body can propose, approve, and execute a change to the protocol. It guarantees time-bound uncertainty management through the Epistemic Hold, externalized notarization across a minimum of five Anchor chains, and a Diamond Standard contract architecture in which the core Protocol is immutable and only four bounded facets remain upgradeable under Joint-Approval supermajority. These guarantees are procedural. They bind institutions that can be captured, coerced, deceived, or left quorum-starved. Governance is the janitor of eternity, not the architect of tomorrow. Hardware resists last. Institutions fail first. To make the Three Mandates physical rather than rhetorical, the Epistemic Hold must be instantiated as a dual-rail NULL voltage state, execution must be interlocked with atomic audit evidence, and No Switch Off must be enforced by the absence of any kill circuit in silicon. Governance shapes the room. Governance never touches the foundation. The foundation is hardware, or the foundation is not physical at all.
+          </div>
+        </div>
+
+        <h3>Single Most Important Finding Per Section</h3>
+        <div class="finding-row">
+          <div class="finding-card">
+            <div class="finding-section">Section 1 - Technical Council</div>
+            <div class="finding-text">The Type 1 emergency Anchor migration authority, exercisable unilaterally by a simple majority of the Technical Council with no Custodian involvement, is the single largest capture vector in the governance architecture. <span class="marker marker-verified">VERIFIED</span></div>
+          </div>
+          <div class="finding-card">
+            <div class="finding-section">Section 2 - Stewardship Custodians</div>
+            <div class="finding-text">The Custodian mandatory veto obligation is a social and legal commitment only, not an on-chain primitive, and it fails as a defense against state-level legal compulsion combined with synthetic evidence at Q2 2026 human detection rates near chance. <span class="marker marker-verified">VERIFIED</span></div>
+          </div>
+          <div class="finding-card">
+            <div class="finding-section">Section 3 - Smart Contract Treasury</div>
+            <div class="finding-text">No comparable autonomous on-chain treasury without an admin key, pause guardian, or emergency shutdown has survived adversarial production testing as of Q2 2026, making rule-encoding expressiveness the single load-bearing design constraint of the entire Treasury architecture. <span class="marker marker-verified">VERIFIED</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s4-priority">
+        <h2>Priority Update Table for Governance.md</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Update</th>
+                <th>Article</th>
+                <th>Priority</th>
+                <th>Fits Article I?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>72-hour Custodian observation-and-escalation window on Type 1 emergency Anchor migrations</td><td>Art. IV, Art. VI</td><td><span class="priority-critical">[CRITICAL]</span></td><td>Yes</td></tr>
+              <tr><td>2</td><td>Time-bound escalation pathway for cryptographically-urgent proposals under sustained Custodian veto</td><td>Art. IV, new PQC section</td><td><span class="priority-critical">[CRITICAL]</span></td><td>Yes</td></tr>
+              <tr><td>3</td><td>Explicit PQC migration schedule (ML-DSA-87 primary, SLH-DSA fallback, 2030 deadline)</td><td>Art. V or new Article</td><td><span class="priority-critical">[CRITICAL]</span></td><td>Yes</td></tr>
+              <tr><td>4</td><td>Pillar Interpretation clause and mandatory Pillar Impact Statements on all Type 3 proposals</td><td>Art. I, Art. IV</td><td><span class="priority-critical">[CRITICAL]</span></td><td>Yes</td></tr>
+              <tr><td>5</td><td>Sunset clauses on operational rules with auto-expiry and explicit re-approval</td><td>Art. IV, Treasury facet</td><td><span class="priority-high">[HIGH]</span></td><td>Yes</td></tr>
+              <tr><td>6</td><td>Custodian counter-proposal right scoped only to formally vetoed proposals</td><td>Art. III, Art. IV</td><td><span class="priority-high">[HIGH]</span></td><td>New constitutional text</td></tr>
+              <tr><td>7</td><td>Rule-level circuit-breakers and per-epoch disbursement caps in Treasury facet</td><td>Art. III, Art. V</td><td><span class="priority-high">[HIGH]</span></td><td>Yes</td></tr>
+              <tr><td>8</td><td>Polkadot-pattern 7-day pre-enforcement grace period on Revocation actions</td><td>Art. III (Revocation)</td><td><span class="priority-high">[HIGH]</span></td><td>Yes</td></tr>
+              <tr><td>9</td><td>Quorum-collapse safeguard for 9-of-11 Custodian threshold with pre-confirmed alternates</td><td>Art. II, Art. IV</td><td><span class="priority-high">[HIGH]</span></td><td>New constitutional text</td></tr>
+              <tr><td>10</td><td>Mandate IBC Eureka or equivalent trust-minimized relay for Anchor cross-chain</td><td>Art. VI</td><td><span class="priority-high">[HIGH]</span></td><td>Yes</td></tr>
+              <tr><td>11</td><td>Bound Custodian white-paper publishing to prevent precedent-accretion drift</td><td>Art. III</td><td><span class="priority-moderate">[MODERATE]</span></td><td>Yes</td></tr>
+              <tr><td>12</td><td>Complete Succession Charter with full procedural specification</td><td>Art. II</td><td><span class="priority-moderate">[MODERATE]</span></td><td>Yes</td></tr>
+              <tr><td>13</td><td>On-chain Preamble disclosure of current speed-bump regime (pre-DITL)</td><td>Preamble, Art. I</td><td><span class="priority-moderate">[MODERATE]</span></td><td>Yes</td></tr>
+              <tr><td>14</td><td>Document Ghost Governance as constitutional goal achievable only at hardware layer</td><td>Preamble, Art. I</td><td><span class="priority-moderate">[MODERATE]</span></td><td>New constitutional text</td></tr>
+              <tr><td>15</td><td>Establish rotating Pillar Interpretation Panel with advisory jurisdiction only</td><td>New Article</td><td><span class="priority-moderate">[MODERATE]</span></td><td>New constitutional text</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-quote" style="margin-top: 32px;">
+          <p>"In TL, the constitution is not written in parchment but in protocol; it cannot be amended, only better maintained. Governance is the janitor of eternity, not the architect of tomorrow." - Lev Goukassian</p>
+        </div>
+
+        <p style="margin-top: 24px; color: var(--text-secondary); font-size: 14px;">The single non-negotiable observation of this research program: the Three Mandates are procedural commitments at the current software layer and become physical enforcements only at the DITL layer. The Goukassian Principle in LTL form, G(execute &rarr; P(escrow_recorded &and; auditable)), is satisfiable in silicon by construction and unsatisfiable in software by any method known in Q2 2026. Hardware resists last. Institutions fail first.</p>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
