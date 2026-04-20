@@ -1,4 +1,3 @@
-# Stewardship_Custodians.md
 ## Ternary Logic Constitutional Governance Research - Section 2
 **Framework:** Ternary Logic (TL) by Lev Goukassian
 **ORCID:** 0009-0006-5966-1243
