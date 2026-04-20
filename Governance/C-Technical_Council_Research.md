@@ -1,4 +1,3 @@
-# Technical_Council.md
 ## Ternary Logic Constitutional Governance Research - Section 1
 **Framework:** Ternary Logic (TL) by Lev Goukassian
 **ORCID:** 0009-0006-5966-1243
