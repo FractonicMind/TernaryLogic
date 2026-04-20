@@ -1,7 +1,7 @@
 ## Ternary Logic Constitutional Governance Research - Section 3
-**Framework:** Ternary Logic (TL) by Lev Goukassian
-**ORCID:** 0009-0006-5966-1243
-**Research Date:** Q2 2026
+**Framework:** Ternary Logic (TL) by Lev Goukassian   
+**ORCID:** 0009-0006-5966-1243   
+**Research Date:** Q2 2026   
 **Status:** Standalone Report - Section 3 of 4
 
 ---
