@@ -2,7 +2,7 @@
 
 ### **A Tri-Cameral Constitutional Blueprint for Autonomous Protocol Governance**
 
-**Architect:** Lev Goukassian (FractonicMind)   
+**Architect:** Lev Goukassian   
 **ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)   
 **Published:** AI and Ethics, Springer Nature. [DOI: 10.1007/s43681-025-00910-6](https://doi.org/10.1007/s43681-025-00910-6)   
 **Hardware Reference:** Atomic Auditability Paper. [DOI: 10.5281/zenodo.18716142](https://doi.org/10.5281/zenodo.18716142)   
