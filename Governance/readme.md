@@ -98,7 +98,7 @@ The research in this folder is honest about what this power cannot do. The manda
 
 ## **The Smart Contract Treasury**
 
-![Smart Contract Treasury attack surface: Flash Loan, Oracle Manipulation, Economic Starvation, Governance Paralysis](https://fractonicmind.github.io/TernaryLogic/Governance/SCT.png)   
+![Smart Contract Treasury attack surface: Flash Loan, Oracle Manipulation, Economic Starvation, Governance Paralysis](SCT.png)   
 *Figure 7. Smart Contract Treasury attack surface. Four primary attack vectors: flash loan governance attacks (mitigated by non-token voting), oracle manipulation of milestone verification, economic starvation via rule-freeze preventing new disbursements, and governance paralysis by breaking Joint-Approval quorum.*
 
 ![Oracle Layer: temperature, price, and timestamp data feeding into a blockchain security shield](https://fractonicmind.github.io/TernaryLogic/Governance/OL.png)   
