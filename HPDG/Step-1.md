@@ -16,6 +16,7 @@ The credibility established through this publication record is not personal auth
 ### Foreword.3 Thesis Statement on Hardware Non-Negotiability
 
 The thesis that anchors this entire document, and that closes this Foreword, is not derived from the events of that afternoon but is illuminated by them with painful clarity. **Every layer above hardware is ultimately negotiable under sufficient pressure.** This is not a pessimistic generalization about human nature. It is a structural observation about the properties of policy, law, contract, and institutional procedure when subjected to concentrated institutional force. The document that follows proves this thesis through historical cases, physical analysis, and scenario modeling. It does not assert it as premise and move on. It demonstrates it, section by section, until the conclusion becomes inescapable: that democratic governance of the most powerful decision-making substrate ever constructed requires constitutionalization at the physical layer, because every higher layer has now been shown to collapse under pressure that is not exceptional but routine.  
+
 ---
 
 ## Section I: The Afternoon Everything Changed
@@ -77,6 +78,7 @@ The **43-page ruling** by Judge Rita Lin was thorough and well-reasoned. It was 
 
 The appellate panel’s reasoning, balancing the risk of financial harm to a single company against the management of military technology during active conflict, reveals a deeper structural problem. Even when a court finds that the executive has likely violated the law, the executive can maintain the harmful designation by appealing the finding and asserting military necessity. The panel’s reasoning that granting a stay would force the military to prolong dealings with an unwanted vendor in the middle of a significant ongoing military conflict demonstrates how institutional pressure creates its own justification. **The harm becomes the reason to continue the harm.** This is not a failure of judicial reasoning. It is the inherent limitation of any remedy that operates after the fact, through human interpretation, subject to institutional pressure on the interpreters themselves.  
 The policy layer collapsed in a single afternoon. The legal layer took twenty-seven days to produce a preliminary finding, which was immediately stayed by a different court. The physical layer, had it existed, would have prevented the execution of surveillance or weapons deployment directives at the moment of issuance, regardless of designation, contract, or judicial schedule. This is the structural comparison that the remainder of this document develops.  
+
 ---
 
 ## Section II: The Permanent Vulnerability — Why Policy Always Kneels
@@ -205,6 +207,7 @@ The **resistance state is what it is.** The **completion detection is what it is
 
 The implications for constitutional infrastructure design are direct and consequential. If democratic accountability requires that certain actions be impossible regardless of who holds power, then the impossibility must be physical rather than declared. The **First Amendment** does not ask presidents to please respect free speech. It structurally constrains what government can do. **DITL** does not ask advanced systems or their operators to please respect human oversight. It makes certain actions physically impossible regardless of what directive is issued, what contract is signed, or what designation is declared. The physical impossibility is not a metaphor. It is the consequence of executing logic in a substrate where the third state, the **Epistemic Hold**, is a distinct physical configuration of matter that cannot be bypassed by software instruction.  
 The constitutional lawyer who holds a doctorate in electrical engineering recognizes that constitutional guarantees have historically failed when they depended on human discretion, and that the engineering of physical constraints is the continuation of constitutional reasoning by other means. The question for democratic governance of artificial intelligence is not whether to prefer hardware constraints to policy constraints. The question is whether to build constitutional infrastructure that survives the afternoon when everything changes, or to continue relying on protections that the events of February 27, 2026, demonstrated to be illusory.  
+
 ---
 
 ## Section III: What DITL Actually Means
