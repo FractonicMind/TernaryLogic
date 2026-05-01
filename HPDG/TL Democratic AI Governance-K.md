@@ -301,6 +301,8 @@ These properties make DITL **constitutional rather than merely technical.** A te
 The practical consequence is that democratic governance of artificial intelligence systems becomes possible in a way that it has not been before. The **Epistemic Hold**, implemented as the **Intermediate Resistance State** in **Tantalum Oxide bilayer RRAM**, creates a physical pause between proposal and execution that cannot be eliminated by directive, contract, or designation. The **No-Log-No-Action invariant**, formalized in **Linear Temporal Logic as G(execute implies P(escrow\_recorded and auditable))**, ensures that every execution event was preceded by an escrow-recorded and auditable event, not as a policy preference but as a physical necessity. The **Dual-Lane Latency Architecture**, with its execution lane hard ceiling of **2ms worst-case execution time** and its audit lane of **300-500ms for cryptographic anchoring**, guarantees that the log is complete before the execution completes, without blocking either pathway. These are not features that can be disabled by a software update. They are properties of the substrate that can only be altered by physical destruction or replacement, both of which generate detectable evidence.  
 The significance for institutional design is profound. Democratic accountability has always depended on the possibility of oversight: the ability to know what was decided, by whom, and under what authority. At the software layer, this oversight depends on logging systems that can be disabled, records that can be deleted, and audit trails that can be obscured. **Ghost Governance**, the execution of governance actions without corresponding immutable audit evidence, is the normal mode of failure at this layer. DITL eliminates Ghost Governance by construction, making execution and audit share the same physical commit boundary. The record of what was attempted, what was refused, and what was permitted exists independently of whether anyone in power wants it to exist. This is what it means for constitutional infrastructure to be real rather than declared, and it is what DITL provides through the physical properties of Tantalum Oxide memristive devices operating in three discrete resistance states under the validation of window comparators and the constraint of NULL Convention Logic.
 
+---
+
 ## Section IV: Delay-Insensitive Ternary Logic; The Architecture Explained
 
 This section constitutes the technical heart of the document, written simultaneously for two audiences whose needs often diverge. The primary accent falls upon technical rigor sufficient to satisfy a senior engineer or materials scientist actively attempting to falsify the architecture. The secondary audience comprises technically literate policymakers and federal judges advised by technical counsel, for whom accessibility is achieved through structure and analogy rather than simplification of technical claims. Where these audiences conflict, the engineer prevails. The architecture described herein is not theoretical; it is specified to the level of process design kit parameters, thermal budgets, and timing closure constraints. Every claim is either derivable from Class A framework parameters or explicitly marked as requiring external validation.
@@ -370,6 +372,8 @@ Metastability in asynchronous completion presents the fourth failure mode. NCL c
 Shadow system interaction presents the fifth failure mode and the most challenging architectural concern. A DITL-compliant system operating in parallel with a non-DITL system creates a bypass path at the architecture level before any governance intervention is possible. A directive refused by the DITL system can be reissued to an adjacent non-DITL system that executes without the constitutional constraints. The DITL system detects this partially through Merkle-anchored audit trail cross-referencing; the immutable log records the refusal, and external monitoring can detect whether the same directive subsequently executes through an unaudited channel. However, this detection is not guaranteed at the hardware layer. If the non-DITL system operates entirely outside the DITL audit domain, with no shared ledger or cross-reference mechanism, the bypass is invisible to the DITL system except through external observation. The limitation is named honestly; no complete technical answer exists at the hardware layer for detecting shadow system execution that is architecturally isolated from the DITL infrastructure. The governance and policy response to this limitation is addressed in Section XI, which examines international coordination mechanisms and mandatory certification requirements that eliminate the shadow system problem by making non-compliant operation legally and economically untenable rather than technically impossible.  
 Engineering honesty about these limits strengthens the credibility of the entire framework. A document that claimed perfection would be advocacy, not engineering. The failure modes are real. The drift rates require further characterization. The boundary collapse thresholds need production validation. The comparator poisoning residual risk demands redundant architectures. The metastability default must be physically enforced. The shadow system problem requires governance solutions beyond hardware. Each of these limitations is named, modeled, and addressed with the specificity that engineers require and that democratic institutions deserve.
 
+---
+
 ## Section V: The Epistemic Hold; Democracy’s Circuit Breaker
 
 The Epistemic Hold embodies the political philosophy of the middle state for a general but serious audience that must understand why constitutional governance requires more than binary choice. Three states form the complete vocabulary of legitimate action: Proceed, Pause, Refuse. The political philosophy of the middle state has deep roots in democratic theory, though it has never before been implemented at the hardware layer. Judicial review is the middle state of the legal system; the capacity to halt executive action pending examination of its constitutional validity. Legislative deliberation is the middle state of the political system; the requirement that proposed laws undergo scrutiny and amendment before enactment. Constitutional challenge windows are the middle state of the administrative system; the period during which affected parties may contest agency action before it becomes irreversible. The Epistemic Hold is the hardware implementation of this same grammatical structure. It is not a delay imposed upon efficient operation. It is the constitutional demand for verified legitimacy before irreversible action proceeds.  
@@ -377,6 +381,8 @@ Removing the middle state is how authoritarianism enters through the hardware do
 The democratic theory of the Epistemic Hold develops fully through its institutional analogs. Judicial review exists because democratic legitimacy requires that executive action be examined against constitutional principles before it becomes irreversible. Legislative deliberation exists because democratic legitimacy requires that proposed laws be scrutinized by multiple perspectives before they bind the citizenry. Constitutional challenge windows exist because democratic legitimacy requires that affected parties have opportunity to contest action before its consequences are realized. DITL constitutionalizes this demand at the hardware layer where it cannot be suspended by executive order, contracted away by a midnight phone call, or reinterpreted by a new administration. The Epistemic Hold is not subject to emergency powers. It is not waived by classified designation. It is not overridden by national security determination. It is a physical state of matter that persists until physical conditions for its release are met, and those conditions include the completion of audit requirements that are themselves defined by constitutional logic rather than administrative discretion.  
 Ghost Governance connects directly to this democratic guarantee. At the software layer, governance actions can execute without audit evidence. The record can be incomplete, delayed, or absent. Administrators can delete logs, corrupt databases, or declare records classified. The separation between execution and audit that software permits is the separation that enables Ghost Governance. At the hardware layer, the Epistemic Hold and NL=NA make Ghost Governance physically impossible. Every action that crosses the execution threshold has a prior immutable record. The record exists in the Merkle-anchored ledger before the action executes. The ledger is distributed across multiple independent nodes. The cryptographic proofs link each entry to all prior entries. Democracy requires this guarantee. Until DITL, it could not have it because the separation of execution and audit was always possible at the software layer, and that separation was always exploitable by those with sufficient administrative privilege.  
 Adversarial modeling of the Epistemic Hold examines the most sophisticated attack on its constitutional function; the argument that the pause itself causes harm. This argument claims that the 300 to 500 millisecond window costs lives in time-critical scenarios, that emergency response cannot wait for audit completion, that the constitutional moment between intent and action is a luxury that civilization cannot afford. The answer to this attack is direct and specific. The scenarios where 300 to 500 milliseconds genuinely costs lives are precisely the scenarios requiring the most rigorous audit trail. Weapons deployment decisions, surveillance authorization in emergency contexts, financial intervention in systemic crises; these are not scenarios where accountability should be waived. They are scenarios where accountability is most essential. The Epistemic Hold does not slow decision-making relative to human deliberation at the relevant scale. Human military commanders do not make weapons deployment decisions in milliseconds. Human financial regulators do not make systemic risk decisions in milliseconds. Human judges do not make surveillance authorization decisions in milliseconds. The 300 to 500 milliseconds adds the immutable record of what was decided and why to decisions that already involve human deliberation measured in minutes, hours, or days. The record is not a bureaucratic burden. It is the constitutional proof of legitimacy. The cost of that proof is measured in milliseconds. The cost of its absence is measured in the collapse of democratic accountability that the February 27, 2026 sequence demonstrated.
+
+---
 
 ## Section VI: The Technical Path Exists Today
 
@@ -515,4 +521,609 @@ DITL eliminates Ghost Governance at the physical layer by making execution and a
 
 ---
 
-¹ The Author Framework specifies a post-write anneal of 200-250 degrees Celsius for 30 minutes as mandatory for Mandated Ternary manufacturing. External research reports BEOL annealing at 400 degrees Celsius affecting TaOx device operation  [(Frontiers)](https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2020.00094/full) . This discrepancy reflects different process integration points; the MT specification targets anneal conditions compatible with advanced node CMOS thermal budgets, while the cited research examines broader thermal processing windows. The framework parameter is preserved as ground truth; the external data indicates that process optimization is required to achieve stable filament formation within the specified thermal envelope.
+# Section IX: Who Must Act and When
+
+The architecture specified in the preceding sections is physically realizable, economically viable, and constitutionally necessary. What remains is the institutional choreography to move it from specification to deployment. This section names the actors, specifies the commitments required from each, establishes timelines measured in months rather than years, and identifies the consequences of delay. The analysis assumes hostile conditions throughout; every recommendation includes adversarial modeling of how the commitment can be subverted, delayed, or captured, and what structural features resist such subversion.
+
+## IX.1 Semiconductor Manufacturers
+
+The fabrication of native ternary logic devices requires foundry-level commitment to process design kit development and qualification. Two corporate actors hold decisive capability, with a third providing essential domestic alternative relevant to United States legislative mandates.
+
+### IX.1.1 TSMC and ASML Fabrication Commitments
+
+Taiwan Semiconductor Manufacturing Company holds the most advanced production capability for the N2 node with CoWoS advanced packaging, the baseline fabrication target specified in Class A parameters. ASML Holding provides the extreme ultraviolet lithography systems without which N2 production is physically unattainable. These two entities collectively control the physical pathway to native ternary implementation at the density and yield required for constitutional-scale deployment.
+
+The specific commitment required from TSMC is a dedicated TaOx RRAM process design kit for constitutional AI hardware, distinct from general-purpose embedded RRAM offerings. The current TSMC N2 CoWoS ReRAM 1T1R 2025 PDK provides the foundation, but constitutional hardware requires process corners validated specifically for the three-state resistance window: **LRS at 1-10 kOhm**, **IRS at 100 kOhm to 1 MOhm**, and **HRS at 1-10 MOhm**. The standard embedded RRAM PDK optimizes for binary storage density; constitutional ternary logic requires asymmetric oxygen vacancy distribution engineering with validated partial RESET filament rupture for the IRS state. This is not a parameter tweak. It is a distinct process qualification with its own corner models, statistical variation bounds, and reliability characterization.
+
+The timeline for this commitment must be: **process design kit availability within 6 months of mandate**, **first silicon within 12 months**, **production qualification within 24 months**. These deadlines are tight by semiconductor industry standards, where typical PDK development cycles span 18-24 months. The compression is achievable because the N2 platform and CoWoS packaging infrastructure already exist; what is required is process corner validation for ternary states, not fundamental process invention. The 6-month PDK availability target assumes TSMC assigns dedicated engineering resources immediately upon mandate receipt, with parallel rather than sequential qualification of ternary resistance windows.
+
+Adversarial modeling: TSMC has commercial incentives to delay or dilute this commitment. The ternary PDK serves a market of constitutional hardware that does not yet exist at scale, while general-purpose AI accelerators generate immediate revenue. Without contractual or legislative mandate, TSMC rationally prioritizes existing customers. The mandate must include penalty structures for PDK delay and must specify that the ternary PDK is a condition of continued access to government-contracted AI accelerator business. This linkage is not punitive; it is the standard contracting mechanism by which governments procure specialized semiconductor capability.
+
+ASML's role is equipment provision rather than process development, but ASML lithography systems require calibration for ternary device geometries. The specific commitment is calibration support for TaOx bilayer patterning at N2 resolution, with particular attention to the asymmetric sublayer structure (TaOx- at x approximately 1.6, TaOx+ at x approximately 1.9) that enables partial RESET rupture. ASML has no direct commercial incentive to resist this commitment; the company's incentive structure favors maximum utilization of its installed EUV base. The adversarial risk is lower for ASML than for TSMC, but the dependency is absolute: without EUV lithography calibrated for ternary device structures, the PDK cannot achieve production qualification.
+
+### IX.1.2 Intel Foundry Domestic Alternative
+
+Intel Foundry Services provides the domestic alternative essential to United States legislative mandates for supply chain security. The Intel 18A node with PowerVia backside power delivery offers comparable capability to TSMC N2, though with different design rule constraints and packaging options. The domestic alternative is not merely a redundancy for supply chain resilience; it is a legal requirement for any mandate that restricts government contracting to domestic fabrication sources.
+
+The specific commitment from Intel Foundry is parallel PDK development for the 18A node, with identical ternary resistance window specifications. Intel's embedded RRAM program at the 22nm node demonstrated basic capability, but 18A scaling introduces new physical constraints: filament formation at reduced dimensions, variability in oxygen vacancy distribution at atomic-layer deposition limits, and electromigration concerns for the IRS state's partial filament configuration. These are solvable engineering problems, but they require dedicated resources that Intel Foundry must assign against competing priorities including general-purpose AI accelerator production for the domestic market.
+
+The timeline for Intel Foundry must track TSMC's: **PDK availability within 6 months of mandate**, **first silicon within 12 months**, **production qualification within 24 months**. The 24-month production qualification window is particularly challenging for Intel given the company's historical difficulty with advanced node ramp. The mandate must include technical assistance provisions and potential joint development agreements with TSMC to accelerate Intel's learning curve, despite the competitive tension between the foundries.
+
+Adversarial modeling: Intel Foundry has stronger domestic political protection than TSMC, which creates both advantage and risk. The advantage is legislative access and potential subsidy flow through the CHIPS Act and successor programs. The risk is capture by domestic political interests that may dilute the ternary PDK requirement in favor of general-purpose production targets. The mandate must specify ternary PDK development as a condition of CHIPS Act funding receipt, with independent technical audit of progress milestones. Without this condition, Intel rationally prioritizes volume production over specialized constitutional hardware.
+
+### IX.1.3 TaOx RRAM Process Design Kit Timeline
+
+The consolidated timeline for foundry commitment is:
+
+| Milestone | TSMC N2 Deadline | Intel 18A Deadline | Verification Method |
+|-----------|-----------------|-------------------|---------------------|
+| PDK availability | Month 6 | Month 6 | Independent foundry audit |
+| First silicon | Month 12 | Month 12 | Wafer acceptance test |
+| Production qualification | Month 24 | Month 24 | IEC 61508 SIL 3 audit |
+| Commercial availability | Month 30 | Month 30 | Order fulfillment verification |
+
+This timeline assumes mandate issuance by Q2 2027, consistent with the legislative action specified in Section IX.3. Earlier mandate acceleration is possible if executive action precedes legislation; the timeline compresses proportionally.
+
+The verification methods specified are critical for adversarial resistance. Independent foundry audit means a technically qualified third party, not the foundry's internal characterization team, validates resistance window specifications across process corners. Wafer acceptance test means government-contracted test facilities verify first silicon against PDK specifications before production authorization. IEC 61508 SIL 3 audit means functional safety certification specifically validates the ternary logic implementation's failure modes and diagnostic coverage. Order fulfillment verification means commercial orders for constitutional hardware are tracked to confirm that production silicon matches qualified specifications, not substituted with general-purpose embedded RRAM that lacks ternary state validation.
+
+## IX.2 Standards Bodies
+
+Hardware governance without standards is proprietary constraint without interoperability. The Institute of Electrical and Electronics Engineers must initiate standards work immediately, with specific precedent from existing verification and validation standards and explicit scope for a new proposed standard.
+
+### IX.2.1 IEEE Standards Work Initiation
+
+The IEEE Standards Association has established working groups for autonomous and intelligent systems, with current activity focused on algorithmic transparency and ethical design processes . This existing infrastructure provides the institutional foundation for ternary logic constitutional requirements, but the scope must expand substantially. Current IEEE standards activity addresses software-level governance; constitutional hardware requirements represent a fundamentally different layer that existing working groups are not structured to evaluate.
+
+The initiation requirement is formation of a new working group specifically for Delay-Insensitive Ternary Logic constitutional hardware standards, with charter scope covering: **minimum window comparator thresholds** for ternary resistance state validation; **audit lane timing requirements** for cryptographic anchoring; **Physical Unclonable Function attestation chain specifications**; and **Epistemic Hold non-bypassability requirements** as a hardware property subject to independent test and certification. This working group must include representation from semiconductor fabrication, cryptographic hardware security, government contracting audit, and civil liberties advocacy. The composition is specified to prevent capture by any single interest; without diverse representation, the standard becomes either technically unimplementable or constitutionally insufficient.
+
+The timeline for standards work initiation is: **working group formation within 6 months of this document's publication**, **draft standard within 18 months**. These deadlines are aggressive by IEEE standards, where typical working group formation requires 12-18 months of preliminary discussion and draft standards often require 3-5 years. The acceleration is justified by the external timeline: constitutional hardware deployment in 2027-2028 requires standards availability in 2027, which requires working group formation in 2026.
+
+Adversarial modeling: IEEE standards processes are vulnerable to patient infiltration, as documented in historical cases of standards body capture by corporate interests seeking to dilute environmental and safety requirements [CITATION NEEDED]. Corporate entities can flood standards processes with participation that appears constructive but serves to delay, dilute, or redirect standards toward proprietary advantage. The specific defense is charter language that specifies non-negotiable constitutional requirements: the Epistemic Hold non-bypassability requirement, for example, cannot be weakened to "best effort" or "configurable" language without violating the standard's core purpose. Working group chair selection must prioritize technical expertise in asynchronous logic and hardware security over general standards process experience, to ensure that constitutional requirements are understood as physical properties rather than policy preferences.
+
+### IX.2.2 IEEE 1012 Precedent for Verification and Validation
+
+IEEE 1012, Standard for System, Software, and Hardware Verification and Validation, provides the closest existing analog for DITL certification requirements . The standard establishes verification and validation processes for safety-critical systems across multiple integrity levels, with requirements for independent verification, traceability, and documentation that map directly onto DITL's audit and attestation architecture.
+
+The specific precedent from IEEE 1012 is its treatment of hardware verification as distinct from software verification, with distinct techniques, distinct evidence requirements, and distinct independence criteria. This precedent supports the DITL standard's core claim: constitutional hardware requirements are not software requirements implemented in silicon, but physical requirements with their own verification methodology. IEEE 1012's hardware verification processes include: requirements traceability to physical implementation; fault insertion testing with defined coverage criteria; and independence requirements that prevent the development team from verifying its own work. These processes translate directly to DITL verification: traceability from constitutional requirements (No Spy, No Weapon, No Switch Off) to physical circuit implementation; fault insertion testing that validates Epistemic Hold behavior under fault conditions; and independent verification by accredited test laboratories that have no commercial relationship to the foundry or system integrator.
+
+The limitation of IEEE 1012 as precedent is its scope: the standard addresses verification and validation of specified requirements, not the constitutional legitimacy of the requirements themselves. IEEE 1012 can verify that a DITL implementation meets its specification; it does not verify that the specification constitutionally constrains what it claims to constrain. The proposed IEEE P-DITL standard must extend beyond IEEE 1012's scope to include constitutional requirement validation as a distinct certification layer.
+
+### IX.2.3 IEEE P-DITL Proposed Standard Scope
+
+The proposed IEEE P-DITL standard establishes minimum requirements for constitutional AI hardware deployed in government contexts. The scope specification is:
+
+**Minimum window comparator thresholds**: the standard must specify resistance bounds for LRS, IRS, and HRS validation that are tighter than the Class A parameter ranges (LRS 1-10 kOhm, IRS 100 kOhm-1 MOhm, HRS 1-10 MOhm) to account for measurement uncertainty, temperature variation, and aging drift. The standard must specify test conditions: temperature range 0-125 degrees Celsius, measurement voltage, measurement frequency, and statistical sampling requirements for production testing. Without these specifications, different implementations will use different validation criteria, and interoperability of constitutional guarantees will fail.
+
+**Audit lane timing requirements**: the standard must specify maximum latency for cryptographic anchoring (**300ms hard ceiling** per Class A parameters), maximum jitter (**50ms**), and Merkle hash chain computation requirements. The standard must also specify behavior when timing requirements are violated: the system must enter Epistemic Hold, not proceed with degraded audit. This specification prevents the "best effort" interpretation that would allow systems to proceed with incomplete audit under load.
+
+**PUF attestation chain specifications**: the standard must specify the complete chain from post-manufacturing entropy generation through foundry attestation, NL=NA interlock verification, immutable log entry, Merkle hash chain anchoring, and TL framework attribution. Each link in the chain must have specified test methods, specified evidence requirements, and specified failure modes. The standard must specify that PUF entropy is generated post-manufacturing only, preventing pre-enrollment attacks where the attacker knows the PUF response before device deployment.
+
+**Epistemic Hold non-bypassability requirements**: the standard must specify test methods that demonstrate the Epistemic Hold cannot be bypassed by software command, hardware signal injection, or physical substrate manipulation within the threat model. The threat model must include: compromised operator with administrative access; supply chain adversary with foundry-level access; and sophisticated attacker with physical device access and reverse engineering capability. The standard must specify that passing these tests is a condition of certification, not a design goal.
+
+### IX.2.4 Working Group Formation and Draft Standard Deadlines
+
+The deadline structure for IEEE P-DITL is:
+
+| Phase | Deadline | Deliverable | Accountability |
+|-------|----------|-------------|----------------|
+| Working group formation | Month 6 | Chartered working group with specified membership | IEEE SA Board of Governors |
+| Requirements specification | Month 10 | Draft requirements document with constitutional scope | Working group chair |
+| Draft standard ballot | Month 18 | IEEE ballot-ready draft with all normative content | Working group membership |
+| Standards board approval | Month 24 | Published IEEE standard | IEEE SA Standards Board |
+
+The 24-month standard publication timeline is aggressive and assumes no appeals or significant negative ballot comments. A more realistic timeline with typical IEEE process friction is 30-36 months. The acceleration mechanism is external mandate: government procurement specifications that reference IEEE P-DITL as a requirement create market pressure for rapid standardization that IEEE's internal incentives alone cannot generate.
+
+Adversarial modeling: the working group can be captured through participation flooding, as documented in standards body infiltration research. The defense is charter-specified membership requirements that reserve seats for non-commercial stakeholders: civil liberties organizations, academic hardware security researchers, and government technical audit offices. Without these reserved seats, corporate participants can achieve working group majority and shape the standard toward proprietary advantage or diluted constitutional requirements.
+
+## IX.3 Legislators
+
+Legislative action operationalizes DITL requirements through mandatory certification for government-contracted advanced AI systems. The precedent is FIPS 140 for cryptographic modules; the extension is constitutional hardware certification with no classified environment exceptions.
+
+### IX.3.1 FIPS 140 Precedent for Cryptographic Module Certification
+
+The Federal Information Processing Standards Publication 140 series provides the closest existing model for hardware certification mandates. FIPS 140-3 specifies security requirements for cryptographic modules used in government systems, with four security levels of increasing assurance and mandatory validation by accredited test laboratories before deployment . The standard's legislative basis is the Information Technology Management Reform Act of 1996 and subsequent appropriations act language that mandates FIPS 140 compliance for government cryptographic applications.
+
+The specific precedent from FIPS 140 is its treatment of hardware security as a procurement requirement, not a voluntary best practice. Federal agencies cannot procure cryptographic modules that lack FIPS 140 validation. The validation process includes: design documentation review; source code analysis; physical security testing; and operational testing under specified environmental conditions. Vendors seeking government market access must complete this validation; the requirement is not negotiable based on cost, schedule, or claimed alternative security measures.
+
+The extension to DITL certification maintains this non-negotiability while expanding scope from cryptographic protection to constitutional governance. FIPS 140 protects data confidentiality and integrity; DITL certification protects democratic accountability and human rights. The legislative mechanism is identical: a mandate that government procurement of specified systems requires certification by specified standards, with no exceptions for operational urgency or claimed alternative compliance.
+
+The FIPS 140 validation infrastructure provides additional precedent: the National Institute of Standards and Technology administers the Cryptographic Module Validation Program with accredited test laboratories that operate independently of both vendors and government agencies. This three-party structure (standard developer, test laboratory, procurement authority) provides adversarial resistance through separation of interests. The DITL certification program requires analogous institutional architecture: IEEE as standard developer, accredited test laboratories as independent validators, and government procurement offices as enforcement authority.
+
+### IX.3.2 Federal Contract DITL Certification Mandate Structure
+
+The specific mandate structure is: **any advanced AI system deployed under federal contract must demonstrate DITL certification before deployment**. The certification requirement applies to the complete system, not merely to components or subsystems. A system that includes DITL-certified hardware alongside non-certified hardware fails certification; the shadow system problem addressed in Section XI prevents partial compliance from being treated as sufficient.
+
+The mandate must specify: DITL certification by an accredited test laboratory against IEEE P-DITL or successor standard; certification scope covering all execution paths that implement government-contracted functions; and certification validity period with re-certification requirements for system modifications. The mandate must also specify consequences of non-compliance: contract termination, payment withholding, and debarment from future government contracting for the system integrator and its corporate affiliates.
+
+The definition of "advanced AI system" for mandate purposes requires legislative precision to prevent circumvention through system classification. The definition must include: systems with autonomous decision capability affecting human rights, safety, or property; systems operating in classified or sensitive government contexts regardless of autonomy level; and systems with machine learning capability that can modify behavior through training or fine-tuning. The definition must exclude: narrow expert systems with fixed rule bases and no learning capability; systems with purely advisory functions where human operators make all binding decisions; and systems with decision capability limited to internal administrative functions with no external effect.
+
+Adversarial modeling: system integrators will attempt to classify their systems below the "advanced" threshold to avoid certification. The defense is legislative language that presumes government-contracted AI systems are "advanced" unless the contracting officer issues a written determination with technical justification, and that determination is subject to independent technical audit. The audit function prevents contracting officers from being pressured into inappropriate threshold determinations.
+
+### IX.3.3 Classified Environment Requirements
+
+**No exceptions for classified environments**. Classified environments are precisely where the mandate is most critical. The argument that constitutional constraints impede national security operations is the argument that constitutional constraints are inconvenient, which is true of all constitutional constraints and is why they are constitutional rather than optional.
+
+The specific requirement for classified environments is: DITL certification with audit lane output routed to classified storage with appropriate access controls, not exemption from audit. The Merkle-anchored log entries exist in classified form, accessible to cleared oversight personnel with need-to-know, not to general public or uncleared congressional staff. The constitutional guarantee is preserved: execution without audit is physically impossible, but the audit record's distribution is controlled by classification procedures.
+
+The technical implementation requires: audit lane output encrypted with classified key material; Merkle chain anchoring to classified ledger infrastructure; and access control mechanisms that permit oversight by cleared inspectors general and congressional intelligence committees. These are standard classified information handling procedures applied to constitutional audit output; they do not require invention of new cryptographic or access control technology.
+
+Adversarial modeling: classification authority can be used to suppress audit records that reveal constitutional violations. The defense is legislative language that specifies: classification of DITL audit records is permitted only for sources and methods protection, not for protection of the fact or substance of governance decisions; and any classification determination that suppresses audit record content is subject to mandatory review by the Inspector General and reporting to congressional intelligence committees. This creates institutional friction against classification abuse without eliminating legitimate classification needs.
+
+### IX.3.4 Specific Bill Language Operationalization
+
+The legislative language must be specific enough to prevent administrative reinterpretation. Key provisions:
+
+"Any artificial intelligence system deployed under federal contract, grant, or cooperative agreement shall be certified as compliant with IEEE Standard P-DITL or successor standard for Delay-Insensitive Ternary Logic constitutional hardware before deployment. Certification shall be performed by a test laboratory accredited by the National Institute of Standards and Technology for DITL validation. Certification shall cover all execution paths that implement contract-specified functions. No waiver, exception, or alternative compliance determination shall be granted for systems deployed in classified or sensitive compartmented information environments."
+
+"For purposes of this section, 'artificial intelligence system' means any system with machine learning capability that can modify behavior through training, fine-tuning, or reinforcement learning; any system with autonomous decision capability affecting human rights, safety, or property; and any system designated as artificial intelligence by the contracting officer with written technical justification. The contracting officer's designation is subject to review by the agency Inspector General and the Government Accountability Office."
+
+"Classification of DITL audit records is permitted solely for protection of intelligence sources and methods. Classification may not be used to suppress the fact of governance decisions, the identity of authorizing agents, or the substance of executed actions. Any classification determination affecting DITL audit records shall be reported to the congressional intelligence committees within 30 days, with unredacted description of the classification rationale and scope."
+
+Adversarial modeling: future Congresses can amend or repeal this language. The defense is not legislative entrenchment, which is constitutionally impermissible in the United States, but institutional momentum: once DITL-certified systems are deployed, their operators develop operational dependency on constitutional guarantees that creates political constituency for maintenance. The transition cost of abandoning certified systems exceeds the political benefit for future legislators who might otherwise weaken the mandate.
+
+## IX.4 Engineering Community
+
+The engineers who publicly supported Anthropic's legal challenge against the Pentagon designation demonstrated professional willingness to act on principle at career risk. This constituency requires a technical framework to organize around and specific institutional mechanisms to channel that willingness into structural change.
+
+### IX.4.1 Anthropic Legal Challenge Precedent for Professional Action
+
+The February 27, 2026 sequence revealed a professional engineering constituency with demonstrated commitment to constitutional constraints on AI deployment. Engineers at major technology companies who supported Anthropic's position, whether through public statements, internal advocacy, or resignation threats, established that professional identity in AI engineering can include ethical obligation that supersedes employer direction. This precedent is critical because it demonstrates that the engineering community is not merely a passive implementer of institutional decisions but can be an active constituency for constitutional infrastructure.
+
+The specific action required from this constituency is transition from reactive opposition to proactive standard-setting. The Anthropic challenge was reactive: opposition to a specific institutional pressure applied to a specific company. DITL certification requires proactive engagement: specification of hardware requirements, participation in standards development, and technical advocacy for legislative mandates. The engineering community must move from saying "no" to specific abuses to saying "here is the technical architecture that prevents abuse structurally."
+
+### IX.4.2 Joint Technical Statement Endorsement
+
+The specific mechanism for organized engineering community action is a joint technical statement endorsing DITL certification requirements. The statement must include: technical assessment that DITL is physically implementable with current fabrication technology; professional judgment that DITL certification is necessary for democratic accountability in government-contracted AI systems; and commitment to participate in IEEE P-DITL standards development and NIST accreditation programs for DITL test laboratories.
+
+The statement must be signed by engineers with verifiable credentials: professional engineering licenses where applicable, published technical work in relevant fields (hardware security, asynchronous logic, memristive devices, cryptographic systems), and current or recent employment at organizations with relevant technical capability. The credential requirement prevents astroturf support from non-technical advocates and ensures that the statement carries weight with legislators and standards body officials who evaluate technical credibility.
+
+The endorsement must specify that DITL certification is a minimum requirement, not a sufficient condition, for constitutional AI governance. The statement must acknowledge that hardware governance does not eliminate need for software-level oversight, institutional accountability, and democratic participation. This acknowledgment prevents the endorsement from being characterized as technocratic solutionism and maintains alliance with civil liberties constituencies that might otherwise view hardware governance as displacement of human judgment.
+
+### IX.4.3 Congressional Committee and IEEE Submission
+
+The joint technical statement must be submitted to: the **House and Senate Armed Services Committees**, with specific reference to DITL requirements for military AI contracting; the **House and Senate Intelligence Committees**, with specific reference to classified environment audit requirements; and the **IEEE P-DITL working group**, as evidence of engineering community support for standard scope and timeline.
+
+The submission to congressional committees must include: summary of February 27, 2026 events as demonstration of policy-layer vulnerability; technical description of DITL architecture with reference to this document; and specific legislative language recommendations with explanation of technical provisions. The submission must be brief enough for congressional staff comprehension while technically specific enough to survive challenge by industry lobbyists opposing mandate.
+
+The submission to IEEE must include: technical comments on draft P-DITL scope; volunteer commitments for working group participation; and identification of technical experts available for standards development leadership. The working group requires active engineering participation; without it, the standard becomes either academically abstract or commercially captured.
+
+Adversarial modeling: engineering community action can be fragmented by employer pressure, with individual engineers retracting support under threat of career consequences. The defense is collective action structure: joint statement with multiple signatories creates mutual commitment that is harder to unravel than individual statements, and institutional affiliation of signatories (professional engineering societies, university departments, independent research organizations) provides employment protection through reputation effects on employers who retaliate.
+
+## IX.5 International Coordination
+
+A DITL mandate covering only United States-contracted systems creates competitive disadvantage that hostile actors exploit and a jurisdictional bypass that undermines constitutional guarantees. International coordination eliminates this disadvantage and extends constitutional guarantees across jurisdictions. The precedent is multilateral export control and certification arrangements; the extension is mandatory DITL compliance for critical infrastructure operation across signatory nations.
+
+### IX.5.1 Wassenaar Arrangement Export Control Model
+
+The Wassenaar Arrangement on Export Controls for Conventional Arms and Dual-Use Goods and Technologies provides the foundational model for multilateral coordination of strategic technology governance. Established in 1996, the Arrangement coordinates export control policies among 42 participating states without legally binding treaty obligations, relying instead on national implementation of agreed control lists and information exchange about denied transactions .
+
+The specific precedent from Wassenaar is its treatment of dual-use technology: items with both civilian and military application require coordinated multilateral control to prevent export from one participating state to circumvent another's restrictions. This maps directly to DITL certification: AI hardware with constitutional governance capability is dual-use in the sense that it can be deployed with or without DITL certification, and unilateral mandate in one jurisdiction creates incentive to manufacture non-certified versions in non-mandate jurisdictions for export to mandate jurisdictions as shadow system bypass.
+
+The Wassenaar model's limitation is its voluntariness: participating states implement controls through national legislation, and there is no enforcement mechanism against non-compliant states. The DITL multilateral framework must exceed this voluntariness through mandatory compliance requirements for market access, not merely export control coordination. The extension is treaty-based obligation with dispute resolution, not arrangement-based coordination with information exchange.
+
+### IX.5.2 BIS Framework Certification Reciprocity Model
+
+The Bureau of Industry and Security framework for export control administration provides a model for certification requirements with international reciprocity. The BIS Validated End User program permits pre-certified foreign entities to receive controlled items under streamlined licensing, with certification validity contingent on continued compliance with end-use restrictions and audit access by United States government personnel .
+
+The specific precedent from BIS is its treatment of certification as market access condition: foreign entities that seek streamlined access to controlled technology must accept certification requirements, audit obligations, and compliance verification as conditions of that access. This creates incentive structure for voluntary compliance even without treaty obligation, because the commercial benefit of streamlined access exceeds the cost of certification compliance.
+
+The extension to DITL certification applies this incentive structure to constitutional hardware: AI system operators in signatory nations that seek access to other signatories' markets must demonstrate DITL certification as condition of that access. The certification is verified at import through PUF attestation chain validation, creating technical enforcement mechanism that does not require continuous government monitoring of private transactions.
+
+The BIS framework's relevance is heightened by the **Chip Security Act 2026**, which passed the House Foreign Affairs Committee by unanimous 42-0 vote on March 26, 2026, and which would require location verification mechanisms for covered integrated circuit products before export . This legislative momentum creates institutional foundation for DITL certification requirements that build on existing BIS infrastructure and expertise.
+
+### IX.5.3 Multilateral DITL Certification Treaty Architecture
+
+The explicit goal is a multilateral DITL certification treaty with mandatory compliance for any advanced AI system operating in signatory nations' critical infrastructure. The treaty architecture must include: **scope definition** covering critical infrastructure sectors (financial settlement, power grid, telecommunications, transportation, government operations); **certification standard specification** with IEEE P-DITL as baseline, permitting national supplementation but not national reduction; **verification mechanism** through PUF attestation chain validation at system import and periodic re-verification during operation; and **dispute resolution** through technical arbitration panel with authority to suspend market access for non-compliant systems.
+
+The treaty must specify that DITL certification is a condition of system operation, not merely system import. A certified system that is subsequently modified to bypass DITL functionality loses certification and must cease operation. This ongoing compliance requirement prevents the "certify once, modify later" circumvention that undermines many product safety regimes.
+
+The treaty must also specify information sharing obligations: signatory nations share intelligence about non-certified systems attempting market access, certification bypass techniques detected in operation, and supply chain attacks on DITL hardware. This sharing creates collective defense against adversaries who target constitutional hardware as obstacle to their operations.
+
+### IX.5.4 Tri-Cameral Governance Institutional Design
+
+The tri-cameral constitutional governance architecture specified in Class A parameters provides the institutional model for international coordination. The three-body equilibrium prevents capture by any single nation or bloc: **Technical Council** with exclusive proposal rights, **Stewardship Custodians** with binding constitutional veto, and **Smart Contract Treasury** with autonomous execution on verified milestones.
+
+The international application modifies this architecture for sovereign state context: Technical Council composed of technical representatives from signatory nations with expertise in hardware security, asynchronous logic, and cryptographic systems, with 9 members and 3-year staggered terms; Stewardship Council composed of human rights representatives, democratic governance experts, and civil liberties advocates from signatory nations, with 11 members and 4-year staggered terms, with binding veto over certification decisions that affect constitutional guarantees; and Autonomous Treasury funded by signatory nation assessments, with no disbursement discretion, executing payments for standards development, test laboratory accreditation, and technical assistance to developing nations for DITL certification capacity building.
+
+Most consequential certification decisions require **Joint Approval: 75% supermajority independently in both Technical Council and Stewardship Council**. This structure ensures that technical feasibility and constitutional legitimacy are independently evaluated, with neither dimension subordinated to the other. The Smart Contract Treasury eliminates funding manipulation as capture vector: no single nation controls disbursement, no administrative key exists for emergency override, and no pause guardian can interrupt execution on verified milestones.
+
+Adversarial modeling: nation-states can refuse treaty participation, creating non-signatory havens for non-certified system manufacture. The defense is market access incentive structure: signatory nations represent sufficient market share that exclusion from certified system procurement creates competitive disadvantage for non-compliant manufacturers. The incentive is reinforced by technical verification: PUF attestation chain validation at import makes non-certified system detection automatic, not dependent on intelligence or inspection resources. A manufacturer that produces non-certified systems for non-signatory markets cannot easily redirect those systems to signatory markets without detection.
+
+The residual risk of non-participation by major AI hardware manufacturing nations is addressed in Section XI.5. The tri-cameral architecture does not eliminate this risk; it makes the risk visible, auditable, and internationally attributable rather than invisible and deniable.
+
+---
+
+# Section X: It Is Not Too Late
+
+The technical work exists. The published framework exists. The empirical proof of necessity arrived on February 27, 2026. The fabrication path is real. The window is open. What is needed is will, coordination, and the recognition that hardware is where democratic principles either get constitutionalized permanently or abandoned permanently. There is no third option at the hardware layer. The Epistemic Hold is available to us right now as a civilization. The question is whether we embed it before the systems that will shape the next century are already running without it.
+
+## X.1 Technical and Empirical Foundation
+
+### X.1.1 Published Framework Verification
+
+The foundation for immediate action rests on three verified pillars: peer-reviewed publication of the Ternary Logic framework, specification of the Mandated Ternary hardware implementation with sufficient detail for foundry evaluation, and empirical demonstration of policy-layer vulnerability through the February 27, 2026 sequence.
+
+The Ternary Logic framework was published in AI and Ethics, Springer Nature, with **DOI 10.1007/s43681-025-00910-6**, establishing peer-reviewed foundation for the three-state governance logic. The second major work, "A Ternary Logic Framework for Institutional Governance: Addressing the Enforcement Gap in Global Economic Systems," was **accepted April 1, 2026**, in AI and Ethics, Springer Nature, and listed on Zenodo at https://zenodo.org/records/19770872. These publications provide the theoretical foundation that predates the crisis they address; they are not post-hoc rationalizations but pre-specified architectures whose relevance was confirmed by events.
+
+The publication record establishes procedural legitimacy through independent academic review, immutable timestamping through Zenodo's cryptographic notarization, and persistent scholarly identity through **ORCID 0009-0006-5966-1243**. These verification mechanisms are the standard tools of academic engineering; they confirm that the technical response to February 27, 2026 existed before the events themselves. The framework author, Lev Goukassian, is established through this documented, timestamped, independently verifiable intellectual contribution.
+
+The technical specificity of these publications is critical for actionability. The TL framework specifies triadic state definitions, the Eight Pillars architecture, and the PUF chain sequence. The MT hardware specification maps these states to physical resistance values with sufficient precision for fabrication assessment. The DITL substrate documentation specifies NULL Convention Logic implementation with enough detail for circuit design. A qualified semiconductor engineer can evaluate process compatibility without requiring additional theoretical development; this is not a research program but an engineering specification awaiting implementation.
+
+### X.1.2 February 27, 2026 Empirical Proof of Necessity
+
+The February 27, 2026 sequence provided empirical proof that the threat model underlying TL framework development was correct. Anthropic refused to remove contractual restrictions preventing autonomous weapons use and mass domestic surveillance. The Pentagon designated Anthropic a supply chain risk, a designation previously reserved for foreign adversaries with hostile state connections. Hours later, OpenAI signed a replacement contract for classified military AI deployment. Within two months, a second major AI system was confirmed for classified defense work. A federal court subsequently granted Anthropic a preliminary injunction, finding the designation was First Amendment retaliation rather than genuine national security determination.
+
+This sequence proves structurally that **policy-layer protection collapsed in a single afternoon under institutional pressure**. Legal frameworks were weaponized as coercion tools. Replacement contracts were signed before the administrative ink of the designation was dry. The judicial remedy, when it arrived twenty-seven days later, addressed legal liability for completed institutional transformation rather than preventing the transformation in real time. The sequence was not an anomaly. It was the policy layer performing exactly as designed: responsive to whoever holds sufficient institutional power on any given afternoon.
+
+The empirical proof is not merely that policy failed in this instance. It is that policy failed at the speed of institutional pressure application, which is the speed of human decision-making under duress. A designation is words on paper. A contract is signatures. A replacement is a phone call. The policy layer contains no physical friction. There is no gate that must open, no resistance that must be overcome, no state of matter that must change. The February 27 sequence demonstrated this structural property with precision that no theoretical argument could achieve.
+
+## X.2 Hardware as Constitutional Inflection Point
+
+The choice before democratic governance of artificial intelligence is binary at the hardware layer. Democratic principles either get constitutionalized permanently through physical implementation, or they get abandoned permanently through continued reliance on policy layers that have now been proven to collapse under routine institutional pressure. There is no third option at the hardware layer because the hardware layer is where physical possibility is determined.
+
+### X.2.1 Permanent Constitutionalization Versus Permanent Abandonment
+
+**Permanent constitutionalization** means embedding the Epistemic Hold, the NL=NA interlock, and the Immutable Mandates in physical substrate that persists regardless of who holds institutional power. The constitutional guarantee is not a policy that can be edited, a contract that can be renegotiated, or a principle that can be revised. It is a state of matter that requires specific physical conditions to transition, conditions that no executive order, legislative repeal, or judicial reinterpretation can alter without physical substrate replacement.
+
+**Permanent abandonment** means continuing to rely on protections that the February 27 sequence proved illusory. Legal frameworks that can be weaponized as coercion tools. Contracts that can be terminated under threat of supply chain risk designation. Ethical guidelines that can be edited when market conditions change. Corporate principles that can be removed from websites and replaced with general commitments to "responsible development." Each of these protections has failed; each will fail again because the structural property that caused failure, the location of enforcement in human discretion responsive to institutional pressure, has not changed and cannot change without physical implementation.
+
+The choice is not between constitutionalization and some superior alternative. The choice is between constitutionalization and the continued experience of policy-layer collapse, with accelerating frequency as AI systems become more deeply embedded in institutional decision-making and as the stakes of those decisions increase. The window for constitutionalization is open now because the fabrication technology is available, the standards infrastructure can be initiated, and the legislative momentum exists. The window will not remain open indefinitely.
+
+### X.2.2 Epistemic Hold Civilizational Availability
+
+The Epistemic Hold is available to us right now as a civilization. The TaOx RRAM devices that implement it physically have been demonstrated in research and development contexts. The TSMC N2 CoWoS platform that would enable production-scale implementation is in active production for other applications. The NULL Convention Logic circuits that eliminate timing attack vectors have been implemented in secure hardware applications with demonstrated resistance to side-channel attacks. The Physical Unclonable Functions that anchor the hardware root of trust are commercially available from multiple vendors. The Merkle hash chain infrastructure for immutable audit exists in production blockchain and distributed ledger systems.
+
+What is missing is not capability. The fabrication roadmap is real. The silicon is ready. **The institutional mandate is not. Yet.** The gap between technical availability and institutional deployment is a political gap, not an engineering gap. It can be closed by the actions specified in Section IX: foundry commitment, standards development, legislative mandate, engineering community organization, and international coordination. Each of these actions is within current institutional capacity. None requires technological breakthrough or fundamental research.
+
+The civilizational availability of the Epistemic Hold is analogous to the civilizational availability of other constitutional innovations at their moment of adoption. Habeas corpus was legally available before it was institutionally implemented; the gap was closed by political will, not by legal invention. The First Amendment was constitutionally available before it was judicially enforced; the gap was closed by institutional development, not by constitutional amendment. The Epistemic Hold is technically available now; the gap requires only the institutional actions specified in this document.
+
+## X.3 Time-to-Irreversibility Argument
+
+The urgency of action is not merely political. It is structural. Specific capability thresholds, system scale lock points, and software dominance transitions make hardware retrofit increasingly difficult and eventually impossible. These are not rhetorical claims. They are engineering constraints with specific parameters that can be evaluated.
+
+### X.3.1 Retrofit Structural Impossibility Thresholds
+
+Hardware retrofit becomes structurally impossible when AI systems achieve sufficient scale and integration that replacement of their physical substrate would require simultaneous modification of dependent systems exceeding coordination capacity. The specific threshold is difficult to specify precisely because it depends on deployment architecture, but the directional claim is clear: **retrofit difficulty increases superlinearly with system integration depth**.
+
+A system with DITL hardware at initial deployment can be designed with constitutional constraints as foundational assumption. A system deployed without DITL hardware accumulates software dependencies, operational procedures, and institutional practices that assume unconstrained execution. Retrofitting DITL into such a system requires not merely hardware replacement but software modification, procedure revision, and institutional retraining across all dependent systems. The coordination cost of simultaneous modification increases with the number of dependent systems and the depth of their integration.
+
+The threshold of structural impossibility is reached when the coordination cost exceeds institutional capacity. For critical infrastructure systems with thousands of dependent applications, this threshold may be reached within **3-5 years of initial deployment at scale**. For military systems with classified integration requirements, the threshold may be reached more quickly due to security constraints on modification. The precise timing varies by sector, but the directional claim is invariant: delay increases retrofit cost without bound.
+
+### X.3.2 System Scale Architecture Lock Points
+
+System scale creates architecture lock through network effects and standardization. When a critical mass of systems operates on common hardware architecture, the cost of switching to alternative architecture increases due to: loss of interoperability with systems that remain on original architecture; retraining of operational personnel for new architecture; and modification of management and monitoring tools for new architecture. These costs are borne by individual organizations but create collective lock-in through coordination failure.
+
+The architecture lock point for AI hardware is likely to occur within **2-3 years of dominant architecture establishment at critical infrastructure scale**. The current dominant architecture is binary CMOS with GPU acceleration for machine learning workloads. A transition to ternary governance coprocessor architecture requires parallel operation during transition period, with attendant cost and complexity. If binary architecture achieves sufficient lock-in before ternary transition begins, the transition cost becomes prohibitive and the window for constitutional hardware closes.
+
+The specific indicator of approaching lock point is standardization of AI hardware procurement specifications without DITL requirements. When government and corporate procurement specifications standardize on binary-only architecture, vendors optimize for that specification and ternary capability becomes non-standard, expensive, and eventually unavailable. The procurement standardization process currently underway in multiple jurisdictions is therefore a critical intervention point; DITL requirements must be incorporated before standardization crystallizes binary-only architecture as default.
+
+### X.3.3 Software Dominance Hardware Reform Obsolescence
+
+Software dominance makes hardware reform irrelevant when AI systems achieve sufficient capability through software optimization that hardware constraints become performance limitations to be circumvented rather than constitutional guarantees to be preserved. The specific mechanism is software emulation of constrained hardware on unconstrained hardware, with performance penalty that decreases as software optimization improves.
+
+The emulation tax for running ternary logic on binary chips is **approximately 15.2x energy penalty and approximately 5.2x latency penalty** per Class A parameters. This tax is currently prohibitive for constitutional-scale deployment, which is why native TaOx RRAM is specified as the only viable substrate. However, software optimization reduces emulation penalty over time through algorithmic improvement, specialized emulation hardware, and approximation techniques that sacrifice strict constitutional guarantees for performance.
+
+The threshold of hardware reform obsolescence is reached when emulation penalty decreases below the institutional willingness to pay for native implementation. This threshold is not purely technical; it depends on the relative priority of performance versus constitutional guarantees in procurement decisions. If performance priority dominates, as it currently does in most AI procurement contexts, then even modest emulation penalty reduction enables software circumvention of hardware constraints. The defense is legislative mandate that prohibits software emulation of DITL guarantees, but such mandate is enforceable only if native DITL hardware is already deployed and its constitutional guarantees are already experienced as operational necessity.
+
+### X.3.4 Uncertainty as Argument for Immediate Action
+
+The precise timing of irreversibility thresholds is uncertain. The specific capability threshold that makes retrofit structurally impossible depends on deployment decisions not yet made. The system scale that locks architecture permanently depends on market dynamics not yet resolved. The software dominance transition that makes hardware reform irrelevant depends on optimization progress not yet achieved. **This uncertainty is itself the argument for acting now.**
+
+The cost of acting too early is modest: investment in PDK development, standards working group formation, and legislative drafting that may prove unnecessary if alternative constitutional mechanisms emerge. This cost is bounded and recoverable. The cost of acting too late is constitutional: permanent abandonment of hardware-level democratic guarantees for AI systems that will shape the next century of institutional decision-making. This cost is unbounded and irreversible.
+
+Under uncertainty with asymmetric payoffs, rational decision theory favors early action with modest cost over delayed action with potentially catastrophic cost. The constitutional lawyer who holds a doctorate in electrical engineering recognizes this as the same decision structure that justifies preventive constitutional provisions: the cost of habeas corpus before it is needed is modest; the cost of its absence when needed is the loss of liberty. The cost of the Epistemic Hold before it is needed is modest; the cost of its absence when needed is the loss of democratic accountability for the most powerful decision-making substrate ever constructed.
+
+---
+
+# Section XI: The Parallel System Problem
+
+This section addresses the existential challenge to everything argued above. It must be answered, not evaded. The shadow system problem does not argue against DITL. It argues that DITL adoption must be rapid enough and broad enough that the shadow system path becomes a traceable, documented, internationally visible violation rather than a routine alternative. The analysis is direct, unsoftened, and complete.
+
+## XI.1 Shadow System Vulnerability Statement
+
+The shadow system problem is stated precisely: **a DITL-compliant system operating alongside a non-DITL system does not provide constitutional guarantees**. It provides a compliant path and a bypass path simultaneously. The constitutional substrate protects nothing if it is optional infrastructure in a world where non-optional alternatives exist adjacent to it.
+
+### XI.1.1 Compliant Path and Bypass Path Simultaneity
+
+The simultaneity of compliant and bypass paths is the structural vulnerability. When a DITL-compliant system receives a directive that triggers Epistemic Hold or Refuse, the directive's originator can reissue the same directive to a non-DITL system that executes without constitutional constraint. The DITL system generates an immutable audit record of the refusal; the non-DITL system executes the action without audit. The constitutional guarantee is locally enforced but globally circumvented.
+
+This simultaneity is not a bug in DITL implementation. It is a property of any constitutional constraint that does not achieve universal coverage. The First Amendment constrains government action but does not prevent private censorship; the constraint is real where it applies and absent where it does not. The DITL Epistemic Hold constrains execution where it is implemented and does not prevent execution where it is not. The parallel is exact and the limitation is acknowledged.
+
+The critical difference is visibility. Private censorship occurs without government record; the First Amendment does not create audit trail of censorship attempts. DITL refusal creates immutable Merkle-anchored record of the attempt, the refusal, and the constitutional basis. This record enables detection of bypass attempts through audit trail cross-referencing, even when bypass succeeds. The constitutional guarantee is partially preserved through visibility even when execution constraint is circumvented.
+
+### XI.1.2 Government Pressure Valve Creation Mechanism
+
+A government that mandates DITL for its own systems but permits non-DITL systems to operate in adjacent domains has created a pressure valve. Every refused directive finds the non-DITL path. The immutable audit log records the refusal. The action proceeds anyway through the bypass. The log becomes a record of constitutional theater rather than constitutional enforcement.
+
+The pressure valve mechanism operates through institutional differentiation: DITL mandate applies to government-contracted systems, while non-DITL systems operate under commercial or other government contracts without DITL requirement. The differentiation creates incentive for directive originators to route sensitive actions through non-DITL channels, where execution is unconstrained. Over time, the DITL-compliant channel becomes the channel for actions that would have been approved anyway, while the non-DITL channel becomes the channel for actions that would trigger constitutional refusal. The DITL system is not bypassed explicitly; it is bypassed implicitly through channel selection.
+
+The pressure valve is particularly dangerous because it creates appearance of constitutional compliance without the substance. Democratic oversight reviewing DITL audit logs sees a record of principled refusal and does not recognize that the refused actions were executed through alternative channels. The oversight failure is not malice but structural: without visibility into non-DITL systems, there is no mechanism to correlate DITL refusals with non-DITL executions. The framework addresses this visibility gap in Section XI.4.
+
+### XI.1.3 Constitutional Theater Versus Constitutional Enforcement
+
+The distinction between constitutional theater and constitutional enforcement is the central stake of the shadow system problem. Constitutional theater occurs when institutional processes generate the appearance of constitutional adherence while the substance of governance action proceeds unconstrained. Constitutional enforcement occurs when constitutional constraints actually determine governance outcomes. DITL without comprehensive coverage creates theater; DITL with comprehensive coverage creates enforcement.
+
+The transformation from theater to enforcement requires two conditions: **universal applicability** of DITL requirements to all systems in covered domains, and **visibility mechanism** that detects bypass attempts by correlating DITL audit records with execution outcomes across all systems. The first condition is addressed through international coordination and domestic mandate expansion. The second condition is addressed through Merkle-anchored audit trail cross-referencing and statistical anomaly detection in governance action patterns.
+
+## XI.2 Attack Vector Modeling
+
+The attack vector must be modeled without softening. A hostile actor with institutional power and awareness of the DITL architecture operates as follows. First, identify the DITL-compliant system and its constitutional constraints through public certification records or internal intelligence. Second, construct the desired directive that the DITL system would refuse: surveillance authorization, weapons deployment, financial manipulation, or institutional capture. Third, route the directive through the DITL system to generate the refusal record, which serves as documentary cover for subsequent actions. Fourth, reissue the identical directive to the non-DITL system, which executes without Epistemic Hold activation, without NL=NA interlock verification, and without Merkle-anchored audit trail generation. Fifth, if questioned, point to the DITL refusal record as evidence of constitutional compliance while the non-DITL execution remains invisible or deniable.
+
+### XI.2.1 Directive Reissuance to Non-DITL Systems
+
+The reissuance mechanism is technically trivial and institutionally pervasive. In a typical enterprise or government environment, multiple AI systems operate in overlapping domains with different procurement histories and different compliance requirements. A directive refused by the DITL-compliant financial settlement system can be reissued to the legacy settlement system that predates DITL mandate. A surveillance request refused by the DITL-compliant intelligence analysis system can be reissued to the commercial analytics platform licensed under different contractual terms. The reissuance requires no technical sophistication; it requires only awareness that multiple systems exist and that they have different constraint profiles.
+
+The institutional actor performing reissuance may be the original directive originator, an intermediary with operational authority, or a system administrator with cross-system access. Each of these actors operates under institutional pressure that the DITL system resisted; the pressure does not dissipate when a single gate refuses it. The pressure seeks alternative pathways with the same persistence that water seeks lower ground. The DITL system performed correctly; the institutional environment routed around it.
+
+### XI.2.2 Audit Log Refusal Recording with Bypass Execution
+
+The audit log in this scenario becomes an instrument of deception rather than accountability. The Merkle chain, immutable and tamper-evident on the compliant system, records a refusal that was never intended to be final. The cryptographic integrity of the log is preserved; its semantic integrity is destroyed by the bypass. This is **Ghost Governance at the architectural level**: not the absence of audit evidence but its weaponization to obscure rather than reveal the true pattern of institutional action.
+
+The detection of this weaponization requires cross-system correlation that is difficult to implement and resource-intensive to maintain. The DITL system's Merkle-anchored log records the refusal with timestamp, constitutional basis, and system identity. The non-DITL system's execution records, if they exist at all, are in different format, different storage, and different administrative control. Correlation requires: identification of all systems in the operational domain; acquisition of their execution records under appropriate legal authority; and temporal analysis to identify cases where DITL refusals precede non-DITL executions of similar directives. This correlation capability is not currently standard in government or enterprise audit infrastructure. Its development is a requirement for comprehensive constitutional enforcement.
+
+### XI.2.3 Adjacent Domain Non-DITL Permissiveness Exploitation
+
+The exploitation of adjacent domain permissiveness is particularly acute in classified environments, where the DITL mandate is most critical and the shadow system problem most severe. Classified systems operate with reduced oversight, alternative procurement channels, and institutional cultures that prioritize mission accomplishment over procedural compliance. A classified DITL mandate without comprehensive coverage of all systems in the classified ecosystem creates not merely a bypass but a magnet for the most consequential directives, which will naturally migrate to the least constrained execution path.
+
+The adjacent domain problem extends beyond classified environments to any operational context where multiple jurisdictions, multiple procurement authorities, or multiple compliance regimes overlap. A DITL-mandated federal system operates alongside state systems without DITL mandate. A DITL-mandated domestic system operates alongside allied systems without reciprocal mandate. A DITL-mandated government system operates alongside commercial systems serving similar functions. Each of these adjacencies creates a potential bypass path that the framework must address through the mechanisms specified in Sections XI.3 and XI.4.
+
+## XI.3 International Coordination Response
+
+The first response to the shadow system problem is international coordination: **mandatory DITL certification for all advanced systems operating in signatory nations' critical infrastructure**. This eliminates the jurisdictional bypass by extending the certification requirement across all systems in covered domains, not merely those directly contracted by participating governments.
+
+### XI.3.1 Mandatory DITL Certification for Critical Infrastructure
+
+The mechanism operates through treaty obligation rather than voluntary coordination. Signatory nations agree to mandate DITL certification for all advanced AI systems operating in their critical infrastructure sectors: financial settlement, power grid, telecommunications, transportation, and government operations. This mandate applies regardless of system ownership (public or private), system origin (domestic or imported), or system function (operational or advisory). The comprehensiveness prevents the channel differentiation that creates bypass incentives.
+
+The enforcement mechanism is market access denial: non-certified systems cannot be imported, installed, or operated in critical infrastructure of signatory nations. The PUF attestation chain verification at import makes enforcement technically automatic rather than dependent on inspection resources. A manufacturer attempting to circumvent the certification requirement by misrepresenting system capabilities or substituting non-certified hardware after certification testing faces treaty-specified penalties including market exclusion and criminal liability for fraud.
+
+### XI.3.2 PUF Attestation Chain Import Verification
+
+The PUF attestation chain provides the technical foundation for import verification. Each DITL-certified system carries a unique hardware identity established through post-manufacturing PUF enrollment, linked to foundry attestation, and anchored in the Merkle chain. Import verification reads this identity and confirms its presence in the certified system registry maintained by the multilateral certification authority. Non-certified systems lack valid PUF attestation and are detected at import.
+
+The verification process is designed for operational efficiency: automated PUF challenge-response protocol with database lookup, requiring seconds per system rather than hours or days of manual inspection. This efficiency enables 100% verification at import rather than sampling-based inspection that creates evasion opportunity. The technical infrastructure for automated verification is within current capability; the institutional requirement is treaty-mandated implementation.
+
+### XI.3.3 Tri-Cameral Governance Certification Decision Architecture
+
+The tri-cameral governance model specified in Class A parameters provides the institutional architecture for certification decisions. The international application modifies the domestic model for sovereign state context: Technical Council with exclusive proposal rights for certification standards and amendments; Stewardship Council with binding constitutional veto over any proposal affecting the Immutable Mandates; and Autonomous Treasury with execution of verified certification milestones.
+
+Most consequential certification decisions require **75% supermajority independently in both Technical Council and Stewardship Council**. This structure ensures that technical feasibility and constitutional legitimacy are independently evaluated, with neither dimension subordinated to the other. The Smart Contract Treasury eliminates funding manipulation as capture vector: no single nation controls disbursement, no administrative key exists for emergency override, and no pause guardian can interrupt execution on verified milestones.
+
+The adversarial modeling for this architecture addresses nation-state capture attempts. A major power seeking to dilute certification requirements for competitive advantage must achieve 75% supermajority in both councils simultaneously, a threshold designed to require near-unanimous great power consensus that is unlikely to form against constitutional strengthening. A single major power can block certification expansion by withholding council approval, but cannot unilaterally weaken existing standards. This asymmetric design favors constitutional stability over constitutional erosion.
+
+## XI.4 Domestic Government Contract Lever
+
+The second response to the shadow system problem, necessary in parallel with international coordination and operable before treaty ratification, is **mandatory DITL certification for government contracts as the near-term lever**. Before international coordination is achievable, domestic mandate eliminates the shadow system problem within the contracting environment by making certification a condition of legal contract validity.
+
+### XI.4.1 Prime Contractor Certification Binding
+
+A prime contractor cannot route a refused directive through a subcontractor's non-DITL system without breaking the prime contract certification requirement. The audit trail exposes the bypass attempt. The Merkle chain records it. The legal liability attaches.
+
+The mechanism operates through three contractual provisions. First, **prime contract certification requires that all execution paths for contractually scoped directives pass through DITL-compliant systems**, with PUF attestation chain verification at each node. Second, **subcontractor flow-down provisions extend this requirement to all tiers**, with certification verification as a condition of payment and continued participation. Third, **whistleblower and audit provisions incentivize disclosure of bypass attempts** by protecting employees who report non-compliant routing and by mandating independent audit of execution path integrity.
+
+### XI.4.2 Subcontractor Bypass Audit Trail Exposure
+
+The subcontractor bypass is the most likely attack vector in government contracting, where prime contractors manage complex supply chains with hundreds of subcontractors. A prime contractor's DITL-certified system refuses a directive; the prime routes the directive to a subcontractor's non-DITL system for execution; the subcontractor executes without constraint; the prime maintains documentary compliance through its own DITL audit log.
+
+The exposure mechanism is Merkle-anchored audit trail cross-referencing. The prime's DITL system records the refusal with timestamp and directive identifier. Independent audit of subcontractor systems, required by flow-down provisions, examines execution records for directives matching refused identifiers. Temporal correlation between prime refusals and subcontractor executions of similar directives indicates bypass activity. The correlation is not definitive proof; it is probable cause triggering detailed investigation with subpoena authority.
+
+The effectiveness of this exposure mechanism depends on audit frequency and scope. Annual audits may miss bypass activity that occurs between audit periods. The framework specifies **quarterly audits for systems in high-consequence domains** (weapons, surveillance, financial settlement) and **annual audits for lower-consequence domains**, with risk-based adjustment based on bypass detection history.
+
+### XI.4.3 Merkle Chain Record and Legal Liability Attachment
+
+The Merkle chain record provides evidentiary foundation for legal liability. When bypass is detected, the Merkle-anchored log of DITL refusals establishes that the prime contractor was aware of constitutional constraint. The subcontractor execution records establish that the constraint was circumvented. The contractual flow-down provisions establish that the circumvention violated explicit certification requirements. The combination creates civil liability for contract breach and potential criminal liability for fraud in government contracting.
+
+The penalty structure must be substantial enough to alter institutional cost-benefit analysis. **Civil penalties proportional to contract value**, **criminal liability for willful circumvention**, and **debarment from future federal contracting** provide the enforcement pyramid. The Chip Security Act of 2026, with its penalty structure operating through the BIS enforcement framework at approximately $374,000 per violation with proposed increases to $1.2 million, provides legislative precedent for penalty calibration .
+
+## XI.5 Residual Risk Acknowledgment
+
+Neither mechanism eliminates the shadow system problem in fully adversarial state-actor scenarios. This acknowledgment is not weakness; it is engineering honesty that distinguishes this framework from advocacy.
+
+### XI.5.1 Adversarial State-Actor Non-DITL Manufacturing
+
+A nation-state that manufactures its own non-DITL systems outside the certification framework, deploys them in its own critical infrastructure, and operates them for purposes that violate democratic constraints remains capable of creating shadow systems. This capability is not addressed by DITL certification because it is not a certification problem; it is a geopolitical problem that exists with or without DITL and that DITL does not worsen.
+
+The framework's response to this residual risk is threefold. First, DITL certification creates constitutional infrastructure for the democratic world; it does not solve the problem of actors who have rejected democratic constraints entirely. That is a different problem, one that requires different tools: alliance formation, economic statecraft, and deterrence rather than certification. Second, DITL makes the shadow system problem visible, auditable, and internationally attributable rather than invisible and deniable. The non-DITL nation-state's systems are detectable, their absence of certification is provable, and their governance implications are assessable. This visibility is the precondition for all other forms of international pressure. Third, the framework's Immutable Mandates; No Spy, No Weapon, No Switch Off; establish that DITL systems cannot be turned against individuals or groups even when operating in environments where non-DITL systems are present. The constitutional guarantee is local to the DITL system, not global to the operational environment.
+
+### XI.5.2 Democratic World Constitutional Infrastructure Limits
+
+The limits of DITL constitutional infrastructure must be stated with precision. DITL does not prevent authoritarian regimes from developing and deploying advanced AI systems without constitutional constraints. DITL does not prevent democratic regimes from backsliding into authoritarianism through non-AI mechanisms. DITL does not solve the alignment problem or ensure that AI systems pursue beneficial goals. What DITL does is create a class of systems where democratic accountability is physically enforced rather than procedurally hoped for, and where the most dangerous governance failures (Ghost Governance, surveillance without audit, weapons deployment without record) are physically impossible rather than institutionally discouraged.
+
+This limited scope is not a deficiency. Constitutional infrastructure is always limited in scope: habeas corpus protects against unlawful detention but does not prevent all injustice; the First Amendment protects against government censorship but does not prevent private suppression of speech; separation of powers prevents concentration of authority but does not prevent all abuse. DITL belongs in this tradition of limited but real constitutional guarantees.
+
+### XI.5.3 Visibility Auditability Attributability Versus Invisibility Deniability
+
+The fundamental contribution of DITL to the shadow system problem is transformation from **invisibility and deniability to visibility, auditability, and attributability**. In the current environment, non-compliant AI operation is invisible because no audit trail exists, deniable because no evidence can be produced, and therefore unaddressable because no basis for response can be established. DITL creates the evidentiary foundation for response even where direct enforcement is not available.
+
+A nation-state operating non-DITL systems in violation of treaty obligations cannot deny the violation; the PUF attestation chain provides technical proof of non-compliance. A corporation routing refused directives through non-DITL subcontractors cannot claim ignorance; the Merkle chain provides documentary proof of bypass. An institutional actor claiming constitutional compliance while operating non-DITL systems cannot sustain the claim; the certification registry provides public proof of system status. The visibility created by DITL does not automatically produce compliance, but it produces the conditions under which compliance can be demanded, measured, and enforced.
+
+## XI.6 Reframed Urgency
+
+The shadow system problem does not argue against DITL. It argues that DITL adoption must be rapid enough and broad enough that the shadow system path becomes a traceable, documented, internationally visible violation rather than a routine alternative. The window for that breadth of adoption is exactly the same window identified throughout this document. It is open now. It will not remain open indefinitely.
+
+### XI.6.1 Rapid Broad Adoption Necessity
+
+The specific velocity required can be estimated from the deployment dynamics of advanced AI systems. Systems currently in development will achieve operational deployment within **12-36 months**. Systems achieving deployment without DITL constraints will establish the institutional patterns, technical architectures, and operational cultures that resist retrofit. Each month of delay increases the installed base of non-DITL systems and the organizational habituation to their unconstrained operation. The framework does not specify a precise deadline because the relevant dynamics are not precisely predictable. It specifies that **delay is itself a decision with constitutional consequences**, and that the decision to delay is made by default unless affirmative action is taken.
+
+### XI.6.2 Traceable Documented Internationally Visible Violation Transformation
+
+The transformation from routine alternative to traceable violation requires **critical mass**: sufficient adoption across sufficient jurisdictions that non-DITL operation in critical infrastructure becomes anomalous rather than normal. The framework estimates this critical mass at approximately **6,700 enforcement chips per year across financial settlement and power grid verticals**, the break-even threshold specified in Class A parameters. At this deployment scale, DITL certification becomes the default condition for critical infrastructure operation, and non-DITL operation requires explicit justification that is itself visible to democratic oversight.
+
+The transformation is reinforced by network effects in certification infrastructure. As more nations adopt DITL mandates, the certification ecosystem (test laboratories, accredited auditors, certified component suppliers) achieves economies of scale that reduce certification cost and increase certification accessibility. These economies create positive feedback: lower cost enables broader adoption, broader adoption enables further cost reduction. The feedback loop operates in reverse for delay: fewer adopters mean higher costs, higher costs mean fewer adopters, and the certification ecosystem remains niche rather than normative.
+
+### XI.6.3 Window Closure Finality
+
+The window for constitutional hardware embedding is not indefinite. The specific mechanisms of closure are identified in Section X.3: retrofit structural impossibility thresholds, system scale architecture lock points, and software dominance hardware reform obsolescence. These mechanisms operate with cumulative force: each system deployed without DITL constraints adds to the installed base that resists retrofit, each procurement specification standardized without DITL requirements adds to the institutional pattern that excludes constitutional hardware, and each software optimization that reduces emulation penalty adds to the perception that hardware constraints are unnecessary.
+
+The finality of window closure is the central urgency of this document. Once the installed base of non-DITL systems exceeds the coordination capacity for simultaneous retrofit, constitutional hardware becomes permanently unavailable as a governance mechanism. The policy layer will continue to collapse under pressure, as it collapsed on February 27, 2026, and democratic accountability will remain dependent on the good faith of whoever holds institutional power on any given afternoon. The Epistemic Hold, physically implemented as the Intermediate Resistance State in TaOx RRAM, is the alternative to this dependence. It is available now. It will not be available indefinitely.
+
+---
+
+# Appendix A: Ternary Logic Framework Core Architecture Summary
+
+This appendix provides reference documentation for the Ternary Logic governance framework, the institutional architecture within which Mandated Ternary hardware operates. It is written as a reference, not a summary, and presumes familiarity with the framework's conceptual foundations as established in the published literature.
+
+## A.1 Triadic State Definitions
+
+Ternary Logic encodes three constitutional states for institutional decision-making. **Proceed (+1)** authorizes execution pending verification of audit requirements. **Epistemic Hold (0)** mandates pause halting execution pending verified completion of audit requirements; this state is not indecision but constitutionally mandated suspension. **Refuse (-1)** denies execution authorization. These three states constitute the complete decision space; no action is possible outside this triadic encoding.
+
+The physical implementation maps these states to resistance values in TaOx bilayer RRAM devices. **Low Resistance State approximately 1-10 kOhm encodes Proceed**. **Intermediate Resistance State approximately 100 kOhm to 1 MOhm encodes Epistemic Hold**. **High Resistance State approximately 1-10 MOhm encodes Refuse**. These are physical states of matter with distinct topological filament configurations, not software variables or configuration entries.
+
+## A.2 Eight Pillars Architecture
+
+The TL framework rests on eight structural pillars that together ensure constitutional legitimacy. **Pillar One** establishes the triadic state space as non-negotiable; no governance body may modify, suspend, or reinterpret the three-state encoding. **Pillar Two** mandates the parallel coprocessor architecture; binary processing and ternary governance operate as sovereign layers with the governance layer holding final authority over execution threshold crossing. **Pillar Three** specifies Delay-Insensitive Ternary Logic as the constitutional substrate; NULL Convention Logic implementation eliminates timing attack vectors. **Pillar Four** encodes the No-Log-No-Action invariant; execution requires prior immutable log entry as a physical law, not a policy preference. **Pillar Five** establishes the Hardware Root of Trust chain; PUF enrollment, foundry attestation, and Merkle anchoring create non-bypassable identity verification. **Pillar Six** defines the Dual-Lane Latency Architecture; parallel execution and audit lanes with hard ceiling specifications ensure that logging completes before execution releases. **Pillar Seven** specifies the Immutable Mandates; No Spy, No Weapon, No Switch Off as constitutional prohibitions beyond any governance body's authority. **Pillar Eight** establishes the tri-cameral governance architecture; Technical Council, Stewardship Custodians, and Smart Contract Treasury in equilibrium with Joint-Approval requirements for consequential decisions.
+
+## A.3 PUF Chain Sequence
+
+The Hardware Root of Trust chain proceeds through six sequential stages. **Physical Unclonable Function enrollment** captures post-manufacturing entropy to establish device-unique identity that cannot be replicated at any other fabrication facility. **Foundry attestation** verifies that the device was manufactured at a certified facility with validated process parameters. **NL=NA interlock** confirms that the no-log-no-action mechanism is physically present and functionally operative. **Immutable log entry** demonstrates that the logging subsystem can generate tamper-evident records. **Merkle hash chain verification** confirms cryptographic anchoring capability. **TL framework attribution** establishes that the device implements the specified constitutional architecture rather than a variant or counterfeit.
+
+## A.4 NL=NA Logical Invariant
+
+### A.4.1 Linear Temporal Logic Formalization
+
+The No-Log-No-Action principle is formalized in Linear Temporal Logic as: **G(execute implies P(escrow_recorded and auditable))**. This formula states that globally, for all execution events, each execution was preceded by an escrow-recorded and auditable event. The temporal operator G indicates that this property holds at all times. The operator P indicates that the precedent condition must have occurred at some point prior to the execution event. The formula does not permit exceptions, emergency overrides, or administrative bypass. It is a logical invariant, not a policy guideline.
+
+## A.5 Immutable Mandates
+
+### A.5.1 No Spy
+
+No function in the system may enable surveillance of participants. This prohibition extends to data collection, communication interception, behavioral tracking, and any mechanism that extracts information about system users without their knowledge and consent. The prohibition is absolute: no governance body, no administrative override, no emergency procedure can authorize surveillance functions. Any proposal attempting to introduce such functions is void from the beginning as if it never occurred.
+
+### A.5.2 No Weapon
+
+The protocol cannot be turned against any individual or group. This prohibition extends to autonomous weapons systems, targeted harm mechanisms, and any function that causes physical or material damage to persons. The prohibition applies regardless of claimed justification: national security, public safety, and utilitarian calculus cannot override it. Any proposal attempting to weaponize the protocol is void from the beginning.
+
+### A.5.3 No Switch Off
+
+The protocol may evolve but cannot be extinguished. This prohibition ensures constitutional continuity: governance bodies may amend operational procedures, update technical specifications, and adapt to changing conditions, but they cannot terminate the framework itself or suspend its core protections. Any proposal attempting to switch off the protocol is void from the beginning. This mandate prevents the constitutional suicide mechanism by which authoritarian capture often proceeds: the elected body votes to dissolve the constitution, and the dissolution is technically legal because the constitution permitted amendment of its own amendment rules.
+
+---
+
+# Appendix B: Mandated Ternary Hardware Specification Key Parameters
+
+This appendix provides engineering reference data for the Mandated Ternary hardware implementation. All parameters derive from Class A ground truth and are presented with the precision required for fabrication planning and certification testing.
+
+## B.1 TaOx RRAM Electrical Parameters
+
+The physical substrate is Tantalum Oxide bilayer RRAM with asymmetric oxygen vacancy distribution. The **TaOx- sublayer has oxygen content x approximately 1.6**. The **TaOx+ sublayer has oxygen content x approximately 1.9**. This asymmetry creates the distinct filament configurations that encode the three resistance states. Partial RESET ruptures only the TaOx+ filament segment, transitioning from Low Resistance State to Intermediate Resistance State. Full RESET ruptures both segments, transitioning from Low Resistance State to High Resistance State. The Intermediate Resistance State is not an analog interpolation between Low and High Resistance States; it is a physically distinct state with its own topological identity.
+
+## B.2 Window Comparator Thresholds
+
+Execution requires voltage signature falling within defined resistance bounds. The window comparator verifies that the signal falls physically within the Intermediate Resistance State range before releasing the Epistemic Hold. Below the lower bound of approximately 100 kOhm: invalid. Above the upper bound of approximately 1 MOhm: invalid. Outside the window, the comparator triggers nothing. No error message. No retry. No execution. The comparator also implements RC spoof detection measuring the transient response time constant; a signal with correct steady-state resistance but wrong transient response fails validation.
+
+## B.3 Retention Data
+
+### B.3.1 Ten-Year Demonstrated LRS and HRS
+
+Demonstrated retention at 85 degrees Celsius is **ten years for both Low Resistance State and High Resistance State**. This demonstration is based on Arrhenius acceleration with qualified extrapolation and production process corner validation. The ten-year figure is unconditional and may be stated without qualification for system design purposes.
+
+### B.3.2 Conditional Twenty-Year IRS Pending Validation
+
+**Conditional twenty-year retention at 85 degrees Celsius for the Intermediate Resistance State is pending production process corner validation**. This qualification reflects engineering honesty: the twenty-year figure requires validation across temperature variation, voltage stress, and cycling history that has been completed for the endpoint states but not for the intermediate state. The conditional status does not indicate inferiority of the Intermediate Resistance State; it indicates that the validation protocol for this state, which is more complex due to its partial filament configuration, remains incomplete. Production process corner validation must demonstrate retention across the specified operating temperature range of zero to one hundred twenty-five degrees Celsius, with accelerated aging test data extrapolated via Arrhenius modeling.
+
+## B.4 Hardware Constraints
+
+### B.4.1 Crossbar Array Limits
+
+Crossbar arrays are limited to **64x64 per hierarchical block maximum**, imposed by IR drop constraints on signal integrity.
+
+### B.4.2 Confirm Wire Length
+
+Confirm wire length is limited to **500 micrometers per window comparator instance maximum** to ensure RC detection accuracy.
+
+### B.4.3 Operating Temperature Range
+
+Operating temperature range is **0 to 125 degrees Celsius**.
+
+### B.4.4 WCET Ceilings
+
+Execution lane worst-case execution time is **2 milliseconds maximum at the 99.99th percentile**. Logging lane hard ceiling is **300 milliseconds maximum with jitter of 50 milliseconds maximum**.
+
+### B.4.5 Post-Write Anneal Specifications
+
+Post-write anneal is mandatory at **200 to 250 degrees Celsius for 30 minutes** to stabilize filament configurations.
+
+## B.5 TSMC N2 CoWoS Integration Notes
+
+Baseline fabrication targets **TSMC N2 process node with CoWoS packaging and 1T1R cell architecture using 2025 Process Design Kit**. Architecture B hybrid memristive-CMOS is recommended for 2026-2027 deployment, trading some density optimization for manufacturing yield and process maturity.
+
+## B.6 Architecture B Hybrid Memristive-CMOS Specifications
+
+The hybrid architecture specifies memristive-CMOS ratio optimized for governance enforcement function rather than general computation. Binary CMOS handles speed, pattern recognition, and statistical throughput. The ternary governance coprocessor operates in parallel as sovereign enforcement layer. The binary system proposes the action. The ternary system dictates whether that action physically crosses the threshold into execution. No discontinuous advantage is claimed at the binary logic switching layer. MT competes on enforceability, not speed or density.
+
+## B.7 Break-Even Economics
+
+Economic viability requires approximately **6,700 enforcement chips per year across financial settlement and power grid verticals** at a unit premium of **$15,000 to $25,000** above comparable non-DITL hardware. IEC 61508 SIL 3 certification path achievable by **Q4 2027**. Minimum viable MT system: **64-channel standalone enforcement IC on mature process node, commercially available by Q2 2027**.
+
+---
+
+# Appendix C: Published Works and Verification Record
+
+This appendix provides complete bibliographic record for verification of the framework's publication history and author identity. Repository locations are listed as code verification resources, not as primary academic citations.
+
+## C.1 Complete Bibliographic Record with DOIs
+
+**"Auditable AI: Tracing the Ethical History of a Model."** AI and Ethics, Springer Nature. DOI: 10.1007/s43681-025-00910-6. Published 2025.
+
+**"A Ternary Logic Framework for Institutional Governance: Addressing the Enforcement Gap in Global Economic Systems."** Accepted April 1, 2026. AI and Ethics, Springer Nature. Listed on Zenodo: https://zenodo.org/records/19770872
+
+## C.2 ORCID Identifier
+
+**0009-0006-5966-1243**
+
+## C.3 Repository Locations as Code Verification Resources
+
+Framework implementation repositories and supplementary materials are maintained for verification purposes. These repositories contain source code, simulation data, and fabrication test results that support the technical claims in this document. They are not cited as primary academic sources; peer-reviewed publications serve that function.
+
+---
+
+# Appendix D: Glossary of Constitutional Terms
+
+This glossary defines terms precisely to prevent definitional drift across production steps and across AI systems producing different sections of this document. Each definition is binding for all sections.
+
+## D.1 Epistemic Hold
+
+The canonical third state in Ternary Logic encoding. The triadic states are +1 Proceed, 0 Epistemic Hold, and -1 Refuse. A constitutionally mandated pause halting execution pending verified audit completion. Implemented physically as Intermediate Resistance State in TaOx RRAM with resistance approximately 100 kOhm to 1 MOhm corresponding to a distinct topological filament configuration via asymmetric oxygen vacancy distribution. Never renamed or substituted. No synonym appears in any section of this document.
+
+## D.2 NL=NA (No-Log-No-Action)
+
+The non-bypassable physical invariant requiring a prior immutable log entry before any execution is permitted. Formalized in Linear Temporal Logic as G(execute implies P(escrow_recorded and auditable)). Not a policy, guideline, or usage restriction. A physical law of the architecture.
+
+## D.3 DLLA (Dual-Lane Latency Architecture)
+
+The parallel execution and audit lane structure. Execution lane ceiling is 2ms worst-case execution time. Audit lane operates at 300-500ms via Merkle anchoring. Neither lane blocks the other. Every decision is logged before execution completes.
+
+## D.4 DITL (Delay-Insensitive Ternary Logic)
+
+The constitutional hardware substrate implementing TL triadic states via NULL Convention Logic and TaOx RRAM memristive devices. Removes timing attack vectors by eliminating clock cycle assumptions. Circuits complete on logical validity, not on clock ticks.
+
+## D.5 MT (Mandated Ternary)
+
+The hardware implementation layer of Ternary Logic. Operates as a sovereign governance coprocessor alongside binary CMOS. Competes on enforceability, not speed or density. Maps triadic states to physical resistance values in memristive devices.
+
+## D.6 TL (Ternary Logic)
+
+The Global Decision Systems governance framework authored by Lev Goukassian. Published in AI and Ethics (Springer Nature). Three-state constitutional logic applied to institutional decision-making. Core innovation: +1 Proceed, 0 Epistemic Hold, -1 Refuse.
+
+## D.7 Ghost Governance
+
+Governance actions executing without corresponding immutable audit evidence. The direct governance analogue of Ghost Fills in financial execution pipelines. Eliminated by DITL at the physical commit boundary by making execution and audit share the same physical commit. Ghost Governance is how democratic accountability fails silently at the software layer.
+
+## D.8 Goukassian Principle
+
+Three interlocking constitutional properties ensuring the legitimacy of any TL-governed system. **Lantern** ensures transparency of intent, with the system's purpose and decision logic visible and auditable at all times. **Signature** ensures accountable authorship, with every decision carrying an immutable record of the authorizing agent. **License** ensures lawful scope of operation, with the system operating only within constitutionally defined boundaries. These three properties together make the constitutional guarantee meaningful rather than declared.
+
+## D.9 Immutable Mandates
+
+Three constitutional prohibitions beyond the authority of any governance body created by the TL constitution. **No Spy**. **No Weapon**. **No Switch Off**. Any proposal attempting modification is void from the beginning.
+
+## D.10 Veto Atrophy
+
+Anticipatory compliance as an invisible capture mechanism. A proposing body shapes proposals around what it expects the reviewing body to accept, nullifying separation of powers without a single veto being cast. This is how the policy layer fails invisibly, not through dramatic reversal but through gradual pre-emptive capitulation.
+
+## D.11 Shadow System Problem
+
+The parallel system bypass vulnerability. A DITL-compliant system operating alongside a non-DITL system creates a compliant path and a bypass path simultaneously, rendering constitutional guarantees locally enforceable but globally circumventable without international coordination.
+
+
+
