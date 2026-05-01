@@ -48,7 +48,7 @@ The TL framework introduces three states:
 - **0 Epistemic Hold:** The action is suspended pending additional verification. This is not a software flag. It is a physical memristive resistance state.
 - **-1 Refuse:** The action is permanently blocked. The refusal is logged with the same cryptographic rigor as a proceed.
 
-![DITL Three-Rail Architecture](https://fractonicmind.github.io/TernaryLogic/Constitutional_Hardware/img_09_ditl_three_rail_architecture.png)
+![DITL Three-Rail Architecture](https://raw.githubusercontent.com/FractonicMind/TernaryLogic/main/Constitutional_Hardware/img_09_ditl_three_rail_architecture.png)
 *Figure 3. Delay-Insensitive Ternary Logic (DITL) three-rail architecture. Rail 1 (+1 Proceed), Rail 2 (0 Epistemic Hold), Rail 3 (-1 Refuse). The window comparator resolves which rail is active based on physical resistance thresholds.*
 
 The Epistemic Hold is the architectural innovation. It is not a timeout. It is not a queue. It is a physical condition of the TaOx memristive film that no downstream circuit can proceed past without the correct ionic configuration being present. Those electrodes are not reachable from the compute layer's signal lines.
@@ -59,7 +59,7 @@ The Epistemic Hold is the architectural innovation. It is not a timeout. It is n
 
 The constitutional state is not simulated. It is grown.
 
-![TaOx Memristor Stack](https://fractonicmind.github.io/TernaryLogic/Constitutional_Hardware/img_03_taox_memristor_stack.png)
+![TaOx Memristor Stack](https://raw.githubusercontent.com/FractonicMind/TernaryLogic/main/Constitutional_Hardware/img_03_taox_memristor_stack.png)
 *Figure 4. Tantalum oxide memristor bilayer stack. The Pt top electrode, Ta₂O₅ switching layer, and TaO₂ oxygen-rich layer create an asymmetric oxygen vacancy distribution that stabilizes the intermediate resistance state.*
 
 Tantalum oxide (TaOx) resistive RAM maintains three stable resistance states through controlled oxygen vacancy migration:
