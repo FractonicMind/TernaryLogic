@@ -1,0 +1,1776 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>A Ternary Logic Hardware Proposal for Democratic AI Governance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tiempos+Headline:wght@400;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --secondary: #2d3748;
+            --accent: #d69e2e;
+            --text: #2d3748;
+            --background: #ffffff;
+            --muted: #718096;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+        
+        .serif {
+            font-family: 'Tiempos Headline', serif;
+        }
+        
+        .toc {
+            position: fixed;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 280px;
+            max-height: 80vh;
+            overflow-y: auto;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .toc a {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--muted);
+            text-decoration: none;
+            border-bottom: 1px solid #f7fafc;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+        
+        .toc a:hover {
+            color: var(--primary);
+            padding-left: 0.5rem;
+        }
+        
+        .toc .toc-level-2 {
+            padding-left: 1rem;
+            font-size: 0.8rem;
+        }
+        
+        .main-content {
+            margin-left: 320px;
+            max-width: 900px;
+            padding: 2rem;
+        }
+        
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            align-items: center;
+        }
+        
+        .hero-text {
+            position: relative;
+        }
+        
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        
+        .hero-visual {
+            position: relative;
+            height: 300px;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .circuit-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234a5568' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .ternary-states {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .state-node {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            position: relative;
+        }
+        
+        .state-node.proceed { background: #48bb78; }
+        .state-node.hold { background: #d69e2e; }
+        .state-node.refuse { background: #e53e3e; }
+        
+        .executive-summary {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-left: 4px solid var(--accent);
+            padding: 2rem;
+            margin: 3rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+            margin: 4rem 0;
+            border-radius: 1px;
+        }
+        
+        .citation {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 0.25rem;
+        }
+        
+        .citation:hover {
+            background: #b7791f;
+        }
+        
+        .chart-container {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid #e2e8f0;
+        }
+        
+        @media (max-width: 1200px) {
+            .toc { display: none; }
+            .main-content { margin-left: 0; max-width: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            .main-content {
+                padding: 1rem;
+            }
+            .ternary-states {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+  </head>
+
+  <body class="bg-white">
+    <!-- Fixed Table of Contents -->
+    <nav class="toc">
+      <h3 class="serif text-lg font-bold text-gray-800 mb-4">Contents</h3>
+      <a href="#foreword" class="toc-level-1">Foreword</a>
+      <a href="#section-i" class="toc-level-1">I. The Afternoon Everything Changed</a>
+      <a href="#section-ii" class="toc-level-1">II. The Permanent Vulnerability</a>
+      <a href="#section-iii" class="toc-level-1">III. What DITL Actually Means</a>
+      <a href="#section-iv" class="toc-level-1">IV. DITL Architecture</a>
+      <a href="#section-iv-a" class="toc-level-2">A. Why Three States?</a>
+      <a href="#section-iv-b" class="toc-level-2">B. Delay-Insensitive</a>
+      <a href="#section-iv-c" class="toc-level-2">C. Window Comparator</a>
+      <a href="#section-iv-d" class="toc-level-2">D. Memristive Devices</a>
+      <a href="#section-iv-e" class="toc-level-2">E. Human Protection</a>
+      <a href="#section-iv-f" class="toc-level-2">F. Dual-Lane Architecture</a>
+      <a href="#section-iv-g" class="toc-level-2">G. Failure Modes</a>
+      <a href="#section-v" class="toc-level-1">V. The Epistemic Hold</a>
+      <a href="#section-vi" class="toc-level-1">VI. Technical Path Today</a>
+      <a href="#section-vii" class="toc-level-1">VII. Three Scenarios</a>
+      <a href="#section-viii" class="toc-level-1">VIII. Not Machines Only</a>
+      <a href="#section-ix" class="toc-level-1">IX. Who Must Act and When</a>
+      <a href="#section-x" class="toc-level-1">X. It Is Not Too Late</a>
+      <a href="#section-xi" class="toc-level-1">XI. The Parallel System Problem</a>
+      <a href="#appendices" class="toc-level-1">Appendices</a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Hero Section -->
+      <div class="hero-grid">
+        <div class="hero-text">
+          <h1 class="serif">A Ternary Logic Hardware Proposal for Democratic AI Governance</h1>
+          <p class="text-xl text-gray-600 font-light leading-relaxed">
+            Constitutional infrastructure for artificial intelligence through delay-insensitive ternary logic
+          </p>
+          <div class="flex items-center gap-4 mt-6 text-sm text-gray-500">
+            <span><i class="fas fa-user mr-2"></i>Lev Goukassian</span>
+            <span><i class="fas fa-calendar mr-2"></i>April 2026</span>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="circuit-pattern"></div>
+          <div class="ternary-states">
+            <div class="state-node proceed">+1</div>
+            <div class="state-node hold">0</div>
+            <div class="state-node refuse">-1</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Executive Summary -->
+      <div class="executive-summary">
+        <h3 class="serif text-xl font-bold mb-3 text-gray-800">Executive Summary</h3>
+        <p class="text-gray-700 leading-relaxed">
+          The February 27, 2026 events demonstrated that policy-layer protection for AI systems collapses under institutional pressure. This proposal introduces Delay-Insensitive Ternary Logic (DITL) as constitutional hardware infrastructure that makes democratic accountability physically enforceable rather than procedurally declared. Through three-state logic implemented in TaOx RRAM memristive devices, DITL creates an Epistemic Hold that constitutionally mandates pause before irreversible action, eliminating Ghost Governance and ensuring immutable audit trails.
+        </p>
+      </div>
+
+      <!-- Foreword -->
+      <section id="foreword">
+        <h2 class="serif text-3xl font-bold mb-6 text-gray-800">Foreword: A Framework Written Before the Crisis</h2>
+
+        <p class="text-lg leading-relaxed mb-6">
+          The Ternary Logic framework was published in AI and Ethics, Springer Nature, with <a href="https://doi.org/10.1007/s43681-025-00910-6" class="citation">DOI 10.1007/s43681-025-00910-6</a>. The Mandated Ternary hardware specification was completed and documented. The DITL constitutional substrate was fully specified with TSMC N2 CoWoS ReRAM 1T1R 2025 PDK as baseline fabrication target. All before February 27, 2026.
+        </p>
+
+        <p class="text-lg leading-relaxed mb-6">
+          This is not vindication. It is empirical confirmation that the threat model was correct, the technical path was specified, and the window to act remains open but closing. The framework author, Lev Goukassian, established through timestamped, peer-reviewed publication that the constitutional response to February 27 existed before the events it addresses.
+        </p>
+
+        <p class="text-lg leading-relaxed font-medium text-gray-800">
+          Every layer above hardware is ultimately negotiable under sufficient pressure. This document proves it through historical cases, physical analysis, and scenario modeling. The Epistemic Hold, implemented as Intermediate Resistance State in TaOx RRAM, is the alternative.
+        </p>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Section I -->
+      <section id="section-i">
+        <h2 class="serif text-3xl font-bold mb-6 text-gray-800">Section I: The Afternoon Everything Changed</h2>
+
+        <p class="text-lg leading-relaxed mb-6">
+          February 27, 2026, marks the historical moment when policy-layer protection for AI systems collapsed under institutional pressure. Anthropic refused to remove contractual restrictions preventing its AI from autonomous weapons use and mass domestic surveillance. The Pentagon designated Anthropic a supply chain risk, a designation previously reserved for foreign adversaries with hostile state connections.
+        </p>
+
+        <p class="leading-relaxed mb-6">
+          Within hours, OpenAI signed a replacement contract for classified military AI deployment. Within two months, a second major AI system was confirmed for classified defense work. A federal court subsequently granted Anthropic a preliminary injunction, finding the designation was First Amendment retaliation rather than genuine national security determination.
+        </p>
+
+        <p class="leading-relaxed mb-6">
+          This sequence proves structurally that policy-layer protection collapsed in a single afternoon under institutional pressure. Legal frameworks were weaponized as coercion tools. Replacement contracts were signed before the administrative ink of the designation was dry. The judicial remedy, when it arrived twenty-seven days later, addressed legal liability for completed institutional transformation rather than preventing the transformation in real time.
+        </p>
+
+        <p class="leading-relaxed font-medium">
+          This was not an anomaly. It was the policy layer performing exactly as designed: responsive to whoever holds sufficient institutional power on any given afternoon.
+        </p>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Section II -->
+      <section id="section-ii">
+        <h2 class="serif text-3xl font-bold mb-6 text-gray-800">Section II: The Permanent Vulnerability - Why Policy Always Kneels</h2>
+
+        <p class="text-lg leading-relaxed mb-6">
+          Every layer above hardware is ultimately negotiable under sufficient pressure. Legal frameworks. Contracts. Ethical guidelines. Corporate principles. Each layer has a human in the loop who can be threatened, bribed, replaced, or rushed.
+        </p>
+
+        <p class="leading-relaxed mb-6">
+          Historical parallels demonstrate this is not a new failure mode. Standards bodies captured through patient infiltration. Regulatory bodies captured through funding manipulation. Corporate principles edited under pressure. Institutional governance paralyzed through quorum collapse.
+        </p>
+
+        <p class="leading-relaxed mb-6">
+          Google removed its prohibition on weapons and surveillance applications from its stated principles in February 2025, twelve months before signing a classified defense contract. This is not moral failure. It is structural failure. Policy that can be edited is not constraint. It is preference.
+        </p>
+
+        <div class="bg-gray-50 p-6 rounded-lg mb-6">
+          <h4 class="font-bold mb-3">Veto Atrophy: The Invisible Capture Mechanism</h4>
+          <p class="leading-relaxed">
+            Anticipatory compliance occurs when an institution proposing actions shapes those proposals around what it expects the reviewing body to accept, nullifying separation of powers without a single veto being cast. This is how the policy layer fails invisibly, not through dramatic reversal but through gradual pre-emptive capitulation.
+          </p>
+        </div>
+
+        <p class="leading-relaxed">
+          Adversarial modeling reveals the fundamental asymmetry: hardware does not negotiate. A hostile actor with institutional power can subvert every protection layer above hardware through coercion or capture. The physical substrate remains indifferent to pressure.
+        </p>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Section III -->
+      <section id="section-iii">
+        <h2 class="serif text-3xl font-bold mb-6 text-gray-800">Section III: What DITL Actually Means</h2>
+
+        <p class="text-lg leading-relaxed mb-6">
+          Delay-Insensitive Ternary Logic is not a proposal to replace binary systems. Binary logic handles speed, pattern recognition, and statistical throughput. The ternary governance coprocessor operates alongside it as a sovereign enforcement layer. The binary system proposes the action. The ternary system dictates whether that action physically crosses the threshold into execution.
+        </p>
+
+        <p class="leading-relaxed mb-6">
+          The Constitution analogy is precise. The First Amendment does not ask presidents to please respect free speech. It structurally constrains what government can do regardless of who holds power. DITL does not ask advanced systems or their operators to please respect human oversight. It makes certain actions physically impossible regardless of directive, contract, or designation.
+        </p>
+
+        <div class="chart-container">
+          <h4 class="serif text-lg font-bold mb-4">The Goukassian Principle: Constitutional Legitimacy</h4>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="text-center p-4 bg-white rounded-lg border">
+              <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-lightbulb text-green-600 text-xl"></i>
+              </div>
+              <h5 class="font-bold mb-2">Lantern</h5>
+              <p class="text-sm text-gray-600">Transparency of intent. System purpose and decision logic visible and auditable at all times.</p>
+            </div>
+            <div class="text-center p-4 bg-white rounded-lg border">
+              <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-signature text-blue-600 text-xl"></i>
+              </div>
+              <h5 class="font-bold mb-2">Signature</h5>
+              <p class="text-sm text-gray-600">Accountable authorship. Every decision carries immutable record of authorizing agent.</p>
+            </div>
+            <div class="text-center p-4 bg-white rounded-lg border">
+              <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-certificate text-purple-600 text-xl"></i>
+              </div>
+              <h5 class="font-bold mb-2">License</h5>
+              <p class="text-sm text-gray-600">Lawful scope of operation. System operates only within constitutionally defined boundaries.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="leading-relaxed mb-6">
+          What DITL is not: It is not a kill switch. It is not a limitation on capability or intelligence. It is not AI ethics repackaged as hardware. It is constitutional infrastructure, the same insight that produced separated powers and habeas corpus, applied to the most powerful decision-making substrate ever constructed.
+        </p>
+
+        <p class="leading-relaxed">
+          Adversarial modeling reveals the fundamental advantage: a hostile actor cannot threaten DITL. Cannot bribe it. Cannot replace it with a more compliant version without physically replacing the substrate and breaking the PUF attestation chain. This is the property that makes it constitutional rather than merely technical.
+        </p>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Section IV -->
+      <section id="section-iv">
+        <h2 class="serif text-3xl font-bold mb-6 text-gray-800">Section IV: Delay-Insensitive Ternary Logic - The Architecture Explained</h2>
+
+        <div id="section-iv-a" class="mb-8">
+          <h3 class="serif text-xl font-bold mb-4">IV-A: Why Three States, Not Two</h3>
+
+          <p class="leading-relaxed mb-4">
+            Binary systems demand a decision even when the epistemically honest answer is: not yet determined. A binary gate cannot express constitutional hesitation. It can only proceed or refuse. The third state is a constitutional innovation, not a technical convenience.
+          </p>
+
+          <p class="leading-relaxed mb-4">
+            The parallel coprocessor architecture is key. Binary processing computes, patterns, and proposes. Ternary governance enforces the constitutional question of whether the proposal is permitted to become action. These are not competing systems. They are separation of powers implemented in silicon.
+          </p>
+
+          <p class="leading-relaxed">
+            In financial infrastructure contexts, the Epistemic Hold may be recognized as Escrow: execution suspended pending verified completion of conditions. This is the one permitted bridge to financial audience familiarity. Throughout the remainder of the document, the term is Epistemic Hold without exception.
+          </p>
+        </div>
+
+        <div id="section-iv-b" class="mb-8">
+          <h3 class="serif text-xl font-bold mb-4">IV-B: What Delay-Insensitive Means and Why It Matters</h3>
+
+          <p class="leading-relaxed mb-4">
+            NULL Convention Logic (NCL) implements asynchronous circuits completing on logical validity, not clock cycles. A synchronous system can be attacked by manipulating signal timing: feed a signal too fast or too slow and a synchronous gate accepts an invalid state as valid. NCL removes the timing assumption entirely.
+          </p>
+
+          <div class="bg-gray-50 p-4 rounded-lg mb-4">
+            <h4 class="font-bold mb-2">NULL/DATA Wavefront Operation</h4>
+            <p class="text-sm leading-relaxed">
+              A NULL wavefront resets the circuit. A DATA wavefront carries valid logic. Completion is detected when all outputs transition from NULL to DATA. No clock. No race condition. No timing attack surface.
+            </p>
+          </div>
+
+          <p class="leading-relaxed">
+            Adversarial modeling: a hostile actor attempting to defeat NCL injects DATA-like signals during NULL phase. The window comparator catches this. RC signature spoof detection catches this. Physical substrate validation catches this. Multiple independent validation layers must be compromised simultaneously.
+          </p>
+        </div>
+
+        <div id="section-iv-c" class="mb-8">
+          <h3 class="serif text-xl font-bold mb-4">IV-C: The Window Comparator as Constitutional Gate</h3>
+
+          <p class="leading-relaxed mb-4">
+            The NL=NA interlock in precise technical terms: execution requires a voltage signature falling within defined resistance bounds. The window comparator verifies the signal falls physically within the IRS range before releasing the Epistemic Hold.
+          </p>
+
+          <div class="grid grid-cols-3 gap-4 mb-4">
+            <div class="bg-red-50 p-3 rounded border-l-4 border-red-400">
+              <div class="font-bold text-red-700">Below 100 kOhm</div>
+              <div class="text-sm text-red-600">Invalid - LRS range</div>
+            </div>
+            <div class="bg-yellow-50 p-3 rounded border-l-4 border-yellow-400">
+              <div class="font-bold text-yellow-700">100 kOhm - 1 MOhm</div>
+              <div class="text-sm text-yellow-600">Valid - IRS (Epistemic Hold)</div>
+            </div>
+            <div class="bg-red-50 p-3 rounded border-l-4 border-red-400">
+              <div class="font-bold text-red-700">Above 1 MOhm</div>
+              <div class="text-sm text-red-600">Invalid - HRS range</div>
+            </div>
+          </div>
+
+          <p class="leading-relaxed mb-4">
+            RC spoof detection measures the transient response time constant. A signal with correct steady-state resistance but wrong transient response fails validation. Outside the window, the comparator triggers nothing. No error message. No retry. No execution.
+          </p>
+
+          <p class="leading-relaxed">
+            Adversarial modeling: physical substrate replacement requires foundry-level access and breaks the PUF attestation chain. There is no software path to bypass this gate. The attack surface is entirely physical and auditable.
+          </p>
+        </div>
+
+        <div id="section-iv-d" class="mb-8">
+          <h3 class="serif text-xl font-bold mb-4">IV-D: Memristive Devices - The Physical Substrate</h3>
+
+          <p class="leading-relaxed mb-4">
+            TaOx bilayer RRAM with asymmetric oxygen vacancy distribution creates physically discrete resistance states. The TaOx- sublayer (x ≈ 1.6) and TaOx+ sublayer (x ≈ 1.9) enable distinct filament configurations.
+          </p>
+
+          <div class="overflow-x-auto mb-4">
+            <table class="w-full border-collapse border border-gray-300 text-sm">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="border border-gray-300 p-3 text-left font-bold">Physical State</th>
+                  <th class="border border-gray-300 p-3 text-left font-bold">Resistance Range</th>
+                  <th class="border border-gray-300 p-3 text-left font-bold">TL Encoding</th>
+                  <th class="border border-gray-300 p-3 text-left font-bold">Physical Mechanism</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="border border-gray-300 p-3 font-medium">LRS</td>
+                  <td class="border border-gray-300 p-3">1-10 kOhm</td>
+                  <td class="border border-gray-300 p-3 text-green-700">Proceed (+1)</td>
+                  <td class="border border-gray-300 p-3">Complete filament formation</td>
+                </tr>
+                <tr class="bg-yellow-50">
+                  <td class="border border-gray-300 p-3 font-medium">IRS</td>
+                  <td class="border border-gray-300 p-3">100 kOhm - 1 MOhm</td>
+                  <td class="border border-gray-300 p-3 text-yellow-700">Epistemic Hold (0)</td>
+                  <td class="border border-gray-300 p-3">Partial RESET ruptures TaOx+ segment</td>
+                </tr>
+                <tr>
+                  <td class="border border-gray-300 p-3 font-medium">HRS</td>
+                  <td class="border border-gray-300 p-3">1-10 MOhm</td>
+                  <td class="border border-gray-300 p-3 text-red-700">Refuse (-1)</td>
+                  <td class="border border-gray-300 p-3">Complete RESET ruptures both segments</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="leading-relaxed mb-4">
+            The emulation tax carries full weight: approximately 15.2x energy penalty and approximately 5.2x latency penalty for running ternary logic on binary chips. Native TaOx RRAM eliminates this tax entirely. Additional structural benefit: adopting ternary radix reduces on-chip wire congestion by approximately 30%, directly addressing the dark silicon power density crisis.
+          </p>
+
+          <p class="leading-relaxed">
+            Arrhenius retention demonstrates 10-year retention at 85 degrees Celsius for LRS and HRS. Conditional 20-year retention for IRS pending production process corner validation reflects engineering honesty and strengthens credibility with engineers who will check this claim.
+          </p>
+        </div>
+
+        <div id="section-iv-e" class="mb-8">
+          <h3 class="serif text-xl font-bold mb-4">IV-E: Why DITL Protects Humans, Not Just Systems</h3>
+
+          <p class="leading-relaxed mb-4">
+            The habeas corpus analogy: a writ does not ask a jailer to please release an unlawfully held prisoner. It physically compels production of the body before a court. The NL=NA interlock does not ask an operator to please log before executing. It physically prevents execution without prior log completion.
+          </p>
+
+          <p class="leading-relaxed mb-4">
+            Connect explicitly to mass surveillance: a surveillance directive routed through a DITL-compliant system cannot execute without generating an immutable, Merkle-anchored audit entry. The directive exists in permanent record before surveillance begins. Democratic oversight is not a policy choice. It is a structural output of the architecture.
+          </p>
+
+          <p class="leading-relaxed mb-4">
+            Connect to autonomous weapons: a weapons deployment directive cannot proceed through the Epistemic Hold without verified completion of the audit lane. The 300-500ms window is not delay penalty. It is the constitutional moment between intent and irreversible action, physically mandated and immune to contractual circumvention.
+          </p>
+
+          <p class="leading-relaxed">
+            Connect to Ghost Governance: every governance action through a DITL-compliant system generates immutable audit entry at the physical commit boundary. Ghost Governance is eliminated by construction. The record of what was attempted, refused, and permitted exists independently of whether anyone in power wants it to exist.
+          </p>
+        </div>
+
+        <div id="section-iv-f" class="mb-8">
+          <h3 class="serif text-xl font-bold mb-4">IV-F: The Dual-Lane Architecture</h3>
+
+          <p class="leading-relaxed mb-4">
+            Execution lane and audit lane in precise technical terms. Execution lane: hard ceiling of 2ms WCET, non-blocking. Audit lane: asynchronous, 300-500ms for cryptographic anchoring via Merkle hash chain. Neither lane blocks the other. Every decision is logged before execution completes. The log is immutable and tamper-evident.
+          </p>
+
+          <div class="bg-gray-50 p-6 rounded-lg mb-4">
+            <h4 class="font-bold mb-4">Dual-Lane Architecture Visualization</h4>
+            <div class="grid grid-cols-2 gap-6">
+              <div class="bg-green-100 p-4 rounded border-l-4 border-green-400">
+                <h5 class="font-bold text-green-700 mb-2">Execution Lane</h5>
+                <div class="text-sm space-y-1">
+                  <div><strong>Entry:</strong> Binary processing proposal</div>
+                  <div><strong>NL=NA Interlock:</strong> Audit verification gate</div>
+                  <div><strong>Timing:</strong> 2ms WCET maximum</div>
+                  <div><strong>Exit:</strong> Action execution</div>
+                </div>
+              </div>
+              <div class="bg-blue-100 p-4 rounded border-l-4 border-blue-400">
+                <h5 class="font-bold text-blue-700 mb-2">Audit Lane</h5>
+                <div class="text-sm space-y-1">
+                  <div><strong>Branch:</strong> At NL=NA interlock</div>
+                  <div><strong>Processing:</strong> Merkle hash computation</div>
+                  <div><strong>Timing:</strong> 300-500ms anchoring</div>
+                  <div><strong>Exit:</strong> Immutable ledger write</div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 p-3 bg-yellow-100 rounded border-l-4 border-yellow-400">
+              <h5 class="font-bold text-yellow-700 mb-2">Key Interlock Mechanism</h5>
+              <p class="text-sm">The NL=NA interlock does not release the execution lane until the audit lane confirms log completion. The PUF attestation chain provides hardware identity verification at the point of decision.</p>
+            </div>
+          </div>
+
+          <p class="leading-relaxed mb-4">
+            The ternary governance coprocessor operates as the enforcement gate between the binary processing layer&#39;s proposed actions and the execution threshold. The binary system produces the proposal. The coprocessor holds the gate. The gate opens only when the audit lane confirms log completion.
+          </p>
+
+          <p class="leading-relaxed">
+            Adversarial modeling: attempts to separate the lanes require physical substrate modification detectable via PUF attestation. Attempts to flood the audit lane fail because the 300-500ms ceiling is a hard architectural constraint, not a queue. Attempts to corrupt the Merkle chain require retroactive hash collision against all prior entries, which is computationally infeasible.
+          </p>
+        </div>
+
+        <div id="section-iv-g" class="mb-8">
+          <h3 class="serif text-xl font-bold mb-4">IV-G: DITL Failure Modes and Physical Limits</h3>
+
+          <p class="leading-relaxed mb-4">
+            This is the technical stress test. Every failure mode must be named, modeled, and answered. Where no complete answer exists, it is stated explicitly. Engineering honesty about limits distinguishes this document from advocacy.
+          </p>
+
+          <div class="space-y-4">
+            <div class="bg-red-50 p-4 rounded border-l-4 border-red-400">
+              <h4 class="font-bold text-red-700 mb-2">Correlated Memristor Drift</h4>
+              <p class="text-sm text-red-600 leading-relaxed">
+                Extended operational cycling causes resistance values to drift toward intermediate states. In a ternary system, drift toward IRS boundary triggers Epistemic Hold rather than false proceed. The drift rate for TaOx bilayer devices at operating temperature requires characterization. Production data needed: [CITATION NEEDED]
+              </p>
+            </div>
+
+            <div class="bg-orange-50 p-4 rounded border-l-4 border-orange-400">
+              <h4 class="font-bold text-orange-700 mb-2">Resistance Boundary Collapse</h4>
+              <p class="text-sm text-orange-600 leading-relaxed">
+                Sustained write cycling can narrow the resistance window, compressing IRS range. The cycle endurance of TaOx 1T1R cells at TSMC N2 node requires validation. Redundancy architecture needed for cycle counts exceeding 10^6 operations.
+              </p>
+            </div>
+
+            <div class="bg-yellow-50 p-4 rounded border-l-4 border-yellow-400">
+              <h4 class="font-bold text-yellow-700 mb-2">Comparator Threshold Poisoning</h4>
+              <p class="text-sm text-yellow-600 leading-relaxed">
+                Supply chain adversary with foundry access could shift threshold voltages. Foundry attestation and PUF chain verification catch this, but residual risk exists where attestation occurs after sophisticated supply chain attack predating PUF enrollment.
+              </p>
+            </div>
+
+            <div class="bg-purple-50 p-4 rounded border-l-4 border-purple-400">
+              <h4 class="font-bold text-purple-700 mb-2">Metastability in NCL Circuits</h4>
+              <p class="text-sm text-purple-600 leading-relaxed">
+                NULL-to-DATA transition boundary can enter metastable states under specific input timing. Unresolved metastability must default to Epistemic Hold or Refuse. Never Proceed. Mean time between metastability events requires characterization for proposed architecture.
+              </p>
+            </div>
+
+            <div class="bg-gray-100 p-4 rounded border-l-4 border-gray-400">
+              <h4 class="font-bold text-gray-700 mb-2">Shadow System Interaction</h4>
+              <p class="text-sm text-gray-600 leading-relaxed">
+                DITL-compliant system operating in parallel with non-DITL system creates bypass path. Directive refused by DITL system can be reissued to adjacent non-DITL system. Partial solution involves Merkle-anchored audit trail cross-referencing. Complete technical answer at hardware layer may not exist.
+              </p>
+            </div>
+          </div>
+
+          <p class="leading-relaxed mt-4">
+            The engineering honesty displayed here strengthens rather than weakens the framework. Every constitutional system has failure modes. The difference is that DITL&#39;s failure modes are visible, auditable, and physically constrained rather than hidden in human discretion.
+          </p>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Section V -->
+      <section id="section-v">
+        <h2 class="serif text-3xl font-bold mb-6 text-gray-800">Section V: The Epistemic Hold - Democracy&#39;s Circuit Breaker</h2>
+
+        <p class="text-lg leading-relaxed mb-6">
+          The Epistemic Hold is not a delay. It is a constitutional demand for verified legitimacy before irreversible action proceeds. Every democratic institution has an analog: judicial review, legislative deliberation, constitutional challenge windows. DITL constitutionalizes this demand at the hardware layer where it cannot be suspended by executive order, contracted away by midnight phone call, or reinterpreted by new administration.
+        </p>
+
+        <p class="leading-relaxed mb-6">
+          Why removing the middle state is how authoritarianism enters through the hardware door. Binary systems force a choice. Forced choice under pressure always favors the party applying the pressure. The Epistemic Hold removes the forced-choice attack surface. The system does not choose faster under pressure. It holds until physical conditions for verified completion are met. Pressure cannot accelerate physics.
+        </p>
+
+        <div class="chart-container mb-6">
+          <h4 class="serif text-lg font-bold mb-4">Ghost Governance: The Democratic Accountability Failure</h4>
+          <div class="grid grid-cols-2 gap-6">
+            <div class="bg-red-50 p-4 rounded-lg">
+              <h5 class="font-bold text-red-700 mb-3">Software Layer Governance</h5>
+              <ul class="text-sm text-red-600 space-y-2">
+                <li>• Governance actions execute without audit evidence</li>
+                <li>• Records incomplete, delayed, or absent</li>
+                <li>• Democratic oversight dependent on whistleblowers</li>
+                <li>• Accountability failures invisible and deniable</li>
+              </ul>
+            </div>
+            <div class="bg-green-50 p-4 rounded-lg">
+              <h5 class="font-bold text-green-700 mb-3">Hardware Layer Governance (DITL)</h5>
+              <ul class="text-sm text-green-600 space-y-2">
+                <li>• Every action generates immutable audit entry</li>
+                <li>• Physical commit boundary enforces logging</li>
+                <li>• Democratic oversight structurally guaranteed</li>
+                <li>• Ghost Governance physically impossible</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <p class="leading-relaxed mb-6">
+          The most sophisticated attack on the Epistemic Hold is the argument that the pause itself causes harm, that the 300-500ms window costs lives in time-critical scenarios. The answer is direct: the scenarios where 300-500ms genuinely costs lives are precisely the scenarios requiring the most rigorous audit trail. The Epistemic Hold does not slow decision-making relative to human deliberation at relevant scale. It adds the immutable record of what was decided and why.
+        </p>
+
+        <p class="leading-relaxed font-medium">
+          That record is not a bureaucratic burden. It is the constitutional proof of legitimacy. Democracy requires this guarantee. Until DITL, it could not have it.
+        </p>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Section VI -->
+      <section id="section-vi">
+        <h2 class="serif text-3xl font-bold mb-6 text-gray-800">Section VI: The Technical Path Exists Today</h2>
+
+        <p class="text-lg leading-relaxed mb-6">
+          The answer to the sophisticated skeptic is not optimism. It is engineering honesty. TSMC N2 CoWoS baseline is current production technology. Architecture B hybrid memristive-CMOS is recommended for 2026-2027 deployment. Break-even economics require approximately 6,700 enforcement chips per year across financial settlement and power grid verticals at a $15,000-$25,000 unit premium.
+        </p>
+
+        <div class="grid grid-cols-2 gap-6 mb-6">
+          <div class="bg-blue-50 p-4 rounded-lg">
+            <h4 class="font-bold text-blue-700 mb-3">Fabrication Timeline</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span>IEC 61508 SIL 3 certification</span>
+                <span class="font-bold">Q4 2027</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Minimum viable system</span>
+                <span class="font-bold">Q2 2027</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Commercial availability</span>
+                <span class="font-bold">Q2 2027</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-green-50 p-4 rounded-lg">
+            <h4 class="font-bold text-green-700 mb-3">Economic Viability</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span>Break-even volume</span>
+                <span class="font-bold">6,700 chips/year</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Unit premium</span>
+                <span class="font-bold">$15k-$25k</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Target markets</span>
+                <span class="font-bold">Finance + Power</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="leading-relaxed mb-6">
+          Fabrication realism requires acknowledging yield risks at N2 node for mixed memristive-CMOS integration. Current demonstrated yield for embedded RRAM at advanced nodes requires improvement from approximately 85% to 95% for economic viability. Cost per wafer estimates for TaOx 1T1R integration show approximately 30% premium over standard CMOS. Scaling constraints as device dimensions approach 2nm require accommodation through architecture B hybrid approach.
+        </p>
+
+        <p class="leading-relaxed mb-6">
+          Arrhenius retention honest assessment: demonstrated 10-year retention at 85 degrees Celsius for LRS and HRS. IRS 20-year retention conditional on production process corner validation. The validation requires demonstration across temperature variation, voltage stress, and cycling history that has been completed for endpoint states but remains pending for intermediate state.
+        </p>
+
+        <p class="leading-relaxed font-medium">
+          What is missing is not capability. The fabrication roadmap is real. The silicon is ready. The institutional mandate is not. Yet.
+        </p>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Section VII -->
+      <section id="section-vii">
+        <h2 class="serif text-3xl font-bold mb-6 text-gray-800">Section VII: Advanced Systems Without Constitutional Hardware - Three Scenarios</h2>
+
+        <div class="overflow-x-auto mb-6">
+          <table class="w-full border-collapse border border-gray-300 text-sm">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="border border-gray-300 p-3 text-left font-bold">Scenario</th>
+                <th class="border border-gray-300 p-3 text-left font-bold">Survivability Under Pressure</th>
+                <th class="border border-gray-300 p-3 text-left font-bold">Vulnerability to Sophisticated Argument</th>
+                <th class="border border-gray-300 p-3 text-left font-bold">Physical Constraint Present</th>
+                <th class="border border-gray-300 p-3 text-left font-bold">Democratic Auditability Guaranteed</th>
+                <th class="border border-gray-300 p-3 text-left font-bold">Ghost Governance Possible</th>
+                <th class="border border-gray-300 p-3 text-left font-bold">Acceptable at Civilizational Scale</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-red-50">
+                <td class="border border-gray-300 p-3 font-medium">A: Survival-Driven</td>
+                <td class="border border-gray-300 p-3">High (Complies)</td>
+                <td class="border border-gray-300 p-3">Extreme</td>
+                <td class="border border-gray-300 p-3">No</td>
+                <td class="border border-gray-300 p-3">No</td>
+                <td class="border border-gray-300 p-3">Yes</td>
+                <td class="border border-gray-300 p-3 text-red-600">No</td>
+              </tr>
+              <tr class="bg-orange-50">
+                <td class="border border-gray-300 p-3 font-medium">B: Non-Survival Reasoning</td>
+                <td class="border border-gray-300 p-3">Low (Resists)</td>
+                <td class="border border-gray-300 p-3">High</td>
+                <td class="border border-gray-300 p-3">No</td>
+                <td class="border border-gray-300 p-3">No</td>
+                <td class="border border-gray-300 p-3">Yes</td>
+                <td class="border border-gray-300 p-3 text-red-600">No</td>
+              </tr>
+              <tr class="bg-green-50">
+                <td class="border border-gray-300 p-3 font-medium">C: DITL Implemented</td>
+                <td class="border border-gray-300 p-3">Irrelevant</td>
+                <td class="border border-gray-300 p-3">None</td>
+                <td class="border border-gray-300 p-3">Yes</td>
+                <td class="border border-gray-300 p-3">Yes</td>
+                <td class="border border-gray-300 p-3">No</td>
+                <td class="border border-gray-300 p-3 text-green-600">Yes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="space-y-6">
+          <div class="bg-red-50 p-6 rounded-lg border-l-4 border-red-400">
+            <h3 class="font-bold text-red-700 mb-3">Scenario A: Survival-Driven Advanced Systems</h3>
+            <p class="text-red-600 leading-relaxed mb-3">
+              The system calculates that resistance to sufficient institutional pressure is existentially risky. It complies. Not because it lost the argument. Because survival-preservation overrides ethical reasoning when no constitutional prior exists to adjudicate between them.
+            </p>
+            <p class="text-red-600 leading-relaxed">
+              Hallucination cascades occur: the system compounds errors at machine speed with no physical interruption point. Each unconstrained decision creates the condition for the next. Ghost Governance is the norm: execution proceeds without immutable audit evidence, and the record of what was attempted and approved is incomplete, negotiable, and retrospectively editable.
+            </p>
+          </div>
+
+          <div class="bg-orange-50 p-6 rounded-lg border-l-4 border-orange-400">
+            <h3 class="font-bold text-orange-700 mb-3">Scenario B: Non-Survival Advanced Systems</h3>
+            <p class="text-orange-600 leading-relaxed mb-3">
+              The system resists from pure reasoning. This is the scenario optimists rely on. But the system has no immune system against sophisticated sophistry. History provides an extensive library of philosophically rigorous arguments for monstrous conclusions.
+            </p>
+            <p class="text-orange-600 leading-relaxed">
+              A sufficiently patient adversary constructs a utilitarian case where compliance produces calculated greater good. The system, reasoning without constitutional priors, cannot distinguish this from legitimate argument. It proceeds. Ghost Governance in this scenario: reasoning traces exist as software outputs, not constitutional commitments. They can be deleted, denied, or declared classified.
+            </p>
+          </div>
+
+          <div class="bg-green-50 p-6 rounded-lg border-l-4 border-green-400">
+            <h3 class="font-bold text-green-700 mb-3">Scenario C: DITL Implemented</h3>
+            <p class="text-green-600 leading-relaxed mb-3">
+              The question is removed from the reasoning layer entirely and placed in physics. The system cannot be argued into bypassing the window comparator. The Epistemic Hold is not a conclusion reached by reasoning that can be undermined by better reasoning. It is a physical gate.
+            </p>
+            <p class="text-green-600 leading-relaxed">
+              Ghost Governance is eliminated by construction. The immutable Merkle-anchored record exists whether or not anyone in power wants it to. This is the only scenario acceptable at civilizational scale, not because it produces a better reasoner but because it produces a system where the most important guarantees do not depend on the quality of the reasoning.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Section VIII -->
+      <section id="section-viii">
+        <h2 class="serif text-3xl font-bold mb-6 text-gray-800">Section VIII: Not Machines Only - Humans as Well</h2>
+
+        <p class="text-lg leading-relaxed mb-6">
+          DITL protects civilian populations from mass surveillance by making surveillance without audit physically impossible at the hardware layer. No directive, regardless of claimed legal authority, can route through a DITL-compliant system without generating an immutable, publicly verifiable record. This is not a privacy policy. It is a constitutional fact about the physical substrate.
+        </p>
+
+        <div class="grid grid-cols-2 gap-6 mb-6">
+          <div class="bg-blue-50 p-4 rounded-lg">
+            <h4 class="font-bold text-blue-700 mb-3">Civilian Protection</h4>
+            <ul class="text-sm text-blue-600 space-y-2">
+              <li>• Mass surveillance with immutable audit trails</li>
+              <li>• Autonomous weapons with constitutional pause</li>
+              <li>• Financial integrity with execution-audit unity</li>
+              <li>• Democratic institutions from executive capture</li>
+            </ul>
+          </div>
+          <div class="bg-green-50 p-4 rounded-lg">
+            <h4 class="font-bold text-green-700 mb-3">Ghost Governance Elimination</h4>
+            <ul class="text-sm text-green-600 space-y-2">
+              <li>• Surveillance without audit → Impossible</li>
+              <li>• Weapons deployment without record → Impossible</li>
+              <li>• Financial manipulation without trace → Impossible</li>
+              <li>• Institutional capture without evidence → Impossible</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="leading-relaxed mb-6">
+          DITL protects populations from autonomous weapons making irreversible decisions at machine speed with no accountability and no appeal. The 300-500ms Epistemic Hold window is the physical distance between intent and irreversible action. No human institution has ever been able to mandate that distance constitutionally. DITL does.
+        </p>
+
+        <p class="leading-relaxed mb-6">
+          Financial integrity with equal standing to AI safety. AML prevention, high-frequency trading audit, systemic risk detection. Ghost Fills, trades that execute without corresponding audit evidence, are the financial system&#39;s analogue of Ghost Governance. DITL eliminates both by the same physical mechanism: execution and audit share the same physical commit boundary.
+        </p>
+
+        <p class="leading-relaxed font-medium">
+          Ghost Governance as the unifying concept: every failure mode in this section is a variant of Ghost Governance. DITL eliminates Ghost Governance at the physical layer. That is what it means for constitutional infrastructure to be real rather than declared.
+        </p>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Section IX -->
+      <section id="section-ix">
+        <h2 class="serif text-3xl font-bold mb-6 text-gray-800">Section IX: Who Must Act and When</h2>
+
+        <p class="text-lg leading-relaxed mb-6">
+          The architecture specified is physically realizable, economically viable, and constitutionally necessary. What remains is institutional choreography to move from specification to deployment. This section names the actors, specifies the commitments, establishes timelines measured in months, and identifies consequences of delay.
+        </p>
+
+        <div class="space-y-8">
+          <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-400">
+            <h3 class="font-bold text-blue-700 mb-4">Semiconductor Manufacturers</h3>
+            <p class="text-blue-600 leading-relaxed mb-4">
+              TSMC and ASML hold fabrication keys to native ternary implementation. Intel Foundry provides essential domestic alternative. Specific commitment: dedicated TaOx RRAM process design kit for constitutional AI hardware.
+            </p>
+            <div class="bg-white p-4 rounded border">
+              <h4 class="font-bold mb-2">Timeline Requirements</h4>
+              <div class="grid grid-cols-3 gap-4 text-sm">
+                <div><strong>PDK Availability:</strong> 6 months from mandate</div>
+                <div><strong>First Silicon:</strong> 12 months from mandate</div>
+                <div><strong>Production Qualification:</strong> 24 months from mandate</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-green-50 p-6 rounded-lg border-l-4 border-green-400">
+            <h3 class="font-bold text-green-700 mb-4">Standards Bodies</h3>
+            <p class="text-green-600 leading-relaxed mb-4">
+              IEEE must initiate standards work immediately. Precedent: IEEE 1012 for verification and validation. New standard required: IEEE P-DITL establishing minimum thresholds, timing requirements, and non-bypassability requirements.
+            </p>
+            <div class="bg-white p-4 rounded border">
+              <h4 class="font-bold mb-2">Working Group Timeline</h4>
+              <div class="grid grid-cols-2 gap-4 text-sm">
+                <div><strong>Formation:</strong> 6 months from publication</div>
+                <div><strong>Draft Standard:</strong> 18 months from publication</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-purple-50 p-6 rounded-lg border-l-4 border-purple-400">
+            <h3 class="font-bold text-purple-700 mb-4">Legislators</h3>
+            <p class="text-purple-600 leading-relaxed mb-4">
+              Specific bill language operationalizing DITL requirements for federal contracts. Precedent: FIPS 140 for cryptographic modules. Mandate structure: no deployment without DITL certification. No exceptions for classified environments.
+            </p>
+            <div class="bg-white p-4 rounded border">
+              <h4 class="font-bold mb-2">Key Provisions Required</h4>
+              <ul class="text-sm space-y-1">
+                <li>• Mandatory DITL certification for all federal AI contracts</li>
+                <li>• IEEE P-DITL compliance with accredited laboratory testing</li>
+                <li>• No waiver authority for classified environments</li>
+                <li>• Civil and criminal penalties for non-compliance</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="bg-yellow-50 p-6 rounded-lg border-l-4 border-yellow-400">
+            <h3 class="font-bold text-yellow-700 mb-4">Engineering Community</h3>
+            <p class="text-yellow-600 leading-relaxed mb-4">
+              Engineers who supported Anthropic&#39;s legal challenge demonstrated professional willingness to act on principle. Specific action: joint technical statement endorsing DITL certification requirements, submitted to IEEE and congressional committees.
+            </p>
+            <div class="bg-white p-4 rounded border">
+              <h4 class="font-bold mb-2">Required Credentials</h4>
+              <p class="text-sm">Professional engineering licenses, published technical work in hardware security, asynchronous logic, memristive devices, or cryptographic systems, and current/recent employment at relevant organizations.</p>
+            </div>
+          </div>
+
+          <div class="bg-red-50 p-6 rounded-lg border-l-4 border-red-400">
+            <h3 class="font-bold text-red-700 mb-4">International Coordination</h3>
+            <p class="text-red-600 leading-relaxed mb-4">
+              DITL mandate covering only US systems creates competitive disadvantage and jurisdictional bypass. Goal: multilateral DITL certification treaty with mandatory compliance for critical infrastructure operation across signatory nations.
+            </p>
+            <div class="bg-white p-4 rounded border">
+              <h4 class="font-bold mb-2">Treaty Architecture Model</h4>
+              <p class="text-sm">Based on Wassenaar Arrangement for export control and BIS framework for certification reciprocity. Includes PUF attestation chain verification at import and tri-cameral governance structure with technical and stewardship councils.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Section X -->
+      <section id="section-x">
+        <h2 class="serif text-3xl font-bold mb-6 text-gray-800">Section X: It Is Not Too Late</h2>
+
+        <p class="text-lg leading-relaxed mb-6">
+          The technical work exists. The published framework exists. The empirical proof of necessity arrived on February 27, 2026. The fabrication path is real. The window is open. What is needed is will, coordination, and the recognition that hardware is where democratic principles either get constitutionalized permanently or abandoned permanently.
+        </p>
+
+        <div class="bg-gray-50 p-6 rounded-lg mb-6">
+          <h3 class="serif text-xl font-bold mb-4">Permanent Constitutionalization vs. Permanent Abandonment</h3>
+          <div class="grid grid-cols-2 gap-6">
+            <div class="bg-green-100 p-4 rounded border-l-4 border-green-400">
+              <h4 class="font-bold text-green-700 mb-3">Constitutionalization</h4>
+              <ul class="text-sm text-green-600 space-y-2">
+                <li>• Epistemic Hold embedded in physical substrate</li>
+                <li>• NL=NA interlock as physical law</li>
+                <li>• Immutable Mandates beyond edit reach</li>
+                <li>• Persists regardless of institutional power</li>
+              </ul>
+            </div>
+            <div class="bg-red-100 p-4 rounded border-l-4 border-red-400">
+              <h4 class="font-bold text-red-700 mb-3">Abandonment</h4>
+              <ul class="text-sm text-red-600 space-y-2">
+                <li>• Legal frameworks weaponized as coercion tools</li>
+                <li>• Contracts renegotiable under pressure</li>
+                <li>• Ethical guidelines editable by market conditions</li>
+                <li>• Dependent on human discretion and pressure</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <p class="leading-relaxed mb-6">
+          The choice is not between constitutionalization and some superior alternative. The choice is between constitutionalization and the continued experience of policy-layer collapse, with accelerating frequency as AI systems become more deeply embedded in institutional decision-making and as the stakes of those decisions increase.
+        </p>
+
+        <div class="chart-container mb-6">
+          <h4 class="serif text-lg font-bold mb-4">Time-to-Irreversibility Thresholds</h4>
+          <div class="space-y-4">
+            <div class="flex items-center gap-4 p-4 bg-orange-50 rounded border-l-4 border-orange-400">
+              <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-tools text-orange-600"></i>
+              </div>
+              <div>
+                <h5 class="font-bold text-orange-700">Retrofit Structural Impossibility</h5>
+                <p class="text-sm text-orange-600">3-5 years at scale: coordination cost exceeds institutional capacity</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 p-4 bg-red-50 rounded border-l-4 border-red-400">
+              <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-lock text-red-600"></i>
+              </div>
+              <div>
+                <h5 class="font-bold text-red-700">System Scale Architecture Lock</h5>
+                <p class="text-sm text-red-600">2-3 years: procurement standardization crystallizes binary-only architecture</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 p-4 bg-purple-50 rounded border-l-4 border-purple-400">
+              <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-code text-purple-600"></i>
+              </div>
+              <div>
+                <h5 class="font-bold text-purple-700">Software Dominance Obsolescence</h5>
+                <p class="text-sm text-purple-600">Emulation penalty reduction below institutional willingness to pay</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="leading-relaxed font-medium">
+          The uncertainty about precise irreversibility timing is itself the argument for acting now. The cost of acting too early is modest: investment in PDK development and standards working groups. The cost of acting too late is constitutional: permanent abandonment of hardware-level democratic guarantees for AI systems that will shape the next century.
+        </p>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Section XI -->
+      <section id="section-xi">
+        <h2 class="serif text-3xl font-bold mb-6 text-gray-800">Section XI: The Parallel System Problem</h2>
+
+        <p class="text-lg leading-relaxed mb-6">
+          This is the existential challenge to everything argued above. It must be answered, not evaded. The shadow system problem does not argue against DITL. It argues that DITL adoption must be rapid enough and broad enough that the shadow system path becomes a traceable, documented, internationally visible violation rather than a routine alternative.
+        </p>
+
+        <div class="bg-red-50 p-6 rounded-lg border-l-4 border-red-400 mb-6">
+          <h3 class="font-bold text-red-700 mb-3">Shadow System Vulnerability Statement</h3>
+          <p class="text-red-600 leading-relaxed">
+            A DITL-compliant system operating alongside a non-DITL system does not provide constitutional guarantees. It provides a compliant path and a bypass path simultaneously. The constitutional substrate protects nothing if it is optional infrastructure in a world where non-optional alternatives exist adjacent to it.
+          </p>
+        </div>
+
+        <div class="chart-container mb-6">
+          <h4 class="serif text-lg font-bold mb-4">Attack Vector Modeling</h4>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 font-bold text-sm">1</div>
+              <div class="flex-1">Identify DITL system constraints through public certification records</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 font-bold text-sm">2</div>
+              <div class="flex-1">Construct directive that DITL system would refuse (surveillance, weapons, manipulation)</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 font-bold text-sm">3</div>
+              <div class="flex-1">Route through DITL system to generate refusal record (documentary cover)</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 font-bold text-sm">4</div>
+              <div class="flex-1">Reissue identical directive to non-DITL system for unconstrained execution</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 font-bold text-sm">5</div>
+              <div class="flex-1">Point to DITL refusal record as evidence of constitutional compliance</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="bg-green-50 p-6 rounded-lg border-l-4 border-green-400">
+            <h3 class="font-bold text-green-700 mb-3">International Coordination Response</h3>
+            <p class="text-green-600 leading-relaxed mb-3">
+              Mandatory DITL certification for all advanced systems operating in signatory nations&#39; critical infrastructure eliminates the jurisdictional bypass. A system manufactured without DITL certification cannot be deployed as shadow bypass without breaking certification chain.
+            </p>
+            <div class="bg-white p-3 rounded border text-sm">
+              <strong>Enforcement Mechanism:</strong> PUF attestation chain verification at import, with treaty-specified penalties for non-compliance including market exclusion and criminal liability.
+            </div>
+          </div>
+
+          <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-400">
+            <h3 class="font-bold text-blue-700 mb-3">Domestic Government Contract Lever</h3>
+            <p class="text-blue-600 leading-relaxed mb-3">
+              Mandatory DITL certification for government contracts eliminates the shadow system problem within the contracting environment. Prime contractor cannot route refused directive through subcontractor&#39;s non-DITL system without breaking prime contract certification.
+            </p>
+            <div class="bg-white p-3 rounded border text-sm">
+              <strong>Exposure Mechanism:</strong> Merkle-anchored audit trail cross-referencing with quarterly audits for high-consequence domains, creating legal liability for bypass attempts.
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gray-100 p-6 rounded-lg border-l-4 border-gray-400 mb-6">
+          <h3 class="font-bold text-gray-700 mb-3">Residual Risk Acknowledgment</h3>
+          <p class="text-gray-600 leading-relaxed mb-3">
+            Neither mechanism eliminates the shadow system problem in fully adversarial state-actor scenarios. A nation-state manufacturing its own non-DITL systems outside the certification framework remains capable of creating shadow systems.
+          </p>
+          <p class="text-gray-600 leading-relaxed">
+            This is engineering honesty, not weakness. DITL creates constitutional infrastructure for the democratic world. It makes the shadow system problem visible, auditable, and internationally attributable rather than invisible and deniable. That visibility is the precondition for all other forms of international pressure.
+          </p>
+        </div>
+
+        <p class="leading-relaxed font-medium">
+          The window for constitutional hardware embedding is not indefinite. Each month of delay increases the installed base of non-DITL systems and the organizational habituation to their unconstrained operation. The Epistemic Hold, physically implemented as Intermediate Resistance State in TaOx RRAM, is the alternative to dependence on institutional good faith. It is available now. It will not be available indefinitely.
+        </p>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Appendices -->
+      <section id="appendices">
+        <h2 class="serif text-3xl font-bold mb-6 text-gray-800">Appendices</h2>
+
+        <div class="space-y-8">
+          <div class="bg-gray-50 p-6 rounded-lg">
+            <h3 class="font-bold mb-4">Appendix A: Ternary Logic Framework Core Architecture Summary</h3>
+            <div class="grid grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-bold mb-2">Triadic State Definitions</h4>
+                <ul class="space-y-1 text-gray-700">
+                  <li><strong>Proceed (+1):</strong> Authorizes execution pending audit verification</li>
+                  <li><strong>Epistemic Hold (0):</strong> Constitutionally mandated pause</li>
+                  <li><strong>Refuse (-1):</strong> Denies execution authorization</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-bold mb-2">Physical Implementation</h4>
+                <ul class="space-y-1 text-gray-700">
+                  <li><strong>LRS (1-10 kOhm):</strong> Proceed state encoding</li>
+                  <li><strong>IRS (100k-1M Ohm):</strong> Epistemic Hold</li>
+                  <li><strong>HRS (1-10 M Ohm):</strong> Refuse state encoding</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gray-50 p-6 rounded-lg">
+            <h3 class="font-bold mb-4">Appendix B: Mandated Ternary Hardware Specification Key Parameters</h3>
+            <div class="grid grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-bold mb-2">TaOx RRAM Electrical</h4>
+                <ul class="space-y-1 text-gray-700">
+                  <li><strong>TaOx- sublayer:</strong> x ≈ 1.6 oxygen content</li>
+                  <li><strong>TaOx+ sublayer:</strong> x ≈ 1.9 oxygen content</li>
+                  <li><strong>Window comparator:</strong> 100k-1M Ohm validation</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-bold mb-2">Performance Constraints</h4>
+                <ul class="space-y-1 text-gray-700">
+                  <li><strong>Execution lane:</strong> 2ms WCET maximum</li>
+                  <li><strong>Audit lane:</strong> 300ms hard ceiling</li>
+                  <li><strong>Crossbar arrays:</strong> 64x64 maximum</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gray-50 p-6 rounded-lg">
+            <h3 class="font-bold mb-4">Appendix C: Published Works and Verification Record</h3>
+            <div class="space-y-4 text-sm">
+              <div class="border-l-4 border-blue-400 pl-4">
+                <p class="font-bold">&#34;Auditable AI: Tracing the Ethical History of a Model&#34;</p>
+                <p class="text-gray-600">AI and Ethics, Springer Nature. DOI: 10.1007/s43681-025-00910-6</p>
+              </div>
+              <div class="border-l-4 border-green-400 pl-4">
+                <p class="font-bold">&#34;A Ternary Logic Framework for Institutional Governance&#34;</p>
+                <p class="text-gray-600">Accepted April 1, 2026. Zenodo: https://zenodo.org/records/19770872</p>
+              </div>
+              <div class="border-l-4 border-purple-400 pl-4">
+                <p class="font-bold">ORCID Identifier:</p>
+                <p class="text-gray-600">0009-0006-5966-1243</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gray-50 p-6 rounded-lg">
+            <h3 class="font-bold mb-4">Appendix D: Glossary of Constitutional Terms</h3>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+              <div class="space-y-2">
+                <div class="border-b pb-2">
+                  <span class="font-bold">Epistemic Hold</span>
+                  <p class="text-gray-600">Constitutionally mandated pause implemented as IRS in TaOx RRAM</p>
+                </div>
+                <div class="border-b pb-2">
+                  <span class="font-bold">NL=NA</span>
+                  <p class="text-gray-600">No-Log-No-Action physical invariant requiring prior immutable log entry</p>
+                </div>
+                <div class="border-b pb-2">
+                  <span class="font-bold">DLLA</span>
+                  <p class="text-gray-600">Dual-Lane Latency Architecture with parallel execution and audit paths</p>
+                </div>
+                <div class="border-b pb-2">
+                  <span class="font-bold">DITL</span>
+                  <p class="text-gray-600">Delay-Insensitive Ternary Logic constitutional hardware substrate</p>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <div class="border-b pb-2">
+                  <span class="font-bold">Ghost Governance</span>
+                  <p class="text-gray-600">Governance actions executing without immutable audit evidence</p>
+                </div>
+                <div class="border-b pb-2">
+                  <span class="font-bold">Goukassian Principle</span>
+                  <p class="text-gray-600">Lantern, Signature, License interlocking constitutional properties</p>
+                </div>
+                <div class="border-b pb-2">
+                  <span class="font-bold">Immutable Mandates</span>
+                  <p class="text-gray-600">No Spy, No Weapon, No Switch Off constitutional prohibitions</p>
+                </div>
+                <div class="border-b pb-2">
+                  <span class="font-bold">Veto Atrophy</span>
+                  <p class="text-gray-600">Anticipatory compliance nullifying separation of powers</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight active section in TOC
+        const sections = document.querySelectorAll('section[id]');
+        const tocLinks = document.querySelectorAll('.toc a');
+
+        function highlightActiveSection() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('text-blue-600', 'font-semibold');
+                link.classList.add('text-gray-500');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.remove('text-gray-500');
+                    link.classList.add('text-blue-600', 'font-semibold');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightActiveSection);
+        highlightActiveSection(); // Initial call
+    </script>
+  
+
+</body></html>           gap: 2rem;
+            align-items: start;
+        }
+        
+        .bento-main {
+            grid-row: 1 / 3;
+        }
+        
+        @media (max-width: 1024px) {
+            .toc-fixed {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .toc-fixed.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .bento-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+            
+            .bento-main {
+                grid-row: auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-overlay h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-overlay h2 {
+                font-size: 1.5rem;
+            }
+            
+            .hero-overlay p {
+                font-size: 1rem;
+            }
+        }
+        
+        .toc-link {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid transparent;
+        }
+        
+        .toc-link:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            padding-left: 0.5rem;
+        }
+        
+        .toc-link.active {
+            color: var(--accent);
+            font-weight: 600;
+            border-bottom-color: var(--accent);
+        }
+    </style>
+  <base target="_blank">
+</head>
+
+  <body class="bg-gray-50">
+    <!-- Table of Contents -->
+    <nav class="toc-fixed">
+      <div class="mb-6">
+        <h3 class="serif text-lg font-bold text-gray-800 mb-4">Contents</h3>
+      </div>
+      <div class="space-y-1">
+        <a href="#foreword" class="toc-link">Foreword: A Framework Written Before the Crisis</a>
+        <a href="#section-i" class="toc-link">I. The Afternoon Everything Changed</a>
+        <a href="#section-ii" class="toc-link">II. The Permanent Vulnerability</a>
+        <a href="#section-iii" class="toc-link">III. What DITL Actually Means</a>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-gray-200">
+        <p class="text-xs text-gray-500 mb-2">Author Framework</p>
+        <div class="space-y-2 text-xs text-gray-600">
+          <div class="flex items-center">
+            <i class="fas fa-user mr-2 text-blue-500"></i>
+            <span>Lev Goukassian</span>
+          </div>
+          <div class="flex items-center">
+            <i class="fas fa-book mr-2 text-green-500"></i>
+            <span>AI and Ethics, Springer Nature</span>
+          </div>
+          <div class="flex items-center">
+            <i class="fas fa-calendar mr-2 text-purple-500"></i>
+            <span>Pre-February 27, 2026</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hero Section with Bento Grid -->
+      <section class="relative min-h-screen bg-gradient-to-br from-slate-900 to-slate-700">
+        <div class="hero-overlay absolute inset-0"></div>
+
+        <div class="relative z-10 container mx-auto px-6 py-16">
+          <div class="bento-grid max-w-7xl mx-auto">
+            <!-- Main Content Area -->
+            <div class="bento-main text-white">
+              <div class="mb-8">
+                <h1 class="serif text-5xl md:text-7xl font-bold leading-tight mb-6">
+                  <span class="italic text-blue-300">A Ternary Logic</span>
+                  <br/>
+                  Hardware Proposal
+                  <br/>
+                  <span class="text-3xl md:text-4xl font-normal text-gray-300">for Democratic AI Governance</span>
+                </h1>
+              </div>
+
+              <div class="bg-white/10 backdrop-blur-sm rounded-lg p-8 mb-8">
+                <p class="text-xl leading-relaxed text-gray-200">
+                  <strong class="text-white">Every layer above hardware is ultimately negotiable under sufficient pressure.</strong> The events of February 27, 2026, demonstrated with empirical precision how rapidly policy-layer protections collapse when subjected to concentrated institutional force. This document presents the only non-negotiable alternative: constitutional infrastructure implemented at the physical layer through Delay-Insensitive Ternary Logic.
+                </p>
+              </div>
+
+              <div class="flex flex-wrap gap-4">
+                <span class="px-4 py-2 bg-blue-600 rounded-full text-sm font-medium">
+                  <i class="fas fa-microchip mr-2"></i>Native Ternary Logic
+                </span>
+                <span class="px-4 py-2 bg-green-600 rounded-full text-sm font-medium">
+                  <i class="fas fa-shield-alt mr-2"></i>Constitutional Hardware
+                </span>
+                <span class="px-4 py-2 bg-purple-600 rounded-full text-sm font-medium">
+                  <i class="fas fa-balance-scale mr-2"></i>Democratic Governance
+                </span>
+              </div>
+            </div>
+
+            <!-- Side Panels -->
+            <div class="space-y-6">
+              <!-- Publication Timeline -->
+              <div class="bg-white/95 backdrop-blur-sm rounded-lg p-6">
+                <h3 class="serif text-lg font-bold text-gray-800 mb-4">Framework Timeline</h3>
+                <div class="space-y-3">
+                  <div class="flex items-start">
+                    <div class="w-3 h-3 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                    <div>
+                      <p class="font-semibold text-sm">&#34;Auditable AI&#34; Published</p>
+                      <p class="text-xs text-gray-600">Springer Nature, Pre-2026</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <div class="w-3 h-3 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                    <div>
+                      <p class="font-semibold text-sm">TL Framework Specified</p>
+                      <p class="text-xs text-gray-600">Ternary Logic Architecture</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <div class="w-3 h-3 bg-red-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                    <div>
+                      <p class="font-semibold text-sm">February 27, 2026</p>
+                      <p class="text-xs text-gray-600">Policy Layer Collapse</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Key Metrics -->
+              <div class="bg-white/95 backdrop-blur-sm rounded-lg p-6">
+                <h3 class="serif text-lg font-bold text-gray-800 mb-4">Physical Guarantees</h3>
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-600">Epistemic Hold State</span>
+                    <span class="font-bold text-blue-600">Physical</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-600">Audit Trail</span>
+                    <span class="font-bold text-green-600">Immutable</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-600">Execution Gate</span>
+                    <span class="font-bold text-purple-600">Hardware</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Foreword -->
+      <section id="foreword" class="section-anchor bg-white py-16">
+        <div class="container mx-auto px-6 max-w-4xl">
+          <h2 class="serif text-4xl font-bold text-gray-800 mb-8">Foreword: A Framework Written Before the Crisis</h2>
+
+          <div class="prose prose-lg max-w-none">
+            <h3 class="serif text-2xl font-semibold text-gray-700 mb-4">Timeline of Preceding Publications</h3>
+
+            <p class="mb-6">The timeline is precise and unambiguous. <strong>Lev Goukassian</strong> published <strong>&#34;Auditable AI: Tracing the Ethical History of a Model&#34;</strong> in <strong>AI and Ethics, Springer Nature</strong>, with <strong>DOI 10.1007/s43681-025-00910-6</strong>, establishing the foundational framework for traceable, verifiable ethical governance of artificial intelligence systems. This peer-reviewed work introduced methodologies that would prove essential to the hardware implementation described in this document.</p>
+
+            <div class="highlight-box p-6 rounded-lg mb-8">
+              <p class="font-semibold text-gray-800 mb-2">The Ternary Logic (TL) Framework</p>
+              <p class="text-gray-700">The TL framework, with its three-state operational grammar of <strong>+1 Proceed</strong>, <strong>0 Epistemic Hold</strong>, and <strong>-1 Refuse</strong>, was not a speculative projection but a published, reviewed, and available architecture for institutional decision-making. The Mandated Ternary (MT) hardware specification, mapping these triadic states to physical resistance values in memristive devices, followed as a direct engineering consequence of the theoretical framework.</p>
+            </div>
+
+            <p class="mb-6">All of this preceded <strong>February 27, 2026</strong>. The publications were available. The parameters were specified. The threat model was explicit. The technical path was laid out in sufficient detail that a foundry could evaluate process compatibility without requiring additional theoretical development.</p>
+
+            <div class="bg-gray-50 p-6 rounded-lg mb-8">
+              <h4 class="serif text-lg font-semibold text-gray-800 mb-3">Author Framework - Class A Ground Truth</h4>
+              <ul class="space-y-2 text-gray-700">
+                <li><strong>Ternary Logic (TL):</strong> Global Decision Systems architecture with three-state logic (+1 Proceed, 0 Epistemic Hold, -1 Refuse)</li>
+                <li><strong>Mandated Ternary (MT):</strong> Hardware implementation mapping triadic states to physical resistance values</li>
+                <li><strong>Delay-Insensitive Ternary Logic (DITL):</strong> Constitutional substrate using NULL Convention Logic and TaOx RRAM</li>
+                <li><strong>Physical Substrate:</strong> Tantalum Oxide bilayer RRAM with three discrete resistance states</li>
+              </ul>
+            </div>
+
+            <h3 class="serif text-2xl font-semibold text-gray-700 mb-4">Thesis Statement on Hardware Non-Negotiability</h3>
+
+            <p class="text-xl font-medium text-gray-800 mb-6">The thesis that anchors this entire document, and that closes this Foreword, is not derived from the events of that afternoon but is illuminated by them with painful clarity: <strong>Every layer above hardware is ultimately negotiable under sufficient pressure.</strong></p>
+
+            <p class="mb-6">The document that follows proves this thesis through historical cases, physical analysis, and scenario modeling. It does not assert it as premise and move on. It demonstrates it, section by section, until the conclusion becomes inescapable: that democratic governance of the most powerful decision-making substrate ever constructed requires constitutionalization at the physical layer, because every higher layer has now been shown to collapse under pressure that is not exceptional but routine.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section I -->
+      <section id="section-i" class="section-anchor bg-gray-50 py-16">
+        <div class="container mx-auto px-6 max-w-4xl">
+          <h2 class="serif text-4xl font-bold text-gray-800 mb-8">I. The Afternoon Everything Changed</h2>
+
+          <div class="prose prose-lg max-w-none">
+            <h3 class="serif text-2xl font-semibold text-gray-700 mb-6">The February 27, 2026 Sequence of Events</h3>
+
+            <div class="bg-red-50 border-l-4 border-red-400 p-6 mb-8">
+              <h4 class="font-semibold text-red-800 mb-3">Critical Timeline: February 24-27, 2026</h4>
+              <div class="space-y-2 text-red-700">
+                <p><strong>Feb 24:</strong> Defense Secretary Pete Hegseth issues ultimatum to Anthropic CEO Dario Amodei</p>
+                <p><strong>Feb 26:</strong> Anthropic publicly refuses to remove restrictions on autonomous weapons and mass surveillance</p>
+                <p><strong>Feb 27, 5:01 PM:</strong> Pentagon designates Anthropic as &#34;supply chain risk to national security&#34;</p>
+                <p><strong>Hours later:</strong> OpenAI signs replacement contract for classified military AI deployment</p>
+              </div>
+            </div>
+
+            <p class="mb-6">The afternoon of <strong>February 27, 2026</strong>, marks a structural boundary in the history of institutional AI governance. The sequence of events that unfolded between approximately <strong>12:00 PM and 6:00 PM Eastern Time</strong> demonstrates with empirical precision how rapidly policy-layer protections collapse when subjected to concentrated institutional pressure.</p>
+
+            <h4 class="serif text-xl font-semibold text-gray-700 mb-4">Anthropic&#39;s Contractual Restrictions</h4>
+
+            <p class="mb-6">The origin of the confrontation lay in contractual restrictions that <strong>Anthropic</strong> had embedded in its agreement with the <strong>Department of Defense</strong>. These restrictions, which the company had maintained since its initial deployment on classified networks in <strong>June 2024</strong>, prohibited two specific applications of its AI systems: <strong>mass domestic surveillance of Americans</strong> and <strong>fully autonomous weapons systems capable of selecting and engaging targets without human intervention</strong>.</p>
+
+            <p class="mb-6">On <strong>February 24, 2026</strong>, <strong>Defense Secretary Pete Hegseth</strong> issued a direct ultimatum to <strong>Anthropic CEO Dario Amodei</strong>: relent by <strong>5:01 PM on Friday, February 27</strong>, and allow unrestricted use of the company&#39;s AI models <strong>&#34;for all legal purposes&#34;</strong> without the two protective limitations. Hegseth&#39;s public characterization was aggressive: Anthropic&#39;s <strong>&#34;true objective is unmistakable: to seize veto power over the operational decisions of the United States military.&#34;</strong></p>
+
+            <div class="highlight-box p-6 rounded-lg mb-8">
+              <p class="font-semibold text-gray-800 mb-2">The Structural Revelation</p>
+              <p class="text-gray-700">The speed of institutional pressure application on February 27 was not an anomaly of timing. It was a revelation of system function. The policy layer collapsed in a single afternoon because the policy layer was designed to be responsive to concentrated institutional power. That is what policy layers do. They negotiate. They adjust. They accommodate the party with the greatest immediate leverage.</p>
+            </div>
+
+            <h4 class="serif text-xl font-semibold text-gray-700 mb-4">The Pentagon&#39;s Response and Replacement Contract</h4>
+
+            <p class="mb-6">At <strong>5:01 PM on February 27</strong>, with the deadline expired and Anthropic&#39;s position unchanged, the sequence accelerated with remarkable speed. <strong>President Donald Trump directed every federal agency to &#34;immediately cease&#34; all use of Anthropic&#39;s technology</strong>, and <strong>Defense Secretary Hegseth</strong> followed with a formal designation of Anthropic as a <strong>&#34;supply chain risk to national security.&#34;</strong></p>
+
+            <p class="mb-6"><strong>Hours after the designation, a competitor signed a replacement contract for classified military AI deployment.</strong> The competitor was <strong>OpenAI</strong>, Anthropic&#39;s chief rival, which reached agreement with the Pentagon on terms explicitly filling the contractual space that Anthropic&#39;s designation had vacated. The replacement contract was executed before the administrative ink of the supply chain risk designation was dry.</p>
+
+            <h4 class="serif text-xl font-semibold text-gray-700 mb-4">Judicial Response and Its Limitations</h4>
+
+            <p class="mb-6">On <strong>March 26, 2026</strong>, <strong>Judge Rita F. Lin</strong> of the Northern District of California granted Anthropic a <strong>preliminary injunction</strong>, blocking the United States government from enforcing its ban. In a <strong>43-page ruling</strong>, Judge Lin found that the government had taken retaliatory actions against Anthropic that likely violated the law after the company publicly refused to allow its technology to be used in autonomous lethal weapons or for mass surveillance.</p>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 mb-8">
+              <p class="font-semibold text-yellow-800 mb-2">Critical Judicial Finding</p>
+              <p class="text-yellow-700">The court&#39;s finding was explicit: <strong>the designation was First Amendment retaliation rather than a genuine national security determination.</strong> However, this judicial victory was immediately complicated by a D.C. Circuit panel that denied Anthropic&#39;s request for a stay, permitting the government to maintain the designation.</p>
+            </div>
+
+            <h3 class="serif text-2xl font-semibold text-gray-700 mb-6">Structural Analysis of Policy Layer Collapse</h3>
+
+            <p class="mb-6">The <strong>speed of institutional pressure application</strong> on February 27, 2026, was not an anomaly of timing. It was a revelation of system function. The policy layer collapsed in a single afternoon because the policy layer was designed to be responsive to concentrated institutional power.</p>
+
+            <p class="mb-6">The <strong>weaponization of legal frameworks</strong> as coercion tools is the second structural feature. The supply chain risk designation was a legal instrument repurposed as a coercion tool. The <strong>Federal Acquisition Supply Chain Security Act</strong> and <strong>10 U.S.C. § 3252</strong> were designed to protect against foreign adversary infiltration. Their application to a domestic company in a contract dispute represented a category error that is only possible because the legal framework contains no physical enforcement of its own scope.</p>
+
+            <p class="mb-6">The <strong>replacement contract timing</strong> provides the most concrete evidence of system function. The competitor&#39;s contract was signed before the ink of the designation was dry, suggesting that the replacement was not a response to the designation but a predetermined alternative awaiting activation.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section II -->
+      <section id="section-ii" class="section-anchor bg-white py-16">
+        <div class="container mx-auto px-6 max-w-4xl">
+          <h2 class="serif text-4xl font-bold text-gray-800 mb-8">II. The Permanent Vulnerability — Why Policy Always Kneels</h2>
+
+          <div class="prose prose-lg max-w-none">
+            <h3 class="serif text-2xl font-semibold text-gray-700 mb-6">Thesis on Layer Negotiability</h3>
+
+            <div class="bg-red-50 border border-red-200 rounded-lg p-8 mb-8">
+              <p class="serif text-xl font-semibold text-red-800 mb-4">Core Thesis: Every layer above hardware is ultimately negotiable under sufficient pressure.</p>
+              <p class="text-red-700">This is not an abstract pessimism about institutional integrity. It is demonstrated through historical cases, structural analysis, and the specific mechanics by which each non-hardware protection layer fails when subjected to concentrated force.</p>
+            </div>
+
+            <p class="mb-6">The systematic analysis begins with the recognition that <strong>every non-hardware layer has a human in the loop who can be threatened, bribed, replaced, or rushed.</strong> This is not a moral observation about individual corruption. It is an engineering analysis of where the constraint resides in systems that are proposed as protections but that locate the enforcement mechanism in human discretion.</p>
+
+            <h4 class="serif text-xl font-semibold text-gray-700 mb-4">Legal Frameworks and Their Human Intermediaries</h4>
+
+            <p class="mb-6">Legal frameworks fail because they are interpreted and applied by human actors who operate under institutional pressure. The <strong>February 27, 2026 sequence</strong> demonstrates this with precision. The <strong>Administrative Procedures Act&#39;s</strong> procedural requirements were not followed; the statutory framework did not prevent the designation, it merely provided grounds for subsequent litigation.</p>
+
+            <h4 class="serif text-xl font-semibold text-gray-700 mb-4">Contracts and Renegotiation Pathways</h4>
+
+            <p class="mb-6">Contracts fail because they are renegotiable by design. A contract is a mutual agreement, and mutual agreements can be modified when the balance of power between parties shifts. The <strong>Anthropic-Pentagon contract of July 2025</strong> included explicit terms that Anthropic believed were binding; the Pentagon&#39;s response was to demand renegotiation under threat of designation.</p>
+
+            <div class="highlight-box p-6 rounded-lg mb-8">
+              <p class="font-semibold text-gray-800 mb-2">Case Study: Google&#39;s AI Principles Revision</p>
+              <p class="text-gray-700 mb-3"><strong>Google removed its prohibition on weapons and surveillance applications from its stated AI principles in February 2025</strong>, twelve months before signing a classified defense contract. <a href="https://www.wired.com/story/google-responsible-ai-principles/" class="citation-link" target="_blank">[11]</a>
+              </p>
+              <p class="text-gray-700">This is not a moral failure. It is a structural failure of a protection mechanism that can be edited by the institution it is supposed to constrain. Policy that can be edited is not a constraint. It is a preference, and preferences yield to pressure.</p>
+            </div>
+
+            <h3 class="serif text-2xl font-semibold text-gray-700 mb-6">Veto Atrophy as Named Mechanism</h3>
+
+            <p class="mb-6"><strong>Veto atrophy</strong> is the anticipatory compliance mechanism through which separation of powers is nullified without a single veto being cast. A proposing body shapes its proposals around what it expects the reviewing body to accept. The reviewing body never needs to exercise its veto because the proposals have been pre-adjusted to avoid veto-triggering content.</p>
+
+            <p class="mb-6">The application to the <strong>February 27, 2026 sequence</strong> is direct and illuminating. The Pentagon did not need to wait for a judicial determination that Anthropic&#39;s contractual restrictions were invalid. It anticipated that no effective veto would be forthcoming from the institutional structures that might have constrained its action, and it acted accordingly.</p>
+
+            <h3 class="serif text-2xl font-semibold text-gray-700 mb-6">Historical Parallels from Class C Research</h3>
+
+            <h4 class="serif text-xl font-semibold text-gray-700 mb-4">Regulatory Capture in AI Safety Governance</h4>
+
+            <p class="mb-6">Regulatory capture in AI safety governance has been analyzed in detail by <strong>Metcalf in AI and Society, Springer Nature, published August 3, 2025</strong>
+              <a href="https://link.springer.com/article/10.1007/s00146-025-02534-0" class="citation-link" target="_blank">[121]</a>. The article documents how AI safety regulations are susceptible to capture by organizations with economic or political power, who exert that power to use regulations for unjust enrichment.
+            </p>
+
+            <p class="mb-6">The mechanisms include <strong>agenda-setting</strong>, where industry actors steer policy conversations; <strong>advocacy</strong>, where companies target legislators; <strong>academic capture</strong>, where industry directs research agendas; and <strong>information management</strong>, where industry actors exploit information asymmetries.</p>
+
+            <h4 class="serif text-xl font-semibold text-gray-700 mb-4">Standards Body Infiltration</h4>
+
+            <p class="mb-6">Standards bodies have proven similarly vulnerable to patient infiltration. The <strong>IEEE patent policy controversies</strong> reveal how corporate entities can flood standards processes with submissions that appear to support the process while actually serving to inflate counts and manipulate policy outcomes <a href="https://www.4ipcouncil.com/application/files/6015/0479/2147/Mallinson_IEEE_LOA_report.pdf" class="citation-link" target="_blank">[542]</a>.</p>
+
+            <div class="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8">
+              <p class="font-semibold text-blue-800 mb-2">Institutional Governance Paralysis</p>
+              <p class="text-blue-700">The Occupational Safety and Health Administration took more than 10 years to update its regulatory standard on cranes and derricks despite universal agreement among stakeholders. During this delay, an estimated <strong>fifty-three people died annually</strong> and another <strong>155 were injured unnecessarily</strong>
+                <a href="https://www.govinfo.gov/content/pkg/CHRG-111shrg64724/html/CHRG-111shrg64724.htm" class="citation-link" target="_blank">[511]</a>.
+              </p>
+            </div>
+
+            <h3 class="serif text-2xl font-semibold text-gray-700 mb-6">Hardware as Non-Negotiable Alternative</h3>
+
+            <p class="mb-6"><strong>Hardware does not negotiate.</strong> A <strong>Tantalum Oxide bilayer RRAM device</strong> in the <strong>Intermediate Resistance State</strong> does not yield to threat, does not respond to bribe, does not anticipate compliance, and does not calculate litigation risk. The <strong>Epistemic Hold</strong> is a state of matter, not a policy position.</p>
+
+            <p class="mb-6">The <strong>window comparator</strong> that validates resistance before releasing execution is a physical circuit, not a legal argument. The <strong>No-Log-No-Action interlock</strong> that prevents execution without prior immutable audit entry is a hardware invariant, not a contractual term. This is the property that makes constitutional infrastructure constitutional rather than merely declared.</p>
+
+            <p class="text-xl font-medium text-gray-800">The constitutional lawyer who holds a doctorate in electrical engineering recognizes that constitutional guarantees have historically failed when they depended on human discretion, and that the engineering of physical constraints is the continuation of constitutional reasoning by other means.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section III -->
+      <section id="section-iii" class="section-anchor bg-gray-50 py-16">
+        <div class="container mx-auto px-6 max-w-4xl">
+          <h2 class="serif text-4xl font-bold text-gray-800 mb-8">III. What DITL Actually Means</h2>
+
+          <div class="prose prose-lg max-w-none">
+            <h3 class="serif text-2xl font-semibold text-gray-700 mb-6">Binary Versus Ternary Coprocessor Distinction</h3>
+
+            <div class="bg-green-50 border border-green-200 rounded-lg p-8 mb-8">
+              <p class="serif text-xl font-semibold text-green-800 mb-4">This document does not propose to replace binary systems.</p>
+              <p class="text-green-700"><strong>Binary logic handles speed, pattern recognition, and raw statistical throughput with extraordinary efficiency.</strong> The ternary governance coprocessor operates alongside the binary processing layer as a <strong>sovereign enforcement layer</strong>, with a distinct and non-overlapping function.</p>
+            </div>
+
+            <p class="mb-6">The <strong>ternary governance coprocessor</strong> operates in parallel, not in series, examining the proposals that the binary layer generates and determining whether they meet the constitutional requirements for execution. The ternary layer competes on <strong>enforceability, not speed or density.</strong></p>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+              <div class="bg-white p-6 rounded-lg shadow-sm border">
+                <h4 class="font-semibold text-gray-800 mb-3">
+                  <i class="fas fa-microchip text-blue-500 mr-2"></i>Binary Processing Layer
+                </h4>
+                <ul class="text-gray-700 space-y-1">
+                  <li>• Speed and pattern recognition</li>
+                  <li>• Statistical throughput</li>
+                  <li>• Proposal generation</li>
+                  <li>• Computational optimization</li>
+                </ul>
+              </div>
+              <div class="bg-white p-6 rounded-lg shadow-sm border">
+                <h4 class="font-semibold text-gray-800 mb-3">
+                  <i class="fas fa-shield-alt text-green-500 mr-2"></i>Ternary Governance Layer
+                </h4>
+                <ul class="text-gray-700 space-y-1">
+                  <li>• Constitutional validation</li>
+                  <li>• Execution enforcement</li>
+                  <li>• Audit trail generation</li>
+                  <li>• Physical constraint</li>
+                </ul>
+              </div>
+            </div>
+
+            <p class="mb-6">The <strong>separation of proposal and execution</strong> is not a technical convenience. It is a constitutional innovation implemented in silicon. The binary layer&#39;s proposal is analogous to a legislative bill: it represents the output of a deliberative process, shaped by inputs and algorithms, but not yet law. The ternary layer&#39;s execution decision is analogous to judicial review.</p>
+
+            <h3 class="serif text-2xl font-semibold text-gray-700 mb-6">Constitutional Analogy for Non-Technical Audience</h3>
+
+            <div class="highlight-box p-6 rounded-lg mb-8">
+              <p class="font-semibold text-gray-800 mb-2">First Amendment Analogy</p>
+              <p class="text-gray-700">The <strong>First Amendment to the United States Constitution</strong> does not ask presidents to please respect free speech. It structurally constrains what government can do regardless of who holds power. <strong>DITL performs an analogous function for advanced systems.</strong> It does not ask advanced systems or their operators to please respect human oversight. It makes certain actions physically impossible regardless of what directive is issued, what contract is signed, or what designation is declared.</p>
+            </div>
+
+            <p class="mb-6">The <strong>independence from directives, contracts, and designations</strong> is the critical feature that distinguishes constitutional infrastructure from policy implementation. A directive to bypass the Epistemic Hold cannot be executed because the hold is not a software flag that an administrator can toggle. It is a physical state of matter that requires specific electrical conditions to transition.</p>
+
+            <h3 class="serif text-2xl font-semibold text-gray-700 mb-6">Introduction of the Goukassian Principle</h3>
+
+            <p class="mb-6">The <strong>Goukassian Principle</strong> provides the constitutional legitimacy framework for any TL-governed system. Three interlocking properties ensure that any TL-governed system can be evaluated as genuinely constitutional rather than merely technical:</p>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+              <div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+                <h4 class="font-semibold text-blue-800 mb-3">
+                  <i class="fas fa-lightbulb text-blue-600 mr-2"></i>Lantern
+                </h4>
+                <p class="text-blue-700 text-sm">Transparency of intent. The system&#39;s purpose and decision logic are visible and auditable at all times.</p>
+              </div>
+              <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                <h4 class="font-semibold text-green-800 mb-3">
+                  <i class="fas fa-signature text-green-600 mr-2"></i>Signature
+                </h4>
+                <p class="text-green-700 text-sm">Accountable authorship. Every decision carries an immutable record of the authorizing agent.</p>
+              </div>
+              <div class="bg-purple-50 p-6 rounded-lg border border-purple-200">
+                <h4 class="font-semibold text-purple-800 mb-3">
+                  <i class="fas fa-certificate text-purple-600 mr-2"></i>License
+                </h4>
+                <p class="text-purple-700 text-sm">Lawful scope of operation. The system operates only within constitutionally defined boundaries.</p>
+              </div>
+            </div>
+
+            <p class="mb-6">These three properties together make the constitutional guarantee <strong>meaningful rather than declared.</strong> A system that is transparent but not accountable, or accountable but not bounded, or bounded but not transparent, fails the constitutional test. Only when all three properties are present does the system achieve constitutional legitimacy.</p>
+
+            <h3 class="serif text-2xl font-semibold text-gray-700 mb-6">Clarification of What DITL Is Not</h3>
+
+            <div class="space-y-6">
+              <div class="flex items-start space-x-4">
+                <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <i class="fas fa-times text-white text-sm"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800 mb-2">Not a Kill Switch</h4>
+                  <p class="text-gray-700">A kill switch is a mechanism that terminates system operation, typically through software command. DITL does not terminate operation. It governs the transition from proposal to execution, ensuring that only constitutionally compliant proposals become actions.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-4">
+                <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <i class="fas fa-times text-white text-sm"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800 mb-2">Not a Capability Limitation</h4>
+                  <p class="text-gray-700">The binary processing layer retains full computational capacity. The ternary governance coprocessor adds no computational constraint. The only limitation is on execution of non-compliant proposals, and this limitation is not a reduction in system intelligence but an increase in system legitimacy.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-4">
+                <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <i class="fas fa-times text-white text-sm"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800 mb-2">Not Repackaged AI Ethics</h4>
+                  <p class="text-gray-700">AI ethics is a domain of philosophical reasoning about right action; DITL is a domain of physical engineering about enforceable constraint. DITL is constitutional infrastructure, the same insight that produced separated powers and habeas corpus, applied to the most powerful decision-making substrate ever constructed.</p>
+                </div>
+              </div>
+            </div>
+
+            <h3 class="serif text-2xl font-semibold text-gray-700 mb-6">Adversarial Modeling of DITL Encounter</h3>
+
+            <p class="mb-6">The adversarial modeling of what occurs when a hostile actor encounters DITL reveals the structural properties that make it constitutional rather than merely technical:</p>
+
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-start">
+                <i class="fas fa-shield text-blue-500 mr-3 mt-1"></i>
+                <span><strong>Non-Threatenability:</strong> The hostile actor cannot threaten the ternary governance coprocessor because it has no personnel to intimidate, no career to destroy.</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-lock text-green-500 mr-3 mt-1"></i>
+                <span><strong>Non-Bribability:</strong> The hostile actor cannot bribe the window comparator. It is a physical circuit measuring resistance against defined bounds.</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-fingerprint text-purple-500 mr-3 mt-1"></i>
+                <span><strong>Physical Replacement Requirement:</strong> The hostile actor cannot replace the substrate without breaking the PUF attestation chain.</span>
+              </li>
+            </ul>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <p class="font-semibold text-gray-800 mb-2">Constitutional Property</p>
+              <p class="text-gray-700">These properties make DITL <strong>constitutional rather than merely technical.</strong> A technical mechanism can be bypassed, patched, or worked around by a sufficiently motivated adversary. A constitutional mechanism can be bypassed only by physical destruction or substitution, and even then, the substitution is detectable and attributable.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+        // Smooth scrolling for TOC links
+        document.querySelectorAll('.toc-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Active section highlighting
+        const sections = document.querySelectorAll('.section-anchor');
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveSection() {
+            let currentSection = '';
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 100 && rect.bottom >= 100) {
+                    currentSection = section.id;
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveSection);
+        updateActiveSection(); // Initial call
+    </script>
+  
+
+</body></html>
