@@ -81,7 +81,7 @@ The policy layer collapsed in a single afternoon. The legal layer took twenty-se
 
 ---
 
-## Section II: The Permanent Vulnerability — Why Policy Always Kneels
+## Section II: The Permanent Vulnerability: Why Policy Always Kneels
 
 ### II.1 Thesis on Layer Negotiability
 
