@@ -1128,3 +1128,6 @@ Anticipatory compliance as an invisible capture mechanism. A proposing body shap
 
 The parallel system bypass vulnerability. A DITL-compliant system operating alongside a non-DITL system creates a compliant path and a bypass path simultaneously, rendering constitutional guarantees locally enforceable but globally circumventable without international coordination.
 
+---
+
+**"The afternoon of February 27, 2026 did not prove that policy fails. It proved that policy without physical constraint is a promise without a mechanism."** ***— Lev Goukassian, TL Constitutional Hardware, 2026***
