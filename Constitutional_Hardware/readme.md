@@ -27,7 +27,7 @@ Policy does not fail all at once. It fails in layers.
 ![Policy Collapse Under Pressure](https://fractonicmind.github.io/TernaryLogic/Constitutional_Hardware/img_04_policy_collapse_pyramid.png)
 *Figure 1. The collapse pyramid. Pressure enters at the Applications/Policy layer and propagates downward. Only the Hardware Foundation is immune to administrative override.*
 
-The February 27 sequence—public refusal, internal reversal, federal contract execution—demonstrates that every layer above hardware is negotiable under sufficient pressure. Applications rewrite their terms of service. Operating systems patch around restrictions. Firmware updates silently. Only the physical layer resists last-minute revision because it requires a foundry mask set, ion implantation, and weeks of fabrication to change.
+The February 27 sequence: public refusal, internal reversal, federal contract execution, demonstrates that every layer above hardware is negotiable under sufficient pressure. Applications rewrite their terms of service. Operating systems patch around restrictions. Firmware updates silently. Only the physical layer resists last-minute revision because it requires a foundry mask set, ion implantation, and weeks of fabrication to change.
 
 The MASTER document reconstructs the full legal timeline: Judge Rita F. Lin's 43-page ruling, the D.C. Circuit stay denial, the Administrative Procedures Act five-count complaint, and the specific statutory provisions (10 U.S.C. § 3252, FASCSA) that made the reversal legally inevitable. The TECHSPEC document translates that inevitability into resistance parameters: cycle counts, retention corners, and metastability bounds.
 
@@ -100,7 +100,7 @@ Hardware without governance architecture is just a circuit. The TL framework wra
 
 **Ternary Logic Enforcement:** The three-state vocabulary (Proceed, Epistemic Hold, Refuse) is enforced at the physical layer, not the application layer. No software update can add a fourth state or redefine the thresholds.
 
-**Constitutional Constraints:** The Epistemic Hold is the democratic moment—the physical instantiation of "let me think about this" that no executive order, market pressure, or institutional threat can compress.
+**Constitutional Constraints:** The Epistemic Hold is the democratic moment, the physical instantiation of "let me think about this" that no executive order, market pressure, or institutional threat can compress.
 
 ---
 
@@ -134,8 +134,6 @@ Two documents. Two functions. One architecture.
 
 ## Audio Companion
 
-For the commute, the gym, or the 2:47 AM pancake recipe search.
-
 - **Audio:** [Hardwiring AI Safety into Ternary Logic.mp3](https://fractonicmind.github.io/TernaryLogic/Constitutional_Hardware/Hardwiring%20AI%20Safety%20into%20Ternary%20Logic.mp3)
 
 ---
@@ -160,12 +158,12 @@ For the commute, the gym, or the 2:47 AM pancake recipe search.
 
 ## Published Verification
 
-- **"Auditable AI"** — *AI and Ethics*, Springer Nature. DOI: 10.1007/s43681-025-00910-6
-- **"A Ternary Logic Framework for Institutional Governance"** — *AI and Ethics*, Springer Nature. Accepted April 1, 2026. Zenodo: https://zenodo.org/records/19770872
+- **"Auditable AI"**: *AI and Ethics*, Springer Nature. DOI: 10.1007/s43681-025-00910-6
+- **"A Ternary Logic Framework for Institutional Governance"**: *AI and Ethics*, Springer Nature. Accepted April 1, 2026. Zenodo: https://zenodo.org/records/19770872
 - **ORCID:** 0009-0006-5966-1243
 
 ---
 
 &gt; *"The stone age didn't end because we ran out of stones. The binary age won't end because we run out of zeros and ones, but because the cost of emulating safety becomes higher than the cost of building it."*
 &gt;
-&gt; — Lev Goukassian, Creator of Ternary Logic
+&gt; -Lev Goukassian, Creator of Ternary Logic
