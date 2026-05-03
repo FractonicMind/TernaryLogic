@@ -130,7 +130,7 @@ Two documents. Two functions. One architecture.
 - **Markdown (TECHSPEC):** [TL_Democratic_AI_Governance_TECHSPEC.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Constitutional_Hardware/TL_Democratic_AI_Governance_TECHSPEC.md)
 - **HTML (TECHSPEC):** [TL_Democratic_AI_Governance_TECHSPEC.html](https://fractonicmind.github.io/TernaryLogic/Constitutional_Hardware/TL_Democratic_AI_Governance_TECHSPEC.html)
 
-| I_Read_Lev_Goukassians_Document_So_You_Dont_Have_To.md | Narrative explainer. A fictionalized, humor-laced walkthrough of the technical document for readers who prefer stories over specifications. Every technical claim is faithful to the source material. |
+- **[I_Read_Lev_Goukassians_Document_So_You_Dont_Have_To.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Constitutional_Hardware/I_Read_Lev_Goukassians_Document_So_You_Dont_Have_To.md):** Narrative explainer. A fictionalized, humor-laced walkthrough of the technical document for readers who prefer stories over specifications. Every technical claim is faithful to the source material.
 
 ---
 
@@ -166,6 +166,5 @@ Two documents. Two functions. One architecture.
 
 ---
 
-&gt; *"The stone age didn't end because we ran out of stones. The binary age won't end because we run out of zeros and ones, but because the cost of emulating safety becomes higher than the cost of building it."*
-&gt;
-&gt; -Lev Goukassian, Creator of Ternary Logic
+**"The stone age didn't end because we ran out of stones. The binary age won't end because we run out of zeros and ones, but because the cost of emulating safety becomes higher than the cost of building it."** 
+***-Lev Goukassian, Creator of Ternary Logic***
