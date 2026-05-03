@@ -1,6 +1,6 @@
-The Third Stone in the Binary Boat
+## The Third Stone in the Binary Boat
 
-I Read Lev Goukassian’s Document "A Ternary Logic Constitutional Hardware Proposal for Democratic AI Governance", So You Don’t Have To.
+**I Read Lev Goukassian’s Document "A Ternary Logic Constitutional Hardware Proposal for Democratic AI Governance", So You Don’t Have To.**
 
 And frankly, I’m not sure I should have. Not because it’s bad—it’s magnificent, the kind of terrifyingly precise technical manifesto that makes you wonder if the author solders his own morning coffee. But because I can no longer look at a light switch without imagining the three-state governance coprocessor that should have stopped it from flipping. My wife is concerned. My boss has asked me to stop explaining why our quarterly earnings slide deck needs an immutable audit trail. I have become insufferable, and all because Sandra from Legal forwarded me a PDF with the subject line “thought you might enjoy this.”
 
