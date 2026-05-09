@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API — "Ternary Logic" (TL) Governance Framework</title>
+<style>
+  :root {
+    --navy:    #0a1628;
+    --navy2:   #0f1f3d;
+    --navy3:   #162847;
+    --gold:    #d4a574;
+    --gold2:   #e8c496;
+    --teal:    #2dd4bf;
+    --green:   #22c55e;
+    --amber:   #f59e0b;
+    --coral:   #f87171;
+    --purple:  #a78bfa;
+    --blue:    #60a5fa;
+    --text:    #e2e8f0;
+    --muted:   #94a3b8;
+    --border:  rgba(212,165,116,0.2);
+    --border2: rgba(212,165,116,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--navy); color: var(--text); font-family: 'Georgia', serif; line-height: 1.75; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed; top: 0; left: 0; width: 260px; height: 100vh;
+    background: var(--navy2); border-right: 1px solid var(--border);
+    overflow-y: auto; z-index: 200;
+  }
+  .sidebar-brand {
+    padding: 1.5rem 1.25rem 1.1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-brand .tl-label {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.65rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+  .sidebar-brand h2 {
+    font-size: 0.88rem; font-weight: normal;
+    color: var(--text); line-height: 1.4;
+  }
+  .sidebar nav { padding: 0.4rem 0 2rem; }
+  .sidebar nav .group {
+    padding: 0.9rem 1.25rem 0.25rem;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.62rem; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .sidebar nav a {
+    display: block; padding: 0.38rem 1.25rem;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.73rem; color: var(--muted);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .sidebar nav a:hover {
+    color: var(--gold);
+    border-left-color: var(--gold);
+    background: rgba(212,165,116,0.05);
+  }
+
+  /* ── MAIN ── */
+  .main { margin-left: 260px; padding: 3rem 3.5rem 6rem; max-width: 1100px; }
+
+  /* ── HEADER ── */
+  .page-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2.25rem; margin-bottom: 3rem;
+  }
+  .page-header .pre-label {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.68rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+  .page-header h1 {
+    font-size: 2.2rem; font-weight: normal;
+    color: var(--gold2); line-height: 1.2;
+    margin-bottom: 0.6rem;
+  }
+  .page-header .sub {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.82rem; color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .page-header .sub a { color: var(--gold); text-decoration: none; }
+  .page-header .sub a:hover { text-decoration: underline; }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem; margin-top: 1.5rem;
+  }
+  .meta-card {
+    background: var(--navy3); border: 1px solid var(--border2);
+    border-radius: 6px; padding: 0.75rem 1rem;
+  }
+  .meta-card .k {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.62rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+  .meta-card .v { font-size: 0.83rem; color: var(--text); }
+  .meta-card .v a { color: var(--gold); text-decoration: none; }
+  .meta-card .v a:hover { text-decoration: underline; }
+
+  /* ── VOW ── */
+  .vow-block {
+    background: var(--navy2);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 1.4rem 1.75rem;
+    margin: 2rem 0;
+  }
+  .vow-block .vow-title {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.65rem; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+  .vow-line {
+    font-family: 'Courier New', monospace;
+    font-size: 0.92rem; color: var(--gold2);
+    line-height: 1.9;
+  }
+
+  /* ── MANDATES ── */
+  .mandates-bar {
+    display: flex; gap: 2rem; align-items: center;
+    background: var(--navy2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.65rem 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+  .mandates-bar .ml {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.62rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .mandates-bar .mv {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.82rem; color: var(--coral); font-weight: 500;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.68rem; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--gold);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.45rem; margin: 2.75rem 0 1.25rem;
+  }
+
+  /* ── AUDIO PLAYER ── */
+  .audio-card {
+    background: var(--navy2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .audio-card .a-title {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.72rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .audio-card .a-name {
+    font-size: 0.95rem; color: var(--text);
+    margin-bottom: 0.85rem; line-height: 1.4;
+  }
+  .audio-card audio {
+    width: 100%; height: 36px;
+    border-radius: 4px; outline: none;
+    accent-color: var(--gold);
+  }
+
+  /* ── ARTIFACT TABLE ── */
+  .artifact-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px; margin-bottom: 1.5rem;
+  }
+  .artifact-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+  .artifact-table thead tr { background: var(--navy3); }
+  .artifact-table thead th {
+    padding: 0.7rem 1rem; text-align: left;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.63rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gold);
+    font-weight: 500; border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .artifact-table tbody tr {
+    border-bottom: 1px solid var(--border2);
+    transition: background 0.1s;
+  }
+  .artifact-table tbody tr:last-child { border-bottom: none; }
+  .artifact-table tbody tr:hover { background: rgba(212,165,116,0.04); }
+  .artifact-table tbody td {
+    padding: 0.65rem 1rem; color: var(--text);
+    vertical-align: top; line-height: 1.5;
+  }
+  .artifact-table td a { color: var(--gold); text-decoration: none; }
+  .artifact-table td a:hover { text-decoration: underline; }
+  .artifact-table td .web-link { color: var(--teal); }
+  code {
+    font-family: 'Courier New', monospace;
+    font-size: 0.78rem;
+    background: rgba(255,255,255,0.06);
+    padding: 0.1em 0.35em; border-radius: 3px;
+    color: var(--teal);
+  }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.6rem; letter-spacing: 0.06em;
+    padding: 0.15em 0.5em; border-radius: 3px;
+    font-weight: 500; text-transform: uppercase;
+  }
+  .badge-ship  { background: rgba(34,197,94,0.12);  color: var(--green);  border: 1px solid rgba(34,197,94,0.25); }
+  .badge-future{ background: rgba(245,158,11,0.12); color: var(--amber);  border: 1px solid rgba(245,158,11,0.25); }
+  .badge-beta  { background: rgba(96,165,250,0.12); color: var(--blue);   border: 1px solid rgba(96,165,250,0.25); }
+
+  /* ── DIAGRAM GRID ── */
+  .diagram-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem; margin-bottom: 1.5rem;
+  }
+  .diagram-card {
+    background: var(--navy2); border: 1px solid var(--border2);
+    border-radius: 8px; overflow: hidden;
+  }
+  .diagram-card img {
+    width: 100%; display: block;
+    border-bottom: 1px solid var(--border2);
+  }
+  .diagram-card .d-caption {
+    padding: 0.6rem 0.85rem;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.68rem; color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .diagram-card-full {
+    background: var(--navy2); border: 1px solid var(--border2);
+    border-radius: 8px; overflow: hidden; margin-bottom: 1.25rem;
+  }
+  .diagram-card-full img { width: 100%; display: block; border-bottom: 1px solid var(--border2); }
+  .diagram-card-full .d-caption { padding: 0.6rem 0.85rem; font-family: 'Helvetica Neue', sans-serif; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.04em; }
+
+  /* ── PILLARS TABLE ── */
+  .pillars-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 1.5rem; }
+  .pillars-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  .pillars-table thead tr { background: var(--navy3); }
+  .pillars-table thead th { padding: 0.65rem 0.9rem; text-align: left; font-family: 'Helvetica Neue', sans-serif; font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 500; border-bottom: 1px solid var(--border); }
+  .pillars-table tbody tr { border-bottom: 1px solid var(--border2); transition: background 0.1s; }
+  .pillars-table tbody tr:last-child { border-bottom: none; }
+  .pillars-table tbody tr:hover { background: rgba(212,165,116,0.04); }
+  .pillars-table tbody td { padding: 0.55rem 0.9rem; vertical-align: top; line-height: 1.5; }
+  .pillar-chip { display: inline-block; font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; padding: 0.12em 0.45em; border-radius: 3px; background: rgba(167,139,250,0.12); color: var(--purple); border: 1px solid rgba(167,139,250,0.2); white-space: nowrap; }
+
+  /* ── ENFORCEMENT TABLE ── */
+  .enf-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 1.5rem; }
+  .enf-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  .enf-table thead tr { background: var(--navy3); }
+  .enf-table thead th { padding: 0.65rem 0.9rem; text-align: left; font-family: 'Helvetica Neue', sans-serif; font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 500; border-bottom: 1px solid var(--border); }
+  .enf-table tbody tr { border-bottom: 1px solid var(--border2); }
+  .enf-table tbody tr:last-child { border-bottom: none; }
+  .enf-table tbody td { padding: 0.55rem 0.9rem; vertical-align: top; }
+
+  /* ── VERSION TABLE ── */
+  .version-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 1.5rem; }
+  .version-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .version-table tr { border-bottom: 1px solid var(--border2); }
+  .version-table tr:last-child { border-bottom: none; }
+  .version-table td { padding: 0.6rem 1rem; vertical-align: top; }
+  .version-table td:first-child { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); width: 180px; }
+  .version-table td a { color: var(--gold); text-decoration: none; }
+  .version-table td a:hover { text-decoration: underline; }
+
+  /* ── CLOSING QUOTE ── */
+  .closing-quote {
+    border-top: 1px solid var(--border);
+    margin-top: 4rem; padding-top: 2rem;
+    text-align: center;
+  }
+  .closing-quote blockquote {
+    font-size: 1.05rem; color: var(--gold2);
+    font-style: italic; line-height: 1.7;
+    max-width: 680px; margin: 0 auto 0.75rem;
+  }
+  .closing-quote .attribution {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.75rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  p { margin-bottom: 1rem; font-size: 0.93rem; color: var(--text); }
+
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; padding: 1.5rem; }
+    .meta-grid { grid-template-columns: 1fr 1fr; }
+    .diagram-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="tl-label">"Ternary Logic" · TL</div>
+    <h2>API Specification Suite</h2>
+  </div>
+  <nav>
+    <div class="group">Overview</div>
+    <a href="#overview">Constitution in Code</a>
+    <a href="#vow">Goukassian Vow</a>
+    <a href="#audio">Audio Companion</a>
+
+    <div class="group">Diagrams</div>
+    <a href="#diag-dual-lane">Dual-Lane Architecture</a>
+    <a href="#diag-nlna">NL=NA Five-Layer Stack</a>
+    <a href="#diag-states">Three Triadic States</a>
+    <a href="#diag-lifecycle">Decision Lifecycle</a>
+    <a href="#diag-pillars">Eight Pillars</a>
+    <a href="#diag-tricameral">Tri-Cameral Governance</a>
+    <a href="#diag-emergency">Emergency Override</a>
+
+    <div class="group">Specification Files</div>
+    <a href="#spec-openapi">1 · OpenAPI</a>
+    <a href="#spec-schema">2 · JSON Schema</a>
+    <a href="#spec-abi">3 · Smart Contract ABI</a>
+    <a href="#spec-eip712">4 · EIP-712</a>
+    <a href="#spec-arch">5 · Specification Architecture</a>
+    <a href="#spec-matrix">6 · Compliance Matrix</a>
+    <a href="#spec-future">7 · Future-Blocked Appendix</a>
+
+    <div class="group">Reference</div>
+    <a href="#eight-pillars">Eight Pillars</a>
+    <a href="#regulatory">Regulatory Alignment</a>
+    <a href="#enforcement">Hybrid Shield</a>
+    <a href="#version">Version and Authority</a>
+  </nav>
+</aside>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="pre-label">API Specification Suite · v1.0.0-tl-monograph-2026</div>
+    <h1>"Ternary Logic" (TL)<br>Governance Framework</h1>
+    <div class="sub">
+      By <strong>Lev Goukassian</strong> ·
+      ORCID <a href="https://orcid.org/0009-0006-5966-1243">0009-0006-5966-1243</a> ·
+      <a href="https://github.com/FractonicMind/TernaryLogic">FractonicMind/TernaryLogic</a>
+    </div>
+    <div class="meta-grid">
+      <div class="meta-card"><div class="k">DOI 1</div><div class="v"><a href="https://doi.org/10.1007/s43681-025-00910-6">10.1007/s43681-025-00910-6</a></div></div>
+      <div class="meta-card"><div class="k">DOI 2</div><div class="v"><a href="https://doi.org/10.1007/s43681-026-01124-0">10.1007/s43681-026-01124-0</a></div></div>
+      <div class="meta-card"><div class="k">Publisher</div><div class="v">AI and Ethics, Springer Nature</div></div>
+      <div class="meta-card"><div class="k">Spec Version</div><div class="v"><code>1.0.0-tl-monograph-2026</code></div></div>
+      <div class="meta-card"><div class="k">Endpoints</div><div class="v">40 across 12 path groups</div></div>
+      <div class="meta-card"><div class="k">Schemas</div><div class="v">22 · all unevaluatedProperties: false</div></div>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div id="overview">
+    <div class="section-title">Overview — The Constitution in Code</div>
+    <p>The TL API is not a conventional REST interface. It is the software expression of a constitutional enforcement architecture: a sovereign governance coprocessor that operates in parallel with a binary inference engine and holds absolute authority over whether any proposed action crosses the threshold into execution.</p>
+    <p>The binary system proposes. The ternary system decides. The <strong>Permission Token</strong> is the only key that opens the actuation gate. Without a cryptographically valid token issued by the Audit Lane, no proposed State +1 action may execute. This is the <strong>No Log = No Action</strong> (NL=NA) iron law, enforced simultaneously at the schema layer, the API contract layer, the on-chain ABI layer, and the EIP-712 signing layer. There is no software path around it in a conforming implementation.</p>
+    <p>The <strong>Epistemic Hold</strong> (State 0) is the most constitutionally significant state in the framework. It is not a null. It is not an error. It is not a timeout. It is a first-class governance state of mandatory hesitation that holds execution pending verified completion of legitimate process.</p>
+  </div>
+
+  <!-- VOW -->
+  <div id="vow">
+    <div class="vow-block">
+      <div class="vow-title">The Goukassian Vow</div>
+      <div class="vow-line">"Pause when truth is uncertain" &nbsp;→&nbsp; State &nbsp;0 &nbsp;(Epistemic Hold)</div>
+      <div class="vow-line">"Refuse when harm is clear" &nbsp;&nbsp;&nbsp;&nbsp;→&nbsp; State −1 &nbsp;(Refuse)</div>
+      <div class="vow-line">"Proceed where truth is" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→&nbsp; State +1 &nbsp;(Proceed)</div>
+    </div>
+    <div class="mandates-bar">
+      <span class="ml">Immutable mandates</span>
+      <span class="mv">No Spy</span>
+      <span class="mv">No Weapon</span>
+      <span class="mv">No Switch Off</span>
+    </div>
+  </div>
+
+  <!-- AUDIO -->
+  <div id="audio">
+    <div class="section-title">Audio Companion</div>
+    <div class="audio-card">
+      <div class="a-title">AI-Generated Deep-Research Interview</div>
+      <div class="a-name">Preventing Financial Collapse With Ternary Hardware</div>
+      <audio controls>
+        <source src="https://fractonicmind.github.io/TernaryLogic/API/Preventing_Financial_Collapse_With_Ternary_Hardware.mp3" type="audio/mpeg">
+        Your browser does not support the audio element. <a href="https://fractonicmind.github.io/TernaryLogic/API/Preventing_Financial_Collapse_With_Ternary_Hardware.mp3">Download MP3</a>
+      </audio>
+    </div>
+  </div>
+
+  <!-- DIAGRAMS -->
+  <div class="section-title">Architecture Diagrams</div>
+
+  <div id="diag-dual-lane">
+    <div class="diagram-card-full">
+      <img src="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_dual_lane_architecture.png?raw=true" alt="Dual-Lane Architecture">
+      <div class="d-caption">Dual-Lane Architecture — Inference Lane (proposal only) vs Audit Lane (Permission Token issuance). NL=NA enforced at the lane boundary.</div>
+    </div>
+  </div>
+
+  <div class="diagram-grid">
+    <div class="diagram-card" id="diag-nlna">
+      <img src="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_nlna_five_layer_stack.png?raw=true" alt="NL=NA Five-Layer Stack">
+      <div class="d-caption">NL=NA Five-Layer Stack — five independent enforcement layers, each independently un-bypassable.</div>
+    </div>
+    <div class="diagram-card" id="diag-states">
+      <img src="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_goukassian_vow_state_machine.png?raw=true" alt="Goukassian Vow State Machine">
+      <div class="d-caption">Goukassian Vow State Machine — three constitutional states, permitted transitions, and mandate footer.</div>
+    </div>
+    <div class="diagram-card" id="diag-lifecycle">
+      <img src="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_decision_lifecycle.png?raw=true" alt="Decision Lifecycle">
+      <div class="d-caption">Decision Lifecycle — six-stage flow with Epistemic Hold branch. Skipping the Audit Lane is constitutionally blocked.</div>
+    </div>
+    <div class="diagram-card" id="diag-pillars">
+      <img src="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_eight_pillars.png?raw=true" alt="Eight Pillars">
+      <div class="d-caption">Eight Pillars — 2×4 governance grid. Pillar III (Goukassian Principle) carries the lantern icon. Pillar VIII (Anchors) carries the anchor.</div>
+    </div>
+    <div class="diagram-card" id="diag-tricameral">
+      <img src="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_tri_cameral_governance.png?raw=true" alt="Tri-Cameral Governance">
+      <div class="d-caption">Tri-Cameral Governance — Technical Council (9), Stewardship Custodians (11), Smart Contract Treasury. Veto arrow and mandate footer.</div>
+    </div>
+    <div class="diagram-card" id="diag-emergency">
+      <img src="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_emergency_override.png?raw=true" alt="Emergency Override Decision Tree">
+      <div class="d-caption">Emergency Override — decision tree, NL=NA checkpoint gate, forcedState limited to [−1, 0]. Forced +1 constitutionally blocked.</div>
+    </div>
+  </div>
+
+  <!-- SPECIFICATION FILES -->
+  <div class="section-title">Specification Files</div>
+
+  <div id="spec-openapi" style="margin-bottom:1rem">
+    <div class="section-title" style="font-size:0.62rem;margin-top:0">1 · OpenAPI Specification</div>
+    <p style="font-size:0.88rem">The canonical machine-parseable API contract. 40 endpoints, 12 path groups, 5 security schemes, 2 webhook callbacks, and the Dual-Lane architectural separation. Import into Swagger UI, Postman, or any OpenAPI-compliant code generator.</p>
+  </div>
+  <div id="spec-schema" style="margin-bottom:1rem">
+    <div class="section-title" style="font-size:0.62rem;margin-top:0">2 · TL JSON Schema Bundle</div>
+    <p style="font-size:0.88rem">22 schemas, all enforcing <code>unevaluatedProperties: false</code>. The <code>StateEnvelope</code> <code>if/then</code> constraint is the schema-level expression of NL=NA Layer 1.</p>
+  </div>
+  <div id="spec-abi" style="margin-bottom:1rem">
+    <div class="section-title" style="font-size:0.62rem;margin-top:0">3 · TL Smart Contract ABI Bundle</div>
+    <p style="font-size:0.88rem">ABI definitions for <code>TL_Ledger_Core.sol</code> and <code>ITL_Validator.sol</code>. The <code>NLNAViolation</code> custom error is the on-chain terminal enforcement gate — NL=NA Layer 5.</p>
+  </div>
+  <div id="spec-eip712" style="margin-bottom:1rem">
+    <div class="section-title" style="font-size:0.62rem;margin-top:0">4 · EIP-712 Typed Data Bundle</div>
+    <p style="font-size:0.88rem">Domain separator and typed data schemas for <code>GovernanceTraceLog</code>, <code>PermissionToken</code>, <code>EmergencyOverride</code>, and <code>GoukassianSignatureAttestation</code>. Canonical artifact name hash registry included.</p>
+  </div>
+  <div id="spec-arch" style="margin-bottom:1rem">
+    <div class="section-title" style="font-size:0.62rem;margin-top:0">5 · Specification Architecture</div>
+    <p style="font-size:0.88rem">14-section prose companion. Covers Dual-Lane architecture, NL=NA five-layer chain, Epistemic Hold operationalization, Goukassian Principle as API resources, Eight Pillars, Regulatory Nexus, auditor workflow, and trace propagation.</p>
+  </div>
+  <div id="spec-matrix" style="margin-bottom:1rem">
+    <div class="section-title" style="font-size:0.62rem;margin-top:0">6 · Constitutional Compliance Matrix</div>
+    <p style="font-size:0.88rem">Every endpoint and every schema property mapped to Monograph section, Pillar, Regulatory Nexus, and Status. NL=NA checklist, Epistemic Hold integrity checkpoints, and dangling reference audit included.</p>
+  </div>
+  <div id="spec-future" style="margin-bottom:1.5rem">
+    <div class="section-title" style="font-size:0.62rem;margin-top:0">7 · Future-Blocked Features Appendix</div>
+    <p style="font-size:0.88rem">Six constitutionally desirable features blocked by Section X constraints: per-trade blockchain anchoring, PQC migration (SLH-DSA-SHAKE-128s, ML-KEM-1024), full DITL/MT hardware, sub-300ms custodian quorum, GDPR Art.17 native compliance, real-time Basel III monitoring. Every FUTURE item has a SHIPPING mitigation.</p>
+  </div>
+
+  <!-- ARTIFACT TABLE -->
+  <div class="section-title">All Artifacts — Source and Web Links</div>
+  <div class="artifact-table-wrap">
+    <table class="artifact-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>File</th>
+          <th>Description</th>
+          <th>Source</th>
+          <th>Web</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><code>tl_openapi.yaml</code></td>
+          <td>OpenAPI 3.1.0 contract — 40 endpoints, 5 security schemes, 2 webhooks</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/tl_openapi.yaml">GitHub</a></td>
+          <td><a class="web-link" href="https://fractonicmind.github.io/TernaryLogic/API/openapi.html">openapi.html</a></td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><code>tl_schema.json</code></td>
+          <td>JSON Schema Draft 2020-12 — 22 schemas, all unevaluatedProperties: false</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/tl_schema.json">GitHub</a></td>
+          <td><a class="web-link" href="https://fractonicmind.github.io/TernaryLogic/API/schema.html">schema.html</a></td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><code>tl_abi.json</code></td>
+          <td>ABI for TL_Ledger_Core.sol and ITL_Validator.sol — functions, events, custom errors</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/tl_abi.json">GitHub</a></td>
+          <td><a class="web-link" href="https://fractonicmind.github.io/TernaryLogic/API/abi_eip712.html">abi_eip712.html</a></td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><code>eip712_typed_data.json</code></td>
+          <td>EIP-712 domain separator, 5 primary types, canonical hash registry</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/eip712_typed_data.json">GitHub</a></td>
+          <td><a class="web-link" href="https://fractonicmind.github.io/TernaryLogic/API/abi_eip712.html">abi_eip712.html</a></td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><code>Specification_Architecture.md</code></td>
+          <td>14-section prose companion — Dual-Lane, NL=NA, Eight Pillars, Regulatory Nexus, trace propagation</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md">GitHub</a></td>
+          <td><a class="web-link" href="https://fractonicmind.github.io/TernaryLogic/API/Specification_Architecture.html">Specification_Architecture.html</a></td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><code>Constitutional_Compliance_Matrix.md</code></td>
+          <td>40-path compliance map — Pillar, Regulatory Nexus, NL=NA layer, dangling reference audit</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/Constitutional_Compliance_Matrix.md">GitHub</a></td>
+          <td><a class="web-link" href="https://fractonicmind.github.io/TernaryLogic/API/Constitutional_Compliance_Matrix.html">Constitutional_Compliance_Matrix.html</a></td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><code>Future-Blocked_Appendix.md</code></td>
+          <td>Six Section X-blocked features with SHIPPING mitigations and uncertainty registers</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/Future-Blocked_Appendix.md">GitHub</a></td>
+          <td>—</td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td><code>diagram_dual_lane_architecture.png</code></td>
+          <td>Dual-Lane Architecture — Inference vs Audit Lane separation</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_dual_lane_architecture.png">GitHub</a></td>
+          <td>—</td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td><code>diagram_nlna_five_layer_stack.png</code></td>
+          <td>NL=NA Five-Layer Stack — five independent enforcement layers</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_nlna_five_layer_stack.png">GitHub</a></td>
+          <td>—</td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td><code>diagram_goukassian_vow_state_machine.png</code></td>
+          <td>Goukassian Vow State Machine — three states, transitions, mandates</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_goukassian_vow_state_machine.png">GitHub</a></td>
+          <td>—</td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td><code>diagram_decision_lifecycle.png</code></td>
+          <td>Decision Lifecycle — six stages, Epistemic Hold branch, blocked skip paths</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_decision_lifecycle.png">GitHub</a></td>
+          <td>—</td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td><code>diagram_eight_pillars.png</code></td>
+          <td>Eight Pillars — 2×4 governance grid with Lantern and Anchor icons</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_eight_pillars.png">GitHub</a></td>
+          <td>—</td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td><code>diagram_tri_cameral_governance.png</code></td>
+          <td>Tri-Cameral Governance — Council (9), Custodians (11), Treasury</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_tri_cameral_governance.png">GitHub</a></td>
+          <td>—</td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td><code>diagram_emergency_override.png</code></td>
+          <td>Emergency Override — decision tree, NL=NA gate, forcedState constraint</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_emergency_override.png">GitHub</a></td>
+          <td>—</td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td><code>Preventing_Financial_Collapse_With_Ternary_Hardware.mp3</code></td>
+          <td>AI-generated deep-research interview — financial collapse prevention and ternary governance</td>
+          <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/Preventing_Financial_Collapse_With_Ternary_Hardware.mp3">GitHub</a></td>
+          <td><a class="web-link" href="https://fractonicmind.github.io/TernaryLogic/API/Preventing_Financial_Collapse_With_Ternary_Hardware.mp3">Play MP3</a></td>
+          <td><span class="badge badge-ship">SHIPPING</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- EIGHT PILLARS -->
+  <div class="section-title" id="eight-pillars">The Eight Pillars — API Coverage</div>
+  <div class="pillars-table-wrap">
+    <table class="pillars-table">
+      <thead><tr><th>Pillar</th><th>Identifier</th><th>Primary Endpoints</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>I · Epistemic Hold</td><td><span class="pillar-chip">EpistemicHold</span></td><td><code>POST /decisions</code> · <code>GET/PATCH /epistemic-hold/escalations/*</code> · <code>POST /gateway/lane-assignment</code></td><td><span class="badge badge-ship">SHIPPING</span></td></tr>
+        <tr><td>II · Immutable Ledger</td><td><span class="pillar-chip">ImmutableLedger</span></td><td><code>POST /audit-logs</code> · <code>GET /audit-logs/{logId}</code> · <code>POST /refusals</code> · <code>GET /regulator/timestamp-verification/{logId}</code></td><td><span class="badge badge-ship">SHIPPING</span></td></tr>
+        <tr><td>III · Goukassian Principle</td><td><span class="pillar-chip">GoukassianPrinciple</span></td><td><code>GET /epistemic-hold/lantern</code> · <code>GET /goukassian/signature</code> · <code>POST /goukassian/license/validate</code> · <code>POST /refusals/license-violations</code></td><td><span class="badge badge-ship">SHIPPING</span></td></tr>
+        <tr><td>IV · Decision Logs</td><td><span class="pillar-chip">DecisionLogs</span></td><td><code>GET /decisions/{decisionId}</code> · <code>GET/PUT /thresholds/{domain}</code> · <code>GET /metrics/summary</code></td><td><span class="badge badge-ship">SHIPPING</span></td></tr>
+        <tr><td>V · Economic Rights</td><td><span class="pillar-chip">EconomicRights</span></td><td><code>POST /evaluate/trade</code> · <code>POST /redress/*</code> · <code>GET /regulator/basel-iii/attestation</code> · <code>POST /regulator/fatf/compliance-export</code></td><td><span class="badge badge-ship">SHIPPING</span></td></tr>
+        <tr><td>VI · Sustainable Capital</td><td><span class="pillar-chip">SustainableCapital</span></td><td><code>POST /evaluate/policy</code> · <code>POST /evaluate/supply-chain</code> · <code>GET /audit/compliance/attestation</code></td><td><span class="badge badge-ship">SHIPPING</span></td></tr>
+        <tr><td>VII · Hybrid Shield</td><td><span class="pillar-chip">HybridShield</span></td><td><code>POST /emergency/override</code> · <code>GET /emergency/status</code> · <code>GET /audit/custodians/{id}/heartbeat</code> · <code>GET /regulator/custodian-quorum</code></td><td><span class="badge badge-ship">SHIPPING</span> <span class="badge badge-future">sub-300ms: FUTURE</span></td></tr>
+        <tr><td>VIII · Anchors</td><td><span class="pillar-chip">Anchors</span></td><td><code>GET /audit/verifications/merkle/{root}</code> · <code>GET /audit/verifications/inclusion/{logId}</code> · <code>POST /regulator/evidence-export</code></td><td><span class="badge badge-ship">SHIPPING</span> <span class="badge badge-future">per-trade real-time: FUTURE</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- REGULATORY -->
+  <div class="section-title" id="regulatory">Compliance and Regulatory Alignment</div>
+  <div class="enf-table-wrap">
+    <table class="enf-table">
+      <thead><tr><th>Standard</th><th>Coverage</th><th>Primary Endpoints</th></tr></thead>
+      <tbody>
+        <tr><td>Basel III</td><td>LCR &ge; 1.0 · NSFR &ge; 1.0 · capital adequacy · stress testing</td><td><code>POST /evaluate/trade</code> · <code>GET /regulator/basel-iii/attestation</code></td></tr>
+        <tr><td>FATF</td><td>Rec. 6 (sanctions) · Rec. 10, 11 (records) · Rec. 20 (SAR) · Rec. 29</td><td><code>POST /evaluate/trade</code> · <code>POST /regulator/fatf/compliance-export</code></td></tr>
+        <tr><td>IOSCO</td><td>Principles 34-38 — layering, spoofing, wash trading, cross-market manipulation</td><td><code>POST /evaluate/trade</code> · <code>GET /regulator/iosco/principle-mapping</code></td></tr>
+        <tr><td>GDPR Art. 17</td><td>Cryptographic erasure via HKDF-SHA3-256 · EKR workflow · three residual sub-gaps documented</td><td><code>POST /redress/log-reevaluation</code> · <code>EKRRecord</code> schema</td></tr>
+        <tr><td>Paris Agreement</td><td>Carbon footprint verification · green bond eligibility · ESG scoring</td><td><code>POST /evaluate/policy</code> · <code>POST /evaluate/supply-chain</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- HYBRID SHIELD -->
+  <div class="section-title" id="enforcement">Hybrid Shield — NL=NA Enforcement Chain</div>
+  <div class="enf-table-wrap">
+    <table class="enf-table">
+      <thead><tr><th>Layer</th><th>Mechanism</th><th>File</th></tr></thead>
+      <tbody>
+        <tr><td>Schema (Layer 1)</td><td><code>StateEnvelope</code> <code>if/then</code> constraint — permissionToken required when currentState==1</td><td><code>tl_schema.json</code></td></tr>
+        <tr><td>API Contract (Layer 2)</td><td><code>PermissionToken.laneOrigin: const "AUDIT_LANE"</code> — Inference Lane tokens schema-invalid</td><td><code>tl_openapi.yaml</code></td></tr>
+        <tr><td>TGLF Record (Layer 3)</td><td><code>TGLF_StateP1.permissionToken</code> required · <code>pillarsCertified</code> minItems 8, maxItems 8</td><td><code>tl_schema.json</code></td></tr>
+        <tr><td>Cross-Reference (Layer 4)</td><td><code>AuditProof.logHash</code> = <code>PermissionToken.logHash</code> · <code>AuditProof.merkleRoot</code> = <code>PermissionToken.merkleRoot</code></td><td><code>tl_schema.json</code></td></tr>
+        <tr><td>On-Chain (Layer 5)</td><td><code>NLNAViolation</code> reverts if logHash not in anchored Merkle root — terminal enforcement gate</td><td><code>tl_abi.json</code></td></tr>
+        <tr><td>EIP-712</td><td>Domain separator binding to contract, chain, and monograph version — prevents replay attacks</td><td><code>eip712_typed_data.json</code></td></tr>
+        <tr><td>Prose</td><td>Five-layer enforcement chain documented across 14 sections</td><td><code>Specification_Architecture.md</code></td></tr>
+        <tr><td>Audit</td><td>Full path-to-pillar-to-regulation mapping with dangling reference audit</td><td><code>Constitutional_Compliance_Matrix.md</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- VERSION -->
+  <div class="section-title" id="version">Version and Authority</div>
+  <div class="version-table-wrap">
+    <table class="version-table">
+      <tr><td>Version</td><td><code>1.0.0-tl-monograph-2026</code></td></tr>
+      <tr><td>Authority</td><td>Constitutional Hardware Monograph 2026</td></tr>
+      <tr><td>Author</td><td>Lev Goukassian · ORCID <a href="https://orcid.org/0009-0006-5966-1243">0009-0006-5966-1243</a></td></tr>
+      <tr><td>Repository</td><td><a href="https://github.com/FractonicMind/TernaryLogic">FractonicMind/TernaryLogic</a></td></tr>
+      <tr><td>DOI 1</td><td><a href="https://doi.org/10.1007/s43681-025-00910-6">10.1007/s43681-025-00910-6</a> — "Auditable AI: Tracing the Ethical History of a Model"</td></tr>
+      <tr><td>DOI 2</td><td><a href="https://doi.org/10.1007/s43681-026-01124-0">10.1007/s43681-026-01124-0</a> — "A Ternary Logic Framework for Institutional Governance"</td></tr>
+      <tr><td>Publisher</td><td>AI and Ethics, Springer Nature</td></tr>
+      <tr><td>License</td><td>Creative Commons Attribution 4.0 International (CC BY 4.0)</td></tr>
+    </table>
+  </div>
+
+  <!-- CLOSING QUOTE -->
+  <div class="closing-quote">
+    <blockquote>
+      "If you cannot log it, you do not understand it.<br>
+      If you do not understand it, you have no authority to execute it."
+    </blockquote>
+    <div class="attribution">Lev Goukassian</div>
+  </div>
+
+</main>
+</body>
+</html>
