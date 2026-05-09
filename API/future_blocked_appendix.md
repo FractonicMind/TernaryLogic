@@ -6,8 +6,8 @@
 **ORCID:** 0009-0006-5966-1243   
 **Repository:** FractonicMind/TernaryLogic   
 **Spec Version:** 1.0.0-tl-monograph-2026   
-**DOI 1:** 10.1007/s43681-025-00910-6   
-**DOI 2:** 10.1007/s43681-026-01124-0   
+**DOI 1:** 10.1007/s43681-025-00910-6 — "Auditable AI: Tracing the Ethical History of a Model"   
+**DOI 2:** 10.1007/s43681-026-01124-0 — "A Ternary Logic Framework for Institutional Governance"   
 
 This appendix documents all features that are architecturally desirable and constitutionally required but not buildable with 2026 production infrastructure. For each feature: the blocking monograph constraint is cited verbatim, the SHIPPING mitigation is described, the remaining unbuildable gap is explained, the `x-tl-migration-path` value is named, and all affected specification artifacts are listed.
 
