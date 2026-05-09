@@ -1,14 +1,13 @@
 # Future-Blocked Features Appendix
 
-## "Ternary Logic" (TL) Governance API — Deliverable G
+## "Ternary Logic" (TL) Governance API
 
-**Framework:** "Ternary Logic" (TL) by Lev Goukassian
-**ORCID:** 0009-0006-5966-1243
-**Repository:** FractonicMind/TernaryLogic
-**Spec Version:** 1.0.0-tl-monograph-2026
-**DOI 1:** 10.1007/s43681-025-00910-6
-**DOI 2:** 10.1007/s43681-026-01124-0
-**Consistency Lock:** All identifiers immutable from Steps 1 through 5.
+**Framework:** "Ternary Logic" (TL) by Lev Goukassian   
+**ORCID:** 0009-0006-5966-1243   
+**Repository:** FractonicMind/TernaryLogic   
+**Spec Version:** 1.0.0-tl-monograph-2026   
+**DOI 1:** 10.1007/s43681-025-00910-6   
+**DOI 2:** 10.1007/s43681-026-01124-0   
 
 This appendix documents all features that are architecturally desirable and constitutionally required but not buildable with 2026 production infrastructure. For each feature: the blocking monograph constraint is cited verbatim, the SHIPPING mitigation is described, the remaining unbuildable gap is explained, the `x-tl-migration-path` value is named, and all affected specification artifacts are listed.
 
