@@ -2,13 +2,13 @@
 
 ## "Ternary Logic" (TL) Governance API — Deliverable E
 
-**Framework:** "Ternary Logic" (TL) by Lev Goukassian
-**ORCID:** 0009-0006-5966-1243
-**Repository:** FractonicMind/TernaryLogic
-**DOI 1:** 10.1007/s43681-025-00910-6
-**DOI 2:** 10.1007/s43681-026-01124-0
-**Spec Version:** 1.0.0-tl-monograph-2026
-**Consistency Lock:** All identifiers immutable from Steps 1, 2, and 3.
+**Framework:** "Ternary Logic" (TL) by Lev Goukassian   
+**ORCID:** 0009-0006-5966-1243   
+**Repository:** FractonicMind/TernaryLogic   
+**DOI 1:** 10.1007/s43681-025-00910-6   
+**DOI 2:** 10.1007/s43681-026-01124-0   
+**Spec Version:** 1.0.0-tl-monograph-2026   
+**Consistency Lock:** All identifiers immutable from Steps 1, 2, and 3.   
 
 ---
 
