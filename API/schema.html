@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON Schema Bundle — TL Governance API</title>
+<style>
+  :root {
+    --navy: #0a1628; --navy2: #0f1f3d; --navy3: #162847;
+    --gold: #d4a574; --gold2: #e8c496;
+    --teal: #2dd4bf; --green: #22c55e; --amber: #f59e0b;
+    --coral: #f87171; --purple: #a78bfa; --blue: #60a5fa;
+    --text: #e2e8f0; --muted: #94a3b8;
+    --border: rgba(212,165,116,0.2); --border2: rgba(212,165,116,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--navy); color: var(--text); font-family: 'Georgia', serif; }
+  .sidebar { position: fixed; top: 0; left: 0; width: 260px; height: 100vh; background: var(--navy2); border-right: 1px solid var(--border); overflow-y: auto; z-index: 100; }
+  .sidebar-brand { padding: 1.5rem 1.25rem 1rem; border-bottom: 1px solid var(--border); }
+  .sidebar-brand .tl { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gold); font-family: 'Helvetica Neue', sans-serif; text-transform: uppercase; margin-bottom: 0.25rem; }
+  .sidebar-brand h2 { font-size: 0.85rem; color: var(--text); font-weight: normal; }
+  .sidebar nav { padding: 0.5rem 0 2rem; }
+  .sidebar nav a { display: block; padding: 0.38rem 1.25rem; font-family: 'Helvetica Neue', sans-serif; font-size: 0.72rem; color: var(--muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.15s; }
+  .sidebar nav a:hover { color: var(--gold); border-left-color: var(--gold); background: rgba(212,165,116,0.05); }
+  .sidebar nav .group { padding: 0.8rem 1.25rem 0.2rem; font-size: 0.62rem; letter-spacing: 0.12em; color: var(--gold); font-family: 'Helvetica Neue', sans-serif; text-transform: uppercase; }
+  .main { margin-left: 260px; padding: 2.5rem 3rem 5rem; }
+  .page-header { border-bottom: 1px solid var(--border); padding-bottom: 1.75rem; margin-bottom: 2.5rem; }
+  .page-header .label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .page-header h1 { font-size: 1.9rem; font-weight: normal; color: var(--gold2); margin-bottom: 0.5rem; }
+  .page-header .sub { font-family: 'Helvetica Neue', sans-serif; font-size: 0.82rem; color: var(--muted); }
+  .page-header .sub a { color: var(--gold); text-decoration: none; }
+  code { font-family: 'Courier New', monospace; font-size: 0.8rem; background: rgba(255,255,255,0.06); padding: 0.1em 0.35em; border-radius: 3px; color: var(--teal); }
+  .schema-card { background: var(--navy2); border: 1px solid var(--border2); border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; }
+  .schema-header { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.1rem; cursor: pointer; transition: background 0.1s; }
+  .schema-header:hover { background: rgba(212,165,116,0.04); }
+  .schema-anchor { font-family: 'Courier New', monospace; font-size: 0.88rem; color: var(--teal); }
+  .schema-type { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; padding: 0.15em 0.5em; border-radius: 3px; background: rgba(96,165,250,0.1); color: var(--blue); border: 1px solid rgba(96,165,250,0.2); }
+  .schema-pillar { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; padding: 0.15em 0.5em; border-radius: 3px; background: rgba(167,139,250,0.1); color: var(--purple); border: 1px solid rgba(167,139,250,0.2); margin-left: auto; }
+  .status-chip { font-family: 'Helvetica Neue', sans-serif; font-size: 0.6rem; padding: 0.1em 0.4em; border-radius: 3px; }
+  .s-ship { background: rgba(34,197,94,0.1); color: var(--green); }
+  .s-future { background: rgba(245,158,11,0.1); color: var(--amber); }
+  .s-beta { background: rgba(96,165,250,0.1); color: var(--blue); }
+  .schema-body { display: none; padding: 0.75rem 1.1rem 1.1rem; border-top: 1px solid var(--border2); }
+  .schema-body.open { display: block; }
+  .schema-desc { font-size: 0.83rem; color: var(--muted); margin-bottom: 0.85rem; line-height: 1.6; }
+  .props-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+  .props-table th { text-align: left; font-family: 'Helvetica Neue', sans-serif; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border2); }
+  .props-table td { padding: 0.4rem 0.6rem; color: var(--text); border-bottom: 1px solid rgba(255,255,255,0.03); vertical-align: top; }
+  .prop-name { color: var(--teal); font-family: 'Courier New', monospace; }
+  .prop-req { color: var(--coral); font-size: 0.68rem; font-family: 'Helvetica Neue', sans-serif; }
+  .prop-note { color: var(--muted); font-size: 0.76rem; }
+  .nlna-tag { font-family: 'Helvetica Neue', sans-serif; font-size: 0.6rem; padding: 0.1em 0.4em; border-radius: 3px; background: rgba(45,212,191,0.1); color: var(--teal); border: 1px solid rgba(45,212,191,0.2); white-space: nowrap; }
+  .section-title { font-family: 'Helvetica Neue', sans-serif; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; margin: 2rem 0 1rem; }
+  @media (max-width: 900px) { .sidebar { display: none; } .main { margin-left: 0; padding: 1.5rem; } }
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="tl">"Ternary Logic" · TL</div>
+    <h2>JSON Schema Bundle</h2>
+  </div>
+  <nav>
+    <div class="group">Core Types</div>
+    <a href="#TLState">TLState</a>
+    <a href="#TLStateLabel">TLStateLabel</a>
+    <a href="#PillarIdentifier">PillarIdentifier</a>
+    <a href="#StateEnvelope">StateEnvelope</a>
+    <a href="#TLResult">TLResult</a>
+    <div class="group">NL=NA Schemas</div>
+    <a href="#PermissionToken">PermissionToken</a>
+    <a href="#AuditProof">AuditProof</a>
+    <a href="#NLNAAuditToken">NLNAAuditToken</a>
+    <div class="group">Epistemic Hold</div>
+    <a href="#EscrowRecord">EscrowRecord</a>
+    <a href="#TGLF_State0">TGLF_State0</a>
+    <a href="#TGLF_StateNeg1">TGLF_StateNeg1</a>
+    <a href="#TGLF_StateP1">TGLF_StateP1</a>
+    <div class="group">Governance</div>
+    <a href="#GoukassianPrincipleBlock">GoukassianPrincipleBlock</a>
+    <a href="#LanternStatus">LanternStatus</a>
+    <a href="#SignatureBlock">SignatureBlock</a>
+    <a href="#TriCameralApproval">TriCameralApproval</a>
+    <a href="#EmergencyOverrideRequest">EmergencyOverrideRequest</a>
+    <div class="group">Regulatory</div>
+    <a href="#RegulatoryContext">RegulatoryContext</a>
+    <a href="#RegulatoryFlags">RegulatoryFlags</a>
+    <a href="#ThresholdProfile">ThresholdProfile</a>
+    <div class="group">Infrastructure</div>
+    <a href="#EKRRecord">EKRRecord</a>
+    <a href="#SuccessionDeclaration">SuccessionDeclaration</a>
+    <a href="#TLProblemDetail">TLProblemDetail</a>
+    <a href="#MetricsSummary">MetricsSummary</a>
+    <div class="group">Spec Files</div>
+    <a href="tl_schema.json">tl_schema.json (raw)</a>
+    <a href="openapi.html">OpenAPI Reference</a>
+    <a href="Constitutional_Compliance_Matrix.html">Compliance Matrix</a>
+  </nav>
+</aside>
+<main class="main">
+  <div class="page-header">
+    <div class="label">Deliverable B · "Ternary Logic" (TL) Governance API</div>
+    <h1>JSON Schema Bundle</h1>
+    <div class="sub">
+      <code>$id: https://fractonicmind.github.io/TernaryLogic/api/schema/v1.0.0</code> ·
+      JSON Schema Draft 2020-12 ·
+      22 schemas · All enforce <code>unevaluatedProperties: false</code> ·
+      <a href="tl_schema.json">Download raw JSON</a>
+    </div>
+  </div>
+
+  <div class="section-title" id="core">Core Types</div>
+
+  <div class="schema-card" id="TLState">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">TLState</span>
+      <span class="schema-type">integer</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">EpistemicHold (I)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">Three-state enumeration. +1=Proceed, 0=Epistemic Hold, −1=Refuse. State 0 is never null, false, error, timeout, pending, or retry. State −1 canonical label is Refuse. Halt prohibited.</div>
+      <table class="props-table"><thead><tr><th>Constraint</th><th>Value</th><th>Note</th></tr></thead><tbody>
+        <tr><td class="prop-name">enum</td><td>[-1, 0, 1]</td><td class="prop-note">Signed integer. NL=NA Layer 1 if/then evaluates on this field.</td></tr>
+        <tr><td class="prop-name">type</td><td>integer</td><td class="prop-note">Never boolean. int8(0) ≠ bool false.</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="schema-card" id="TLStateLabel">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">TLStateLabel</span>
+      <span class="schema-type">string</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">EpistemicHold (I)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">Human-readable PascalCase label paired with TLState integer.</div>
+      <table class="props-table"><thead><tr><th>Constraint</th><th>Value</th></tr></thead><tbody>
+        <tr><td class="prop-name">enum</td><td>["Proceed", "EpistemicHold", "Refuse"]</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="schema-card" id="PillarIdentifier">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">PillarIdentifier</span>
+      <span class="schema-type">string enum</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">All Pillars</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">Canonical machine-readable identifiers for the Eight Pillars. Used in x-tl-pillar annotations on every endpoint.</div>
+      <table class="props-table"><thead><tr><th>Value</th><th>Pillar</th></tr></thead><tbody>
+        <tr><td class="prop-name">EpistemicHold</td><td>Pillar I</td></tr>
+        <tr><td class="prop-name">ImmutableLedger</td><td>Pillar II</td></tr>
+        <tr><td class="prop-name">GoukassianPrinciple</td><td>Pillar III</td></tr>
+        <tr><td class="prop-name">DecisionLogs</td><td>Pillar IV</td></tr>
+        <tr><td class="prop-name">EconomicRightsAndTransparencyMandate</td><td>Pillar V</td></tr>
+        <tr><td class="prop-name">SustainableCapitalAllocationMandate</td><td>Pillar VI</td></tr>
+        <tr><td class="prop-name">HybridShield</td><td>Pillar VII</td></tr>
+        <tr><td class="prop-name">Anchors</td><td>Pillar VIII</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="schema-card" id="StateEnvelope">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">StateEnvelope</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">EpistemicHold (I)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">Canonical TL response wrapper. NL=NA Layer 1: permissionToken REQUIRED when currentState==1 (if/then). GovernancePause is workflow name, not state synonym. unevaluatedProperties: false prevents bypass.</div>
+      <table class="props-table"><thead><tr><th>Property</th><th>Required</th><th>Type</th><th>NL=NA</th><th>Note</th></tr></thead><tbody>
+        <tr><td class="prop-name">currentState</td><td class="prop-req">required</td><td>TLState</td><td><span class="nlna-tag">Layer 1</span></td><td class="prop-note">if/then evaluates on this field</td></tr>
+        <tr><td class="prop-name">stateLabel</td><td class="prop-req">required</td><td>TLStateLabel</td><td><span class="nlna-tag">Layer 1</span></td><td class="prop-note">const per state branch</td></tr>
+        <tr><td class="prop-name">proposedAction</td><td class="prop-req">required</td><td>string</td><td></td><td class="prop-note">minLength: 1</td></tr>
+        <tr><td class="prop-name">processActive</td><td class="prop-req">required</td><td>string</td><td></td><td class="prop-note">GovernancePause (0) | ProceedAuthorized (1) | RefusalPermanent (−1)</td></tr>
+        <tr><td class="prop-name">permissionToken</td><td>if currentState==1</td><td>PermissionToken</td><td><span class="nlna-tag">Layer 1</span></td><td class="prop-note">Required when +1. Constitutionally prohibited on 0 or −1.</td></tr>
+        <tr><td class="prop-name">escrowRecord</td><td>if currentState==0</td><td>EscrowRecord</td><td></td><td class="prop-note">Required when 0.</td></tr>
+        <tr><td class="prop-name">traceId</td><td></td><td>UUIDv4</td><td></td><td class="prop-note">Echoes X-TL-Trace-Id header</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="section-title" id="nlna">NL=NA Schemas</div>
+
+  <div class="schema-card" id="PermissionToken">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">PermissionToken</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">ImmutableLedger (II)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">NL=NA cryptographic enforcement artifact. laneOrigin const "AUDIT_LANE" — Inference Lane tokens are schema-invalid. maxLifetimeMs maximum 300000 aligned with DLLA Audit Lane 300ms ceiling. Actuation layer MUST reject expired tokens — no grace period.</div>
+      <table class="props-table"><thead><tr><th>Property</th><th>Type</th><th>NL=NA</th><th>Note</th></tr></thead><tbody>
+        <tr><td class="prop-name">tokenId</td><td>UUIDv4</td><td><span class="nlna-tag">Layers 2,3,4,5</span></td><td></td></tr>
+        <tr><td class="prop-name">logHash</td><td>SHA256Hex</td><td><span class="nlna-tag">Layers 4, 5</span></td><td class="prop-note">MUST match AuditProof.logHash</td></tr>
+        <tr><td class="prop-name">laneOrigin</td><td>const "AUDIT_LANE"</td><td><span class="nlna-tag">Layer 2</span></td><td class="prop-note">Schema-invalid for any other value</td></tr>
+        <tr><td class="prop-name">merkleRoot</td><td>SHA256Hex</td><td><span class="nlna-tag">Layers 4, 5</span></td><td class="prop-note">MUST match AuditProof.merkleRoot. Layer 5: registerPermissionToken reverts NLNAViolation if logHash not in root.</td></tr>
+        <tr><td class="prop-name">expiresAt</td><td>ISO8601DateTime</td><td></td><td class="prop-note">Hard expiration. No grace period.</td></tr>
+        <tr><td class="prop-name">maxLifetimeMs</td><td>integer</td><td></td><td class="prop-note">maximum: 300000 (DLLA Audit Lane ceiling)</td></tr>
+        <tr><td class="prop-name">revocationStatus</td><td>enum</td><td></td><td class="prop-note">ACTIVE | REVOKED_BY_EMERGENCY | REVOKED_BY_TRI_CAMERAL</td></tr>
+        <tr><td class="prop-name">custodianQuorumAttestation</td><td>string</td><td></td><td class="prop-note"><span class="status-chip s-beta">BETA</span> Token valid without it for SHIPPING.</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="schema-card" id="AuditProof">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">AuditProof</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">ImmutableLedger (II)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">NL=NA Layer 4: logHash and merkleRoot MUST match PermissionToken fields. Cross-reference is the cryptographic link between Audit Lane log commitment and Permission Token issuance.</div>
+      <table class="props-table"><thead><tr><th>Property</th><th>NL=NA</th><th>Note</th></tr></thead><tbody>
+        <tr><td class="prop-name">logHash</td><td><span class="nlna-tag">Layer 4</span></td><td class="prop-note">MUST = PermissionToken.logHash</td></tr>
+        <tr><td class="prop-name">merkleRoot</td><td><span class="nlna-tag">Layer 4</span></td><td class="prop-note">MUST = PermissionToken.merkleRoot</td></tr>
+        <tr><td class="prop-name">merkleProofPath</td><td><span class="nlna-tag">Layer 5</span></td><td class="prop-note">Full Merkle inclusion proof</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="schema-card" id="NLNAAuditToken">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">NLNAAuditToken</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">ImmutableLedger (II)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">Audit lane completion token. Non-MT deployments MUST use sentinel value "NULL_PUF_DEPLOYMENT" for pufAttestation. Architecture B compensating controls: software enforcement active.</div>
+      <table class="props-table"><thead><tr><th>Property</th><th>Note</th></tr></thead><tbody>
+        <tr><td class="prop-name">pufAttestation</td><td class="prop-note">Non-MT: use sentinel "NULL_PUF_DEPLOYMENT" · FUTURE: FULL_PUF</td></tr>
+        <tr><td class="prop-name">laneStatus</td><td class="prop-note">enum: pending | committed | anchored</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="section-title" id="hold">Epistemic Hold Schemas</div>
+
+  <div class="schema-card" id="EscrowRecord">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">EscrowRecord</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">EpistemicHold (I)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">Single authoritative definition of all Epistemic Hold response fields. Created at hold initiation. Immutable. heldState const 0.</div>
+      <table class="props-table"><thead><tr><th>Property</th><th>Required</th><th>Note</th></tr></thead><tbody>
+        <tr><td class="prop-name">escrowId</td><td class="prop-req">required</td><td>UUIDv4</td></tr>
+        <tr><td class="prop-name">heldState</td><td class="prop-req">required</td><td class="prop-note">const: 0</td></tr>
+        <tr><td class="prop-name">holdRationale</td><td class="prop-req">required</td><td class="prop-note">rationale · uncertaintyScore [0,1] · pillarImplicated</td></tr>
+        <tr><td class="prop-name">resolutionDeadline</td><td class="prop-req">required</td><td class="prop-note">Terminal state must be +1 or −1. State 0 invalid.</td></tr>
+        <tr><td class="prop-name">immutableLogHash</td><td class="prop-req">required</td><td>SHA256Hex</td></tr>
+        <tr><td class="prop-name">requiredConditions</td><td class="prop-req">required</td><td class="prop-note">array minItems: 1 — each with conditionId, description, met bool</td></tr>
+        <tr><td class="prop-name">windowComparatorReading</td><td class="prop-req">required</td><td class="prop-note">SHIPPING: softwareEnforcementActive · FUTURE: resistanceRangeOhm</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="schema-card" id="TGLF_State0">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">TGLF_State0</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">EpistemicHold (I)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">TGLF record for Epistemic Hold. currentState const 0. stateLabel const "EpistemicHold". processActive const "GovernancePause" — workflow name, not state synonym.</div>
+    </div>
+  </div>
+
+  <div class="schema-card" id="TGLF_StateNeg1">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">TGLF_StateNeg1</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">ImmutableLedger (II)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">TGLF record for Refuse. stateLabel const "Refuse" — Halt prohibited. refusalIsPermanent default true. No Permission Token issued.</div>
+    </div>
+  </div>
+
+  <div class="schema-card" id="TGLF_StateP1">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">TGLF_StateP1</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">ImmutableLedger (II)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">TGLF record for Proceed. permissionToken REQUIRED (NL=NA Layer 3). pillarsCertified minItems 8, maxItems 8 — all Eight Pillars must be certified.</div>
+      <table class="props-table"><thead><tr><th>Property</th><th>NL=NA</th></tr></thead><tbody>
+        <tr><td class="prop-name">permissionToken</td><td><span class="nlna-tag">Layer 3 — REQUIRED</span></td></tr>
+        <tr><td class="prop-name">pillarsCertified</td><td><span class="nlna-tag">Layer 3 — minItems 8, maxItems 8</span></td></tr>
+        <tr><td class="prop-name">auditProof</td><td><span class="nlna-tag">Layer 4</span></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="section-title" id="governance">Governance Schemas</div>
+
+  <div class="schema-card" id="GoukassianPrincipleBlock">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">GoukassianPrincipleBlock</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">GoukassianPrinciple (III)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">Three Goukassian Principle artifacts. Required on every POST /decisions, POST /audit-logs, and POST /evaluate/* request. artifactName const values are canonical lowercase.</div>
+      <table class="props-table"><thead><tr><th>Artifact</th><th>artifactName const</th><th>Key Field</th></tr></thead><tbody>
+        <tr><td class="prop-name">lantern</td><td>"lantern"</td><td class="prop-note">lanternHash (SHA256Hex)</td></tr>
+        <tr><td class="prop-name">signature</td><td>"signature"</td><td class="prop-note">agentSignature (Ed25519Hex)</td></tr>
+        <tr><td class="prop-name">license</td><td>"license"</td><td class="prop-note">licenseScope (string[])</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="schema-card" id="LanternStatus">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">LanternStatus</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">GoukassianPrinciple (III)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">Goukassian Principle Lantern status. artifactName const "lantern". compliancePosture includes EPISTEMIC_HOLD_ACTIVE — reflecting constitutional state, not error. pillarStatuses reflects all 8 pillars.</div>
+    </div>
+  </div>
+
+  <div class="schema-card" id="SignatureBlock">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">SignatureBlock</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">GoukassianPrinciple (III)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">artifactName const "signature". SHIPPING: ES256 (default) or Ed25519. SLH-DSA-SHAKE-128s (id 6) and ML-KEM-1024 (id 7) are FUTURE-reserved. SHIPPING MUST NOT emit values 6 or 7.</div>
+    </div>
+  </div>
+
+  <div class="schema-card" id="TriCameralApproval">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">TriCameralApproval</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">HybridShield (VII)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">Technical Council (9 members, proposal rights). Stewardship Custodians (11 members, binding veto). Smart Contract Treasury (automatic execution, no admin key).</div>
+      <table class="props-table"><thead><tr><th>Body</th><th>totalMembers (const)</th><th>Authority</th></tr></thead><tbody>
+        <tr><td class="prop-name">technicalCouncilVotes</td><td>9</td><td class="prop-note">Proposal rights only</td></tr>
+        <tr><td class="prop-name">stewardshipCustodianVotes</td><td>11</td><td class="prop-note">Binding veto — vetoExercised: true blocks constitutionally</td></tr>
+        <tr><td class="prop-name">smartContractTreasuryExecution</td><td>—</td><td class="prop-note">Automatic. No admin key. No human override.</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="schema-card" id="EmergencyOverrideRequest">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">EmergencyOverrideRequest</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">HybridShield (VII)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">NL=NA without exception. forcedState enum [−1, 0] only. Forced +1 constitutionally blocked. forcedStateExpiresAt required for FORCED_STATE_TRANSITION.</div>
+      <table class="props-table"><thead><tr><th>overrideType</th><th>Constraint</th></tr></thead><tbody>
+        <tr><td class="prop-name">BREAK_GLASS_SHUTDOWN</td><td class="prop-note">System-wide halt</td></tr>
+        <tr><td class="prop-name">KILL_SWITCH</td><td class="prop-note">Permanent State −1</td></tr>
+        <tr><td class="prop-name">FORCED_STATE_TRANSITION</td><td class="prop-note">Requires targetDecisionId + forcedStateExpiresAt</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="section-title" id="infra">Infrastructure Schemas</div>
+
+  <div class="schema-card" id="EKRRecord">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">EKRRecord</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">HybridShield (VII)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">Ephemeral Key Rotation record. HKDF-SHA3-256 key destruction achieves GDPR Article 17 cryptographic erasure. hkdfSha3256Confirmed: true field confirms the algorithm was used.</div>
+    </div>
+  </div>
+
+  <div class="schema-card" id="SuccessionDeclaration">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">SuccessionDeclaration</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">Anchors (VIII)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">Notarized, timestamped, anchored governance continuity instrument. Expiry triggers SUCCESSION_DECLARATION_EXPIRED_ERROR. validUntil field establishes constitutional deadline.</div>
+    </div>
+  </div>
+
+  <div class="schema-card" id="TLProblemDetail">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">TLProblemDetail</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">All Pillars</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">RFC 7807 application/problem+json with mandatory TL extensions. x-tl-state never omitted on any error response.</div>
+      <table class="props-table"><thead><tr><th>Error Code</th></tr></thead><tbody>
+        <tr><td class="prop-name">GHOST_GOVERNANCE_DETECTED_ERROR</td></tr>
+        <tr><td class="prop-name">NLNA_VIOLATION_ERROR</td></tr>
+        <tr><td class="prop-name">EPISTEMIC_HOLD_TIMEOUT_ERROR</td></tr>
+        <tr><td class="prop-name">LANTERN_FORFEIT_ERROR</td></tr>
+        <tr><td class="prop-name">PILLAR_VIOLATION_ERROR</td></tr>
+        <tr><td class="prop-name">SUCCESSION_DECLARATION_EXPIRED_ERROR</td></tr>
+        <tr><td class="prop-name">SUCCESSION_DECLARATION_REQUIRED_ERROR</td></tr>
+        <tr><td class="prop-name">QUORUM_NOT_MET_ERROR</td></tr>
+        <tr><td class="prop-name">TRI_CAMERAL_VETO_ERROR</td></tr>
+        <tr><td class="prop-name">REGULATORY_COMPLIANCE_ERROR</td></tr>
+        <tr><td class="prop-name">LICENSE_SCOPE_EXCEEDED_ERROR</td></tr>
+        <tr><td class="prop-name">WINDOW_COMPARATOR_FAILURE_ERROR</td></tr>
+        <tr><td class="prop-name">DECISION_LOG_VIOLATION_ERROR</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="schema-card" id="MetricsSummary">
+    <div class="schema-header" onclick="toggle(this)">
+      <span class="schema-anchor">MetricsSummary</span>
+      <span class="schema-type">object</span>
+      <span class="status-chip s-ship">SHIPPING</span>
+      <span class="schema-pillar">DecisionLogs (IV)</span>
+    </div>
+    <div class="schema-body">
+      <div class="schema-desc">System-wide metrics. ghostGovernanceDetectionRate reflects all 8 Pillars. stateDistribution.proceed + .epistemicHold + .refuse covers all constitutional states.</div>
+    </div>
+  </div>
+
+</main>
+<script>
+function toggle(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+</script>
+</body>
+</html>

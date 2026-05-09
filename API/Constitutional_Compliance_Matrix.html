@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Constitutional Compliance Matrix — TL Governance API</title>
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy2: #0f1f3d;
+    --navy3: #162847;
+    --gold: #d4a574;
+    --gold2: #e8c496;
+    --teal: #2dd4bf;
+    --green: #22c55e;
+    --amber: #f59e0b;
+    --coral: #f87171;
+    --purple: #a78bfa;
+    --blue: #60a5fa;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: rgba(212,165,116,0.2);
+    --border2: rgba(212,165,116,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--navy); color: var(--text); font-family: 'Georgia', serif; line-height: 1.7; }
+
+  .sidebar {
+    position: fixed; top: 0; left: 0; width: 260px; height: 100vh;
+    background: var(--navy2); border-right: 1px solid var(--border);
+    overflow-y: auto; z-index: 100; padding: 0 0 2rem 0;
+  }
+  .sidebar-brand {
+    padding: 1.5rem 1.25rem 1rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.5rem;
+  }
+  .sidebar-brand .tl { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gold); font-family: 'Helvetica Neue', sans-serif; text-transform: uppercase; margin-bottom: 0.25rem; }
+  .sidebar-brand h2 { font-size: 0.9rem; color: var(--text); font-weight: normal; line-height: 1.4; }
+  .sidebar nav a {
+    display: block; padding: 0.45rem 1.25rem;
+    font-family: 'Helvetica Neue', sans-serif; font-size: 0.75rem;
+    color: var(--muted); text-decoration: none; letter-spacing: 0.03em;
+    border-left: 2px solid transparent; transition: all 0.15s;
+  }
+  .sidebar nav a:hover, .sidebar nav a.active { color: var(--gold); border-left-color: var(--gold); background: rgba(212,165,116,0.05); }
+  .sidebar nav .section-label { padding: 1rem 1.25rem 0.25rem; font-size: 0.65rem; letter-spacing: 0.12em; color: var(--gold); font-family: 'Helvetica Neue', sans-serif; text-transform: uppercase; }
+
+  .main { margin-left: 260px; padding: 3rem 3rem 4rem; max-width: 1200px; }
+
+  .page-header { border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2.5rem; }
+  .page-header .label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+  .page-header h1 { font-size: 2rem; font-weight: normal; color: var(--gold2); line-height: 1.2; margin-bottom: 1rem; }
+  .meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; }
+  .meta-card { background: var(--navy2); border: 1px solid var(--border2); border-radius: 6px; padding: 0.75rem 1rem; }
+  .meta-card .key { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.25rem; }
+  .meta-card .val { font-size: 0.85rem; color: var(--text); }
+  .meta-card .val a { color: var(--gold); text-decoration: none; }
+  .meta-card .val a:hover { text-decoration: underline; }
+
+  h2 { font-size: 1.2rem; font-weight: normal; color: var(--gold); margin: 2.5rem 0 1rem; font-family: 'Helvetica Neue', sans-serif; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.8rem; }
+  h3 { font-size: 1rem; color: var(--gold2); margin: 1.5rem 0 0.75rem; font-weight: normal; }
+  p { margin-bottom: 1rem; color: var(--text); font-size: 0.95rem; }
+
+  .section-block { margin-bottom: 3rem; }
+  .section-title { font-family: 'Helvetica Neue', sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1.25rem; }
+
+  .table-wrap { overflow-x: auto; margin-bottom: 1.5rem; border-radius: 8px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  thead tr { background: var(--navy3); }
+  thead th { padding: 0.75rem 0.85rem; text-align: left; font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 500; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border2); transition: background 0.1s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(212,165,116,0.04); }
+  tbody td { padding: 0.6rem 0.85rem; color: var(--text); vertical-align: top; line-height: 1.5; }
+  code { font-family: 'Courier New', monospace; font-size: 0.78rem; background: rgba(255,255,255,0.06); padding: 0.1em 0.35em; border-radius: 3px; color: var(--teal); }
+
+  .badge { display: inline-block; font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.06em; padding: 0.15em 0.55em; border-radius: 3px; font-weight: 500; text-transform: uppercase; }
+  .badge-ship { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+  .badge-future { background: rgba(245,158,11,0.15); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
+  .badge-beta { background: rgba(96,165,250,0.15); color: var(--blue); border: 1px solid rgba(96,165,250,0.3); }
+  .badge-verified { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
+
+  .pillar-chip { display: inline-block; font-size: 0.68rem; padding: 0.1em 0.45em; border-radius: 3px; background: rgba(167,139,250,0.12); color: var(--purple); border: 1px solid rgba(167,139,250,0.25); white-space: nowrap; }
+
+  .uncertainty-block { background: var(--navy2); border: 1px solid rgba(248,113,113,0.2); border-radius: 8px; padding: 1.25rem 1.5rem; margin-top: 1rem; }
+  .uncertainty-block .u-label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--coral); margin-bottom: 0.75rem; }
+  .uncertainty-block p { font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--muted); }
+  .uncertainty-block p:last-child { margin-bottom: 0; }
+  .uncertainty-block strong { color: var(--coral); font-style: normal; }
+
+  .nlna-layer { display: inline-block; font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; padding: 0.1em 0.45em; border-radius: 3px; background: rgba(45,212,191,0.1); color: var(--teal); border: 1px solid rgba(45,212,191,0.25); white-space: nowrap; }
+
+  .checklist { list-style: none; margin: 0.5rem 0 1rem 0; }
+  .checklist li { padding: 0.3rem 0; font-size: 0.85rem; color: var(--text); display: flex; align-items: flex-start; gap: 0.6rem; }
+  .checklist li::before { content: '✓'; color: var(--green); font-weight: bold; flex-shrink: 0; margin-top: 0.05rem; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; padding: 1.5rem; }
+    .meta-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="tl">"Ternary Logic" · TL</div>
+    <h2>Constitutional Compliance Matrix</h2>
+  </div>
+  <nav>
+    <div class="section-label">Sections</div>
+    <a href="#part1">Part 1 — OpenAPI Paths</a>
+    <a href="#part2">Part 2 — Schema Properties</a>
+    <a href="#part3">Part 3 — Cross-Cutting</a>
+    <a href="#uncertainty">Uncertainty Register</a>
+    <div class="section-label">Spec Files</div>
+    <a href="tl_openapi.yaml">tl_openapi.yaml</a>
+    <a href="tl_schema.json">tl_schema.json</a>
+    <a href="tl_abi.json">tl_abi.json</a>
+    <a href="eip712_typed_data.json">eip712_typed_data.json</a>
+    <a href="Specification_Architecture.html">Specification_Architecture</a>
+    <a href="Future-Blocked_Appendix.md">Future-Blocked Appendix</a>
+  </nav>
+</aside>
+
+<main class="main">
+
+  <div class="page-header">
+    <div class="label">Deliverable E · "Ternary Logic" (TL) Governance API</div>
+    <h1>Constitutional Compliance Matrix</h1>
+    <div class="meta-grid">
+      <div class="meta-card"><div class="key">Framework</div><div class="val">"Ternary Logic" (TL) by Lev Goukassian</div></div>
+      <div class="meta-card"><div class="key">ORCID</div><div class="val"><a href="https://orcid.org/0009-0006-5966-1243">0009-0006-5966-1243</a></div></div>
+      <div class="meta-card"><div class="key">Spec Version</div><div class="val">1.0.0-tl-monograph-2026</div></div>
+      <div class="meta-card"><div class="key">DOI 1</div><div class="val"><a href="https://doi.org/10.1007/s43681-025-00910-6">10.1007/s43681-025-00910-6</a></div></div>
+      <div class="meta-card"><div class="key">DOI 2</div><div class="val"><a href="https://doi.org/10.1007/s43681-026-01124-0">10.1007/s43681-026-01124-0</a></div></div>
+      <div class="meta-card"><div class="key">Repository</div><div class="val"><a href="https://github.com/FractonicMind/TernaryLogic">FractonicMind/TernaryLogic</a></div></div>
+    </div>
+  </div>
+
+  <!-- PART 1 -->
+  <div class="section-block" id="part1">
+    <div class="section-title">Part 1 — OpenAPI Path Compliance Mapping</div>
+    <p>Every endpoint from <code>tl_openapi.yaml</code> mapped to its Monograph Section, TL Pillar, Regulatory Nexus, Implementation Status, and Pillar Interactions.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Path</th><th>Method</th><th>Pillar</th><th>Regulatory Nexus</th><th>Status</th><th>Pillar Interactions</th></tr></thead>
+        <tbody>
+          <tr><td><code>/decisions</code></td><td>POST</td><td><span class="pillar-chip">EpistemicHold (I)</span></td><td>None (Inference Lane)</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Triggers Pillar II on log creation; Pillar III via GoukassianPrincipleBlock</td></tr>
+          <tr><td><code>/decisions/{decisionId}</code></td><td>GET</td><td><span class="pillar-chip">DecisionLogs (IV)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Reflects Pillar I state; may expose Pillar II PermissionToken</td></tr>
+          <tr><td><code>/audit-logs</code></td><td>POST</td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td>NL=NA universal; Basel III / FATF / IOSCO via RegulatoryContext</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Central NL=NA enforcement — all 8 Pillars; Pillar VII via HSM; Pillar VIII via Merkle</td></tr>
+          <tr><td><code>/audit-logs/{logId}</code></td><td>GET</td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td>GDPR Article 17</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar VIII via Merkle verification; Pillar IV</td></tr>
+          <tr><td><code>/epistemic-hold/escalations</code></td><td>GET</td><td><span class="pillar-chip">EpistemicHold (I)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar II via EscrowRecord; Pillar III via lanternStatus</td></tr>
+          <tr><td><code>/epistemic-hold/escalations/{id}</code></td><td>GET</td><td><span class="pillar-chip">EpistemicHold (I)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar II via TGLF-State0; Pillar IV via deliberationMatrix</td></tr>
+          <tr><td><code>/epistemic-hold/escalations/{id}</code></td><td>PATCH</td><td><span class="pillar-chip">EpistemicHold (I)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Requires Pillar VII TriCameralApproval; resolution updates Pillar II</td></tr>
+          <tr><td><code>/epistemic-hold/lantern</code></td><td>GET</td><td><span class="pillar-chip">GoukassianPrinciple (III)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Reflects all 8 Pillars via pillarStatuses; artifactName const "lantern"</td></tr>
+          <tr><td><code>/goukassian/signature</code></td><td>GET</td><td><span class="pillar-chip">GoukassianPrinciple (III)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar II via attestation chain; artifactName const "signature"</td></tr>
+          <tr><td><code>/goukassian/license/validate</code></td><td>POST</td><td><span class="pillar-chip">GoukassianPrinciple (III)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Exceeded licenseScope triggers Pillar I Refuse; artifactName const "license"</td></tr>
+          <tr><td><code>/refusals</code></td><td>POST</td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td>Regulatory flags in refusalRationale</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar III via GoukassianPrincipleBlock; Pillar IV</td></tr>
+          <tr><td><code>/refusals/license-violations</code></td><td>POST</td><td><span class="pillar-chip">GoukassianPrinciple (III)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar II immutable violation log; Pillar I confirms Refuse (−1)</td></tr>
+          <tr><td><code>/emergency/override</code></td><td>POST</td><td><span class="pillar-chip">HybridShield (VII)</span></td><td>None (supreme authority gate)</td><td><span class="badge badge-ship">SHIPPING</span></td><td>NL=NA universal; forcedState [−1, 0] only; Pillar II logged before execution</td></tr>
+          <tr><td><code>/emergency/status</code></td><td>GET</td><td><span class="pillar-chip">HybridShield (VII)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar I if forcedState 0 active; Pillar III via Lantern</td></tr>
+          <tr><td><code>/audit/verifications/merkle/{root}</code></td><td>GET</td><td><span class="pillar-chip">Anchors (VIII)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar II via Merkle chain; Pillar VII via custodian quorum</td></tr>
+          <tr><td><code>/audit/verifications/inclusion/{logId}</code></td><td>GET</td><td><span class="pillar-chip">Anchors (VIII)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar II; Pillar IV</td></tr>
+          <tr><td><code>/audit/custodians/{id}/heartbeat</code></td><td>GET</td><td><span class="pillar-chip">HybridShield (VII)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar VIII via quorum contribution flag</td></tr>
+          <tr><td><code>/audit/compliance/attestation</code></td><td>GET</td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td>All 8 Pillars; Basel III, FATF, IOSCO, Paris Agreement</td><td><span class="badge badge-ship">SHIPPING</span></td><td>All 8 Pillars via pillarAttestations array</td></tr>
+          <tr><td><code>/redress/challenges</code></td><td>POST</td><td><span class="pillar-chip">EconomicRights (V)</span></td><td>CFPB, SEC, FINRA</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar II on challenge record; Pillar IV</td></tr>
+          <tr><td><code>/redress/challenges/{id}</code></td><td>GET</td><td><span class="pillar-chip">EconomicRights (V)</span></td><td>CFPB, SEC, FINRA</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar II; Pillar IV</td></tr>
+          <tr><td><code>/redress/log-reevaluation</code></td><td>POST</td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td>GDPR Article 17</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar IV; original TGLF untouched confirms Pillar II integrity</td></tr>
+          <tr><td><code>/redress/economic-rights-grievances</code></td><td>POST</td><td><span class="pillar-chip">EconomicRights (V)</span></td><td>Basel III, FATF, IOSCO, CFPB, SEC, FINRA</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar II on grievance record; Pillar VII escalation path</td></tr>
+          <tr><td><code>/regulator/evidence-export</code></td><td>POST</td><td><span class="pillar-chip">EconomicRights (V)</span></td><td>Basel III Art.96, FATF Rec.11, IOSCO P.34, GDPR Art.5(1)(e)</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar II via Merkle-verified archive; Pillar VIII</td></tr>
+          <tr><td><code>/regulator/custodian-quorum</code></td><td>GET</td><td><span class="pillar-chip">HybridShield (VII)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span> <span class="badge badge-future">sub-300ms: FUTURE</span></td><td>crossJurisdictionLatencyMs exposes Pillar VIII geographic gap</td></tr>
+          <tr><td><code>/regulator/timestamp-verification/{logId}</code></td><td>GET</td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td>GDPR Art.5(1)(f); eIDAS qualified timestamp</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar VIII via RFC 3161 TSA</td></tr>
+          <tr><td><code>/regulator/basel-iii/attestation</code></td><td>GET</td><td><span class="pillar-chip">EconomicRights (V)</span></td><td>Basel III: LCR ≥ 1.0, NSFR ≥ 1.0, capital adequacy, stress test</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar VII via SignatureBlock attestation</td></tr>
+          <tr><td><code>/regulator/fatf/compliance-export</code></td><td>POST</td><td><span class="pillar-chip">EconomicRights (V)</span></td><td>FATF Rec.10, 11, 20 (SAR), 29</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar II via export archive; Pillar VIII</td></tr>
+          <tr><td><code>/regulator/iosco/principle-mapping</code></td><td>GET</td><td><span class="pillar-chip">EconomicRights (V)</span></td><td>IOSCO Principles 34–38</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar IV via principlesMapped array</td></tr>
+          <tr><td><code>/gateway/status</code></td><td>GET</td><td><span class="pillar-chip">GoukassianPrinciple (III)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Fail-closed posture touches all Pillars; EPISTEMIC_HOLD_OVERRIDE_ACTIVE reflects Pillar I</td></tr>
+          <tr><td><code>/gateway/lane-assignment</code></td><td>POST</td><td><span class="pillar-chip">EpistemicHold (I)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>epistemicHoldOverride activates Pillar I; Pillar III via lanternStatus</td></tr>
+          <tr><td><code>/evaluate/trade</code></td><td>POST</td><td><span class="pillar-chip">EconomicRights (V)</span></td><td>Basel III, FATF, IOSCO</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar V triggers Pillar VII on regulatory flag; amlClearanceStatus feeds Pillar II</td></tr>
+          <tr><td><code>/evaluate/policy</code></td><td>POST</td><td><span class="pillar-chip">SustainableCapital (VI)</span></td><td>Paris Agreement, Basel III, GDPR</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar VI triggers Pillar V; greenBondEligibility feeds Pillar VIII</td></tr>
+          <tr><td><code>/evaluate/supply-chain</code></td><td>POST</td><td><span class="pillar-chip">SustainableCapital (VI)</span></td><td>Paris Agreement, IOSCO</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Pillar VI triggers Pillar V on non-compliance; Pillar II on log</td></tr>
+          <tr><td><code>/pillars/status</code></td><td>GET</td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td>All regulatory frameworks</td><td><span class="badge badge-ship">SHIPPING</span></td><td>All 8 Pillars; overallComplianceScore aggregates all Pillar health</td></tr>
+          <tr><td><code>/pillars/{pillarId}/configure</code></td><td>POST</td><td><span class="pillar-chip">HybridShield (VII)</span></td><td>None (Tri-Cameral gate)</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Requires TriCameralApproval (Pillar VII); logged to Pillar II</td></tr>
+          <tr><td><code>/thresholds/{domain}</code></td><td>GET</td><td><span class="pillar-chip">DecisionLogs (IV)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>ThresholdProfile affects all Pillars</td></tr>
+          <tr><td><code>/thresholds/{domain}</code></td><td>PUT</td><td><span class="pillar-chip">DecisionLogs (IV)</span></td><td>None</td><td><span class="badge badge-ship">SHIPPING</span></td><td>Requires TriCameralApproval (Pillar VII); logged to Pillar II</td></tr>
+          <tr><td><code>/ditl/state-transition</code></td><td>POST</td><td><span class="pillar-chip">EpistemicHold (I)</span></td><td>None</td><td><span class="badge badge-future">FUTURE</span></td><td>Pillar II via PUF attestation; Window Comparator touches Pillar I state machine</td></tr>
+          <tr><td><code>/ditl/puf-attestation/{deviceId}</code></td><td>GET</td><td><span class="pillar-chip">HybridShield (VII)</span></td><td>None</td><td><span class="badge badge-future">FUTURE</span></td><td>Pillar VIII via Merkle hash chain; Pillar II via enrollment log</td></tr>
+          <tr><td><code>/metrics/summary</code></td><td>GET</td><td><span class="pillar-chip">DecisionLogs (IV)</span></td><td>All frameworks reflected in rate metrics</td><td><span class="badge badge-ship">SHIPPING</span></td><td>ghostGovernanceDetectionRate reflects all 8 Pillars</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- PART 2 -->
+  <div class="section-block" id="part2">
+    <div class="section-title">Part 2 — JSON Schema Property Compliance Mapping (Key Entries)</div>
+    <p>Selected schema definitions from <code>tl_schema.json</code> mapped to Pillar, Regulatory Nexus, Status, and NL=NA Layer.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Schema ($anchor)</th><th>Property</th><th>Pillar</th><th>Status</th><th>NL=NA Layer</th></tr></thead>
+        <tbody>
+          <tr><td><code>TLState</code></td><td>(enum: −1, 0, 1)</td><td><span class="pillar-chip">EpistemicHold (I)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td><span class="nlna-layer">All layers</span></td></tr>
+          <tr><td><code>TLStateLabel</code></td><td>(enum: Proceed, EpistemicHold, Refuse)</td><td><span class="pillar-chip">EpistemicHold (I)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td><span class="nlna-layer">All layers</span></td></tr>
+          <tr><td><code>PermissionToken</code></td><td><code>laneOrigin</code> (const "AUDIT_LANE")</td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td><span class="nlna-layer">Layer 2</span></td></tr>
+          <tr><td><code>PermissionToken</code></td><td><code>logHash</code></td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td><span class="nlna-layer">Layers 4, 5</span></td></tr>
+          <tr><td><code>PermissionToken</code></td><td><code>merkleRoot</code></td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td><span class="nlna-layer">Layers 4, 5</span></td></tr>
+          <tr><td><code>PermissionToken</code></td><td><code>maxLifetimeMs</code> (max: 300000)</td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td>DLLA 300ms ceiling</td></tr>
+          <tr><td><code>PermissionToken</code></td><td><code>custodianQuorumAttestation</code></td><td><span class="pillar-chip">HybridShield (VII)</span></td><td><span class="badge badge-beta">BETA</span></td><td>None</td></tr>
+          <tr><td><code>AuditProof</code></td><td><code>logHash</code></td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td><span class="nlna-layer">Layer 4</span></td></tr>
+          <tr><td><code>AuditProof</code></td><td><code>merkleRoot</code></td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td><span class="nlna-layer">Layer 4</span></td></tr>
+          <tr><td><code>EscrowRecord</code></td><td><code>heldState</code> (const: 0)</td><td><span class="pillar-chip">EpistemicHold (I)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td>None</td></tr>
+          <tr><td><code>EscrowRecord</code></td><td><code>windowComparatorReading</code></td><td><span class="pillar-chip">EpistemicHold (I)</span></td><td><span class="badge badge-ship">SHIPPING</span> <span class="badge badge-future">MT: FUTURE</span></td><td>DITL physical gate</td></tr>
+          <tr><td><code>StateEnvelope</code></td><td><code>permissionToken</code> (required when currentState==1)</td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td><span class="nlna-layer">Layer 1</span></td></tr>
+          <tr><td><code>StateEnvelope</code></td><td><code>escrowRecord</code> (required when currentState==0)</td><td><span class="pillar-chip">EpistemicHold (I)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td><span class="nlna-layer">Layer 1</span></td></tr>
+          <tr><td><code>TGLF_StateP1</code></td><td><code>permissionToken</code> (REQUIRED)</td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td><span class="nlna-layer">Layer 3</span></td></tr>
+          <tr><td><code>TGLF_StateP1</code></td><td><code>pillarsCertified</code> (minItems 8, maxItems 8)</td><td>All Pillars</td><td><span class="badge badge-ship">SHIPPING</span></td><td><span class="nlna-layer">Layer 3</span></td></tr>
+          <tr><td><code>TGLF_StateNeg1</code></td><td><code>stateLabel</code> (const: "Refuse")</td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td>None</td></tr>
+          <tr><td><code>TGLF_StateNeg1</code></td><td><code>refusalIsPermanent</code> (default: true)</td><td><span class="pillar-chip">ImmutableLedger (II)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td>None</td></tr>
+          <tr><td><code>NLNAAuditToken</code></td><td><code>pufAttestation</code> (NULL_PUF_DEPLOYMENT sentinel)</td><td><span class="pillar-chip">HybridShield (VII)</span></td><td><span class="badge badge-ship">SHIPPING</span> <span class="badge badge-future">FULL_PUF: FUTURE</span></td><td>None</td></tr>
+          <tr><td><code>LanternStatus</code></td><td><code>artifactName</code> (const: "lantern")</td><td><span class="pillar-chip">GoukassianPrinciple (III)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td>None</td></tr>
+          <tr><td><code>SignatureBlock</code></td><td><code>signatureAlgorithm</code> (SLH-DSA/ML-KEM slots reserved)</td><td><span class="pillar-chip">GoukassianPrinciple (III)</span></td><td><span class="badge badge-future">PQC: FUTURE</span></td><td>None</td></tr>
+          <tr><td><code>TriCameralApproval</code></td><td><code>technicalCouncilVotes.totalMembers</code> (const: 9)</td><td><span class="pillar-chip">HybridShield (VII)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td>None</td></tr>
+          <tr><td><code>TriCameralApproval</code></td><td><code>stewardshipCustodianVotes.totalMembers</code> (const: 11)</td><td><span class="pillar-chip">HybridShield (VII)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td>None</td></tr>
+          <tr><td><code>EKRRecord</code></td><td><code>hkdfSha3256Confirmed</code></td><td><span class="pillar-chip">HybridShield (VII)</span></td><td><span class="badge badge-ship">SHIPPING</span></td><td>GDPR Art.17 crypto-erasure</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- PART 3 -->
+  <div class="section-block" id="part3">
+    <div class="section-title">Part 3 — Cross-Cutting Notes</div>
+
+    <h3>NL=NA Five-Layer Checklist</h3>
+    <ul class="checklist">
+      <li><strong>Layer 1</strong> — StateEnvelope if/then: permissionToken required when currentState==1. unevaluatedProperties: false prevents bypass. <span class="badge badge-verified">CONFIRMED</span></li>
+      <li><strong>Layer 2</strong> — PermissionToken.laneOrigin const "AUDIT_LANE". registerPermissionToken reverts NLNAViolation on mismatch. <span class="badge badge-verified">CONFIRMED</span></li>
+      <li><strong>Layer 3</strong> — TGLF_StateP1.permissionToken required. pillarsCertified minItems 8, maxItems 8. <span class="badge badge-verified">CONFIRMED</span></li>
+      <li><strong>Layer 4</strong> — AuditProof.logHash = PermissionToken.logHash. AuditProof.merkleRoot = PermissionToken.merkleRoot. <span class="badge badge-verified">CONFIRMED</span></li>
+      <li><strong>Layer 5</strong> — TL_Ledger_Core.registerPermissionToken reverts NLNAViolation if logHash not in anchored Merkle root. <span class="badge badge-verified">CONFIRMED</span></li>
+    </ul>
+
+    <h3>Epistemic Hold Integrity Checkpoints</h3>
+    <ul class="checklist">
+      <li>State 0 never conflated with null, error, false, timeout, or retry — confirmed across all TGLF schema const values. <span class="badge badge-verified">CONFIRMED</span></li>
+      <li>GovernancePause is workflow name not state synonym — TGLF_State0.processActive const "GovernancePause" confirmed. <span class="badge badge-verified">CONFIRMED</span></li>
+      <li>EscrowRecord is the single authoritative source for all hold response fields. No duplication in other schemas. <span class="badge badge-verified">CONFIRMED</span></li>
+      <li>Resolution accepts only State +1 or State −1. State 0 is constitutionally invalid as resolution. <span class="badge badge-verified">CONFIRMED</span></li>
+    </ul>
+
+    <h3>Goukassian Principle Artifact Name Integrity</h3>
+    <ul class="checklist">
+      <li>GoukassianPrincipleBlock.lantern.artifactName const "lantern" — canonical lowercase confirmed. <span class="badge badge-verified">CONFIRMED</span></li>
+      <li>GoukassianPrincipleBlock.signature.artifactName const "signature" — canonical lowercase confirmed. <span class="badge badge-verified">CONFIRMED</span></li>
+      <li>GoukassianPrincipleBlock.license.artifactName const "license" — canonical lowercase confirmed. <span class="badge badge-verified">CONFIRMED</span></li>
+      <li>EIP-712 keccak256 pre-images recorded in canonicalArtifactNameHashes section. <span class="badge badge-verified">CONFIRMED</span></li>
+    </ul>
+
+    <h3>Implementation Gap Summary</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Feature</th><th>Blocking Constraint</th><th>SHIPPING Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td>Real-time per-trade blockchain anchoring</td><td>Monograph Section X (throughput asymmetry)</td><td>Batch Merkle root anchoring</td></tr>
+          <tr><td>PQC signature migration (SLH-DSA-SHAKE-128s, ML-KEM-1024)</td><td>Monograph Section X (HSM readiness)</td><td>ES256 / Ed25519 SHIPPING; slots 6–7 reserved</td></tr>
+          <tr><td>Full DITL / MT hardware deployment</td><td>Monograph Section X (TSMC N2 / Intel 18A)</td><td>Architecture B / NULL_PUF_DEPLOYMENT sentinel</td></tr>
+          <tr><td>Cross-jurisdiction custodian quorum &lt;300ms</td><td>Monograph Section X (network physics)</td><td>crossJurisdictionLatencyMs monitoring field</td></tr>
+          <tr><td>Immutable ledger with native GDPR Art.17 compliance</td><td>Erasure Paradox</td><td>HKDF-SHA3-256 cryptographic erasure; 3 residual sub-gaps</td></tr>
+          <tr><td>Real-time cross-border Basel III monitoring at global volume</td><td>Monograph Section X (data aggregation latency)</td><td>Periodic attestation via GET /regulator/basel-iii/attestation</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Dangling Reference Audit</h3>
+    <ul class="checklist">
+      <li>All 40 OpenAPI endpoints carry x-tl-pillar annotation referencing a valid PillarIdentifier. <span class="badge badge-verified">VERIFIED — zero orphans</span></li>
+      <li>All 22 schema $anchors in tl_schema.json are used by at least one endpoint. <span class="badge badge-verified">VERIFIED — zero orphans</span></li>
+      <li>All ABI functions reference schema types present in tl_schema.json. <span class="badge badge-verified">VERIFIED — zero orphans</span></li>
+      <li>All EIP-712 type pre-images recorded in canonicalTypeHashRegistry. <span class="badge badge-verified">VERIFIED — zero orphans</span></li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <!-- UNCERTAINTY REGISTER -->
+  <div class="section-block" id="uncertainty">
+    <div class="section-title">Constitutional Uncertainty Register — Deliverable E</div>
+    <div class="uncertainty-block">
+      <div class="u-label">Open Items</div>
+      <p><strong>&lt;UNVERIFIED&gt;</strong> Basel III specific article numbers — Mapped to functional requirements (LCR ≥ 1.0, NSFR ≥ 1.0) per Section 4.8 of the constitutional prompt. Article 96 cited for record-keeping as generally applicable.</p>
+      <p><strong>&lt;UNVERIFIED&gt;</strong> IOSCO Principles 34–38 — Principles cited as the market integrity cluster covering layering, spoofing, wash trading, cross-market manipulation per IOSCO's published framework structure.</p>
+      <p><strong>&lt;MONOGRAPH_EXCERPT_MISSING&gt;</strong> EU AI Act references — EU AI Act column omitted. Regulatory Nexus Guard applied: only provisions explicitly cited or unmistakably implied in the monograph are mapped.</p>
+      <p><strong>&lt;MONOGRAPH_EXCERPT_MISSING&gt;</strong> Implementation Gap: exact Section X monograph text — All six FUTURE features mapped to "Constitutional Hardware Monograph, Section X" per the constitutional prompt's source precedence hierarchy.</p>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

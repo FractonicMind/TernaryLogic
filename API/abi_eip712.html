@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABI and EIP-712 — TL Governance API</title>
+<style>
+  :root {
+    --navy: #0a1628; --navy2: #0f1f3d; --navy3: #162847;
+    --gold: #d4a574; --gold2: #e8c496;
+    --teal: #2dd4bf; --green: #22c55e; --amber: #f59e0b;
+    --coral: #f87171; --purple: #a78bfa; --blue: #60a5fa;
+    --text: #e2e8f0; --muted: #94a3b8;
+    --border: rgba(212,165,116,0.2); --border2: rgba(212,165,116,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--navy); color: var(--text); font-family: 'Georgia', serif; }
+  .sidebar { position: fixed; top: 0; left: 0; width: 260px; height: 100vh; background: var(--navy2); border-right: 1px solid var(--border); overflow-y: auto; z-index: 100; }
+  .sidebar-brand { padding: 1.5rem 1.25rem 1rem; border-bottom: 1px solid var(--border); }
+  .sidebar-brand .tl { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gold); font-family: 'Helvetica Neue', sans-serif; text-transform: uppercase; margin-bottom: 0.25rem; }
+  .sidebar-brand h2 { font-size: 0.85rem; color: var(--text); font-weight: normal; }
+  .sidebar nav { padding: 0.5rem 0 2rem; }
+  .sidebar nav a { display: block; padding: 0.38rem 1.25rem; font-family: 'Helvetica Neue', sans-serif; font-size: 0.72rem; color: var(--muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.15s; }
+  .sidebar nav a:hover { color: var(--gold); border-left-color: var(--gold); background: rgba(212,165,116,0.05); }
+  .sidebar nav .group { padding: 0.8rem 1.25rem 0.2rem; font-size: 0.62rem; letter-spacing: 0.12em; color: var(--gold); font-family: 'Helvetica Neue', sans-serif; text-transform: uppercase; }
+  .main { margin-left: 260px; padding: 2.5rem 3rem 5rem; }
+  .page-header { border-bottom: 1px solid var(--border); padding-bottom: 1.75rem; margin-bottom: 2.5rem; }
+  .page-header .label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .page-header h1 { font-size: 1.9rem; font-weight: normal; color: var(--gold2); margin-bottom: 0.5rem; }
+  .page-header .sub { font-family: 'Helvetica Neue', sans-serif; font-size: 0.82rem; color: var(--muted); }
+  .page-header .sub a { color: var(--gold); text-decoration: none; }
+  code { font-family: 'Courier New', monospace; font-size: 0.8rem; background: rgba(255,255,255,0.06); padding: 0.1em 0.35em; border-radius: 3px; color: var(--teal); }
+  .section-title { font-family: 'Helvetica Neue', sans-serif; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; margin: 2rem 0 1rem; }
+  .contract-label { display: inline-block; font-family: 'Helvetica Neue', sans-serif; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); border-radius: 4px; padding: 0.2em 0.6em; margin-bottom: 0.75rem; }
+  .fn-card { background: var(--navy2); border: 1px solid var(--border2); border-radius: 6px; margin-bottom: 0.5rem; overflow: hidden; }
+  .fn-header { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; cursor: pointer; transition: background 0.1s; }
+  .fn-header:hover { background: rgba(212,165,116,0.04); }
+  .fn-kind { font-family: 'Helvetica Neue', sans-serif; font-size: 0.62rem; padding: 0.15em 0.5em; border-radius: 3px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
+  .k-function { background: rgba(96,165,250,0.12); color: var(--blue); border: 1px solid rgba(96,165,250,0.25); }
+  .k-event { background: rgba(167,139,250,0.12); color: var(--purple); border: 1px solid rgba(167,139,250,0.25); }
+  .k-error { background: rgba(248,113,113,0.12); color: var(--coral); border: 1px solid rgba(248,113,113,0.25); }
+  .k-view { background: rgba(45,212,191,0.12); color: var(--teal); border: 1px solid rgba(45,212,191,0.25); }
+  .fn-name { font-family: 'Courier New', monospace; font-size: 0.88rem; color: var(--text); }
+  .fn-sig { font-family: 'Courier New', monospace; font-size: 0.72rem; color: var(--muted); margin-left: auto; max-width: 45%; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fn-body { display: none; padding: 0.75rem 1rem 1rem; border-top: 1px solid var(--border2); }
+  .fn-body.open { display: block; }
+  .fn-desc { font-size: 0.83rem; color: var(--muted); margin-bottom: 0.85rem; line-height: 1.6; }
+  .params-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+  .params-table th { text-align: left; font-family: 'Helvetica Neue', sans-serif; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border2); }
+  .params-table td { padding: 0.4rem 0.5rem; color: var(--text); border-bottom: 1px solid rgba(255,255,255,0.03); vertical-align: top; }
+  .p-name { color: var(--teal); font-family: 'Courier New', monospace; }
+  .p-type { color: var(--blue); font-family: 'Courier New', monospace; font-size: 0.76rem; }
+  .p-note { color: var(--muted); font-size: 0.76rem; }
+  .revert-tag { display: inline-block; font-family: 'Helvetica Neue', sans-serif; font-size: 0.62rem; padding: 0.1em 0.4em; border-radius: 3px; background: rgba(248,113,113,0.1); color: var(--coral); border: 1px solid rgba(248,113,113,0.2); }
+  .nlna-tag { display: inline-block; font-family: 'Helvetica Neue', sans-serif; font-size: 0.62rem; padding: 0.1em 0.4em; border-radius: 3px; background: rgba(45,212,191,0.1); color: var(--teal); border: 1px solid rgba(45,212,191,0.2); }
+  .type-card { background: var(--navy2); border: 1px solid var(--border2); border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 0.75rem; }
+  .type-name { font-family: 'Courier New', monospace; font-size: 0.9rem; color: var(--gold2); margin-bottom: 0.6rem; }
+  .hash-row { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 0.4rem; font-size: 0.8rem; }
+  .hash-key { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); min-width: 140px; padding-top: 0.1rem; }
+  .hash-val { font-family: 'Courier New', monospace; color: var(--teal); word-break: break-all; line-height: 1.5; }
+  @media (max-width: 900px) { .sidebar { display: none; } .main { margin-left: 0; padding: 1.5rem; } }
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="tl">"Ternary Logic" · TL</div>
+    <h2>ABI and EIP-712</h2>
+  </div>
+  <nav>
+    <div class="group">TL_Ledger_Core.sol</div>
+    <a href="#anchorMerkleRoot">anchorMerkleRoot</a>
+    <a href="#registerPermissionToken">registerPermissionToken</a>
+    <a href="#verifyPermissionToken">verifyPermissionToken</a>
+    <a href="#verifyMerkleInclusion">verifyMerkleInclusion</a>
+    <a href="#activateEpistemicHold">activateEpistemicHold</a>
+    <a href="#resolveEpistemicHold">resolveEpistemicHold</a>
+    <a href="#executeEmergencyOverride">executeEmergencyOverride</a>
+    <a href="#revokePermissionToken">revokePermissionToken</a>
+    <div class="group">Events</div>
+    <a href="#events-core">Core Events</a>
+    <div class="group">Custom Errors</div>
+    <a href="#errors">Custom Errors</a>
+    <div class="group">ITL_Validator.sol</div>
+    <a href="#verifyEconomicRights">verifyEconomicRights</a>
+    <a href="#verifySustainableCapital">verifySustainableCapital</a>
+    <a href="#verifyGoukassianLicense">verifyGoukassianLicense</a>
+    <a href="#recordMandateViolation">recordMandateViolation</a>
+    <div class="group">EIP-712</div>
+    <a href="#eip712-domain">Domain Separator</a>
+    <a href="#eip712-types">Primary Types</a>
+    <a href="#eip712-hashes">Canonical Hashes</a>
+    <div class="group">Spec Files</div>
+    <a href="tl_abi.json">tl_abi.json (raw)</a>
+    <a href="eip712_typed_data.json">eip712_typed_data.json (raw)</a>
+    <a href="schema.html">Schema Browser</a>
+  </nav>
+</aside>
+<main class="main">
+  <div class="page-header">
+    <div class="label">Deliverables C and D · "Ternary Logic" (TL) Governance API</div>
+    <h1>Smart Contract ABI and EIP-712 Typed Data</h1>
+    <div class="sub">
+      ABI: function signatures, events, custom errors, struct types only — no Solidity source ·
+      <a href="tl_abi.json">tl_abi.json</a> ·
+      <a href="eip712_typed_data.json">eip712_typed_data.json</a>
+    </div>
+  </div>
+
+  <!-- TL_LEDGER_CORE -->
+  <div class="section-title">TL_Ledger_Core.sol</div>
+  <div class="contract-label">TL_Ledger_Core</div>
+
+  <div class="fn-card" id="anchorMerkleRoot">
+    <div class="fn-header" onclick="toggle(this)">
+      <span class="fn-kind k-function">function</span>
+      <span class="fn-name">anchorMerkleRoot</span>
+      <span class="fn-sig">(bytes32 merkleRoot, uint256 batchTimestamp, CustodianQuorumAttestation[] attestations)</span>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">Anchors a Merkle root on-chain. Requires HybridShield custodian quorum. Emits MerkleRootAnchored.</div>
+      <table class="params-table"><thead><tr><th>Parameter</th><th>Type</th><th>Note</th></tr></thead><tbody>
+        <tr><td class="p-name">merkleRoot</td><td class="p-type">bytes32</td><td class="p-note">SHA-256 root of TGLF batch</td></tr>
+        <tr><td class="p-name">batchTimestamp</td><td class="p-type">uint256</td><td class="p-note">Unix epoch of batch</td></tr>
+        <tr><td class="p-name">attestations</td><td class="p-type">CustodianQuorumAttestation[]</td><td class="p-note">operationType: 0 (ANCHOR_MERKLE)</td></tr>
+      </tbody></table>
+      <div style="margin-top:0.6rem"><span class="revert-tag">reverts QuorumNotMet</span></div>
+    </div>
+  </div>
+
+  <div class="fn-card" id="registerPermissionToken">
+    <div class="fn-header" onclick="toggle(this)">
+      <span class="fn-kind k-function">function</span>
+      <span class="fn-name">registerPermissionToken</span>
+      <span class="fn-sig">(bytes32 tokenId, bytes32 logHash, bytes32 laneOriginHash, bytes32 merkleRoot, ...)</span>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">NL=NA Layer 5 enforcement. Registers a Permission Token on-chain. Reverts NLNAViolation if logHash is not provably included in an anchored Merkle root via verifyMerkleInclusion, or if laneOriginHash does not equal keccak256("AUDIT_LANE").</div>
+      <table class="params-table"><thead><tr><th>Parameter</th><th>Type</th><th>Note</th></tr></thead><tbody>
+        <tr><td class="p-name">logHash</td><td class="p-type">bytes32</td><td class="p-note"><span class="nlna-tag">Layer 5</span> — must be in anchored Merkle root</td></tr>
+        <tr><td class="p-name">laneOriginHash</td><td class="p-type">bytes32</td><td class="p-note"><span class="nlna-tag">Layer 2</span> — must equal keccak256("AUDIT_LANE")</td></tr>
+        <tr><td class="p-name">merkleRoot</td><td class="p-type">bytes32</td><td class="p-note">Previously anchored root</td></tr>
+      </tbody></table>
+      <div style="margin-top:0.6rem">
+        <span class="revert-tag">reverts NLNAViolation(violationReason)</span>
+        <span style="margin-left:0.5rem;font-size:0.76rem;color:var(--muted)">0=MERKLE_NOT_FOUND, 1=INVALID_LANE_ORIGIN</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="fn-card" id="verifyPermissionToken">
+    <div class="fn-header" onclick="toggle(this)">
+      <span class="fn-kind k-view">view</span>
+      <span class="fn-name">verifyPermissionToken</span>
+      <span class="fn-sig">(bytes32 tokenId) → (bool valid, uint8 revocationStatus, int256 remainingLifetimeMs)</span>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">Read-only verification of Permission Token validity, revocation status, and remaining lifetime. Actuation layer calls this before firing.</div>
+    </div>
+  </div>
+
+  <div class="fn-card" id="verifyMerkleInclusion">
+    <div class="fn-header" onclick="toggle(this)">
+      <span class="fn-kind k-view">pure</span>
+      <span class="fn-name">verifyMerkleInclusion</span>
+      <span class="fn-sig">(bytes32 logHash, bytes32[] proofPath, bytes32 merkleRoot) → bool</span>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">Pure function. Verifies a log hash is included in a Merkle root given a proof path. Used internally by registerPermissionToken (NL=NA Layer 5) and exposed for external auditor verification.</div>
+    </div>
+  </div>
+
+  <div class="fn-card" id="activateEpistemicHold">
+    <div class="fn-header" onclick="toggle(this)">
+      <span class="fn-kind k-function">function</span>
+      <span class="fn-name">activateEpistemicHoldSystemWide</span>
+      <span class="fn-sig">(bytes32 triggerLogHash, CustodianQuorumAttestation[] attestations)</span>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">Activates system-wide Epistemic Hold. Requires custodian quorum attestation (operationType: 1). Emits EpistemicHoldActivated.</div>
+      <div style="margin-top:0.6rem"><span class="revert-tag">reverts QuorumNotMet</span></div>
+    </div>
+  </div>
+
+  <div class="fn-card" id="resolveEpistemicHold">
+    <div class="fn-header" onclick="toggle(this)">
+      <span class="fn-kind k-function">function</span>
+      <span class="fn-name">resolveEpistemicHoldSystemWide</span>
+      <span class="fn-sig">(uint8 resolvedState, bytes32 resolutionLogHash, CustodianQuorumAttestation[] attestations)</span>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">Resolves system-wide Epistemic Hold. resolvedState uint8: 0=REFUSE, 1=PROCEED. State 0 (Epistemic Hold) is not a valid resolution. Reverts InvalidResolutionState for any other value.</div>
+      <div style="margin-top:0.6rem">
+        <span class="revert-tag">reverts InvalidResolutionState</span>
+        <span style="margin-left:0.5rem;font-size:0.76rem;color:var(--muted)">State 0 constitutionally prohibited as resolution</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="fn-card" id="executeEmergencyOverride">
+    <div class="fn-header" onclick="toggle(this)">
+      <span class="fn-kind k-function">function</span>
+      <span class="fn-name">executeEmergencyOverride</span>
+      <span class="fn-sig">(uint8 overrideType, uint8 forcedState, bytes32 justificationLogHash, ...)</span>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">Break-glass override. Logged before execution — audit trail exists before state change. forcedState uint8: 0=EpistemicHold, 255=Refuse. Proceed (+1) is constitutionally blocked and will revert. Emits EmergencyOverrideExecuted.</div>
+      <table class="params-table"><thead><tr><th>forcedState value</th><th>Meaning</th></tr></thead><tbody>
+        <tr><td class="p-name">0</td><td class="p-note">EpistemicHold (State 0)</td></tr>
+        <tr><td class="p-name">255</td><td class="p-note">Refuse (State −1)</td></tr>
+        <tr><td class="p-name">any other</td><td class="p-note"><span class="revert-tag">reverts UnauthorizedOverride</span> — Proceed blocked</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="fn-card" id="revokePermissionToken">
+    <div class="fn-header" onclick="toggle(this)">
+      <span class="fn-kind k-function">function</span>
+      <span class="fn-name">revokePermissionToken</span>
+      <span class="fn-sig">(bytes32 tokenId, uint8 revocationReason, bytes32 revocationMerkleRoot)</span>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">Revokes a previously registered Permission Token. revocationMerkleRoot anchors the revocation on-chain. Revocation reasons: 0=EMERGENCY_OVERRIDE, 1=TRI_CAMERAL_DECISION.</div>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="section-title" id="events-core">Events — TL_Ledger_Core</div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">MerkleRootAnchored</span><span class="fn-sig">(bytes32 merkleRoot, uint256 batchTimestamp, uint256 blockNumber)</span></div><div class="fn-body"><div class="fn-desc">Emitted when a Merkle root batch is anchored on-chain. batchTimestamp is the off-chain epoch of the batch; blockNumber is the on-chain confirmation block.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">PermissionTokenRegistered</span><span class="fn-sig">(bytes32 tokenId, bytes32 logHash, bytes32 merkleRoot, uint256 expiresAt)</span></div><div class="fn-body"><div class="fn-desc">Emitted when a Permission Token is successfully registered. logHash and merkleRoot are the NL=NA Layer 4/5 binding fields.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">EpistemicHoldActivated</span><span class="fn-sig">(bytes32 triggerLogHash, uint256 activatedAt)</span></div><div class="fn-body"><div class="fn-desc">Emitted on system-wide Epistemic Hold activation. All downstream actuation gates must observe this event and halt.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">EpistemicHoldResolved</span><span class="fn-sig">(uint8 resolvedState, bytes32 resolutionLogHash, uint256 resolvedAt)</span></div><div class="fn-body"><div class="fn-desc">Emitted on resolution. resolvedState 0=REFUSE, 1=PROCEED. Never emitted with State 0 (Epistemic Hold) as resolved state.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">EmergencyOverrideExecuted</span><span class="fn-sig">(uint8 overrideType, uint8 forcedState, bytes32 justificationLogHash)</span></div><div class="fn-body"><div class="fn-desc">Emitted BEFORE state change — audit log precedes execution. This ordering is constitutional: the log exists before the action fires.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">LanternStatusBroadcast</span><span class="fn-sig">(bytes32 lanternHash, uint8 compliancePosture, uint256 broadcastAt)</span></div><div class="fn-body"><div class="fn-desc">Goukassian Principle Lantern public beacon. compliancePosture uint8 maps to LanternStatus.compliancePosture enum.</div></div></div>
+
+  <!-- CUSTOM ERRORS -->
+  <div class="section-title" id="errors">Custom Errors</div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">NLNAViolation</span><span class="fn-sig">(uint8 violationReason)</span></div><div class="fn-body"><div class="fn-desc">violationReason: 0=MERKLE_NOT_FOUND (logHash not in anchored root), 1=INVALID_LANE_ORIGIN (laneOriginHash ≠ keccak256("AUDIT_LANE")). Terminal NL=NA Layer 5 enforcement.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">EpistemicHoldActive</span><span class="fn-sig">()</span></div><div class="fn-body"><div class="fn-desc">Reverted when a state-mutating operation is attempted while system-wide Epistemic Hold is active.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">QuorumNotMet</span><span class="fn-sig">(uint8 provided, uint8 required)</span></div><div class="fn-body"><div class="fn-desc">HybridShield custodian quorum insufficient for the requested operation type.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">InvalidResolutionState</span><span class="fn-sig">(uint8 attempted)</span></div><div class="fn-body"><div class="fn-desc">Reverted when resolveEpistemicHoldSystemWide is called with a value other than 0 (REFUSE) or 1 (PROCEED). State 0 is constitutionally prohibited as a resolution target.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">UnauthorizedOverride</span><span class="fn-sig">()</span></div><div class="fn-body"><div class="fn-desc">Reverted when executeEmergencyOverride is called with forcedState targeting +1 (Proceed). Constitutionally blocked.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">TokenExpired</span><span class="fn-sig">(bytes32 tokenId, uint256 expiredAt)</span></div><div class="fn-body"><div class="fn-desc">Reverted when an actuation attempt references a Permission Token past its expiresAt timestamp. No grace period.</div></div></div>
+
+  <!-- ITL_VALIDATOR -->
+  <div class="section-title">ITL_Validator.sol</div>
+  <div class="contract-label">ITL_Validator</div>
+
+  <div class="fn-card" id="verifyEconomicRights">
+    <div class="fn-header" onclick="toggle(this)">
+      <span class="fn-kind k-function">function</span>
+      <span class="fn-name">verifyEconomicRightsCompliance</span>
+      <span class="fn-sig">(uint256[3] baselIiiVector, uint256[2] fatfVector, uint256[4] ioscoVector)</span>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">Verifies Basel III + FATF + IOSCO compliance vectors. Returns compliant bool, violationCode bytes32, and forcedState uint8 (0=EPISTEMIC_HOLD, 255=REFUSE). Emits EconomicRightsMandateViolationDetected on non-compliance.</div>
+      <table class="params-table"><thead><tr><th>Vector</th><th>Elements</th></tr></thead><tbody>
+        <tr><td class="p-name">baselIiiVector</td><td class="p-note">[0] lcr (scaled 1e18), [1] nsfr (scaled 1e18), [2] capitalRatio</td></tr>
+        <tr><td class="p-name">fatfVector</td><td class="p-note">[0] sanctionsHit bool, [1] sarRequired bool</td></tr>
+        <tr><td class="p-name">ioscoVector</td><td class="p-note">[0] layering, [1] spoofing, [2] washTrading, [3] crossMarket</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="fn-card" id="verifySustainableCapital">
+    <div class="fn-header" onclick="toggle(this)">
+      <span class="fn-kind k-function">function</span>
+      <span class="fn-name">verifySustainableCapitalCompliance</span>
+      <span class="fn-sig">(uint256 carbonFootprintVerified, uint256 greenBondEligibility, uint256 esgScore)</span>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">Verifies Paris Agreement and ESG compliance. Emits SustainableCapitalMandateViolationDetected on non-compliance.</div>
+    </div>
+  </div>
+
+  <div class="fn-card" id="verifyGoukassianLicense">
+    <div class="fn-header" onclick="toggle(this)">
+      <span class="fn-kind k-function">function</span>
+      <span class="fn-name">verifyGoukassianLicense</span>
+      <span class="fn-sig">(bytes32 licenseHash, uint8 violatedArtifact, bytes32 agentSignature)</span>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">Verifies Goukassian Principle license compliance. violatedArtifact ordinals: 1=lantern, 2=signature, 3=license. Emits GoukassianLicenseViolationDetected on violation.</div>
+    </div>
+  </div>
+
+  <div class="fn-card" id="recordMandateViolation">
+    <div class="fn-header" onclick="toggle(this)">
+      <span class="fn-kind k-function">function</span>
+      <span class="fn-name">recordMandateViolation</span>
+      <span class="fn-sig">(uint8 mandateId, bytes32 violationHash, uint256 timestamp)</span>
+    </div>
+    <div class="fn-body">
+      <div class="fn-desc">Records a mandate violation immutably on-chain. mandateId: 0=No Spy, 1=No Weapon, 2=No Switch Off. These three mandates are beyond all governance bodies' authority to suspend.</div>
+    </div>
+  </div>
+
+  <!-- EIP-712 -->
+  <div class="section-title" id="eip712-domain">EIP-712 Domain Separator</div>
+  <div class="type-card">
+    <div class="type-name">EIP712Domain</div>
+    <div class="hash-row"><span class="hash-key">name</span><span class="hash-val">"TLGovernance"</span></div>
+    <div class="hash-row"><span class="hash-key">version</span><span class="hash-val">"1.0.0"</span></div>
+    <div class="hash-row"><span class="hash-key">chainId</span><span class="hash-val">1 (placeholder — deployment-specific)</span></div>
+    <div class="hash-row"><span class="hash-key">verifyingContract</span><span class="hash-val">placeholder — deployment-specific</span></div>
+    <div class="hash-row"><span class="hash-key">salt</span><span class="hash-val">keccak256("TL_API_SALT_V1_0_0") — placeholder</span></div>
+  </div>
+
+  <div class="section-title" id="eip712-types">EIP-712 Primary Types</div>
+
+  <div class="type-card">
+    <div class="type-name">GovernanceTraceLog</div>
+    <div class="hash-row"><span class="hash-key">currentState</span><span class="hash-val">int8 — preserves signed triadic semantics. int8(0) ≠ bool false.</span></div>
+    <div class="hash-row"><span class="hash-key">logHash</span><span class="hash-val">bytes32</span></div>
+    <div class="hash-row"><span class="hash-key">merkleRoot</span><span class="hash-val">bytes32</span></div>
+    <div class="hash-row"><span class="hash-key">epochTimestamp</span><span class="hash-val">uint256</span></div>
+  </div>
+
+  <div class="type-card">
+    <div class="type-name">PermissionToken</div>
+    <div class="hash-row"><span class="hash-key">laneOrigin</span><span class="hash-val">bytes32 — must equal keccak256("AUDIT_LANE")</span></div>
+    <div class="hash-row"><span class="hash-key">logHash</span><span class="hash-val">bytes32 — NL=NA Layer 4 binding</span></div>
+    <div class="hash-row"><span class="hash-key">merkleRoot</span><span class="hash-val">bytes32 — NL=NA Layer 4 binding</span></div>
+  </div>
+
+  <div class="type-card">
+    <div class="type-name">EmergencyOverride</div>
+    <div class="hash-row"><span class="hash-key">forcedState</span><span class="hash-val">uint8 — 255=Refuse(−1), 0=EpistemicHold(0). Proceed (+1) blocked.</span></div>
+    <div class="hash-row"><span class="hash-key">overrideType</span><span class="hash-val">uint8</span></div>
+  </div>
+
+  <div class="type-card">
+    <div class="type-name">GoukassianSignatureAttestation</div>
+    <div class="hash-row"><span class="hash-key">artifactName</span><span class="hash-val">bytes32 — keccak256("signature")</span></div>
+    <div class="hash-row"><span class="hash-key">signatureAlgorithmId</span><span class="hash-val">uint8 — slots 6 (SLH-DSA-SHAKE-128s) and 7 (ML-KEM-1024) reserved FUTURE</span></div>
+  </div>
+
+  <div class="section-title" id="eip712-hashes">Canonical Hash Registry</div>
+  <div class="type-card">
+    <div class="type-name">canonicalArtifactNameHashes</div>
+    <div class="hash-row"><span class="hash-key">keccak256("lantern")</span><span class="hash-val">0x... (see eip712_typed_data.json)</span></div>
+    <div class="hash-row"><span class="hash-key">keccak256("signature")</span><span class="hash-val">0x... (see eip712_typed_data.json)</span></div>
+    <div class="hash-row"><span class="hash-key">keccak256("license")</span><span class="hash-val">0x... (see eip712_typed_data.json)</span></div>
+  </div>
+  <div class="type-card">
+    <div class="type-name">canonicalMandateHashes</div>
+    <div class="hash-row"><span class="hash-key">keccak256("No Spy")</span><span class="hash-val">0x... (see eip712_typed_data.json)</span></div>
+    <div class="hash-row"><span class="hash-key">keccak256("No Weapon")</span><span class="hash-val">0x... (see eip712_typed_data.json)</span></div>
+    <div class="hash-row"><span class="hash-key">keccak256("No Switch Off")</span><span class="hash-val">0x... (see eip712_typed_data.json)</span></div>
+  </div>
+  <div class="type-card">
+    <div class="type-name">laneOriginHash (NL=NA Layer 2)</div>
+    <div class="hash-row"><span class="hash-key">keccak256("AUDIT_LANE")</span><span class="hash-val">0x... (see eip712_typed_data.json) — registerPermissionToken reverts NLNAViolation on mismatch</span></div>
+  </div>
+
+</main>
+<script>
+function toggle(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+</script>
+</body>
+</html>

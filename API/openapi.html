@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenAPI Specification — TL Governance API</title>
+<style>
+  :root {
+    --navy: #0a1628; --navy2: #0f1f3d; --navy3: #162847;
+    --gold: #d4a574; --gold2: #e8c496;
+    --teal: #2dd4bf; --green: #22c55e; --amber: #f59e0b;
+    --coral: #f87171; --purple: #a78bfa; --blue: #60a5fa;
+    --text: #e2e8f0; --muted: #94a3b8;
+    --border: rgba(212,165,116,0.2); --border2: rgba(212,165,116,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--navy); color: var(--text); font-family: 'Georgia', serif; }
+
+  .sidebar { position: fixed; top: 0; left: 0; width: 260px; height: 100vh; background: var(--navy2); border-right: 1px solid var(--border); overflow-y: auto; z-index: 100; }
+  .sidebar-brand { padding: 1.5rem 1.25rem 1rem; border-bottom: 1px solid var(--border); }
+  .sidebar-brand .tl { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gold); font-family: 'Helvetica Neue', sans-serif; text-transform: uppercase; margin-bottom: 0.25rem; }
+  .sidebar-brand h2 { font-size: 0.85rem; color: var(--text); font-weight: normal; line-height: 1.4; }
+  .sidebar nav { padding: 0.5rem 0 2rem; }
+  .sidebar nav a { display: block; padding: 0.38rem 1.25rem; font-family: 'Helvetica Neue', sans-serif; font-size: 0.72rem; color: var(--muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.15s; }
+  .sidebar nav a:hover { color: var(--gold); border-left-color: var(--gold); background: rgba(212,165,116,0.05); }
+  .sidebar nav .group { padding: 0.8rem 1.25rem 0.2rem; font-size: 0.62rem; letter-spacing: 0.12em; color: var(--gold); font-family: 'Helvetica Neue', sans-serif; text-transform: uppercase; }
+
+  .main { margin-left: 260px; padding: 2.5rem 3rem 5rem; }
+
+  .page-header { border-bottom: 1px solid var(--border); padding-bottom: 1.75rem; margin-bottom: 2.5rem; }
+  .page-header .label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .page-header h1 { font-size: 1.9rem; font-weight: normal; color: var(--gold2); margin-bottom: 0.75rem; }
+  .page-header .version { font-family: 'Helvetica Neue', sans-serif; font-size: 0.8rem; color: var(--muted); }
+  .page-header .version code { color: var(--teal); background: rgba(45,212,191,0.1); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.78rem; }
+
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin: 1.25rem 0; }
+  .info-card { background: var(--navy2); border: 1px solid var(--border2); border-radius: 6px; padding: 0.7rem 0.9rem; }
+  .info-card .k { font-family: 'Helvetica Neue', sans-serif; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
+  .info-card .v { font-size: 0.82rem; color: var(--text); }
+  .info-card .v a { color: var(--gold); text-decoration: none; }
+
+  .vow { background: var(--navy2); border-left: 3px solid var(--gold); border-radius: 0 6px 6px 0; padding: 1rem 1.25rem; margin: 1.25rem 0; font-family: 'Courier New', monospace; font-size: 0.85rem; color: var(--gold2); line-height: 1.8; }
+
+  .section-block { margin-bottom: 2.5rem; }
+  .section-title { font-family: 'Helvetica Neue', sans-serif; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; margin-bottom: 1.25rem; }
+
+  .endpoint-group { margin-bottom: 2rem; }
+  .endpoint-group h3 { font-size: 0.95rem; font-weight: normal; color: var(--gold2); margin-bottom: 0.75rem; font-family: 'Helvetica Neue', sans-serif; }
+
+  .endpoint { background: var(--navy2); border: 1px solid var(--border2); border-radius: 6px; margin-bottom: 0.5rem; overflow: hidden; }
+  .endpoint-header { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 1rem; cursor: pointer; transition: background 0.1s; }
+  .endpoint-header:hover { background: rgba(212,165,116,0.04); }
+  .method { font-family: 'Helvetica Neue', sans-serif; font-size: 0.68rem; font-weight: 600; padding: 0.2em 0.6em; border-radius: 3px; letter-spacing: 0.05em; min-width: 48px; text-align: center; }
+  .m-get { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+  .m-post { background: rgba(96,165,250,0.15); color: var(--blue); border: 1px solid rgba(96,165,250,0.3); }
+  .m-patch { background: rgba(245,158,11,0.15); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
+  .m-put { background: rgba(167,139,250,0.15); color: var(--purple); border: 1px solid rgba(167,139,250,0.3); }
+  .endpoint-path { font-family: 'Courier New', monospace; font-size: 0.83rem; color: var(--teal); }
+  .endpoint-summary { font-size: 0.8rem; color: var(--muted); margin-left: auto; text-align: right; max-width: 40%; }
+  .status-chip { font-family: 'Helvetica Neue', sans-serif; font-size: 0.6rem; padding: 0.1em 0.4em; border-radius: 3px; margin-left: 0.5rem; }
+  .s-ship { background: rgba(34,197,94,0.1); color: var(--green); }
+  .s-future { background: rgba(245,158,11,0.1); color: var(--amber); }
+  .endpoint-detail { display: none; padding: 0.75rem 1rem 1rem; border-top: 1px solid var(--border2); font-size: 0.82rem; }
+  .endpoint-detail.open { display: block; }
+  .detail-row { display: flex; gap: 0.5rem; margin-bottom: 0.35rem; align-items: flex-start; }
+  .detail-key { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); min-width: 90px; padding-top: 0.1rem; }
+  .detail-val { color: var(--text); line-height: 1.5; }
+  .pillar-tag { display: inline-block; font-size: 0.68rem; padding: 0.1em 0.4em; border-radius: 3px; background: rgba(167,139,250,0.12); color: var(--purple); border: 1px solid rgba(167,139,250,0.2); }
+  code { font-family: 'Courier New', monospace; font-size: 0.8rem; background: rgba(255,255,255,0.06); padding: 0.1em 0.35em; border-radius: 3px; color: var(--teal); }
+
+  .server-card { background: var(--navy2); border: 1px solid var(--border2); border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; display: flex; gap: 1rem; align-items: center; }
+  .server-env { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); min-width: 80px; }
+  .server-url { font-family: 'Courier New', monospace; font-size: 0.82rem; color: var(--teal); }
+
+  .security-card { background: var(--navy2); border: 1px solid var(--border2); border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; }
+  .security-name { font-family: 'Helvetica Neue', sans-serif; font-size: 0.78rem; color: var(--gold2); margin-bottom: 0.25rem; }
+  .security-desc { font-size: 0.8rem; color: var(--muted); }
+
+  .webhook-card { background: var(--navy2); border: 1px solid var(--border2); border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 0.75rem; }
+  .webhook-name { font-family: 'Courier New', monospace; font-size: 0.88rem; color: var(--teal); margin-bottom: 0.35rem; }
+  .webhook-desc { font-size: 0.82rem; color: var(--muted); }
+
+  .mandates-bar { background: var(--navy2); border: 1px solid var(--border); border-radius: 6px; padding: 0.65rem 1.25rem; display: flex; gap: 2rem; align-items: center; margin-bottom: 1.5rem; }
+  .mandates-bar .ml { font-family: 'Helvetica Neue', sans-serif; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .mandates-bar .mv { font-size: 0.82rem; color: var(--coral); font-family: 'Helvetica Neue', sans-serif; }
+
+  @media (max-width: 900px) { .sidebar { display: none; } .main { margin-left: 0; padding: 1.5rem; } .info-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="tl">"Ternary Logic" · TL</div>
+    <h2>OpenAPI Specification</h2>
+  </div>
+  <nav>
+    <div class="group">Overview</div>
+    <a href="#info">Info and Vow</a>
+    <a href="#servers">Servers</a>
+    <a href="#security">Security Schemes</a>
+    <a href="#webhooks">Webhooks</a>
+    <div class="group">Endpoints</div>
+    <a href="#g-core">Core States</a>
+    <a href="#g-decision">Decision Engine</a>
+    <a href="#g-hold">Epistemic Hold</a>
+    <a href="#g-goukassian">Goukassian Principle</a>
+    <a href="#g-audit">Audit and Anchoring</a>
+    <a href="#g-redress">Redress and Appeal</a>
+    <a href="#g-regulator">Regulatory Compliance</a>
+    <a href="#g-gateway">Gateway</a>
+    <a href="#g-evaluate">Domain Evaluation</a>
+    <a href="#g-pillars">Pillars and Thresholds</a>
+    <a href="#g-ditl">DITL Hardware</a>
+    <a href="#g-metrics">System Metrics</a>
+    <div class="group">Spec Files</div>
+    <a href="tl_openapi.yaml">tl_openapi.yaml (raw)</a>
+    <a href="tl_schema.json">tl_schema.json</a>
+    <a href="Constitutional_Compliance_Matrix.html">Compliance Matrix</a>
+    <a href="Specification_Architecture.html">Architecture</a>
+  </nav>
+</aside>
+
+<main class="main">
+
+  <div class="page-header" id="info">
+    <div class="label">Deliverable A · "Ternary Logic" (TL) Governance API</div>
+    <h1>OpenAPI Specification</h1>
+    <div class="version">Version <code>1.0.0-tl-monograph-2026</code> · OpenAPI 3.1.0</div>
+    <div class="info-grid">
+      <div class="info-card"><div class="k">Author</div><div class="v">Lev Goukassian</div></div>
+      <div class="info-card"><div class="k">ORCID</div><div class="v"><a href="https://orcid.org/0009-0006-5966-1243">0009-0006-5966-1243</a></div></div>
+      <div class="info-card"><div class="k">Repository</div><div class="v"><a href="https://github.com/FractonicMind/TernaryLogic">FractonicMind/TernaryLogic</a></div></div>
+      <div class="info-card"><div class="k">DOI 1</div><div class="v"><a href="https://doi.org/10.1007/s43681-025-00910-6">10.1007/s43681-025-00910-6</a></div></div>
+      <div class="info-card"><div class="k">DOI 2</div><div class="v"><a href="https://doi.org/10.1007/s43681-026-01124-0">10.1007/s43681-026-01124-0</a></div></div>
+      <div class="info-card"><div class="k">Raw Spec</div><div class="v"><a href="tl_openapi.yaml">tl_openapi.yaml</a></div></div>
+    </div>
+    <div class="vow">
+"Pause when truth is uncertain"  →  State  0  (Epistemic Hold)<br>
+"Refuse when harm is clear"      →  State -1  (Refuse)<br>
+"Proceed where truth is"         →  State +1  (Proceed)
+    </div>
+    <div class="mandates-bar">
+      <span class="ml">Immutable mandates</span>
+      <span class="mv">No Spy</span><span class="mv">No Weapon</span><span class="mv">No Switch Off</span>
+    </div>
+  </div>
+
+  <!-- SERVERS -->
+  <div class="section-block" id="servers">
+    <div class="section-title">Servers</div>
+    <div class="server-card"><span class="server-env">Sandbox</span><span class="server-url">https://api.sandbox.tl-governance.org/v1</span></div>
+    <div class="server-card"><span class="server-env">Staging</span><span class="server-url">https://api.staging.tl-governance.org/v1</span></div>
+    <div class="server-card"><span class="server-env">Production</span><span class="server-url">https://api.tl-governance.org/v1</span></div>
+  </div>
+
+  <!-- SECURITY -->
+  <div class="section-block" id="security">
+    <div class="section-title">Security Schemes</div>
+    <div class="security-card"><div class="security-name">TLGovernanceJWT</div><div class="security-desc">JWT with TL governance claims. Used on all Inference Lane endpoints. Proposal rights only — cannot issue Permission Tokens.</div></div>
+    <div class="security-card"><div class="security-name">NLNAAuditToken</div><div class="security-desc">Audit lane completion token. Cryptographically bound to X-TL-Trace-Id of the originating Inference Lane request. laneOrigin claim MUST be "AUDIT_LANE".</div></div>
+    <div class="security-card"><div class="security-name">HSMSignedJWT</div><div class="security-desc">HSM-signed JWT for Audit and Governance Lane security. Required for state-mutating audit operations.</div></div>
+    <div class="security-card"><div class="security-name">CAVettedJWT</div><div class="security-desc">Certificate Authority-vetted JWT for auditor and regulator endpoints.</div></div>
+    <div class="security-card"><div class="security-name">PUFAttestationHeader</div><div class="security-desc">Physical Unclonable Function attestation token. FUTURE for full MT deployments. Non-MT: NULL_PUF_DEPLOYMENT sentinel.</div></div>
+  </div>
+
+  <!-- WEBHOOKS -->
+  <div class="section-block" id="webhooks">
+    <div class="section-title">Webhooks</div>
+    <div class="webhook-card"><div class="webhook-name">epistemicHold.escalation</div><div class="webhook-desc">Async notification when Epistemic Hold triggers human review. HMAC-SHA256 signed. Min 3 attempts over 15 minutes with exponential backoff. Dedup key: escalationId. Pillar: EpistemicHold.</div></div>
+    <div class="webhook-card"><div class="webhook-name">lanternStatus.broadcast</div><div class="webhook-desc">Goukassian Principle Lantern public beacon update. HMAC-SHA256 signed. Best-effort. Dedup key: lanternSignalId. Pillar: GoukassianPrinciple.</div></div>
+  </div>
+
+  <!-- ENDPOINTS -->
+  <div class="section-block" id="g-core">
+    <div class="section-title">Core States</div>
+    <div class="endpoint-group">
+      <div class="endpoint">
+        <div class="endpoint-header" onclick="toggle(this)">
+          <span class="method m-post">POST</span>
+          <span class="endpoint-path">/emergency/override</span>
+          <span class="status-chip s-ship">SHIPPING</span>
+          <span class="endpoint-summary">Break-glass shutdown, kill switch, or forced state transition</span>
+        </div>
+        <div class="endpoint-detail">
+          <div class="detail-row"><span class="detail-key">Security</span><span class="detail-val"><code>HSMSignedJWT</code></span></div>
+          <div class="detail-row"><span class="detail-key">Pillar</span><span class="detail-val"><span class="pillar-tag">HybridShield (VII)</span></span></div>
+          <div class="detail-row"><span class="detail-key">Constraint</span><span class="detail-val">NL=NA without exception. <code>forcedState</code> enum [−1, 0] only. Forced +1 constitutionally blocked. Monograph Section IX.3.</span></div>
+          <div class="detail-row"><span class="detail-key">Responses</span><span class="detail-val">201 StateEnvelope · 403 ProblemResponse</span></div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-header" onclick="toggle(this)">
+          <span class="method m-get">GET</span>
+          <span class="endpoint-path">/emergency/status</span>
+          <span class="status-chip s-ship">SHIPPING</span>
+          <span class="endpoint-summary">Current emergency override status</span>
+        </div>
+        <div class="endpoint-detail">
+          <div class="detail-row"><span class="detail-key">Security</span><span class="detail-val"><code>TLGovernanceJWT</code></span></div>
+          <div class="detail-row"><span class="detail-key">Pillar</span><span class="detail-val"><span class="pillar-tag">HybridShield (VII)</span></span></div>
+          <div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">overrideActive bool, activeOverrideType, forcedState, expiresAt</span></div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-header" onclick="toggle(this)">
+          <span class="method m-post">POST</span>
+          <span class="endpoint-path">/refusals</span>
+          <span class="status-chip s-ship">SHIPPING</span>
+          <span class="endpoint-summary">Record hard State −1 Refuse — no Permission Token issued</span>
+        </div>
+        <div class="endpoint-detail">
+          <div class="detail-row"><span class="detail-key">Security</span><span class="detail-val"><code>HSMSignedJWT</code></span></div>
+          <div class="detail-row"><span class="detail-key">Pillar</span><span class="detail-val"><span class="pillar-tag">ImmutableLedger (II)</span></span></div>
+          <div class="detail-row"><span class="detail-key">Responses</span><span class="detail-val">201 StateEnvelope (stateLabel: "Refuse")</span></div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-header" onclick="toggle(this)">
+          <span class="method m-post">POST</span>
+          <span class="endpoint-path">/refusals/license-violations</span>
+          <span class="status-chip s-ship">SHIPPING</span>
+          <span class="endpoint-summary">Record Goukassian Principle license violation refusal</span>
+        </div>
+        <div class="endpoint-detail">
+          <div class="detail-row"><span class="detail-key">Pillar</span><span class="detail-val"><span class="pillar-tag">GoukassianPrinciple (III)</span></span></div>
+          <div class="detail-row"><span class="detail-key">Body</span><span class="detail-val">decisionId · violatedArtifact (lantern | signature | license) · violationDescription</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-block" id="g-decision">
+    <div class="section-title">Decision Engine</div>
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method m-post">POST</span>
+        <span class="endpoint-path">/decisions</span>
+        <span class="status-chip s-ship">SHIPPING</span>
+        <span class="endpoint-summary">Submit decision vector for TL governance evaluation</span>
+      </div>
+      <div class="endpoint-detail">
+        <div class="detail-row"><span class="detail-key">Security</span><span class="detail-val"><code>TLGovernanceJWT</code></span></div>
+        <div class="detail-row"><span class="detail-key">Pillar</span><span class="detail-val"><span class="pillar-tag">EpistemicHold (I)</span></span></div>
+        <div class="detail-row"><span class="detail-key">NL=NA</span><span class="detail-val">State +1 from this endpoint does NOT authorize actuation. Permission Token required from POST /audit-logs.</span></div>
+        <div class="detail-row"><span class="detail-key">Required</span><span class="detail-val">Headers: X-TL-Trace-Id (UUID v4), Idempotency-Key (UUID v4)</span></div>
+        <div class="detail-row"><span class="detail-key">Body</span><span class="detail-val">decisionVector · proposedAction · GoukassianPrincipleBlock · [RegulatoryContext] · [domain]</span></div>
+        <div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">200 TLResult + decisionId · 400/401/403/429/500 ProblemResponse</span></div>
+      </div>
+    </div>
+    <div class="endpoint">
+      <div class="endpoint-header" onclick="toggle(this)">
+        <span class="method m-get">GET</span>
+        <span class="endpoint-path">/decisions/{decisionId}</span>
+        <span class="status-chip s-ship">SHIPPING</span>
+        <span class="endpoint-summary">Retrieve decision record with current state</span>
+      </div>
+      <div class="endpoint-detail">
+        <div class="detail-row"><span class="detail-key">Pillar</span><span class="detail-val"><span class="pillar-tag">DecisionLogs (IV)</span></span></div>
+        <div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">200 StateEnvelope + TLResult · 404 if not found</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-block" id="g-hold">
+    <div class="section-title">Epistemic Hold</div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/epistemic-hold/escalations</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Human-in-the-loop review queue</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Pillar</span><span class="detail-val"><span class="pillar-tag">EpistemicHold (I)</span></span></div><div class="detail-row"><span class="detail-key">Filter</span><span class="detail-val">status · pillarImplicated</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/epistemic-hold/escalations/{escalationId}</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Full escalation case detail</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">escalationId · decisionId · EscrowRecord · deliberationMatrix · resolutionRequest</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-patch">PATCH</span><span class="endpoint-path">/epistemic-hold/escalations/{escalationId}</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Human authority resolution</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Constraint</span><span class="detail-val">resolvedState enum [1, −1]. State 0 is constitutionally invalid as resolution. Requires TriCameralApproval.</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/epistemic-hold/lantern</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Goukassian Principle Lantern status</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Pillar</span><span class="detail-val"><span class="pillar-tag">GoukassianPrinciple (III)</span></span></div><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">LanternStatus — artifactName const "lantern" · compliancePosture · pillarStatuses[8]</span></div></div></div>
+  </div>
+
+  <div class="section-block" id="g-goukassian">
+    <div class="section-title">Goukassian Principle</div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/goukassian/signature</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Current Signature Block</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">SignatureBlock — artifactName const "signature" · signatureAlgorithm (ES256/Ed25519; PQC slots 6–7 reserved) · attestationChainStatus</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-post">POST</span><span class="endpoint-path">/goukassian/license/validate</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Validate license scope against proposed action</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Body</span><span class="detail-val">artifactName (const "license") · licenseToken · requestingEntityId · purposeOfUse · [proposedActionVector]</span></div><div class="detail-row"><span class="detail-key">Constraint</span><span class="detail-val">Exceeded licenseScope triggers automatic Refuse (State −1).</span></div></div></div>
+  </div>
+
+  <div class="section-block" id="g-audit">
+    <div class="section-title">Audit and Anchoring</div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-post">POST</span><span class="endpoint-path">/audit-logs</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Submit TGLF — central NL=NA enforcement point</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Security</span><span class="detail-val"><code>HSMSignedJWT</code> + <code>NLNAAuditToken</code></span></div><div class="detail-row"><span class="detail-key">NL=NA</span><span class="detail-val">AuditProof.logHash MUST = PermissionToken.logHash. AuditProof.merkleRoot MUST = PermissionToken.merkleRoot (Layer 4).</span></div><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">201 StateEnvelope — +1 includes PermissionToken, 0 includes EscrowRecord + webhook fires, −1 no token</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/audit-logs/{logId}</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Retrieve anchored TGLF record</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Pillar</span><span class="detail-val"><span class="pillar-tag">ImmutableLedger (II)</span></span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/audit/verifications/merkle/{merkleRoot}</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Verify Merkle root against blockchain anchor</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Pillar</span><span class="detail-val"><span class="pillar-tag">Anchors (VIII)</span></span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/audit/verifications/inclusion/{logId}</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Get log inclusion proof with full Merkle path</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">merkleRoot · merklePath[] · leafHash · verified bool</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/audit/custodians/{custodianId}/heartbeat</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">HybridShield custodian liveness check</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Pillar</span><span class="detail-val"><span class="pillar-tag">HybridShield (VII)</span></span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/audit/compliance/attestation</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Signed Eight Pillar compliance attestation</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">pillarAttestations[8] with complianceStatus per pillar · SignatureBlock</span></div></div></div>
+  </div>
+
+  <div class="section-block" id="g-redress">
+    <div class="section-title">Redress and Appeal</div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-post">POST</span><span class="endpoint-path">/redress/challenges</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Subject-initiated challenge against TL state determination</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Pillar</span><span class="detail-val"><span class="pillar-tag">EconomicRights (V)</span></span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/redress/challenges/{challengeId}</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Challenge status and outcome</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">status: PENDING | UNDER_REVIEW | RESOLVED_UPHELD | RESOLVED_OVERTURNED</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-post">POST</span><span class="endpoint-path">/redress/log-reevaluation</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">TGLF re-evaluation — original log immutable</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Constraint</span><span class="detail-val">immutabilityConfirmed: true is const. Original log never modified.</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-post">POST</span><span class="endpoint-path">/redress/economic-rights-grievances</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Formal economic rights grievance under Pillar V</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Categories</span><span class="detail-val">FINANCIAL_FAIRNESS | EQUITABLE_ACCESS | TRANSPARENCY_DEFICIT | REGULATORY_VIOLATION</span></div></div></div>
+  </div>
+
+  <div class="section-block" id="g-regulator">
+    <div class="section-title">Regulatory Compliance</div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-post">POST</span><span class="endpoint-path">/regulator/evidence-export</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Bulk regulatory evidence export (async)</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Security</span><span class="detail-val"><code>CAVettedJWT</code></span></div><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">202 Accepted with exportJobId</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/regulator/custodian-quorum</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Cross-jurisdiction HybridShield quorum status</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Note</span><span class="detail-val">crossJurisdictionLatencyMs field present. Sub-300ms global quorum is FUTURE per Section X.</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/regulator/timestamp-verification/{logId}</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">RFC 3161 qualified timestamp verification</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">timestampVerified bool · rfc3161Token · tsaIssuer · timestampedAt</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/regulator/basel-iii/attestation</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Basel III capital adequacy attestation</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">lcr · nsfr · capitalRatio · stressTestPassed · counterpartyExposureWithinLimits · SignatureBlock</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-post">POST</span><span class="endpoint-path">/regulator/fatf/compliance-export</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">FATF AML/CFT compliance export with SAR trigger</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">202 with exportJobId · sarGenerationTriggered bool</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/regulator/iosco/principle-mapping</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">IOSCO principle compliance mapping</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">principlesMapped[] · marketIntegrityChecks (layering/spoofing/washTrading/crossMarket)</span></div></div></div>
+  </div>
+
+  <div class="section-block" id="g-gateway">
+    <div class="section-title">Gateway</div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/gateway/status</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">TL Gateway status — fail-closed posture, lane health, Lantern</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">GatewayRoutingStatus — operationalStatus includes EPISTEMIC_HOLD_OVERRIDE_ACTIVE and FAIL_CLOSED</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-post">POST</span><span class="endpoint-path">/gateway/lane-assignment</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Request lane assignment — epistemicHoldOverride flag</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Constraint</span><span class="detail-val">Cannot reach Audit Lane → defaults to EPISTEMIC_HOLD. Fail-open constitutionally prohibited.</span></div></div></div>
+  </div>
+
+  <div class="section-block" id="g-evaluate">
+    <div class="section-title">Domain Evaluation</div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-post">POST</span><span class="endpoint-path">/evaluate/trade</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Financial trading governance — Basel III, FATF, IOSCO</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Pillar</span><span class="detail-val"><span class="pillar-tag">EconomicRights (V)</span></span></div><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">TLResult + tradingMetadata.amlClearanceStatus (CLEARED | PENDING_REVIEW | REFUSED)</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-post">POST</span><span class="endpoint-path">/evaluate/policy</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Monetary policy governance — Paris Agreement, ESG</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Pillar</span><span class="detail-val"><span class="pillar-tag">SustainableCapital (VI)</span></span></div><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">TLResult + policyMetadata (inflationImpact · unemploymentDelta · greenBondEligibility)</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-post">POST</span><span class="endpoint-path">/evaluate/supply-chain</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Supply chain governance</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">TLResult + chainMetadata (carbonFootprintVerified · laborStandardCompliance)</span></div></div></div>
+  </div>
+
+  <div class="section-block" id="g-pillars">
+    <div class="section-title">Pillars and Thresholds</div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/pillars/status</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Eight Pillar health check with compliance scores</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">pillars[8] — pillarId · status · complianceScore · attestationHash · overallComplianceScore</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-post">POST</span><span class="endpoint-path">/pillars/{pillarId}/configure</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Pillar reconfiguration — Tri-Cameral approval required</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Body</span><span class="detail-val">pillarConfiguration · TriCameralApproval (required)</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/thresholds/{domain}</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Current threshold profile for governance domain</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Domain</span><span class="detail-val">trade | policy | supply-chain | general</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-put">PUT</span><span class="endpoint-path">/thresholds/{domain}</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">Update threshold profile — Tri-Cameral approval required</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Constraint</span><span class="detail-val">Requires TriCameralApproval. Update logged to ImmutableLedger.</span></div></div></div>
+  </div>
+
+  <div class="section-block" id="g-ditl">
+    <div class="section-title">DITL Hardware Interface</div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-post">POST</span><span class="endpoint-path">/ditl/state-transition</span><span class="status-chip s-future">FUTURE</span><span class="endpoint-summary">MT hardware state query with Window Comparator verification</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Blocking</span><span class="detail-val">Constitutional Hardware Monograph, Section X. SHIPPING: NULL_PUF_DEPLOYMENT sentinel.</span></div></div></div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/ditl/puf-attestation/{deviceId}</span><span class="status-chip s-future">FUTURE</span><span class="endpoint-summary">PUF attestation chain verification for MT device</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">enrollmentVerified · foundryAttestationVerified · nlNaInterlockVerified · merkleHashChainRoot</span></div></div></div>
+  </div>
+
+  <div class="section-block" id="g-metrics">
+    <div class="section-title">System Metrics</div>
+    <div class="endpoint"><div class="endpoint-header" onclick="toggle(this)"><span class="method m-get">GET</span><span class="endpoint-path">/metrics/summary</span><span class="status-chip s-ship">SHIPPING</span><span class="endpoint-summary">State distribution, epistemic hold rate, ghost governance detection</span></div><div class="endpoint-detail"><div class="detail-row"><span class="detail-key">Returns</span><span class="detail-val">stateDistribution (proceed/epistemicHold/refuse) · averageConfidence · epistemicHoldRate · regulatoryComplianceRate · esgVerificationAccuracy · decisionLogCompleteness · averageHoldDurationMs · ghostGovernanceDetectionRate</span></div></div></div>
+  </div>
+
+</main>
+
+<script>
+function toggle(header) {
+  const detail = header.nextElementSibling;
+  detail.classList.toggle('open');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Specification Architecture — TL Governance API</title>
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy2: #0f1f3d;
+    --navy3: #162847;
+    --gold: #d4a574;
+    --gold2: #e8c496;
+    --teal: #2dd4bf;
+    --green: #22c55e;
+    --amber: #f59e0b;
+    --coral: #f87171;
+    --purple: #a78bfa;
+    --blue: #60a5fa;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: rgba(212,165,116,0.2);
+    --border2: rgba(212,165,116,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--navy); color: var(--text); font-family: 'Georgia', serif; line-height: 1.8; }
+
+  .sidebar {
+    position: fixed; top: 0; left: 0; width: 260px; height: 100vh;
+    background: var(--navy2); border-right: 1px solid var(--border);
+    overflow-y: auto; z-index: 100; padding: 0 0 2rem 0;
+  }
+  .sidebar-brand { padding: 1.5rem 1.25rem 1rem; border-bottom: 1px solid var(--border); margin-bottom: 0.5rem; }
+  .sidebar-brand .tl { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gold); font-family: 'Helvetica Neue', sans-serif; text-transform: uppercase; margin-bottom: 0.25rem; }
+  .sidebar-brand h2 { font-size: 0.9rem; color: var(--text); font-weight: normal; line-height: 1.4; }
+  .sidebar nav a { display: block; padding: 0.4rem 1.25rem; font-family: 'Helvetica Neue', sans-serif; font-size: 0.73rem; color: var(--muted); text-decoration: none; letter-spacing: 0.02em; border-left: 2px solid transparent; transition: all 0.15s; }
+  .sidebar nav a:hover { color: var(--gold); border-left-color: var(--gold); background: rgba(212,165,116,0.05); }
+  .sidebar nav .section-label { padding: 1rem 1.25rem 0.3rem; font-size: 0.65rem; letter-spacing: 0.12em; color: var(--gold); font-family: 'Helvetica Neue', sans-serif; text-transform: uppercase; }
+
+  .main { margin-left: 260px; padding: 3rem 3.5rem 5rem; max-width: 900px; }
+
+  .page-header { border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 3rem; }
+  .page-header .label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+  .page-header h1 { font-size: 2.1rem; font-weight: normal; color: var(--gold2); line-height: 1.2; margin-bottom: 1.25rem; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; margin-top: 1rem; }
+  .meta-item { font-family: 'Helvetica Neue', sans-serif; font-size: 0.78rem; color: var(--muted); }
+  .meta-item a { color: var(--gold); text-decoration: none; }
+  .meta-item a:hover { text-decoration: underline; }
+  .meta-item strong { color: var(--text); }
+
+  .vow-block {
+    background: var(--navy2); border: 1px solid var(--border); border-left: 4px solid var(--gold);
+    border-radius: 0 8px 8px 0; padding: 1.5rem 1.75rem; margin: 1.5rem 0; font-family: 'Georgia', serif;
+  }
+  .vow-line { font-size: 1rem; color: var(--gold2); margin-bottom: 0.4rem; line-height: 1.6; }
+  .vow-line:last-child { margin-bottom: 0; }
+
+  .section { margin-bottom: 3.5rem; }
+  .section-tag {
+    display: inline-block; font-family: 'Helvetica Neue', sans-serif; font-size: 0.62rem;
+    letter-spacing: 0.12em; text-transform: uppercase; padding: 0.15em 0.6em; border-radius: 3px;
+    margin-bottom: 0.6rem; font-weight: 500;
+  }
+  .tag-constitutional { background: rgba(212,165,116,0.15); color: var(--gold); border: 1px solid rgba(212,165,116,0.3); }
+  .tag-normative { background: rgba(45,212,191,0.12); color: var(--teal); border: 1px solid rgba(45,212,191,0.25); }
+  .tag-informative { background: rgba(148,163,184,0.12); color: var(--muted); border: 1px solid rgba(148,163,184,0.2); }
+
+  .section h2 { font-size: 1.35rem; font-weight: normal; color: var(--gold2); margin-bottom: 1rem; line-height: 1.3; }
+  .section h3 { font-size: 1.05rem; font-weight: normal; color: var(--teal); margin: 1.75rem 0 0.75rem; }
+  .section p { margin-bottom: 1rem; font-size: 0.95rem; color: var(--text); }
+  .section ul { margin: 0.5rem 0 1rem 1.5rem; }
+  .section ul li { margin-bottom: 0.4rem; font-size: 0.92rem; color: var(--text); }
+
+  code { font-family: 'Courier New', monospace; font-size: 0.82rem; background: rgba(255,255,255,0.07); padding: 0.1em 0.38em; border-radius: 3px; color: var(--teal); }
+
+  .layer-block {
+    background: var(--navy2); border: 1px solid var(--border2); border-radius: 8px;
+    padding: 1rem 1.25rem; margin: 0.75rem 0;
+  }
+  .layer-block .layer-num { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+  .layer-block p { margin-bottom: 0; font-size: 0.88rem; }
+
+  .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0; }
+  .pillar-card { background: var(--navy2); border: 1px solid var(--border2); border-radius: 6px; padding: 0.85rem 1rem; }
+  .pillar-card .pillar-id { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.3rem; }
+  .pillar-card .pillar-name { font-size: 0.9rem; color: var(--gold2); margin-bottom: 0.4rem; }
+  .pillar-card p { font-size: 0.8rem; color: var(--muted); margin-bottom: 0; line-height: 1.5; }
+
+  .code-block {
+    background: var(--navy3); border: 1px solid var(--border2); border-radius: 6px;
+    padding: 1rem 1.25rem; margin: 1rem 0; overflow-x: auto;
+    font-family: 'Courier New', monospace; font-size: 0.78rem; color: var(--teal); line-height: 1.6; white-space: pre;
+  }
+
+  .uncertainty-block { background: var(--navy2); border: 1px solid rgba(248,113,113,0.2); border-radius: 8px; padding: 1.25rem 1.5rem; margin-top: 1rem; }
+  .uncertainty-block .u-label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--coral); margin-bottom: 0.75rem; }
+  .uncertainty-block p { font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--muted); }
+  .uncertainty-block strong { color: var(--coral); }
+
+  .mandates-bar { background: var(--navy2); border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem 1.25rem; display: flex; gap: 2rem; align-items: center; margin: 1.5rem 0; }
+  .mandates-bar .m-label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .mandates-bar .mandate { font-size: 0.85rem; color: var(--coral); font-family: 'Helvetica Neue', sans-serif; font-weight: 500; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  @media (max-width: 900px) { .sidebar { display: none; } .main { margin-left: 0; padding: 1.5rem; } .pillar-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="tl">"Ternary Logic" · TL</div>
+    <h2>Specification Architecture</h2>
+  </div>
+  <nav>
+    <div class="section-label">Sections</div>
+    <a href="#s1">1 · Goukassian Vow</a>
+    <a href="#s2">2 · Binary and Ternary</a>
+    <a href="#s3">3 · Dual-Lane Paths</a>
+    <a href="#s4">4 · NL=NA Enforcement</a>
+    <a href="#s5">5 · Epistemic Hold</a>
+    <a href="#s6">6 · Goukassian Principle</a>
+    <a href="#s7">7 · Eight Pillars</a>
+    <a href="#s8">8 · Regulatory Nexus</a>
+    <a href="#s9">9 · Domain Evaluation</a>
+    <a href="#s10">10 · Auditor Surface</a>
+    <a href="#s11">11 · DITL Hardware</a>
+    <a href="#s12">12 · EKR and GDPR</a>
+    <a href="#s13">13 · Error Handling</a>
+    <a href="#s14">14 · Trace Propagation</a>
+    <div class="section-label">Spec Files</div>
+    <a href="tl_openapi.yaml">tl_openapi.yaml</a>
+    <a href="tl_schema.json">tl_schema.json</a>
+    <a href="tl_abi.json">tl_abi.json</a>
+    <a href="eip712_typed_data.json">eip712_typed_data.json</a>
+    <a href="Constitutional_Compliance_Matrix.html">Compliance Matrix</a>
+  </nav>
+</aside>
+
+<main class="main">
+
+  <div class="page-header">
+    <div class="label">Deliverable F · "Ternary Logic" (TL) Governance API</div>
+    <h1>Specification Architecture</h1>
+    <div class="meta-row">
+      <span class="meta-item"><strong>Author:</strong> Lev Goukassian</span>
+      <span class="meta-item"><strong>ORCID:</strong> <a href="https://orcid.org/0009-0006-5966-1243">0009-0006-5966-1243</a></span>
+      <span class="meta-item"><strong>Version:</strong> 1.0.0-tl-monograph-2026</span>
+      <span class="meta-item"><strong>DOI 1:</strong> <a href="https://doi.org/10.1007/s43681-025-00910-6">10.1007/s43681-025-00910-6</a></span>
+      <span class="meta-item"><strong>DOI 2:</strong> <a href="https://doi.org/10.1007/s43681-026-01124-0">10.1007/s43681-026-01124-0</a></span>
+    </div>
+    <div class="mandates-bar">
+      <span class="m-label">Immutable mandates</span>
+      <span class="mandate">No Spy</span>
+      <span class="mandate">No Weapon</span>
+      <span class="mandate">No Switch Off</span>
+    </div>
+  </div>
+
+  <div class="section" id="s1">
+    <span class="section-tag tag-constitutional">Constitutional</span>
+    <h2>Section 1 — The Goukassian Vow as Foundational Architecture</h2>
+    <p>Every schema property, endpoint path, error code, and webhook payload in this specification derives from a single constitutional foundation: the Goukassian Vow.</p>
+    <div class="vow-block">
+      <div class="vow-line">"Pause when truth is uncertain" &nbsp;→&nbsp; State &nbsp;0 &nbsp;(Epistemic Hold)</div>
+      <div class="vow-line">"Refuse when harm is clear" &nbsp;&nbsp;&nbsp;&nbsp;→&nbsp; State −1 &nbsp;(Refuse)</div>
+      <div class="vow-line">"Proceed where truth is" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→&nbsp; State +1 &nbsp;(Proceed)</div>
+    </div>
+    <p>This is not a design preference. It is the constitutional logic that makes the entire "Ternary Logic" (TL) framework coherent. Every state transition is an expression of one of these three lines.</p>
+    <p>The first line mandates <code>EscrowRecord</code> creation, <code>TGLF_State0</code> log emission, and the <code>epistemicHold.escalation</code> webhook. Uncertainty is not failure; it is constitutional information.</p>
+    <p>The second line mandates <code>TGLF_StateNeg1</code> log emission, no Permission Token issuance, and <code>refusalIsPermanent: true</code> by default. The ABI's <code>InvalidResolutionState</code> revert enforces this at the on-chain layer.</p>
+    <p>The third line mandates the Permission Token as the cryptographic expression of verified truth. The five-layer NL=NA enforcement architecture is the engineering expression of this single phrase.</p>
+  </div>
+
+  <hr>
+
+  <div class="section" id="s2">
+    <span class="section-tag tag-informative">Informative</span>
+    <h2>Section 2 — Binary and Ternary in Parallel</h2>
+    <p>The "Ternary Logic" framework does not replace binary inference. It governs it.</p>
+    <p>The binary inference engine provides speed, pattern recognition, and statistical throughput. It proposes a state. It cannot authorize actuation. The Inference Lane produces <code>TLResult</code> objects that carry a proposed <code>state</code> field. That field is advisory.</p>
+    <p>The ternary governance coprocessor operates in parallel, receiving the same decision vector through the Audit Lane. It verifies, logs, and either issues or withholds a Permission Token. Only a valid Permission Token from the Audit Lane authorizes the actuation layer to fire.</p>
+    <p>This is why <code>POST /decisions</code> and <code>POST /audit-logs</code> are separate endpoints on separate security schemes. The Inference Lane uses <code>TLGovernanceJWT</code>. The Audit Lane uses <code>HSMSignedJWT</code> and <code>NLNAAuditToken</code>. A client that has only <code>TLGovernanceJWT</code> can propose actions. It cannot authorize them.</p>
+  </div>
+
+  <hr>
+
+  <div class="section" id="s3">
+    <span class="section-tag tag-normative">Normative</span>
+    <h2>Section 3 — Dual-Lane Architecture in OpenAPI Paths</h2>
+    <h3>3.1 Inference Lane Path Group</h3>
+    <p>The Inference Lane endpoints are <code>POST /decisions</code> and <code>GET /decisions/{decisionId}</code>. Security: <code>TLGovernanceJWT</code>. The <code>TLResult.state</code> field is the binary engine's proposed state. It is not authorization.</p>
+    <h3>3.2 Audit Lane Path Group</h3>
+    <p><code>POST /audit-logs</code> is the central NL=NA enforcement point. On State +1, a <code>PermissionToken</code> is returned inside a <code>StateEnvelope</code>. On State 0, an <code>EscrowRecord</code> is returned and the <code>epistemicHold.escalation</code> webhook fires. On State −1, no <code>PermissionToken</code> is issued.</p>
+    <h3>3.3 Gateway Fail-Closed Behavior</h3>
+    <p>The Gateway is fail-closed by design: if it cannot route to the Audit Lane, it defaults to <code>EPISTEMIC_HOLD</code>. Fail-open is constitutionally prohibited. The <code>GatewayRoutingStatus.operationalStatus</code> enum includes <code>EPISTEMIC_HOLD_OVERRIDE_ACTIVE</code> to signal this condition.</p>
+  </div>
+
+  <hr>
+
+  <div class="section" id="s4">
+    <span class="section-tag tag-normative">Normative</span>
+    <h2>Section 4 — NL=NA Schema-Level Enforcement</h2>
+    <p>NL=NA (No Log = No Action) is enforced at five independent layers. Bypassing one layer does not bypass the others.</p>
+    <div class="layer-block"><div class="layer-num">Layer 1</div><p><code>StateEnvelope_v1_0_0</code> if/then constraint: <code>permissionToken</code> required when <code>currentState</code> equals 1. <code>unevaluatedProperties: false</code> prevents bypass.</p></div>
+    <div class="layer-block"><div class="layer-num">Layer 2</div><p><code>PermissionToken_v1_0_0.laneOrigin</code> carries <code>const: "AUDIT_LANE"</code>. <code>TL_Ledger_Core.registerPermissionToken</code> reverts <code>NLNAViolation</code> on <code>laneOriginHash</code> mismatch.</p></div>
+    <div class="layer-block"><div class="layer-num">Layer 3</div><p><code>TGLF_StateP1_v1_0_0.permissionToken</code> is in the <code>required</code> array. <code>pillarsCertified</code> carries <code>minItems: 8, maxItems: 8</code>.</p></div>
+    <div class="layer-block"><div class="layer-num">Layer 4</div><p><code>AuditProof.logHash</code> must match <code>PermissionToken.logHash</code>. <code>AuditProof.merkleRoot</code> must match <code>PermissionToken.merkleRoot</code>.</p></div>
+    <div class="layer-block"><div class="layer-num">Layer 5</div><p><code>TL_Ledger_Core.registerPermissionToken</code> reverts <code>NLNAViolation</code> if the supplied <code>logHash</code> is not provably included in an anchored Merkle root. Terminal on-chain enforcement gate.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section" id="s5">
+    <span class="section-tag tag-normative">Normative</span>
+    <h2>Section 5 — Epistemic Hold</h2>
+    <h3>5.1 State versus Workflow Distinction</h3>
+    <p>Epistemic Hold is a TL constitutional state. Its integer value is 0. Its <code>stateLabel</code> is <code>"EpistemicHold"</code>. <code>GovernancePause</code> is the workflow process name that activates when Epistemic Hold is declared — it appears in <code>StateEnvelope.processActive</code> and <code>TGLF_State0.processActive</code> as <code>const: "GovernancePause"</code>. It is a workflow name, not a state synonym.</p>
+    <h3>5.2 EscrowRecord as Single Schema Source</h3>
+    <p><code>EscrowRecord_v1_0_0</code> is the single authoritative definition of all Epistemic Hold response fields. Fields: <code>escrowId</code>, <code>heldState</code> (const 0), <code>initiatedAt</code>, <code>initiatingDecisionId</code>, <code>holdRationale</code>, <code>resolutionDeadline</code>, <code>immutableLogHash</code>, <code>holdDurationMs</code>, <code>auditLaneStatus</code>, <code>requiredConditions</code>, and <code>windowComparatorReading</code>.</p>
+    <h3>5.3 Resolution Constraints</h3>
+    <p>Resolution must specify State +1 or State −1. State 0 is not a valid resolution. Enforced at three layers: <code>PATCH /epistemic-hold/escalations/{escalationId}</code> schema, <code>TL_Ledger_Core.resolveEpistemicHoldSystemWide</code> revert, and the <code>resolutionDeadline</code> constitutional deadline.</p>
+  </div>
+
+  <hr>
+
+  <div class="section" id="s6">
+    <span class="section-tag tag-normative">Normative</span>
+    <h2>Section 6 — Goukassian Principle as API Resources</h2>
+    <p>Three canonical lowercase artifact names, each a dedicated API resource:</p>
+    <ul>
+      <li><code>lantern</code> — exposed at <code>GET /epistemic-hold/lantern</code>. <code>compliancePosture</code> enum includes <code>EPISTEMIC_HOLD_ACTIVE</code>.</li>
+      <li><code>signature</code> — exposed at <code>GET /goukassian/signature</code>. PQC slots 6 (SLH-DSA-SHAKE-128s) and 7 (ML-KEM-1024) reserved.</li>
+      <li><code>license</code> — exposed at <code>POST /goukassian/license/validate</code>. Exceeded <code>licenseScope</code> triggers automatic Refuse (State −1).</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <div class="section" id="s7">
+    <span class="section-tag tag-normative">Normative</span>
+    <h2>Section 7 — Eight Pillars</h2>
+    <div class="pillar-grid">
+      <div class="pillar-card"><div class="pillar-id">Pillar I</div><div class="pillar-name">EpistemicHold</div><p>POST /decisions, Epistemic Hold escalation surface, EscrowRecord, TGLF_State0, Gateway fail-closed</p></div>
+      <div class="pillar-card"><div class="pillar-id">Pillar II</div><div class="pillar-name">ImmutableLedger</div><p>POST /audit-logs, GET /audit-logs/{logId}, POST /refusals, RFC 3161 timestamp, Ghost Governance prevention</p></div>
+      <div class="pillar-card"><div class="pillar-id">Pillar III</div><div class="pillar-name">GoukassianPrinciple</div><p>lantern · signature · license — required on every POST /decisions, POST /audit-logs, POST /evaluate/* request body</p></div>
+      <div class="pillar-card"><div class="pillar-id">Pillar IV</div><div class="pillar-name">DecisionLogs</div><p>GET /decisions/{decisionId}, GET /thresholds/{domain}, PUT /thresholds/{domain}, GET /metrics/summary</p></div>
+      <div class="pillar-card"><div class="pillar-id">Pillar V</div><div class="pillar-name">EconomicRights</div><p>POST /evaluate/trade, POST /redress/*, GET /regulator/basel-iii/attestation — Basel III, FATF, IOSCO</p></div>
+      <div class="pillar-card"><div class="pillar-id">Pillar VI</div><div class="pillar-name">SustainableCapital</div><p>POST /evaluate/policy, POST /evaluate/supply-chain — Paris Agreement, ESG, carbon footprint, green bond</p></div>
+      <div class="pillar-card"><div class="pillar-id">Pillar VII</div><div class="pillar-name">HybridShield</div><p>POST /emergency/override, GET /emergency/status, GET /audit/custodians/*/heartbeat, TriCameralApproval</p></div>
+      <div class="pillar-card"><div class="pillar-id">Pillar VIII</div><div class="pillar-name">Anchors</div><p>GET /audit/verifications/merkle/{root}, GET /audit/verifications/inclusion/{logId}, SuccessionDeclaration</p></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section" id="s8">
+    <span class="section-tag tag-normative">Normative</span>
+    <h2>Section 8 — Regulatory Nexus</h2>
+    <ul>
+      <li><strong>Basel III</strong> — <code>RegulatoryContext.baselIii</code> (lcr, nsfr, capitalRatio); LCR ≥ 1.0, NSFR ≥ 1.0; <code>GET /regulator/basel-iii/attestation</code></li>
+      <li><strong>FATF</strong> — <code>RegulatoryContext.fatf</code> (amlCheckRequired, sanctionsScreened, pepInvolved, sarGenerated); <code>POST /regulator/fatf/compliance-export</code></li>
+      <li><strong>IOSCO</strong> — <code>RegulatoryContext.iosco</code> (layeringDetected, spoofingDetected, washTradingDetected); <code>GET /regulator/iosco/principle-mapping</code></li>
+      <li><strong>GDPR</strong> — <code>RegulatoryContext.gdpr.erasureEligible</code>; TL uses HKDF-SHA3-256 cryptographic erasure (not Article 4(5) pseudonymization)</li>
+      <li><strong>Paris Agreement</strong> — <code>RegulatoryContext.parisAgreement</code> (carbonFootprintVerified, greenBondEligibility, esgScore); <code>POST /evaluate/policy</code></li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <div class="section" id="s9">
+    <span class="section-tag tag-normative">Normative</span>
+    <h2>Section 9 — Domain Evaluation Endpoints</h2>
+    <p><code>POST /evaluate/trade</code> — financial trading governance. Returns <code>TLResult</code> with <code>tradingMetadata.amlClearanceStatus</code> (CLEARED / PENDING_REVIEW / REFUSED).</p>
+    <p><code>POST /evaluate/policy</code> — monetary policy governance. Returns <code>policyMetadata.greenBondEligibility</code> as direct Pillar VI expression.</p>
+    <p><code>POST /evaluate/supply-chain</code> — supply chain governance. Returns <code>chainMetadata.carbonFootprintVerified</code> and <code>laborStandardCompliance</code>.</p>
+    <p>All three require <code>GoukassianPrincipleBlock</code>. All three return <code>TLResult</code>, not <code>StateEnvelope</code>. The <code>POST /audit-logs</code> step is required before any Proceed determination may authorize actuation.</p>
+  </div>
+
+  <hr>
+
+  <div class="section" id="s10">
+    <span class="section-tag tag-normative">Normative</span>
+    <h2>Section 10 — Auditor and Regulator Surface</h2>
+    <p>Six-step compliance verification workflow using only endpoints in <code>tl_openapi.yaml</code>:</p>
+    <ul>
+      <li><strong>Step 1</strong> — <code>GET /audit/verifications/merkle/{merkleRoot}</code> — verify the Merkle anchor on-chain</li>
+      <li><strong>Step 2</strong> — <code>GET /audit/verifications/inclusion/{logId}</code> — verify log inclusion with full Merkle proof path</li>
+      <li><strong>Step 3</strong> — <code>GET /audit-logs/{logId}</code> — retrieve the anchored TGLF record and embedded StateEnvelope</li>
+      <li><strong>Step 4</strong> — <code>GET /regulator/timestamp-verification/{logId}</code> — verify RFC 3161 qualified timestamp</li>
+      <li><strong>Step 5</strong> — <code>GET /audit/compliance/attestation</code> — pull signed Eight Pillar compliance attestation</li>
+      <li><strong>Step 6</strong> — <code>POST /regulator/evidence-export</code> — bulk export signed, Merkle-verified archive</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <div class="section" id="s11">
+    <span class="section-tag tag-normative">Normative</span>
+    <h2>Section 11 — DITL Hardware Interface</h2>
+    <h3>11.1 Architecture B Hybrid Model (SHIPPING)</h3>
+    <p>SHIPPING baseline: software enforcement with DITL attestation where available. <code>NLNAAuditToken.pufAttestation</code> must be set to sentinel <code>"NULL_PUF_DEPLOYMENT"</code> for non-MT deployments. <code>TLCapabilityFlags.pufAttestationMode: "ARCHITECTURE_B"</code>.</p>
+    <h3>11.2 MT Integration (FUTURE)</h3>
+    <p><code>POST /ditl/state-transition</code> and <code>GET /ditl/puf-attestation/{deviceId}</code> are defined with <code>x-tl-implementation-status: FUTURE</code>. Blocking constraint: Constitutional Hardware Monograph, Section X.</p>
+  </div>
+
+  <hr>
+
+  <div class="section" id="s12">
+    <span class="section-tag tag-normative">Normative</span>
+    <h2>Section 12 — EKR, GDPR Cryptographic Erasure, and Succession Declaration</h2>
+    <h3>12.1 Ephemeral Key Rotation</h3>
+    <p>Defined in <code>EKRRecord_v1_0_0</code>. The <code>hkdfSha3256Confirmed: true</code> field confirms HKDF-SHA3-256 key derivation. Key destruction achieves cryptographic erasure — underlying data becomes computationally irrecoverable while audit record remains intact.</p>
+    <h3>12.2 GDPR Cryptographic Erasure</h3>
+    <p>Three residual sub-gaps remain FUTURE: regulatory interpretation, erasure key registry dependency, metadata residue. All documented in <code>Future-Blocked_Appendix.md</code>.</p>
+    <h3>12.3 Succession Declaration</h3>
+    <p><code>SuccessionDeclaration_v1_0_0</code> is a notarized, timestamped, anchored governance continuity instrument. Expiry triggers <code>SUCCESSION_DECLARATION_EXPIRED_ERROR</code>.</p>
+  </div>
+
+  <hr>
+
+  <div class="section" id="s13">
+    <span class="section-tag tag-normative">Normative</span>
+    <h2>Section 13 — Error Handling</h2>
+    <p>All error responses conform to RFC 7807 <code>application/problem+json</code> with three mandatory TL extensions that are never omitted:</p>
+    <ul>
+      <li><code>x-tl-state</code> — signed integer enum [−1, 0, 1]. Even errors carry a constitutional state.</li>
+      <li><code>x-tl-pillar</code> — canonical PillarIdentifier implicated in this error.</li>
+      <li><code>x-tl-trace-id</code> — UUID v4 echoed from the originating request header.</li>
+    </ul>
+    <p>Fail-closed default: any unresolvable condition defaults to <code>EPISTEMIC_HOLD</code> or <code>REFUSE</code>, never to <code>PROCEED</code>.</p>
+  </div>
+
+  <hr>
+
+  <div class="section" id="s14">
+    <span class="section-tag tag-normative">Normative</span>
+    <h2>Section 14 — Trace Propagation</h2>
+    <p>The <code>X-TL-Trace-Id</code> UUID v4 header is the constitutional thread connecting every layer of the governance stack.</p>
+    <div class="code-block">Client              Inference Lane        Audit Lane            Regulator
+  |                       |                     |                     |
+  |-- POST /decisions --->|                     |                     |
+  |   X-TL-Trace-Id: T1   |                     |                     |
+  |<-- TLResult ---------|                     |                     |
+  |                       |                     |                     |
+  |-- POST /audit-logs ---|-------------------->|                     |
+  |   X-TL-Trace-Id: T1 (bound via NLNAAuditToken)                   |
+  |<-- StateEnvelope + PermissionToken --------|                     |
+  |                       |                     |                     |
+  |<-- epistemicHold.escalation webhook (if State 0)                 |
+  |   event_id: E1, x-tl-trace-id: T1          |                     |
+  |                       |                     |                     |
+  |-- POST /regulator/evidence-export -------------------------------->|
+  |<-- exportJobId (archive contains T1-linked TGLF records) --------|</div>
+    <p>Webhook deduplication uses <code>event_id</code> (UUID v4), not <code>x-tl-trace-id</code>, since a single trace may produce multiple webhook events.</p>
+
+    <hr>
+
+    <div class="uncertainty-block">
+      <div class="u-label">Constitutional Uncertainty Register — Deliverable F</div>
+      <p><strong>&lt;MONOGRAPH_EXCERPT_MISSING&gt;</strong> Section 11 — Architecture B exact compensating control specification. Monograph Section X not supplied. Described from Section 4.10 of the constitutional prompt.</p>
+      <p><strong>&lt;MONOGRAPH_EXCERPT_MISSING&gt;</strong> Section 12.2 — Three GDPR sub-gaps exact phrasing. Derived from Section 5G of the constitutional prompt.</p>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
