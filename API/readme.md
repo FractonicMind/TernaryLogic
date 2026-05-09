@@ -199,4 +199,4 @@ This work is licensed under a Creative Commons Attribution 4.0 International Lic
 
 ---
 
-### *"If you cannot log it, you do not understand it. If you do not understand it, you have no authority to execute it."* - Lev Goukassian
+### *"A system that decides before it understands is not governing, it is gambling with borrowed authority."* - Lev Goukassian
