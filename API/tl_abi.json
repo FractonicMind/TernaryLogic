@@ -1,0 +1,568 @@
+{
+  "$schema": "https://fractonicmind.github.io/TernaryLogic/api/abi/v1.0.0",
+  "title": "\"Ternary Logic\" (TL) Smart Contract ABI Bundle",
+  "description": "Canonical ABI definitions for TL_Ledger_Core.sol and ITL_Validator.sol. Function signatures, event logs, custom errors, and structured data types only. No Solidity source code. Framework: \"Ternary Logic\" (TL) by Lev Goukassian. ORCID: 0009-0006-5966-1243. DOI: 10.1007/s43681-025-00910-6 | DOI: 10.1007/s43681-026-01124-0. Consistency Lock: all identifiers immutable from Steps 1 and 2.",
+  "specVersion": "1.0.0-tl-monograph-2026",
+  "contracts": {
+
+    "TL_Ledger_Core": {
+      "contractName": "TL_Ledger_Core",
+      "description": "Core immutable ledger contract. Anchors Merkle roots, registers and verifies Permission Tokens, enforces NL=NA at the on-chain boundary (Layer 5), manages system-wide Epistemic Hold activation and resolution, executes Emergency Overrides under logged conditions, and broadcasts Lantern status. HybridShield quorum is required for all state-mutating operations. No admin key: governance is Tri-Cameral only.",
+      "nlNaLayer5Note": "TL_Ledger_Core.registerPermissionToken reverts NLNAViolation if the supplied logHash is not present in an anchored Merkle root. This is NL=NA Layer 5: the final on-chain enforcement gate. Bypassing Layers 1-4 in the off-chain stack does not bypass this layer.",
+      "abi": [
+
+        {
+          "type": "function",
+          "name": "anchorMerkleRoot",
+          "description": "Anchor a Merkle root of a TGLF batch on-chain. Requires HybridShield custodian quorum. Reverts QuorumNotMet if quorum is not satisfied. Emits MerkleRootAnchored on success. This is the on-chain foundation for NL=NA Layer 5 enforcement: only logHashes provably included in an anchored root can produce valid Permission Tokens.",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            {
+              "name": "merkleRoot",
+              "type": "bytes32",
+              "description": "SHA-256 Merkle root of the TGLF batch being anchored."
+            },
+            {
+              "name": "batchId",
+              "type": "bytes32",
+              "description": "Unique batch identifier for this Merkle root submission."
+            },
+            {
+              "name": "quorumAttestation",
+              "type": "bytes",
+              "description": "ABI-encoded CustodianQuorumAttestation array proving HybridShield quorum. Must meet minimum custodian threshold before root is accepted."
+            },
+            {
+              "name": "committedAt",
+              "type": "uint256",
+              "description": "Unix epoch timestamp of batch commit."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "anchorId",
+              "type": "bytes32",
+              "description": "Unique on-chain identifier for this anchoring event."
+            }
+          ],
+          "x-tl-pillar": "ImmutableLedger",
+          "x-tl-implementation-status": "SHIPPING"
+        },
+
+        {
+          "type": "function",
+          "name": "registerPermissionToken",
+          "description": "Register a Permission Token on-chain. NL=NA Layer 5: reverts NLNAViolation if the supplied logHash is not provably included in an anchored Merkle root via verifyMerkleInclusion. This is the terminal enforcement gate: no actuation may proceed without a registered, valid Permission Token whose logHash is on-chain verified.",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            { "name": "tokenId", "type": "bytes32", "description": "Permission Token unique identifier (keccak256 of UUID v4)." },
+            { "name": "logHash", "type": "bytes32", "description": "SHA-256 of the anchored TGLF entry. NL=NA Layer 5: MUST be provably included in an anchored Merkle root or transaction reverts NLNAViolation." },
+            { "name": "merkleRoot", "type": "bytes32", "description": "The Merkle root in which logHash is claimed to be included." },
+            { "name": "merkleProof", "type": "bytes32[]", "description": "Ordered sibling hash array forming the Merkle inclusion proof path." },
+            { "name": "epochTimestamp", "type": "uint256", "description": "Unix epoch timestamp of token issuance." },
+            { "name": "expiresAt", "type": "uint256", "description": "Unix epoch expiration timestamp. Actuation layer MUST reject tokens where block.timestamp >= expiresAt." },
+            { "name": "signerKeyId", "type": "bytes32", "description": "HSM key identifier for Audit Lane signature verification." },
+            { "name": "laneOriginHash", "type": "bytes32", "description": "keccak256(\"AUDIT_LANE\"). Inference Lane token production is constitutionally blocked: any value not matching this hash reverts NLNAViolation." },
+            { "name": "signatureValue", "type": "bytes", "description": "Base64url-decoded HSM signature over the PermissionToken fields." }
+          ],
+          "outputs": [
+            { "name": "registered", "type": "bool", "description": "True on successful registration." }
+          ],
+          "x-tl-pillar": "ImmutableLedger",
+          "x-tl-nlna-layer": 5,
+          "x-tl-implementation-status": "SHIPPING"
+        },
+
+        {
+          "type": "function",
+          "name": "verifyPermissionToken",
+          "description": "View function. Verify that a Permission Token is registered, non-expired, non-revoked, and its logHash is provably included in an anchored Merkle root.",
+          "stateMutability": "view",
+          "inputs": [
+            { "name": "tokenId", "type": "bytes32" },
+            { "name": "currentTimestamp", "type": "uint256" }
+          ],
+          "outputs": [
+            { "name": "valid", "type": "bool" },
+            { "name": "revocationStatus", "type": "uint8", "description": "0 = ACTIVE, 1 = REVOKED_BY_EMERGENCY, 2 = REVOKED_BY_TRI_CAMERAL." },
+            { "name": "remainingLifetimeMs", "type": "int256" }
+          ],
+          "x-tl-pillar": "ImmutableLedger",
+          "x-tl-implementation-status": "SHIPPING"
+        },
+
+        {
+          "type": "function",
+          "name": "verifyMerkleInclusion",
+          "description": "Pure function. Verify that a leaf hash is included in a Merkle root given a proof path.",
+          "stateMutability": "pure",
+          "inputs": [
+            { "name": "leaf", "type": "bytes32" },
+            { "name": "merkleRoot", "type": "bytes32" },
+            { "name": "proof", "type": "bytes32[]" }
+          ],
+          "outputs": [
+            { "name": "included", "type": "bool" }
+          ],
+          "x-tl-pillar": "Anchors",
+          "x-tl-implementation-status": "SHIPPING"
+        },
+
+        {
+          "type": "function",
+          "name": "activateEpistemicHoldSystemWide",
+          "description": "Activate system-wide Epistemic Hold (State 0). Requires HybridShield custodian quorum. Reverts QuorumNotMet if quorum not satisfied. All subsequent Permission Token registrations are blocked until hold is resolved. Emits EpistemicHoldActivated.",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            { "name": "holdRationale", "type": "bytes32" },
+            { "name": "escrowRecordId", "type": "bytes32" },
+            { "name": "quorumAttestation", "type": "bytes" },
+            { "name": "resolutionDeadline", "type": "uint256" }
+          ],
+          "outputs": [
+            { "name": "holdActivated", "type": "bool" }
+          ],
+          "x-tl-pillar": "EpistemicHold",
+          "x-tl-implementation-status": "SHIPPING"
+        },
+
+        {
+          "type": "function",
+          "name": "resolveEpistemicHoldSystemWide",
+          "description": "Resolve a system-wide Epistemic Hold. resolvedState uint8: 1 = Proceed, 0 = Refuse (encoding). State 0 (Epistemic Hold) is not a valid resolution. Reverts InvalidResolutionState if resolvedState is any other value.",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            { "name": "escrowRecordId", "type": "bytes32" },
+            {
+              "name": "resolvedState",
+              "type": "uint8",
+              "description": "Resolution encoding: 1 = Proceed (+1), 0 = Refuse (-1). uint8(0) encodes REFUSE here, not Epistemic Hold. Any other value reverts InvalidResolutionState.",
+              "x-tl-encoding-note": "uint8(0) = REFUSE (-1 integer), uint8(1) = PROCEED (+1 integer). Epistemic Hold re-resolution is constitutionally invalid."
+            },
+            { "name": "resolutionRationaleHash", "type": "bytes32" },
+            { "name": "quorumAttestation", "type": "bytes" }
+          ],
+          "outputs": [
+            { "name": "resolved", "type": "bool" }
+          ],
+          "x-tl-pillar": "EpistemicHold",
+          "x-tl-implementation-status": "SHIPPING"
+        },
+
+        {
+          "type": "function",
+          "name": "executeEmergencyOverride",
+          "description": "Execute Emergency Override under supreme authority. ALL invocations logged on-chain before execution. NL=NA applies without exception. forcedState uint8: 0 = Epistemic Hold, 255 = Refuse. Forced Proceed (+1) is constitutionally blocked. Emits EmergencyOverrideExecuted.",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            { "name": "overrideRequestId", "type": "bytes32" },
+            { "name": "overrideType", "type": "uint8", "description": "0=BREAK_GLASS_SHUTDOWN, 1=KILL_SWITCH, 2=FORCED_STATE_TRANSITION." },
+            { "name": "targetDecisionId", "type": "bytes32" },
+            { "name": "forcedState", "type": "uint8", "description": "0=EpistemicHold, 255=Refuse. Proceed(+1) constitutionally blocked.", "x-tl-encoding-note": "uint8(0)=EpistemicHold(0), uint8(255)=Refuse(-1). Proceed(+1) is constitutionally blocked." },
+            { "name": "forcedStateExpiresAt", "type": "uint256" },
+            { "name": "justificationHash", "type": "bytes32" },
+            { "name": "authorityAttestation", "type": "bytes" }
+          ],
+          "outputs": [
+            { "name": "executed", "type": "bool" }
+          ],
+          "x-tl-pillar": "HybridShield",
+          "x-tl-monograph-ref": "Constitutional Hardware Monograph, Section IX.3",
+          "x-tl-implementation-status": "SHIPPING"
+        },
+
+        {
+          "type": "function",
+          "name": "revokePermissionToken",
+          "description": "Revoke a registered Permission Token. Revocation state machine: ACTIVE -> REVOKED_BY_EMERGENCY or REVOKED_BY_TRI_CAMERAL.",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            { "name": "tokenId", "type": "bytes32" },
+            { "name": "revocationReason", "type": "uint8", "description": "1=REVOKED_BY_EMERGENCY, 2=REVOKED_BY_TRI_CAMERAL." },
+            { "name": "revocationMerkleRoot", "type": "bytes32" },
+            { "name": "quorumAttestation", "type": "bytes" }
+          ],
+          "outputs": [
+            { "name": "revoked", "type": "bool" }
+          ],
+          "x-tl-pillar": "ImmutableLedger",
+          "x-tl-implementation-status": "SHIPPING"
+        }
+
+      ],
+
+      "events": [
+
+        {
+          "type": "event",
+          "name": "MerkleRootAnchored",
+          "inputs": [
+            { "name": "anchorId", "type": "bytes32", "indexed": true },
+            { "name": "merkleRoot", "type": "bytes32", "indexed": true },
+            { "name": "batchId", "type": "bytes32", "indexed": false },
+            { "name": "committedAt", "type": "uint256", "indexed": false },
+            { "name": "traceId", "type": "bytes32", "indexed": false }
+          ],
+          "x-tl-pillar": "ImmutableLedger"
+        },
+
+        {
+          "type": "event",
+          "name": "PermissionTokenRegistered",
+          "inputs": [
+            { "name": "tokenId", "type": "bytes32", "indexed": true },
+            { "name": "logHash", "type": "bytes32", "indexed": true },
+            { "name": "merkleRoot", "type": "bytes32", "indexed": false },
+            { "name": "epochTimestamp", "type": "uint256", "indexed": false },
+            { "name": "expiresAt", "type": "uint256", "indexed": false },
+            { "name": "revocationStatus", "type": "uint8", "indexed": false, "description": "0=ACTIVE, 1=REVOKED_BY_EMERGENCY, 2=REVOKED_BY_TRI_CAMERAL." }
+          ],
+          "x-tl-pillar": "ImmutableLedger"
+        },
+
+        {
+          "type": "event",
+          "name": "EpistemicHoldActivated",
+          "inputs": [
+            { "name": "escrowRecordId", "type": "bytes32", "indexed": true },
+            { "name": "holdRationale", "type": "bytes32", "indexed": false },
+            { "name": "activatedAt", "type": "uint256", "indexed": false },
+            { "name": "resolutionDeadline", "type": "uint256", "indexed": false },
+            { "name": "traceId", "type": "bytes32", "indexed": false }
+          ],
+          "x-tl-pillar": "EpistemicHold"
+        },
+
+        {
+          "type": "event",
+          "name": "EpistemicHoldResolved",
+          "inputs": [
+            { "name": "escrowRecordId", "type": "bytes32", "indexed": true },
+            { "name": "resolvedState", "type": "uint8", "indexed": true, "description": "1=Proceed, 0=Refuse. Epistemic Hold re-resolution constitutionally invalid." },
+            { "name": "resolutionRationaleHash", "type": "bytes32", "indexed": false },
+            { "name": "resolvedAt", "type": "uint256", "indexed": false },
+            { "name": "traceId", "type": "bytes32", "indexed": false }
+          ],
+          "x-tl-pillar": "EpistemicHold"
+        },
+
+        {
+          "type": "event",
+          "name": "EmergencyOverrideExecuted",
+          "inputs": [
+            { "name": "overrideRequestId", "type": "bytes32", "indexed": true },
+            { "name": "overrideType", "type": "uint8", "indexed": true },
+            { "name": "forcedState", "type": "uint8", "indexed": false, "description": "0=EpistemicHold, 255=Refuse. Proceed constitutionally blocked." },
+            { "name": "justificationHash", "type": "bytes32", "indexed": false },
+            { "name": "executedAt", "type": "uint256", "indexed": false },
+            { "name": "forcedStateExpiresAt", "type": "uint256", "indexed": false }
+          ],
+          "x-tl-pillar": "HybridShield"
+        },
+
+        {
+          "type": "event",
+          "name": "LanternStatusBroadcast",
+          "inputs": [
+            { "name": "lanternSignalId", "type": "bytes32", "indexed": true },
+            { "name": "artifactNameHash", "type": "bytes32", "indexed": false, "description": "keccak256(\"lantern\")." },
+            { "name": "compliancePosture", "type": "uint8", "indexed": true, "description": "0=FULLY_COMPLIANT, 1=EPISTEMIC_HOLD_ACTIVE, 2=REGULATORY_REVIEW, 3=PILLAR_DEGRADED, 4=EMERGENCY_OVERRIDE_ACTIVE." },
+            { "name": "broadcastAt", "type": "uint256", "indexed": false },
+            { "name": "signatureBlockHash", "type": "bytes32", "indexed": false }
+          ],
+          "x-tl-pillar": "GoukassianPrinciple"
+        }
+
+      ],
+
+      "customErrors": [
+
+        {
+          "type": "error",
+          "name": "NLNAViolation",
+          "inputs": [
+            { "name": "tokenId", "type": "bytes32" },
+            { "name": "logHash", "type": "bytes32" },
+            { "name": "violationReason", "type": "uint8", "description": "0=MERKLE_NOT_FOUND, 1=INVALID_LANE_ORIGIN." }
+          ],
+          "x-tl-pillar": "ImmutableLedger"
+        },
+
+        {
+          "type": "error",
+          "name": "EpistemicHoldActive",
+          "inputs": [
+            { "name": "escrowRecordId", "type": "bytes32" },
+            { "name": "resolutionDeadline", "type": "uint256" }
+          ],
+          "x-tl-pillar": "EpistemicHold"
+        },
+
+        {
+          "type": "error",
+          "name": "QuorumNotMet",
+          "inputs": [
+            { "name": "provided", "type": "uint8" },
+            { "name": "required", "type": "uint8" }
+          ],
+          "x-tl-pillar": "HybridShield"
+        },
+
+        {
+          "type": "error",
+          "name": "InvalidResolutionState",
+          "inputs": [
+            { "name": "attemptedState", "type": "uint8" }
+          ],
+          "x-tl-pillar": "EpistemicHold"
+        },
+
+        {
+          "type": "error",
+          "name": "UnauthorizedOverride",
+          "inputs": [
+            { "name": "attemptedForcedState", "type": "uint8" },
+            { "name": "callerAddress", "type": "address" }
+          ],
+          "x-tl-pillar": "HybridShield"
+        },
+
+        {
+          "type": "error",
+          "name": "TokenExpired",
+          "inputs": [
+            { "name": "tokenId", "type": "bytes32" },
+            { "name": "expiresAt", "type": "uint256" },
+            { "name": "currentTimestamp", "type": "uint256" }
+          ],
+          "x-tl-pillar": "ImmutableLedger"
+        }
+
+      ]
+    },
+
+    "ITL_Validator": {
+      "contractName": "ITL_Validator",
+      "description": "Validator interface contract. Performs regulatory compliance verification (Pillars V and VI), Goukassian Principle license validation, and immutable mandate violation recording.",
+      "abi": [
+
+        {
+          "type": "function",
+          "name": "verifyEconomicRightsCompliance",
+          "description": "Verify Pillar V compliance. Checks Basel III (LCR >= 1.0, NSFR >= 1.0), FATF (sanctions, PEP, SAR), IOSCO (layering, spoofing, wash trading). Returns compliant, violationCode, forcedState (0=EPISTEMIC_HOLD, 255=REFUSE).",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            { "name": "decisionId", "type": "bytes32" },
+            {
+              "name": "baselIiiVector",
+              "type": "tuple",
+              "components": [
+                { "name": "lcr", "type": "uint256", "description": "Scaled to 1e18. Compliant: >= 1e18." },
+                { "name": "nsfr", "type": "uint256", "description": "Scaled to 1e18. Compliant: >= 1e18." },
+                { "name": "capitalRatio", "type": "uint256" },
+                { "name": "counterpartyExposureWithinLimits", "type": "bool" },
+                { "name": "stressTestPassed", "type": "bool" }
+              ]
+            },
+            {
+              "name": "fatfVector",
+              "type": "tuple",
+              "components": [
+                { "name": "sanctionsScreened", "type": "bool" },
+                { "name": "sanctionsHit", "type": "bool" },
+                { "name": "pepInvolved", "type": "bool" },
+                { "name": "transactionMonitoringAlert", "type": "bool" },
+                { "name": "sarRequired", "type": "bool" }
+              ]
+            },
+            {
+              "name": "ioscoVector",
+              "type": "tuple",
+              "components": [
+                { "name": "layeringDetected", "type": "bool" },
+                { "name": "spoofingDetected", "type": "bool" },
+                { "name": "washTradingDetected", "type": "bool" },
+                { "name": "crossMarketManipulationDetected", "type": "bool" }
+              ]
+            },
+            { "name": "traceId", "type": "bytes32" }
+          ],
+          "outputs": [
+            { "name": "compliant", "type": "bool" },
+            { "name": "violationCode", "type": "bytes32" },
+            { "name": "forcedState", "type": "uint8", "description": "0=EPISTEMIC_HOLD, 255=REFUSE." }
+          ],
+          "x-tl-pillar": "EconomicRightsAndTransparencyMandate",
+          "x-tl-implementation-status": "SHIPPING"
+        },
+
+        {
+          "type": "function",
+          "name": "verifySustainableCapitalCompliance",
+          "description": "Verify Pillar VI compliance. Checks Paris Agreement (carbon footprint, green bond, ESG score).",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            { "name": "decisionId", "type": "bytes32" },
+            {
+              "name": "parisAgreementVector",
+              "type": "tuple",
+              "components": [
+                { "name": "carbonFootprintVerified", "type": "bool" },
+                { "name": "greenBondEligibility", "type": "bool" },
+                { "name": "esgScore", "type": "uint256", "description": "Scaled to 1e18. Range: 0 to 100e18." },
+                { "name": "climateAlignedCapitalFlowValidated", "type": "bool" }
+              ]
+            },
+            { "name": "traceId", "type": "bytes32" }
+          ],
+          "outputs": [
+            { "name": "compliant", "type": "bool" },
+            { "name": "violationCode", "type": "bytes32" },
+            { "name": "forcedState", "type": "uint8", "description": "0=EPISTEMIC_HOLD, 255=REFUSE." }
+          ],
+          "x-tl-pillar": "SustainableCapitalAllocationMandate",
+          "x-tl-implementation-status": "SHIPPING"
+        },
+
+        {
+          "type": "function",
+          "name": "verifyGoukassianLicense",
+          "description": "Verify Goukassian Principle license scope. violatedArtifact ordinals: 1=lantern, 2=signature, 3=license. Exceeding scope triggers automatic Refuse (State -1).",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            { "name": "decisionId", "type": "bytes32" },
+            { "name": "licenseToken", "type": "bytes32" },
+            { "name": "requestingEntityId", "type": "bytes32" },
+            { "name": "proposedScopeHashes", "type": "bytes32[]" },
+            { "name": "authorizedScopeHashes", "type": "bytes32[]" }
+          ],
+          "outputs": [
+            { "name": "licenseValid", "type": "bool" },
+            { "name": "violatedArtifact", "type": "uint8", "description": "0=none, 1=lantern, 2=signature, 3=license." },
+            { "name": "exceededScopeCount", "type": "uint256" }
+          ],
+          "x-tl-pillar": "GoukassianPrinciple",
+          "x-tl-implementation-status": "SHIPPING"
+        },
+
+        {
+          "type": "function",
+          "name": "recordMandateViolation",
+          "description": "Record an immutable mandate violation. Immutable: cannot be modified or deleted once recorded.",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            { "name": "violationId", "type": "bytes32" },
+            { "name": "mandateViolated", "type": "bytes32", "description": "keccak256 of mandate string: keccak256(\"No Spy\"), keccak256(\"No Weapon\"), keccak256(\"No Switch Off\")." },
+            { "name": "pillarImplicated", "type": "uint8", "description": "1=EpistemicHold, 2=ImmutableLedger, 3=GoukassianPrinciple, 4=DecisionLogs, 5=EconomicRightsAndTransparencyMandate, 6=SustainableCapitalAllocationMandate, 7=HybridShield, 8=Anchors." },
+            { "name": "violationDetailsHash", "type": "bytes32" },
+            { "name": "decisionId", "type": "bytes32" },
+            { "name": "recordedAt", "type": "uint256" }
+          ],
+          "outputs": [
+            { "name": "recorded", "type": "bool" }
+          ],
+          "x-tl-pillar": "ImmutableLedger",
+          "x-tl-implementation-status": "SHIPPING"
+        },
+
+        {
+          "type": "function",
+          "name": "getMandateConfiguration",
+          "description": "View function. Retrieve current mandate configuration including Three Immutable Mandates and Eight Pillar threshold parameters.",
+          "stateMutability": "view",
+          "inputs": [
+            { "name": "domain", "type": "uint8", "description": "0=general, 1=trade, 2=policy, 3=supply-chain." }
+          ],
+          "outputs": [
+            { "name": "mandatesActive", "type": "bool[3]", "description": "[0]=No Spy, [1]=No Weapon, [2]=No Switch Off." },
+            { "name": "pillarThresholds", "type": "uint256[8]", "description": "Per-pillar thresholds scaled to 1e18 for Pillars I-VIII." },
+            { "name": "epistemicHoldActive", "type": "bool" }
+          ],
+          "x-tl-pillar": "DecisionLogs",
+          "x-tl-implementation-status": "SHIPPING"
+        }
+
+      ],
+
+      "events": [
+
+        {
+          "type": "event",
+          "name": "EconomicRightsMandateViolationDetected",
+          "inputs": [
+            { "name": "decisionId", "type": "bytes32", "indexed": true },
+            { "name": "violationCode", "type": "bytes32", "indexed": true },
+            { "name": "forcedState", "type": "uint8", "indexed": false },
+            { "name": "detectedAt", "type": "uint256", "indexed": false },
+            { "name": "traceId", "type": "bytes32", "indexed": false }
+          ],
+          "x-tl-pillar": "EconomicRightsAndTransparencyMandate"
+        },
+
+        {
+          "type": "event",
+          "name": "SustainableCapitalMandateViolationDetected",
+          "inputs": [
+            { "name": "decisionId", "type": "bytes32", "indexed": true },
+            { "name": "violationCode", "type": "bytes32", "indexed": true },
+            { "name": "forcedState", "type": "uint8", "indexed": false },
+            { "name": "detectedAt", "type": "uint256", "indexed": false },
+            { "name": "traceId", "type": "bytes32", "indexed": false }
+          ],
+          "x-tl-pillar": "SustainableCapitalAllocationMandate"
+        },
+
+        {
+          "type": "event",
+          "name": "GoukassianLicenseViolationDetected",
+          "inputs": [
+            { "name": "decisionId", "type": "bytes32", "indexed": true },
+            { "name": "violatedArtifact", "type": "uint8", "indexed": true, "description": "1=lantern, 2=signature, 3=license." },
+            { "name": "requestingEntityId", "type": "bytes32", "indexed": false },
+            { "name": "exceededScopeCount", "type": "uint256", "indexed": false },
+            { "name": "detectedAt", "type": "uint256", "indexed": false }
+          ],
+          "x-tl-pillar": "GoukassianPrinciple"
+        }
+
+      ],
+
+      "customErrors": [
+
+        {
+          "type": "error",
+          "name": "MandateViolationImmutable",
+          "inputs": [ { "name": "violationId", "type": "bytes32" } ],
+          "x-tl-pillar": "ImmutableLedger"
+        },
+
+        {
+          "type": "error",
+          "name": "LicenseScopeExceeded",
+          "inputs": [
+            { "name": "decisionId", "type": "bytes32" },
+            { "name": "violatedArtifact", "type": "uint8" }
+          ],
+          "x-tl-pillar": "GoukassianPrinciple"
+        }
+
+      ]
+    }
+
+  },
+
+  "structTypes": {
+    "CustodianQuorumAttestation": {
+      "description": "ABI-encoded HybridShield custodian quorum attestation.",
+      "fields": [
+        { "name": "custodianId", "type": "bytes32" },
+        { "name": "operationId", "type": "bytes32" },
+        { "name": "operationType", "type": "uint8", "description": "0=ANCHOR_MERKLE, 1=ACTIVATE_HOLD, 2=RESOLVE_HOLD, 3=EMERGENCY_OVERRIDE, 4=REVOKE_TOKEN." },
+        { "name": "operationPayloadHash", "type": "bytes32" },
+        { "name": "attestedAt", "type": "uint256" },
+        { "name": "custodianSignature", "type": "bytes" }
+      ],
+      "x-tl-pillar": "HybridShield"
+    }
+  }
+}

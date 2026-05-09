@@ -1,0 +1,174 @@
+{
+  "$schema": "https://fractonicmind.github.io/TernaryLogic/api/eip712/v1.0.0",
+  "title": "\"Ternary Logic\" (TL) EIP-712 Typed Data Schema",
+  "description": "EIP-712 domain separator and type definitions for \"Ternary Logic\" (TL) governance. Framework by Lev Goukassian. ORCID: 0009-0006-5966-1243. DOI: 10.1007/s43681-025-00910-6 | DOI: 10.1007/s43681-026-01124-0. Consistency Lock: all identifiers immutable from Steps 1, 2, and 3.",
+  "specVersion": "1.0.0-tl-monograph-2026",
+
+  "implementationNotes": {
+    "signedIntegerEncoding": "EIP-712 does not natively support signed integers in a way that preserves triadic semantics without explicit encoding conventions. The TL triadic state space (+1, 0, -1) is encoded as int8 in GovernanceTraceLog.currentState to preserve signed semantics. In EmergencyOverride.forcedState, uint8 encoding is used: 255 = Refuse (-1 integer), 0 = EpistemicHold (0 integer). Proceed (+1) is constitutionally blocked and has no valid uint8 encoding in EmergencyOverride. Implementations MUST reject forcedState values other than 0 and 255.",
+    "nlNaOffChainExpression": "The PermissionToken EIP-712 type binds logHash (SHA-256 of the anchored TGLF entry) and merkleRoot (batch anchor hash) into a typed signature. This off-chain expression of NL=NA ensures any signed PermissionToken is cryptographically tied to an immutable audit lane completion record, even before on-chain registration. Full NL=NA five-layer enforcement requires on-chain registration via TL_Ledger_Core.registerPermissionToken.",
+    "pqcMigration": "signatureAlgorithmId values 6 (SLH-DSA-SHAKE-128s) and 7 (ML-KEM-1024) are reserved in GoukassianSignatureAttestation.signatureAlgorithmId for future PQC migration. SHIPPING implementations MUST use values 0 (ES256) or 1 (Ed25519) only.",
+    "epistemicHoldInt8Semantics": "In GovernanceTraceLog.currentState, int8 value 0 encodes Epistemic Hold. This is a first-class constitutional state and MUST NOT be conflated with bool false, uint8(0) in other contexts, null, or any error condition.",
+    "saltDerivation": "The domain salt keccak256(\"TL_API_SALT_V1_0_0\") is the specification placeholder. Real deployments MUST use a unique deployment-specific salt. The verifyingContract address placeholder MUST be replaced with the deployed TL_Ledger_Core address.",
+    "whitespaceSignificance": "Whitespace in EIP-712 type strings is significant per EIP-712 encoding rules. Type strings use single space after each comma, no trailing whitespace, no newlines. Do not reformat."
+  },
+
+  "domain": {
+    "name": "TLGovernance",
+    "version": "1.0.0",
+    "chainId": 1,
+    "chainIdNote": "chainId 1 is the Ethereum mainnet specification placeholder. Real deployments choose their own chainId.",
+    "verifyingContract": "0x0000000000000000000000000000000000000000",
+    "verifyingContractNote": "Placeholder address. Replace with the deployed TL_Ledger_Core contract address.",
+    "salt": "0x[keccak256(\"TL_API_SALT_V1_0_0\")]",
+    "saltNote": "Specification placeholder. Real deployments use a unique deployment salt.",
+    "eip712DomainTypeString": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract,bytes32 salt)"
+  },
+
+  "types": {
+
+    "GovernanceTraceLog": {
+      "description": "EIP-712 type for TGLF records. currentState is encoded as int8 to preserve signed triadic semantics. int8(0) = Epistemic Hold (first-class constitutional state, never conflated with bool false or uint8(0)). int8(1) = Proceed. int8(-1) = Refuse. monographVersionHash binds the signed record to a specific monograph revision.",
+      "typeString": "GovernanceTraceLog(bytes32 logId,int8 currentState,bytes32 decisionId,bytes32 pillarsCertifiedHash,uint256 committedAt,bytes32 monographVersionHash)",
+      "fields": [
+        {
+          "name": "logId",
+          "type": "bytes32",
+          "description": "Unique immutable TGLF log entry identifier (keccak256 of UUID v4)."
+        },
+        {
+          "name": "currentState",
+          "type": "int8",
+          "description": "Signed triadic state: int8(1) = Proceed, int8(0) = Epistemic Hold, int8(-1) = Refuse. int8(0) is Epistemic Hold: a first-class constitutional state, never conflated with bool false, uint8(0), null, error, or timeout.",
+          "x-tl-encoding-note": "int8 preserves signed triadic semantics. int8(0)=EpistemicHold. int8(1)=Proceed. int8(-1)=Refuse."
+        },
+        {
+          "name": "decisionId",
+          "type": "bytes32",
+          "description": "UUID of the originating decision record (keccak256 of UUID v4)."
+        },
+        {
+          "name": "pillarsCertifiedHash",
+          "type": "bytes32",
+          "description": "keccak256 of the ABI-encoded array of pillarsCertified PillarIdentifier strings. For TGLF-StateP1, must encode all 8 pillar identifiers (NL=NA Layer 3)."
+        },
+        {
+          "name": "committedAt",
+          "type": "uint256",
+          "description": "Unix epoch timestamp of TGLF commitment to the immutable ledger."
+        },
+        {
+          "name": "monographVersionHash",
+          "type": "bytes32",
+          "description": "keccak256 of the canonical monograph version string (e.g., keccak256(\"1.0.0-tl-monograph-2026\"))."
+        }
+      ],
+      "typeHash": "keccak256(\"GovernanceTraceLog(bytes32 logId,int8 currentState,bytes32 decisionId,bytes32 pillarsCertifiedHash,uint256 committedAt,bytes32 monographVersionHash)\")"
+    },
+
+    "PermissionToken": {
+      "description": "EIP-712 type for Permission Token off-chain signing. logHash and merkleRoot bind this token to NL=NA off-chain expression. Any signed PermissionToken is cryptographically tied to an immutable Audit Lane completion record.",
+      "typeString": "PermissionToken(bytes32 tokenId,bytes32 logHash,uint256 epochTimestamp,bytes32 signerKeyId,bytes32 merkleRoot,uint256 expiresAt,bytes32 decisionId,bytes32 monographVersionHash)",
+      "fields": [
+        { "name": "tokenId", "type": "bytes32", "description": "Permission Token unique identifier (keccak256 of UUID v4)." },
+        { "name": "logHash", "type": "bytes32", "description": "SHA-256 of the anchored TGLF entry. Core NL=NA binding. Must match AuditProof.logHash (Layer 4) and be provably included in an anchored Merkle root (Layer 5)." },
+        { "name": "epochTimestamp", "type": "uint256", "description": "Unix epoch timestamp at token issuance." },
+        { "name": "signerKeyId", "type": "bytes32", "description": "keccak256 of the HSM key identifier string." },
+        { "name": "merkleRoot", "type": "bytes32", "description": "SHA-256 batch anchor hash. Must match AuditProof.merkleRoot (Layer 4)." },
+        { "name": "expiresAt", "type": "uint256", "description": "Unix epoch expiration. Actuation layer MUST reject tokens where block.timestamp >= expiresAt." },
+        { "name": "decisionId", "type": "bytes32", "description": "UUID of the originating Inference Lane decision (keccak256 of UUID v4)." },
+        { "name": "monographVersionHash", "type": "bytes32", "description": "keccak256 of the monograph version string." }
+      ],
+      "typeHash": "keccak256(\"PermissionToken(bytes32 tokenId,bytes32 logHash,uint256 epochTimestamp,bytes32 signerKeyId,bytes32 merkleRoot,uint256 expiresAt,bytes32 decisionId,bytes32 monographVersionHash)\")"
+    },
+
+    "EmergencyOverride": {
+      "description": "EIP-712 type for Emergency Override signed requests. forcedState uint8 encoding: 255 = Refuse (-1 integer), 0 = Epistemic Hold (0 integer). Proceed (+1) is constitutionally blocked. Implementations MUST reject forcedState values other than 0 and 255.",
+      "typeString": "EmergencyOverride(bytes32 overrideRequestId,uint8 overrideType,bytes32 targetDecisionId,uint8 forcedState,bytes32 justificationHash,uint256 requestedAt)",
+      "fields": [
+        { "name": "overrideRequestId", "type": "bytes32", "description": "Unique identifier (keccak256 of UUID v4)." },
+        { "name": "overrideType", "type": "uint8", "description": "0=BREAK_GLASS_SHUTDOWN, 1=KILL_SWITCH, 2=FORCED_STATE_TRANSITION." },
+        { "name": "targetDecisionId", "type": "bytes32", "description": "Required when overrideType is 2. Zero bytes32 for system-wide overrides." },
+        {
+          "name": "forcedState",
+          "type": "uint8",
+          "description": "uint8 encoding: 255=Refuse(-1 integer), 0=EpistemicHold(0 integer). Forced Proceed(+1) constitutionally blocked.",
+          "x-tl-encoding-note": "uint8(255)=Refuse(-1). uint8(0)=EpistemicHold(0). Proceed(+1) constitutionally blocked and has no valid uint8 encoding here."
+        },
+        { "name": "justificationHash", "type": "bytes32", "description": "keccak256 of justification string (minLength 100 chars off-chain). Logged before execution." },
+        { "name": "requestedAt", "type": "uint256" }
+      ],
+      "typeHash": "keccak256(\"EmergencyOverride(bytes32 overrideRequestId,uint8 overrideType,bytes32 targetDecisionId,uint8 forcedState,bytes32 justificationHash,uint256 requestedAt)\")"
+    },
+
+    "CustodianQuorumAttestation": {
+      "description": "EIP-712 type for HybridShield custodian quorum attestations. Each participating custodian signs this structure for state-mutating TL_Ledger_Core operations.",
+      "typeString": "CustodianQuorumAttestation(bytes32 custodianId,bytes32 operationId,uint8 operationType,bytes32 operationPayloadHash,uint256 attestedAt)",
+      "fields": [
+        { "name": "custodianId", "type": "bytes32" },
+        { "name": "operationId", "type": "bytes32" },
+        { "name": "operationType", "type": "uint8", "description": "0=ANCHOR_MERKLE, 1=ACTIVATE_HOLD, 2=RESOLVE_HOLD, 3=EMERGENCY_OVERRIDE, 4=REVOKE_TOKEN." },
+        { "name": "operationPayloadHash", "type": "bytes32" },
+        { "name": "attestedAt", "type": "uint256" }
+      ],
+      "typeHash": "keccak256(\"CustodianQuorumAttestation(bytes32 custodianId,bytes32 operationId,uint8 operationType,bytes32 operationPayloadHash,uint256 attestedAt)\")"
+    },
+
+    "GoukassianSignatureAttestation": {
+      "description": "EIP-712 type for Goukassian Principle Signature artifact attestations. artifactName encoded as keccak256(\"signature\"). signatureAlgorithmId: 0=ES256 (SHIPPING default), 1=Ed25519 (SHIPPING), 6=SLH-DSA-SHAKE-128s (FUTURE reserved), 7=ML-KEM-1024 (FUTURE reserved). SHIPPING implementations MUST NOT emit values 6 or 7.",
+      "typeString": "GoukassianSignatureAttestation(bytes32 signatureId,bytes32 artifactName,bytes32 signerKeyId,bytes32 signedPayloadHash,uint8 signatureAlgorithmId,uint256 signedAt,bytes32 monographVersionHash)",
+      "fields": [
+        { "name": "signatureId", "type": "bytes32" },
+        { "name": "artifactName", "type": "bytes32", "description": "keccak256(\"signature\"). Canonical artifact name binding.", "x-tl-canonical-value": "keccak256(\"signature\")" },
+        { "name": "signerKeyId", "type": "bytes32" },
+        { "name": "signedPayloadHash", "type": "bytes32" },
+        {
+          "name": "signatureAlgorithmId",
+          "type": "uint8",
+          "description": "0=ES256 (SHIPPING default), 1=Ed25519 (SHIPPING), 6=SLH-DSA-SHAKE-128s (FUTURE), 7=ML-KEM-1024 (FUTURE).",
+          "x-tl-pqc-reserved": [
+            { "id": 6, "algorithm": "SLH-DSA-SHAKE-128s", "status": "FUTURE" },
+            { "id": 7, "algorithm": "ML-KEM-1024", "status": "FUTURE" }
+          ]
+        },
+        { "name": "signedAt", "type": "uint256" },
+        { "name": "monographVersionHash", "type": "bytes32" }
+      ],
+      "typeHash": "keccak256(\"GoukassianSignatureAttestation(bytes32 signatureId,bytes32 artifactName,bytes32 signerKeyId,bytes32 signedPayloadHash,uint8 signatureAlgorithmId,uint256 signedAt,bytes32 monographVersionHash)\")"
+    }
+
+  },
+
+  "canonicalTypeHashRegistry": {
+    "description": "Pre-computed EIP-712 typeHash registry. Whitespace in type string pre-images is significant. Single space after each comma. No trailing whitespace. No newlines. Actual keccak256 values must be computed at deployment time.",
+    "entries": [
+      { "typeName": "GovernanceTraceLog", "typeStringPreImage": "GovernanceTraceLog(bytes32 logId,int8 currentState,bytes32 decisionId,bytes32 pillarsCertifiedHash,uint256 committedAt,bytes32 monographVersionHash)" },
+      { "typeName": "PermissionToken", "typeStringPreImage": "PermissionToken(bytes32 tokenId,bytes32 logHash,uint256 epochTimestamp,bytes32 signerKeyId,bytes32 merkleRoot,uint256 expiresAt,bytes32 decisionId,bytes32 monographVersionHash)" },
+      { "typeName": "EmergencyOverride", "typeStringPreImage": "EmergencyOverride(bytes32 overrideRequestId,uint8 overrideType,bytes32 targetDecisionId,uint8 forcedState,bytes32 justificationHash,uint256 requestedAt)" },
+      { "typeName": "CustodianQuorumAttestation", "typeStringPreImage": "CustodianQuorumAttestation(bytes32 custodianId,bytes32 operationId,uint8 operationType,bytes32 operationPayloadHash,uint256 attestedAt)" },
+      { "typeName": "GoukassianSignatureAttestation", "typeStringPreImage": "GoukassianSignatureAttestation(bytes32 signatureId,bytes32 artifactName,bytes32 signerKeyId,bytes32 signedPayloadHash,uint8 signatureAlgorithmId,uint256 signedAt,bytes32 monographVersionHash)" },
+      { "typeName": "EIP712Domain", "typeStringPreImage": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract,bytes32 salt)" }
+    ]
+  },
+
+  "canonicalArtifactNameHashes": {
+    "description": "keccak256 hashes of canonical lowercase Goukassian Principle artifact names.",
+    "lantern": { "preImage": "lantern", "hash": "keccak256(\"lantern\")", "note": "Canonical const per GoukassianPrincipleBlock.lantern.artifactName." },
+    "signature": { "preImage": "signature", "hash": "keccak256(\"signature\")", "note": "Canonical const per GoukassianPrincipleBlock.signature.artifactName. Used in GoukassianSignatureAttestation.artifactName." },
+    "license": { "preImage": "license", "hash": "keccak256(\"license\")", "note": "Canonical const per GoukassianPrincipleBlock.license.artifactName." }
+  },
+
+  "canonicalMandateHashes": {
+    "description": "keccak256 hashes of the Three Immutable Mandate strings. Used in ITL_Validator.recordMandateViolation.mandateViolated.",
+    "noSpy": { "preImage": "No Spy", "hash": "keccak256(\"No Spy\")", "mandate": "No Spy" },
+    "noWeapon": { "preImage": "No Weapon", "hash": "keccak256(\"No Weapon\")", "mandate": "No Weapon" },
+    "noSwitchOff": { "preImage": "No Switch Off", "hash": "keccak256(\"No Switch Off\")", "mandate": "No Switch Off" }
+  },
+
+  "laneOriginHash": {
+    "description": "keccak256 of the canonical AUDIT_LANE string. Used by TL_Ledger_Core.registerPermissionToken for NL=NA Layer 2 enforcement.",
+    "preImage": "AUDIT_LANE",
+    "hash": "keccak256(\"AUDIT_LANE\")",
+    "nlNaLayer": 2
+  }
+}
