@@ -199,4 +199,4 @@ This work is licensed under a Creative Commons Attribution 4.0 International Lic
 
 ---
 
-### *"Epistemic Hold is not a delay. It is the first honest byte ever written in the history of institutional governance."* - Lev Goukassian
+### *"If you cannot log it, you do not understand it. If you do not understand it, you have no authority to execute it."* - Lev Goukassian
