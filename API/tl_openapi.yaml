@@ -1,0 +1,2238 @@
+openapi: 3.1.0
+
+info:
+  title: '"Ternary Logic" (TL) Governance API'
+  version: 1.0.0-tl-monograph-2026
+  description: |
+    # "Ternary Logic" (TL) Governance API
+
+    ## Constitutional Preamble
+
+    The "Ternary Logic" (TL) framework by Lev Goukassian governs institutional
+    decision-making at the macro level: global economic systems, financial
+    infrastructure, supply chain governance, and sovereign policy execution.
+    This API is the software interface to a constitutional substrate, not a
+    conventional REST service. Every endpoint is a governance boundary. Every
+    request carries democratic accountability requirements. Every response is
+    a constitutional state transition.
+
+    ## The Goukassian Vow (Foundational Constitutional Logic)
+
+    The Goukassian Vow is the constitutional mapping of the three TL states
+    to human-readable moral imperatives. It is the foundational logic of
+    every state transition in this specification:
+
+      "Pause when truth is uncertain"  ->  State  0  (Epistemic Hold)
+      "Refuse when harm is clear"      ->  State -1  (Refuse)
+      "Proceed where truth is"         ->  State +1  (Proceed)
+
+    Epistemic Hold (State 0) is a first-class constitutional state: mandatory
+    hesitation in the presence of unverified truth. It is never null, error,
+    false, timeout, pending, or retry.
+
+    Refuse (State -1) is a hard constitutional barrier when harm is clear.
+    Permanent unless overridden by supreme authority under documented process.
+    The canonical State -1 label is Refuse. Halt does not appear anywhere
+    in this specification.
+
+    Proceed (State +1) is authorized only when truth is present and verified.
+    The Permission Token is the cryptographic expression of this verification.
+
+    ## Three Immutable Mandates
+
+    The following three mandates are beyond any governance body's authority
+    to modify, suspend, or reinterpret. Any such proposal is void from the
+    beginning as if it never occurred:
+
+      No Spy
+      No Weapon
+      No Switch Off
+
+    ## NL=NA (No Log = No Action)
+
+    The NL=NA invariant is enforced at every API boundary. No endpoint may
+    return PROCEED without prior cryptographic confirmation of audit lane
+    completion. The binary lane may propose +1, but the ternary lane must
+    produce a valid Permission Token before the actuation layer fires.
+
+    ## Related Publications
+
+    - "Auditable AI: Tracing the Ethical History of a Model"
+      DOI: 10.1007/s43681-025-00910-6
+      Springer Nature, AI and Ethics
+
+    - "A Ternary Logic Framework for Institutional Governance"
+      DOI: 10.1007/s43681-026-01124-0
+      Springer Nature, AI and Ethics, Editor John MacIntyre
+
+  contact:
+    name: Lev Goukassian
+    url: https://github.com/FractonicMind/TernaryLogic
+  license:
+    name: "Ternary Logic" Constitutional License
+    url: https://github.com/FractonicMind/TernaryLogic
+
+x-tl-constitutional-preamble:
+  frameworkName: '"Ternary Logic" (TL)'
+  frameworkAuthor: Lev Goukassian
+  authorOrcid: "0009-0006-5966-1243"
+  githubRepository: FractonicMind/TernaryLogic
+  springerDoi1: "10.1007/s43681-025-00910-6"
+  springerDoi2: "10.1007/s43681-026-01124-0"
+  goukassianVow:
+    state0: "Pause when truth is uncertain -> State 0 (Epistemic Hold)"
+    stateNeg1: "Refuse when harm is clear -> State -1 (Refuse)"
+    statePos1: "Proceed where truth is -> State +1 (Proceed)"
+  threeImmutableMandates:
+    - "No Spy"
+    - "No Weapon"
+    - "No Switch Off"
+  nlNaInvariant: >-
+    No endpoint may return PROCEED without prior cryptographic confirmation
+    of audit lane completion. Fail-open is constitutionally prohibited.
+  specVersion: 1.0.0-tl-monograph-2026
+
+x-tl-capability-flags:
+  custodianQuorumAttestationEnabled: false
+  pufAttestationMode: ARCHITECTURE_B
+  ditlIntegrated: false
+
+servers:
+  - url: https://api.sandbox.tl-governance.org/v1
+    description: Sandbox environment for integration testing
+    x-tl-environment: sandbox
+  - url: https://api.staging.tl-governance.org/v1
+    description: Staging environment for pre-production validation
+    x-tl-environment: staging
+  - url: https://api.tl-governance.org/v1
+    description: Production environment
+    x-tl-environment: production
+
+security:
+  - TLGovernanceJWT: []
+
+tags:
+  - name: Core States
+    description: >-
+      Foundational TL state machine endpoints. All three states (Proceed,
+      Epistemic Hold, Refuse) are first-class constitutional states governed
+      by the Goukassian Vow.
+  - name: Decision Engine
+    description: >-
+      Inference Lane endpoints. Binary engine proposes; it cannot authorize.
+      Permission Token required for actuation.
+  - name: Epistemic Hold
+    description: >-
+      Constitutional State 0 endpoints. Never null, error, or timeout.
+      Human-in-the-loop escalation and resolution surface.
+  - name: Eight Pillars
+    description: >-
+      Governance architecture pillar health, attestation, and configuration
+      endpoints.
+  - name: Regulatory Compliance
+    description: >-
+      Domain-specific regulatory compliance endpoints under Pillars V and VI.
+      Basel III, FATF, IOSCO, GDPR, Paris Agreement.
+  - name: Audit and Anchoring
+    description: >-
+      Audit Lane endpoints for TGLF submission, Permission Token issuance,
+      Merkle anchoring, and blockchain verification. Central NL=NA surface.
+  - name: Redress and Appeal
+    description: >-
+      Subject-initiated challenge, TGLF re-evaluation, and economic rights
+      grievance endpoints under Pillar V.
+  - name: Thresholds and Calibration
+    description: >-
+      Governance domain threshold profile retrieval and update endpoints.
+      Requires Tri-Cameral governance approval for modifications.
+  - name: DITL Hardware Interface
+    description: >-
+      MT hardware state query, Window Comparator verification, and PUF
+      attestation chain endpoints. FUTURE status for non-MT deployments.
+
+components:
+  securitySchemes:
+
+    TLGovernanceJWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        JWT containing TL governance claims including pillar attestations.
+        Used on all Inference Lane endpoints.
+
+    PUFAttestationHeader:
+      type: apiKey
+      in: header
+      name: X-TL-PUF-Attestation
+      description: >-
+        Physical Unclonable Function attestation token for MT-integrated
+        deployments.
+
+    NLNAAuditToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        Audit lane completion token issued by the Audit Lane HSM.
+        Cryptographically bound to the X-TL-Trace-Id of the originating
+        Inference Lane request. laneOrigin claim MUST be "AUDIT_LANE".
+
+    HSMSignedJWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        HSM-signed JWT for Audit and Governance Lane security.
+
+    CAVettedJWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        Certificate Authority-vetted JWT for auditor and regulator endpoints.
+
+  headers:
+
+    X-TL-Trace-Id:
+      description: UUID v4 required on all requests; echoed in all responses and webhook events.
+      schema:
+        type: string
+        format: uuid
+      required: true
+
+    X-TL-API-Version:
+      description: Client-pinned specification snapshot date (YYYY-MM-DD).
+      schema:
+        type: string
+        pattern: '^\d{4}-\d{2}-\d{2}$'
+
+    X-TL-State:
+      description: >-
+        Present in ALL responses including errors. Signed integer: +1, 0, -1.
+        Never omitted, never null.
+      schema:
+        type: integer
+        enum: [-1, 0, 1]
+      required: true
+
+    Idempotency-Key:
+      description: UUID v4 required on all POST, PUT, and PATCH endpoints.
+      schema:
+        type: string
+        format: uuid
+      required: true
+
+    X-RateLimit-Limit:
+      schema: { type: integer }
+    X-RateLimit-Remaining:
+      schema: { type: integer }
+    X-RateLimit-Reset:
+      schema: { type: integer, format: int64 }
+    X-RateLimit-Policy:
+      schema: { type: string, enum: [tl-governance-v1] }
+
+  responses:
+
+    EpistemicHoldResponse:
+      description: Constitutional State 0. Contains EscrowRecord and hold resolution requirements.
+      headers:
+        X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+        X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/StateEnvelope' }
+
+    RefuseResponse:
+      description: Constitutional State -1. Permanent. No Permission Token issued.
+      headers:
+        X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+        X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/StateEnvelope' }
+
+    ProblemResponse:
+      description: RFC 7807 application/problem+json. x-tl-state never omitted.
+      headers:
+        X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+        X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/TLProblemDetail' }
+
+  schemas:
+
+    TLState:
+      type: integer
+      enum: [-1, 0, 1]
+      description: >-
+        Three-state enumeration. +1=Proceed, 0=Epistemic Hold, -1=Refuse.
+        State 0 is never null, false, error, or timeout.
+      x-tl-pillar: EpistemicHold
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section I"
+
+    TLStateLabel:
+      type: string
+      enum: [Proceed, EpistemicHold, Refuse]
+      description: Human-readable PascalCase label. Refuse is exclusive State -1 label. Halt prohibited.
+      x-tl-pillar: EpistemicHold
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section I"
+
+    StateEnvelope:
+      type: object
+      description: >-
+        Canonical TL response wrapper. NL=NA Layer 1: permissionToken REQUIRED
+        when currentState==1. unevaluatedProperties: false prevents bypass.
+        GovernancePause is workflow name, not state synonym.
+      required: [currentState, stateLabel, proposedAction, processActive]
+      properties:
+        currentState: { $ref: '#/components/schemas/TLState' }
+        stateLabel: { $ref: '#/components/schemas/TLStateLabel' }
+        proposedAction: { type: string, minLength: 1 }
+        processActive:
+          type: string
+          description: "GovernancePause (State 0), ProceedAuthorized (State +1), RefusalPermanent (State -1)."
+        permissionToken: { $ref: '#/components/schemas/PermissionToken' }
+        escrowRecord: { $ref: '#/components/schemas/EscrowRecord' }
+        traceId: { type: string, format: uuid }
+      if:
+        properties: { currentState: { const: 1 } }
+      then:
+        required: [permissionToken]
+        properties:
+          stateLabel: { const: Proceed }
+          processActive: { const: ProceedAuthorized }
+      else:
+        if:
+          properties: { currentState: { const: 0 } }
+        then:
+          required: [escrowRecord]
+          properties:
+            stateLabel: { const: EpistemicHold }
+            processActive: { const: GovernancePause }
+        else:
+          properties:
+            stateLabel: { const: Refuse }
+            processActive: { const: RefusalPermanent }
+      unevaluatedProperties: false
+      x-tl-pillar: EpistemicHold
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+
+    PermissionToken:
+      type: object
+      description: >-
+        NL=NA cryptographic enforcement artifact. laneOrigin const "AUDIT_LANE".
+        Inference Lane tokens schema-invalid. actuation layer MUST reject expired tokens.
+        maxLifetimeMs maximum 300000 aligned with DLLA Audit Lane ceiling.
+      required:
+        [tokenId, logHash, epochTimestamp, signerKeyId, laneOrigin, merkleRoot,
+         signatureValue, issuedAt, expiresAt, maxLifetimeMs, revocationStatus]
+      properties:
+        tokenId: { type: string, format: uuid }
+        logHash: { type: string, pattern: '^[0-9a-f]{64}$', description: "SHA-256 anchored TGLF entry. NL=NA Layer 4 cross-ref: MUST match AuditProof.logHash." }
+        epochTimestamp: { type: integer, format: int64 }
+        signerKeyId: { type: string }
+        laneOrigin: { type: string, const: "AUDIT_LANE", description: "NL=NA Layer 2 const." }
+        merkleRoot: { type: string, pattern: '^[0-9a-f]{64}$', description: "NL=NA Layer 4 cross-ref: MUST match AuditProof.merkleRoot. Layer 5: registerPermissionToken reverts NLNAViolation if logHash not in root." }
+        signatureValue: { type: string, format: byte, minLength: 64 }
+        issuedAt: { type: string, format: date-time }
+        expiresAt: { type: string, format: date-time, description: "Hard expiration. Actuation layer MUST reject. No grace period." }
+        maxLifetimeMs: { type: integer, maximum: 300000 }
+        revocationStatus:
+          type: string
+          enum: [ACTIVE, REVOKED_BY_EMERGENCY, REVOKED_BY_TRI_CAMERAL]
+        revocationMerkleRoot: { type: string, pattern: '^[0-9a-f]{64}$' }
+        custodianQuorumAttestation:
+          type: string
+          description: "BETA optional. Token valid without it for SHIPPING."
+          x-tl-implementation-status: BETA
+      if:
+        properties:
+          revocationStatus: { not: { const: ACTIVE } }
+      then:
+        required: [revocationMerkleRoot]
+      unevaluatedProperties: false
+      x-tl-pillar: ImmutableLedger
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+
+    EscrowRecord:
+      type: object
+      description: >-
+        Single authoritative schema for all Epistemic Hold response fields per Section 4.4.
+        Created at hold initiation. Immutable.
+      required:
+        [escrowId, heldState, initiatedAt, initiatingDecisionId, holdRationale,
+         resolutionDeadline, immutableLogHash, holdDurationMs, auditLaneStatus,
+         requiredConditions, windowComparatorReading]
+      properties:
+        escrowId: { type: string, format: uuid }
+        heldState: { type: integer, const: 0 }
+        initiatedAt: { type: string, format: date-time }
+        initiatingDecisionId: { type: string, format: uuid }
+        holdRationale:
+          type: object
+          required: [rationale, uncertaintyScore, pillarImplicated]
+          properties:
+            rationale: { type: string, minLength: 10 }
+            uncertaintyScore: { type: number, minimum: 0.0, maximum: 1.0 }
+            pillarImplicated:
+              type: string
+              enum: [EpistemicHold, ImmutableLedger, GoukassianPrinciple, DecisionLogs,
+                     EconomicRightsAndTransparencyMandate, SustainableCapitalAllocationMandate,
+                     HybridShield, Anchors]
+          unevaluatedProperties: false
+        resolutionDeadline: { type: string, format: date-time, description: "Terminal state must be +1 or -1. State 0 invalid resolution." }
+        immutableLogHash: { type: string, pattern: '^[0-9a-f]{64}$' }
+        holdDurationMs: { type: integer, minimum: 0 }
+        auditLaneStatus:
+          type: object
+          required: [stage, percentComplete]
+          properties:
+            stage: { type: string }
+            percentComplete: { type: number, minimum: 0, maximum: 100 }
+          unevaluatedProperties: false
+        requiredConditions:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required: [conditionId, description, met]
+            properties:
+              conditionId: { type: string }
+              description: { type: string }
+              met: { type: boolean }
+            unevaluatedProperties: false
+        windowComparatorReading:
+          type: object
+          required: [readingAvailable]
+          properties:
+            readingAvailable: { type: boolean }
+            resistanceRangeOhm:
+              type: object
+              properties:
+                minOhm: { type: number }
+                maxOhm: { type: number }
+              unevaluatedProperties: false
+            softwareEnforcementActive: { type: boolean }
+          unevaluatedProperties: false
+      unevaluatedProperties: false
+      x-tl-pillar: EpistemicHold
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+
+    GoukassianPrincipleBlock:
+      type: object
+      description: >-
+        Three Goukassian Principle artifacts. Every API transaction must carry these.
+        artifactName const values: "lantern", "signature", "license" (canonical lowercase).
+      required: [lantern, signature, license]
+      properties:
+        lantern:
+          type: object
+          required: [artifactName, lanternHash]
+          properties:
+            artifactName: { type: string, const: "lantern" }
+            lanternHash: { type: string, pattern: '^[0-9a-f]{64}$' }
+          unevaluatedProperties: false
+        signature:
+          type: object
+          required: [artifactName, agentSignature]
+          properties:
+            artifactName: { type: string, const: "signature" }
+            agentSignature: { type: string, pattern: '^[0-9a-f]{128}$' }
+          unevaluatedProperties: false
+        license:
+          type: object
+          required: [artifactName, licenseScope]
+          properties:
+            artifactName: { type: string, const: "license" }
+            licenseScope: { type: array, items: { type: string }, minItems: 1 }
+          unevaluatedProperties: false
+      unevaluatedProperties: false
+      x-tl-pillar: GoukassianPrinciple
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+
+    TLResult:
+      type: object
+      required: [state, stateLabel, confidence, rationale, nextSteps, goukassianPrinciple]
+      properties:
+        state: { $ref: '#/components/schemas/TLState' }
+        stateLabel: { $ref: '#/components/schemas/TLStateLabel' }
+        confidence: { type: number, minimum: 0.0, maximum: 1.0 }
+        rationale: { type: string }
+        nextSteps: { type: array, items: { type: string } }
+        metadata: { type: object }
+        goukassianPrinciple: { $ref: '#/components/schemas/GoukassianPrincipleBlock' }
+      x-tl-pillar: EpistemicHold
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section I"
+      x-tl-implementation-status: SHIPPING
+
+    TLProblemDetail:
+      type: object
+      description: "RFC 7807 with mandatory TL extensions. x-tl-state never omitted."
+      required: [type, title, status, x-tl-state, x-tl-pillar, x-tl-trace-id, tlErrorCode]
+      properties:
+        type: { type: string, format: uri }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        instance: { type: string, format: uri }
+        x-tl-state: { type: integer, enum: [-1, 0, 1] }
+        x-tl-pillar:
+          type: string
+          enum: [EpistemicHold, ImmutableLedger, GoukassianPrinciple, DecisionLogs,
+                 EconomicRightsAndTransparencyMandate, SustainableCapitalAllocationMandate,
+                 HybridShield, Anchors]
+        x-tl-trace-id: { type: string, format: uuid }
+        retry_after: { type: integer }
+        tlErrorCode:
+          type: string
+          enum:
+            - PILLAR_VIOLATION_ERROR
+            - EPISTEMIC_HOLD_TIMEOUT_ERROR
+            - REGULATORY_COMPLIANCE_ERROR
+            - LANTERN_FORFEIT_ERROR
+            - DECISION_LOG_VIOLATION_ERROR
+            - WINDOW_COMPARATOR_FAILURE_ERROR
+            - GHOST_GOVERNANCE_DETECTED_ERROR
+            - NLNA_VIOLATION_ERROR
+            - LICENSE_SCOPE_EXCEEDED_ERROR
+            - QUORUM_NOT_MET_ERROR
+            - TRI_CAMERAL_VETO_ERROR
+            - SUCCESSION_DECLARATION_EXPIRED_ERROR
+            - SUCCESSION_DECLARATION_REQUIRED_ERROR
+      unevaluatedProperties: false
+
+    NLNAAuditToken:
+      type: object
+      required: [tokenId, merkleRoot, ledgerAnchor, timestamp, pufAttestation, laneStatus]
+      properties:
+        tokenId: { type: string, format: uuid }
+        merkleRoot: { type: string, pattern: '^[0-9a-f]{64}$' }
+        ledgerAnchor: { type: string }
+        timestamp: { type: string, format: date-time }
+        pufAttestation:
+          type: string
+          description: "Non-MT deployments MUST use sentinel value NULL_PUF_DEPLOYMENT."
+        laneStatus: { type: string, enum: [pending, committed, anchored] }
+      unevaluatedProperties: false
+      x-tl-pillar: ImmutableLedger
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+
+    LanternStatus:
+      type: object
+      required: [artifactName, compliancePosture, pillarStatuses, activatedAt, emergencyOverrideActive]
+      properties:
+        artifactName: { type: string, const: "lantern" }
+        compliancePosture:
+          type: string
+          enum: [FULLY_COMPLIANT, EPISTEMIC_HOLD_ACTIVE, REGULATORY_REVIEW, PILLAR_DEGRADED, EMERGENCY_OVERRIDE_ACTIVE]
+        pillarStatuses:
+          type: array
+          minItems: 8
+          maxItems: 8
+          items:
+            type: object
+            required: [pillarId, status]
+            properties:
+              pillarId:
+                type: string
+                enum: [EpistemicHold, ImmutableLedger, GoukassianPrinciple, DecisionLogs,
+                       EconomicRightsAndTransparencyMandate, SustainableCapitalAllocationMandate,
+                       HybridShield, Anchors]
+              status: { type: string, enum: [ACTIVE, DEGRADED, SUSPENDED, EPISTEMIC_HOLD_ACTIVE] }
+            unevaluatedProperties: false
+        signatureBlock: { $ref: '#/components/schemas/SignatureBlock' }
+        activatedAt: { type: string, format: date-time }
+        emergencyOverrideActive: { type: boolean }
+      unevaluatedProperties: false
+      x-tl-pillar: GoukassianPrinciple
+      x-tl-implementation-status: SHIPPING
+
+    SignatureBlock:
+      type: object
+      description: "SHIPPING: ES256 (default) or Ed25519. SLH-DSA-SHAKE-128s (id 6) and ML-KEM-1024 (id 7) are FUTURE-reserved. SHIPPING MUST NOT emit values 6 or 7."
+      required: [artifactName, signatureAlgorithm, signatureValue, signedAt]
+      properties:
+        artifactName: { type: string, const: "signature" }
+        signatureAlgorithm:
+          type: string
+          enum: [ES256, Ed25519, SLH-DSA-SHAKE-128s, ML-KEM-1024]
+          default: ES256
+        signatureValue: { type: string, format: byte }
+        signedAt: { type: string, format: date-time }
+        keyId: { type: string }
+      unevaluatedProperties: false
+      x-tl-pillar: GoukassianPrinciple
+      x-tl-implementation-status: SHIPPING
+
+    RegulatoryContext:
+      type: object
+      required: [baselIii, fatf, iosco, gdpr, parisAgreement, regulatoryFrameworkVersion]
+      properties:
+        baselIii:
+          type: object
+          required: [lcr, nsfr, capitalRatio]
+          properties:
+            lcr: { type: number }
+            nsfr: { type: number }
+            capitalRatio: { type: number }
+            stressTestRequired: { type: boolean }
+            counterpartyExposureWithinLimits: { type: boolean }
+          unevaluatedProperties: false
+        fatf:
+          type: object
+          required: [amlCheckRequired, sanctionsScreened, pepInvolved, sarGenerated]
+          properties:
+            amlCheckRequired: { type: boolean }
+            sanctionsScreened: { type: boolean }
+            pepInvolved: { type: boolean }
+            sarGenerated: { type: boolean }
+          unevaluatedProperties: false
+        iosco:
+          type: object
+          required: [layeringDetected, spoofingDetected, washTradingDetected]
+          properties:
+            layeringDetected: { type: boolean }
+            spoofingDetected: { type: boolean }
+            washTradingDetected: { type: boolean }
+            crossMarketManipulationDetected: { type: boolean }
+          unevaluatedProperties: false
+        gdpr:
+          type: object
+          required: [jurisdiction, consentAttestation, erasureEligible]
+          properties:
+            jurisdiction: { type: string }
+            consentAttestation: { type: boolean }
+            erasureEligible: { type: boolean, description: "TL uses HKDF-SHA3-256 cryptographic erasure. Not Article 4(5) pseudonymization." }
+          unevaluatedProperties: false
+        parisAgreement:
+          type: object
+          required: [carbonFootprintVerified, greenBondEligibility, esgScore]
+          properties:
+            carbonFootprintVerified: { type: boolean }
+            greenBondEligibility: { type: boolean }
+            esgScore: { type: number, minimum: 0.0, maximum: 100.0 }
+          unevaluatedProperties: false
+        regulatoryFrameworkVersion:
+          type: object
+          required: [baselVersion, fatfVersion, ioscoVersion, gdprVersion]
+          properties:
+            baselVersion: { type: string }
+            fatfVersion: { type: string }
+            ioscoVersion: { type: string }
+            gdprVersion: { type: string }
+          unevaluatedProperties: false
+      unevaluatedProperties: false
+      x-tl-pillar: EconomicRightsAndTransparencyMandate
+      x-tl-implementation-status: SHIPPING
+
+    TriCameralApproval:
+      type: object
+      required: [technicalCouncilVotes, stewardshipCustodianVotes, smartContractTreasuryExecution, quorumAchieved, approvalTimestamp]
+      properties:
+        technicalCouncilVotes:
+          type: object
+          required: [for, against, abstain, totalMembers]
+          properties:
+            for: { type: integer, maximum: 9 }
+            against: { type: integer, maximum: 9 }
+            abstain: { type: integer, maximum: 9 }
+            totalMembers: { type: integer, const: 9 }
+          unevaluatedProperties: false
+        stewardshipCustodianVotes:
+          type: object
+          required: [for, against, abstain, totalMembers, vetoExercised]
+          properties:
+            for: { type: integer, maximum: 11 }
+            against: { type: integer, maximum: 11 }
+            abstain: { type: integer, maximum: 11 }
+            totalMembers: { type: integer, const: 11 }
+            vetoExercised: { type: boolean, description: "Binding veto. If true, proposal constitutionally blocked." }
+          unevaluatedProperties: false
+        smartContractTreasuryExecution:
+          type: object
+          required: [executed, transactionHash]
+          properties:
+            executed: { type: boolean }
+            transactionHash: { type: string }
+          unevaluatedProperties: false
+        quorumAchieved: { type: boolean }
+        approvalTimestamp: { type: string, format: date-time }
+      unevaluatedProperties: false
+      x-tl-pillar: HybridShield
+      x-tl-implementation-status: SHIPPING
+
+    EmergencyOverrideRequest:
+      type: object
+      description: >-
+        Break-glass override. NL=NA without exception. forcedState [-1, 0] only.
+        Forced +1 constitutionally blocked. forcedStateExpiresAt required for
+        FORCED_STATE_TRANSITION.
+      required: [overrideType, forcedState, justification]
+      properties:
+        overrideType: { type: string, enum: [BREAK_GLASS_SHUTDOWN, KILL_SWITCH, FORCED_STATE_TRANSITION] }
+        forcedState: { type: integer, enum: [-1, 0] }
+        forcedStateExpiresAt: { type: string, format: date-time }
+        justification: { type: string, minLength: 100 }
+        targetDecisionId: { type: string, format: uuid }
+        requestingAuthorityId: { type: string }
+      if:
+        properties: { overrideType: { const: FORCED_STATE_TRANSITION } }
+      then:
+        required: [targetDecisionId, forcedStateExpiresAt]
+      unevaluatedProperties: false
+      x-tl-pillar: HybridShield
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section IX.3"
+      x-tl-implementation-status: SHIPPING
+
+    ThresholdProfile:
+      type: object
+      required: [domain, haltThreshold, holdThreshold, maxHoldDurationMs, regulatoryComplianceRequired]
+      properties:
+        domain: { type: string, enum: [trade, policy, supply-chain, general] }
+        haltThreshold: { type: number, minimum: 0.0, maximum: 1.0 }
+        holdThreshold: { type: number, minimum: 0.0, maximum: 1.0 }
+        maxHoldDurationMs: { type: integer, minimum: 0 }
+        regulatoryComplianceRequired: { type: number, minimum: 0.0, maximum: 1.0 }
+      unevaluatedProperties: false
+      x-tl-pillar: DecisionLogs
+      x-tl-implementation-status: SHIPPING
+
+    GatewayRoutingStatus:
+      type: object
+      description: "Fail-closed: cannot route to Audit Lane defaults to EPISTEMIC_HOLD. Fail-open constitutionally prohibited."
+      required: [operationalStatus, epistemicHoldOverride, inferenceLaneStatus, auditLaneStatus, lanternStatus]
+      properties:
+        operationalStatus:
+          type: string
+          enum: [FULLY_OPERATIONAL, INFERENCE_LANE_DEGRADED, AUDIT_LANE_DEGRADED,
+                 EPISTEMIC_HOLD_OVERRIDE_ACTIVE, EMERGENCY_OVERRIDE_ACTIVE, FAIL_CLOSED]
+        epistemicHoldOverride: { type: boolean }
+        inferenceLaneStatus:
+          type: object
+          required: [healthy, latencyMs]
+          properties:
+            healthy: { type: boolean }
+            latencyMs: { type: number, description: "DLLA WCET: 2ms at 99.99th percentile." }
+          unevaluatedProperties: false
+        auditLaneStatus:
+          type: object
+          required: [healthy, latencyMs]
+          properties:
+            healthy: { type: boolean }
+            latencyMs: { type: number, description: "DLLA hard ceiling: 300ms. Max jitter: 50ms." }
+          unevaluatedProperties: false
+        lanternStatus: { $ref: '#/components/schemas/LanternStatus' }
+      unevaluatedProperties: false
+      x-tl-pillar: GoukassianPrinciple
+      x-tl-implementation-status: SHIPPING
+
+paths:
+
+  /decisions:
+    post:
+      operationId: submitDecisionVector
+      summary: Submit a decision vector for TL governance evaluation
+      description: >-
+        Inference Lane. Binary engine proposes TLState. State +1 does NOT
+        authorize actuation. Permission Token from POST /audit-logs required.
+      tags: [Core States, Decision Engine]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: EpistemicHold
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section I"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: X-TL-API-Version, in: header, schema: { type: string, pattern: '^\d{4}-\d{2}-\d{2}$' } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [decisionVector, proposedAction, goukassianPrinciple]
+              properties:
+                decisionVector: { type: object, additionalProperties: true }
+                proposedAction: { type: string, minLength: 1 }
+                goukassianPrinciple: { $ref: '#/components/schemas/GoukassianPrincipleBlock' }
+                regulatoryContext: { $ref: '#/components/schemas/RegulatoryContext' }
+                domain: { type: string, enum: [trade, policy, supply-chain, general] }
+      responses:
+        '200':
+          description: TL evaluation complete.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+            X-RateLimit-Limit: { $ref: '#/components/headers/X-RateLimit-Limit' }
+            X-RateLimit-Remaining: { $ref: '#/components/headers/X-RateLimit-Remaining' }
+            X-RateLimit-Reset: { $ref: '#/components/headers/X-RateLimit-Reset' }
+            X-RateLimit-Policy: { $ref: '#/components/headers/X-RateLimit-Policy' }
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - { $ref: '#/components/schemas/TLResult' }
+                  - type: object
+                    required: [decisionId]
+                    properties:
+                      decisionId: { type: string, format: uuid }
+        '400': { $ref: '#/components/responses/ProblemResponse' }
+        '401': { $ref: '#/components/responses/ProblemResponse' }
+        '403': { $ref: '#/components/responses/ProblemResponse' }
+        '429': { $ref: '#/components/responses/ProblemResponse' }
+        '500': { $ref: '#/components/responses/ProblemResponse' }
+
+  /decisions/{decisionId}:
+    get:
+      operationId: getDecisionRecord
+      summary: Retrieve a decision record with current state and any issued Permission Token
+      tags: [Decision Engine]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: DecisionLogs
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: decisionId, in: path, required: true, schema: { type: string, format: uuid } }
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Decision record retrieved.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - { $ref: '#/components/schemas/StateEnvelope' }
+                  - type: object
+                    properties:
+                      tlResult: { $ref: '#/components/schemas/TLResult' }
+        '404': { $ref: '#/components/responses/ProblemResponse' }
+        '401': { $ref: '#/components/responses/ProblemResponse' }
+
+  /audit-logs:
+    post:
+      operationId: submitGovernanceTraceLog
+      summary: Submit TGLF; receive Permission Token on Proceed
+      description: >-
+        Audit Lane central NL=NA enforcement. State +1: Permission Token returned.
+        State 0: escalation + epistemicHold.escalation webhook. State -1: refusal, no token.
+      tags: [Audit and Anchoring, Core States]
+      security:
+        - HSMSignedJWT: []
+        - NLNAAuditToken: []
+      x-tl-pillar: ImmutableLedger
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid }, description: "MUST match originating Inference Lane X-TL-Trace-Id." }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [decisionId, tglfRecord, goukassianPrinciple]
+              properties:
+                decisionId: { type: string, format: uuid }
+                tglfRecord: { type: object, additionalProperties: true }
+                goukassianPrinciple: { $ref: '#/components/schemas/GoukassianPrincipleBlock' }
+                auditProof:
+                  type: object
+                  required: [logHash, merkleRoot]
+                  description: "NL=NA Layer 4: logHash and merkleRoot MUST match PermissionToken fields."
+                  properties:
+                    logHash: { type: string, pattern: '^[0-9a-f]{64}$' }
+                    merkleRoot: { type: string, pattern: '^[0-9a-f]{64}$' }
+                  unevaluatedProperties: false
+      responses:
+        '201':
+          description: TGLF anchored. StateEnvelope reflects +1, 0, or -1.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StateEnvelope' }
+        '400': { $ref: '#/components/responses/ProblemResponse' }
+        '401': { $ref: '#/components/responses/ProblemResponse' }
+        '403': { $ref: '#/components/responses/ProblemResponse' }
+        '409': { $ref: '#/components/responses/ProblemResponse' }
+
+  /audit-logs/{logId}:
+    get:
+      operationId: getAnchoredTGLFRecord
+      summary: Retrieve an anchored TGLF record by identifier
+      tags: [Audit and Anchoring]
+      security:
+        - TLGovernanceJWT: []
+        - CAVettedJWT: []
+      x-tl-pillar: ImmutableLedger
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: logId, in: path, required: true, schema: { type: string, format: uuid } }
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Anchored TGLF record.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logId: { type: string, format: uuid }
+                  tglfRecord: { type: object, additionalProperties: true }
+                  anchoredAt: { type: string, format: date-time }
+                  merkleRoot: { type: string, pattern: '^[0-9a-f]{64}$' }
+                  stateEnvelope: { $ref: '#/components/schemas/StateEnvelope' }
+        '404': { $ref: '#/components/responses/ProblemResponse' }
+
+  /epistemic-hold/escalations:
+    get:
+      operationId: listEpistemicHoldEscalations
+      summary: Human-in-the-loop review queue for active Epistemic Hold cases
+      tags: [Epistemic Hold]
+      security:
+        - TLGovernanceJWT: []
+        - HSMSignedJWT: []
+      x-tl-pillar: EpistemicHold
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: status, in: query, schema: { type: string, enum: [ACTIVE, PENDING_RESOLUTION, RESOLVED] } }
+        - name: pillarImplicated
+          in: query
+          schema:
+            type: string
+            enum: [EpistemicHold, ImmutableLedger, GoukassianPrinciple, DecisionLogs,
+                   EconomicRightsAndTransparencyMandate, SustainableCapitalAllocationMandate,
+                   HybridShield, Anchors]
+      responses:
+        '200':
+          description: Active Epistemic Hold escalations.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  escalations:
+                    type: array
+                    items:
+                      type: object
+                      required: [escalationId, decisionId, triggeredAt, escrowRecord]
+                      properties:
+                        escalationId: { type: string, format: uuid }
+                        decisionId: { type: string, format: uuid }
+                        triggeredAt: { type: string, format: date-time }
+                        escrowRecord: { $ref: '#/components/schemas/EscrowRecord' }
+                  totalActive: { type: integer }
+        '401': { $ref: '#/components/responses/ProblemResponse' }
+
+  /epistemic-hold/escalations/{escalationId}:
+    get:
+      operationId: getEpistemicHoldEscalation
+      summary: Full Epistemic Hold escalation case detail
+      tags: [Epistemic Hold]
+      security:
+        - TLGovernanceJWT: []
+        - HSMSignedJWT: []
+      x-tl-pillar: EpistemicHold
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: escalationId, in: path, required: true, schema: { type: string, format: uuid } }
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Full escalation case detail.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [escalationId, decisionId, escrowRecord, deliberationMatrix, resolutionRequest]
+                properties:
+                  escalationId: { type: string, format: uuid }
+                  decisionId: { type: string, format: uuid }
+                  escrowRecord: { $ref: '#/components/schemas/EscrowRecord' }
+                  tglfState0: { type: object, additionalProperties: true }
+                  deliberationMatrix: { type: object, additionalProperties: true }
+                  resolutionRequest: { type: object, additionalProperties: true }
+        '404': { $ref: '#/components/responses/ProblemResponse' }
+
+    patch:
+      operationId: resolveEpistemicHoldEscalation
+      summary: Human authority resolution; resolvedState accepts +1 or -1 only
+      tags: [Epistemic Hold]
+      security:
+        - HSMSignedJWT: []
+      x-tl-pillar: EpistemicHold
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: escalationId, in: path, required: true, schema: { type: string, format: uuid } }
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [resolvedState, resolutionRationale, resolvingAuthorityId, triCameralApproval]
+              properties:
+                resolvedState: { type: integer, enum: [1, -1], description: "State 0 constitutionally invalid as resolution." }
+                resolutionRationale: { type: string, minLength: 50 }
+                resolvingAuthorityId: { type: string }
+                triCameralApproval: { $ref: '#/components/schemas/TriCameralApproval' }
+      responses:
+        '200':
+          description: Epistemic Hold resolved.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StateEnvelope' }
+        '400': { $ref: '#/components/responses/ProblemResponse' }
+        '409': { $ref: '#/components/responses/ProblemResponse' }
+
+  /epistemic-hold/lantern:
+    get:
+      operationId: getEpistemicHoldLantern
+      summary: Current Goukassian Principle Lantern status; artifactName const "lantern"
+      tags: [Epistemic Hold, Eight Pillars]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: GoukassianPrinciple
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Current Lantern status.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LanternStatus' }
+
+  /goukassian/signature:
+    get:
+      operationId: getGoukassianSignature
+      summary: Retrieve current Signature Block and attestation chain status; artifactName const "signature"
+      tags: [Eight Pillars]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: GoukassianPrinciple
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Current Signature Block.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - { $ref: '#/components/schemas/SignatureBlock' }
+                  - type: object
+                    properties:
+                      attestationChainStatus: { type: string, enum: [VALID, DEGRADED, REVOKED] }
+                      pufEnrollmentConfirmed: { type: boolean }
+
+  /goukassian/license/validate:
+    post:
+      operationId: validateGoukassianLicense
+      summary: Validate license scope against proposed action vector; artifactName const "license"
+      tags: [Eight Pillars]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: GoukassianPrinciple
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [artifactName, licenseToken, requestingEntityId, purposeOfUse]
+              properties:
+                artifactName: { type: string, const: "license" }
+                licenseToken: { type: string }
+                requestingEntityId: { type: string }
+                purposeOfUse: { type: string }
+                proposedActionVector: { type: array, items: { type: string } }
+      responses:
+        '200':
+          description: License validation result.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [validationState, stateLabel, licenseScope, requestedScopes, exceededScopes]
+                properties:
+                  validationState: { $ref: '#/components/schemas/TLState' }
+                  stateLabel: { $ref: '#/components/schemas/TLStateLabel' }
+                  licenseScope: { type: array, items: { type: string } }
+                  requestedScopes: { type: array, items: { type: string } }
+                  exceededScopes: { type: array, items: { type: string } }
+        '403': { $ref: '#/components/responses/ProblemResponse' }
+
+  /refusals:
+    post:
+      operationId: recordRefusalDetermination
+      summary: Record a hard State -1 Refuse determination; no Permission Token issued
+      tags: [Core States]
+      security:
+        - HSMSignedJWT: []
+      x-tl-pillar: ImmutableLedger
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section I"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [decisionId, refusalRationale, goukassianPrinciple]
+              properties:
+                decisionId: { type: string, format: uuid }
+                refusalRationale: { type: string, minLength: 50 }
+                licenseViolation: { type: boolean, default: false }
+                threatVectorAnalysis: { type: object, additionalProperties: true }
+                goukassianPrinciple: { $ref: '#/components/schemas/GoukassianPrincipleBlock' }
+      responses:
+        '201':
+          description: Refuse determination recorded.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StateEnvelope' }
+
+  /refusals/license-violations:
+    post:
+      operationId: recordLicenseViolationRefusal
+      summary: Record a Goukassian Principle license violation refusal event
+      tags: [Core States, Eight Pillars]
+      security:
+        - HSMSignedJWT: []
+      x-tl-pillar: GoukassianPrinciple
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [decisionId, violatedArtifact, violationDescription]
+              properties:
+                decisionId: { type: string, format: uuid }
+                violatedArtifact: { type: string, enum: [lantern, signature, license] }
+                violationDescription: { type: string, minLength: 20 }
+      responses:
+        '201':
+          description: License violation refusal recorded.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StateEnvelope' }
+
+  /emergency/override:
+    post:
+      operationId: executeEmergencyOverride
+      summary: Break-glass shutdown, kill switch, or forced state transition
+      description: "NL=NA without exception. forcedState [-1, 0] only. Forced +1 constitutionally blocked."
+      tags: [Core States]
+      security:
+        - HSMSignedJWT: []
+      x-tl-pillar: HybridShield
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section IX.3"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/EmergencyOverrideRequest' }
+      responses:
+        '201':
+          description: Emergency override executed and logged.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StateEnvelope' }
+        '403': { $ref: '#/components/responses/ProblemResponse' }
+
+  /emergency/status:
+    get:
+      operationId: getEmergencyOverrideStatus
+      summary: Current emergency override status
+      tags: [Core States]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: HybridShield
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section IX.3"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Current emergency override status.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  overrideActive: { type: boolean }
+                  activeOverrideType: { type: string, enum: [BREAK_GLASS_SHUTDOWN, KILL_SWITCH, FORCED_STATE_TRANSITION] }
+                  forcedState: { type: integer, enum: [-1, 0] }
+                  expiresAt: { type: string, format: date-time }
+                  activatedAt: { type: string, format: date-time }
+
+  /audit/verifications/merkle/{merkleRoot}:
+    get:
+      operationId: verifyMerkleRoot
+      summary: Verify a Merkle root against public blockchain anchor
+      tags: [Audit and Anchoring]
+      security:
+        - CAVettedJWT: []
+        - TLGovernanceJWT: []
+      x-tl-pillar: Anchors
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: merkleRoot, in: path, required: true, schema: { type: string, pattern: '^[0-9a-f]{64}$' } }
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Merkle root verification result.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  merkleRoot: { type: string }
+                  anchoredAt: { type: string, format: date-time }
+                  blockchainTxHash: { type: string }
+                  verified: { type: boolean }
+        '404': { $ref: '#/components/responses/ProblemResponse' }
+
+  /audit/verifications/inclusion/{logId}:
+    get:
+      operationId: getLogInclusionProof
+      summary: Get log inclusion proof with full Merkle path
+      tags: [Audit and Anchoring]
+      security:
+        - CAVettedJWT: []
+        - TLGovernanceJWT: []
+      x-tl-pillar: Anchors
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: logId, in: path, required: true, schema: { type: string, format: uuid } }
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Log inclusion proof.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logId: { type: string, format: uuid }
+                  merkleRoot: { type: string, pattern: '^[0-9a-f]{64}$' }
+                  merklePath: { type: array, items: { type: string } }
+                  leafHash: { type: string, pattern: '^[0-9a-f]{64}$' }
+                  verified: { type: boolean }
+        '404': { $ref: '#/components/responses/ProblemResponse' }
+
+  /audit/custodians/{custodianId}/heartbeat:
+    get:
+      operationId: getCustodianHeartbeat
+      summary: HybridShield custodian liveness check
+      tags: [Audit and Anchoring, Eight Pillars]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: HybridShield
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: custodianId, in: path, required: true, schema: { type: string } }
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Custodian liveness status.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  custodianId: { type: string }
+                  alive: { type: boolean }
+                  lastHeartbeatAt: { type: string, format: date-time }
+                  jurisdiction: { type: string }
+                  quorumContribution: { type: boolean }
+
+  /audit/compliance/attestation:
+    get:
+      operationId: getEightPillarComplianceAttestation
+      summary: Pull signed Eight Pillar compliance attestation
+      tags: [Eight Pillars, Audit and Anchoring]
+      security:
+        - CAVettedJWT: []
+        - TLGovernanceJWT: []
+      x-tl-pillar: ImmutableLedger
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Signed Eight Pillar compliance attestation.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  attestationId: { type: string, format: uuid }
+                  attestedAt: { type: string, format: date-time }
+                  pillarAttestations:
+                    type: array
+                    minItems: 8
+                    maxItems: 8
+                    items:
+                      type: object
+                      properties:
+                        pillarId: { type: string }
+                        complianceStatus: { type: string, enum: [FULLY_COMPLIANT, CONDITIONALLY_COMPLIANT, NON_COMPLIANT] }
+                        attestationHash: { type: string, pattern: '^[0-9a-f]{64}$' }
+                  signatureBlock: { $ref: '#/components/schemas/SignatureBlock' }
+
+  /redress/challenges:
+    post:
+      operationId: submitRedressChallenge
+      summary: Subject-initiated challenge against a TL state determination
+      tags: [Redress and Appeal]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: EconomicRightsAndTransparencyMandate
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [decisionId, challengingEntityId, challengeRationale]
+              properties:
+                decisionId: { type: string, format: uuid }
+                challengingEntityId: { type: string }
+                challengeRationale: { type: string, minLength: 50 }
+                supportingEvidence: { type: array, items: { type: string } }
+      responses:
+        '201':
+          description: Redress challenge submitted.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  challengeId: { type: string, format: uuid }
+                  submittedAt: { type: string, format: date-time }
+                  estimatedReviewDeadline: { type: string, format: date-time }
+
+  /redress/challenges/{challengeId}:
+    get:
+      operationId: getRedressChallengeStatus
+      summary: Challenge status and outcome
+      tags: [Redress and Appeal]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: EconomicRightsAndTransparencyMandate
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: challengeId, in: path, required: true, schema: { type: string, format: uuid } }
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Challenge status and outcome.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  challengeId: { type: string, format: uuid }
+                  status: { type: string, enum: [PENDING, UNDER_REVIEW, RESOLVED_UPHELD, RESOLVED_OVERTURNED] }
+                  outcome: { type: object, additionalProperties: true }
+        '404': { $ref: '#/components/responses/ProblemResponse' }
+
+  /redress/log-reevaluation:
+    post:
+      operationId: requestTGLFReevaluation
+      summary: Request TGLF re-evaluation; original log remains immutable
+      tags: [Redress and Appeal]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: ImmutableLedger
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [logId, reevaluationRationale]
+              properties:
+                logId: { type: string, format: uuid, description: "Original log remains immutable." }
+                reevaluationRationale: { type: string, minLength: 50 }
+      responses:
+        '201':
+          description: Re-evaluation submitted. Original log unchanged.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reevaluationRequestId: { type: string, format: uuid }
+                  originalLogId: { type: string, format: uuid }
+                  immutabilityConfirmed: { type: boolean, const: true }
+
+  /redress/economic-rights-grievances:
+    post:
+      operationId: submitEconomicRightsGrievance
+      summary: Formal economic rights grievance under Pillar V
+      tags: [Redress and Appeal, Regulatory Compliance]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: EconomicRightsAndTransparencyMandate
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [grievingEntityId, grievanceCategory, grievanceDescription]
+              properties:
+                grievingEntityId: { type: string }
+                grievanceCategory: { type: string, enum: [FINANCIAL_FAIRNESS, EQUITABLE_ACCESS, TRANSPARENCY_DEFICIT, REGULATORY_VIOLATION] }
+                grievanceDescription: { type: string, minLength: 100 }
+                regulatoryFramework: { type: string, enum: [BASEL_III, FATF, IOSCO, CFPB, SEC, FINRA] }
+      responses:
+        '201':
+          description: Economic rights grievance filed.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  grievanceId: { type: string, format: uuid }
+                  filedAt: { type: string, format: date-time }
+
+  /regulator/evidence-export:
+    post:
+      operationId: exportRegulatoryEvidence
+      summary: Bulk evidence export (signed, Merkle-verified; asynchronous)
+      tags: [Regulatory Compliance, Audit and Anchoring]
+      security:
+        - CAVettedJWT: []
+      x-tl-pillar: EconomicRightsAndTransparencyMandate
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [requestingRegulatoryBody, exportScope, dateRangeStart, dateRangeEnd]
+              properties:
+                requestingRegulatoryBody: { type: string }
+                exportScope:
+                  type: array
+                  items: { type: string, enum: [TGLF_RECORDS, PERMISSION_TOKENS, PILLAR_ATTESTATIONS, REGULATORY_CONTEXTS] }
+                dateRangeStart: { type: string, format: date-time }
+                dateRangeEnd: { type: string, format: date-time }
+      responses:
+        '202':
+          description: Export job accepted (asynchronous).
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exportJobId: { type: string, format: uuid }
+                  estimatedCompletionAt: { type: string, format: date-time }
+
+  /regulator/custodian-quorum:
+    get:
+      operationId: getCustodianQuorumStatus
+      summary: Cross-jurisdiction HybridShield quorum status; sub-300ms global quorum is FUTURE
+      tags: [Regulatory Compliance, Eight Pillars]
+      security:
+        - CAVettedJWT: []
+        - TLGovernanceJWT: []
+      x-tl-pillar: HybridShield
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section X"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Cross-jurisdiction quorum status.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  quorumAchieved: { type: boolean }
+                  activeCustodians: { type: integer }
+                  requiredCustodians: { type: integer }
+                  crossJurisdictionLatencyMs:
+                    type: number
+                    description: "Sub-300ms global quorum is FUTURE per Section X."
+                  jurisdictions: { type: array, items: { type: string } }
+
+  /regulator/timestamp-verification/{logId}:
+    get:
+      operationId: verifyQualifiedTimestamp
+      summary: Qualified timestamp verification (RFC 3161)
+      tags: [Audit and Anchoring]
+      security:
+        - CAVettedJWT: []
+      x-tl-pillar: ImmutableLedger
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: logId, in: path, required: true, schema: { type: string, format: uuid } }
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: RFC 3161 timestamp verification result.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logId: { type: string, format: uuid }
+                  timestampVerified: { type: boolean }
+                  rfc3161Token: { type: string, format: byte }
+                  tsaIssuer: { type: string }
+                  timestampedAt: { type: string, format: date-time }
+
+  /regulator/basel-iii/attestation:
+    get:
+      operationId: getBaselIIIAttestation
+      summary: Basel III capital adequacy attestation
+      tags: [Regulatory Compliance]
+      security:
+        - CAVettedJWT: []
+      x-tl-pillar: EconomicRightsAndTransparencyMandate
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Basel III attestation.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  attestationId: { type: string, format: uuid }
+                  lcr: { type: number }
+                  nsfr: { type: number }
+                  capitalRatio: { type: number }
+                  stressTestPassed: { type: boolean }
+                  counterpartyExposureWithinLimits: { type: boolean }
+                  attestedAt: { type: string, format: date-time }
+                  signatureBlock: { $ref: '#/components/schemas/SignatureBlock' }
+
+  /regulator/fatf/compliance-export:
+    post:
+      operationId: exportFATFCompliance
+      summary: FATF AML/CFT compliance export with SAR generation trigger
+      tags: [Regulatory Compliance]
+      security:
+        - CAVettedJWT: []
+      x-tl-pillar: EconomicRightsAndTransparencyMandate
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [exportPeriodStart, exportPeriodEnd, requestingAuthority]
+              properties:
+                exportPeriodStart: { type: string, format: date-time }
+                exportPeriodEnd: { type: string, format: date-time }
+                requestingAuthority: { type: string }
+                triggerSARGeneration: { type: boolean, default: false }
+      responses:
+        '202':
+          description: FATF compliance export initiated.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exportJobId: { type: string, format: uuid }
+                  sarGenerationTriggered: { type: boolean }
+
+  /regulator/iosco/principle-mapping:
+    get:
+      operationId: getIOSCOPrincipleMapping
+      summary: IOSCO principle compliance mapping for market integrity
+      tags: [Regulatory Compliance]
+      security:
+        - CAVettedJWT: []
+      x-tl-pillar: EconomicRightsAndTransparencyMandate
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: IOSCO principle mapping.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mappingId: { type: string, format: uuid }
+                  ioscoCompliance: { $ref: '#/components/schemas/RegulatoryContext' }
+                  principlesMapped: { type: array, items: { type: string } }
+                  marketIntegrityChecks:
+                    type: object
+                    properties:
+                      layeringDetected: { type: boolean }
+                      spoofingDetected: { type: boolean }
+                      washTradingDetected: { type: boolean }
+                      crossMarketManipulationDetected: { type: boolean }
+
+  /gateway/status:
+    get:
+      operationId: getGatewayStatus
+      summary: TL Gateway status including fail-closed posture, lane health, and Lantern signal
+      tags: [Core States]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: GoukassianPrinciple
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: TL Gateway status.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/GatewayRoutingStatus' }
+
+  /gateway/lane-assignment:
+    post:
+      operationId: requestLaneAssignment
+      summary: Request lane assignment; epistemicHoldOverride signals fail-closed activation
+      tags: [Core States]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: EpistemicHold
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [requestedLane, decisionId]
+              properties:
+                requestedLane: { type: string, enum: [INFERENCE_LANE, AUDIT_LANE] }
+                decisionId: { type: string, format: uuid }
+                epistemicHoldOverride: { type: boolean, default: false }
+      responses:
+        '200':
+          description: Lane assignment result.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/GatewayRoutingStatus' }
+
+  /evaluate/trade:
+    post:
+      operationId: evaluateTradeDecision
+      summary: Financial trading domain evaluation with Basel III, FATF, and IOSCO sub-objects
+      tags: [Regulatory Compliance, Decision Engine]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: EconomicRightsAndTransparencyMandate
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [tradeVector, regulatoryContext, goukassianPrinciple]
+              properties:
+                tradeVector: { type: object, additionalProperties: true }
+                regulatoryContext: { $ref: '#/components/schemas/RegulatoryContext' }
+                goukassianPrinciple: { $ref: '#/components/schemas/GoukassianPrincipleBlock' }
+      responses:
+        '200':
+          description: Trade evaluation TLResult with trading metadata.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - { $ref: '#/components/schemas/TLResult' }
+                  - type: object
+                    properties:
+                      tradingMetadata:
+                        type: object
+                        properties:
+                          fillProbability: { type: number, minimum: 0.0, maximum: 1.0 }
+                          marketImpactEstimate: { type: number }
+                          amlClearanceStatus: { type: string, enum: [CLEARED, PENDING_REVIEW, REFUSED] }
+        '400': { $ref: '#/components/responses/ProblemResponse' }
+
+  /evaluate/policy:
+    post:
+      operationId: evaluatePolicyDecision
+      summary: Central banking and monetary policy evaluation with ESG considerations
+      tags: [Regulatory Compliance, Decision Engine]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: SustainableCapitalAllocationMandate
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [policyVector, regulatoryContext, goukassianPrinciple]
+              properties:
+                policyVector: { type: object, additionalProperties: true }
+                regulatoryContext: { $ref: '#/components/schemas/RegulatoryContext' }
+                goukassianPrinciple: { $ref: '#/components/schemas/GoukassianPrincipleBlock' }
+      responses:
+        '200':
+          description: Policy evaluation TLResult with policy metadata.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - { $ref: '#/components/schemas/TLResult' }
+                  - type: object
+                    properties:
+                      policyMetadata:
+                        type: object
+                        properties:
+                          inflationImpact: { type: number }
+                          unemploymentDelta: { type: number }
+                          greenBondEligibility: { type: boolean }
+        '400': { $ref: '#/components/responses/ProblemResponse' }
+
+  /evaluate/supply-chain:
+    post:
+      operationId: evaluateSupplyChainDecision
+      summary: Supply chain governance evaluation
+      tags: [Regulatory Compliance, Decision Engine]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: SustainableCapitalAllocationMandate
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [supplyChainVector, regulatoryContext, goukassianPrinciple]
+              properties:
+                supplyChainVector: { type: object, additionalProperties: true }
+                regulatoryContext: { $ref: '#/components/schemas/RegulatoryContext' }
+                goukassianPrinciple: { $ref: '#/components/schemas/GoukassianPrincipleBlock' }
+      responses:
+        '200':
+          description: Supply chain evaluation TLResult with chain metadata.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - { $ref: '#/components/schemas/TLResult' }
+                  - type: object
+                    properties:
+                      chainMetadata:
+                        type: object
+                        properties:
+                          carbonFootprintVerified: { type: boolean }
+                          laborStandardCompliance: { type: boolean }
+        '400': { $ref: '#/components/responses/ProblemResponse' }
+
+  /pillars/status:
+    get:
+      operationId: getEightPillarStatus
+      summary: Eight Pillar health check with per-pillar attestation and compliance score
+      tags: [Eight Pillars]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: ImmutableLedger
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Eight Pillar health status.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pillars:
+                    type: array
+                    minItems: 8
+                    maxItems: 8
+                    items:
+                      type: object
+                      required: [pillarId, status, complianceScore]
+                      properties:
+                        pillarId:
+                          type: string
+                          enum: [EpistemicHold, ImmutableLedger, GoukassianPrinciple, DecisionLogs,
+                                 EconomicRightsAndTransparencyMandate, SustainableCapitalAllocationMandate,
+                                 HybridShield, Anchors]
+                        status: { type: string, enum: [ACTIVE, DEGRADED, SUSPENDED, EPISTEMIC_HOLD_ACTIVE] }
+                        complianceScore: { type: number, minimum: 0.0, maximum: 1.0 }
+                        attestationHash: { type: string, pattern: '^[0-9a-f]{64}$' }
+                  overallComplianceScore: { type: number, minimum: 0.0, maximum: 1.0 }
+
+  /pillars/{pillarId}/configure:
+    post:
+      operationId: configurePillar
+      summary: Pillar reconfiguration requiring Tri-Cameral governance approval
+      tags: [Eight Pillars]
+      security:
+        - HSMSignedJWT: []
+      x-tl-pillar: HybridShield
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - name: pillarId
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [EpistemicHold, ImmutableLedger, GoukassianPrinciple, DecisionLogs,
+                   EconomicRightsAndTransparencyMandate, SustainableCapitalAllocationMandate,
+                   HybridShield, Anchors]
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [pillarConfiguration, triCameralApproval]
+              properties:
+                pillarConfiguration: { type: object, additionalProperties: true }
+                triCameralApproval: { $ref: '#/components/schemas/TriCameralApproval' }
+      responses:
+        '200':
+          description: Pillar reconfigured.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pillarId: { type: string }
+                  configurationLogId: { type: string, format: uuid }
+                  updatedAt: { type: string, format: date-time }
+        '403': { $ref: '#/components/responses/ProblemResponse' }
+
+  /thresholds/{domain}:
+    get:
+      operationId: getDomainThresholdProfile
+      summary: Current threshold profile for a governance domain
+      tags: [Thresholds and Calibration]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: DecisionLogs
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: domain, in: path, required: true, schema: { type: string, enum: [trade, policy, supply-chain, general] } }
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: Domain threshold profile.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ThresholdProfile' }
+
+    put:
+      operationId: updateDomainThresholdProfile
+      summary: Update threshold profile; requires Tri-Cameral governance approval
+      tags: [Thresholds and Calibration]
+      security:
+        - HSMSignedJWT: []
+      x-tl-pillar: DecisionLogs
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: domain, in: path, required: true, schema: { type: string, enum: [trade, policy, supply-chain, general] } }
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - { $ref: '#/components/schemas/ThresholdProfile' }
+                - type: object
+                  required: [triCameralApproval]
+                  properties:
+                    triCameralApproval: { $ref: '#/components/schemas/TriCameralApproval' }
+      responses:
+        '200':
+          description: Threshold profile updated.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ThresholdProfile' }
+        '403': { $ref: '#/components/responses/ProblemResponse' }
+
+  /ditl/state-transition:
+    post:
+      operationId: queryDITLStateTransition
+      summary: MT hardware state query with Window Comparator verification
+      tags: [DITL Hardware Interface]
+      security:
+        - PUFAttestationHeader: []
+        - HSMSignedJWT: []
+      x-tl-pillar: EpistemicHold
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section X"
+      x-tl-implementation-status: FUTURE
+      x-tl-blocking-constraint: "Constitutional Hardware Monograph, Section X"
+      x-tl-migration-path: "Constitutional Hardware Monograph, Section X"
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [deviceId, targetState, pufAttestation]
+              properties:
+                deviceId: { type: string }
+                targetState: { $ref: '#/components/schemas/TLState' }
+                pufAttestation: { type: string }
+      responses:
+        '200':
+          description: FUTURE. MT hardware state transition result.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transitionConfirmed: { type: boolean }
+                  windowComparatorReading:
+                    type: object
+                    properties:
+                      resistanceOhm: { type: number }
+                      stateConfirmed: { $ref: '#/components/schemas/TLState' }
+
+  /ditl/puf-attestation/{deviceId}:
+    get:
+      operationId: getPUFAttestationChain
+      summary: PUF attestation chain verification for an MT device
+      tags: [DITL Hardware Interface]
+      security:
+        - PUFAttestationHeader: []
+        - TLGovernanceJWT: []
+      x-tl-pillar: HybridShield
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section X"
+      x-tl-implementation-status: FUTURE
+      x-tl-blocking-constraint: "Constitutional Hardware Monograph, Section X"
+      x-tl-migration-path: "Constitutional Hardware Monograph, Section X"
+      parameters:
+        - { name: deviceId, in: path, required: true, schema: { type: string } }
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: FUTURE. PUF attestation chain verification.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deviceId: { type: string }
+                  enrollmentVerified: { type: boolean }
+                  foundryAttestationVerified: { type: boolean }
+                  nlNaInterlockVerified: { type: boolean }
+                  merkleHashChainRoot: { type: string, pattern: '^[0-9a-f]{64}$' }
+
+  /metrics/summary:
+    get:
+      operationId: getSystemMetricsSummary
+      summary: State distribution, epistemic hold rate, ghost governance detection rate
+      tags: [Eight Pillars]
+      security:
+        - TLGovernanceJWT: []
+      x-tl-pillar: DecisionLogs
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      parameters:
+        - { name: X-TL-Trace-Id, in: header, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: System metrics summary.
+          headers:
+            X-TL-Trace-Id: { $ref: '#/components/headers/X-TL-Trace-Id' }
+            X-TL-State: { $ref: '#/components/headers/X-TL-State' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stateDistribution:
+                    type: object
+                    properties:
+                      proceed: { type: number }
+                      epistemicHold: { type: number }
+                      refuse: { type: number }
+                  averageConfidence: { type: number, minimum: 0.0, maximum: 1.0 }
+                  epistemicHoldRate: { type: number }
+                  regulatoryComplianceRate: { type: number }
+                  esgVerificationAccuracy: { type: number }
+                  decisionLogCompleteness: { type: number }
+                  averageHoldDurationMs: { type: number }
+                  ghostGovernanceDetectionRate: { type: number }
+
+webhooks:
+  epistemicHold.escalation:
+    post:
+      summary: Async notification when Epistemic Hold triggers human review
+      description: >-
+        HMAC-SHA256 on X-TL-Webhook-Signature. Timestamp tolerance +/-30 seconds.
+        Min 3 attempts over 15 minutes (exponential backoff). Dedup key: escalationId.
+        Failover: HybridShield failover queue.
+      x-tl-pillar: EpistemicHold
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
+      x-tl-implementation-status: SHIPPING
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [event_id, escalationId, decisionId, triggeredAt, stateEnvelope, lanternStatus, humanReviewQueueUrl, x-tl-trace-id]
+              properties:
+                event_id: { type: string, format: uuid, description: "Receivers MUST deduplicate by event_id." }
+                escalationId: { type: string, format: uuid }
+                decisionId: { type: string, format: uuid }
+                triggeredAt: { type: string, format: date-time }
+                stateEnvelope: { $ref: '#/components/schemas/StateEnvelope' }
+                lanternStatus: { $ref: '#/components/schemas/LanternStatus' }
+                humanReviewQueueUrl: { type: string, format: uri }
+                x-tl-trace-id: { type: string, format: uuid }
+      responses:
+        '200':
+          description: Webhook received and deduplicated.
+        '422':
+          description: Payload rejected; retry will be attempted.
+
+  lanternStatus.broadcast:
+    post:
+      summary: Goukassian Principle Lantern public beacon update
+      description: >-
+        HMAC-SHA256 on X-TL-Webhook-Signature. Min 3 attempts over 15 seconds
+        at 5-second intervals. Best-effort. Dedup key: lanternSignalId.
+      x-tl-pillar: GoukassianPrinciple
+      x-tl-monograph-ref: "Constitutional Hardware Monograph, Section III"
+      x-tl-implementation-status: SHIPPING
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [event_id, lanternSignalId, broadcastAt, lanternStatus, signatureBlock, x-tl-trace-id]
+              properties:
+                event_id: { type: string, format: uuid }
+                lanternSignalId: { type: string, format: uuid }
+                broadcastAt: { type: string, format: date-time }
+                lanternStatus: { $ref: '#/components/schemas/LanternStatus' }
+                signatureBlock: { $ref: '#/components/schemas/SignatureBlock' }
+                x-tl-trace-id: { type: string, format: uuid }
+      responses:
+        '200':
+          description: Broadcast received.
