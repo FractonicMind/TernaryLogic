@@ -1,0 +1,1912 @@
+```
+
+```json
+{
+  "$id": "https://fractonicmind.github.io/Ternaryogic/api/schema/v1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "\"Ternary Logic\" (TL) Governance API Schema Bundle",
+  "description": "Canonical JSON Schema Draft 2020-12 bundle for the \"Ternary Logic\" (TL) framework by Lev Goukassian. ORCID: 0009-0006-5966-1243. DOI: 10.1007/s43681-025-00910-6 | DOI: 10.1007/s43681-026-01124-0. All schemas enforce unevaluatedProperties: false. Schema evolution: new properties must be added with versioned keys (e.g., PermissionToken_v1_0_0) to prevent silent drift.",
+  "$defs": {
+
+    "TLState_v1_0_0": {
+      "$anchor": "TLState",
+      "title": "TLState",
+      "description": "Three-state enumeration core to the Goukassian Vow. +1 = Proceed (authorized, truth present and verified). 0 = Epistemic Hold (mandatory pause, truth uncertain; never null, false, error, timeout, pending, or retry). -1 = Refuse (hard constitutional barrier, harm is clear; permanent unless overridden by supreme authority). Canonical State -1 label is Refuse. Halt does not appear anywhere in this specification.",
+      "type": "integer",
+      "enum": [-1, 0, 1],
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section I. Pillar: EpistemicHold."
+    },
+
+    "TLStateLabel_v1_0_0": {
+      "$anchor": "TLStateLabel",
+      "title": "TLStateLabel",
+      "description": "Human-readable PascalCase state label paired with TLState integer. Required alongside every TLState integer in all schemas. Refuse is the exclusive State -1 label. Halt is prohibited.",
+      "type": "string",
+      "enum": ["Proceed", "EpistemicHold", "Refuse"],
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section I. Pillar: EpistemicHold."
+    },
+
+    "PillarIdentifier_v1_0_0": {
+      "$anchor": "PillarIdentifier",
+      "title": "PillarIdentifier",
+      "description": "Canonical machine-readable identifiers for the Eight Pillars of the \"Ternary Logic\" governance architecture.",
+      "type": "string",
+      "enum": [
+        "EpistemicHold",
+        "ImmutableLedger",
+        "GoukassianPrinciple",
+        "DecisionLogs",
+        "EconomicRightsAndTransparencyMandate",
+        "SustainableCapitalAllocationMandate",
+        "HybridShield",
+        "Anchors"
+      ],
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section III. Eight Pillars canonical identifiers per Section 3.1."
+    },
+
+    "SHA256Hex_v1_0_0": {
+      "$anchor": "SHA256Hex",
+      "title": "SHA256Hex",
+      "description": "SHA-256 digest encoded as 64 lowercase hexadecimal characters.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "$comment": "Reusable primitive. Used by PermissionToken.logHash, PermissionToken.merkleRoot, EscrowRecord.immutableLogHash, AuditProof fields, and all Merkle anchor fields."
+    },
+
+    "Ed25519Hex_v1_0_0": {
+      "$anchor": "Ed25519Hex",
+      "title": "Ed25519Hex",
+      "description": "Ed25519 signature encoded as 128 lowercase hexadecimal characters.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{128}$",
+      "$comment": "Used by GoukassianPrincipleBlock.signature.agentSignature."
+    },
+
+    "ISO8601DateTime_v1_0_0": {
+      "$anchor": "ISO8601DateTime",
+      "title": "ISO8601DateTime",
+      "description": "ISO 8601 date-time string with timezone designator.",
+      "type": "string",
+      "format": "date-time",
+      "$comment": "Reusable primitive for all timestamp fields across TGLF schemas and PermissionToken."
+    },
+
+    "UUIDv4_v1_0_0": {
+      "$anchor": "UUIDv4",
+      "title": "UUIDv4",
+      "description": "UUID version 4 string in canonical hyphenated format.",
+      "type": "string",
+      "format": "uuid",
+      "$comment": "Reusable primitive for all identifier fields."
+    },
+
+    "GoukassianPrincipleBlock_v1_0_0": {
+      "$anchor": "GoukassianPrincipleBlock",
+      "title": "GoukassianPrincipleBlock",
+      "description": "The three Goukassian Principle artifacts that every API transaction must carry. Three interlocking properties: Lantern (visibility), Signature (attribution), License (boundary). artifactName const values are canonical lowercase strings: \"lantern\", \"signature\", \"license\". Emoji symbols and visual shorthand are restricted to narrative markdown only.",
+      "type": "object",
+      "required": ["lantern", "signature", "license"],
+      "properties": {
+
+        "lantern": {
+          "title": "LanternArtifact",
+          "description": "Purpose and decision logic visible and auditable at all times. artifactName: const \"lantern\".",
+          "type": "object",
+          "required": ["artifactName", "lanternHash"],
+          "properties": {
+            "artifactName": {
+              "type": "string",
+              "const": "lantern",
+              "description": "Canonical lowercase artifact identifier. Immutable const."
+            },
+            "lanternHash": {
+              "$ref": "#/$defs/SHA256Hex_v1_0_0",
+              "description": "SHA-256 hex64 hash of the lantern artifact payload."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+
+        "signature": {
+          "title": "SignatureArtifact",
+          "description": "Immutable record of the authorizing agent. artifactName: const \"signature\".",
+          "type": "object",
+          "required": ["artifactName", "agentSignature"],
+          "properties": {
+            "artifactName": {
+              "type": "string",
+              "const": "signature",
+              "description": "Canonical lowercase artifact identifier. Immutable const."
+            },
+            "agentSignature": {
+              "$ref": "#/$defs/Ed25519Hex_v1_0_0",
+              "description": "Ed25519 hex128 signature of the authorizing agent."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+
+        "license": {
+          "title": "LicenseArtifact",
+          "description": "System operates only within constitutionally defined boundaries. Any request exceeding licenseScope is automatically refused (State -1). artifactName: const \"license\".",
+          "type": "object",
+          "required": ["artifactName", "licenseScope"],
+          "properties": {
+            "artifactName": {
+              "type": "string",
+              "const": "license",
+              "description": "Canonical lowercase artifact identifier. Immutable const."
+            },
+            "licenseScope": {
+              "type": "array",
+              "items": { "type": "string" },
+              "minItems": 1,
+              "description": "Array of constitutionally authorized action scopes for this transaction."
+            }
+          },
+          "unevaluatedProperties": false
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section III. Pillar: GoukassianPrinciple."
+    },
+
+    "TLResult_v1_0_0": {
+      "$anchor": "TLResult",
+      "title": "TLResult",
+      "description": "Result object returned by Inference Lane /decisions endpoints. Contains the proposed TLState from the binary engine. State +1 does NOT authorize actuation; a Permission Token from the Audit Lane is required. The binary system proposes; the ternary system dictates.",
+      "type": "object",
+      "required": [
+        "state",
+        "stateLabel",
+        "confidence",
+        "rationale",
+        "nextSteps",
+        "goukassianPrinciple"
+      ],
+      "properties": {
+        "state": { "$ref": "#/$defs/TLState_v1_0_0" },
+        "stateLabel": { "$ref": "#/$defs/TLStateLabel_v1_0_0" },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Confidence score for the proposed state [0.0-1.0]."
+        },
+        "rationale": {
+          "type": "string",
+          "description": "Human-readable rationale for the proposed state transition."
+        },
+        "nextSteps": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Recommended governance actions following this determination."
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Domain-specific metadata. See tradingMetadata, policyMetadata, chainMetadata on domain evaluation responses."
+        },
+        "goukassianPrinciple": {
+          "$ref": "#/$defs/GoukassianPrincipleBlock_v1_0_0"
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section I. Pillar: EpistemicHold."
+    },
+
+    "PermissionToken_v1_0_0": {
+      "$anchor": "PermissionToken",
+      "title": "PermissionToken",
+      "description": "NL=NA cryptographic enforcement artifact and the schema-level expression of the Goukassian Vow third line (\"Proceed where truth is\"). Issued exclusively by the Audit Lane HSM. laneOrigin const \"AUDIT_LANE\": Inference Lane tokens are schema-invalid. Any StateEnvelope with currentState +1 MUST include a valid, non-expired PermissionToken. NL=NA Layer 2 enforcement. Revocation state machine: ACTIVE, REVOKED_BY_EMERGENCY, REVOKED_BY_TRI_CAMERAL. The actuation layer MUST reject expired tokens. maxLifetimeMs maximum: 300000, aligned with the DLLA Audit Lane 300ms hard ceiling.",
+      "type": "object",
+      "required": [
+        "tokenId",
+        "logHash",
+        "epochTimestamp",
+        "signerKeyId",
+        "laneOrigin",
+        "merkleRoot",
+        "signatureValue",
+        "issuedAt",
+        "expiresAt",
+        "maxLifetimeMs",
+        "revocationStatus"
+      ],
+      "properties": {
+        "tokenId": {
+          "$ref": "#/$defs/UUIDv4_v1_0_0",
+          "description": "Unique identifier for this Permission Token."
+        },
+        "logHash": {
+          "$ref": "#/$defs/SHA256Hex_v1_0_0",
+          "description": "SHA-256 of the anchored TGLF entry. Core NL=NA binding: cryptographically ties this token to an immutable audit log entry. NL=NA Layer 4 cross-reference: MUST match AuditProof.logHash."
+        },
+        "epochTimestamp": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Unix epoch integer at token issuance."
+        },
+        "signerKeyId": {
+          "type": "string",
+          "description": "HSM key identifier for signature verification."
+        },
+        "laneOrigin": {
+          "type": "string",
+          "const": "AUDIT_LANE",
+          "description": "NL=NA Layer 2: const \"AUDIT_LANE\". Inference Lane tokens are schema-invalid. This field cannot be set to any other value."
+        },
+        "merkleRoot": {
+          "$ref": "#/$defs/SHA256Hex_v1_0_0",
+          "description": "SHA-256 batch anchor hash. NL=NA Layer 4 cross-reference: MUST match AuditProof.merkleRoot. NL=NA Layer 5: TL_Ledger_Core.registerPermissionToken reverts NLNAViolation if logHash not in this anchored Merkle root."
+        },
+        "signatureValue": {
+          "type": "string",
+          "contentEncoding": "base64url",
+          "minLength": 64,
+          "description": "Base64url-encoded HSM signature over token fields."
+        },
+        "issuedAt": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "ISO 8601 datetime of token issuance."
+        },
+        "expiresAt": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "ISO 8601 datetime of token expiration. The actuation layer MUST reject expired tokens. Hard constraint; no grace period."
+        },
+        "maxLifetimeMs": {
+          "type": "integer",
+          "maximum": 300000,
+          "description": "Maximum token lifetime in milliseconds. Maximum: 300000, aligned with the DLLA Audit Lane 300ms hard ceiling."
+        },
+        "revocationStatus": {
+          "type": "string",
+          "enum": ["ACTIVE", "REVOKED_BY_EMERGENCY", "REVOKED_BY_TRI_CAMERAL"],
+          "description": "Revocation state machine. ACTIVE: token valid. REVOKED_BY_EMERGENCY: voided by emergency override. REVOKED_BY_TRI_CAMERAL: voided by Tri-Cameral governance decision."
+        },
+        "revocationMerkleRoot": {
+          "$ref": "#/$defs/SHA256Hex_v1_0_0",
+          "description": "Required when revocationStatus is not ACTIVE. SHA-256 Merkle root of the revocation record, anchored on-chain."
+        },
+        "custodianQuorumAttestation": {
+          "type": "string",
+          "description": "BETA optional field. HybridShield custodian quorum attestation at issuance. Token is valid without it for SHIPPING deployments.",
+          "$comment": "x-tl-implementation-status: BETA"
+        }
+      },
+      "if": {
+        "properties": {
+          "revocationStatus": {
+            "not": { "const": "ACTIVE" }
+          }
+        }
+      },
+      "then": {
+        "required": ["revocationMerkleRoot"]
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section II. Pillar: ImmutableLedger. NL=NA Layers 2 and 4 enforced here."
+    },
+
+    "AuditProof_v1_0_0": {
+      "$anchor": "AuditProof",
+      "title": "AuditProof",
+      "description": "NL=NA Layer 4 enforcement object. AuditProof.logHash and AuditProof.merkleRoot MUST match PermissionToken.logHash and PermissionToken.merkleRoot respectively. This cross-reference is the schema-level binding between the Audit Lane completion record and the Permission Token.",
+      "type": "object",
+      "required": ["logHash", "merkleRoot"],
+      "properties": {
+        "logHash": {
+          "$ref": "#/$defs/SHA256Hex_v1_0_0",
+          "description": "SHA-256 of the anchored TGLF entry. MUST match PermissionToken.logHash. NL=NA Layer 4."
+        },
+        "merkleRoot": {
+          "$ref": "#/$defs/SHA256Hex_v1_0_0",
+          "description": "SHA-256 batch anchor hash. MUST match PermissionToken.merkleRoot. NL=NA Layer 4."
+        },
+        "merkleProofPath": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SHA256Hex_v1_0_0" },
+          "description": "Ordered array of sibling hashes forming the full Merkle inclusion proof path."
+        },
+        "anchoredAt": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "ISO 8601 datetime when this log entry was anchored on-chain."
+        },
+        "blockchainTxHash": {
+          "type": "string",
+          "description": "On-chain transaction hash confirming Merkle root anchoring."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section II. Pillar: ImmutableLedger. NL=NA Layer 4."
+    },
+
+    "EscrowRecord_v1_0_0": {
+      "$anchor": "EscrowRecord",
+      "title": "EscrowRecord",
+      "description": "Single authoritative schema for all Epistemic Hold response fields. Created at hold initiation. Immutable after creation. Contains all fields required by Section 4.4. This schema is the sole source of truth for hold response field definitions. The TGLF-State0 schema references this as its escrowRecord sub-object.",
+      "type": "object",
+      "required": [
+        "escrowId",
+        "heldState",
+        "initiatedAt",
+        "initiatingDecisionId",
+        "holdRationale",
+        "resolutionDeadline",
+        "immutableLogHash",
+        "holdDurationMs",
+        "auditLaneStatus",
+        "requiredConditions",
+        "windowComparatorReading"
+      ],
+      "properties": {
+        "escrowId": {
+          "$ref": "#/$defs/UUIDv4_v1_0_0",
+          "description": "Unique identifier of this EscrowRecord."
+        },
+        "heldState": {
+          "type": "integer",
+          "const": 0,
+          "description": "Always 0. The EscrowRecord is created exclusively when Epistemic Hold (State 0) is active."
+        },
+        "initiatedAt": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "ISO 8601 datetime when Epistemic Hold was initiated."
+        },
+        "initiatingDecisionId": {
+          "$ref": "#/$defs/UUIDv4_v1_0_0",
+          "description": "UUID of the decision record that triggered this Epistemic Hold."
+        },
+        "holdRationale": {
+          "title": "HoldRationale",
+          "description": "Structured explanation of the constitutional pause.",
+          "type": "object",
+          "required": ["rationale", "uncertaintyScore", "pillarImplicated"],
+          "properties": {
+            "rationale": {
+              "type": "string",
+              "minLength": 10,
+              "description": "Human-readable rationale for the governance pause."
+            },
+            "uncertaintyScore": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Quantified uncertainty score [0.0-1.0] triggering Epistemic Hold."
+            },
+            "pillarImplicated": {
+              "$ref": "#/$defs/PillarIdentifier_v1_0_0",
+              "description": "Canonical pillar identifier implicated in this hold."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "resolutionDeadline": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "ISO 8601 datetime by which Tri-Cameral governance must resolve this hold. Terminal state must be +1 (Proceed) or -1 (Refuse). State 0 is not a valid resolution. Tri-Cameral bodies may not indefinitely defer."
+        },
+        "immutableLogHash": {
+          "$ref": "#/$defs/SHA256Hex_v1_0_0",
+          "description": "SHA-256 of the immutable TGLF-State0 log entry for this hold."
+        },
+        "holdDurationMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Current hold elapsed time in milliseconds since interlock initiation."
+        },
+        "auditLaneStatus": {
+          "title": "AuditLaneProgress",
+          "description": "Real-time progress of the Audit Lane during this hold period.",
+          "type": "object",
+          "required": ["stage", "percentComplete"],
+          "properties": {
+            "stage": {
+              "type": "string",
+              "description": "Current Audit Lane processing stage identifier."
+            },
+            "percentComplete": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Audit Lane completion percentage [0-100]."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "requiredConditions": {
+          "type": "array",
+          "description": "Checklist of unmet preconditions for state transition out of Epistemic Hold.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["conditionId", "description", "met"],
+            "properties": {
+              "conditionId": {
+                "type": "string",
+                "description": "Machine-readable condition identifier."
+              },
+              "description": {
+                "type": "string",
+                "description": "Human-readable condition description."
+              },
+              "met": {
+                "type": "boolean",
+                "description": "Whether this condition has been satisfied."
+              }
+            },
+            "unevaluatedProperties": false
+          }
+        },
+        "windowComparatorReading": {
+          "title": "WindowComparatorReading",
+          "description": "For MT-integrated deployments, the IRS resistance range confirmation from the Window Comparator physical gate. For Architecture B (SHIPPING baseline), contains software-enforced sentinel values.",
+          "type": "object",
+          "required": ["readingAvailable"],
+          "properties": {
+            "readingAvailable": {
+              "type": "boolean",
+              "description": "True for MT-integrated deployments. False for Architecture B software enforcement baseline."
+            },
+            "resistanceRangeOhm": {
+              "type": "object",
+              "description": "TaOx RRAM resistance range confirming TLState. Present only when readingAvailable is true.",
+              "properties": {
+                "minOhm": { "type": "number" },
+                "maxOhm": { "type": "number" }
+              },
+              "unevaluatedProperties": false
+            },
+            "softwareEnforcementActive": {
+              "type": "boolean",
+              "description": "True when Architecture B compensating controls are active instead of physical DITL enforcement."
+            }
+          },
+          "unevaluatedProperties": false
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section II. Pillar: EpistemicHold. AUTHORITATIVE source for all Epistemic Hold response fields per Section 4.4 and 5B."
+    },
+
+    "StateEnvelope_v1_0_0": {
+      "$anchor": "StateEnvelope",
+      "title": "StateEnvelope",
+      "description": "Canonical TL response wrapper. NL=NA Layer 1: if currentState is +1, permissionToken is REQUIRED (if/then constraint). If currentState is 0, stateLabel MUST be \"EpistemicHold\" and processActive MUST be \"GovernancePause\". If currentState is -1, stateLabel MUST be \"Refuse\". unevaluatedProperties: false prevents all bypass. GovernancePause is a workflow process name, not a state synonym for Epistemic Hold.",
+      "type": "object",
+      "required": [
+        "currentState",
+        "stateLabel",
+        "proposedAction",
+        "processActive"
+      ],
+      "properties": {
+        "currentState": {
+          "$ref": "#/$defs/TLState_v1_0_0"
+        },
+        "stateLabel": {
+          "$ref": "#/$defs/TLStateLabel_v1_0_0"
+        },
+        "proposedAction": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable description of the governance action evaluated."
+        },
+        "processActive": {
+          "type": "string",
+          "description": "Active workflow process name. GovernancePause (when currentState is 0) is the workflow name, not a state synonym. ProceedAuthorized (when currentState is +1). RefusalPermanent (when currentState is -1)."
+        },
+        "permissionToken": {
+          "$ref": "#/$defs/PermissionToken_v1_0_0"
+        },
+        "escrowRecord": {
+          "$ref": "#/$defs/EscrowRecord_v1_0_0"
+        },
+        "traceId": {
+          "$ref": "#/$defs/UUIDv4_v1_0_0",
+          "description": "Echoed X-TL-Trace-Id from the originating request."
+        }
+      },
+      "if": {
+        "properties": {
+          "currentState": { "const": 1 }
+        },
+        "required": ["currentState"]
+      },
+      "then": {
+        "required": ["permissionToken"],
+        "properties": {
+          "stateLabel": { "const": "Proceed" },
+          "processActive": { "const": "ProceedAuthorized" }
+        }
+      },
+      "else": {
+        "if": {
+          "properties": {
+            "currentState": { "const": 0 }
+          },
+          "required": ["currentState"]
+        },
+        "then": {
+          "required": ["escrowRecord"],
+          "properties": {
+            "stateLabel": { "const": "EpistemicHold" },
+            "processActive": { "const": "GovernancePause" }
+          }
+        },
+        "else": {
+          "properties": {
+            "stateLabel": { "const": "Refuse" },
+            "processActive": { "const": "RefusalPermanent" }
+          }
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section II. Pillar: EpistemicHold. NL=NA Layer 1 if/then enforced here."
+    },
+
+    "TGLF_State0_v1_0_0": {
+      "$anchor": "TGLF_State0",
+      "title": "TGLF-State0",
+      "description": "Governance Trace Log Format record for Epistemic Hold (State 0) determinations. currentState const 0. stateLabel const \"EpistemicHold\". processActive const \"GovernancePause\" (workflow name, not a state synonym). escrowRecord is the single authoritative EscrowRecord for this hold. lanternStatus is required and must reflect EPISTEMIC_HOLD_ACTIVE. pillarsCertified captures pillar statuses at the moment of hold initiation.",
+      "type": "object",
+      "required": [
+        "logId",
+        "currentState",
+        "stateLabel",
+        "processActive",
+        "decisionId",
+        "escrowRecord",
+        "uncertaintyQuantification",
+        "deliberationMatrix",
+        "resolutionRequest",
+        "lanternStatus",
+        "committedAt",
+        "pillarsCertified"
+      ],
+      "properties": {
+        "logId": {
+          "$ref": "#/$defs/UUIDv4_v1_0_0",
+          "description": "Unique immutable identifier of this TGLF log entry."
+        },
+        "currentState": {
+          "type": "integer",
+          "const": 0,
+          "description": "Always 0. This log schema applies exclusively to Epistemic Hold determinations."
+        },
+        "stateLabel": {
+          "type": "string",
+          "const": "EpistemicHold",
+          "description": "Always \"EpistemicHold\". PascalCase canonical label for State 0."
+        },
+        "processActive": {
+          "type": "string",
+          "const": "GovernancePause",
+          "description": "Always \"GovernancePause\". Workflow process name. NOT a state synonym for Epistemic Hold."
+        },
+        "decisionId": {
+          "$ref": "#/$defs/UUIDv4_v1_0_0",
+          "description": "UUID of the originating decision record."
+        },
+        "escrowRecord": {
+          "$ref": "#/$defs/EscrowRecord_v1_0_0",
+          "description": "The single authoritative EscrowRecord for this Epistemic Hold. All Section 4.4 hold response fields are defined in EscrowRecord."
+        },
+        "uncertaintyQuantification": {
+          "title": "UncertaintyQuantification",
+          "description": "Structured quantification of the epistemic uncertainty triggering this hold.",
+          "type": "object",
+          "required": ["uncertaintyScore", "uncertaintyVector", "inferenceEngineId"],
+          "properties": {
+            "uncertaintyScore": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Aggregate uncertainty score [0.0-1.0]."
+            },
+            "uncertaintyVector": {
+              "type": "array",
+              "items": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+              "description": "Per-dimension uncertainty scores from the inference engine."
+            },
+            "inferenceEngineId": {
+              "type": "string",
+              "description": "Identifier of the binary inference engine that produced this uncertainty vector."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "deliberationMatrix": {
+          "title": "DeliberationMatrix",
+          "description": "Structured matrix for Tri-Cameral governance review. Documents pillar assessments and regulatory flags present at hold initiation.",
+          "type": "object",
+          "required": ["pillarAssessments", "regulatoryFlags"],
+          "properties": {
+            "pillarAssessments": {
+              "type": "array",
+              "minItems": 8,
+              "maxItems": 8,
+              "items": { "$ref": "#/$defs/PillarAssessment_v1_0_0" },
+              "description": "Assessment of all 8 pillars at hold initiation."
+            },
+            "regulatoryFlags": {
+              "$ref": "#/$defs/RegulatoryFlags_v1_0_0",
+              "description": "Regulatory flag conditions present at hold initiation."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "resolutionRequest": {
+          "title": "ResolutionRequest",
+          "description": "Resolution requirements and timeline for Tri-Cameral governance action.",
+          "type": "object",
+          "required": ["resolutionDeadline", "requiredAuthority", "permittedResolutionStates"],
+          "properties": {
+            "resolutionDeadline": {
+              "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+              "description": "Deadline for Tri-Cameral resolution. Must not be deferred indefinitely."
+            },
+            "requiredAuthority": {
+              "type": "string",
+              "description": "Governance authority required to resolve this hold."
+            },
+            "permittedResolutionStates": {
+              "type": "array",
+              "items": { "type": "integer", "enum": [1, -1] },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "Terminal resolution states: [1, -1] only. State 0 is constitutionally invalid as a resolution."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "lanternStatus": {
+          "$ref": "#/$defs/LanternStatus_v1_0_0",
+          "description": "Required. Must reflect EPISTEMIC_HOLD_ACTIVE compliancePosture at time of log creation."
+        },
+        "committedAt": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "ISO 8601 datetime when this TGLF record was committed to the immutable ledger."
+        },
+        "pillarsCertified": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/PillarIdentifier_v1_0_0" },
+          "description": "Pillar identifiers certified at hold initiation. Records which pillars were evaluated."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section II (TGLF schema). Pillar: EpistemicHold."
+    },
+
+    "TGLF_StateNeg1_v1_0_0": {
+      "$anchor": "TGLF_StateNeg1",
+      "title": "TGLF-State-1",
+      "description": "Governance Trace Log Format record for Refuse (State -1) determinations. currentState const -1. stateLabel const \"Refuse\". refusalIsPermanent defaults to true. No Permission Token is issued for State -1 determinations.",
+      "type": "object",
+      "required": [
+        "logId",
+        "currentState",
+        "stateLabel",
+        "decisionId",
+        "threatVectorAnalysis",
+        "chainOfCustody",
+        "committedAt",
+        "refusalIsPermanent"
+      ],
+      "properties": {
+        "logId": {
+          "$ref": "#/$defs/UUIDv4_v1_0_0",
+          "description": "Unique immutable identifier of this TGLF log entry."
+        },
+        "currentState": {
+          "type": "integer",
+          "const": -1,
+          "description": "Always -1. This log schema applies exclusively to Refuse determinations."
+        },
+        "stateLabel": {
+          "type": "string",
+          "const": "Refuse",
+          "description": "Always \"Refuse\". Canonical State -1 label. Halt is prohibited."
+        },
+        "decisionId": {
+          "$ref": "#/$defs/UUIDv4_v1_0_0",
+          "description": "UUID of the originating decision record."
+        },
+        "licenseViolation": {
+          "type": "boolean",
+          "description": "Optional. True if this Refuse was triggered by a Goukassian Principle license scope violation.",
+          "default": false
+        },
+        "violatedArtifact": {
+          "type": "string",
+          "enum": ["lantern", "signature", "license"],
+          "description": "Present when licenseViolation is true. Canonical lowercase artifact name that was violated."
+        },
+        "threatVectorAnalysis": {
+          "title": "ThreatVectorAnalysis",
+          "description": "Structured analysis of the harm vector triggering Refuse.",
+          "type": "object",
+          "required": ["threatCategory", "harmClearance", "pillarImplicated"],
+          "properties": {
+            "threatCategory": {
+              "type": "string",
+              "description": "Classification of the identified threat or harm vector."
+            },
+            "harmClearance": {
+              "type": "string",
+              "enum": ["CLEAR", "PROBABLE", "SUSPECTED"],
+              "description": "Degree of harm clarity per the Goukassian Vow (\"Refuse when harm is clear\")."
+            },
+            "pillarImplicated": {
+              "$ref": "#/$defs/PillarIdentifier_v1_0_0"
+            },
+            "regulatoryViolations": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Regulatory provisions violated (e.g., \"Basel III LCR\", \"FATF Recommendation 10\")."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "chainOfCustody": {
+          "title": "ChainOfCustody",
+          "description": "Evidentiary chain of custody for this Refuse determination.",
+          "type": "object",
+          "required": ["initiatingAgentId", "reviewedBy", "immutableLogAnchor"],
+          "properties": {
+            "initiatingAgentId": {
+              "type": "string",
+              "description": "Identifier of the agent that initiated this determination."
+            },
+            "reviewedBy": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Identifiers of governance authorities that reviewed this Refuse."
+            },
+            "immutableLogAnchor": {
+              "$ref": "#/$defs/SHA256Hex_v1_0_0",
+              "description": "SHA-256 Merkle anchor hash for this chain of custody record."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "committedAt": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "ISO 8601 datetime when this TGLF record was committed to the immutable ledger."
+        },
+        "refusalIsPermanent": {
+          "type": "boolean",
+          "default": true,
+          "description": "Refuse is permanent unless overridden by supreme authority under documented process. Defaults to true."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section II (TGLF schema). Pillar: ImmutableLedger."
+    },
+
+    "TGLF_StateP1_v1_0_0": {
+      "$anchor": "TGLF_StateP1",
+      "title": "TGLF-StateP1",
+      "description": "Governance Trace Log Format record for Proceed (State +1) determinations. currentState const 1. stateLabel const \"Proceed\". permissionToken is REQUIRED (NL=NA Layer 3). pillarsCertified minItems 8, maxItems 8: all Eight Pillars must be certified. regulatoryVerification: all 8 pillars must be PASSED.",
+      "type": "object",
+      "required": [
+        "logId",
+        "currentState",
+        "stateLabel",
+        "decisionId",
+        "regulatoryVerification",
+        "theSignature",
+        "auditProof",
+        "permissionToken",
+        "committedAt",
+        "pillarsCertified"
+      ],
+      "properties": {
+        "logId": {
+          "$ref": "#/$defs/UUIDv4_v1_0_0",
+          "description": "Unique immutable identifier of this TGLF log entry."
+        },
+        "currentState": {
+          "type": "integer",
+          "const": 1,
+          "description": "Always 1. This log schema applies exclusively to Proceed determinations."
+        },
+        "stateLabel": {
+          "type": "string",
+          "const": "Proceed",
+          "description": "Always \"Proceed\". Canonical State +1 label."
+        },
+        "decisionId": {
+          "$ref": "#/$defs/UUIDv4_v1_0_0",
+          "description": "UUID of the originating decision record."
+        },
+        "regulatoryVerification": {
+          "title": "RegulatoryVerification",
+          "description": "Verification that all Eight Pillars have PASSED regulatory checks. NL=NA requires full pillar compliance before Proceed is authorized.",
+          "type": "object",
+          "required": ["allPillarsPassed", "pillarVerifications"],
+          "properties": {
+            "allPillarsPassed": {
+              "type": "boolean",
+              "const": true,
+              "description": "Must be true. All Eight Pillars must have PASSED for State +1 to be valid."
+            },
+            "pillarVerifications": {
+              "type": "array",
+              "minItems": 8,
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "required": ["pillarId", "verificationStatus"],
+                "properties": {
+                  "pillarId": { "$ref": "#/$defs/PillarIdentifier_v1_0_0" },
+                  "verificationStatus": {
+                    "type": "string",
+                    "const": "PASSED",
+                    "description": "Must be PASSED for all 8 pillars in a valid Proceed TGLF entry."
+                  }
+                },
+                "unevaluatedProperties": false
+              },
+              "description": "Per-pillar PASSED verification records. All 8 required."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "theSignature": {
+          "$ref": "#/$defs/GoukassianPrincipleBlock_v1_0_0",
+          "description": "The full Goukassian Principle signature block for this Proceed determination."
+        },
+        "auditProof": {
+          "$ref": "#/$defs/AuditProof_v1_0_0",
+          "description": "NL=NA Layer 4: AuditProof.logHash and AuditProof.merkleRoot MUST match PermissionToken.logHash and PermissionToken.merkleRoot respectively."
+        },
+        "permissionToken": {
+          "$ref": "#/$defs/PermissionToken_v1_0_0",
+          "description": "REQUIRED. NL=NA Layer 3: permissionToken is in the required array. Absence renders this TGLF entry schema-invalid. The Permission Token cryptographically binds Audit Lane completion to Proceed authorization."
+        },
+        "committedAt": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "ISO 8601 datetime when this TGLF record was committed to the immutable ledger."
+        },
+        "pillarsCertified": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/PillarIdentifier_v1_0_0" },
+          "minItems": 8,
+          "maxItems": 8,
+          "description": "NL=NA Layer 3: all Eight Pillars must be certified for a valid Proceed log entry. minItems 8, maxItems 8."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section II (TGLF schema). Pillar: ImmutableLedger. NL=NA Layer 3 enforced here."
+    },
+
+    "NLNAAuditToken_v1_0_0": {
+      "$anchor": "NLNAAuditToken",
+      "title": "NLNAAuditToken",
+      "description": "Audit lane completion token. Returned by POST /audit-logs on Proceed determination. Cryptographically bound to the X-TL-Trace-Id of the originating Inference Lane request, preventing token substitution across unrelated decision vectors. For non-MT deployments, pufAttestation MUST use the sentinel value \"NULL_PUF_DEPLOYMENT\" to maintain schema integrity. Architecture B compensating controls documented in specification_architecture.md Section 11.",
+      "type": "object",
+      "required": [
+        "tokenId",
+        "merkleRoot",
+        "ledgerAnchor",
+        "timestamp",
+        "pufAttestation",
+        "laneStatus"
+      ],
+      "properties": {
+        "tokenId": {
+          "$ref": "#/$defs/UUIDv4_v1_0_0",
+          "description": "Unique identifier for this NLNAAuditToken."
+        },
+        "merkleRoot": {
+          "$ref": "#/$defs/SHA256Hex_v1_0_0",
+          "description": "SHA-256 Merkle root of the batch anchor containing this audit token's TGLF entry."
+        },
+        "ledgerAnchor": {
+          "type": "string",
+          "description": "On-chain anchor reference (block hash or transaction identifier)."
+        },
+        "timestamp": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "RFC 3339 timestamp of token issuance."
+        },
+        "pufAttestation": {
+          "type": "string",
+          "description": "PUF attestation for MT-integrated deployments. Non-MT deployments MUST use the sentinel value \"NULL_PUF_DEPLOYMENT\" to maintain schema integrity. Architecture B compensating controls documented in specification_architecture.md Section 11.",
+          "$comment": "Sentinel value for non-MT deployments: NULL_PUF_DEPLOYMENT"
+        },
+        "laneStatus": {
+          "type": "string",
+          "enum": ["pending", "committed", "anchored"],
+          "description": "Current Audit Lane completion stage for this token."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section II. Pillar: ImmutableLedger."
+    },
+
+    "JustificationObject_v1_0_0": {
+      "$anchor": "JustificationObject",
+      "title": "JustificationObject",
+      "description": "Structured justification for a TL state determination. Includes the proposed state, reasoning vector, uncertainty score, assessments of all 8 pillars, inference engine identifier, and regulatory flags with severity levels.",
+      "type": "object",
+      "required": [
+        "proposedState",
+        "reasoningVector",
+        "uncertaintyScore",
+        "pillarAssessments",
+        "inferenceEngineId",
+        "regulatoryFlags"
+      ],
+      "properties": {
+        "proposedState": {
+          "$ref": "#/$defs/TLState_v1_0_0"
+        },
+        "reasoningVector": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Ordered array of reasoning steps from the inference engine."
+        },
+        "uncertaintyScore": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Aggregate uncertainty score [0.0-1.0] for this determination."
+        },
+        "pillarAssessments": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/PillarAssessment_v1_0_0" },
+          "description": "Assessment of all 8 pillars for this determination."
+        },
+        "inferenceEngineId": {
+          "type": "string",
+          "description": "Identifier of the binary inference engine producing this justification."
+        },
+        "regulatoryFlags": {
+          "$ref": "#/$defs/RegulatoryFlags_v1_0_0",
+          "description": "Regulatory flag conditions with severity levels."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section II. Pillar: DecisionLogs."
+    },
+
+    "PillarAssessment_v1_0_0": {
+      "$anchor": "PillarAssessment",
+      "title": "PillarAssessment",
+      "description": "Assessment record for a single pillar within a JustificationObject or DeliberationMatrix.",
+      "type": "object",
+      "required": ["pillarId", "assessmentStatus", "complianceScore"],
+      "properties": {
+        "pillarId": { "$ref": "#/$defs/PillarIdentifier_v1_0_0" },
+        "assessmentStatus": {
+          "type": "string",
+          "enum": ["PASSED", "FAILED", "EPISTEMIC_HOLD_ACTIVE", "NOT_APPLICABLE"],
+          "description": "Assessment outcome for this pillar."
+        },
+        "complianceScore": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Compliance score [0.0-1.0] for this pillar assessment."
+        },
+        "assessmentNotes": {
+          "type": "string",
+          "description": "Human-readable notes on this pillar assessment."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Reusable sub-schema used by JustificationObject and TGLF-State0 DeliberationMatrix."
+    },
+
+    "RegulatoryFlags_v1_0_0": {
+      "$anchor": "RegulatoryFlags",
+      "title": "RegulatoryFlags",
+      "description": "Regulatory flag conditions with severity levels. Covers Basel III, FATF, IOSCO, and Paris Agreement provision flags. Regulatory compliance checks are the detection and refusal layer before a Permission Token is requested.",
+      "type": "object",
+      "required": ["baselIiiFlags", "fatfFlags", "ioscoFlags", "parisAgreementFlags"],
+      "properties": {
+        "baselIiiFlags": {
+          "type": "object",
+          "properties": {
+            "lcrBreach": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0",
+              "description": "Basel III LCR below 1.0 threshold."
+            },
+            "nsfrBreach": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0",
+              "description": "Basel III NSFR below 1.0 threshold."
+            },
+            "capitalAdequacyBreach": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0"
+            },
+            "counterpartyExposureBreach": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0"
+            },
+            "stressTestFailure": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0"
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "fatfFlags": {
+          "type": "object",
+          "properties": {
+            "sanctionsHit": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0",
+              "description": "FATF sanctions screening positive match."
+            },
+            "pepDetected": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0",
+              "description": "Politically Exposed Person detected."
+            },
+            "transactionMonitoringAlert": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0"
+            },
+            "sarRequired": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0",
+              "description": "Suspicious Activity Report generation triggered."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "ioscoFlags": {
+          "type": "object",
+          "properties": {
+            "layeringDetected": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0"
+            },
+            "spoofingDetected": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0"
+            },
+            "washTradingDetected": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0"
+            },
+            "crossMarketManipulationDetected": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0"
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "parisAgreementFlags": {
+          "type": "object",
+          "properties": {
+            "carbonFootprintUnverified": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0"
+            },
+            "greenBondIneligible": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0"
+            },
+            "esgScoreBelowThreshold": {
+              "$ref": "#/$defs/RegulatoryFlagEntry_v1_0_0"
+            }
+          },
+          "unevaluatedProperties": false
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section III. Pillars: EconomicRightsAndTransparencyMandate, SustainableCapitalAllocationMandate."
+    },
+
+    "RegulatoryFlagEntry_v1_0_0": {
+      "$anchor": "RegulatoryFlagEntry",
+      "title": "RegulatoryFlagEntry",
+      "description": "Individual regulatory flag with severity level.",
+      "type": "object",
+      "required": ["flagged", "severityLevel"],
+      "properties": {
+        "flagged": {
+          "type": "boolean",
+          "description": "Whether this regulatory flag condition is active."
+        },
+        "severityLevel": {
+          "type": "string",
+          "enum": ["INFO", "WARNING", "CRITICAL", "REFUSE_TRIGGER"],
+          "description": "Severity level. REFUSE_TRIGGER: this flag alone mandates State -1."
+        },
+        "detail": {
+          "type": "string",
+          "description": "Human-readable detail for this flag instance."
+        }
+      },
+      "unevaluatedProperties": false
+    },
+
+    "LanternStatus_v1_0_0": {
+      "$anchor": "LanternStatus",
+      "title": "LanternStatus",
+      "description": "Goukassian Principle Lantern public beacon status. artifactName: const \"lantern\". The compliancePosture enum includes EPISTEMIC_HOLD_ACTIVE. pillarStatuses covers all 8 pillars. signatureBlock is the current Signature artifact. emergencyOverrideActive signals constitutional emergency posture.",
+      "type": "object",
+      "required": [
+        "artifactName",
+        "compliancePosture",
+        "pillarStatuses",
+        "activatedAt",
+        "emergencyOverrideActive"
+      ],
+      "properties": {
+        "artifactName": {
+          "type": "string",
+          "const": "lantern",
+          "description": "Canonical lowercase artifact identifier. Immutable const."
+        },
+        "compliancePosture": {
+          "type": "string",
+          "enum": [
+            "FULLY_COMPLIANT",
+            "EPISTEMIC_HOLD_ACTIVE",
+            "REGULATORY_REVIEW",
+            "PILLAR_DEGRADED",
+            "EMERGENCY_OVERRIDE_ACTIVE"
+          ],
+          "description": "Current governance transparency posture. EPISTEMIC_HOLD_ACTIVE is a first-class constitutional state, not a degraded condition."
+        },
+        "pillarStatuses": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "required": ["pillarId", "status"],
+            "properties": {
+              "pillarId": { "$ref": "#/$defs/PillarIdentifier_v1_0_0" },
+              "status": {
+                "type": "string",
+                "enum": ["ACTIVE", "DEGRADED", "SUSPENDED", "EPISTEMIC_HOLD_ACTIVE"]
+              }
+            },
+            "unevaluatedProperties": false
+          },
+          "description": "Status of all 8 pillars. minItems 8, maxItems 8."
+        },
+        "signatureBlock": {
+          "$ref": "#/$defs/SignatureBlock_v1_0_0"
+        },
+        "activatedAt": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "ISO 8601 datetime when this Lantern status was activated."
+        },
+        "emergencyOverrideActive": {
+          "type": "boolean",
+          "description": "True when an emergency override is currently active."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section III. Pillar: GoukassianPrinciple."
+    },
+
+    "SignatureBlock_v1_0_0": {
+      "$anchor": "SignatureBlock",
+      "title": "SignatureBlock",
+      "description": "Goukassian Principle Signature artifact. artifactName: const \"signature\". SHIPPING implementations MUST use ES256 (default) or Ed25519. SLH-DSA-SHAKE-128s (id 6) and ML-KEM-1024 (id 7) are FUTURE-reserved PQC slots; SHIPPING implementations MUST NOT emit these values.",
+      "type": "object",
+      "required": [
+        "artifactName",
+        "signatureAlgorithm",
+        "signatureValue",
+        "signedAt"
+      ],
+      "properties": {
+        "artifactName": {
+          "type": "string",
+          "const": "signature",
+          "description": "Canonical lowercase artifact identifier. Immutable const."
+        },
+        "signatureAlgorithm": {
+          "type": "string",
+          "enum": ["ES256", "Ed25519", "SLH-DSA-SHAKE-128s", "ML-KEM-1024"],
+          "default": "ES256",
+          "description": "Signature algorithm. SHIPPING: ES256 (default) or Ed25519. SLH-DSA-SHAKE-128s (pqcSlotId: 6) and ML-KEM-1024 (pqcSlotId: 7) are FUTURE-reserved PQC migration slots. SHIPPING implementations MUST NOT emit these values.",
+          "$comment": "PQC reserved slots: SLH-DSA-SHAKE-128s id 6 (FUTURE), ML-KEM-1024 id 7 (FUTURE)."
+        },
+        "signatureValue": {
+          "type": "string",
+          "contentEncoding": "base64url",
+          "description": "Base64url-encoded signature value."
+        },
+        "signedAt": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "ISO 8601 datetime of signature creation."
+        },
+        "keyId": {
+          "type": "string",
+          "description": "Key identifier for signature verification."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section III. Pillar: GoukassianPrinciple."
+    },
+
+    "LicenseValidationRequest_v1_0_0": {
+      "$anchor": "LicenseValidationRequest",
+      "title": "LicenseValidationRequest",
+      "description": "Request schema for POST /goukassian/license/validate. artifactName: const \"license\". Any requested scope exceeding licenseScope triggers automatic Refuse (State -1).",
+      "type": "object",
+      "required": [
+        "artifactName",
+        "licenseToken",
+        "requestingEntityId",
+        "purposeOfUse"
+      ],
+      "properties": {
+        "artifactName": {
+          "type": "string",
+          "const": "license",
+          "description": "Canonical lowercase artifact identifier. Immutable const."
+        },
+        "licenseToken": {
+          "type": "string",
+          "description": "Current license token for scope verification."
+        },
+        "requestingEntityId": {
+          "type": "string",
+          "description": "Identifier of the entity requesting license validation."
+        },
+        "purposeOfUse": {
+          "type": "string",
+          "description": "Declared purpose for the proposed action."
+        },
+        "proposedActionVector": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Action scopes requested against the license."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section III. Pillar: GoukassianPrinciple."
+    },
+
+    "RegulatoryContext_v1_0_0": {
+      "$anchor": "RegulatoryContext",
+      "title": "RegulatoryContext",
+      "description": "Regulatory compliance context for domain evaluation endpoints. Regulatory checks are the detection and refusal layer before a Permission Token is requested. They are not synonymous with NL=NA. regulatoryFrameworkVersion captures which revision of each standard was applied.",
+      "type": "object",
+      "required": [
+        "baselIii",
+        "fatf",
+        "iosco",
+        "gdpr",
+        "parisAgreement",
+        "regulatoryFrameworkVersion"
+      ],
+      "properties": {
+        "baselIii": {
+          "title": "BaselIIIContext",
+          "type": "object",
+          "required": ["lcr", "nsfr", "capitalRatio"],
+          "properties": {
+            "lcr": {
+              "type": "number",
+              "description": "Liquidity Coverage Ratio. Compliant threshold: >= 1.0."
+            },
+            "nsfr": {
+              "type": "number",
+              "description": "Net Stable Funding Ratio. Compliant threshold: >= 1.0."
+            },
+            "capitalRatio": {
+              "type": "number",
+              "description": "Capital adequacy ratio."
+            },
+            "stressTestRequired": {
+              "type": "boolean"
+            },
+            "counterpartyExposureWithinLimits": {
+              "type": "boolean"
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "fatf": {
+          "title": "FATFContext",
+          "type": "object",
+          "required": [
+            "amlCheckRequired",
+            "sanctionsScreened",
+            "pepInvolved",
+            "sarGenerated"
+          ],
+          "properties": {
+            "amlCheckRequired": { "type": "boolean" },
+            "sanctionsScreened": { "type": "boolean" },
+            "pepInvolved": { "type": "boolean" },
+            "sarGenerated": { "type": "boolean" }
+          },
+          "unevaluatedProperties": false
+        },
+        "iosco": {
+          "title": "IOSCOContext",
+          "type": "object",
+          "required": [
+            "layeringDetected",
+            "spoofingDetected",
+            "washTradingDetected"
+          ],
+          "properties": {
+            "layeringDetected": { "type": "boolean" },
+            "spoofingDetected": { "type": "boolean" },
+            "washTradingDetected": { "type": "boolean" },
+            "crossMarketManipulationDetected": { "type": "boolean" }
+          },
+          "unevaluatedProperties": false
+        },
+        "gdpr": {
+          "title": "GDPRContext",
+          "type": "object",
+          "required": ["jurisdiction", "consentAttestation", "erasureEligible"],
+          "properties": {
+            "jurisdiction": {
+              "type": "string",
+              "description": "ISO 3166-1 alpha-2 jurisdiction code."
+            },
+            "consentAttestation": { "type": "boolean" },
+            "erasureEligible": {
+              "type": "boolean",
+              "description": "Whether GDPR Article 17 erasure applies. TL uses cryptographic erasure (key destruction via HKDF-SHA3-256) as the SHIPPING mitigation. This is not pseudonymization under Article 4(5)."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "parisAgreement": {
+          "title": "ParisAgreementContext",
+          "type": "object",
+          "required": [
+            "carbonFootprintVerified",
+            "greenBondEligibility",
+            "esgScore"
+          ],
+          "properties": {
+            "carbonFootprintVerified": { "type": "boolean" },
+            "greenBondEligibility": { "type": "boolean" },
+            "esgScore": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 100.0,
+              "description": "ESG score [0.0-100.0]."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "regulatoryFrameworkVersion": {
+          "title": "RegulatoryFrameworkVersion",
+          "type": "object",
+          "required": [
+            "baselVersion",
+            "fatfVersion",
+            "ioscoVersion",
+            "gdprVersion"
+          ],
+          "properties": {
+            "baselVersion": {
+              "type": "string",
+              "description": "Revision of Basel III standard applied."
+            },
+            "fatfVersion": {
+              "type": "string",
+              "description": "Revision of FATF Recommendations applied."
+            },
+            "ioscoVersion": {
+              "type": "string",
+              "description": "Revision of IOSCO Principles applied."
+            },
+            "gdprVersion": {
+              "type": "string",
+              "description": "Revision of GDPR applied."
+            }
+          },
+          "unevaluatedProperties": false
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section III. Pillars: EconomicRightsAndTransparencyMandate, SustainableCapitalAllocationMandate."
+    },
+
+    "ThresholdProfile_v1_0_0": {
+      "$anchor": "ThresholdProfile",
+      "title": "ThresholdProfile",
+      "description": "Governance domain threshold profile. Update requires Tri-Cameral governance approval.",
+      "type": "object",
+      "required": [
+        "domain",
+        "haltThreshold",
+        "holdThreshold",
+        "maxHoldDurationMs",
+        "regulatoryComplianceRequired"
+      ],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "enum": ["trade", "policy", "supply-chain", "general"],
+          "description": "Governance domain identifier."
+        },
+        "haltThreshold": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Threshold at which State -1 (Refuse) is triggered."
+        },
+        "holdThreshold": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Threshold at which State 0 (Epistemic Hold) is triggered."
+        },
+        "maxHoldDurationMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum Epistemic Hold duration in milliseconds before mandatory resolution."
+        },
+        "regulatoryComplianceRequired": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Minimum regulatory compliance score required for this domain."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section II. Pillar: DecisionLogs."
+    },
+
+    "TriCameralApproval_v1_0_0": {
+      "$anchor": "TriCameralApproval",
+      "title": "TriCameralApproval",
+      "description": "Tri-Cameral governance approval record. Technical Council (proposal rights, 9 members). Stewardship Custodians (binding veto, 11 members). Smart Contract Treasury (automatic execution, no admin key).",
+      "type": "object",
+      "required": [
+        "technicalCouncilVotes",
+        "stewardshipCustodianVotes",
+        "smartContractTreasuryExecution",
+        "quorumAchieved",
+        "approvalTimestamp"
+      ],
+      "properties": {
+        "technicalCouncilVotes": {
+          "type": "object",
+          "required": ["for", "against", "abstain", "totalMembers"],
+          "properties": {
+            "for": { "type": "integer", "minimum": 0, "maximum": 9 },
+            "against": { "type": "integer", "minimum": 0, "maximum": 9 },
+            "abstain": { "type": "integer", "minimum": 0, "maximum": 9 },
+            "totalMembers": {
+              "type": "integer",
+              "const": 9,
+              "description": "Technical Council has exactly 9 members."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "stewardshipCustodianVotes": {
+          "type": "object",
+          "required": ["for", "against", "abstain", "totalMembers", "vetoExercised"],
+          "properties": {
+            "for": { "type": "integer", "minimum": 0, "maximum": 11 },
+            "against": { "type": "integer", "minimum": 0, "maximum": 11 },
+            "abstain": { "type": "integer", "minimum": 0, "maximum": 11 },
+            "totalMembers": {
+              "type": "integer",
+              "const": 11,
+              "description": "Stewardship Custodians have exactly 11 members."
+            },
+            "vetoExercised": {
+              "type": "boolean",
+              "description": "Stewardship Custodians hold binding veto. If true, the proposal is constitutionally blocked regardless of other vote tallies."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "smartContractTreasuryExecution": {
+          "type": "object",
+          "required": ["executed", "transactionHash"],
+          "properties": {
+            "executed": {
+              "type": "boolean",
+              "description": "Whether the Smart Contract Treasury has executed this approval on-chain."
+            },
+            "transactionHash": {
+              "type": "string",
+              "description": "On-chain transaction hash of Smart Contract Treasury execution."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "quorumAchieved": {
+          "type": "boolean",
+          "description": "Whether the required quorum across all three chambers was achieved."
+        },
+        "approvalTimestamp": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "ISO 8601 datetime when Tri-Cameral approval was finalized."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section III. Pillar: HybridShield."
+    },
+
+    "GatewayRoutingStatus_v1_0_0": {
+      "$anchor": "GatewayRoutingStatus",
+      "title": "GatewayRoutingStatus",
+      "description": "TL Gateway routing status. Fail-closed: if the Gateway cannot route to the Audit Lane, it defaults to EPISTEMIC_HOLD and activates the governance pause. Fail-open is constitutionally prohibited. EPISTEMIC_HOLD_OVERRIDE_ACTIVE signals fail-closed activation.",
+      "type": "object",
+      "required": [
+        "operationalStatus",
+        "epistemicHoldOverride",
+        "inferenceLaneStatus",
+        "auditLaneStatus",
+        "lanternStatus"
+      ],
+      "properties": {
+        "operationalStatus": {
+          "type": "string",
+          "enum": [
+            "FULLY_OPERATIONAL",
+            "INFERENCE_LANE_DEGRADED",
+            "AUDIT_LANE_DEGRADED",
+            "EPISTEMIC_HOLD_OVERRIDE_ACTIVE",
+            "EMERGENCY_OVERRIDE_ACTIVE",
+            "FAIL_CLOSED"
+          ],
+          "description": "Gateway operational state. EPISTEMIC_HOLD_OVERRIDE_ACTIVE: fail-closed has forced all decisions to Epistemic Hold pending Audit Lane restoration."
+        },
+        "epistemicHoldOverride": {
+          "type": "boolean",
+          "description": "True when fail-closed activation has forced all decisions to Epistemic Hold."
+        },
+        "inferenceLaneStatus": {
+          "type": "object",
+          "required": ["healthy", "latencyMs"],
+          "properties": {
+            "healthy": { "type": "boolean" },
+            "latencyMs": {
+              "type": "number",
+              "description": "Current Inference Lane latency. DLLA WCET: 2ms at 99.99th percentile."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "auditLaneStatus": {
+          "type": "object",
+          "required": ["healthy", "latencyMs"],
+          "properties": {
+            "healthy": { "type": "boolean" },
+            "latencyMs": {
+              "type": "number",
+              "description": "Current Audit Lane latency. DLLA hard ceiling: 300ms. Maximum jitter: 50ms."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "lanternStatus": {
+          "$ref": "#/$defs/LanternStatus_v1_0_0",
+          "description": "Embedded current Lantern status."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section II. Pillar: GoukassianPrinciple. Definition in Section 4.10 of the constitutional prompt is authoritative."
+    },
+
+    "EmergencyOverrideRequest_v1_0_0": {
+      "$anchor": "EmergencyOverrideRequest",
+      "title": "EmergencyOverrideRequest",
+      "description": "Break-glass emergency override request. All invocations are logged before execution. NL=NA applies without exception. forcedState enum: [-1, 0] only. Forced transition to +1 (Proceed) is constitutionally blocked. forcedStateExpiresAt is required for FORCED_STATE_TRANSITION to prevent indefinite constitutional suspension.",
+      "type": "object",
+      "required": [
+        "overrideType",
+        "forcedState",
+        "justification"
+      ],
+      "properties": {
+        "overrideType": {
+          "type": "string",
+          "enum": [
+            "BREAK_GLASS_SHUTDOWN",
+            "KILL_SWITCH",
+            "FORCED_STATE_TRANSITION"
+          ],
+          "description": "Type of emergency override."
+        },
+        "forcedState": {
+          "type": "integer",
+          "enum": [-1, 0],
+          "description": "Target forced state. Only -1 (Refuse) and 0 (Epistemic Hold) are constitutionally permitted. Forced transition to +1 (Proceed) is constitutionally blocked."
+        },
+        "forcedStateExpiresAt": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "Required when overrideType is FORCED_STATE_TRANSITION. Expiration datetime preventing indefinite constitutional suspension."
+        },
+        "justification": {
+          "type": "string",
+          "minLength": 100,
+          "description": "Mandatory justification. Minimum 100 characters. Logged immutably before override executes. NL=NA applies: log entry created before execution."
+        },
+        "targetDecisionId": {
+          "$ref": "#/$defs/UUIDv4_v1_0_0",
+          "description": "Required when overrideType is FORCED_STATE_TRANSITION."
+        },
+        "requestingAuthorityId": {
+          "type": "string",
+          "description": "Identifier of the supreme authority initiating this override."
+        }
+      },
+      "if": {
+        "properties": {
+          "overrideType": { "const": "FORCED_STATE_TRANSITION" }
+        },
+        "required": ["overrideType"]
+      },
+      "then": {
+        "required": ["targetDecisionId", "forcedStateExpiresAt"]
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section IX.3. Pillar: HybridShield."
+    },
+
+    "TLProblemDetail_v1_0_0": {
+      "$anchor": "TLProblemDetail",
+      "title": "TLProblemDetail",
+      "description": "RFC 7807 application/problem+json with mandatory TL extensions. x-tl-state is never omitted on any error response. GhostGovernanceDetectedError MUST carry x-tl-state -1 or 0, never omitted.",
+      "type": "object",
+      "required": [
+        "type",
+        "title",
+        "status",
+        "x-tl-state",
+        "x-tl-pillar",
+        "x-tl-trace-id",
+        "tlErrorCode"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "format": "uri",
+          "description": "RFC 7807 problem type URI."
+        },
+        "title": {
+          "type": "string",
+          "description": "Short human-readable summary of the problem type."
+        },
+        "status": {
+          "type": "integer",
+          "description": "HTTP status code."
+        },
+        "detail": {
+          "type": "string",
+          "description": "Human-readable explanation specific to this occurrence."
+        },
+        "instance": {
+          "type": "string",
+          "format": "uri",
+          "description": "URI reference identifying this specific problem occurrence."
+        },
+        "x-tl-state": {
+          "$ref": "#/$defs/TLState_v1_0_0",
+          "description": "Mandatory TL ternary disposition of the error condition. Never omitted, never null."
+        },
+        "x-tl-pillar": {
+          "$ref": "#/$defs/PillarIdentifier_v1_0_0",
+          "description": "Canonical pillar identifier implicated in this error."
+        },
+        "x-tl-trace-id": {
+          "$ref": "#/$defs/UUIDv4_v1_0_0",
+          "description": "Echoed X-TL-Trace-Id from the originating request."
+        },
+        "retry_after": {
+          "type": "integer",
+          "description": "Seconds to wait before retrying, where applicable."
+        },
+        "tlErrorCode": {
+          "type": "string",
+          "enum": [
+            "PILLAR_VIOLATION_ERROR",
+            "EPISTEMIC_HOLD_TIMEOUT_ERROR",
+            "REGULATORY_COMPLIANCE_ERROR",
+            "LANTERN_FORFEIT_ERROR",
+            "DECISION_LOG_VIOLATION_ERROR",
+            "WINDOW_COMPARATOR_FAILURE_ERROR",
+            "GHOST_GOVERNANCE_DETECTED_ERROR",
+            "NLNA_VIOLATION_ERROR",
+            "LICENSE_SCOPE_EXCEEDED_ERROR",
+            "QUORUM_NOT_MET_ERROR",
+            "TRI_CAMERAL_VETO_ERROR",
+            "SUCCESSION_DECLARATION_EXPIRED_ERROR",
+            "SUCCESSION_DECLARATION_REQUIRED_ERROR"
+          ],
+          "description": "UPPER_SNAKE_CASE programmatic error code for machine handling."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Pillar: all pillars (error may implicate any). RFC 7807 extended with TL constitutional fields."
+    },
+
+    "TLCapabilityFlags_v1_0_0": {
+      "$anchor": "TLCapabilityFlags",
+      "title": "TLCapabilityFlags",
+      "description": "Deployment-specific capability flags signaling which optional TL features are active. Included in tl_openapi.yaml info extensions to inform consumers of deployment posture.",
+      "type": "object",
+      "properties": {
+        "custodianQuorumAttestationEnabled": {
+          "type": "boolean",
+          "description": "Whether HybridShield custodian quorum attestation is active at issuance."
+        },
+        "pufAttestationMode": {
+          "type": "string",
+          "enum": ["FULL_PUF", "NULL_PUF_DEPLOYMENT", "ARCHITECTURE_B"],
+          "description": "PUF attestation mode. FULL_PUF: MT-integrated with physical DITL. NULL_PUF_DEPLOYMENT: non-MT deployment using sentinel. ARCHITECTURE_B: software enforcement with DITL attestation where available (SHIPPING baseline)."
+        },
+        "ditlIntegrated": {
+          "type": "boolean",
+          "description": "Whether DITL hardware interface is integrated in this deployment."
+        }
+      },
+      "unevaluatedProperties": false
+    },
+
+    "SuccessionDeclaration_v1_0_0": {
+      "$anchor": "SuccessionDeclaration",
+      "title": "SuccessionDeclaration",
+      "description": "Notarized, timestamped, anchored governance continuity instrument ensuring TL permanence beyond any single actor or institution. Must be referenced in specification_architecture.md with an anchoring schema entry in the Anchors pillar documentation.",
+      "type": "object",
+      "required": [
+        "declarationId",
+        "notarizedAt",
+        "notaryIdentifier",
+        "blockchainAnchor",
+        "successionScope",
+        "validUntil"
+      ],
+      "properties": {
+        "declarationId": {
+          "$ref": "#/$defs/UUIDv4_v1_0_0",
+          "description": "Unique identifier of this Succession Declaration."
+        },
+        "notarizedAt": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "ISO 8601 datetime of notarization."
+        },
+        "notaryIdentifier": {
+          "type": "string",
+          "description": "Identifier of the notary or notarial authority."
+        },
+        "blockchainAnchor": {
+          "type": "string",
+          "description": "On-chain anchor transaction hash for this declaration."
+        },
+        "successionScope": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Governance domains and authority scope covered by this declaration."
+        },
+        "validUntil": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "Expiration datetime. Expiry triggers SUCCESSION_DECLARATION_EXPIRED_ERROR."
+        },
+        "merkleAnchorHash": {
+          "$ref": "#/$defs/SHA256Hex_v1_0_0",
+          "description": "SHA-256 Merkle anchor hash confirming on-chain immutability."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Section 4.9. Pillar: Anchors."
+    },
+
+    "EKRRecord_v1_0_0": {
+      "$anchor": "EKRRecord",
+      "title": "EKRRecord",
+      "description": "Ephemeral Key Rotation record. EKR enables temporary keys that protect proprietary information while preserving auditability after expiration. Satisfies both confidentiality and permanent audit obligations simultaneously.",
+      "type": "object",
+      "required": [
+        "keyId",
+        "keyGeneratedAt",
+        "keyExpiresAt",
+        "rotationPurpose",
+        "auditRetentionAnchor"
+      ],
+      "properties": {
+        "keyId": {
+          "type": "string",
+          "description": "Identifier of this ephemeral key."
+        },
+        "keyGeneratedAt": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0"
+        },
+        "keyExpiresAt": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "Expiration datetime. After expiry, proprietary information is protected while audit trail remains intact."
+        },
+        "rotationPurpose": {
+          "type": "string",
+          "description": "Constitutional purpose for this ephemeral key issuance."
+        },
+        "auditRetentionAnchor": {
+          "$ref": "#/$defs/SHA256Hex_v1_0_0",
+          "description": "SHA-256 hash anchoring the audit trail that survives key expiration."
+        },
+        "hkdfSha3256Confirmed": {
+          "type": "boolean",
+          "description": "True when HKDF-SHA3-256 key derivation was used, confirming GDPR Article 17 cryptographic erasure compliance."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Section 4.9. Pillar: HybridShield. Related: GDPR Article 17 cryptographic erasure via HKDF-SHA3-256."
+    },
+
+    "MetricsSummary_v1_0_0": {
+      "$anchor": "MetricsSummary",
+      "title": "MetricsSummary",
+      "description": "System-wide TL governance metrics summary returned by GET /metrics/summary.",
+      "type": "object",
+      "required": [
+        "stateDistribution",
+        "averageConfidence",
+        "epistemicHoldRate",
+        "regulatoryComplianceRate",
+        "esgVerificationAccuracy",
+        "decisionLogCompleteness",
+        "averageHoldDurationMs",
+        "ghostGovernanceDetectionRate"
+      ],
+      "properties": {
+        "stateDistribution": {
+          "type": "object",
+          "required": ["proceed", "epistemicHold", "refuse"],
+          "properties": {
+            "proceed": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Fraction of decisions resolving to State +1."
+            },
+            "epistemicHold": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Fraction resolving to State 0."
+            },
+            "refuse": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Fraction resolving to State -1."
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "averageConfidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "epistemicHoldRate": {
+          "type": "number",
+          "description": "Rate of Epistemic Hold activations per decision volume."
+        },
+        "regulatoryComplianceRate": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "esgVerificationAccuracy": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "decisionLogCompleteness": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "averageHoldDurationMs": {
+          "type": "number",
+          "minimum": 0
+        },
+        "ghostGovernanceDetectionRate": {
+          "type": "number",
+          "description": "Rate at which Ghost Governance (actions without immutable audit evidence) was detected and blocked by NL=NA at the physical commit boundary."
+        }
+      },
+      "unevaluatedProperties": false,
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section III. Pillar: DecisionLogs."
+    }
+
+  }
+}
+```
