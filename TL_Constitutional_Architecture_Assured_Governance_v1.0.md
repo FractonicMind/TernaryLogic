@@ -42,7 +42,7 @@
 
 **The Governance Gap**
 
-Current financial regulation faces a critical enforcement crisis. It relies on ex-post forensic reconstruction. When an algorithm fails or a market manipulation event occurs, regulators and legal teams must reconstruct intent and causation from fragmented, often self-reported logs. This creates massive legal ambiguity, prolonged discovery phases, and a reliance on the good faith of the institutions being supervised. [2](https://raw.githubusercontent.com/FractonicMind/TernaryLogic/refs/heads/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md)
+Current financial regulation faces a critical enforcement crisis. It relies on ex-post forensic reconstruction. When an algorithm fails or a market manipulation event occurs, regulators and legal teams must reconstruct intent and causation from fragmented, often self-reported logs. This creates massive legal ambiguity, prolonged discovery phases, and a reliance on the good faith of the institutions being supervised. [[2](https://raw.githubusercontent.com/FractonicMind/TernaryLogic/refs/heads/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md)]
 
 **The Solution: Ternary Logic**
 
