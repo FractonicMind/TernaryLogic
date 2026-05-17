@@ -15,7 +15,7 @@
 **Repository: [FractonicMind/TernaryLogic](https://github.com/FractonicMind/TernaryLogic/tree/main)**
 
 **DOI 1: [10.1007/s43681-025-00910-6](https://doi.org/10.1007/s43681-025-00910-6)**  
-**DOI 2: [10.1007/s43681-026-01124-0](https://doi.org/10.1007/s43681-026-01124-0) *(in proofs, publication pending)***  
+**DOI 2: [10.1007/s43681-026-01124-0](https://doi.org/10.1007/s43681-026-01124-0)**
 **DOI 3: [10.5281/zenodo.17860332](https://doi.org/10.5281/zenodo.17860332)**
 
 **Document Classification:** Sovereign-Grade Governance Specification
