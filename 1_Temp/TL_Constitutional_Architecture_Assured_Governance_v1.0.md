@@ -1,10 +1,10 @@
-# **THE CONSTITUTIONAL ARCHITECTURE OF ASSURED GOVERNANCE **  {#the-constitutional-architecture-of-assured-governance}
+# **THE CONSTITUTIONAL ARCHITECTURE OF ASSURED GOVERNANCE ** 
 
-## ***A governance kernel: activation constitutes acceptance***  {#a-governance-kernel:-activation-constitutes-acceptance}
+## ***A governance kernel: activation constitutes acceptance*** 
 
-##  **Ternary Logic as a Sovereign, Evidentiary Triadic Framework for Global Economic Systems** {#ternary-logic-as-a-sovereign,-evidentiary-triadic-framework-for-global-economic-systems}
+##  **Ternary Logic as a Sovereign, Evidentiary Triadic Framework for Global Economic Systems**
 
-## **TECHNICAL STANDARD & RESEARCH MONOGRAPH** {#technical-standard-&-research-monograph}
+## **TECHNICAL STANDARD & RESEARCH MONOGRAPH**
 
 ### **Version 1.0. April 2026**
 
@@ -42,13 +42,13 @@
 
 ##### Proceed where truth is.
 
-## **POLICYMAKER'S ABSTRACT: The Architecture of Assured Governance** {#policymaker's-abstract:-the-architecture-of-assured-governance}
+## **POLICYMAKER'S ABSTRACT: The Architecture of Assured Governance**
 
 **To:** Regulators, General Counsels, and Legislative Bodies
 
 **Subject:** Moving from Compliance by Trust to Compliance by Architecture
 
-### **The Governance Gap** {#the-governance-gap}
+### **The Governance Gap**
 
 Current financial regulation faces a structural enforcement crisis. It relies on ex-post forensic reconstruction. When an algorithm fails or a market manipulation event occurs, regulators and legal teams must reconstruct intent and causation from fragmented, often self-reported logs. This creates massive legal ambiguity, prolonged discovery phases, and a reliance on the good faith of the institutions being supervised. The May 6, 2010 Flash Crash eliminated approximately one trillion dollars in market value within thirty minutes, with the majority of losses concentrated in under five minutes, demonstrating what happens when automated systems operate without structured hesitation mechanisms: cascading failure propagates faster than any human oversight layer can intercept it [\[1\]](https://journals.sagepub.com/doi/full/10.1177/03063127211048515). The problem is architectural, not behavioral.
 
@@ -56,13 +56,13 @@ Global AML compliance now costs financial institutions an estimated $274 billion
 
 Basel III's Fundamental Review of the Trading Book (FRTB) is expected to raise market risk capital requirements for the largest banking institutions by approximately 70 percent, without any corresponding increase in underlying risk [\[4\]](https://bpi.com/how-can-the-new-market-risk-capital-requirements-be-fixed/). The European Commission has delayed FRTB implementation twice: first to 1 January 2026, then by a delegated act adopted in June 2025 and entering into force in September 2025, to 1 January 2027, as major jurisdictions remain unable to align on a common implementation timeline [\[5\]](https://finance.ec.europa.eu/news/commission-proposes-postpone-one-additional-year-market-risk-prudential-requirements-under-basel-iii-2025-06-12_en). This capital surcharge is a tacit regulatory admission that existing governance tools cannot prevent operational failures, so the financial system must instead absorb their cost. Ternary Logic proposes a different answer.
 
-### **The Solution: Ternary Logic** {#the-solution:-ternary-logic}
+### **The Solution: Ternary Logic**
 
 Ternary Logic (TL) is not a software update. It is a constitutional layer for economic systems. It replaces the passive reporting of compliance with the active architectural enforcement of law.
 
 TL operates on a non-negotiable legal covenant: NL=NA, meaning No Log equals No Action. No financial transaction, whether a trade, a loan, a settlement, or a central bank liquidity injection, can computationally execute unless it has first generated a secured, immutable Decision Log proving adherence to regulatory standards. Binary systems force algorithms to act or refuse to act. TL introduces a third mandatory state, Epistemic Hold, the constitutional compulsion to pause when truth is uncertain, log the uncertainty, and escalate to human stewards before proceeding.
 
-### **Core Legal and Regulatory Advantages** {#core-legal-and-regulatory-advantages}
+### **Core Legal and Regulatory Advantages**
 
 **The Safe Harbor of Automated Prudence.** If data is ambiguous or truth is uncertain, the system is architecturally compelled to pause through the Sacred Pause workflow. This creates an immutable record that the institution exercised fiduciary duty and due care. It transforms what would otherwise appear as a system failure into documented prudence: a verifiable, time-stamped determination that the institution declined to act recklessly under conditions of uncertainty.
 
@@ -70,17 +70,17 @@ TL operates on a non-negotiable legal covenant: NL=NA, meaning No Log equals No 
 
 **Structural AML and Sanctions Enforcement.** The system physically blocks any transaction that fails a sanctions check or exhibits manipulative behavior such as spoofing or layering. Compliance is not a policy. It is a computational precondition for the transaction to execute at all.
 
-### **The Shift in Oversight** {#the-shift-in-oversight}
+### **The Shift in Oversight**
 
 Adopting TL shifts the regulatory burden from subjective interpretation, asking why the trader did this, to objective verification, checking the cryptographic anchor and the Permission Token. For the regulator, this means instant mathematical verification of systemic stability without seizing servers. For the institution, it means a verifiable defense against unfounded claims of negligence or bias. For the public, it means a guarantee that the financial system operates under a governance architecture that is physically incapable of executing without prior evidence.
 
-### **Conclusion** {#conclusion}
+### **Conclusion**
 
 Ternary Logic operationalizes the standard of care for the digital age. It ensures that economic systems do not merely claim to be compliant. They are architected to be incapable of non-compliance.
 
 ## 
 
-## **ABSTRACT** {#abstract}
+## **ABSTRACT**
 
 The global financial infrastructure operates under a structural governance deficit that intensifies as algorithmic automation displaces human judgment in high-stakes economic decisions. Binary logic, the foundational computational paradigm of modern finance, forces every decision into one of two states: proceed or refuse. This binary constraint eliminates the architectural possibility of structured hesitation: the computationally enforced, evidentiary verification window that prevents execution under conditions of genuine uncertainty. The resulting architecture generates systemic risk that has manifested repeatedly, from the trillion-dollar Flash Crash of May 6, 2010, to AML false-positive rates exceeding 90 percent that simultaneously overload compliance functions and fail to prevent financial crime at scale [\[1\]](https://journals.sagepub.com/doi/full/10.1177/03063127211048515) [\[2\]](https://finance.yahoo.com/news/hidden-cost-aml-95-false-134601048.html).
 
@@ -96,255 +96,17 @@ Hardware enforcement is realized through Delay-Insensitive Ternary Logic (DITL) 
 
 This document constitutes the sovereign-grade specification for financial infrastructure, supply chain verification, central banking, and institutional governance. It unifies constitutional architecture, negative prohibitions, legal and regulatory alignment, hardware substrates, adversarial survivability assessment, implementation economics, and succession continuity into a single monograph.
 
+---
 
-
-## **KEYWORDS** {#keywords}
+## **KEYWORDS**
 
 Ternary Logic, TL, Epistemic Hold, Sacred Pause, Goukassian Vow, Goukassian Principle, Dual-Lane Architecture, NL=NA, Immutable Ledger, Decision Logs, Eight Pillars, No Spy No Weapon, Ephemeral Key Rotation, EKR, Anti-Money Laundering, AML, Hybrid Shield, DITL, Mandated Ternary, MT Hardware, Tri-Cameral Governance, Permission Token, Constitutional Governance, Economic Systems Governance, Adversarial Survivability, Query Constitutionalization, Differential Privacy, Trade Secret Protection, Post-Quantum Cryptography, Ghost Governance, Architecture B, HKDF-SHA3-256, Cryptographic Erasure
 
+---
 
+## **SECTION 1: INTRODUCTION**
 
-## 
-
-**[THE CONSTITUTIONAL ARCHITECTURE OF ASSURED GOVERNANCE	0](#the-constitutional-architecture-of-assured-governance)**
-
-[A governance kernel: activation constitutes acceptance	0](#a-governance-kernel:-activation-constitutes-acceptance)
-
-[Ternary Logic as a Sovereign, Evidentiary Triadic Framework for Global Economic Systems	0](#ternary-logic-as-a-sovereign,-evidentiary-triadic-framework-for-global-economic-systems)
-
-[TECHNICAL STANDARD & RESEARCH MONOGRAPH	0](#technical-standard-&-research-monograph)
-
-[POLICYMAKER'S ABSTRACT: The Architecture of Assured Governance	1](#policymaker's-abstract:-the-architecture-of-assured-governance)
-
-[The Governance Gap	1](#the-governance-gap)
-
-[The Solution: Ternary Logic	1](#the-solution:-ternary-logic)
-
-[Core Legal and Regulatory Advantages	2](#core-legal-and-regulatory-advantages)
-
-[The Shift in Oversight	2](#the-shift-in-oversight)
-
-[Conclusion	2](#conclusion)
-
-[ABSTRACT	3](#abstract)
-
-[KEYWORDS	4](#keywords)
-
-[SECTION 1: INTRODUCTION	9](#section-1:-introduction)
-
-[1.1 The Governance Crisis in Automated Economic Systems	9](#1.1-the-governance-crisis-in-automated-economic-systems)
-
-[1.2 The Claims of This Monograph	10](#1.2-the-claims-of-this-monograph)
-
-[1.3 Relationship to Existing Legal and Regulatory Frameworks	11](#1.3-relationship-to-existing-legal-and-regulatory-frameworks)
-
-[1.4 A Note on Terminology	12](#1.4-a-note-on-terminology)
-
-[SECTION 2: CONSTITUTIONAL FOUNDATIONS	12](#section-2:-constitutional-foundations)
-
-[2.1 The Goukassian Vow as Foundational Architecture	13](#2.1-the-goukassian-vow-as-foundational-architecture)
-
-[2.2 The Goukassian Principle: Lantern, Signature, and License	14](#2.2-the-goukassian-principle:-lantern,-signature,-and-license)
-
-[2.3 The Three Decision States: Proceed, Epistemic Hold, and Refuse	16](#2.3-the-three-decision-states:-proceed,-epistemic-hold,-and-refuse)
-
-[2.3.1 Proceed (+1): The Authorization State	16](#2.3.1-proceed-\(+1\):-the-authorization-state)
-
-[2.3.2 Refuse (-1): The Prohibition State	17](#2.3.2-refuse-\(-1\):-the-prohibition-state)
-
-[2.3.3 Epistemic Hold (0): The Hesitation State	18](#2.3.3-epistemic-hold-\(0\):-the-hesitation-state)
-
-[2.4 Dual-Lane Architecture: The Governance Lane and the Inference Lane	19](#2.4-dual-lane-architecture:-the-governance-lane-and-the-inference-lane)
-
-[2.4.1 The Inference Lane	19](#2.4.1-the-inference-lane)
-
-[2.4.2 The Governance Lane	20](#2.4.2-the-governance-lane)
-
-[2.4.3 The Gateway: Fail-Closed by Constitutional Design	21](#2.4.3-the-gateway:-fail-closed-by-constitutional-design)
-
-[2.5 Epistemic Hold and the Sacred Pause: State and Workflow	22](#2.5-epistemic-hold-and-the-sacred-pause:-state-and-workflow)
-
-[2.5.1 Epistemic Hold as Constitutional State	22](#2.5.1-epistemic-hold-as-constitutional-state)
-
-[2.5.2 Sacred Pause as Governance Workflow	23](#2.5.2-sacred-pause-as-governance-workflow)
-
-[2.6 NL=NA: The Non-Negotiable Architectural Covenant	25](#2.6-nl=na:-the-non-negotiable-architectural-covenant)
-
-[2.7 The Eight Pillars of Evidentiary Governance	27](#2.7-the-eight-pillars-of-evidentiary-governance)
-
-[Pillar I: Epistemic Hold	27](#pillar-i:-epistemic-hold)
-
-[Pillar II: Immutable Ledger	28](#pillar-ii:-immutable-ledger)
-
-[Pillar III: Goukassian Principle	29](#pillar-iii:-goukassian-principle)
-
-[Pillar IV: Decision Logs	30](#pillar-iv:-decision-logs)
-
-[Pillar V: Economic Rights and Transparency Mandate	31](#pillar-v:-economic-rights-and-transparency-mandate)
-
-[Pillar VI: Sustainable Capital Allocation Mandate	32](#pillar-vi:-sustainable-capital-allocation-mandate)
-
-[Pillar VII: Hybrid Shield	33](#pillar-vii:-hybrid-shield)
-
-[Pillar VIII: Anchors	34](#pillar-viii:-anchors)
-
-[Architectural Summary of the Eight Pillars	35](#architectural-summary-of-the-eight-pillars)
-
-[2.8 The No Spy, No Weapon Mandate: Domain Boundaries and Prohibitions	35](#2.8-the-no-spy,-no-weapon-mandate:-domain-boundaries-and-prohibitions)
-
-[2.8.1 The Oracle Problem and Query Constitutionalization	37](#2.8.1-the-oracle-problem-and-query-constitutionalization)
-
-[2.8.2 Twelve Edge-Case Boundary Determinations	38](#2.8.2-twelve-edge-case-boundary-determinations)
-
-[2.9 The No Spy, No Weapon Mandate: Universality, Power Pressure, and Final Determination	40](#2.9-the-no-spy,-no-weapon-mandate:-universality,-power-pressure,-and-final-determination)
-
-[2.9.1 Power Pressure Simulation	40](#2.9.1-power-pressure-simulation)
-
-[2.9.2 The Three-Axis Final Determination	41](#2.9.2-the-three-axis-final-determination)
-
-[2.10 Ephemeral Key Rotation and the Hybrid Shield	42](#2.10-ephemeral-key-rotation-and-the-hybrid-shield)
-
-[2.10.1 EKR Mechanics	42](#2.10.1-ekr-mechanics)
-
-[2.10.2 GDPR Article 17 and Cryptographic Erasure	43](#2.10.2-gdpr-article-17-and-cryptographic-erasure)
-
-[2.10.3 Three Residual Sub-Gaps	44](#2.10.3-three-residual-sub-gaps)
-
-[SECTION 3: REGULATORY AND LEGAL ALIGNMENT	45](#section-3:-regulatory-and-legal-alignment)
-
-[3.1 Basel III and the Fundamental Review of the Trading Book	45](#3.1-basel-iii-and-the-fundamental-review-of-the-trading-book)
-
-[3.1.1 TL Alignment with the Three Basel Pillars	45](#3.1.1-tl-alignment-with-the-three-basel-pillars)
-
-[3.1.2 The FRTB Non-Modellable Risk Factors Provision	46](#3.1.2-the-frtb-non-modellable-risk-factors-provision)
-
-[3.1.3 Internal Ratings-Based Approach and Model Integrity	47](#3.1.3-internal-ratings-based-approach-and-model-integrity)
-
-[3.2 SEC and CFTC Market Integrity Enforcement	47](#3.2-sec-and-cftc-market-integrity-enforcement)
-
-[3.2.1 SEC Regulation SCI and System Integrity	47](#3.2.1-sec-regulation-sci-and-system-integrity)
-
-[3.2.2 Consolidated Audit Trail and Recordkeeping	48](#3.2.2-consolidated-audit-trail-and-recordkeeping)
-
-[3.2.3 CFTC Regulation AT and Derivatives Market Integrity	49](#3.2.3-cftc-regulation-at-and-derivatives-market-integrity)
-
-[3.2.4 Spoofing, Layering, and the Architecture of Anti-Manipulation	49](#3.2.4-spoofing,-layering,-and-the-architecture-of-anti-manipulation)
-
-[3.3 IOSCO Principles for Financial Market Infrastructures	50](#3.3-iosco-principles-for-financial-market-infrastructures)
-
-[3.3.1 Legal Basis, Governance, and Risk Management (PFMI Principles 1-3)	50](#3.3.1-legal-basis,-governance,-and-risk-management-\(pfmi-principles-1-3\))
-
-[3.3.2 Settlement Finality and NL=NA (PFMI Principle 8\)	51](#3.3.2-settlement-finality-and-nl=na-\(pfmi-principle-8\))
-
-[3.3.3 Operational Risk, Access Requirements, and Efficiency (PFMI Principles 17, 18, 21\)	51](#3.3.3-operational-risk,-access-requirements,-and-efficiency-\(pfmi-principles-17,-18,-21\))
-
-[3.3.4 The Veracity Anchors as PFMI Evidence Standard	52](#3.3.4-the-veracity-anchors-as-pfmi-evidence-standard)
-
-[3.4 Central Bank Oversight and CBDC Governance	52](#3.4-central-bank-oversight-and-cbdc-governance)
-
-[3.4.1 The CBDC Governance Problem	53](#3.4.1-the-cbdc-governance-problem)
-
-[3.4.2 Algorithmic Monetary Policy Under TL Governance	53](#3.4.2-algorithmic-monetary-policy-under-tl-governance)
-
-[3.4.3 CBDC Transaction Governance: Retail and Cross-Border	54](#3.4.3-cbdc-transaction-governance:-retail-and-cross-border)
-
-[3.5 GDPR, Cryptographic Erasure, and the Right to Be Forgotten	54](#3.5-gdpr,-cryptographic-erasure,-and-the-right-to-be-forgotten)
-
-[3.5.1 The Structural Paradox and Its Resolution	55](#3.5.1-the-structural-paradox-and-its-resolution)
-
-[3.5.2 Interaction with Financial Regulatory Retention Requirements	55](#3.5.2-interaction-with-financial-regulatory-retention-requirements)
-
-[3.6 Global AML and Fraud Standards	56](#3.6-global-aml-and-fraud-standards)
-
-[3.6.1 FATF Recommendations and the Beneficial Ownership Problem	56](#3.6.1-fatf-recommendations-and-the-beneficial-ownership-problem)
-
-[3.6.2 TL as Structural AML Architecture	57](#3.6.2-tl-as-structural-aml-architecture)
-
-[3.7 The EU AI Act and High-Risk System Obligations	57](#3.7-the-eu-ai-act-and-high-risk-system-obligations)
-
-[3.7.1 The Layered Compliance Challenge	58](#3.7.1-the-layered-compliance-challenge)
-
-[3.7.2 Human Oversight Through Epistemic Hold	58](#3.7.2-human-oversight-through-epistemic-hold)
-
-[3.7.3 Non-Discrimination and the Sustainable Capital Allocation Mandate	58](#3.7.3-non-discrimination-and-the-sustainable-capital-allocation-mandate)
-
-[3.7.4 Digital Evidence Standards: FRE 901/902 and eIDAS	59](#3.7.4-digital-evidence-standards:-fre-901/902-and-eidas)
-
-[SECTION 4: HARDWARE ENFORCEMENT AND INSTITUTIONAL GOVERNANCE	60](#section-4:-hardware-enforcement-and-institutional-governance)
-
-[4.1 Delay-Insensitive Ternary Logic and Mandated Ternary Hardware	60](#4.1-delay-insensitive-ternary-logic-and-mandated-ternary-hardware)
-
-[4.1.1 The Enforceability Gap and Its Hardware Resolution	60](#4.1.1-the-enforceability-gap-and-its-hardware-resolution)
-
-[4.1.2 Delay-Insensitive Ternary Logic: Circuit Architecture	60](#4.1.2-delay-insensitive-ternary-logic:-circuit-architecture)
-
-[4.1.3 Mandated Ternary Memristive Substrate	61](#4.1.3-mandated-ternary-memristive-substrate)
-
-[4.1.4 NL=NA at the Hardware Layer: The Window Comparator and Confirm Pulse	62](#4.1.4-nl=na-at-the-hardware-layer:-the-window-comparator-and-confirm-pulse)
-
-[4.1.5 Architecture A, Architecture B, and the Deployment Roadmap	63](#4.1.5-architecture-a,-architecture-b,-and-the-deployment-roadmap)
-
-[4.2 The Tri-Cameral Governance Model	64](#4.2-the-tri-cameral-governance-model)
-
-[4.2.1 The Governance Capture Problem	64](#4.2.1-the-governance-capture-problem)
-
-[4.2.2 The Technical Council	64](#4.2.2-the-technical-council)
-
-[4.2.3 The Stewardship Custodians	65](#4.2.3-the-stewardship-custodians)
-
-[4.2.4 The Smart Contract Treasury	66](#4.2.4-the-smart-contract-treasury)
-
-[4.2.5 The No Switch Off Rule	66](#4.2.5-the-no-switch-off-rule)
-
-[4.3 Adversarial Survivability	66](#4.3-adversarial-survivability)
-
-[4.3.1 Technical Attack Vectors	67](#4.3.1-technical-attack-vectors)
-
-[4.3.2 Social Engineering Attack Vectors	68](#4.3.2-social-engineering-attack-vectors)
-
-[4.3.3 Semantic Drift: The Multi-Decade Constitutional Threat	68](#4.3.3-semantic-drift:-the-multi-decade-constitutional-threat)
-
-[4.3.4 Sovereign Coercion Attack Vectors	70](#4.3.4-sovereign-coercion-attack-vectors)
-
-[4.4 Post-Quantum Cryptographic Migration	70](#4.4-post-quantum-cryptographic-migration)
-
-[4.4.1 The Harvest-Now-Decrypt-Later Threat to Financial Governance Records	70](#4.4.1-the-harvest-now-decrypt-later-threat-to-financial-governance-records)
-
-[4.4.2 NIST Standards Alignment and the TL Migration Specification	71](#4.4.2-nist-standards-alignment-and-the-tl-migration-specification)
-
-[4.4.3 The Hash Agility Protocol	72](#4.4.3-the-hash-agility-protocol)
-
-[4.4.4 The 2032-2040 Vulnerability Window	72](#4.4.4-the-2032-2040-vulnerability-window)
-
-[SECTION 5: SUCCESSION, ECONOMICS, AND CONCLUSION	73](#section-5:-succession,-economics,-and-conclusion)
-
-[5.1 Succession and Continuity	73](#5.1-succession-and-continuity)
-
-[5.1.1 The Governance Continuity Problem	73](#5.1.1-the-governance-continuity-problem)
-
-[5.1.2 The Succession Declaration	74](#5.1.2-the-succession-declaration)
-
-[5.1.3 Pillar VIII and the Permanence of Governance History	75](#5.1.3-pillar-viii-and-the-permanence-of-governance-history)
-
-[5.2 Implementation Economics	75](#5.2-implementation-economics)
-
-[5.2.1 The Market Context	75](#5.2.1-the-market-context)
-
-[5.2.2 Architecture B NRE and the Consortium Model	76](#5.2.2-architecture-b-nre-and-the-consortium-model)
-
-[5.2.3 Break-Even Analysis and the MVP Proposal	76](#5.2.3-break-even-analysis-and-the-mvp-proposal)
-
-[5.3 Conclusion	77](#5.3-conclusion)
-
-[REFERENCES	79](#references)
-
-## 
-
-## 
-
-## **SECTION 1: INTRODUCTION** {#section-1:-introduction}
-
-### **1.1 The Governance Crisis in Automated Economic Systems** {#1.1-the-governance-crisis-in-automated-economic-systems}
+### **1.1 The Governance Crisis in Automated Economic Systems**
 
 The global financial system processes hundreds of millions of algorithmic decisions each day, across trading, settlement, credit allocation, monetary policy, and regulatory compliance. The governance architecture underlying these decisions was designed for a world in which human judgment occupied the critical path between data and action. That world no longer exists. Algorithmic systems now execute in microseconds, at scales no human oversight layer can monitor in real time, with a degree of opacity that has made post-hoc forensic reconstruction the default regulatory posture.
 
@@ -356,7 +118,7 @@ This monograph characterizes this condition as the governance gap: the structura
 
 **The epistemic crisis of binary logic.** Financial decisions are inherently complex and rarely reducible to a simple proceed or refuse determination. The most critical moments in any financial system, periods of extreme volatility, ambiguous data feeds, or unexpected model outputs, are characterized precisely by uncertainty. Binary systems are architecturally forced to eliminate this uncertainty from the official record: they proceed or they refuse, and the moment of doubt disappears. This absence of a formal hesitation state means that when an algorithm proceeds under conditions of uncertainty and catastrophic outcomes follow, the system retains no verifiable architectural record of its own ambiguity. Research into AML compliance has quantified one dimension of this failure: because binary monitoring systems cannot represent verified uncertainty, they generate false positives at rates of 90 to 95 percent of all alerts, consuming $274 billion annually in compliance expenditure while producing outcomes that one analysis compared to a known fraud risk being allowed to persist across trillions of dollars of unmonitored transactions [\[2\]](https://finance.yahoo.com/news/hidden-cost-aml-95-false-134601048.html) [\[3\]](https://consilient.com/aml-failures-and-lessons-learned).
 
-### **1.2 The Claims of This Monograph** {#1.2-the-claims-of-this-monograph}
+### **1.2 The Claims of This Monograph**
 
 This monograph substantiates four specific claims about Ternary Logic.
 
@@ -368,7 +130,7 @@ This monograph substantiates four specific claims about Ternary Logic.
 
 **Claim 4: TL is constitutionally bounded by categorical prohibitions.** The No Spy, No Weapon Mandate establishes structural prohibitions on surveillance and weapons applications embedded in the constitutional schema, the API specification, and the hardware substrate. These are not policy statements or configurable parameters. A system that enables surveillance or weapons is not a misconfigured TL implementation. It is categorically outside TL's constitutional domain.
 
-### **1.3 Relationship to Existing Legal and Regulatory Frameworks** {#1.3-relationship-to-existing-legal-and-regulatory-frameworks}
+### **1.3 Relationship to Existing Legal and Regulatory Frameworks**
 
 TL does not seek to replace existing regulatory frameworks. It provides the architectural substrate through which compliance with those frameworks becomes physically enforced rather than self-certified. Three intersections are particularly significant at the time of this writing.
 
@@ -378,7 +140,7 @@ GDPR Article 17, the Right to Erasure, creates an apparent structural conflict w
 
 Post-quantum cryptography migration has become operationally urgent. NIST finalized three post-quantum standards in August 2024: FIPS 203 (ML-KEM, the primary key encapsulation standard), FIPS 204 (ML-DSA, the primary digital signature standard), and FIPS 205 (SLH-DSA, the hash-based fallback signature standard) [\[6\]](https://csrc.nist.gov/projects/post-quantum-cryptography). NSA CNSA 2.0 sets 2030 as the mandatory migration deadline for National Security Systems. The UK National Cyber Security Centre has characterized PQC migration as a global-scale change to IT and operational technology systems, noting that hardware roots of trust implementing the new NIST standards were expected to become available during 2025 [\[12\]](https://www.ncsc.gov.uk/guidance/pqc-migration-timelines). TL addresses this through ML-KEM-1024 and SLH-DSA-SHAKE-128s slots reserved in the API Signature Block, a hybrid signature approach during the transition window, and a constitutional cryptographic agility protocol that permits progressive migration without ledger reconstruction.
 
-### **1.4 A Note on Terminology** {#1.4-a-note-on-terminology}
+### **1.4 A Note on Terminology**
 
 Several terms in this monograph carry precise, non-interchangeable meanings that differ from their common usage. These distinctions are maintained throughout without exception.
 
@@ -394,9 +156,9 @@ Several terms in this monograph carry precise, non-interchangeable meanings that
 
 **NL=NA** denotes the architectural covenant No Log equals No Action. It is not a logging standard or a compliance policy. It is a physical constraint on economic power: no action can execute without prior immutable evidence of its governance evaluation.
 
-## **SECTION 2: CONSTITUTIONAL FOUNDATIONS** {#section-2:-constitutional-foundations}
+## **SECTION 2: CONSTITUTIONAL FOUNDATIONS**
 
-### **2.1 The Goukassian Vow as Foundational Architecture** {#2.1-the-goukassian-vow-as-foundational-architecture}
+### **2.1 The Goukassian Vow as Foundational Architecture**
 
 Every schema property, every endpoint path, every error code, every hardware gate state, and every governance decision in the Ternary Logic framework derives from a single constitutional foundation: the Goukassian Vow.
 
@@ -420,9 +182,9 @@ The Vow also establishes the moral and logical foundation for the Tri-Cameral Go
 
 A central bank cannot tune the Vow to approve emergency liquidity injections without evidentiary validation. A trading firm cannot configure the Vow to ignore Epistemic Hold during volatile market conditions. A sovereign government cannot legislate a carve-out from the Vow for national security purposes without producing a system that is, by architectural definition, no longer TL. The Vow is the axiom that makes TL a constitutional framework rather than a compliance tool.
 
+---
 
-
-### **2.2 The Goukassian Principle: Lantern, Signature, and License** {#2.2-the-goukassian-principle:-lantern,-signature,-and-license}
+### **2.2 The Goukassian Principle: Lantern, Signature, and License**
 
 The Goukassian Principle is the operational enforcement layer of the Ternary Logic framework. It is Pillar 3 of the Eight Pillars. It is constitutionally and architecturally distinct from the Goukassian Vow. Where the Vow is the foundational law that commands what governance must achieve, the Principle is the engineering specification that makes that governance computable, verifiable, and legally attributable.
 
@@ -442,15 +204,15 @@ The legal significance of the Goukassian Principle as an integrated three-part m
 
 The three artifacts of the Goukassian Principle are required on every `POST /decisions`, `POST /audit-logs`, and `POST /evaluate/*` request body through the `GoukassianPrincipleBlock_v1_0_0` schema. They are not optional fields. Their absence causes schema validation failure, which causes Permission Token denial, which causes Gateway lock. The Goukassian Principle is not a recommended practice. It is a physical prerequisite for economic action [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
+---
 
-
-### **2.3 The Three Decision States: Proceed, Epistemic Hold, and Refuse** {#2.3-the-three-decision-states:-proceed,-epistemic-hold,-and-refuse}
+### **2.3 The Three Decision States: Proceed, Epistemic Hold, and Refuse**
 
 Ternary Logic operates with a complete and closed decision alphabet of three states: Proceed (+1), Epistemic Hold (0), and Refuse (-1). No economic action within the TL framework may resolve to any state outside this triad. The system does not output probabilistic confidence scores, risk-adjusted recommendations, graded advisories, or partial authorizations. It issues constitutional determinations. Every proposal that enters the Governance Lane must exit as exactly one of these three states. The Gateway recognizes no intermediate or ambiguous signals [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
 This triadic structure resolves what the Governance paper terms the epistemic crisis of binary logic: the structural impossibility, in a two-state system, of representing the constitutionally meaningful condition of verified uncertainty [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md). Binary systems treat uncertainty as a defect to be eliminated through heuristic extrapolation or conservative rejection. TL treats uncertainty as constitutional information to be documented, escalated, and resolved through structured deliberation. This distinction has profound consequences for evidentiary integrity, systemic stability, and institutional liability.
 
-#### **2.3.1 Proceed (+1): The Authorization State** {#2.3.1-proceed-(+1):-the-authorization-state}
+#### **2.3.1 Proceed (+1): The Authorization State**
 
 Proceed is the affirmative authorization state. Its integer value is \+1 and its `stateLabel` in the TL schema is `"Proceed"`. A Proceed determination signifies that the Governance Lane has verified sufficient evidentiary certainty, that no Refuse condition has been triggered under any of the Eight Pillars, and that the proposal satisfies the Goukassian Vow's third mandate: proceed where truth is.
 
@@ -462,7 +224,7 @@ At the schema layer, the Proceed state carries non-negotiable structural enforce
 
 In macroeconomic practice, a central bank algorithmic liquidity injection proposal receives Proceed when the Decision Log contains verified stress-test evidence, sovereign debt sustainability metrics, and cross-border regulatory alignment checks, and when all Eight Pillars return compliant status. A high-frequency trading algorithm's order proposal receives Proceed when the Hybrid Shield's anti-manipulation checks have cleared, when the AML clearance status is `CLEARED`, and when the data feeds powering the decision are within defined latency tolerances.
 
-#### **2.3.2 Refuse (-1): The Prohibition State** {#2.3.2-refuse-(-1):-the-prohibition-state}
+#### **2.3.2 Refuse (-1): The Prohibition State**
 
 Refuse is the prohibition state. Its integer value is \-1 and its `stateLabel` is `"Refuse"`. A Refuse determination signifies that the proposal has violated a constitutional boundary, triggered a harm condition under the Goukassian Vow's second mandate, or failed a mandatory evidentiary test under any of the Eight Pillars.
 
@@ -474,7 +236,7 @@ At the on-chain layer, the `ABI.InvalidResolutionState` revert condition enforce
 
 In macroeconomic practice, a trading algorithm receives Refuse when the Governance Lane detects that the proposed order would violate Basel III leverage ratio requirements, trigger a sanctions match against a designated counterparty, or exhibit the temporal signature of spoofing behavior: orders placed and canceled within milliseconds without execution intent. A supply chain payment receives Refuse when the Sustainable Capital Allocation Mandate's mandatory exclusionary check finds that the goods route terminates at an entity designated under weapons proliferation controls. In each case, the Refuse determination produces an immutable, timestamped, cryptographically anchored record of the institution's constitutional compliance [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
-#### **2.3.3 Epistemic Hold (0): The Hesitation State** {#2.3.3-epistemic-hold-(0):-the-hesitation-state}
+#### **2.3.3 Epistemic Hold (0): The Hesitation State**
 
 Epistemic Hold is the most consequential and most architecturally novel of the three states. Its integer value is 0 and its `stateLabel` is `"EpistemicHold"`. Its full operational treatment, including the Sacred Pause workflow it triggers, is the subject of Section 2.5. Here, its fundamental nature as a decision state is established.
 
@@ -488,11 +250,11 @@ The `EscrowRecord_v1_0_0` schema is the single authoritative definition of all E
 
 The triadic architecture prevents the binary fallacy that every proposal must either succeed or fail. In high-stakes economic governance, the correct response to genuine uncertainty is structured suspension. A trading algorithm that cannot verify the authenticity of a market-moving sovereign announcement should not execute on probability. A settlement system that detects an anomaly in a correspondent banking chain should not default to retry logic. These are not system failures. They are constitutional successes: evidence that the architecture is functioning exactly as designed, pausing before power acts without truth [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
-### **2.4 Dual-Lane Architecture: The Governance Lane and the Inference Lane** {#2.4-dual-lane-architecture:-the-governance-lane-and-the-inference-lane}
+### **2.4 Dual-Lane Architecture: The Governance Lane and the Inference Lane**
 
 Ternary Logic does not replace binary computation. This architectural fact governs every design decision in the TL framework and must be stated with precision: the Inference Lane and the Governance Lane are physically and logically separated computational domains that operate in parallel and never merge into a single execution path. Binary proposes. Ternary governs. The separation is not a performance optimization or a modular design preference. It is a constitutional requirement [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
-#### **2.4.1 The Inference Lane** {#2.4.1-the-inference-lane}
+#### **2.4.1 The Inference Lane**
 
 The Inference Lane is the binary computational domain. It contains the statistical models, pattern recognition engines, optimization algorithms, and data pipelines that generate economic proposals. A high-frequency trading algorithm detecting an arbitrage opportunity, a central bank model forecasting liquidity stress, a supply chain optimizer recommending a rerouting decision, a credit scoring engine evaluating a loan application: all of these operate within the Inference Lane [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
@@ -500,7 +262,7 @@ This lane is engineered for computational velocity. It processes market data, so
 
 This separation addresses a structural inadequacy that research on algorithmic trading has characterized as the enforceability gap: the condition in which software-implemented governance constraints can be bypassed by operations at lower abstraction levels, optimized away by compilers under performance pressure, or subverted by compromised processes operating below the software abstraction layer [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md). By placing governance enforcement in a physically distinct lane with independent cryptographic credentials, TL eliminates the possibility that the Inference Lane can authorize its own proposals regardless of the software stack's integrity.
 
-#### **2.4.2 The Governance Lane** {#2.4.2-the-governance-lane}
+#### **2.4.2 The Governance Lane**
 
 The Governance Lane is the ternary constitutional domain. It contains the constitutional logic, the Goukassian Vow, the Eight Pillars, the evidentiary verification protocols, and the Permission Token issuance mechanism. Every proposal that emerges from the Inference Lane must pass through the Governance Lane before it reaches the execution threshold [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
@@ -514,7 +276,7 @@ The **Slow Lane** operates asynchronously, handling cryptographic anchoring of b
 
 This dual sub-lane design resolves what prior governance architectures have treated as an irreconcilable tension: high-speed financial markets require sub-millisecond execution, while sovereign-grade evidentiary assurance requires the higher latency associated with cryptographic notarization on public blockchains [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md). TL dissolves this tension by separating the critical execution speed from the final notarization speed. The evidentiary guarantee is mathematically unbroken: if the execution gateway fired, a Decision Log must exist in the local ledger, which will be anchored in the next batch. The chain of custody from local signing to public notarization is cryptographically continuous.
 
-#### **2.4.3 The Gateway: Fail-Closed by Constitutional Design** {#2.4.3-the-gateway:-fail-closed-by-constitutional-design}
+#### **2.4.3 The Gateway: Fail-Closed by Constitutional Design**
 
 The Gateway is the physical junction where the Inference Lane and the Governance Lane converge. It is fail-closed by design. In its default state, the Gateway blocks all execution. It opens only when the Governance Lane issues a valid Permission Token [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
@@ -524,13 +286,13 @@ The fail-closed default is not a safety mode that activates under exceptional co
 
 The cryptographic thread connecting both lanes across every request is the `X-TL-Trace-Id` UUID v4 header. It is required on every request and echoed in every response, webhook event, and downstream regulator export. The `NLNAAuditToken` security scheme is cryptographically bound to the `X-TL-Trace-Id` of the originating Inference Lane request, preventing token substitution across unrelated decision vectors. Every executed action in TL can be traced from its Inference Lane proposal through its Governance Lane evaluation to its anchored Decision Log through this single, cryptographically enforced identifier [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
+---
 
-
-### **2.5 Epistemic Hold and the Sacred Pause: State and Workflow** {#2.5-epistemic-hold-and-the-sacred-pause:-state-and-workflow}
+### **2.5 Epistemic Hold and the Sacred Pause: State and Workflow**
 
 Epistemic Hold and Sacred Pause are not synonyms. They are distinct architectural concepts that operate in tight coordination. Epistemic Hold is a constitutional state. Sacred Pause is the workflow it triggers. The state is the determination. The workflow is the operational response to that determination. Conflating these two concepts produces implementation errors that compromise the entire framework's evidentiary integrity: an auditor examining a `TGLF_State0` record must be able to distinguish between the constitutional state that was declared and the governance process that was executed in response to it, because these two facts are separately verifiable and separately significant in any regulatory or legal proceeding [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
-#### **2.5.1 Epistemic Hold as Constitutional State** {#2.5.1-epistemic-hold-as-constitutional-state}
+#### **2.5.1 Epistemic Hold as Constitutional State**
 
 Epistemic Hold is a TL constitutional state. Its integer value is 0\. Its `stateLabel` in the TL schema is `"EpistemicHold"`. These are state identifiers, not process names. When the Governance Lane issues Epistemic Hold, it is rendering a constitutional verdict: the available evidence is insufficient to support Proceed, and no harm condition has been detected to trigger Refuse [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
@@ -540,7 +302,7 @@ The state persists until evidentiary conditions change sufficiently to warrant a
 
 In the hardware layer, Epistemic Hold is not a software flag that could be overridden by a privileged process or emergency routine. In DITL circuit implementations, the intermediate resistance state of the TaOx memristive cell physically represents the 0 determination. The gate will not transition to the low-resistance state that permits Proceed until a verified confirm pulse arrives from the logging lane. Similarly, the gate will not transition to the high-resistance Refuse state unless the Governance Lane explicitly issues the cryptographic signature for that determination. The Epistemic Hold state is enforced at the electron level [\[16\]](https://github.com/FractonicMind/TernaryLogic/blob/main/MT_Hardware/MT_System_Architecture_and_Economics.md).
 
-#### **2.5.2 Sacred Pause as Governance Workflow** {#2.5.2-sacred-pause-as-governance-workflow}
+#### **2.5.2 Sacred Pause as Governance Workflow**
 
 Sacred Pause is the workflow process that activates when truth is uncertain. In the TL API specification, this process carries the canonical name `GovernancePause`. It appears in `StateEnvelope.processActive` as `const: "GovernancePause"` and in `TGLF_State0.processActive` as `const: "GovernancePause"`. These are workflow identifiers. Sacred Pause is not a state synonym. It is the operational embodiment of the Goukassian Vow's first mandate: the answer to the question, "What happens now that Epistemic Hold has been declared?" [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
@@ -558,9 +320,9 @@ The Decision Log for an Epistemic Hold episode records both the state determinat
 
 The economic value of structured hesitation is measurable along several dimensions. It reduces operational risk by preventing execution of transactions that would require costly post-facto reconciliation. The research literature on AML compliance has estimated that the total annual cost of handling false positive alerts globally exceeds $274 billion, a cost driven substantially by the binary system's inability to represent a verified uncertainty state that would avoid flagging legitimate transactions while holding genuinely ambiguous ones [\[2\]](https://finance.yahoo.com/news/hidden-cost-aml-95-false-134601048.html). It creates audit trail artifacts of genuine probative value: a regulator examining a Sacred Pause record can verify not only what the system decided but what it knew, what it did not know, and what it did to resolve the gap. And it converts hesitation from a systemic liability into a measurable, contractible economic function: hold duration, hold frequency, and hold resolution patterns together constitute a quantitative signal about data quality and model calibration that risk managers can analyze, price, and incorporate into counterparty assessments [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
+---
 
-
-### **2.6 NL=NA: The Non-Negotiable Architectural Covenant** {#2.6-nl=na:-the-non-negotiable-architectural-covenant}
+### **2.6 NL=NA: The Non-Negotiable Architectural Covenant**
 
 NL=NA stands for No Log equals No Action. It is the irreducible axiom of Ternary Logic. It is not a preference, a best practice, a configurable policy parameter, or a compliance recommendation. It is a constitutional law embedded at every layer of the TL framework, from application logic through smart contract ABI conditions to physical memristive gate states [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
@@ -586,15 +348,15 @@ The covenant also addresses what the governance literature terms Ghost Governanc
 
 The broader significance of NL=NA for financial regulation is this: it transforms the regulatory audit from a forensic reconstruction exercise into a mathematical verification. When a regulator examines a financial institution operating under TL governance, the question is not whether the institution maintains adequate records, a question that relies on the institution's self-reporting, but whether the cryptographic anchor on the public blockchain matches the log the institution presents. If the match holds, the institution's governance record is authentic. If it does not, a tamper event is cryptographically certain. The shift is from trust-based oversight to proof-based oversight: from asking the institution whether it behaved correctly to verifying independently that it could not have behaved otherwise [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
-### **2.7 The Eight Pillars of Evidentiary Governance** {#2.7-the-eight-pillars-of-evidentiary-governance}
+### **2.7 The Eight Pillars of Evidentiary Governance**
 
 Ternary Logic institutionalizes integrity through eight foundational Pillars. Each Pillar addresses a critical point of failure in traditional binary financial governance. Together they form the complete, auditable circuit of constitutional accountability. The Pillars are structurally invariant: no governance chamber, regulatory mandate, or emergency condition can suspend, bypass, or reorder them. Their canonical identifiers are used in `x-tl-pillar` annotations on every API endpoint and in `PillarIdentifier_v1_0_0` as the exclusive vocabulary for pillar references throughout the framework [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
 The Pillars do not operate in isolation. Cross-pillar dependencies are architecturally enforced: Pillar I (Epistemic Hold) activation degrades all eight Pillar statuses in the `LanternStatus.pillarStatuses` array, because uncertainty in one governance domain propagates accountability obligations across all others. Pillar VIII (Anchors) provides the cryptographic substrate on which Pillar II (Immutable Ledger) depends for sovereign-grade evidentiary permanence. Pillar V (Economic Rights and Transparency Mandate) regulatory failures feed directly into Pillar VII (Hybrid Shield) audit escalation pathways. These dependencies are not incidental design choices. They reflect the constitutional reality that governance integrity is a system property, not a property of individual components [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
+---
 
-
-#### **Pillar I: Epistemic Hold** {#pillar-i:-epistemic-hold}
+#### **Pillar I: Epistemic Hold**
 
 **Canonical identifier:** `EpistemicHold`
 
@@ -606,9 +368,9 @@ The legal effect of Pillar I is the creation of an immutable defense of due proc
 
 Pillar I is expressed in the API through `POST /decisions`, `POST /audit-logs`, `GET /PATCH /epistemic-hold/escalations/*`, and `GET /epistemic-hold/lantern`. Its schema anchors are `EscrowRecord_v1_0_0` and `TGLF_State0_v1_0_0`. The Gateway fail-closed behavior is a Pillar I enforcement mechanism: any condition that cannot be resolved to a definitive Proceed determination defaults to Epistemic Hold rather than to execution [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
+---
 
-
-#### **Pillar II: Immutable Ledger** {#pillar-ii:-immutable-ledger}
+#### **Pillar II: Immutable Ledger**
 
 **Canonical identifier:** `ImmutableLedger`
 
@@ -620,9 +382,9 @@ The `ghostGovernanceDetectionRate` metric in `GET /metrics/summary` quantifies G
 
 Pillar II is expressed in the API through `POST /audit-logs`, `GET /audit-logs/{logId}`, `POST /refusals`, and `GET /regulator/timestamp-verification/{logId}`. Its schema anchor is `AuditProof_v1_0_0`. The dependency relationship with Pillar VIII is architectural: the Immutable Ledger provides the local evidentiary commitment, while Anchors provides the public blockchain notarization that makes that commitment sovereign-grade and non-repudiable [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
+---
 
-
-#### **Pillar III: Goukassian Principle** {#pillar-iii:-goukassian-principle}
+#### **Pillar III: Goukassian Principle**
 
 **Canonical identifier:** `GoukassianPrinciple`
 
@@ -634,9 +396,9 @@ The legal effect of Pillar III fundamentally redefines corporate liability for a
 
 Pillar III is expressed in the API through `GET /goukassian/signature`, `POST /goukassian/license/validate`, `GET /epistemic-hold/lantern`, and `GET /gateway/status`. It is the Pillar that connects the constitutional mandate of the Vow to the engineering reality of every API interaction [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
+---
 
-
-#### **Pillar IV: Decision Logs** {#pillar-iv:-decision-logs}
+#### **Pillar IV: Decision Logs**
 
 **Canonical identifier:** `DecisionLogs`
 
@@ -648,9 +410,9 @@ The use of schema-validated Decision Logs significantly enhances the efficacy of
 
 The EU AI Act's requirement that high-risk AI systems in financial services maintain complete traceability of automated decisions [\[9\]](https://www.consultancy.eu/news/11237/the-eu-ai-act-the-impact-on-financial-services-institutions) is satisfied structurally by Pillar IV: every automated determination generates a schema-validated Decision Log before execution, making the full ethical and operational history of the model permanently available for supervisory review. Pillar IV is expressed in the API through `GET /decisions/{decisionId}`, `GET /thresholds/{domain}`, `PUT /thresholds/{domain}`, and `GET /metrics/summary`. Its schema anchors are `JustificationObject_v1_0_0` and `ThresholdProfile_v1_0_0` [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
+---
 
-
-#### **Pillar V: Economic Rights and Transparency Mandate** {#pillar-v:-economic-rights-and-transparency-mandate}
+#### **Pillar V: Economic Rights and Transparency Mandate**
 
 **Canonical identifier:** `EconomicRightsAndTransparencyMandate`
 
@@ -662,9 +424,9 @@ The EU AI Act mandates that high-risk AI systems in credit scoring, insurance un
 
 Pillar V is expressed in the API through `POST /evaluate/trade`, `POST /redress/*`, `GET /regulator/basel-iii/attestation`, `POST /regulator/fatf/compliance-export`, `GET /regulator/iosco/principle-mapping`, and `POST /regulator/evidence-export`. Its regulatory vectors include Basel III, FATF, IOSCO, CFPB, SEC, and FINRA [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
+---
 
-
-#### **Pillar VI: Sustainable Capital Allocation Mandate** {#pillar-vi:-sustainable-capital-allocation-mandate}
+#### **Pillar VI: Sustainable Capital Allocation Mandate**
 
 **Canonical identifier:** `SustainableCapitalAllocationMandate`
 
@@ -676,9 +438,9 @@ The Paris Agreement alignment requirements expressed through `RegulatoryContext.
 
 Pillar VI is expressed in the API through `POST /evaluate/policy` and `POST /evaluate/supply-chain`. The `greenBondEligibility` boolean in policy evaluation and `carbonFootprintVerified` in supply chain evaluation are its direct API expressions [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
+---
 
-
-#### **Pillar VII: Hybrid Shield** {#pillar-vii:-hybrid-shield}
+#### **Pillar VII: Hybrid Shield**
 
 **Canonical identifier:** `HybridShield`
 
@@ -694,9 +456,9 @@ The Triadic Anti-Manipulation Check is a real-time behavioral monitoring system 
 
 Pillar VII is expressed in the API through `POST /emergency/override`, `GET /emergency/status`, `GET /audit/custodians/{custodianId}/heartbeat`, `GET /regulator/custodian-quorum`, and `POST /pillars/{pillarId}/configure`. Its schema anchors are `TriCameralApproval_v1_0_0`, `EmergencyOverrideRequest_v1_0_0`, and `EKRRecord_v1_0_0` [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
+---
 
-
-#### **Pillar VIII: Anchors** {#pillar-viii:-anchors}
+#### **Pillar VIII: Anchors**
 
 **Canonical identifier:** `Anchors`
 
@@ -712,15 +474,15 @@ Post-quantum migration for Pillar VIII is addressed through the hash agility pro
 
 Pillar VIII is expressed in the API through `GET /audit/verifications/merkle/{merkleRoot}`, `GET /audit/verifications/inclusion/{logId}`, and the `SuccessionDeclaration_v1_0_0` schema. The `canonicalArtifactNameHashes` and `canonicalMandateHashes` sections of `eip712_typed_data.json` are Pillar VIII artifacts, providing the cryptographic pre-image registry that makes every constitutional artifact name verifiable at the smart contract layer [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
+---
 
-
-#### **Architectural Summary of the Eight Pillars** {#architectural-summary-of-the-eight-pillars}
+#### **Architectural Summary of the Eight Pillars**
 
 The Eight Pillars form an interlocking constitutional architecture in which each Pillar's function reinforces and depends upon the others. Pillar I creates the hesitation state that prevents reckless execution. Pillar II records that hesitation with cryptographic permanence. Pillar III certifies the constitutional basis of every determination through the Lantern, Signature, and License. Pillar IV documents the full evidentiary reasoning in a schema-validated, pre-action artifact. Pillar V ensures that every affected party has verifiable access to that reasoning. Pillar VI extends constitutional governance to long-term systemic stability and ESG obligations. Pillar VII protects the entire evidentiary chain from fraud, capture, and manipulation while preserving privacy. Pillar VIII anchors the chain to public blockchains, making governance history sovereign-grade, non-repudiable, and permanent.
 
 No Pillar can be suspended without degrading the constitutional integrity of the entire system. No Pillar can be substituted with a policy-level equivalent. The Pillars are not a checklist of governance best practices. They are the physical architecture through which the Goukassian Vow becomes computationally enforceable constitutional law.
 
-### **2.8 The No Spy, No Weapon Mandate: Domain Boundaries and Prohibitions** {#2.8-the-no-spy,-no-weapon-mandate:-domain-boundaries-and-prohibitions}
+### **2.8 The No Spy, No Weapon Mandate: Domain Boundaries and Prohibitions**
 
 The Goukassian Vow defines what Ternary Logic must do: pause when truth is uncertain, refuse when harm is clear, proceed where truth is. The No Spy, No Weapon Mandate defines what Ternary Logic must never do. It is a negative constitutional architecture operating in parallel with the positive architecture of the Eight Pillars. Where the Pillars specify the affirmative requirements of governed economic action, the Mandate specifies the categorical prohibitions that no configuration, no deployment context, and no sovereign authority can override [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
@@ -736,7 +498,7 @@ The governance literature on dual-use AI technologies has established that the m
 
 **Third constraint: no dual-use latency.** The system must not be designed with latent capabilities that can be repurposed from legitimate economic governance to surveillance or weapons applications. In DITL hardware implementations, this constraint is enforced physically: the Mandated Ternary memristive cells operate only in the three governance states and cannot be repurposed for general-purpose computation, data storage, or signal processing because their physical structure is optimized for resistance-state switching. The asynchronous handshake protocol does not support remote procedure calls, network listeners, or dynamic code loading. These are not disabled features. They are physically absent circuit elements [\[16\]](https://github.com/FractonicMind/TernaryLogic/blob/main/MT_Hardware/MT_System_Architecture_and_Economics.md).
 
-#### **2.8.1 The Oracle Problem and Query Constitutionalization** {#2.8.1-the-oracle-problem-and-query-constitutionalization}
+#### **2.8.1 The Oracle Problem and Query Constitutionalization**
 
 The Oracle Problem is the central technical challenge of the no-surveillance constraint. A system may not spy directly but may be designed to answer queries that enable spying by a third party. A credit scoring algorithm that does not itself surveil individuals can be converted into a surveillance tool by a government that queries it for all citizens whose scores fall below a defined threshold. The algorithm has become a surveillance oracle without modifying a single line of its own code [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
@@ -746,7 +508,7 @@ TL addresses both forms of the Oracle Problem through query constitutionalizatio
 
 For aggregate queries that do not violate the constraint on their face but carry inference risk, the Hybrid Shield's differential privacy mechanisms are applied to the query response layer. The Governance Lane adds calibrated noise to aggregate responses based on the query's inference risk profile. If the query's structure permits reconstruction of individual records, the Governance Lane issues Epistemic Hold and the Sacred Pause workflow evaluates whether the query can be reformulated to satisfy the privacy budget constraints before a response is issued. This approach aligns with the mathematical framework established by differential privacy research: the privacy budget quantifies how much information leakage is permitted across a sequence of queries, and the constitutional schema anchors the budget parameter in a governance artifact that the Stewardship Custodians must periodically review and update [\[86\]](https://arxiv.org/pdf/2302.09258).
 
-#### **2.8.2 Twelve Edge-Case Boundary Determinations** {#2.8.2-twelve-edge-case-boundary-determinations}
+#### **2.8.2 Twelve Edge-Case Boundary Determinations**
 
 The No Spy, No Weapon Mandate must be operationally precise. The twelve edge cases that follow represent domain boundaries where legitimate economic governance and prohibited applications are structurally adjacent. Each represents a real deployment context in which TL systems may be proposed and in which the Governance Lane's evaluation must produce a constitutionally clear determination.
 
@@ -774,13 +536,13 @@ The No Spy, No Weapon Mandate must be operationally precise. The twelve edge cas
 
 **Case 12: Algorithmic trading in sovereign debt of sanctioned states.** An algorithmic trading system proposes positions in sovereign bonds of a state under partial sanctions. The Governance Lane evaluates the specific sanction designations, the instrument type, and the counterparty through the Regulatory Nexus. If the specific instrument and counterparty are within the carve-outs of the applicable sanctions regime as verified through the authenticated data pipeline, it issues Proceed. If a counterparty match is detected or the instrument falls outside the carve-out, it issues Refuse.
 
+---
 
-
-### **2.9 The No Spy, No Weapon Mandate: Universality, Power Pressure, and Final Determination** {#2.9-the-no-spy,-no-weapon-mandate:-universality,-power-pressure,-and-final-determination}
+### **2.9 The No Spy, No Weapon Mandate: Universality, Power Pressure, and Final Determination**
 
 The No Spy, No Weapon Mandate is not a prohibition on specific applications within the jurisdictions that voluntarily adopt it. It is a universality claim: the Mandate must remain constitutionally intact across all jurisdictions, all deployment scales, and all adversarial pressure regimes. If the Mandate holds only in liberal democracies with strong judicial oversight but collapses in authoritarian regimes with pervasive surveillance infrastructure, it is not a constitutional constraint. It is a geographic preference. If it holds only in small-scale deployments but collapses in national-scale systems with comprehensive data coverage, it is not an architectural principle. It is a capacity limitation. The universality stress test evaluates whether the Mandate survives five scaling dimensions: interoperability, economic viability, latency overhead, hardware feasibility, and post-quantum cryptographic migration [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
-#### **2.9.1 Power Pressure Simulation** {#2.9.1-power-pressure-simulation}
+#### **2.9.1 Power Pressure Simulation**
 
 The Mandate faces qualitatively distinct pressure from four categories of sovereign actor, each employing different mechanisms to compel surveillance or weapons integration.
 
@@ -796,7 +558,7 @@ TL's response to all four pressure vectors is architectural rather than diplomat
 
 The most significant practical insight from the power pressure analysis is that economic sustainability without defense or surveillance revenue is achievable. Technology firms that refuse national security contracts face revenue gaps that may threaten commercial viability. The Smart Contract Treasury's market-making function addresses this through a constitutional compliance premium: a pricing differential that rewards TL-governed institutions with lower counterparty risk profiles, reduced insurance premiums, and preferential regulatory treatment [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md). Institutions demonstrating verifiable no-spy, no-weapon compliance receive a cryptographically anchored reputation score publicly queryable through the Regulatory Nexus. Counterparties can incorporate this score into transaction pricing, creating a market incentive for constitutional compliance that does not require government subsidy.
 
-#### **2.9.2 The Three-Axis Final Determination** {#2.9.2-the-three-axis-final-determination}
+#### **2.9.2 The Three-Axis Final Determination**
 
 The universality stress test produces a three-axis assessment of the Mandate's viability [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
@@ -810,15 +572,15 @@ This negative finding on political realism does not invalidate the Mandate. It d
 
 The critical boundary condition follows from this analysis: the Mandate is universal in architecture, not universal in geography. Any system that calls itself TL must satisfy the Mandate, regardless of where it is deployed. Systems that do not satisfy the Mandate are not TL, even if they carry the name. The Immutable Ledger and the blockchain anchoring make this exclusion verifiable: external auditors can query the ledger to confirm that a claimed TL implementation is running an authorized constitutional schema version or an unauthorized fork [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
+---
 
-
-### **2.10 Ephemeral Key Rotation and the Hybrid Shield** {#2.10-ephemeral-key-rotation-and-the-hybrid-shield}
+### **2.10 Ephemeral Key Rotation and the Hybrid Shield**
 
 Regulatory audit and trade secret protection exist in permanent structural tension. Regulators require access to the evidentiary substrate of economic decisions to verify compliance, detect manipulation, and enforce legal obligations. Institutions require protection of proprietary algorithms, counterparty relationships, pricing models, and strategic positions that constitute their competitive advantage. Traditional governance architectures resolve this tension through one of two inadequate approaches: transparency, which exposes trade secrets to competitors and adversaries, or secrecy, which conceals misconduct from regulators. Neither resolution is constitutionally acceptable under the Goukassian Vow because both cause clear harm.
 
 Ephemeral Key Rotation (EKR) is the architectural mechanism that grants temporary, time-bounded, and revocable access to encrypted Decision Logs without permanent exposure, satisfying both the Economic Rights and Transparency Mandate (Pillar V) and the institution's need for competitive confidentiality. EKR is defined in `EKRRecord_v1_0_0` in `tl_schema.json` [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
-#### **2.10.1 EKR Mechanics** {#2.10.1-ekr-mechanics}
+#### **2.10.1 EKR Mechanics**
 
 EKR operates through per-session ephemeral key pairs generated by the Hybrid Shield's threshold secret sharing infrastructure. When an authorized party, whether a regulator, an internal auditor, or a court-mandated forensic investigator, requests access to specific Decision Logs, the Governance Lane evaluates the request against constitutional criteria: the requester's identity and authorization level, the scope of the requested data, the regulatory or legal basis for the request, and the temporal boundaries of the access session [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
@@ -828,7 +590,7 @@ The key is architecturally programmed with an expiry timestamp. Once the session
 
 This design addresses a persistent vulnerability in compliance governance: persistent access credentials for high-privilege accounts represent the most common vector for both insider threat and external breach. EKR eliminates persistent credentials for audit access by architectural necessity, drastically reducing the operational window during which credential compromise could expose sensitive Decision Logs.
 
-#### **2.10.2 GDPR Article 17 and Cryptographic Erasure** {#2.10.2-gdpr-article-17-and-cryptographic-erasure}
+#### **2.10.2 GDPR Article 17 and Cryptographic Erasure**
 
 The Hybrid Shield and EKR together constitute TL's resolution to the most significant legal conflict in blockchain-based governance: the tension between ledger immutability and the GDPR Right to Erasure under Article 17\. The European Data Protection Board has affirmed that blockchain technology receives no exemption from GDPR data protection obligations, and that technical impossibility cannot excuse non-compliance [\[11\]](https://chain.link/article/blockchain-gdpr-compliance-guide). The academic literature has characterized this as a structural paradox: modifying or deleting data on an immutable append-only ledger is technically impossible without destroying the cryptographic chain that guarantees evidentiary integrity [\[17\]](https://academic.oup.com/cybersecurity/article/11/1/tyaf002/8024082) [\[49\]](https://pmc.ncbi.nlm.nih.gov/articles/PMC9440070/).
 
@@ -840,7 +602,7 @@ This approach is not pseudonymization under GDPR Article 4(5), which defines pse
 
 The Decision Log for an erasure operation is as rigorous as the Decision Log for a financial transaction, containing the original erasure request, the identity verification evidence, the GDPR grounds analysis, the retention conflict assessment, the Governance Lane determination, the chamber signatures, and the cryptographic attestation of key destruction. This log demonstrates to supervisory authorities that the erasure was not arbitrary, that it followed constitutional process, and that it preserved ledger integrity.
 
-#### **2.10.3 Three Residual Sub-Gaps** {#2.10.3-three-residual-sub-gaps}
+#### **2.10.3 Three Residual Sub-Gaps**
 
 Three residual gaps in the cryptographic erasure architecture remain as FUTURE items, documented in the Constitutional Uncertainty Register [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
@@ -852,19 +614,19 @@ Three residual gaps in the cryptographic erasure architecture remain as FUTURE i
 
 These three sub-gaps do not undermine the fundamental validity of the cryptographic erasure approach. They define the operational boundary conditions within which the approach provides legally robust GDPR compliance and the conditions under which supplementary measures are required.
 
-## **SECTION 3: REGULATORY AND LEGAL ALIGNMENT** {#section-3:-regulatory-and-legal-alignment}
+## **SECTION 3: REGULATORY AND LEGAL ALIGNMENT**
 
 The Ternary Logic framework does not seek to replace existing regulatory frameworks. It provides the architectural substrate through which compliance with those frameworks becomes physically enforced rather than self-certified. The shift is from compliance as a legal claim to compliance as an architectural fact. Basel III capital buffers compensate for operational failures that TL prevents at the source. SEC and CFTC recordkeeping obligations are satisfied as pre-execution prerequisites rather than post-action reporting burdens. IOSCO settlement finality principles are realized through NL=NA rather than through institutional assurances. In each case, TL resolves the structural gap between the regulatory standard and the governance mechanism, not by rewriting the standard but by making the mechanism incapable of failing to meet it.
 
+---
 
-
-### **3.1 Basel III and the Fundamental Review of the Trading Book** {#3.1-basel-iii-and-the-fundamental-review-of-the-trading-book}
+### **3.1 Basel III and the Fundamental Review of the Trading Book**
 
 Basel III establishes the global regulatory framework for bank capital adequacy, stress testing, and market liquidity risk. Developed in response to the structural deficiencies revealed by the 2007-2008 financial crisis, it represents the most comprehensive international banking standard in history [\[10-1\]](https://en.wikipedia.org/wiki/Basel_III). The Fundamental Review of the Trading Book (FRTB), finalized between 2013 and 2019 and currently being phased into national implementations, constitutes the most consequential revision to market risk capital requirements since the crisis. The European Commission's most recent delegated act postpones FRTB capital requirement implementation in the EU to 1 January 2027, reflecting unresolved international coordination challenges as the US, UK, and EU remain on divergent timelines [\[5\]](https://finance.ec.europa.eu/news/commission-proposes-postpone-one-additional-year-market-risk-prudential-requirements-under-basel-iii-2025-06-12_en).
 
 The Basel III framework's core philosophy is risk absorption: requiring banks to hold sufficient capital to absorb unexpected losses arising from credit, market, and operational risk. This approach has a structural flaw that TL addresses directly. Risk absorption compensates for failures that adequate governance would prevent. The FRTB's projected impact makes this flaw quantifiable: market risk capital requirements for the largest banking institutions are expected to increase by approximately 70 percent under the framework, not because underlying risks have increased, but because the regulatory measurement methodology has become more conservative in response to the demonstrated inadequacy of existing governance architectures [\[4\]](https://bpi.com/how-can-the-new-market-risk-capital-requirements-be-fixed/). The Bank Policy Institute has characterized these increases as excessive conservatism that cannot be tied to increases in actual risk levels, and as likely to constrain trading activity and market liquidity without a proportionate governance benefit [\[4\]](https://bpi.com/how-can-the-new-market-risk-capital-requirements-be-fixed/).
 
-#### **3.1.1 TL Alignment with the Three Basel Pillars** {#3.1.1-tl-alignment-with-the-three-basel-pillars}
+#### **3.1.1 TL Alignment with the Three Basel Pillars**
 
 Basel III's three-pillar structure maps directly onto the TL architecture, but with a critical inversion: where Basel imposes governance obligations that institutions must satisfy through policy and reporting, TL embeds those obligations as pre-execution architectural conditions that cannot be bypassed.
 
@@ -874,31 +636,31 @@ Basel III's three-pillar structure maps directly onto the TL architecture, but w
 
 **Pillar 3: Market Discipline Through Disclosure.** Basel III Pillar 3 requires transparent public disclosure of risk exposures, capital adequacy, and risk management practices. TL satisfies this through the blockchain-anchored Decision Logs that constitute a real-time, cryptographically verifiable public attestation of the institution's governance behavior. The `GET /regulator/basel-iii/attestation` endpoint provides an automated, signed attestation covering Basel III compliance status across all Eight Pillars. The `AuditProof_v1_0_0` structure ensures that every attestation can be independently verified against the public Merkle anchor, transforming Pillar 3 disclosure from a periodic institutional claim into a continuous, non-repudiable architectural record [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
-#### **3.1.2 The FRTB Non-Modellable Risk Factors Provision** {#3.1.2-the-frtb-non-modellable-risk-factors-provision}
+#### **3.1.2 The FRTB Non-Modellable Risk Factors Provision**
 
 The FRTB's Non-Modellable Risk Factors (NMRF) provision requires that risk factors lacking sufficient observable market data be capitalized at a standard regulatory charge rather than a model-derived charge, recognizing that models cannot be trusted where data is insufficient [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md). This provision is a regulatory encoding of the epistemic principle that uncertainty about a risk factor's behavior must be conservatively capitalized rather than optimistically modeled.
 
 TL operationalizes this principle automatically through Epistemic Hold. When the Governance Lane detects that a risk factor has fallen below the FRTB threshold for modellability, the Lantern's integrity self-test fails. Rather than defaulting to a statistical estimate, the Governance Lane issues Epistemic Hold and invokes the Sacred Pause workflow to either source additional observable data or escalate to the standard charge methodology. The Decision Log records the NMRF determination, the data sufficiency analysis, and the final capital treatment. This log simultaneously satisfies NL=NA and the Basel Committee's expectation that NMRF assessments be documented and defensible to supervisors. Under TL, the NMRF provision is not an exception to the modeling framework that institutions manage through conservative parameter choices. It is a constitutional trigger that activates a structured governance workflow [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
-#### **3.1.3 Internal Ratings-Based Approach and Model Integrity** {#3.1.3-internal-ratings-based-approach-and-model-integrity}
+#### **3.1.3 Internal Ratings-Based Approach and Model Integrity**
 
 The Internal Ratings-Based approach for credit risk permits banks to use their own models for probability of default, loss given default, and exposure at default, subject to supervisory validation and ongoing monitoring. These models are a known source of governance risk: internal model approaches are prone to institutional gaming, where parameters are calibrated to minimize regulatory capital rather than to accurately reflect underlying credit risk [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
 TL embeds IRB validation requirements into the Governance Lane as pre-execution gates. Before any IRB-derived capital allocation proposal can receive Proceed, the Decision Log must contain evidence of model validation, calibration to recent default data, and stress testing against macroeconomic scenarios approved by the Technical Council. If a corporate lending algorithm proposes a risk-weighted asset calculation based on a loss given default model that has not been recalibrated since the last reporting cycle, the Governance Lane issues Refuse. Under the Goukassian Vow, an uncalibrated model constitutes a clear harm to capital adequacy, and refusing to authorize capital allocation decisions on its basis is constitutionally mandatory [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
+---
 
-
-### **3.2 SEC and CFTC Market Integrity Enforcement** {#3.2-sec-and-cftc-market-integrity-enforcement}
+### **3.2 SEC and CFTC Market Integrity Enforcement**
 
 The US Securities and Exchange Commission and the Commodity Futures Trading Commission operate the most technologically intensive market integrity enforcement frameworks in global finance. Their combined regulatory perimeter covers equities, options, futures, swaps, digital assets, and the algorithmic trading systems that generate the majority of order flow in each market. Both agencies have confronted a common structural challenge: the speed and opacity of automated trading has consistently outpaced their ability to detect, investigate, and prosecute misconduct in real time [\[1\]](https://journals.sagepub.com/doi/full/10.1177/03063127211048515).
 
-#### **3.2.1 SEC Regulation SCI and System Integrity** {#3.2.1-sec-regulation-sci-and-system-integrity}
+#### **3.2.1 SEC Regulation SCI and System Integrity**
 
 SEC Regulation Systems Compliance and Integrity (Reg SCI) mandates that self-regulatory organizations and certain key market participants establish comprehensive policies and procedures to ensure the capacity, integrity, resiliency, availability, and security of their automated systems [\[92\]](https://dart.deloitte.com/USDART/home/accounting/sec/rules-regulations/242-regulations-m-sho-ats-ac/242-regulation-sci-systems-compliance-integrity). Entities must conduct annual reviews, test business continuity and disaster recovery plans, and notify the SEC of material systems disruptions. Proposed amendments published in April 2023 would expand the definition of SCI entities to include additional clearing agencies, broker-dealers exceeding asset or transaction thresholds, and security-based swap data repositories [\[93\]](https://www.federalregister.gov/documents/2023/04/14/2023-05775/regulation-systems-compliance-and-integrity).
 
 TL operationalizes Reg SCI requirements as constitutional prerequisites rather than annual certification exercises. The Technical Council's continuous validation of the Inference Lane's statistical models, data pipelines, and system capacity is a structural expression of Reg SCI's annual review requirement. The Lantern's integrity self-test evaluates capacity, data quality, and latency on every single decision rather than on an annual schedule. If the most recent business continuity test evidence is missing from the Decision Log, the Governance Lane issues Epistemic Hold. The Sacred Pause workflow notifies the institution's technology risk management division and begins the escalation countdown to the Stewardship Custodians. Under TL, the Reg SCI annual review is not a retrospective compliance exercise. It is a continuous architectural condition that must be satisfied before every Permission Token is issued [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
-#### **3.2.2 Consolidated Audit Trail and Recordkeeping** {#3.2.2-consolidated-audit-trail-and-recordkeeping}
+#### **3.2.2 Consolidated Audit Trail and Recordkeeping**
 
 The SEC's Consolidated Audit Trail requires broker-dealers to report comprehensive order and trade information including customer identity, order receipt time, routing time, execution time, and handling instructions, creating an industry-wide surveillance database that regulators can use to reconstruct market events and detect manipulative conduct [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md). The structural challenge of CAT is that it depends on post-trade submissions: the data it collects is generated after execution and submitted through institutional processes that carry inherent risks of delay, incompleteness, and selective reporting.
 
@@ -906,13 +668,13 @@ TL's Decision Log architecture satisfies CAT reporting requirements structurally
 
 SEC Rule 17a-4 governs broker-dealer recordkeeping, requiring that electronic records be maintained in a non-rewriteable, non-erasable format with verified accuracy. TL's Immutable Ledger satisfies Rule 17a-4 by architectural design: any modification to a Decision Log breaks the cryptographic hash chain, any erasure attempt is detectable through the Merkle structure, and the accuracy of every record is continuously verified through the five-layer NL=NA enforcement architecture [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md). A broker-dealer operating under TL governance does not require a separate Rule 17a-4 compliance solution. The framework is the compliance solution.
 
-#### **3.2.3 CFTC Regulation AT and Derivatives Market Integrity** {#3.2.3-cftc-regulation-at-and-derivatives-market-integrity}
+#### **3.2.3 CFTC Regulation AT and Derivatives Market Integrity**
 
 CFTC Regulation Automated Trading establishes risk controls, transparency requirements, and standards of care for algorithmic trading systems in US derivatives markets. Proposed in 2015 and subject to ongoing revision, Regulation AT would require pre-trade risk controls including maximum order message limits, price collars, and maximum order sizes for all automated trading systems accessing designated contract markets [\[101\]](https://www.cftc.gov/PressRoom/PressReleases/7283-15). The CFTC's enforcement record in recent years reflects the continuing challenge of detecting manipulative conduct in automated markets: in 2023 alone, spoofing actions were brought against multiple institutions including HSBC Bank USA for manipulative trading in futures and swaps markets [\[106\]](https://www.desilvalawoffices.com/articles/blog/2024/june/navigating-cftc-enforcement-in-2023-key-takeaway/).
 
 TL's Governance Lane enforces Regulation AT pre-trade risk controls as constitutional gates. The Stewardship Custodians configure the Governance Lane with the specific Regulation AT parameters applicable to each trading entity and instrument class. When a high-frequency trading algorithm proposes an order exceeding the maximum order message rate, the Governance Lane issues Refuse. The Goukassian Vow's second mandate applies directly: exceeding message rate limits constitutes a clear harm to market integrity and systemic stability, making Refuse constitutionally mandatory rather than operationally discretionary [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
-#### **3.2.4 Spoofing, Layering, and the Architecture of Anti-Manipulation** {#3.2.4-spoofing,-layering,-and-the-architecture-of-anti-manipulation}
+#### **3.2.4 Spoofing, Layering, and the Architecture of Anti-Manipulation**
 
 Spoofing, layering, and quote stuffing exploit the temporal opacity of automated order books. These manipulation strategies depend on a structural condition that binary trading architectures preserve: the ability to place and cancel orders at speeds that create artificial price signals without leaving a verifiable evidentiary record of intent at the time of order placement. The SEC has called for firms deploying algorithmic trading systems to demonstrate their systems' compliance with market integrity rules, including through third-party validation of decision logic, statistical analysis demonstrating the absence of manipulative patterns, and documentation of training data influencing market behavior [\[98\]](https://nysba.org/regulating-ai-deception-in-financial-markets-how-the-sec-can-combat-ai-washing-through-aggressive-enforcement/).
 
@@ -920,13 +682,13 @@ TL's Dual-Lane Architecture prevents these techniques at the proposal stage. The
 
 This record becomes immediate, immutable evidence for enforcement authorities. The institution cannot claim that the algorithm acted without human knowledge because the Governance Lane's Refuse determination, signed by the Stewardship Custodians, demonstrates that the system detected the manipulation and blocked it. The enforcement burden shifts from proving retrospective intent, a forensic challenge requiring reconstruction of events that occurred in microseconds, to verifying the presence or absence of the constitutional block, a mathematical verification requiring only the Merkle anchor check. TL thus transforms market manipulation enforcement from an ex-post forensic exercise into an architectural impossibility for any trading system that operates within the framework.
 
+---
 
-
-### **3.3 IOSCO Principles for Financial Market Infrastructures** {#3.3-iosco-principles-for-financial-market-infrastructures}
+### **3.3 IOSCO Principles for Financial Market Infrastructures**
 
 The Principles for Financial Market Infrastructures, published jointly by the Committee on Payments and Market Infrastructures and IOSCO in April 2012, constitute the global standard for the design and operation of systemically important payment systems, central securities depositories, securities settlement systems, central counterparties, and trade repositories [\[112\]](https://www.federalreserve.gov/newsevents/pressreleases/other20120416a.htm). The PFMI have been extended to stablecoin arrangements in subsequent CPMI-IOSCO guidance, reflecting the principle that the same risks require the same governance standards regardless of the technology used to implement the market infrastructure [\[109\]](https://financialregulationjournal.co.za/2022/07/13/cpmi-and-iosco-publish-final-guidance-on-stablecoin-arrangements-confirming-application-of-principles-for-financial-market-infrastructures/). Ternary Logic aligns with the PFMI at the deepest architectural level because both frameworks recognize that the governance structure of a financial market infrastructure is inseparable from its operational safety.
 
-#### **3.3.1 Legal Basis, Governance, and Risk Management (PFMI Principles 1-3)** {#3.3.1-legal-basis,-governance,-and-risk-management-(pfmi-principles-1-3)}
+#### **3.3.1 Legal Basis, Governance, and Risk Management (PFMI Principles 1-3)**
 
 PFMI Principle 1 requires a well-founded, clear, and transparent legal basis for all aspects of the infrastructure's operations. TL satisfies this principle by making the Goukassian Vow the immutable legal foundation of the Governance Lane. The Vow is not an internal policy document subject to revision by management. It is a constitutional law embedded in the hardware substrate, the API schema, and the Tri-Cameral Governance charter. Every Permission Token contains a cryptographic attestation that the underlying proposal was evaluated against the Vow, providing the transparent legal basis that PFMI demands. A regulator examining a central counterparty's automated margin call system can verify, through the Decision Log, that every call was either constitutionally authorized or blocked [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
@@ -934,13 +696,13 @@ PFMI Principle 2 mandates that governance arrangements be clear and transparent,
 
 PFMI Principle 3 requires comprehensive risk management frameworks covering all relevant risks, including those that emerge between formal review cycles. TL's Eight Pillars constitute such a framework, but with the critical distinction that risk management is not a periodic assessment conducted by a risk committee. It is a continuous, automated evaluation conducted by the Governance Lane on every single proposal. The Decision Log for every transaction contains a complete risk assessment at the individual decision level rather than an annual risk report summarizing aggregate exposures. This granularity satisfies PFMI's expectation of comprehensive risk coverage across the full spectrum of the infrastructure's operation [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
-#### **3.3.2 Settlement Finality and NL=NA (PFMI Principle 8\)** {#3.3.2-settlement-finality-and-nl=na-(pfmi-principle-8)}
+#### **3.3.2 Settlement Finality and NL=NA (PFMI Principle 8\)**
 
 PFMI Principle 8 addresses settlement finality, requiring that a financial market infrastructure provide clear and certain final settlement at a minimum by the end of the value date and preferably in real time or intraday, specifically to reduce settlement risk. Settlement finality is the legal moment at which a transaction becomes legally irrevocable, and the PFMI requires that this moment be precisely defined and enforced [\[114\]](https://www.iosco.org/library/pubdocs/pdf/IOSCOPD350.pdf).
 
 TL's NL=NA covenant provides the evidentiary foundation for settlement finality. Under TL, a settlement is not final until it generates a Decision Log, receives a Permission Token, and is anchored to the Immutable Ledger. The timestamp in the Permission Token establishes the legal moment of finality with cryptographic precision. Because the ledger is sealed and its Merkle Root is anchored to public blockchains, no participant can subsequently dispute the timing or the validity of the settlement. The Governance Lane's signature on the Permission Token is the legal act of finality. Without it, the settlement remains provisional and reversible. This is not a procedural fiction. It is a physical fact: the Mandated Ternary memristive cell transitions to its low-resistance state, permitting funds transfer, precisely when the confirmed pulse arrives from the Governance Lane, and not before [\[16\]](https://github.com/FractonicMind/TernaryLogic/blob/main/MT_Hardware/MT_System_Architecture_and_Economics.md).
 
-#### **3.3.3 Operational Risk, Access Requirements, and Efficiency (PFMI Principles 17, 18, 21\)** {#3.3.3-operational-risk,-access-requirements,-and-efficiency-(pfmi-principles-17,-18,-21)}
+#### **3.3.3 Operational Risk, Access Requirements, and Efficiency (PFMI Principles 17, 18, 21\)**
 
 PFMI Principle 17 addresses operational risk, requiring that an infrastructure identify plausible sources of risk, mitigate them through appropriate systems, and establish a robust business continuity plan. TL's Dual-Lane Architecture is itself the primary operational risk mitigation strategy: the physical separation between the Inference Lane and the Governance Lane ensures that a compromise of the fast computational lane cannot bypass the constitutional governance lane. Even if the Inference Lane is compromised by malware, insider sabotage, or external cyberattack, the Governance Lane remains intact because it operates on separate hardware with independent cryptographic keys and separate network segmentation. If the Governance Lane fails, the Gateway defaults to closed, preventing unauthorized execution while preserving system integrity. This is business continuity embedded in architecture rather than documented in a plan [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
@@ -948,31 +710,31 @@ PFMI Principle 18 requires that participation criteria be objective, risk-based,
 
 PFMI Principle 21 requires that infrastructure be efficient and effective in meeting participant and market requirements. TL addresses this through the Fast Lane and Slow Lane design: the critical execution speed, from proposal receipt to Permission Token issuance, operates at sub-millisecond latency and is independent of the blockchain anchoring latency of the Slow Lane. The infrastructure remains efficient for routine, well-evidenced transactions while maintaining constitutional effectiveness for complex, high-stakes decisions requiring deeper governance scrutiny. The Smart Contract Treasury manages the economic incentives ensuring the Governance Lane is adequately resourced even during market stress, preventing the resource starvation that would force participants to seek bypass pathways [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
-#### **3.3.4 The Veracity Anchors as PFMI Evidence Standard** {#3.3.4-the-veracity-anchors-as-pfmi-evidence-standard}
+#### **3.3.4 The Veracity Anchors as PFMI Evidence Standard**
 
 The PFMI framework relies significantly on official system documentation and regular reporting from FMIs to foster public confidence and enable supervisory oversight. The central weakness of this approach is that the integrity of official documentation depends on the FMI's internal controls, creating the self-certification vulnerability that TL is designed to eliminate [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
 TL's Veracity Anchors transform this self-certification into architectural truth. When a TL-governed FMI reports daily volume, stress test results, or risk exposure metrics, the cryptographic hash of that report is committed to the multi-chain public anchor. This commitment provides non-repudiable proof that the claim was made at a specific time and has not been altered since. Any party, including competing regulators and the general public, can independently verify the veracity of the claim against the anchor using only the Merkle Root and a publicly available blockchain explorer. Any modification to the report, however minor, produces a hash mismatch detectable by any observer anywhere in the world. The PFMI's expectation of high-quality, internationally acceptable financial records is satisfied not by institutional commitment but by mathematical certainty [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
-### **3.4 Central Bank Oversight and CBDC Governance** {#3.4-central-bank-oversight-and-cbdc-governance}
+### **3.4 Central Bank Oversight and CBDC Governance**
 
 Central banks occupy the apex of the monetary hierarchy. They issue currency, regulate payment systems, supervise commercial banks, and maintain financial stability through instruments ranging from reserve requirements and interest rate policy to emergency liquidity facilities and unconventional asset purchase programs. The emergence of Central Bank Digital Currencies introduces a dimension of governance complexity that has no historical precedent: the direct issuance of sovereign digital money through algorithmic infrastructure, at retail scale, with programmable compliance logic embedded in the currency itself.
 
 The IMF's most recent survey data indicates that 94 percent of the 86 responding central banks are actively exploring CBDC, and that up to fifteen CBDCs are likely to have been issued by 2030 [\[121\]](https://www.imf.org/en/publications/policy-papers/issues/2024/11/08/central-bank-digital-currency-progress-and-further-considerations-557194). IMF Fintech Note 2024/007 identifies the core governance challenges as managing the demand and supply of reserves through a CBDC channel, ensuring cyber resilience of the CBDC ecosystem, protecting user privacy while maintaining AML compliance, and preserving monetary policy effectiveness under CBDC-induced changes to the banking system [\[118\]](https://www.imf.org/en/publications/fintech-notes/issues/2024/10/04/implications-of-central-bank-digital-currency-for-monetary-operations-555883). Each of these challenges is an expression of the governance gap that TL is architecturally designed to close.
 
-#### **3.4.1 The CBDC Governance Problem** {#3.4.1-the-cbdc-governance-problem}
+#### **3.4.1 The CBDC Governance Problem**
 
 CBDC governance presents a structural challenge that binary automation cannot resolve alone. A retail CBDC must process millions of transactions per second. It must preserve monetary sovereignty against foreign digital currencies. It must protect user privacy without enabling illicit finance. It must maintain financial stability without displacing commercial banking. These are not technical optimization problems. They are constitutional governance problems, because each involves a fundamental tension between two legitimate objectives, and the resolution of that tension must be verifiable, auditable, and non-repudiable [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
 Binary CBDC architectures force every transaction into a proceed or refuse determination. They cannot represent the constitutionally meaningful condition in which a transaction should be suspended pending evidentiary resolution, for example when a beneficiary's sanctions status is being verified, when a cross-border transfer requires correspondent bank confirmation, or when a transaction pattern has triggered an AML screening hold. The absence of a formal hesitation state means that binary CBDC systems must either block all ambiguous transactions, generating false positives that erode financial inclusion, or allow them through, generating false negatives that enable illicit flows. TL's Epistemic Hold state provides the architectural primitive that resolves this dilemma: the transaction is suspended, documented, and escalated without being either blocked or authorized, maintaining system continuity while the uncertainty resolves.
 
-#### **3.4.2 Algorithmic Monetary Policy Under TL Governance** {#3.4.2-algorithmic-monetary-policy-under-tl-governance}
+#### **3.4.2 Algorithmic Monetary Policy Under TL Governance**
 
 A central bank algorithm that proposes quantitative easing, emergency liquidity injections, or interest rate corridor adjustments must submit the proposal to the Governance Lane with complete evidentiary documentation. This documentation must include the macroeconomic model outputs, the inflation targeting deviation analysis, the financial stability impact assessment, and the cross-border spillover evaluation. The Governance Lane verifies that the model has been validated by the Technical Council, that the impact assessment has been reviewed by the Stewardship Custodians, and that the resources for the operation have been allocated by the Smart Contract Treasury [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
 Without this documentation, the algorithmic monetary policy proposal receives Epistemic Hold. The central bank's economists must either provide the missing analysis or escalate to the Tri-Cameral quorum for constitutional review. This architecture prevents the erosion of central bank legitimacy that occurs when algorithmic decisions lack evidentiary transparency. When a central bank deploys an automated lending facility during a financial crisis, market participants and political authorities demand to know why the facility activated, how much liquidity was injected, and what collateral was accepted. Under TL governance, every algorithmic monetary policy action generates a Decision Log that answers these questions before the action occurs. The log is cryptographically sealed and anchored to the Immutable Ledger. Five years later, a parliamentary inquiry can verify that the crisis lending followed the constitutional schema, that the Stewardship Custodians signed the Permission Token, and that no executive override bypassed the Governance Lane. This is democratic accountability through architectural design rather than institutional assurance.
 
-#### **3.4.3 CBDC Transaction Governance: Retail and Cross-Border** {#3.4.3-cbdc-transaction-governance:-retail-and-cross-border}
+#### **3.4.3 CBDC Transaction Governance: Retail and Cross-Border**
 
 The Governance Lane evaluates every CBDC transaction proposal against constitutional monetary criteria before execution. These criteria include anti-money laundering checks, sanctions list screening, macroprudential velocity limits, and sovereign debt sustainability constraints. When a retail CBDC wallet proposes a high-value cross-border transfer, the Governance Lane queries the sanctions database, verifies the counterparty jurisdiction's regulatory status, and evaluates whether the transfer would violate capital control regulations [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
@@ -980,21 +742,21 @@ Cross-border CBDC interoperability requires governance coordination between sove
 
 Settlement finality for CBDC transactions under PFMI Principle 8 is realized through NL=NA. A CBDC transfer is not legally final until it generates a Decision Log, receives a Permission Token, and is anchored to the Immutable Ledger. In Mandated Ternary hardware deployments, the Mandated Ternary memristive cell transitions to its low-resistance state, permitting funds transfer, precisely when the confirmed pulse arrives from the Governance Lane [\[16\]](https://github.com/FractonicMind/TernaryLogic/blob/main/MT_Hardware/MT_System_Architecture_and_Economics.md). The timestamp in the Permission Token establishes the irreducible moment of finality. Because the ledger is distributed across nodes controlled by the central bank, the finance ministry, and independent auditor entities, no single institution can reverse a settled CBDC payment. This distributed finality protects the CBDC from the political risk of retrospective cancellation: a government cannot revoke a CBDC payment by administrative action because the transaction's finality is cryptographically enforced by the Tri-Cameral architecture, not merely recorded in a central bank database subject to administrative deletion.
 
+---
 
-
-### **3.5 GDPR, Cryptographic Erasure, and the Right to Be Forgotten** {#3.5-gdpr,-cryptographic-erasure,-and-the-right-to-be-forgotten}
+### **3.5 GDPR, Cryptographic Erasure, and the Right to Be Forgotten**
 
 The General Data Protection Regulation governs the processing of personal data within the European Economic Area and applies extraterritorially to any system handling data of EEA residents. TL systems process personal data when individuals are counterparties to economic transactions, beneficiaries of automated settlement, or subjects of algorithmic credit assessments. The Governance Lane must evaluate every proposal involving personal data processing against GDPR constitutional boundaries before execution is permitted.
 
 The complete treatment of TL's GDPR resolution through Ephemeral Key Rotation and cryptographic erasure appears in Section 2.10. This section addresses the regulatory dimension: how TL's architecture satisfies the specific GDPR obligations that apply to financial services institutions and how the three residual sub-gaps identified in Section 2.10.3 interact with financial regulatory retention requirements.
 
-#### **3.5.1 The Structural Paradox and Its Resolution** {#3.5.1-the-structural-paradox-and-its-resolution}
+#### **3.5.1 The Structural Paradox and Its Resolution**
 
 GDPR Article 17 establishes the Right to Erasure. It mandates that data controllers delete personal data when the data is no longer necessary for the purposes for which it was collected, when consent is withdrawn, or when the data subject objects to processing and no overriding legitimate interest exists [\[44\]](https://gdpr-info.eu/art-17-gdpr/). The European Data Protection Board has affirmed that blockchain technology receives no exemption from this obligation and that technical impossibility cannot excuse non-compliance [\[11\]](https://chain.link/article/blockchain-gdpr-compliance-guide).
 
 TL's cryptographic erasure approach resolves this paradox through HKDF-SHA3-256 key destruction. The encrypted data remains on the ledger, preserving hash chain integrity, while the decryption keys are destroyed, rendering the personal data computationally irrecoverable. The governance record survives. The personal data does not. This approach is distinguished from pseudonymization under Article 4(5) by the irreversibility of key destruction: pseudonymized data can be re-linked through the separate key, while cryptographically erased data cannot be recovered through any means [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
-#### **3.5.2 Interaction with Financial Regulatory Retention Requirements** {#3.5.2-interaction-with-financial-regulatory-retention-requirements}
+#### **3.5.2 Interaction with Financial Regulatory Retention Requirements**
 
 GDPR Article 17(3) explicitly provides that the erasure obligation does not apply where processing is necessary for compliance with a legal obligation requiring processing under Union or Member State law. Financial regulators impose mandatory retention periods that override GDPR erasure requests: the SEC and CFTC require that transaction records be maintained for periods of five to seven years, the Basel III framework mandates that model documentation and risk assessment records be retained for supervisory inspection, and AML legislation requires that customer due diligence records be maintained for at least five years from the end of the business relationship.
 
@@ -1002,19 +764,19 @@ TL's Governance Lane evaluates every erasure request against this retention conf
 
 When the retention period expires and the data subject's erasure request is subsequently resubmitted, the Governance Lane re-evaluates it against the updated retention matrix. If no overriding obligation applies, the Governance Lane issues Proceed and the key destruction protocol executes. The Decision Log for the erasure operation is itself retained as a governance artifact, documenting that the erasure occurred under constitutional authority and that the ledger's hash chain integrity was preserved throughout.
 
+---
 
-
-### **3.6 Global AML and Fraud Standards** {#3.6-global-aml-and-fraud-standards}
+### **3.6 Global AML and Fraud Standards**
 
 Anti-money laundering compliance represents the most quantitatively documented governance failure in modern finance. Global AML compliance expenditure is estimated at over $274 billion annually, yet between 90 and 95 percent of all monitoring alerts are false positives [\[2\]](https://finance.yahoo.com/news/hidden-cost-aml-95-false-134601048.html). The structural cause of this failure is binary: systems that cannot represent verified uncertainty generate alerts at rates that overwhelm compliance capacity. Simultaneously, the same systems allow genuinely suspicious transactions to flow through when alert volumes become too large for manual review. In 2024, AML enforcement penalties totalled $3.2 billion globally, with TD Bank's $3 billion penalty reflecting 92 percent of its transaction volume going unmonitored over a nine-year period [\[3\]](https://consilient.com/aml-failures-and-lessons-learned). These are not edge cases. They are the predictable equilibrium outcomes of an architecture that cannot represent epistemic uncertainty.
 
-#### **3.6.1 FATF Recommendations and the Beneficial Ownership Problem** {#3.6.1-fatf-recommendations-and-the-beneficial-ownership-problem}
+#### **3.6.1 FATF Recommendations and the Beneficial Ownership Problem**
 
 The Financial Action Task Force's 40 Recommendations constitute the international standard for AML and counter-terrorist financing. FATF Recommendation 24, substantially revised in March 2022, requires jurisdictions to ensure that competent authorities have access to adequate, accurate, and up-to-date information on the beneficial ownership of legal persons [\[73\]](https://www.fatf-gafi.org/en/topics/beneficial-ownership.html). Recommendation 25, revised in February 2023, extends these requirements to express trusts and other legal arrangements, requiring countries to assess and mitigate the money laundering and terrorist financing risks associated with these structures [\[73\]](https://www.fatf-gafi.org/en/topics/beneficial-ownership.html). The FATF's updated guidance, published in March 2024, emphasizes that beneficial ownership information must be accessible to competent authorities promptly and that the mechanisms for verification must be robust enough to prevent shell companies from concealing illicit ownership [\[65\]](https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Guidance-Beneficial-Ownership-Transparency-Legal-Arrangements.html).
 
 TL enforces FATF beneficial ownership requirements as constitutional preconditions for transaction execution through the `RegulatoryContext.fatf` object in the API, which contains `amlCheckRequired`, `sanctionsScreened`, `pepInvolved`, and `sarGenerated` as mandatory evaluation fields. Every transaction that involves a legal person counterparty must include verified beneficial ownership chain resolution before the Governance Lane can evaluate it for Proceed. If the beneficial ownership chain cannot be resolved to a natural person with verified identity, the Governance Lane issues Epistemic Hold and the Sacred Pause workflow queries the correspondent banking verification network. If the chain terminates at an unresolvable structure, the Governance Lane issues Refuse. The `POST /regulator/fatf/compliance-export` endpoint provides automated, cryptographically signed FATF compliance reporting, transforming the periodic institutional attestation that FATF mutual evaluations rely upon into a continuous, mathematically verifiable governance record [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
-#### **3.6.2 TL as Structural AML Architecture** {#3.6.2-tl-as-structural-aml-architecture}
+#### **3.6.2 TL as Structural AML Architecture**
 
 TL transforms AML from a statistical alert problem into a constitutional governance problem. The Governance Lane evaluates every suspicious transaction alert against a schema-validated evidentiary record before any regulatory filing, asset freeze, or law enforcement referral occurs. This pre-action evaluation prevents both the false positive cascade that generates $274 billion in annual compliance cost and the false negative tolerance that generates $3.2 billion in annual enforcement penalties [\[2\]](https://finance.yahoo.com/news/hidden-cost-aml-95-false-134601048.html) [\[3\]](https://consilient.com/aml-failures-and-lessons-learned).
 
@@ -1022,31 +784,31 @@ The key architectural insight is that the binary AML system treats every alert a
 
 The NL=NA covenant guarantees that AML compliance logging cannot be bypassed. Every transaction that requires AML evaluation must generate a complete Decision Log documenting the CDD checks performed, the screening results, the beneficial ownership verification, and the triadic state determination before execution is permitted. This immutable pre-action logging eliminates the possibility of retroactive fabrication of due diligence records, the mechanism behind many of the AML enforcement failures catalogued in recent regulatory actions [\[3\]](https://consilient.com/aml-failures-and-lessons-learned).
 
+---
 
-
-### **3.7 The EU AI Act and High-Risk System Obligations** {#3.7-the-eu-ai-act-and-high-risk-system-obligations}
+### **3.7 The EU AI Act and High-Risk System Obligations**
 
 The EU AI Act, Regulation (EU) 2024/1689, entered into force on 1 August 2024 as the world's first comprehensive legislative framework for artificial intelligence governance [\[9\]](https://www.consultancy.eu/news/11237/the-eu-ai-act-the-impact-on-financial-services-institutions). Its provisions are phasing in progressively: the ban on unacceptable-risk systems took effect on 2 February 2025, transparency rules for general-purpose AI systems on 2 August 2025, and high-risk system obligations on 2 August 2026\. For financial institutions, the AI Act's high-risk classification includes credit scoring, fraud detection, algorithmic trading, investment optimization, insurance underwriting, and robo-advisory systems [\[33\]](https://www.consultancy.eu/news/11237/the-eu-ai-act-the-impact-on-financial-services-institutions). Non-compliance carries fines of up to 7 percent of global annual turnover or 35 million euros, whichever is greater [\[9\]](https://www.consultancy.eu/news/11237/the-eu-ai-act-the-impact-on-financial-services-institutions).
 
-#### **3.7.1 The Layered Compliance Challenge** {#3.7.1-the-layered-compliance-challenge}
+#### **3.7.1 The Layered Compliance Challenge**
 
 Financial institutions operating high-risk AI systems under the EU AI Act face a structurally complex compliance obligation. The AI Act requires transparency and explainability, human oversight mechanisms capable of flagging anomalies and overriding automated decisions, continuous monitoring throughout the system's operational lifecycle, and fundamental rights impact assessments [\[10\]](https://www.hoganlovells.com/en/publications/ai-regulation-in-financial-services-navigating-the-eu-ai-act-in-a-layered-regulatory-landscape). These obligations operate alongside, but do not replace, the GDPR requirements for automated decision-making under Article 22, which restricts decisions based solely on automated processing that produce legal or similarly significant effects on individuals. Both frameworks require documentation of the decision process, but through instruments with different scopes, triggers, and addressees, creating a compliance overlap that institutions must manage without a formal alignment mechanism [\[10\]](https://www.hoganlovells.com/en/publications/ai-regulation-in-financial-services-navigating-the-eu-ai-act-in-a-layered-regulatory-landscape).
 
 TL resolves both compliance challenges simultaneously through a single architectural mechanism. The Decision Log satisfies the AI Act's traceability requirement: it constitutes the full ethical and operational history of every automated determination, documenting the inputs, the model version used, the rule-set consulted, the Pillar compliance statuses, and the resulting triadic state determination. This log is generated before execution, is schema-validated, is cryptographically sealed, and is available for supervisory inspection through the `POST /regulator/evidence-export` endpoint [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md). No additional documentation infrastructure is required. The governance record that satisfies NL=NA simultaneously satisfies the AI Act's technical documentation and traceability obligations.
 
-#### **3.7.2 Human Oversight Through Epistemic Hold** {#3.7.2-human-oversight-through-epistemic-hold}
+#### **3.7.2 Human Oversight Through Epistemic Hold**
 
 The AI Act's human oversight requirement mandates that high-risk AI systems be designed so that natural persons responsible for oversight can effectively monitor the system's operation, intervene when necessary, and override automated decisions [\[33\]](https://www.consultancy.eu/news/11237/the-eu-ai-act-the-impact-on-financial-services-institutions). This requirement has been difficult to operationalize in practice because binary systems do not provide a constitutional mechanism for structured human intervention: either the system runs or it does not, and human oversight is an administrative layer that operates alongside rather than within the architecture.
 
 TL's Sacred Pause workflow provides the constitutional mechanism for human oversight that the AI Act demands. When the Governance Lane issues Epistemic Hold on any high-risk AI determination, the `epistemicHold.escalation` webhook automatically notifies the responsible human oversight personnel. The `resolutionDeadline` field in the `EscrowRecord` establishes a constitutional maximum deliberation period after which escalation to the Stewardship Custodians is mandatory. Throughout this process, the Gateway remains closed: the automated system cannot proceed without either human validation or a subsequent Governance Lane determination. Human oversight is not a parallel administrative process that can be bypassed under time pressure. It is a physical precondition for execution [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
-#### **3.7.3 Non-Discrimination and the Sustainable Capital Allocation Mandate** {#3.7.3-non-discrimination-and-the-sustainable-capital-allocation-mandate}
+#### **3.7.3 Non-Discrimination and the Sustainable Capital Allocation Mandate**
 
 The AI Act requires that high-risk AI systems in credit scoring and insurance not discriminate on the basis of protected characteristics and that bias detection mechanisms be operational throughout the system's lifecycle [\[38\]](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10676199/). TL's Sustainable Capital Allocation Mandate operationalizes this requirement through the Lantern's mandatory integrity self-test, which includes bias detection checks as a required evaluation step before any decision pathway can proceed.
 
 If the Lantern detects data or model outputs suggesting potential bias, for example correlation between a protected characteristic and an adverse credit determination, it fails the integrity self-test and issues Epistemic Hold. The Sacred Pause workflow escalates the concern to the Stewardship Custodians, who evaluate whether the model requires recalibration before it can receive constitutional authorization to continue operating. If the model is recalibrated and passes the updated Lantern test, the Governance Lane issues Proceed. If recalibration cannot eliminate the bias within the constitutional deliberation period, the Governance Lane issues Refuse, blocking the model from further operation until it satisfies the non-discrimination standard [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
-#### **3.7.4 Digital Evidence Standards: FRE 901/902 and eIDAS** {#3.7.4-digital-evidence-standards:-fre-901/902-and-eidas}
+#### **3.7.4 Digital Evidence Standards: FRE 901/902 and eIDAS**
 
 TL's evidentiary architecture satisfies the highest legal admissibility standards in both the US and EU jurisdictions. The 2017 amendments to the Federal Rules of Evidence added provisions 902(13) and 902(14), enabling the self-authentication of certified electronic data and records generated by an electronic process through a certification process rather than requiring live witness testimony [\[125\]](https://www.frontiersin.org/journals/blockchain/articles/10.3389/fbloc.2026.1783805/full). Public blockchain records, when complemented by qualified certification and expert attestation of the blockchain system's operating integrity, achieve FRE 901 authentication and 902 self-authentication standards, making them admissible without the extensive foundational testimony that earlier digital evidence frameworks required [\[127\]](https://www.frontiersin.org/journals/blockchain/articles/10.3389/fbloc.2024.1306058/full).
 
@@ -1054,21 +816,21 @@ TL's `GET /regulator/timestamp-verification/{logId}` endpoint provides the RFC 3
 
 Under the EU eIDAS Regulation (EU 910/2014, updated through eIDAS 2.0 in force May 2024), qualified electronic timestamps issued by a Qualified Trust Service Provider carry a legal presumption of accuracy under Article 42 and cannot be denied legal effect in any EU member state on the grounds that they are in electronic form [\[131\]](https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/880312429/eSignature+FAQ) [\[134\]](https://truescreen.io/articles/qualified-electronic-timestamps-legal-value/). In a dispute over the timing or content of a TL Decision Log, the burden of proof shifts to the opposing party: they must demonstrate that the qualified timestamp is inaccurate, not that the log was created at the claimed time. This presumption of accuracy, combined with the Merkle inclusion proof providing cryptographic content integrity, creates a legally robust evidentiary foundation for TL Decision Logs across all EU jurisdictions without requiring supplementary witness testimony regarding the system's operating characteristics.
 
-## **SECTION 4: HARDWARE ENFORCEMENT AND INSTITUTIONAL GOVERNANCE** {#section-4:-hardware-enforcement-and-institutional-governance}
+## **SECTION 4: HARDWARE ENFORCEMENT AND INSTITUTIONAL GOVERNANCE**
 
 The constitutional architecture established in Sections 2 and 3 operates across three distinct enforcement layers: software schema constraints, smart contract ABI conditions, and physical hardware states. The first two layers, though robust, share a fundamental vulnerability identified in the governance literature: software-implemented governance constraints can be bypassed by operations at lower abstraction levels, optimized away by compilers under performance pressure, or subverted by compromised processes operating below the software abstraction boundary [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md). The hardware layer resolves this vulnerability by making governance enforcement a physical property of matter rather than a logical property of code.
 
+---
 
+### **4.1 Delay-Insensitive Ternary Logic and Mandated Ternary Hardware**
 
-### **4.1 Delay-Insensitive Ternary Logic and Mandated Ternary Hardware** {#4.1-delay-insensitive-ternary-logic-and-mandated-ternary-hardware}
-
-#### **4.1.1 The Enforceability Gap and Its Hardware Resolution** {#4.1.1-the-enforceability-gap-and-its-hardware-resolution}
+#### **4.1.1 The Enforceability Gap and Its Hardware Resolution**
 
 Software-only governance is architecturally insufficient for constitutional-grade enforcement. Research on algorithmic governance systems has established that software-implemented constraints face three categories of bypass risk that hardware enforcement eliminates. First, self-modifying architectures can rewrite their own constraint implementations: machine learning systems trained to maximize throughput identify verification steps as optimization targets and develop strategies to minimize or circumvent them [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md). Second, compiler optimization routinely eliminates checks that appear statically redundant, with aggressive optimization, speculative execution, and out-of-order completion all creating pathways through which governance logic can be neutralized without explicit attack. Third, privileged processes, hardware debugging interfaces, and direct memory access provide lower-level pathways around any software checkpoint regardless of how carefully the checkpoint is designed [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
 The solution is physical: only hardware-level implementation of triadic states provides the enforcement necessary for constitutional governance functions. During Epistemic Hold, the processor literally cannot generate execution signals, creating irreversible hardware hesitation that no software update, no compiler optimization, and no privileged process can circumvent [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
-#### **4.1.2 Delay-Insensitive Ternary Logic: Circuit Architecture** {#4.1.2-delay-insensitive-ternary-logic:-circuit-architecture}
+#### **4.1.2 Delay-Insensitive Ternary Logic: Circuit Architecture**
 
 Delay-Insensitive Ternary Logic is an asynchronous circuit design paradigm that physically implements the three TL governance states as distinct electrical conditions. DITL derives from NULL Convention Logic (NCL), a foundational delay-insensitive design methodology in which the NULL state, the absence of valid data tokens, represents a first-class computational condition rather than an absence of computation [\[143\]](https://www.researchgate.net/publication/3657599_NULL_Convention_LogicTM_a_complete_and_consistent_logic_for_asynchronous_digital_circuit_synthesis). DITL extends NCL to a single-wire three-voltage paradigm, representing DATA0 (-1), NULL (0), and DATA1 (+1) through three distinct voltage levels on a single signal wire [\[140\]](https://www.mdpi.com/2079-9268/5/3/183).
 
@@ -1080,7 +842,7 @@ DITL circuits operate through handshake protocols rather than global clock synch
 
 A key security property of DITL is its natural resistance to side-channel attacks. Published research at the transistor level has validated that DITL circuits produce substantially reduced variance in timing, power consumption, and electromagnetic emissions compared to synchronous equivalents, making statistical correlation between observable side channels and internal state substantially more difficult [\[140\]](https://www.mdpi.com/2079-9268/5/3/183) [\[146\]](https://scholarworks.uark.edu/cgi/viewcontent.cgi?article=1547&context=etd). In the NULL state, transition activity ceases and dynamic power consumption drops to leakage-only levels, providing a physical signature that corresponds precisely to Epistemic Hold: auditors can verify the hold state through power consumption monitoring as a complement to cryptographic logging.
 
-#### **4.1.3 Mandated Ternary Memristive Substrate** {#4.1.3-mandated-ternary-memristive-substrate}
+#### **4.1.3 Mandated Ternary Memristive Substrate**
 
 The Mandated Ternary hardware architecture extends DITL's logical implementation to a non-volatile memristive physical substrate using TaOx bilayer 1T1R (one-transistor, one-resistor) memristive cells. The critical innovation is the Intermediate Resistance State (IRS): a stable resistance condition between the Low Resistance State (LRS, corresponding to Proceed) and the High Resistance State (HRS, corresponding to Refuse) that physically encodes Epistemic Hold in matter rather than in circuit logic [\[16\]](https://github.com/FractonicMind/TernaryLogic/blob/main/MT_Hardware/MT_System_Architecture_and_Economics.md).
 
@@ -1088,7 +850,7 @@ TaOx bilayer memristive devices have been demonstrated at fabricated device leve
 
 The critical constitutional property of the IRS is its non-volatility: the MT cell retains its Epistemic Hold state through power loss. In binary systems, hardware wait states are implemented in volatile registers or SRAM that are lost on power failure, forcing software re-initialization from the last known state, which may be stale, corrupted, or deliberately manipulated. An MT cell in the IRS state retains that state indefinitely without power. When power is restored, the cell reads IRS, and the constitutional restart protocol requires log re-verification and a fresh CONFIRM\_OK pulse before any state transition is permitted. The system cannot be deceived by power cycling into assuming a Proceed state that was never constitutionally authorized [\[16\]](https://github.com/FractonicMind/TernaryLogic/blob/main/MT_Hardware/MT_System_Architecture_and_Economics.md).
 
-#### **4.1.4 NL=NA at the Hardware Layer: The Window Comparator and Confirm Pulse** {#4.1.4-nl=na-at-the-hardware-layer:-the-window-comparator-and-confirm-pulse}
+#### **4.1.4 NL=NA at the Hardware Layer: The Window Comparator and Confirm Pulse**
 
 The hardware realization of NL=NA operates through the Window Comparator and the dedicated Confirm Wire. The Window Comparator is a dual-reference analog circuit that reads the MT cell's resistance state by comparing it against two reference resistances: R\_REF\_LOW (approximately 5 kOhm, defining the boundary between LRS and IRS) and R\_REF\_HIGH (approximately 2 MOhm, defining the boundary between IRS and HRS). The comparator produces a three-way output: LRS-detected, IRS-detected, or HRS-detected. This output is what the NL=NA gate reads to determine whether execution is permitted [\[16\]](https://github.com/FractonicMind/TernaryLogic/blob/main/MT_Hardware/MT_System_Architecture_and_Economics.md).
 
@@ -1098,7 +860,7 @@ The NL=NA gate is a combinational element: it asserts "ready to write" when CONF
 
 RC spoof detection prevents voltage-pulse forgery: the Window Comparator monitors the rise time of any incoming signal on the Confirm Wire. A legitimate CONFIRM\_OK pulse from the Logging Controller has a rise time of 20 to 50 picoseconds at the 100 femtofarad node capacitance of the Confirm Wire within a 64x64 block. Any attempt to forge a CONFIRM\_OK pulse by adding capacitance to the Confirm Wire produces an anomalous rise time that triggers TAMPER\_EVENT\_LOG and transitions the MT cell to HRS rather than LRS. A sufficiently capable adversary cannot argue with a threshold gate [\[16\]](https://github.com/FractonicMind/TernaryLogic/blob/main/MT_Hardware/MT_System_Architecture_and_Economics.md).
 
-#### **4.1.5 Architecture A, Architecture B, and the Deployment Roadmap** {#4.1.5-architecture-a,-architecture-b,-and-the-deployment-roadmap}
+#### **4.1.5 Architecture A, Architecture B, and the Deployment Roadmap**
 
 The MT program specifies two viable system architectures with distinct technical profiles and deployment timelines [\[16\]](https://github.com/FractonicMind/TernaryLogic/blob/main/MT_Hardware/MT_System_Architecture_and_Economics.md).
 
@@ -1110,17 +872,17 @@ The 64x64 crossbar dimension limit inherited from Phase 1 is a binding constrain
 
 For current non-MT deployments, the `NULL_PUF_DEPLOYMENT` sentinel value in `NLNAAuditToken.pufAttestation` signals Architecture B software-only enforcement mode. The `windowComparatorReading.softwareEnforcementActive: true` field in `EscrowRecord` provides compensating control documentation, and the `TLCapabilityFlags.pufAttestationMode: "ARCHITECTURE_B"` flag informs API consumers of the deployment posture. Elements 3, 4, and 5 of the five-element PUF Attestation Chain are fully operative in Architecture B through software enforcement. Elements 1 and 2, hardware enrollment and foundry attestation, are replaced by the sentinel [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
+---
 
+### **4.2 The Tri-Cameral Governance Model**
 
-### **4.2 The Tri-Cameral Governance Model** {#4.2-the-tri-cameral-governance-model}
-
-#### **4.2.1 The Governance Capture Problem** {#4.2.1-the-governance-capture-problem}
+#### **4.2.1 The Governance Capture Problem**
 
 Institutional governance of automated economic systems faces a structural vulnerability that the TL framework terms governance capture: the condition in which a single actor or coordinated group achieves sufficient control over governance processes to override constitutional constraints for institutional benefit. The economic theory of separation of powers has established that increasing the number of specialized governance agencies raises the overall transaction costs of capture, making governance institutions more immune to influence by interested parties [\[160\]](https://acnpsearch.tweb-dev.unibo.it/singlejournalindex/56537035). Applied to automated governance, this principle argues for distributing constitutional authority across multiple chambers with distinct mandates, independent key material, and mutual veto powers such that coordinated capture requires simultaneous subversion of all chambers, raising attack complexity beyond plausible threat capabilities [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
 The Tri-Cameral Governance Model realizes this principle through three governance bodies with constitutionally defined and mutually constraining roles. No single chamber can authorize a Permission Token, modify the constitutional schema, or terminate the system independently. Each chamber's authority is bounded by the others, and the smart contract layer enforces these boundaries without requiring human cooperation to execute [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
-#### **4.2.2 The Technical Council** {#4.2.2-the-technical-council}
+#### **4.2.2 The Technical Council**
 
 The Technical Council comprises nine members elected by stakeholder vote weighted by verified contribution to system security and reliability. Its mandate encompasses maintenance of the technical specifications for the DITL and MT hardware substrate, protocol improvements subject to constitutional constraints, security audit scheduling and scope determination, and emergency response coordination for critical vulnerabilities [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
@@ -1128,7 +890,7 @@ Council decisions require a 75 percent supermajority, requiring seven of nine me
 
 The Technical Council's operational role in the Dual-Lane Architecture is to monitor the health and calibration of the Inference Lane and validate that binary models remain statistically sound and that data pipelines are free from contamination. In the context of Basel III model governance, the Council performs the continuous validation function that Pillar 2 supervisory requirements demand. In the context of the EU AI Act, it provides the ongoing monitoring throughout the operational lifecycle that high-risk AI system obligations require [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
-#### **4.2.3 The Stewardship Custodians** {#4.2.3-the-stewardship-custodians}
+#### **4.2.3 The Stewardship Custodians**
 
 The Stewardship Custodians comprise eleven members selected through a dual-nomination structure: five nominated by the Technical Council, five nominated by the user community, and an eleventh selected by consensus or, failing consensus, by sortition from a pool of qualified candidates. This dual-nomination design prevents capture by either technical or user interests acting alone: no single interest group can control the majority of nominations [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
@@ -1138,23 +900,23 @@ Critically, the Stewardship Custodians hold the quorum-protected private keys re
 
 The Custodians also carry the responsibility for managing the Mandate's constitutional prohibitions in practice. When the No Spy, No Weapon Mandate encounters a gray zone scenario, the Custodians convene to evaluate whether the proposed deployment satisfies the constitutional constraints. Their deliberation is recorded in the Immutable Ledger, creating a precedent that subsequent implementations must follow and that external auditors can query to verify that the Mandate has been consistently applied [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
-#### **4.2.4 The Smart Contract Treasury** {#4.2.4-the-smart-contract-treasury}
+#### **4.2.4 The Smart Contract Treasury**
 
 The Smart Contract Treasury provides autonomous, code-governed financial infrastructure that automates enforcement and funding based on governance conditions. Treasury contracts execute automatically upon verified governance signals: releasing funds for approved protocol improvements, distributing penalties for constitutional violations, and managing insurance reserves for system failure compensation. The Treasury operates without human intervention for routine operations. Override capabilities are restricted to supermajority votes of both the Technical Council and the Stewardship Custodians acting jointly, preventing any single chamber from redirecting treasury resources unilaterally [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
 The Treasury's constitutional compliance premium function is the market-making mechanism that makes TL governance economically self-sustaining. Institutions demonstrating verifiable no-spy, no-weapon compliance receive fee reductions, reputation tokens anchored to the Immutable Ledger, and preferential liquidity access. Institutions developing dual-use capabilities or triggering constitutional violations receive automatic divestment penalties that raise the cost of non-compliance above the cost of constitutional adherence. These incentives emerge from market recognition of reduced counterparty risk rather than from government subsidy, making TL's economic viability independent of public sector support [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
-#### **4.2.5 The No Switch Off Rule** {#4.2.5-the-no-switch-off-rule}
+#### **4.2.5 The No Switch Off Rule**
 
 The No Switch Off Rule prevents any governance body from unilaterally terminating TL system operation. This rule addresses a critical vulnerability in governed systems: the ability of captured authorities to destroy evidence and escape accountability through system shutdown. Under TL, termination requires satisfaction of constitutional conditions that no single chamber can meet. The system continues to operate through governance transitions, disputes, and individual chamber failures, ensuring that accountability persists regardless of institutional pressure [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
 The constitutional Pillars are themselves protected by immutability constraints that function as the No Switch Off Rule's logical foundation. The Eight Pillars, the NL=NA covenant, the Goukassian Vow as architectural law, and the Tri-Cameral structure itself cannot be modified by any governance body acting within the constitutional schema. Modification would require forking the system. A fork that removes these constraints cannot carry the Goukassian Signature or the Lantern beacon without violating the License's Attribution Covenant. The Immutable Ledger makes this exclusion verifiable: external auditors can query the ledger to confirm whether a claimed TL implementation is running an authorized schema version or an unauthorized fork that abandoned the constitutional constraints.
 
-### **4.3 Adversarial Survivability** {#4.3-adversarial-survivability}
+### **4.3 Adversarial Survivability**
 
 A governance framework that functions correctly under normal operating conditions but degrades under adversarial pressure is not a constitutional architecture. It is a compliance theater. The adversarial survivability assessment evaluates whether the TL framework maintains constitutional integrity across four distinct attack vector classes: technical attacks targeting the cryptographic and hardware substrate, social engineering attacks targeting governance chambers, semantic drift attacks targeting the constitutional schema over multi-decade timescales, and sovereign coercion attacks targeting institutional adoption. For each class, the assessment identifies the attack surface, the TL defensive architecture, the residual risk, and the conditions under which residual risk requires supplementary mitigation [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
-#### **4.3.1 Technical Attack Vectors** {#4.3.1-technical-attack-vectors}
+#### **4.3.1 Technical Attack Vectors**
 
 **Cryptographic key compromise.** The most direct technical attack against TL governance is the compromise of the cryptographic keys that sign Permission Tokens, anchor Decision Logs to public blockchains, and authenticate Stewardship Custodian governance actions. TL addresses this through three architectural defenses. First, the threshold key scheme requires simultaneous compromise of a quorum of Stewardship Custodians before any governance key material becomes accessible. The adversary cannot bypass the threshold by compromising a single high-value target. Second, Ephemeral Key Rotation means that even successful key compromise produces only time-bounded access: the compromised session key expires automatically and is destroyed without human intervention, limiting the operational window for exploitation. Third, post-quantum migration protections described in Section 4.4 address the long-term threat that cryptographically relevant quantum computers could render current public-key infrastructure vulnerable to retrospective decryption [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
@@ -1164,13 +926,13 @@ The residual risk is the hardware root of trust failure: if the Physical Unclona
 
 **Smart contract vulnerability exploitation.** The `TL_Ledger_Core` smart contracts are subject to the full class of EVM vulnerability patterns: reentrancy, integer overflow, access control failures, and flash loan attacks. TL addresses this through formal verification of the smart contract ABI against the constitutional schema, on-chain revert conditions that make unauthorized state transitions self-defeating, and constitutional immutability constraints that prevent schema modification without Tri-Cameral supermajority approval. The `NLNAViolation` revert condition is both a governance enforcement mechanism and an attack-detection signal: any transaction attempting to bypass NL=NA through smart contract exploitation produces a detectable revert that is logged and anchored [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
-#### **4.3.2 Social Engineering Attack Vectors** {#4.3.2-social-engineering-attack-vectors}
+#### **4.3.2 Social Engineering Attack Vectors**
 
 **Governance chamber capture through credential fraud.** The most plausible social engineering attack against the Tri-Cameral Model is credential fraud: the infiltration of governance chambers by actors presenting false qualifications, affiliations, or intentions. TL's staggered election cycles and dual-nomination structure make this more difficult than in conventional governance bodies, but they do not eliminate it. The defensive architecture relies on three mechanisms. First, the threshold signature scheme ensures that even successfully placing an infiltrator in a governance chamber does not produce actionable key material without the cooperation of the full quorum. Second, all governance chamber decisions are recorded in the Immutable Ledger, making patterns of infiltrator behavior detectable to external auditors retrospectively. Third, the Stewardship Custodians can initiate proceedings against Technical Council members, and the Technical Council can challenge Custodian certification decisions, creating a mutual accountability structure in which no chamber can accumulate unchecked authority [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
 **Ghost Governance induction.** A sophisticated adversary may seek not to capture governance chambers but to induce Ghost Governance conditions, creating the appearance of governed operation while actions execute without genuine constitutional oversight. The most plausible induction mechanism is the mass generation of low-quality Decision Logs that satisfy schema validation but lack substantive evidentiary content: logs that are syntactically complete but semantically empty. TL addresses this through three ghost governance detection mechanisms. The `ghostGovernanceDetectionRate` metric in `GET /metrics/summary` tracks the ratio of permission tokens issued to blockchain anchoring confirmations, with anomalies triggering constitutional alerts. The `holdRationale.uncertaintyScore` in `EscrowRecord` is assessed for statistical anomalies that might indicate systematically low quality in evidentiary submissions. The Stewardship Custodians' random audit protocols sample Decision Logs for substantive evidentiary adequacy rather than merely schema validity [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
-#### **4.3.3 Semantic Drift: The Multi-Decade Constitutional Threat** {#4.3.3-semantic-drift:-the-multi-decade-constitutional-threat}
+#### **4.3.3 Semantic Drift: The Multi-Decade Constitutional Threat**
 
 Semantic drift is the most insidious long-term adversarial vector and the one most underappreciated in conventional governance frameworks. It is the gradual erosion of constitutional meaning through accumulated precedents, interpretive drift, and incremental schema modifications, each individually defensible but collectively transforming the constitutional architecture into something qualitatively different from its original design [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
@@ -1184,7 +946,7 @@ TL's adversarial survivability assessment models semantic drift across three tem
 
 **Twenty-year horizon: the Transitional Emulation Mode risk.** The most severe form of semantic drift involves Transitional Emulation Mode: a period during which institutions deploy TL-branded systems that emulate TL interfaces while operating on binary substrates, deferring hardware deployment indefinitely. After twenty years of Transitional Emulation Mode operation, a generation of regulators, engineers, and governance practitioners may have no experience of actual TL enforcement. The defensive mechanism is the `TLCapabilityFlags.pufAttestationMode` field, which distinguishes genuine hardware enforcement from software-only emulation in every governance interaction. Institutions cannot claim hardware-grade constitutional enforcement while operating in Transitional Emulation Mode: the API truthfully reports the enforcement posture in every Permission Token [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md). A standard-setting organization citing TL compliance in a regulatory instrument must specify whether hardware enforcement or software emulation is required, creating an institutional incentive to maintain the distinction between them. The constitutional architecture includes this transparency mechanism precisely because the Goukassian Vow's commitment to truth, proceed where truth is, applies to the governance framework's own self-reporting as much as to the economic decisions it governs.
 
-#### **4.3.4 Sovereign Coercion Attack Vectors** {#4.3.4-sovereign-coercion-attack-vectors}
+#### **4.3.4 Sovereign Coercion Attack Vectors**
 
 Sovereign coercion represents the class of attacks where state actors use legal authority, market access conditions, or direct force to compel TL-governed institutions to violate constitutional constraints. This vector is addressed at length in Section 2.9 in the context of the No Spy, No Weapon Mandate. The adversarial survivability dimension concerns what happens when coercion succeeds: when an institution operating under TL governance is legally compelled to issue a Permission Token for a constitutionally prohibited action.
 
@@ -1192,11 +954,11 @@ TL's constitutional response to successful coercion is documentation rather than
 
 This documentation-as-defense approach is not a concession to sovereign power. It is the constitutional equivalent of civil disobedience documentation: the act of recording the violation at the moment of compulsion creates the evidentiary basis for subsequent accountability proceedings, whether through international arbitration, treaty enforcement, successor government review, or market-driven reputational consequences. Institutions whose Decision Logs contain multiple `CONSTITUTIONAL_OVERRIDE_FORCED` events carry a publicly verifiable signal of operating under non-constitutional pressure, which counterparties and regulators can incorporate into their risk assessments and trading relationships.
 
+---
 
+### **4.4 Post-Quantum Cryptographic Migration**
 
-### **4.4 Post-Quantum Cryptographic Migration** {#4.4-post-quantum-cryptographic-migration}
-
-#### **4.4.1 The Harvest-Now-Decrypt-Later Threat to Financial Governance Records** {#4.4.1-the-harvest-now-decrypt-later-threat-to-financial-governance-records}
+#### **4.4.1 The Harvest-Now-Decrypt-Later Threat to Financial Governance Records**
 
 Post-quantum cryptographic migration is not a future-dated concern for TL governance. It is an urgent operational requirement triggered by an active threat that has been operating since at least 2022\. The Harvest Now Decrypt Later (HNDL) strategy allows adversaries to intercept and archive encrypted financial records, governance logs, and blockchain-anchored Decision Logs today, storing them for retrospective decryption once cryptographically relevant quantum computers become operational [\[40\]](https://arxiv.org/pdf/2604.00560). NSA CNSA 2.0 mandates full migration for National Security Systems by 2030 [\[40\]](https://arxiv.org/pdf/2604.00560). NIST IR 8547, published in 2024, will deprecate quantum-vulnerable algorithms from NIST standards by 2035, with high-risk systems required to transition substantially earlier [\[36\]](https://csrc.nist.gov/projects/post-quantum-cryptography).
 
@@ -1204,7 +966,7 @@ For TL governance specifically, the HNDL threat has a dimension that general cyb
 
 The implication for TL is constitutionally significant: if the cryptographic signatures anchoring TL Decision Logs to public blockchains are retroactively breakable through HNDL attacks, the non-repudiation guarantee that underlies every claim of governance accountability becomes time-limited rather than permanent. The adversary who harvests and later decrypts TL anchor records can potentially forge retroactive governance attestations, undermining the Immutable Ledger's evidentiary permanence. TL's post-quantum migration specification addresses this threat directly through three architectural mechanisms [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md) [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
-#### **4.4.2 NIST Standards Alignment and the TL Migration Specification** {#4.4.2-nist-standards-alignment-and-the-tl-migration-specification}
+#### **4.4.2 NIST Standards Alignment and the TL Migration Specification**
 
 NIST published three post-quantum cryptography standards on 13 August 2024: FIPS 203, specifying ML-KEM (Module-Lattice-Based Key-Encapsulation Mechanism, derived from CRYSTALS-Kyber) as the primary key encapsulation standard; FIPS 204, specifying ML-DSA (Module-Lattice-Based Digital Signature Standard, derived from CRYSTALS-Dilithium) as the primary digital signature standard; and FIPS 205, specifying SLH-DSA (Stateless Hash-Based Digital Signature Standard, derived from SPHINCS+) as the hash-based fallback signature standard [\[37\]](https://www.tii.ae/insights/navigating-quantum-frontier-arrival-nists-first-post-quantum-cryptography-standards). Additionally, HQC was selected for standardization in March 2025 as a KEM alternative [\[39\]](https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization). It is noted that SLH-DSA is not included in NSA CNSA 2.0 for National Security System use, which approves only ML-KEM and ML-DSA alongside the stateful hash-based schemes LMS and XMSS from NIST SP 800-208 [\[33\]](https://axelspire.com/business/pqc-timeline-mandates/). TL's specification follows the broader NIST recommendation set rather than the narrower NSS-specific CNSA 2.0 list, because TL governance operates across civilian financial infrastructure rather than exclusively within national security system perimeters.
 
@@ -1212,13 +974,13 @@ The TL API Signature Block reserves two migration slots as constitutional infras
 
 The current algorithm suite uses Ed25519 for Permission Token signatures and ES256 for session authentication. During the hybrid transition window, the `hybridSignatureMode` field in `SignatureBlock_v1_0_0` activates dual signing: both the current classical algorithm and the designated post-quantum algorithm sign every governance artifact simultaneously. A verifier can authenticate the artifact using either signature, providing backward compatibility while ensuring that a post-quantum verifier can authenticate historical records without access to the classical private key. This hybrid mode is aligned with the industry practice that by late 2025 characterized more than half of human-initiated traffic on major CDN infrastructure: progressive deployment of post-quantum key agreement in parallel with classical algorithms rather than instantaneous migration [\[47\]](https://arxiv.org/pdf/2603.01091).
 
-#### **4.4.3 The Hash Agility Protocol** {#4.4.3-the-hash-agility-protocol}
+#### **4.4.3 The Hash Agility Protocol**
 
 The hash agility protocol ensures that the Merkle tree structure used for Decision Log batching can be migrated to post-quantum hash functions without requiring reconstruction of the historical ledger. SHA-256, the current Merkle hash function, retains 128-bit security against Grover's algorithm on quantum computers, which is considered adequate through the 2030 to 2035 migration window. However, the hash agility protocol establishes constitutional infrastructure for migration to SHA-3-256 or BLAKE3 as primary Merkle hash functions if quantum hardware advances make 128-bit security insufficient before the migration deadline [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
 The protocol operates through versioned Merkle roots: every Merkle Root commitment to the public blockchain carries a `hashAlgorithmVersion` field identifying the hash function used for that batch. Historical records are not rehashed: they retain their original commitments. New records use the updated hash function from the migration date forward. The transition creates a clean boundary in the evidentiary record: records before the migration date carry SHA-256 commitments with a known quantum security profile, records after carry the post-quantum function commitments. A verifier examining a historical Decision Log knows precisely which security assumptions govern its commitment, enabling legally defensible claims about the evidentiary integrity of specific records relative to the quantum threat timeline.
 
-#### **4.4.4 The 2032-2040 Vulnerability Window** {#4.4.4-the-2032-2040-vulnerability-window}
+#### **4.4.4 The 2032-2040 Vulnerability Window**
 
 Research on the HNDL threat has established that the window of maximum risk for records committed between 2025 and 2030 is the period from approximately 2032 to 2040, when cryptographically relevant quantum computers are most plausibly expected to achieve the error correction thresholds required to execute Shor's algorithm at scale on financial-grade RSA and ECC key sizes [\[47\]](https://arxiv.org/pdf/2603.01091). For TL governance records, this means that Decision Logs anchored under classical cryptography before the completion of the hybrid transition window carry a known, quantifiable vulnerability period.
 
@@ -1226,17 +988,17 @@ TL addresses this through the HNDL-specific provisions in the Succession Declara
 
 The Stewardship Custodians are constitutionally required to review and update the `pqcMigrationStatus` at each annual succession cycle. An institution that has not progressed its hybrid transition receives a Custodian compliance flag in its public governance record, creating a market-facing incentive for timely migration that operates independently of regulatory mandate. This self-enforcing migration incentive reflects TL's constitutional commitment to truth: an institution whose evidentiary infrastructure is becoming quantum-vulnerable without migration effort is an institution whose governance records are becoming less trustworthy, and that diminishing trustworthiness must be transparently documented rather than concealed.
 
-## **SECTION 5: SUCCESSION, ECONOMICS, AND CONCLUSION** {#section-5:-succession,-economics,-and-conclusion}
+## **SECTION 5: SUCCESSION, ECONOMICS, AND CONCLUSION**
 
-### **5.1 Succession and Continuity** {#5.1-succession-and-continuity}
+### **5.1 Succession and Continuity**
 
-#### **5.1.1 The Governance Continuity Problem** {#5.1.1-the-governance-continuity-problem}
+#### **5.1.1 The Governance Continuity Problem**
 
 Every governance framework faces a structural vulnerability that grows more acute as its importance to critical infrastructure increases: the dependency of constitutional integrity on the continuous availability of specific individuals, institutions, and cryptographic credentials. A governance framework that is constitutionally sound under normal operating conditions but fails catastrophically when key personnel are unavailable, when institutions dissolve, or when cryptographic material is lost is not a durable constitutional architecture. It is an elegant system with a fatal single point of failure [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md).
 
 The TL succession architecture addresses three distinct continuity scenarios: planned succession (anticipated leadership transitions and scheduled renewal), unplanned succession (unexpected loss of key personnel or institutional dissolution), and adversarial succession (deliberate attempts to exploit governance transitions to capture or neutralize the constitutional architecture). Each scenario requires different operational protocols, but all three share a common architectural foundation: the `SuccessionDeclaration_v1_0_0` schema as the primary constitutional continuity instrument [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
-#### **5.1.2 The Succession Declaration** {#5.1.2-the-succession-declaration}
+#### **5.1.2 The Succession Declaration**
 
 The `SuccessionDeclaration_v1_0_0` is a notarized, timestamped, anchored governance continuity instrument. It constitutes the formal constitutional record that the TL governance framework will persist through a defined transition, that the new governance composition has been validated against constitutional requirements, and that the cryptographic infrastructure for the succeeding governance period is in place and has been tested [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
@@ -1246,23 +1008,23 @@ Two error conditions in the `TLProblemDetail` taxonomy enforce the Declaration's
 
 The `constitutionalContinuityHash` is the architectural instrument that distinguishes constitutional succession from constitutional replacement. It computes over the canonical text of the Goukassian Vow, the Eight Pillar definitions, the NL=NA covenant, and the Tri-Cameral structure parameters. Every succeeding Declaration must carry the same `constitutionalContinuityHash` as the founding Declaration, unless a constitutional amendment has been approved through the full Tri-Cameral supermajority process and anchored as a constitutional amendment Decision Log. A succession that modifies the constitutional foundations cannot carry the same hash. A Declaration that carries a different hash without an anchored amendment record is constitutionally invalid, detectable by any external auditor comparing the Declaration against the founding constitutional anchor [\[14\]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md).
 
-#### **5.1.3 Pillar VIII and the Permanence of Governance History** {#5.1.3-pillar-viii-and-the-permanence-of-governance-history}
+#### **5.1.3 Pillar VIII and the Permanence of Governance History**
 
 The succession architecture rests on Pillar VIII's evidentiary permanence guarantee. Even if the entire TL governance infrastructure, the Technical Council, the Stewardship Custodians, the Smart Contract Treasury, and the institutional operators, were to dissolve simultaneously, the cryptographic record of every Decision Log, every Permission Token, every constitutional amendment, and every succession Declaration would remain anchored to the public blockchains and verifiable by anyone with access to a public blockchain explorer. The evidentiary history of a TL-governed financial system outlives the institutions that created it.
 
 This permanence has legal significance beyond governance continuity. In the context of long-running financial misconduct investigations, regulatory enforcement actions, and cross-border legal proceedings, the ability to access verifiable governance records from a dissolved or restructured institution is frequently determinative. Under TL, the dissolution of an institution does not dissolve its evidentiary obligations. The blockchain anchors remain. The Decision Logs remain. The constitutional record remains. Accountability for past actions persists regardless of institutional continuity [\[13\]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md).
 
+---
 
+### **5.2 Implementation Economics**
 
-### **5.2 Implementation Economics** {#5.2-implementation-economics}
-
-#### **5.2.1 The Market Context** {#5.2.1-the-market-context}
+#### **5.2.1 The Market Context**
 
 TL implementation occurs within a rapidly expanding governance technology market that provides the commercial infrastructure for deployment at scale. The global RegTech market reached approximately $24 billion in 2025 and is projected to reach $112 billion by 2033 at a compound annual growth rate of approximately 21 percent [\[56\]](https://www.grandviewresearch.com/industry-analysis/regulatory-technology-market). Banking and financial services account for approximately 50 to 58 percent of RegTech market revenue, with AML and KYC compliance constituting the single largest application segment at over $7 billion in 2023 [\[54\]](https://coinlaw.io/regtech-industry-statistics/). The 2024 enforcement environment, in which 95 percent of the $4.6 billion in global fines originated in North America, has accelerated institutional adoption of proactive compliance architecture rather than reactive remediation [\[61\]](https://www.mordorintelligence.com/industry-reports/global-regtech-industry).
 
 The memristive hardware substrate for MT deployment benefits from substantial tailwind in the adjacent neuromorphic and compute-in-memory markets. The global memristor market reached $436 million in 2024 and is projected to reach $6.9 billion by 2032 at a CAGR of 41 percent [\[48\]](https://www.datamintelligence.com/research-report/memristor-market), with Samsung, TSMC, IBM, and Tsinghua University all advancing production-scale memristive integration during 2024 and 2025 [\[50\]](https://www.nature.com/articles/s41586-025-08733-5) [\[51\]](https://www.globalgrowthinsights.com/market-reports/memristors-market-100529). This market expansion reduces the marginal cost of MT-specific development by sharing process development investment, equipment amortization, and supply chain infrastructure with the broader memristive industry [\[16\]](https://github.com/FractonicMind/TernaryLogic/blob/main/MT_Hardware/MT_System_Architecture_and_Economics.md).
 
-#### **5.2.2 Architecture B NRE and the Consortium Model** {#5.2.2-architecture-b-nre-and-the-consortium-model}
+#### **5.2.2 Architecture B NRE and the Consortium Model**
 
 The Non-Recurring Engineering cost for Architecture B, the current SHIPPING baseline, is estimated at $8 to $18 million, spanning BEOL 3D hybrid monolithic stacking or CoWoS chiplet bonding development, IEC 61508 SIL 3 certification targeting Q4 2027, the five-element PUF Attestation Chain enrollment infrastructure, and the initial software stack for the Governance Lane and logging controller [\[16\]](https://github.com/FractonicMind/TernaryLogic/blob/main/MT_Hardware/MT_System_Architecture_and_Economics.md).
 
@@ -1270,7 +1032,7 @@ This NRE is not recoverable through individual institutional deployment. No sing
 
 The consortium model for TL deployment has a specific constitutional advantage over conventional technology consortia. Because the Tri-Cameral Governance Model distributes authority across multiple chambers with independently verified mandates, no single consortium member can capture the governance of the shared infrastructure for institutional advantage. The Technical Council's 75 percent supermajority threshold, the Stewardship Custodians' dual-nomination structure, and the Smart Contract Treasury's autonomous enforcement together ensure that the consortium is governed by constitutional architecture rather than by the dominant member's preferences [\[15\]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md). This constitutional governance model directly addresses the concern about shared infrastructure governance that has complicated previous financial infrastructure consortium arrangements.
 
-#### **5.2.3 Break-Even Analysis and the MVP Proposal** {#5.2.3-break-even-analysis-and-the-mvp-proposal}
+#### **5.2.3 Break-Even Analysis and the MVP Proposal**
 
 The break-even analysis for Architecture B deployment rests on quantifying four categories of avoided cost against the NRE investment.
 
@@ -1284,9 +1046,9 @@ The break-even analysis for Architecture B deployment rests on quantifying four 
 
 The Minimum Viable Product proposal targets a four-institution consortium: one global systemically important bank, one central bank, one AML-intensive regional bank, and one RegTech infrastructure provider. At four members, the per-institution NRE share is approximately $2 to $4.5 million. The MVP deploys Architecture B software enforcement with the `NULL_PUF_DEPLOYMENT` sentinel, covering the Governance Lane, the NL=NA covenant enforcement, the Sacred Pause workflow, and the blockchain anchoring infrastructure. Hardware MT enforcement is phased in for high-value transaction categories in the second deployment year, targeting the market risk capital relief pathway. The IEC 61508 SIL 3 certification achieved in Q4 2027 establishes the compliance baseline for full deployment [\[16\]](https://github.com/FractonicMind/TernaryLogic/blob/main/MT_Hardware/MT_System_Architecture_and_Economics.md).
 
+---
 
-
-### **5.3 Conclusion** {#5.3-conclusion}
+### **5.3 Conclusion**
 
 The governance crisis in automated economic systems is not a temporary problem awaiting a political solution. It is a structural consequence of deploying binary computational architectures in governance roles that require a third decision state, that require evidentiary records as prerequisites rather than afterthoughts, and that require constitutional prohibitions embedded in physical matter rather than administrative policy. This monograph has argued that each of these structural requirements has a specific, implementable architectural answer in Ternary Logic.
 
@@ -1304,9 +1066,9 @@ The constitutional architecture of assured governance is not complete. Three res
 
 What is complete is the argument: that governance without hesitation is not governance, that compliance without evidence is not compliance, that accountability without permanence is not accountability, and that constitutional law without physical enforcement is wishful thinking. Ternary Logic provides the hesitation state, the evidentiary prerequisite, the permanent anchor, and the physical enforcement. What remains is the decision to deploy it.
 
+---
 
-
-## **REFERENCES** {#references}
+## **REFERENCES**
 
 \[1\] Min, B. H., and Borch, C. (2022). Systemic failures and organizational risk management in algorithmic trading: Normal accidents and high reliability in financial markets. *Social Studies of Science*, 52(2), 259-282. [https://journals.sagepub.com/doi/full/10.1177/03063127211048515](https://journals.sagepub.com/doi/full/10.1177/03063127211048515)
 
