@@ -128,19 +128,8 @@ GDPR Article 17, the Right to Erasure, creates an apparent structural conflict w
 
 Post-quantum cryptography migration has become operationally urgent. NIST finalized three post-quantum standards in August 2024: FIPS 203 (ML-KEM, the primary key encapsulation standard), FIPS 204 (ML-DSA, the primary digital signature standard), and FIPS 205 (SLH-DSA, the hash-based fallback signature standard) [[6]](https://csrc.nist.gov/projects/post-quantum-cryptography). NSA CNSA 2.0 sets 2030 as the mandatory migration deadline for National Security Systems. The UK National Cyber Security Centre has characterized PQC migration as a global-scale change to IT and operational technology systems, noting that hardware roots of trust implementing the new NIST standards were expected to become available during 2025 [[12]](https://www.ncsc.gov.uk/guidance/pqc-migration-timelines). TL addresses this through ML-KEM-1024 and SLH-DSA-SHAKE-128s slots reserved in the API Signature Block, a hybrid signature approach during the transition window, and a constitutional cryptographic agility protocol that permits progressive migration without ledger reconstruction.
 
-### 1.4 Structure of This Document
 
-This monograph is organized in five parts.
-
-Section 2 establishes the constitutional foundations of TL. It covers the Goukassian Vow and its status as architectural law rather than ethical guidance (2.1); the Goukassian Principle comprising the Lantern, Signature, and License as the three operational enforcement artifacts of Pillar 3 (2.2); the three decision states and their complete semantic properties (2.3); the Dual-Lane Architecture comprising the Governance Lane and the Inference Lane with the fail-closed Gateway between them (2.4); the precise distinction between Epistemic Hold as a constitutional state and the Sacred Pause as the workflow it triggers (2.5); and the NL=NA covenant and its five independent enforcement layers (2.6). Section 2 continues with the Eight Pillars of evidentiary governance in full detail (2.7), the No Spy, No Weapon Mandate covering domain boundary determinations and power pressure stress testing (2.8 and 2.9), and Ephemeral Key Rotation and the Hybrid Shield (2.10).
-
-Section 3 provides detailed regulatory alignment across seven frameworks: Basel III and FRTB (3.1), SEC and CFTC market integrity enforcement (3.2), IOSCO Principles for Financial Market Infrastructures (3.3), central bank oversight and CBDC governance (3.4), GDPR and cryptographic erasure (3.5), global AML and fraud standards (3.6), and the EU AI Act in the financial systems context (3.7).
-
-Section 4 addresses hardware enforcement and institutional governance: DITL and Mandated Ternary hardware substrates including Architecture A and Architecture B specifications (4.1), the Tri-Cameral Governance Model (4.2), adversarial survivability across four attack vector classes (4.3), and post-quantum cryptographic migration specifications (4.4).
-
-Section 5 closes with succession and continuity instruments (5.1), implementation economics including the consortium requirement and break-even analysis (5.2), and the conclusion (5.3), followed by the consolidated reference list.
-
-### 1.5 A Note on Terminology
+### 1.4 A Note on Terminology
 
 Several terms in this monograph carry precise, non-interchangeable meanings that differ from their common usage. These distinctions are maintained throughout without exception.
 
@@ -819,8 +808,6 @@ Under the EU eIDAS Regulation (EU 910/2014, updated through eIDAS 2.0 in force M
 ## SECTION 4: HARDWARE ENFORCEMENT AND INSTITUTIONAL GOVERNANCE
 
 The constitutional architecture established in Sections 2 and 3 operates across three distinct enforcement layers: software schema constraints, smart contract ABI conditions, and physical hardware states. The first two layers, though robust, share a fundamental vulnerability identified in the governance literature: software-implemented governance constraints can be bypassed by operations at lower abstraction levels, optimized away by compilers under performance pressure, or subverted by compromised processes operating below the software abstraction boundary [[15]](https://github.com/FractonicMind/TernaryLogic/blob/main/Governance/Ternary_Logic_as_Constitutional_Triadic_Governance_Architecture_for_High-Stakes_Automated_Decision-Making.md). The hardware layer resolves this vulnerability by making governance enforcement a physical property of matter rather than a logical property of code.
-
-Section 4 describes how this physical enforcement is realized through Delay-Insensitive Ternary Logic circuits and Mandated Ternary memristive substrates (Section 4.1), how institutional governance is distributed across the Tri-Cameral Model to prevent capture while preserving constitutional continuity (Section 4.2), how the complete adversarial threat landscape is assessed and mitigated (Section 4.3), and how post-quantum cryptographic migration is specified within the constitutional schema (Section 4.4).
 
 ---
 
