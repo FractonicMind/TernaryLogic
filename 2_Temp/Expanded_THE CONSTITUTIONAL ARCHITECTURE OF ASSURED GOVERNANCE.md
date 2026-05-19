@@ -4,15 +4,15 @@
 
 **TECHNICAL STANDARD AND RESEARCH MONOGRAPH**
 
-**Version 1.0**
-
-**April 2026**
+**Version 2.0**  **May 2026**   
 
 **Author:** Lev Goukassian
 
 **ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)
 
 **Repository:** [FractonicMind/TernaryLogic](https://github.com/FractonicMind/TernaryLogic/tree/main)
+
+**DOI: [10.1007/s43681-026-01124-0](https://doi.org/10.1007/s43681-026-01124-0)**
 
 **Document Classification:** Sovereign-Grade Governance Specification
 
