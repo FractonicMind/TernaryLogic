@@ -4,7 +4,7 @@
 
 **TECHNICAL STANDARD AND RESEARCH MONOGRAPH**
 
-**Version 2.0**  **May 2026**   
+**Version 2.0**,  **May 2026**   
 
 **Author:** Lev Goukassian
 
@@ -21,9 +21,9 @@
 **Build:** 1.0.0-tl-monograph-2026
 
 
-*Pause when truth is uncertain.*
-*Refuse when harm is clear.*
-*Proceed where truth is.*
+*Pause when truth is uncertain.*   
+*Refuse when harm is clear.*   
+*Proceed where truth is.*   
 
 
 ## POLICYMAKER'S ABSTRACT: The Architecture of Assured Governance
