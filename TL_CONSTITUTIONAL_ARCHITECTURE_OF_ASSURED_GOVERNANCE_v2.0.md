@@ -18,7 +18,7 @@
 
 **Framework:** Ternary Logic (TL)
 
-**Build:** 1.0.0-tl-monograph-2026
+**Build:** 2.0.0-tl-monograph-2026
 
 
 *Pause when truth is uncertain.*   
