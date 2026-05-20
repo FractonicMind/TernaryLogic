@@ -284,7 +284,7 @@ Cross-pillar dependencies are architecturally enforced: `Pillar I` (`EpistemicHo
 
 ---
 
-## 2.7 Dual-Lane Architecture: Constitutional Overview
+## 2.7 Dual-Lane Architecture
 
 Ternary Logic does not replace binary computation. The Inference Lane and the Governance Lane are physically and logically separated computational domains that operate in parallel and never merge into a single execution path. Binary proposes. Ternary governs. The separation is not a performance optimization. It is a constitutional requirement. [[14]](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md)
 
@@ -300,7 +300,7 @@ The full Dual-Lane Architecture specification including the Gateway, Permission 
 
 ---
 
-## 2.8 The No Spy, No Weapon Mandate: Constitutional Overview
+## 2.8 The No Spy, No Weapon Mandate
 
 The Goukassian Vow defines what Ternary Logic must do. The No Spy, No Weapon Mandate defines what Ternary Logic must never do. It is a negative constitutional architecture operating in parallel with the positive architecture of the Eight Pillars. The Mandate is not a compliance checklist. It is a structural constraint embedded in the constitutional schema, the API specification, and the hardware substrate. [[13]](https://github.com/FractonicMind/TernaryLogic/blob/main/The%20Architecture%20Of%20Assured%20Governance%20for%20Global%20Economic%20Systems.md)
 
