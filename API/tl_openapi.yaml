@@ -51,7 +51,7 @@ info:
     ## NL=NA (No Log = No Action)
 
     The NL=NA invariant is enforced at every API boundary. No endpoint may
-    return PROCEED without prior cryptographic confirmation of audit lane
+    return PROCEED without prior cryptographic confirmation of governance lane
     completion. The binary lane may propose +1, but the ternary lane must
     produce a valid Permission Token before the actuation layer fires.
 
@@ -89,7 +89,7 @@ x-tl-constitutional-preamble:
     - "No Switch Off"
   nlNaInvariant: >-
     No endpoint may return PROCEED without prior cryptographic confirmation
-    of audit lane completion. Fail-open is constitutionally prohibited.
+    of governance lane completion. Fail-open is constitutionally prohibited.
   specVersion: 1.0.0-tl-monograph-2026
 
 x-tl-capability-flags:
@@ -133,9 +133,9 @@ tags:
     description: >-
       Domain-specific regulatory compliance endpoints under Pillars V and VI.
       Basel III, FATF, IOSCO, GDPR, Paris Agreement.
-  - name: Audit and Anchoring
+  - name: Governance and Anchoring
     description: >-
-      Audit Lane endpoints for TGLF submission, Permission Token issuance,
+      Governance Lane endpoints for TGLF submission, Permission Token issuance,
       Merkle anchoring, and blockchain verification. Central NL=NA surface.
   - name: Redress and Appeal
     description: >-
@@ -169,21 +169,21 @@ components:
         Physical Unclonable Function attestation token for MT-integrated
         deployments.
 
-    NLNAAuditToken:
+    NLNAGovernanceToken:
       type: http
       scheme: bearer
       bearerFormat: JWT
       description: >-
-        Audit lane completion token issued by the Audit Lane HSM.
+        Governance lane completion token issued by the Governance Lane HSM.
         Cryptographically bound to the X-TL-Trace-Id of the originating
-        Inference Lane request. laneOrigin claim MUST be "AUDIT_LANE".
+        Inference Lane request. laneOrigin claim MUST be "GOVERNANCE_LANE".
 
     HSMSignedJWT:
       type: http
       scheme: bearer
       bearerFormat: JWT
       description: >-
-        HSM-signed JWT for Audit and Governance Lane security.
+        HSM-signed JWT for Governance Lane security.
 
     CAVettedJWT:
       type: http
@@ -322,19 +322,19 @@ components:
     PermissionToken:
       type: object
       description: >-
-        NL=NA cryptographic enforcement artifact. laneOrigin const "AUDIT_LANE".
+        NL=NA cryptographic enforcement artifact. laneOrigin const "GOVERNANCE_LANE".
         Inference Lane tokens schema-invalid. actuation layer MUST reject expired tokens.
-        maxLifetimeMs maximum 300000 aligned with DLLA Audit Lane ceiling.
+        maxLifetimeMs maximum 300000 aligned with DLLA Governance Lane ceiling.
       required:
         [tokenId, logHash, epochTimestamp, signerKeyId, laneOrigin, merkleRoot,
          signatureValue, issuedAt, expiresAt, maxLifetimeMs, revocationStatus]
       properties:
         tokenId: { type: string, format: uuid }
-        logHash: { type: string, pattern: '^[0-9a-f]{64}$', description: "SHA-256 anchored TGLF entry. NL=NA Layer 4 cross-ref: MUST match AuditProof.logHash." }
+        logHash: { type: string, pattern: '^[0-9a-f]{64}$', description: "SHA-256 anchored TGLF entry. NL=NA Layer 4 cross-ref: MUST match GovernanceProof.logHash." }
         epochTimestamp: { type: integer, format: int64 }
         signerKeyId: { type: string }
-        laneOrigin: { type: string, const: "AUDIT_LANE", description: "NL=NA Layer 2 const." }
-        merkleRoot: { type: string, pattern: '^[0-9a-f]{64}$', description: "NL=NA Layer 4 cross-ref: MUST match AuditProof.merkleRoot. Layer 5: registerPermissionToken reverts NLNAViolation if logHash not in root." }
+        laneOrigin: { type: string, const: "GOVERNANCE_LANE", description: "NL=NA Layer 2 const." }
+        merkleRoot: { type: string, pattern: '^[0-9a-f]{64}$', description: "NL=NA Layer 4 cross-ref: MUST match GovernanceProof.merkleRoot. Layer 5: registerPermissionToken reverts NLNAViolation if logHash not in root." }
         signatureValue: { type: string, format: byte, minLength: 64 }
         issuedAt: { type: string, format: date-time }
         expiresAt: { type: string, format: date-time, description: "Hard expiration. Actuation layer MUST reject. No grace period." }
@@ -364,7 +364,7 @@ components:
         Created at hold initiation. Immutable.
       required:
         [escrowId, heldState, initiatedAt, initiatingDecisionId, holdRationale,
-         resolutionDeadline, immutableLogHash, holdDurationMs, auditLaneStatus,
+         resolutionDeadline, immutableLogHash, holdDurationMs, governanceLaneStatus,
          requiredConditions, windowComparatorReading]
       properties:
         escrowId: { type: string, format: uuid }
@@ -386,7 +386,7 @@ components:
         resolutionDeadline: { type: string, format: date-time, description: "Terminal state must be +1 or -1. State 0 invalid resolution." }
         immutableLogHash: { type: string, pattern: '^[0-9a-f]{64}$' }
         holdDurationMs: { type: integer, minimum: 0 }
-        auditLaneStatus:
+        governanceLaneStatus:
           type: object
           required: [stage, percentComplete]
           properties:
@@ -506,7 +506,7 @@ components:
             - SUCCESSION_DECLARATION_REQUIRED_ERROR
       unevaluatedProperties: false
 
-    NLNAAuditToken:
+    NLNAGovernanceToken:
       type: object
       required: [tokenId, merkleRoot, ledgerAnchor, timestamp, pufAttestation, laneStatus]
       properties:
@@ -705,12 +705,12 @@ components:
 
     GatewayRoutingStatus:
       type: object
-      description: "Fail-closed: cannot route to Audit Lane defaults to EPISTEMIC_HOLD. Fail-open constitutionally prohibited."
-      required: [operationalStatus, epistemicHoldOverride, inferenceLaneStatus, auditLaneStatus, lanternStatus]
+      description: "Fail-closed: cannot route to Governance Lane defaults to EPISTEMIC_HOLD. Fail-open constitutionally prohibited."
+      required: [operationalStatus, epistemicHoldOverride, inferenceLaneStatus, governanceLaneStatus, lanternStatus]
       properties:
         operationalStatus:
           type: string
-          enum: [FULLY_OPERATIONAL, INFERENCE_LANE_DEGRADED, AUDIT_LANE_DEGRADED,
+          enum: [FULLY_OPERATIONAL, INFERENCE_LANE_DEGRADED, GOVERNANCE_LANE_DEGRADED,
                  EPISTEMIC_HOLD_OVERRIDE_ACTIVE, EMERGENCY_OVERRIDE_ACTIVE, FAIL_CLOSED]
         epistemicHoldOverride: { type: boolean }
         inferenceLaneStatus:
@@ -720,7 +720,7 @@ components:
             healthy: { type: boolean }
             latencyMs: { type: number, description: "DLLA WCET: 2ms at 99.99th percentile." }
           unevaluatedProperties: false
-        auditLaneStatus:
+        governanceLaneStatus:
           type: object
           required: [healthy, latencyMs]
           properties:
@@ -740,7 +740,7 @@ paths:
       summary: Submit a decision vector for TL governance evaluation
       description: >-
         Inference Lane. Binary engine proposes TLState. State +1 does NOT
-        authorize actuation. Permission Token from POST /audit-logs required.
+        authorize actuation. Permission Token from POST /governance-logs required.
       tags: [Core States, Decision Engine]
       security:
         - TLGovernanceJWT: []
@@ -819,17 +819,17 @@ paths:
         '404': { $ref: '#/components/responses/ProblemResponse' }
         '401': { $ref: '#/components/responses/ProblemResponse' }
 
-  /audit-logs:
+  /governance-logs:
     post:
       operationId: submitGovernanceTraceLog
       summary: Submit TGLF; receive Permission Token on Proceed
       description: >-
-        Audit Lane central NL=NA enforcement. State +1: Permission Token returned.
+        Governance Lane central NL=NA enforcement. State +1: Permission Token returned.
         State 0: escalation + epistemicHold.escalation webhook. State -1: refusal, no token.
-      tags: [Audit and Anchoring, Core States]
+      tags: [Governance and Anchoring, Core States]
       security:
         - HSMSignedJWT: []
-        - NLNAAuditToken: []
+        - NLNAGovernanceToken: []
       x-tl-pillar: ImmutableLedger
       x-tl-monograph-ref: "Constitutional Hardware Monograph, Section II"
       x-tl-implementation-status: SHIPPING
@@ -847,7 +847,7 @@ paths:
                 decisionId: { type: string, format: uuid }
                 tglfRecord: { type: object, additionalProperties: true }
                 goukassianPrinciple: { $ref: '#/components/schemas/GoukassianPrincipleBlock' }
-                auditProof:
+                governanceProof:
                   type: object
                   required: [logHash, merkleRoot]
                   description: "NL=NA Layer 4: logHash and merkleRoot MUST match PermissionToken fields."
@@ -869,11 +869,11 @@ paths:
         '403': { $ref: '#/components/responses/ProblemResponse' }
         '409': { $ref: '#/components/responses/ProblemResponse' }
 
-  /audit-logs/{logId}:
+  /governance-logs/{logId}:
     get:
       operationId: getAnchoredTGLFRecord
       summary: Retrieve an anchored TGLF record by identifier
-      tags: [Audit and Anchoring]
+      tags: [Governance and Anchoring]
       security:
         - TLGovernanceJWT: []
         - CAVettedJWT: []
@@ -1241,11 +1241,11 @@ paths:
                   expiresAt: { type: string, format: date-time }
                   activatedAt: { type: string, format: date-time }
 
-  /audit/verifications/merkle/{merkleRoot}:
+  /governance/verifications/merkle/{merkleRoot}:
     get:
       operationId: verifyMerkleRoot
       summary: Verify a Merkle root against public blockchain anchor
-      tags: [Audit and Anchoring]
+      tags: [Governance and Anchoring]
       security:
         - CAVettedJWT: []
         - TLGovernanceJWT: []
@@ -1272,11 +1272,11 @@ paths:
                   verified: { type: boolean }
         '404': { $ref: '#/components/responses/ProblemResponse' }
 
-  /audit/verifications/inclusion/{logId}:
+  /governance/verifications/inclusion/{logId}:
     get:
       operationId: getLogInclusionProof
       summary: Get log inclusion proof with full Merkle path
-      tags: [Audit and Anchoring]
+      tags: [Governance and Anchoring]
       security:
         - CAVettedJWT: []
         - TLGovernanceJWT: []
@@ -1304,11 +1304,11 @@ paths:
                   verified: { type: boolean }
         '404': { $ref: '#/components/responses/ProblemResponse' }
 
-  /audit/custodians/{custodianId}/heartbeat:
+  /governance/custodians/{custodianId}/heartbeat:
     get:
       operationId: getCustodianHeartbeat
       summary: HybridShield custodian liveness check
-      tags: [Audit and Anchoring, Eight Pillars]
+      tags: [Governance and Anchoring, Eight Pillars]
       security:
         - TLGovernanceJWT: []
       x-tl-pillar: HybridShield
@@ -1334,11 +1334,11 @@ paths:
                   jurisdiction: { type: string }
                   quorumContribution: { type: boolean }
 
-  /audit/compliance/attestation:
+  /governance/compliance/attestation:
     get:
       operationId: getEightPillarComplianceAttestation
       summary: Pull signed Eight Pillar compliance attestation
-      tags: [Eight Pillars, Audit and Anchoring]
+      tags: [Eight Pillars, Governance and Anchoring]
       security:
         - CAVettedJWT: []
         - TLGovernanceJWT: []
@@ -1522,7 +1522,7 @@ paths:
     post:
       operationId: exportRegulatoryEvidence
       summary: Bulk evidence export (signed, Merkle-verified; asynchronous)
-      tags: [Regulatory Compliance, Audit and Anchoring]
+      tags: [Regulatory Compliance, Governance and Anchoring]
       security:
         - CAVettedJWT: []
       x-tl-pillar: EconomicRightsAndTransparencyMandate
@@ -1595,7 +1595,7 @@ paths:
     get:
       operationId: verifyQualifiedTimestamp
       summary: Qualified timestamp verification (RFC 3161)
-      tags: [Audit and Anchoring]
+      tags: [Governance and Anchoring]
       security:
         - CAVettedJWT: []
       x-tl-pillar: ImmutableLedger
@@ -1769,7 +1769,7 @@ paths:
               type: object
               required: [requestedLane, decisionId]
               properties:
-                requestedLane: { type: string, enum: [INFERENCE_LANE, AUDIT_LANE] }
+                requestedLane: { type: string, enum: [INFERENCE_LANE, GOVERNANCE_LANE] }
                 decisionId: { type: string, format: uuid }
                 epistemicHoldOverride: { type: boolean, default: false }
       responses:
