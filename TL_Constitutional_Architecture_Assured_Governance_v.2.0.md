@@ -86,7 +86,7 @@ Binary monitoring forces every transaction into “suspect” or “clear.” Th
 Risk absorption compensates for governance failure. TL replaces absorption with prevention — architecturally, not aspirationally.
 
 
-### II. The Eight Pillars & NL=NA
+### II. The Eight Pillars & No Log=No Action 
 
 > **“The Eight Pillars are not a checklist. They are a closed circuit of accountability — break one, and all degrade.”**
 
