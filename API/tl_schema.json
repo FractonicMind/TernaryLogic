@@ -115,7 +115,7 @@
     "TLResult_v1_0_0": {
       "$anchor": "TLResult",
       "title": "TLResult",
-      "description": "Inference Lane result. State +1 does NOT authorize actuation; Permission Token from Audit Lane required.",
+      "description": "Inference Lane result. State +1 does NOT authorize actuation; Permission Token from Governance Lane required.",
       "type": "object",
       "required": ["state", "stateLabel", "confidence", "rationale", "nextSteps", "goukassianPrinciple"],
       "properties": {
@@ -134,16 +134,16 @@
     "PermissionToken_v1_0_0": {
       "$anchor": "PermissionToken",
       "title": "PermissionToken",
-      "description": "NL=NA cryptographic enforcement artifact. laneOrigin const \"AUDIT_LANE\": Inference Lane tokens schema-invalid. Actuation layer MUST reject expired tokens. maxLifetimeMs maximum 300000 aligned with DLLA Audit Lane ceiling. NL=NA Layers 2 and 4 enforced here.",
+      "description": "NL=NA cryptographic enforcement artifact. laneOrigin const \"GOVERNANCE_LANE\": Inference Lane tokens schema-invalid. Actuation layer MUST reject expired tokens. maxLifetimeMs maximum 300000 aligned with DLLA Governance Lane ceiling. NL=NA Layers 2 and 4 enforced here.",
       "type": "object",
       "required": ["tokenId", "logHash", "epochTimestamp", "signerKeyId", "laneOrigin", "merkleRoot", "signatureValue", "issuedAt", "expiresAt", "maxLifetimeMs", "revocationStatus"],
       "properties": {
         "tokenId": { "$ref": "#/$defs/UUIDv4_v1_0_0" },
-        "logHash": { "$ref": "#/$defs/SHA256Hex_v1_0_0", "description": "NL=NA Layer 4: MUST match AuditProof.logHash." },
+        "logHash": { "$ref": "#/$defs/SHA256Hex_v1_0_0", "description": "NL=NA Layer 4: MUST match GovernanceProof.logHash." },
         "epochTimestamp": { "type": "integer", "format": "int64" },
         "signerKeyId": { "type": "string" },
-        "laneOrigin": { "type": "string", "const": "AUDIT_LANE", "description": "NL=NA Layer 2 const. Schema-invalid for any other value." },
-        "merkleRoot": { "$ref": "#/$defs/SHA256Hex_v1_0_0", "description": "NL=NA Layer 4: MUST match AuditProof.merkleRoot. Layer 5: registerPermissionToken reverts NLNAViolation if logHash not in root." },
+        "laneOrigin": { "type": "string", "const": "GOVERNANCE_LANE", "description": "NL=NA Layer 2 const. Schema-invalid for any other value." },
+        "merkleRoot": { "$ref": "#/$defs/SHA256Hex_v1_0_0", "description": "NL=NA Layer 4: MUST match GovernanceProof.merkleRoot. Layer 5: registerPermissionToken reverts NLNAViolation if logHash not in root." },
         "signatureValue": { "type": "string", "contentEncoding": "base64url", "minLength": 64 },
         "issuedAt": { "$ref": "#/$defs/ISO8601DateTime_v1_0_0" },
         "expiresAt": { "$ref": "#/$defs/ISO8601DateTime_v1_0_0", "description": "Hard expiration. Actuation MUST reject. No grace period." },
@@ -160,10 +160,10 @@
       "$comment": "Monograph ref: Constitutional Hardware Monograph, Section II. Pillar: ImmutableLedger. NL=NA Layers 2 and 4."
     },
 
-    "AuditProof_v1_0_0": {
-      "$anchor": "AuditProof",
-      "title": "AuditProof",
-      "description": "NL=NA Layer 4: AuditProof.logHash and AuditProof.merkleRoot MUST match PermissionToken.logHash and PermissionToken.merkleRoot respectively.",
+    "GovernanceProof_v1_0_0": {
+      "$anchor": "GovernanceProof",
+      "title": "GovernanceProof",
+      "description": "NL=NA Layer 4: GovernanceProof.logHash and GovernanceProof.merkleRoot MUST match PermissionToken.logHash and PermissionToken.merkleRoot respectively.",
       "type": "object",
       "required": ["logHash", "merkleRoot"],
       "properties": {
@@ -182,7 +182,7 @@
       "title": "EscrowRecord",
       "description": "Single authoritative schema for all Epistemic Hold response fields per Section 4.4. Created at hold initiation. Immutable.",
       "type": "object",
-      "required": ["escrowId", "heldState", "initiatedAt", "initiatingDecisionId", "holdRationale", "resolutionDeadline", "immutableLogHash", "holdDurationMs", "auditLaneStatus", "requiredConditions", "windowComparatorReading"],
+      "required": ["escrowId", "heldState", "initiatedAt", "initiatingDecisionId", "holdRationale", "resolutionDeadline", "immutableLogHash", "holdDurationMs", "governanceLaneStatus", "requiredConditions", "windowComparatorReading"],
       "properties": {
         "escrowId": { "$ref": "#/$defs/UUIDv4_v1_0_0" },
         "heldState": { "type": "integer", "const": 0 },
@@ -201,7 +201,7 @@
         "resolutionDeadline": { "$ref": "#/$defs/ISO8601DateTime_v1_0_0", "description": "Terminal state must be +1 or -1. State 0 invalid resolution." },
         "immutableLogHash": { "$ref": "#/$defs/SHA256Hex_v1_0_0" },
         "holdDurationMs": { "type": "integer", "minimum": 0 },
-        "auditLaneStatus": {
+        "governanceLaneStatus": {
           "type": "object",
           "required": ["stage", "percentComplete"],
           "properties": {
@@ -388,7 +388,7 @@
       "title": "TGLF-StateP1",
       "description": "TGLF record for Proceed (State +1). permissionToken REQUIRED (NL=NA Layer 3). pillarsCertified minItems 8, maxItems 8. All Eight Pillars must be certified.",
       "type": "object",
-      "required": ["logId", "currentState", "stateLabel", "decisionId", "regulatoryVerification", "theSignature", "auditProof", "permissionToken", "committedAt", "pillarsCertified"],
+      "required": ["logId", "currentState", "stateLabel", "decisionId", "regulatoryVerification", "theSignature", "governanceProof", "permissionToken", "committedAt", "pillarsCertified"],
       "properties": {
         "logId": { "$ref": "#/$defs/UUIDv4_v1_0_0" },
         "currentState": { "type": "integer", "const": 1 },
@@ -417,7 +417,7 @@
           "unevaluatedProperties": false
         },
         "theSignature": { "$ref": "#/$defs/GoukassianPrincipleBlock_v1_0_0" },
-        "auditProof": { "$ref": "#/$defs/AuditProof_v1_0_0", "description": "NL=NA Layer 4: logHash and merkleRoot MUST match PermissionToken fields." },
+        "governanceProof": { "$ref": "#/$defs/GovernanceProof_v1_0_0", "description": "NL=NA Layer 4: logHash and merkleRoot MUST match PermissionToken fields." },
         "permissionToken": { "$ref": "#/$defs/PermissionToken_v1_0_0", "description": "REQUIRED. NL=NA Layer 3." },
         "committedAt": { "$ref": "#/$defs/ISO8601DateTime_v1_0_0" },
         "pillarsCertified": {
@@ -432,10 +432,10 @@
       "$comment": "Monograph ref: Constitutional Hardware Monograph, Section II. Pillar: ImmutableLedger. NL=NA Layer 3."
     },
 
-    "NLNAAuditToken_v1_0_0": {
-      "$anchor": "NLNAAuditToken",
-      "title": "NLNAAuditToken",
-      "description": "Audit lane completion token. Non-MT deployments MUST use sentinel value \"NULL_PUF_DEPLOYMENT\" for pufAttestation. Architecture B compensating controls documented in specification_architecture.md Section 11.",
+    "NLNAGovernanceToken_v1_0_0": {
+      "$anchor": "NLNAGovernanceToken",
+      "title": "NLNAGovernanceToken",
+      "description": "Governance lane completion token. Non-MT deployments MUST use sentinel value \"NULL_PUF_DEPLOYMENT\" for pufAttestation. Architecture B compensating controls documented in specification_architecture.md Section 11.",
       "type": "object",
       "required": ["tokenId", "merkleRoot", "ledgerAnchor", "timestamp", "pufAttestation", "laneStatus"],
       "properties": {
@@ -761,13 +761,13 @@
     "GatewayRoutingStatus_v1_0_0": {
       "$anchor": "GatewayRoutingStatus",
       "title": "GatewayRoutingStatus",
-      "description": "TL Gateway status. Fail-closed: cannot route to Audit Lane defaults to EPISTEMIC_HOLD. Fail-open constitutionally prohibited.",
+      "description": "TL Gateway status. Fail-closed: cannot route to Governance Lane defaults to EPISTEMIC_HOLD. Fail-open constitutionally prohibited.",
       "type": "object",
-      "required": ["operationalStatus", "epistemicHoldOverride", "inferenceLaneStatus", "auditLaneStatus", "lanternStatus"],
+      "required": ["operationalStatus", "epistemicHoldOverride", "inferenceLaneStatus", "governanceLaneStatus", "lanternStatus"],
       "properties": {
         "operationalStatus": {
           "type": "string",
-          "enum": ["FULLY_OPERATIONAL", "INFERENCE_LANE_DEGRADED", "AUDIT_LANE_DEGRADED", "EPISTEMIC_HOLD_OVERRIDE_ACTIVE", "EMERGENCY_OVERRIDE_ACTIVE", "FAIL_CLOSED"]
+          "enum": ["FULLY_OPERATIONAL", "INFERENCE_LANE_DEGRADED", "GOVERNANCE_LANE_DEGRADED", "EPISTEMIC_HOLD_OVERRIDE_ACTIVE", "EMERGENCY_OVERRIDE_ACTIVE", "FAIL_CLOSED"]
         },
         "epistemicHoldOverride": { "type": "boolean" },
         "inferenceLaneStatus": {
@@ -779,7 +779,7 @@
           },
           "unevaluatedProperties": false
         },
-        "auditLaneStatus": {
+        "governanceLaneStatus": {
           "type": "object",
           "required": ["healthy", "latencyMs"],
           "properties": {
@@ -883,13 +883,13 @@
       "title": "EKRRecord",
       "description": "Ephemeral Key Rotation record. HKDF-SHA3-256 key destruction achieves GDPR Article 17 cryptographic erasure.",
       "type": "object",
-      "required": ["keyId", "keyGeneratedAt", "keyExpiresAt", "rotationPurpose", "auditRetentionAnchor"],
+      "required": ["keyId", "keyGeneratedAt", "keyExpiresAt", "rotationPurpose", "governanceRetentionAnchor"],
       "properties": {
         "keyId": { "type": "string" },
         "keyGeneratedAt": { "$ref": "#/$defs/ISO8601DateTime_v1_0_0" },
         "keyExpiresAt": { "$ref": "#/$defs/ISO8601DateTime_v1_0_0" },
         "rotationPurpose": { "type": "string" },
-        "auditRetentionAnchor": { "$ref": "#/$defs/SHA256Hex_v1_0_0" },
+        "governanceRetentionAnchor": { "$ref": "#/$defs/SHA256Hex_v1_0_0" },
         "hkdfSha3256Confirmed": { "type": "boolean" }
       },
       "unevaluatedProperties": false,
