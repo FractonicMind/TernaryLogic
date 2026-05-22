@@ -6,21 +6,12 @@
 <title>Specification Architecture — TL Governance API</title>
 <style>
   :root {
-    --navy: #0a1628;
-    --navy2: #0f1f3d;
-    --navy3: #162847;
-    --gold: #d4a574;
-    --gold2: #e8c496;
-    --teal: #2dd4bf;
-    --green: #22c55e;
-    --amber: #f59e0b;
-    --coral: #f87171;
-    --purple: #a78bfa;
-    --blue: #60a5fa;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --border: rgba(212,165,116,0.2);
-    --border2: rgba(212,165,116,0.08);
+    --navy: #0a1628; --navy2: #0f1f3d; --navy3: #162847;
+    --gold: #d4a574; --gold2: #e8c496;
+    --teal: #2dd4bf; --green: #22c55e; --amber: #f59e0b;
+    --coral: #f87171; --purple: #a78bfa; --blue: #60a5fa;
+    --text: #e2e8f0; --muted: #94a3b8;
+    --border: rgba(212,165,116,0.2); --border2: rgba(212,165,116,0.08);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: var(--navy); color: var(--text); font-family: 'Georgia', serif; line-height: 1.8; }
@@ -70,6 +61,8 @@
   .section p { margin-bottom: 1rem; font-size: 0.95rem; color: var(--text); }
   .section ul { margin: 0.5rem 0 1rem 1.5rem; }
   .section ul li { margin-bottom: 0.4rem; font-size: 0.92rem; color: var(--text); }
+  .section ol { margin: 0.5rem 0 1rem 1.5rem; }
+  .section ol li { margin-bottom: 0.6rem; font-size: 0.92rem; color: var(--text); }
 
   code { font-family: 'Courier New', monospace; font-size: 0.82rem; background: rgba(255,255,255,0.07); padding: 0.1em 0.38em; border-radius: 3px; color: var(--teal); }
 
@@ -92,6 +85,12 @@
     font-family: 'Courier New', monospace; font-size: 0.78rem; color: var(--teal); line-height: 1.6; white-space: pre;
   }
 
+  .trace-block {
+    background: var(--navy3); border: 1px solid var(--border2); border-radius: 6px;
+    padding: 1rem 1.25rem; margin: 1rem 0; overflow-x: auto;
+    font-family: 'Courier New', monospace; font-size: 0.76rem; color: var(--muted); line-height: 1.7; white-space: pre;
+  }
+
   .uncertainty-block { background: var(--navy2); border: 1px solid rgba(248,113,113,0.2); border-radius: 8px; padding: 1.25rem 1.5rem; margin-top: 1rem; }
   .uncertainty-block .u-label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--coral); margin-bottom: 0.75rem; }
   .uncertainty-block p { font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--muted); }
@@ -100,6 +99,10 @@
   .mandates-bar { background: var(--navy2); border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem 1.25rem; display: flex; gap: 2rem; align-items: center; margin: 1.5rem 0; }
   .mandates-bar .m-label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
   .mandates-bar .mandate { font-size: 0.85rem; color: var(--coral); font-family: 'Helvetica Neue', sans-serif; font-weight: 500; }
+
+  .step-list { list-style: none; margin: 0.75rem 0 1.25rem; }
+  .step-list li { display: flex; gap: 1rem; margin-bottom: 0.75rem; font-size: 0.92rem; align-items: flex-start; }
+  .step-num { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); background: rgba(212,165,116,0.1); border: 1px solid rgba(212,165,116,0.2); border-radius: 3px; padding: 0.15em 0.5em; white-space: nowrap; margin-top: 0.1rem; flex-shrink: 0; }
 
   hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
 
@@ -124,7 +127,7 @@
     <a href="#s7">7 · Eight Pillars</a>
     <a href="#s8">8 · Regulatory Nexus</a>
     <a href="#s9">9 · Domain Evaluation</a>
-    <a href="#s10">10 · Auditor Surface</a>
+    <a href="#s10">10 · Governance Surface</a>
     <a href="#s11">11 · DITL Hardware</a>
     <a href="#s12">12 · EKR and GDPR</a>
     <a href="#s13">13 · Error Handling</a>
@@ -158,6 +161,7 @@
     </div>
   </div>
 
+  <!-- SECTION 1 -->
   <div class="section" id="s1">
     <span class="section-tag tag-constitutional">Constitutional</span>
     <h2>Section 1 — The Goukassian Vow as Foundational Architecture</h2>
@@ -171,196 +175,295 @@
     <p>The first line mandates <code>EscrowRecord</code> creation, <code>TGLF_State0</code> log emission, and the <code>epistemicHold.escalation</code> webhook. Uncertainty is not failure; it is constitutional information.</p>
     <p>The second line mandates <code>TGLF_StateNeg1</code> log emission, no Permission Token issuance, and <code>refusalIsPermanent: true</code> by default. The ABI's <code>InvalidResolutionState</code> revert enforces this at the on-chain layer.</p>
     <p>The third line mandates the Permission Token as the cryptographic expression of verified truth. The five-layer NL=NA enforcement architecture is the engineering expression of this single phrase.</p>
+    <p>The Goukassian Vow appears in <code>tl_openapi.yaml</code> in both <code>info.description</code> and <code>x-tl-constitutional-preamble</code>. It governs every state machine branch in <code>StateEnvelope_v1_0_0</code>, every TGLF schema const value, and every ABI revert condition in <code>TL_Ledger_Core</code>.</p>
   </div>
 
   <hr>
 
+  <!-- SECTION 2 -->
   <div class="section" id="s2">
     <span class="section-tag tag-informative">Informative</span>
     <h2>Section 2 — Binary and Ternary in Parallel</h2>
     <p>The "Ternary Logic" framework does not replace binary inference. It governs it.</p>
     <p>The binary inference engine provides speed, pattern recognition, and statistical throughput. It proposes a state. It cannot authorize actuation. The Inference Lane produces <code>TLResult</code> objects that carry a proposed <code>state</code> field. That field is advisory.</p>
-    <p>The ternary governance coprocessor operates in parallel, receiving the same decision vector through the Audit Lane. It verifies, logs, and either issues or withholds a Permission Token. Only a valid Permission Token from the Audit Lane authorizes the actuation layer to fire.</p>
-    <p>This is why <code>POST /decisions</code> and <code>POST /audit-logs</code> are separate endpoints on separate security schemes. The Inference Lane uses <code>TLGovernanceJWT</code>. The Audit Lane uses <code>HSMSignedJWT</code> and <code>NLNAAuditToken</code>. A client that has only <code>TLGovernanceJWT</code> can propose actions. It cannot authorize them.</p>
+    <p>The ternary governance coprocessor operates in parallel, receiving the same decision vector through the Governance Lane. It verifies, logs, and either issues or withholds a Permission Token. Only a valid Permission Token from the Governance Lane authorizes the actuation layer to fire.</p>
+    <p>This is why <code>POST /decisions</code> and <code>POST /governance-logs</code> are separate endpoints on separate security schemes. The Inference Lane uses <code>TLGovernanceJWT</code>. The Governance Lane uses <code>HSMSignedJWT</code> and <code>NLNAGovernanceToken</code>. A client that has only <code>TLGovernanceJWT</code> can propose actions. It cannot authorize them.</p>
+    <p>The <code>X-TL-Trace-Id</code> UUID v4 header is the cryptographic thread that connects both lanes. It is required on every request and echoed in every response, webhook event, and downstream regulator export. The <code>NLNAGovernanceToken</code> security scheme is cryptographically bound to the <code>X-TL-Trace-Id</code> of the originating Inference Lane request, preventing token substitution across unrelated decision vectors.</p>
   </div>
 
   <hr>
 
+  <!-- SECTION 3 -->
   <div class="section" id="s3">
     <span class="section-tag tag-normative">Normative</span>
     <h2>Section 3 — Dual-Lane Architecture in OpenAPI Paths</h2>
     <h3>3.1 Inference Lane Path Group</h3>
-    <p>The Inference Lane endpoints are <code>POST /decisions</code> and <code>GET /decisions/{decisionId}</code>. Security: <code>TLGovernanceJWT</code>. The <code>TLResult.state</code> field is the binary engine's proposed state. It is not authorization.</p>
-    <h3>3.2 Audit Lane Path Group</h3>
-    <p><code>POST /audit-logs</code> is the central NL=NA enforcement point. On State +1, a <code>PermissionToken</code> is returned inside a <code>StateEnvelope</code>. On State 0, an <code>EscrowRecord</code> is returned and the <code>epistemicHold.escalation</code> webhook fires. On State −1, no <code>PermissionToken</code> is issued.</p>
+    <p>The Inference Lane endpoints are <code>POST /decisions</code> and <code>GET /decisions/{decisionId}</code>. Security: <code>TLGovernanceJWT</code>. <code>POST /decisions</code> accepts a <code>decisionVector</code>, <code>proposedAction</code>, <code>GoukassianPrincipleBlock</code>, optional <code>RegulatoryContext</code>, and optional <code>domain</code>. It returns a <code>TLResult</code> with a <code>decisionId</code>. The <code>TLResult.state</code> field is the binary engine's proposed state. It is not authorization.</p>
+    <h3>3.2 Governance Lane Path Group</h3>
+    <p>The Governance Lane endpoints are <code>POST /governance-logs</code> and <code>GET /governance-logs/{logId}</code>. Security: <code>HSMSignedJWT</code> and <code>NLNAGovernanceToken</code>.</p>
+    <p><code>POST /governance-logs</code> is the central NL=NA enforcement point. It accepts a <code>decisionId</code>, a <code>tglfRecord</code>, a <code>GoukassianPrincipleBlock</code>, and a <code>GovernanceProof</code> object. The <code>GovernanceProof.logHash</code> and <code>GovernanceProof.merkleRoot</code> fields must match the <code>PermissionToken.logHash</code> and <code>PermissionToken.merkleRoot</code> fields respectively (NL=NA Layer 4). On State +1, a <code>PermissionToken</code> is returned inside a <code>StateEnvelope</code>. On State 0, an <code>EscrowRecord</code> is returned and the <code>epistemicHold.escalation</code> webhook fires. On State −1, no <code>PermissionToken</code> is issued.</p>
     <h3>3.3 Gateway Fail-Closed Behavior</h3>
-    <p>The Gateway is fail-closed by design: if it cannot route to the Audit Lane, it defaults to <code>EPISTEMIC_HOLD</code>. Fail-open is constitutionally prohibited. The <code>GatewayRoutingStatus.operationalStatus</code> enum includes <code>EPISTEMIC_HOLD_OVERRIDE_ACTIVE</code> to signal this condition.</p>
+    <p><code>GET /gateway/status</code> and <code>POST /gateway/lane-assignment</code> expose the TL Gateway routing state. The Gateway is fail-closed by design: if it cannot route to the Governance Lane, it defaults to <code>EPISTEMIC_HOLD</code>. Fail-open is constitutionally prohibited. The <code>GatewayRoutingStatus.operationalStatus</code> enum includes <code>EPISTEMIC_HOLD_OVERRIDE_ACTIVE</code> to signal this condition.</p>
   </div>
 
   <hr>
 
+  <!-- SECTION 4 -->
   <div class="section" id="s4">
     <span class="section-tag tag-normative">Normative</span>
     <h2>Section 4 — NL=NA Schema-Level Enforcement</h2>
     <p>NL=NA (No Log = No Action) is enforced at five independent layers. Bypassing one layer does not bypass the others.</p>
-    <div class="layer-block"><div class="layer-num">Layer 1</div><p><code>StateEnvelope_v1_0_0</code> if/then constraint: <code>permissionToken</code> required when <code>currentState</code> equals 1. <code>unevaluatedProperties: false</code> prevents bypass.</p></div>
-    <div class="layer-block"><div class="layer-num">Layer 2</div><p><code>PermissionToken_v1_0_0.laneOrigin</code> carries <code>const: "GOVERNANCE_LANE"</code>. <code>TL_Ledger_Core.registerPermissionToken</code> reverts <code>NLNAViolation</code> on <code>laneOriginHash</code> mismatch.</p></div>
-    <div class="layer-block"><div class="layer-num">Layer 3</div><p><code>TGLF_StateP1_v1_0_0.permissionToken</code> is in the <code>required</code> array. <code>pillarsCertified</code> carries <code>minItems: 8, maxItems: 8</code>.</p></div>
-    <div class="layer-block"><div class="layer-num">Layer 4</div><p><code>AuditProof.logHash</code> must match <code>PermissionToken.logHash</code>. <code>AuditProof.merkleRoot</code> must match <code>PermissionToken.merkleRoot</code>.</p></div>
-    <div class="layer-block"><div class="layer-num">Layer 5</div><p><code>TL_Ledger_Core.registerPermissionToken</code> reverts <code>NLNAViolation</code> if the supplied <code>logHash</code> is not provably included in an anchored Merkle root. Terminal on-chain enforcement gate.</p></div>
+    <div class="layer-block">
+      <div class="layer-num">Layer 1</div>
+      <p><code>StateEnvelope_v1_0_0</code> in <code>tl_schema.json</code>: <code>permissionToken</code> is REQUIRED via <code>if/then</code> constraint when <code>currentState</code> equals 1. <code>unevaluatedProperties: false</code> prevents bypass. Evaluated on every response returning a <code>StateEnvelope</code>.</p>
+    </div>
+    <div class="layer-block">
+      <div class="layer-num">Layer 2</div>
+      <p><code>PermissionToken_v1_0_0.laneOrigin</code> carries <code>const: "GOVERNANCE_LANE"</code>. Any token with any other value is schema-invalid. <code>TL_Ledger_Core.registerPermissionToken</code> reverts <code>NLNAViolation</code> if <code>laneOriginHash &ne; keccak256("GOVERNANCE_LANE")</code>.</p>
+    </div>
+    <div class="layer-block">
+      <div class="layer-num">Layer 3</div>
+      <p><code>TGLF_StateP1_v1_0_0</code>: <code>permissionToken</code> is in the <code>required</code> array. <code>pillarsCertified</code> carries <code>minItems: 8, maxItems: 8</code>. All Eight Pillars must be certified for a valid Proceed log entry.</p>
+    </div>
+    <div class="layer-block">
+      <div class="layer-num">Layer 4</div>
+      <p><code>GovernanceProof_v1_0_0</code>: <code>GovernanceProof.logHash</code> MUST match <code>PermissionToken.logHash</code>. <code>GovernanceProof.merkleRoot</code> MUST match <code>PermissionToken.merkleRoot</code>. Enforced at <code>POST /governance-logs</code>.</p>
+    </div>
+    <div class="layer-block">
+      <div class="layer-num">Layer 5</div>
+      <p><code>TL_Ledger_Core.registerPermissionToken</code> in <code>tl_abi.json</code>: reverts <code>NLNAViolation</code> if <code>logHash</code> is not provably included in an anchored Merkle root via <code>verifyMerkleInclusion</code>. Terminal on-chain enforcement gate. Bypassing Layers 1–4 does not bypass Layer 5.</p>
+    </div>
+    <p>The fail-closed default applies to all five layers: any Governance Lane failure, timeout, or ambiguity defaults to <code>EPISTEMIC_HOLD</code> or <code>REFUSE</code>, never to <code>PROCEED</code>. NL=NA applies to Emergency Override without exception.</p>
   </div>
 
   <hr>
 
+  <!-- SECTION 5 -->
   <div class="section" id="s5">
     <span class="section-tag tag-normative">Normative</span>
     <h2>Section 5 — Epistemic Hold</h2>
     <h3>5.1 State versus Workflow Distinction</h3>
-    <p>Epistemic Hold is a TL constitutional state. Its integer value is 0. Its <code>stateLabel</code> is <code>"EpistemicHold"</code>. <code>GovernancePause</code> is the workflow process name that activates when Epistemic Hold is declared — it appears in <code>StateEnvelope.processActive</code> and <code>TGLF_State0.processActive</code> as <code>const: "GovernancePause"</code>. It is a workflow name, not a state synonym.</p>
+    <p>Epistemic Hold is a TL constitutional state. Its integer value is 0. Its <code>stateLabel</code> is <code>"EpistemicHold"</code>. These are state identifiers.</p>
+    <p><code>GovernancePause</code> is the workflow process name that activates when Epistemic Hold is declared. It appears in <code>StateEnvelope.processActive</code> as <code>const: "GovernancePause"</code> and in <code>TGLF_State0.processActive</code> as <code>const: "GovernancePause"</code>. It is a workflow name, not a state synonym.</p>
     <h3>5.2 EscrowRecord as Single Schema Source</h3>
-    <p><code>EscrowRecord_v1_0_0</code> is the single authoritative definition of all Epistemic Hold response fields. Fields: <code>escrowId</code>, <code>heldState</code> (const 0), <code>initiatedAt</code>, <code>initiatingDecisionId</code>, <code>holdRationale</code>, <code>resolutionDeadline</code>, <code>immutableLogHash</code>, <code>holdDurationMs</code>, <code>auditLaneStatus</code>, <code>requiredConditions</code>, and <code>windowComparatorReading</code>.</p>
+    <p><code>EscrowRecord_v1_0_0</code> in <code>tl_schema.json</code> is the single authoritative definition of all Epistemic Hold response fields. Fields: <code>escrowId</code>, <code>heldState</code> (const 0), <code>initiatedAt</code>, <code>initiatingDecisionId</code>, <code>holdRationale</code> (with <code>rationale</code>, <code>uncertaintyScore</code>, <code>pillarImplicated</code>), <code>resolutionDeadline</code>, <code>immutableLogHash</code>, <code>holdDurationMs</code>, <code>governanceLaneStatus</code> (with <code>stage</code> and <code>percentComplete</code>), <code>requiredConditions</code>, and <code>windowComparatorReading</code>.</p>
     <h3>5.3 Resolution Constraints</h3>
-    <p>Resolution must specify State +1 or State −1. State 0 is not a valid resolution. Enforced at three layers: <code>PATCH /epistemic-hold/escalations/{escalationId}</code> schema, <code>TL_Ledger_Core.resolveEpistemicHoldSystemWide</code> revert, and the <code>resolutionDeadline</code> constitutional deadline.</p>
+    <p>Resolution must specify State +1 (Proceed) or State −1 (Refuse). State 0 is not a valid resolution. Enforced at three layers: <code>PATCH /epistemic-hold/escalations/{escalationId}</code> accepts <code>resolvedState</code> with <code>enum [1, -1]</code>; <code>TL_Ledger_Core.resolveEpistemicHoldSystemWide</code> reverts <code>InvalidResolutionState</code> for any other value; and <code>resolutionDeadline</code> in <code>EscrowRecord</code> establishes a constitutional deadline.</p>
   </div>
 
   <hr>
 
+  <!-- SECTION 6 -->
   <div class="section" id="s6">
     <span class="section-tag tag-normative">Normative</span>
     <h2>Section 6 — Goukassian Principle as API Resources</h2>
-    <p>Three canonical lowercase artifact names, each a dedicated API resource:</p>
+    <p>The Goukassian Principle has three properties. Each is modeled as a canonical lowercase string artifact name and exposed as a dedicated API resource.</p>
     <ul>
-      <li><code>lantern</code> — exposed at <code>GET /epistemic-hold/lantern</code>. <code>compliancePosture</code> enum includes <code>EPISTEMIC_HOLD_ACTIVE</code>.</li>
-      <li><code>signature</code> — exposed at <code>GET /goukassian/signature</code>. PQC slots 6 (SLH-DSA-SHAKE-128s) and 7 (ML-KEM-1024) reserved.</li>
-      <li><code>license</code> — exposed at <code>POST /goukassian/license/validate</code>. Exceeded <code>licenseScope</code> triggers automatic Refuse (State −1).</li>
+      <li><code>lantern</code> (artifactName const <code>"lantern"</code>) — exposed at <code>GET /epistemic-hold/lantern</code>. Broadcasts governance transparency posture. <code>compliancePosture</code> includes <code>EPISTEMIC_HOLD_ACTIVE</code>. <code>pillarStatuses</code> reflects all 8 pillars.</li>
+      <li><code>signature</code> (artifactName const <code>"signature"</code>) — exposed at <code>GET /goukassian/signature</code>. Carries current Ed25519 or ES256 attestation. PQC migration slots 6 and 7 reserved in <code>SignatureBlock_v1_0_0</code>.</li>
+      <li><code>license</code> (artifactName const <code>"license"</code>) — exposed at <code>POST /goukassian/license/validate</code>. Exceeded <code>licenseScope</code> triggers automatic Refuse (State −1). <code>LicenseValidationRequest_v1_0_0</code> enforces <code>artifactName: const "license"</code> as required.</li>
     </ul>
+    <p>In <code>GoukassianPrincipleBlock_v1_0_0</code>, the three artifacts are nested objects each carrying <code>artifactName</code> as a const-constrained property. In <code>eip712_typed_data.json</code>, <code>GoukassianSignatureAttestation.artifactName</code> is typed as <code>bytes32</code> with canonical value <code>keccak256("signature")</code>.</p>
   </div>
 
   <hr>
 
+  <!-- SECTION 7 -->
   <div class="section" id="s7">
     <span class="section-tag tag-normative">Normative</span>
     <h2>Section 7 — Eight Pillars</h2>
+    <p>The canonical pillar identifiers in <code>PillarIdentifier_v1_0_0</code> are the exclusive vocabulary for pillar references across all specification artifacts.</p>
     <div class="pillar-grid">
-      <div class="pillar-card"><div class="pillar-id">Pillar I</div><div class="pillar-name">EpistemicHold</div><p>POST /decisions, Epistemic Hold escalation surface, EscrowRecord, TGLF_State0, Gateway fail-closed</p></div>
-      <div class="pillar-card"><div class="pillar-id">Pillar II</div><div class="pillar-name">ImmutableLedger</div><p>POST /audit-logs, GET /audit-logs/{logId}, POST /refusals, RFC 3161 timestamp, Ghost Governance prevention</p></div>
-      <div class="pillar-card"><div class="pillar-id">Pillar III</div><div class="pillar-name">GoukassianPrinciple</div><p>lantern · signature · license — required on every POST /decisions, POST /audit-logs, POST /evaluate/* request body</p></div>
-      <div class="pillar-card"><div class="pillar-id">Pillar IV</div><div class="pillar-name">DecisionLogs</div><p>GET /decisions/{decisionId}, GET /thresholds/{domain}, PUT /thresholds/{domain}, GET /metrics/summary</p></div>
-      <div class="pillar-card"><div class="pillar-id">Pillar V</div><div class="pillar-name">EconomicRights</div><p>POST /evaluate/trade, POST /redress/*, GET /regulator/basel-iii/attestation — Basel III, FATF, IOSCO</p></div>
-      <div class="pillar-card"><div class="pillar-id">Pillar VI</div><div class="pillar-name">SustainableCapital</div><p>POST /evaluate/policy, POST /evaluate/supply-chain — Paris Agreement, ESG, carbon footprint, green bond</p></div>
-      <div class="pillar-card"><div class="pillar-id">Pillar VII</div><div class="pillar-name">HybridShield</div><p>POST /emergency/override, GET /emergency/status, GET /audit/custodians/*/heartbeat, TriCameralApproval</p></div>
-      <div class="pillar-card"><div class="pillar-id">Pillar VIII</div><div class="pillar-name">Anchors</div><p>GET /audit/verifications/merkle/{root}, GET /audit/verifications/inclusion/{logId}, SuccessionDeclaration</p></div>
+      <div class="pillar-card">
+        <div class="pillar-id">Pillar I</div>
+        <div class="pillar-name">EpistemicHold</div>
+        <p>Primary endpoints: <code>POST /decisions</code>, <code>GET/PATCH /epistemic-hold/escalations/*</code>, <code>POST /gateway/lane-assignment</code>. Schema anchors: <code>EscrowRecord_v1_0_0</code>, <code>TGLF_State0_v1_0_0</code>.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-id">Pillar II</div>
+        <div class="pillar-name">ImmutableLedger</div>
+        <p>Primary endpoints: <code>POST /governance-logs</code>, <code>GET /governance-logs/{logId}</code>, <code>POST /refusals</code>, <code>GET /regulator/timestamp-verification/{logId}</code>. Schema anchor: <code>GovernanceProof_v1_0_0</code>.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-id">Pillar III</div>
+        <div class="pillar-name">GoukassianPrinciple</div>
+        <p>Primary endpoints: <code>GET /goukassian/signature</code>, <code>POST /goukassian/license/validate</code>, <code>GET /epistemic-hold/lantern</code>, <code>GET /gateway/status</code>. Required on every <code>POST /decisions</code> and <code>POST /governance-logs</code> request body.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-id">Pillar IV</div>
+        <div class="pillar-name">DecisionLogs</div>
+        <p>Primary endpoints: <code>GET /decisions/{decisionId}</code>, <code>GET /thresholds/{domain}</code>, <code>PUT /thresholds/{domain}</code>, <code>GET /metrics/summary</code>. Schema anchors: <code>JustificationObject_v1_0_0</code>, <code>ThresholdProfile_v1_0_0</code>.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-id">Pillar V</div>
+        <div class="pillar-name">EconomicRightsAndTransparencyMandate</div>
+        <p>Primary endpoints: <code>POST /evaluate/trade</code>, <code>POST /redress/*</code>, <code>GET /regulator/basel-iii/attestation</code>, <code>POST /regulator/fatf/compliance-export</code>. Regulatory vectors: Basel III, FATF, IOSCO, CFPB, SEC, FINRA.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-id">Pillar VI</div>
+        <div class="pillar-name">SustainableCapitalAllocationMandate</div>
+        <p>Primary endpoints: <code>POST /evaluate/policy</code>, <code>POST /evaluate/supply-chain</code>. Regulatory vectors: Paris Agreement, carbon footprint verification, green bond eligibility, ESG scoring.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-id">Pillar VII</div>
+        <div class="pillar-name">HybridShield</div>
+        <p>Primary endpoints: <code>POST /emergency/override</code>, <code>GET /emergency/status</code>, <code>GET /governance/custodians/{custodianId}/heartbeat</code>, <code>GET /regulator/custodian-quorum</code>. Schema anchors: <code>TriCameralApproval_v1_0_0</code>, <code>EKRRecord_v1_0_0</code>.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-id">Pillar VIII</div>
+        <div class="pillar-name">Anchors</div>
+        <p>Primary endpoints: <code>GET /governance/verifications/merkle/{merkleRoot}</code>, <code>GET /governance/verifications/inclusion/{logId}</code>, <code>POST /regulator/evidence-export</code>. Schema anchor: <code>SuccessionDeclaration_v1_0_0</code>.</p>
+      </div>
     </div>
+    <p>Cross-pillar dependency notes: Pillar V regulatory failures feed Pillar VII escalation. Pillar I activation degrades all eight pillar statuses in <code>LanternStatus.pillarStatuses</code>. Pillar VIII provides the cryptographic substrate on which Pillar II depends.</p>
   </div>
 
   <hr>
 
+  <!-- SECTION 8 -->
   <div class="section" id="s8">
     <span class="section-tag tag-normative">Normative</span>
     <h2>Section 8 — Regulatory Nexus</h2>
+    <p>Regulatory compliance checks are the detection and refusal layer before a Permission Token is requested. They are not synonymous with NL=NA. NL=NA applies universally; regulatory checks apply domain-specifically under Pillars V and VI.</p>
     <ul>
-      <li><strong>Basel III</strong> — <code>RegulatoryContext.baselIii</code> (lcr, nsfr, capitalRatio); LCR ≥ 1.0, NSFR ≥ 1.0; <code>GET /regulator/basel-iii/attestation</code></li>
-      <li><strong>FATF</strong> — <code>RegulatoryContext.fatf</code> (amlCheckRequired, sanctionsScreened, pepInvolved, sarGenerated); <code>POST /regulator/fatf/compliance-export</code></li>
-      <li><strong>IOSCO</strong> — <code>RegulatoryContext.iosco</code> (layeringDetected, spoofingDetected, washTradingDetected); <code>GET /regulator/iosco/principle-mapping</code></li>
-      <li><strong>GDPR</strong> — <code>RegulatoryContext.gdpr.erasureEligible</code>; TL uses HKDF-SHA3-256 cryptographic erasure (not Article 4(5) pseudonymization)</li>
-      <li><strong>Paris Agreement</strong> — <code>RegulatoryContext.parisAgreement</code> (carbonFootprintVerified, greenBondEligibility, esgScore); <code>POST /evaluate/policy</code></li>
+      <li><strong>Basel III</strong> — expressed in <code>RegulatoryContext.baselIii</code> (lcr, nsfr, capitalRatio, stressTestRequired, counterpartyExposureWithinLimits), <code>GET /regulator/basel-iii/attestation</code>, and <code>ITL_Validator.verifyEconomicRightsCompliance</code>. LCR &ge; 1.0 and NSFR &ge; 1.0 constraints are enforced.</li>
+      <li><strong>FATF</strong> — expressed in <code>RegulatoryContext.fatf</code>, <code>POST /regulator/fatf/compliance-export</code>, and <code>RegulatoryFlags.fatfFlags</code>. <code>EconomicRightsMandateViolationDetected</code> event carries <code>violationCode</code> bytes32 for downstream handling.</li>
+      <li><strong>IOSCO</strong> — expressed in <code>RegulatoryContext.iosco</code> (layeringDetected, spoofingDetected, washTradingDetected, crossMarketManipulationDetected) and <code>GET /regulator/iosco/principle-mapping</code>.</li>
+      <li><strong>GDPR</strong> — expressed in <code>RegulatoryContext.gdpr</code>. <code>erasureEligible</code> triggers the EKR workflow. TL uses cryptographic erasure via HKDF-SHA3-256 key destruction — not pseudonymization under Article 4(5).</li>
+      <li><strong>Paris Agreement</strong> — expressed in <code>RegulatoryContext.parisAgreement</code> (carbonFootprintVerified, greenBondEligibility, esgScore), <code>POST /evaluate/policy</code>, and <code>POST /evaluate/supply-chain</code>.</li>
     </ul>
+    <p>All five regulatory frameworks carry versioning through <code>RegulatoryContext.regulatoryFrameworkVersion</code>.</p>
   </div>
 
   <hr>
 
+  <!-- SECTION 9 -->
   <div class="section" id="s9">
     <span class="section-tag tag-normative">Normative</span>
     <h2>Section 9 — Domain Evaluation Endpoints</h2>
-    <p><code>POST /evaluate/trade</code> — financial trading governance. Returns <code>TLResult</code> with <code>tradingMetadata.amlClearanceStatus</code> (CLEARED / PENDING_REVIEW / REFUSED).</p>
-    <p><code>POST /evaluate/policy</code> — monetary policy governance. Returns <code>policyMetadata.greenBondEligibility</code> as direct Pillar VI expression.</p>
-    <p><code>POST /evaluate/supply-chain</code> — supply chain governance. Returns <code>chainMetadata.carbonFootprintVerified</code> and <code>laborStandardCompliance</code>.</p>
-    <p>All three require <code>GoukassianPrincipleBlock</code>. All three return <code>TLResult</code>, not <code>StateEnvelope</code>. The <code>POST /audit-logs</code> step is required before any Proceed determination may authorize actuation.</p>
+    <p>The three domain evaluation endpoints represent TL governance at institutional scale. All three are on the Inference Lane path group and return <code>TLResult</code> objects, not <code>StateEnvelope</code> objects. The <code>POST /governance-logs</code> step is required before any Proceed determination may authorize actuation.</p>
+    <ul>
+      <li><strong><code>POST /evaluate/trade</code></strong> — Financial trading governance. Returns <code>tradingMetadata</code> with <code>fillProbability</code>, <code>marketImpactEstimate</code>, and <code>amlClearanceStatus</code> (CLEARED, PENDING_REVIEW, or REFUSED). Maps to the Goukassian Vow: CLEARED is Proceed-eligible, PENDING_REVIEW triggers Epistemic Hold, REFUSED triggers Refuse.</li>
+      <li><strong><code>POST /evaluate/policy</code></strong> — Central banking and monetary policy governance. Returns <code>policyMetadata</code> with <code>inflationImpact</code>, <code>unemploymentDelta</code>, and <code>greenBondEligibility</code>. Direct expression of Pillar VI in monetary policy decisions.</li>
+      <li><strong><code>POST /evaluate/supply-chain</code></strong> — Supply chain governance. Returns <code>chainMetadata</code> with <code>carbonFootprintVerified</code> and <code>laborStandardCompliance</code>. Direct expression of Paris Agreement compliance at the supply chain level.</li>
+    </ul>
+    <p>All three domain endpoints require <code>GoukassianPrincipleBlock</code> in the request body. All three are tagged Regulatory Compliance and Decision Engine.</p>
   </div>
 
   <hr>
 
+  <!-- SECTION 10 -->
   <div class="section" id="s10">
     <span class="section-tag tag-normative">Normative</span>
-    <h2>Section 10 — Auditor and Regulator Surface</h2>
-    <p>Six-step compliance verification workflow using only endpoints in <code>tl_openapi.yaml</code>:</p>
+    <h2>Section 10 — Governance and Regulator Surface</h2>
+    <p>The following 6-step workflow describes a complete compliance verification using only endpoints defined in <code>tl_openapi.yaml</code>.</p>
+    <ol class="step-list">
+      <li><span class="step-num">Step 1</span> <div><strong>Verify the Merkle anchor.</strong> <code>GET /governance/verifications/merkle/{merkleRoot}</code> — the auditor supplies the Merkle root from the log under review. The response confirms <code>verified: true</code>, <code>anchoredAt</code>, and <code>blockchainTxHash</code>.</div></li>
+      <li><span class="step-num">Step 2</span> <div><strong>Verify log inclusion.</strong> <code>GET /governance/verifications/inclusion/{logId}</code> — the response provides the full Merkle inclusion proof path (<code>merklePath</code>), <code>leafHash</code>, and <code>merkleRoot</code>. The auditor can verify the proof offline independently.</div></li>
+      <li><span class="step-num">Step 3</span> <div><strong>Retrieve the anchored TGLF record.</strong> <code>GET /governance-logs/{logId}</code> — retrieves the full TGLF record and embedded <code>StateEnvelope</code>. For State +1 records, the <code>permissionToken</code> is present and verifiable against the Merkle root from Step 1.</div></li>
+      <li><span class="step-num">Step 4</span> <div><strong>Verify the RFC 3161 timestamp.</strong> <code>GET /regulator/timestamp-verification/{logId}</code> — the response carries the <code>rfc3161Token</code> bytes and <code>tsaIssuer</code>.</div></li>
+      <li><span class="step-num">Step 5</span> <div><strong>Pull the Eight Pillar compliance attestation.</strong> <code>GET /governance/compliance/attestation</code> — retrieves the signed attestation covering all 8 Pillars with per-pillar <code>complianceStatus</code> and <code>attestationHash</code>.</div></li>
+      <li><span class="step-num">Step 6</span> <div><strong>Export regulatory evidence.</strong> <code>POST /regulator/evidence-export</code> — for bulk governance requirements. The asynchronous response provides an <code>exportJobId</code> for status tracking. Archive is Merkle-verified and signed.</div></li>
+    </ol>
+    <h3>Monograph Reference Index</h3>
     <ul>
-      <li><strong>Step 1</strong> — <code>GET /audit/verifications/merkle/{merkleRoot}</code> — verify the Merkle anchor on-chain</li>
-      <li><strong>Step 2</strong> — <code>GET /audit/verifications/inclusion/{logId}</code> — verify log inclusion with full Merkle proof path</li>
-      <li><strong>Step 3</strong> — <code>GET /audit-logs/{logId}</code> — retrieve the anchored TGLF record and embedded StateEnvelope</li>
-      <li><strong>Step 4</strong> — <code>GET /regulator/timestamp-verification/{logId}</code> — verify RFC 3161 qualified timestamp</li>
-      <li><strong>Step 5</strong> — <code>GET /audit/compliance/attestation</code> — pull signed Eight Pillar compliance attestation</li>
-      <li><strong>Step 6</strong> — <code>POST /regulator/evidence-export</code> — bulk export signed, Merkle-verified archive</li>
+      <li><code>"Constitutional Hardware Monograph, Section I"</code> — Core TLState definitions; Inference Lane; Refusal State</li>
+      <li><code>"Constitutional Hardware Monograph, Section II"</code> — Governance Lane; Epistemic Hold; Gateway; DLLA; Permission Token; EscrowRecord</li>
+      <li><code>"Constitutional Hardware Monograph, Section III"</code> — Goukassian Principle; Eight Pillars; Regulatory Nexus; Tri-Cameral; EKR; Succession Declaration</li>
+      <li><code>"Constitutional Hardware Monograph, Section IX.3"</code> — Emergency Override</li>
+      <li><code>"Constitutional Hardware Monograph, Section X"</code> — DITL Hardware Interface; Implementation Gap; custodian quorum latency</li>
     </ul>
   </div>
 
   <hr>
 
+  <!-- SECTION 11 -->
   <div class="section" id="s11">
     <span class="section-tag tag-normative">Normative</span>
     <h2>Section 11 — DITL Hardware Interface</h2>
-    <h3>11.1 Architecture B Hybrid Model (SHIPPING)</h3>
-    <p>SHIPPING baseline: software enforcement with DITL attestation where available. <code>NLNAAuditToken.pufAttestation</code> must be set to sentinel <code>"NULL_PUF_DEPLOYMENT"</code> for non-MT deployments. <code>TLCapabilityFlags.pufAttestationMode: "ARCHITECTURE_B"</code>.</p>
+    <h3>11.1 Architecture B Hybrid Model (SHIPPING Baseline)</h3>
+    <p>The SHIPPING baseline is Architecture B: software enforcement with DITL attestation where available. <code>NLNAGovernanceToken.pufAttestation</code> uses the sentinel value <code>"NULL_PUF_DEPLOYMENT"</code> for non-MT deployments. <code>TLCapabilityFlags.pufAttestationMode: "ARCHITECTURE_B"</code> signals this posture. <code>EscrowRecord.windowComparatorReading.softwareEnforcementActive: true</code> confirms software-layer enforcement is active in place of physical DITL gate enforcement.</p>
     <h3>11.2 MT Integration (FUTURE)</h3>
-    <p><code>POST /ditl/state-transition</code> and <code>GET /ditl/puf-attestation/{deviceId}</code> are defined with <code>x-tl-implementation-status: FUTURE</code>. Blocking constraint: Constitutional Hardware Monograph, Section X.</p>
+    <p>Full DITL deployment at TSMC N2 or Intel 18A nodes with physical Window Comparator enforcement is FUTURE status per Section X of the TL monograph. Two DITL endpoints are defined:</p>
+    <ul>
+      <li><code>POST /ditl/state-transition</code> — MT hardware state query with Window Comparator verification. <code>x-tl-implementation-status: FUTURE</code>.</li>
+      <li><code>GET /ditl/puf-attestation/{deviceId}</code> — PUF attestation chain verification. <code>x-tl-implementation-status: FUTURE</code>.</li>
+    </ul>
+    <h3>11.3 PUF Attestation Chain</h3>
+    <p>Five elements: enrollment, foundry attestation, NL=NA interlock verification, immutable log entry, and Merkle hash chain. In SHIPPING deployments, elements 1 and 2 are replaced by the <code>NULL_PUF_DEPLOYMENT</code> sentinel. Elements 3, 4, and 5 are fully operative in Architecture B via software enforcement.</p>
   </div>
 
   <hr>
 
+  <!-- SECTION 12 -->
   <div class="section" id="s12">
     <span class="section-tag tag-normative">Normative</span>
     <h2>Section 12 — EKR, GDPR Cryptographic Erasure, and Succession Declaration</h2>
-    <h3>12.1 Ephemeral Key Rotation</h3>
-    <p>Defined in <code>EKRRecord_v1_0_0</code>. The <code>hkdfSha3256Confirmed: true</code> field confirms HKDF-SHA3-256 key derivation. Key destruction achieves cryptographic erasure — underlying data becomes computationally irrecoverable while audit record remains intact.</p>
+    <h3>12.1 Ephemeral Key Rotation (EKR)</h3>
+    <p><code>EKRRecord_v1_0_0</code> defines ephemeral key rotation records. The <code>governanceRetentionAnchor</code> SHA-256 field ensures the governance trail survives key destruction. <code>hkdfSha3256Confirmed: true</code> confirms HKDF-SHA3-256 key derivation was used — the SHIPPING mitigation for GDPR Article 17 compliance. Key destruction achieves cryptographic erasure: the underlying data becomes computationally irrecoverable while the governance record remains intact.</p>
     <h3>12.2 GDPR Cryptographic Erasure</h3>
-    <p>Three residual sub-gaps remain FUTURE: regulatory interpretation, erasure key registry dependency, metadata residue. All documented in <code>Future-Blocked_Appendix.md</code>.</p>
+    <p>TL uses cryptographic erasure (key destruction via HKDF-SHA3-256) to achieve GDPR-compliant anonymization post-retention. This is not pseudonymization in the Article 4(5) sense. <code>RegulatoryContext.gdpr.erasureEligible: true</code> triggers the EKR workflow. Three residual sub-gaps remain as FUTURE items: regulatory interpretation, erasure key registry dependency, and metadata residue. All documented in <code>Future-Blocked_Appendix.md</code>.</p>
     <h3>12.3 Succession Declaration</h3>
-    <p><code>SuccessionDeclaration_v1_0_0</code> is a notarized, timestamped, anchored governance continuity instrument. Expiry triggers <code>SUCCESSION_DECLARATION_EXPIRED_ERROR</code>.</p>
+    <p><code>SuccessionDeclaration_v1_0_0</code> is a notarized, timestamped, anchored governance continuity instrument. Expiry of a Succession Declaration triggers <code>SUCCESSION_DECLARATION_EXPIRED_ERROR</code>. The <code>SUCCESSION_DECLARATION_REQUIRED_ERROR</code> code is emitted when a governance operation requires a valid Succession Declaration and none is present.</p>
   </div>
 
   <hr>
 
+  <!-- SECTION 13 -->
   <div class="section" id="s13">
     <span class="section-tag tag-normative">Normative</span>
     <h2>Section 13 — Error Handling</h2>
-    <p>All error responses conform to RFC 7807 <code>application/problem+json</code> with three mandatory TL extensions that are never omitted:</p>
+    <p>All error responses conform to RFC 7807 <code>application/problem+json</code> with mandatory TL extensions. Three fields are mandatory and never omitted:</p>
     <ul>
-      <li><code>x-tl-state</code> — signed integer enum [−1, 0, 1]. Even errors carry a constitutional state.</li>
-      <li><code>x-tl-pillar</code> — canonical PillarIdentifier implicated in this error.</li>
-      <li><code>x-tl-trace-id</code> — UUID v4 echoed from the originating request header.</li>
+      <li><code>x-tl-state</code> (signed integer, enum [−1, 0, 1]) — the ternary disposition of the error condition. Even errors carry a constitutional state.</li>
+      <li><code>x-tl-pillar</code> (PillarIdentifier enum) — the canonical pillar implicated in this error.</li>
+      <li><code>x-tl-trace-id</code> (UUID v4) — echoed from the originating request <code>X-TL-Trace-Id</code> header.</li>
     </ul>
-    <p>Fail-closed default: any unresolvable condition defaults to <code>EPISTEMIC_HOLD</code> or <code>REFUSE</code>, never to <code>PROCEED</code>.</p>
+    <p><strong>GhostGovernanceDetectedError</strong> carries <code>x-tl-state: -1</code> or <code>x-tl-state: 0</code>, never omitted. Ghost Governance is governance actions executing without corresponding immutable governance evidence. <code>tlErrorCode: "GHOST_GOVERNANCE_DETECTED_ERROR"</code>.</p>
+    <p><strong>Fail-closed default:</strong> any condition that cannot resolve to a definitive PROCEED defaults to <code>EPISTEMIC_HOLD</code> or <code>REFUSE</code>. <code>EPISTEMIC_HOLD_TIMEOUT_ERROR</code> signals resolution deadline passed without Tri-Cameral action.</p>
   </div>
 
   <hr>
 
+  <!-- SECTION 14 -->
   <div class="section" id="s14">
     <span class="section-tag tag-normative">Normative</span>
     <h2>Section 14 — Trace Propagation</h2>
     <p>The <code>X-TL-Trace-Id</code> UUID v4 header is the constitutional thread connecting every layer of the governance stack.</p>
-    <div class="code-block">Client              Inference Lane        Audit Lane            Regulator
-  |                       |                     |                     |
-  |-- POST /decisions --->|                     |                     |
-  |   X-TL-Trace-Id: T1   |                     |                     |
-  |<-- TLResult ---------|                     |                     |
-  |                       |                     |                     |
-  |-- POST /audit-logs ---|-------------------->|                     |
-  |   X-TL-Trace-Id: T1 (bound via NLNAAuditToken)                   |
-  |<-- StateEnvelope + PermissionToken --------|                     |
-  |                       |                     |                     |
-  |<-- epistemicHold.escalation webhook (if State 0)                 |
-  |   event_id: E1, x-tl-trace-id: T1          |                     |
-  |                       |                     |                     |
-  |-- POST /regulator/evidence-export -------------------------------->|
-  |<-- exportJobId (archive contains T1-linked TGLF records) --------|</div>
-    <p>Webhook deduplication uses <code>event_id</code> (UUID v4), not <code>x-tl-trace-id</code>, since a single trace may produce multiple webhook events.</p>
+    <div class="trace-block">Client                    Inference Lane              Governance Lane            Regulator
+  |                            |                          |                          |
+  |-- POST /decisions -------->|                          |                          |
+  |   X-TL-Trace-Id: T1        |                          |                          |
+  |&lt;-- TLResult + decisionId --|                          |                          |
+  |   X-TL-Trace-Id: T1        |                          |                          |
+  |                            |                          |                          |
+  |-- POST /governance-logs ---|------------------------->|                          |
+  |   X-TL-Trace-Id: T1        |                          |                          |
+  |   (bound to T1 by NLNAGovernanceToken)                |                          |
+  |&lt;-- StateEnvelope + PermissionToken ------------------|                          |
+  |   X-TL-Trace-Id: T1        |                          |                          |
+  |                            |                          |                          |
+  |   (if State 0: webhook fires)                         |                          |
+  |&lt;-- epistemicHold.escalation webhook                   |                          |
+  |   event_id: E1, x-tl-trace-id: T1                    |                          |
+  |                            |                          |                          |
+  |-- POST /regulator/evidence-export ------------------------------------------>|
+  |   X-TL-Trace-Id: T1        |                          |                          |
+  |&lt;-- exportJobId (archive contains T1-linked TGLF records, PermissionTokens) --|</div>
+    <p>The <code>X-TL-Trace-Id</code> T1 appears in: the <code>POST /decisions</code> request and response, the <code>POST /governance-logs</code> request and response (cryptographically bound via <code>NLNAGovernanceToken</code>), any <code>StateEnvelope</code> returned by the Governance Lane, the <code>epistemicHold.escalation</code> webhook payload, and the <code>POST /regulator/evidence-export</code> archive.</p>
+    <p>The <code>x-tl-idempotency</code> guarantee on all webhook payloads uses <code>event_id</code> (UUID v4) as the deduplication key. Receivers must deduplicate by <code>event_id</code>, not by <code>x-tl-trace-id</code>, since a single trace may produce multiple webhook events.</p>
+  </div>
 
-    <hr>
+  <hr>
 
+  <!-- UNCERTAINTY REGISTER -->
+  <div class="section">
+    <span class="section-tag tag-informative">Informative</span>
+    <h2>Constitutional Uncertainty Register — Deliverable F</h2>
     <div class="uncertainty-block">
-      <div class="u-label">Constitutional Uncertainty Register — Deliverable F</div>
-      <p><strong>&lt;MONOGRAPH_EXCERPT_MISSING&gt;</strong> Section 11 — Architecture B exact compensating control specification. Monograph Section X not supplied. Described from Section 4.10 of the constitutional prompt.</p>
-      <p><strong>&lt;MONOGRAPH_EXCERPT_MISSING&gt;</strong> Section 12.2 — Three GDPR sub-gaps exact phrasing. Derived from Section 5G of the constitutional prompt.</p>
+      <div class="u-label">Open Items</div>
+      <p><strong>C.1</strong> <code>&lt;MONOGRAPH_EXCERPT_MISSING&gt;</code> — Section 11: Architecture B exact compensating control specification. Monograph Section X not supplied as excerpt. Architecture B described from Section 4.10 of the constitutional prompt: "software enforcement with DITL attestation where available." <code>NULL_PUF_DEPLOYMENT</code> sentinel documented per Section 5B.</p>
+      <p><strong>C.2</strong> <code>&lt;MONOGRAPH_EXCERPT_MISSING&gt;</code> — Section 12.2: Three GDPR sub-gaps exact phrasing. Sub-gaps derived from Section 5G of the constitutional prompt: regulatory interpretation, erasure key registry dependency, metadata residue.</p>
     </div>
   </div>
 
