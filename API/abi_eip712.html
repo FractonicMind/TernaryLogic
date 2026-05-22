@@ -115,14 +115,15 @@
     <div class="fn-header" onclick="toggle(this)">
       <span class="fn-kind k-function">function</span>
       <span class="fn-name">anchorMerkleRoot</span>
-      <span class="fn-sig">(bytes32 merkleRoot, uint256 batchTimestamp, CustodianQuorumAttestation[] attestations)</span>
+      <span class="fn-sig">(bytes32 merkleRoot, bytes32 batchId, bytes quorumAttestation, uint256 committedAt)</span>
     </div>
     <div class="fn-body">
-      <div class="fn-desc">Anchors a Merkle root on-chain. Requires HybridShield custodian quorum. Emits MerkleRootAnchored.</div>
+      <div class="fn-desc">Anchors a Merkle root on-chain. Requires HybridShield custodian quorum. Emits MerkleRootAnchored. Foundation for NL=NA Layer 5 enforcement: only logHashes provably included in an anchored root can produce valid Permission Tokens.</div>
       <table class="params-table"><thead><tr><th>Parameter</th><th>Type</th><th>Note</th></tr></thead><tbody>
         <tr><td class="p-name">merkleRoot</td><td class="p-type">bytes32</td><td class="p-note">SHA-256 root of TGLF batch</td></tr>
-        <tr><td class="p-name">batchTimestamp</td><td class="p-type">uint256</td><td class="p-note">Unix epoch of batch</td></tr>
-        <tr><td class="p-name">attestations</td><td class="p-type">CustodianQuorumAttestation[]</td><td class="p-note">operationType: 0 (ANCHOR_MERKLE)</td></tr>
+        <tr><td class="p-name">batchId</td><td class="p-type">bytes32</td><td class="p-note">Unique batch identifier</td></tr>
+        <tr><td class="p-name">quorumAttestation</td><td class="p-type">bytes</td><td class="p-note">ABI-encoded CustodianQuorumAttestation array. operationType: 0 (ANCHOR_MERKLE)</td></tr>
+        <tr><td class="p-name">committedAt</td><td class="p-type">uint256</td><td class="p-note">Unix epoch timestamp of batch commit</td></tr>
       </tbody></table>
       <div style="margin-top:0.6rem"><span class="revert-tag">reverts QuorumNotMet</span></div>
     </div>
@@ -135,11 +136,15 @@
       <span class="fn-sig">(bytes32 tokenId, bytes32 logHash, bytes32 laneOriginHash, bytes32 merkleRoot, ...)</span>
     </div>
     <div class="fn-body">
-      <div class="fn-desc">NL=NA Layer 5 enforcement. Registers a Permission Token on-chain. Reverts NLNAViolation if logHash is not provably included in an anchored Merkle root via verifyMerkleInclusion, or if laneOriginHash does not equal keccak256("AUDIT_LANE").</div>
+      <div class="fn-desc">NL=NA Layer 5 enforcement. Registers a Permission Token on-chain. Reverts <code>NLNAViolation</code> if <code>logHash</code> is not provably included in an anchored Merkle root via <code>verifyMerkleInclusion</code>, or if <code>laneOriginHash</code> does not equal <code>keccak256("GOVERNANCE_LANE")</code>. Terminal enforcement gate: no actuation may proceed without a registered, valid Permission Token whose logHash is on-chain verified.</div>
       <table class="params-table"><thead><tr><th>Parameter</th><th>Type</th><th>Note</th></tr></thead><tbody>
         <tr><td class="p-name">logHash</td><td class="p-type">bytes32</td><td class="p-note"><span class="nlna-tag">Layer 5</span> — must be in anchored Merkle root</td></tr>
-        <tr><td class="p-name">laneOriginHash</td><td class="p-type">bytes32</td><td class="p-note"><span class="nlna-tag">Layer 2</span> — must equal keccak256("AUDIT_LANE")</td></tr>
-        <tr><td class="p-name">merkleRoot</td><td class="p-type">bytes32</td><td class="p-note">Previously anchored root</td></tr>
+        <tr><td class="p-name">laneOriginHash</td><td class="p-type">bytes32</td><td class="p-note"><span class="nlna-tag">Layer 2</span> — must equal <code>keccak256("GOVERNANCE_LANE")</code></td></tr>
+        <tr><td class="p-name">merkleRoot</td><td class="p-type">bytes32</td><td class="p-note">Previously anchored root containing logHash</td></tr>
+        <tr><td class="p-name">merkleProof</td><td class="p-type">bytes32[]</td><td class="p-note">Ordered sibling hash array forming inclusion proof path</td></tr>
+        <tr><td class="p-name">expiresAt</td><td class="p-type">uint256</td><td class="p-note">Unix epoch expiration. Actuation MUST reject if block.timestamp &ge; expiresAt</td></tr>
+        <tr><td class="p-name">signerKeyId</td><td class="p-type">bytes32</td><td class="p-note">HSM key identifier for Governance Lane signature verification</td></tr>
+        <tr><td class="p-name">signatureValue</td><td class="p-type">bytes</td><td class="p-note">Base64url-decoded HSM signature over PermissionToken fields</td></tr>
       </tbody></table>
       <div style="margin-top:0.6rem">
         <span class="revert-tag">reverts NLNAViolation(violationReason)</span>
@@ -152,10 +157,10 @@
     <div class="fn-header" onclick="toggle(this)">
       <span class="fn-kind k-view">view</span>
       <span class="fn-name">verifyPermissionToken</span>
-      <span class="fn-sig">(bytes32 tokenId) → (bool valid, uint8 revocationStatus, int256 remainingLifetimeMs)</span>
+      <span class="fn-sig">(bytes32 tokenId, uint256 currentTimestamp) → (bool valid, uint8 revocationStatus, int256 remainingLifetimeMs)</span>
     </div>
     <div class="fn-body">
-      <div class="fn-desc">Read-only verification of Permission Token validity, revocation status, and remaining lifetime. Actuation layer calls this before firing.</div>
+      <div class="fn-desc">Read-only verification of Permission Token validity, revocation status, and remaining lifetime. Actuation layer calls this before firing. revocationStatus: 0=ACTIVE, 1=REVOKED_BY_EMERGENCY, 2=REVOKED_BY_TRI_CAMERAL.</div>
     </div>
   </div>
 
@@ -163,10 +168,10 @@
     <div class="fn-header" onclick="toggle(this)">
       <span class="fn-kind k-view">pure</span>
       <span class="fn-name">verifyMerkleInclusion</span>
-      <span class="fn-sig">(bytes32 logHash, bytes32[] proofPath, bytes32 merkleRoot) → bool</span>
+      <span class="fn-sig">(bytes32 leaf, bytes32 merkleRoot, bytes32[] proof) → bool</span>
     </div>
     <div class="fn-body">
-      <div class="fn-desc">Pure function. Verifies a log hash is included in a Merkle root given a proof path. Used internally by registerPermissionToken (NL=NA Layer 5) and exposed for external auditor verification.</div>
+      <div class="fn-desc">Pure function. Verifies that a leaf hash is included in a Merkle root given a proof path. Used internally by <code>registerPermissionToken</code> (NL=NA Layer 5) and exposed for external governance verification.</div>
     </div>
   </div>
 
@@ -174,10 +179,10 @@
     <div class="fn-header" onclick="toggle(this)">
       <span class="fn-kind k-function">function</span>
       <span class="fn-name">activateEpistemicHoldSystemWide</span>
-      <span class="fn-sig">(bytes32 triggerLogHash, CustodianQuorumAttestation[] attestations)</span>
+      <span class="fn-sig">(bytes32 holdRationale, bytes32 escrowRecordId, bytes quorumAttestation, uint256 resolutionDeadline)</span>
     </div>
     <div class="fn-body">
-      <div class="fn-desc">Activates system-wide Epistemic Hold. Requires custodian quorum attestation (operationType: 1). Emits EpistemicHoldActivated.</div>
+      <div class="fn-desc">Activates system-wide Epistemic Hold (State 0). Requires HybridShield custodian quorum. All subsequent Permission Token registrations are blocked until hold is resolved. Emits EpistemicHoldActivated.</div>
       <div style="margin-top:0.6rem"><span class="revert-tag">reverts QuorumNotMet</span></div>
     </div>
   </div>
@@ -186,14 +191,15 @@
     <div class="fn-header" onclick="toggle(this)">
       <span class="fn-kind k-function">function</span>
       <span class="fn-name">resolveEpistemicHoldSystemWide</span>
-      <span class="fn-sig">(uint8 resolvedState, bytes32 resolutionLogHash, CustodianQuorumAttestation[] attestations)</span>
+      <span class="fn-sig">(bytes32 escrowRecordId, uint8 resolvedState, bytes32 resolutionRationaleHash, bytes quorumAttestation)</span>
     </div>
     <div class="fn-body">
-      <div class="fn-desc">Resolves system-wide Epistemic Hold. resolvedState uint8: 0=REFUSE, 1=PROCEED. State 0 (Epistemic Hold) is not a valid resolution. Reverts InvalidResolutionState for any other value.</div>
-      <div style="margin-top:0.6rem">
-        <span class="revert-tag">reverts InvalidResolutionState</span>
-        <span style="margin-left:0.5rem;font-size:0.76rem;color:var(--muted)">State 0 constitutionally prohibited as resolution</span>
-      </div>
+      <div class="fn-desc">Resolves system-wide Epistemic Hold. <code>resolvedState</code> uint8: 1=PROCEED, 0=REFUSE (function-local encoding). State 0 (Epistemic Hold) is constitutionally invalid as a resolution target. Reverts <code>InvalidResolutionState</code> for any other value.</div>
+      <table class="params-table"><thead><tr><th>resolvedState value</th><th>Meaning</th></tr></thead><tbody>
+        <tr><td class="p-name">1</td><td class="p-note">PROCEED (+1 integer)</td></tr>
+        <tr><td class="p-name">0</td><td class="p-note">REFUSE (−1 integer). Note: uint8(0) encodes Refuse here, not Epistemic Hold.</td></tr>
+        <tr><td class="p-name">any other</td><td class="p-note"><span class="revert-tag">reverts InvalidResolutionState</span></td></tr>
+      </tbody></table>
     </div>
   </div>
 
@@ -201,14 +207,14 @@
     <div class="fn-header" onclick="toggle(this)">
       <span class="fn-kind k-function">function</span>
       <span class="fn-name">executeEmergencyOverride</span>
-      <span class="fn-sig">(uint8 overrideType, uint8 forcedState, bytes32 justificationLogHash, ...)</span>
+      <span class="fn-sig">(bytes32 overrideRequestId, uint8 overrideType, bytes32 targetDecisionId, uint8 forcedState, ...)</span>
     </div>
     <div class="fn-body">
-      <div class="fn-desc">Break-glass override. Logged before execution — audit trail exists before state change. forcedState uint8: 0=EpistemicHold, 255=Refuse. Proceed (+1) is constitutionally blocked and will revert. Emits EmergencyOverrideExecuted.</div>
+      <div class="fn-desc">Break-glass override. ALL invocations logged on-chain before execution — governance trail exists before state change fires. NL=NA applies without exception. <code>forcedState</code> uint8: 0=EpistemicHold, 255=Refuse. Proceed (+1) is constitutionally blocked and will revert <code>UnauthorizedOverride</code>. Emits EmergencyOverrideExecuted.</div>
       <table class="params-table"><thead><tr><th>forcedState value</th><th>Meaning</th></tr></thead><tbody>
         <tr><td class="p-name">0</td><td class="p-note">EpistemicHold (State 0)</td></tr>
         <tr><td class="p-name">255</td><td class="p-note">Refuse (State −1)</td></tr>
-        <tr><td class="p-name">any other</td><td class="p-note"><span class="revert-tag">reverts UnauthorizedOverride</span> — Proceed blocked</td></tr>
+        <tr><td class="p-name">any other</td><td class="p-note"><span class="revert-tag">reverts UnauthorizedOverride</span> — Proceed constitutionally blocked</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -217,30 +223,34 @@
     <div class="fn-header" onclick="toggle(this)">
       <span class="fn-kind k-function">function</span>
       <span class="fn-name">revokePermissionToken</span>
-      <span class="fn-sig">(bytes32 tokenId, uint8 revocationReason, bytes32 revocationMerkleRoot)</span>
+      <span class="fn-sig">(bytes32 tokenId, uint8 revocationReason, bytes32 revocationMerkleRoot, bytes quorumAttestation)</span>
     </div>
     <div class="fn-body">
-      <div class="fn-desc">Revokes a previously registered Permission Token. revocationMerkleRoot anchors the revocation on-chain. Revocation reasons: 0=EMERGENCY_OVERRIDE, 1=TRI_CAMERAL_DECISION.</div>
+      <div class="fn-desc">Revokes a registered Permission Token. Revocation state machine: ACTIVE → REVOKED_BY_EMERGENCY or REVOKED_BY_TRI_CAMERAL. <code>revocationMerkleRoot</code> anchors the revocation on-chain.</div>
+      <table class="params-table"><thead><tr><th>revocationReason</th><th>Meaning</th></tr></thead><tbody>
+        <tr><td class="p-name">1</td><td class="p-note">REVOKED_BY_EMERGENCY</td></tr>
+        <tr><td class="p-name">2</td><td class="p-note">REVOKED_BY_TRI_CAMERAL</td></tr>
+      </tbody></table>
     </div>
   </div>
 
   <!-- EVENTS -->
   <div class="section-title" id="events-core">Events — TL_Ledger_Core</div>
-  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">MerkleRootAnchored</span><span class="fn-sig">(bytes32 merkleRoot, uint256 batchTimestamp, uint256 blockNumber)</span></div><div class="fn-body"><div class="fn-desc">Emitted when a Merkle root batch is anchored on-chain. batchTimestamp is the off-chain epoch of the batch; blockNumber is the on-chain confirmation block.</div></div></div>
-  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">PermissionTokenRegistered</span><span class="fn-sig">(bytes32 tokenId, bytes32 logHash, bytes32 merkleRoot, uint256 expiresAt)</span></div><div class="fn-body"><div class="fn-desc">Emitted when a Permission Token is successfully registered. logHash and merkleRoot are the NL=NA Layer 4/5 binding fields.</div></div></div>
-  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">EpistemicHoldActivated</span><span class="fn-sig">(bytes32 triggerLogHash, uint256 activatedAt)</span></div><div class="fn-body"><div class="fn-desc">Emitted on system-wide Epistemic Hold activation. All downstream actuation gates must observe this event and halt.</div></div></div>
-  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">EpistemicHoldResolved</span><span class="fn-sig">(uint8 resolvedState, bytes32 resolutionLogHash, uint256 resolvedAt)</span></div><div class="fn-body"><div class="fn-desc">Emitted on resolution. resolvedState 0=REFUSE, 1=PROCEED. Never emitted with State 0 (Epistemic Hold) as resolved state.</div></div></div>
-  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">EmergencyOverrideExecuted</span><span class="fn-sig">(uint8 overrideType, uint8 forcedState, bytes32 justificationLogHash)</span></div><div class="fn-body"><div class="fn-desc">Emitted BEFORE state change — audit log precedes execution. This ordering is constitutional: the log exists before the action fires.</div></div></div>
-  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">LanternStatusBroadcast</span><span class="fn-sig">(bytes32 lanternHash, uint8 compliancePosture, uint256 broadcastAt)</span></div><div class="fn-body"><div class="fn-desc">Goukassian Principle Lantern public beacon. compliancePosture uint8 maps to LanternStatus.compliancePosture enum.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">MerkleRootAnchored</span><span class="fn-sig">(bytes32 anchorId, bytes32 merkleRoot, bytes32 batchId, uint256 committedAt, bytes32 traceId)</span></div><div class="fn-body"><div class="fn-desc">Emitted when a Merkle root batch is anchored on-chain. <code>anchorId</code> is the unique on-chain identifier for this anchoring event.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">PermissionTokenRegistered</span><span class="fn-sig">(bytes32 tokenId, bytes32 logHash, bytes32 merkleRoot, uint256 epochTimestamp, uint256 expiresAt, uint8 revocationStatus)</span></div><div class="fn-body"><div class="fn-desc">Emitted when a Permission Token is successfully registered. <code>logHash</code> and <code>merkleRoot</code> are the NL=NA Layer 4/5 binding fields.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">EpistemicHoldActivated</span><span class="fn-sig">(bytes32 escrowRecordId, bytes32 holdRationale, uint256 activatedAt, uint256 resolutionDeadline, bytes32 traceId)</span></div><div class="fn-body"><div class="fn-desc">Emitted on system-wide Epistemic Hold activation. All downstream actuation gates must observe this event and halt execution.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">EpistemicHoldResolved</span><span class="fn-sig">(bytes32 escrowRecordId, uint8 resolvedState, bytes32 resolutionRationaleHash, uint256 resolvedAt, bytes32 traceId)</span></div><div class="fn-body"><div class="fn-desc">Emitted on resolution. <code>resolvedState</code>: 1=PROCEED, 0=REFUSE (function-local encoding). Never emitted with Epistemic Hold as resolved state — constitutionally prohibited.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">EmergencyOverrideExecuted</span><span class="fn-sig">(bytes32 overrideRequestId, uint8 overrideType, uint8 forcedState, bytes32 justificationHash, uint256 executedAt, uint256 forcedStateExpiresAt)</span></div><div class="fn-body"><div class="fn-desc">Emitted BEFORE state change — governance log precedes execution. This ordering is constitutional: the log exists before the action fires. <code>forcedState</code>: 0=EpistemicHold, 255=Refuse.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-event">event</span><span class="fn-name">LanternStatusBroadcast</span><span class="fn-sig">(bytes32 lanternSignalId, bytes32 artifactNameHash, uint8 compliancePosture, uint256 broadcastAt, bytes32 signatureBlockHash)</span></div><div class="fn-body"><div class="fn-desc">Goukassian Principle Lantern public beacon. <code>artifactNameHash</code> = <code>keccak256("lantern")</code>. <code>compliancePosture</code>: 0=FULLY_COMPLIANT, 1=EPISTEMIC_HOLD_ACTIVE, 2=REGULATORY_REVIEW, 3=PILLAR_DEGRADED, 4=EMERGENCY_OVERRIDE_ACTIVE.</div></div></div>
 
   <!-- CUSTOM ERRORS -->
   <div class="section-title" id="errors">Custom Errors</div>
-  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">NLNAViolation</span><span class="fn-sig">(uint8 violationReason)</span></div><div class="fn-body"><div class="fn-desc">violationReason: 0=MERKLE_NOT_FOUND (logHash not in anchored root), 1=INVALID_LANE_ORIGIN (laneOriginHash ≠ keccak256("AUDIT_LANE")). Terminal NL=NA Layer 5 enforcement.</div></div></div>
-  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">EpistemicHoldActive</span><span class="fn-sig">()</span></div><div class="fn-body"><div class="fn-desc">Reverted when a state-mutating operation is attempted while system-wide Epistemic Hold is active.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">NLNAViolation</span><span class="fn-sig">(bytes32 tokenId, bytes32 logHash, uint8 violationReason)</span></div><div class="fn-body"><div class="fn-desc"><code>violationReason</code>: 0=MERKLE_NOT_FOUND (logHash not in anchored root), 1=INVALID_LANE_ORIGIN (<code>laneOriginHash</code> &ne; <code>keccak256("GOVERNANCE_LANE")</code>). Terminal NL=NA Layer 5 enforcement.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">EpistemicHoldActive</span><span class="fn-sig">(bytes32 escrowRecordId, uint256 resolutionDeadline)</span></div><div class="fn-body"><div class="fn-desc">Reverted when a state-mutating operation is attempted while system-wide Epistemic Hold is active.</div></div></div>
   <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">QuorumNotMet</span><span class="fn-sig">(uint8 provided, uint8 required)</span></div><div class="fn-body"><div class="fn-desc">HybridShield custodian quorum insufficient for the requested operation type.</div></div></div>
-  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">InvalidResolutionState</span><span class="fn-sig">(uint8 attempted)</span></div><div class="fn-body"><div class="fn-desc">Reverted when resolveEpistemicHoldSystemWide is called with a value other than 0 (REFUSE) or 1 (PROCEED). State 0 is constitutionally prohibited as a resolution target.</div></div></div>
-  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">UnauthorizedOverride</span><span class="fn-sig">()</span></div><div class="fn-body"><div class="fn-desc">Reverted when executeEmergencyOverride is called with forcedState targeting +1 (Proceed). Constitutionally blocked.</div></div></div>
-  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">TokenExpired</span><span class="fn-sig">(bytes32 tokenId, uint256 expiredAt)</span></div><div class="fn-body"><div class="fn-desc">Reverted when an actuation attempt references a Permission Token past its expiresAt timestamp. No grace period.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">InvalidResolutionState</span><span class="fn-sig">(uint8 attemptedState)</span></div><div class="fn-body"><div class="fn-desc">Reverted when <code>resolveEpistemicHoldSystemWide</code> is called with a value other than 0 (REFUSE) or 1 (PROCEED). Epistemic Hold re-resolution is constitutionally prohibited.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">UnauthorizedOverride</span><span class="fn-sig">(uint8 attemptedForcedState, address callerAddress)</span></div><div class="fn-body"><div class="fn-desc">Reverted when <code>executeEmergencyOverride</code> is called with <code>forcedState</code> targeting Proceed (+1). Constitutionally blocked. Forced Proceed has no valid uint8 encoding in emergency override context.</div></div></div>
+  <div class="fn-card"><div class="fn-header" onclick="toggle(this)"><span class="fn-kind k-error">error</span><span class="fn-name">TokenExpired</span><span class="fn-sig">(bytes32 tokenId, uint256 expiresAt, uint256 currentTimestamp)</span></div><div class="fn-body"><div class="fn-desc">Reverted when an actuation attempt references a Permission Token past its <code>expiresAt</code> timestamp. No grace period.</div></div></div>
 
   <!-- ITL_VALIDATOR -->
   <div class="section-title">ITL_Validator.sol</div>
@@ -250,14 +260,14 @@
     <div class="fn-header" onclick="toggle(this)">
       <span class="fn-kind k-function">function</span>
       <span class="fn-name">verifyEconomicRightsCompliance</span>
-      <span class="fn-sig">(uint256[3] baselIiiVector, uint256[2] fatfVector, uint256[4] ioscoVector)</span>
+      <span class="fn-sig">(bytes32 decisionId, tuple baselIiiVector, tuple fatfVector, tuple ioscoVector, bytes32 traceId)</span>
     </div>
     <div class="fn-body">
-      <div class="fn-desc">Verifies Basel III + FATF + IOSCO compliance vectors. Returns compliant bool, violationCode bytes32, and forcedState uint8 (0=EPISTEMIC_HOLD, 255=REFUSE). Emits EconomicRightsMandateViolationDetected on non-compliance.</div>
+      <div class="fn-desc">Verifies Basel III + FATF + IOSCO compliance vectors. Returns <code>compliant</code> bool, <code>violationCode</code> bytes32, and <code>forcedState</code> uint8 (0=EPISTEMIC_HOLD, 255=REFUSE). Emits EconomicRightsMandateViolationDetected on non-compliance.</div>
       <table class="params-table"><thead><tr><th>Vector</th><th>Elements</th></tr></thead><tbody>
-        <tr><td class="p-name">baselIiiVector</td><td class="p-note">[0] lcr (scaled 1e18), [1] nsfr (scaled 1e18), [2] capitalRatio</td></tr>
-        <tr><td class="p-name">fatfVector</td><td class="p-note">[0] sanctionsHit bool, [1] sarRequired bool</td></tr>
-        <tr><td class="p-name">ioscoVector</td><td class="p-note">[0] layering, [1] spoofing, [2] washTrading, [3] crossMarket</td></tr>
+        <tr><td class="p-name">baselIiiVector</td><td class="p-note">[lcr] scaled 1e18 (≥1e18=compliant), [nsfr] scaled 1e18, [capitalRatio], [counterpartyExposureWithinLimits], [stressTestPassed]</td></tr>
+        <tr><td class="p-name">fatfVector</td><td class="p-note">[sanctionsScreened], [sanctionsHit], [pepInvolved], [transactionMonitoringAlert], [sarRequired]</td></tr>
+        <tr><td class="p-name">ioscoVector</td><td class="p-note">[layeringDetected], [spoofingDetected], [washTradingDetected], [crossMarketManipulationDetected]</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -266,10 +276,10 @@
     <div class="fn-header" onclick="toggle(this)">
       <span class="fn-kind k-function">function</span>
       <span class="fn-name">verifySustainableCapitalCompliance</span>
-      <span class="fn-sig">(uint256 carbonFootprintVerified, uint256 greenBondEligibility, uint256 esgScore)</span>
+      <span class="fn-sig">(bytes32 decisionId, tuple parisAgreementVector, bytes32 traceId)</span>
     </div>
     <div class="fn-body">
-      <div class="fn-desc">Verifies Paris Agreement and ESG compliance. Emits SustainableCapitalMandateViolationDetected on non-compliance.</div>
+      <div class="fn-desc">Verifies Paris Agreement and ESG compliance. <code>parisAgreementVector</code>: [carbonFootprintVerified, greenBondEligibility, esgScore (scaled 1e18, range 0–100e18), climateAlignedCapitalFlowValidated]. Emits SustainableCapitalMandateViolationDetected on non-compliance.</div>
     </div>
   </div>
 
@@ -277,10 +287,10 @@
     <div class="fn-header" onclick="toggle(this)">
       <span class="fn-kind k-function">function</span>
       <span class="fn-name">verifyGoukassianLicense</span>
-      <span class="fn-sig">(bytes32 licenseHash, uint8 violatedArtifact, bytes32 agentSignature)</span>
+      <span class="fn-sig">(bytes32 decisionId, bytes32 licenseToken, bytes32 requestingEntityId, bytes32[] proposedScopeHashes, bytes32[] authorizedScopeHashes)</span>
     </div>
     <div class="fn-body">
-      <div class="fn-desc">Verifies Goukassian Principle license compliance. violatedArtifact ordinals: 1=lantern, 2=signature, 3=license. Emits GoukassianLicenseViolationDetected on violation.</div>
+      <div class="fn-desc">Verifies Goukassian Principle license scope. <code>violatedArtifact</code> ordinals: 0=none, 1=lantern, 2=signature, 3=license. Exceeded scope triggers automatic Refuse (State −1). Emits GoukassianLicenseViolationDetected on violation.</div>
     </div>
   </div>
 
@@ -288,10 +298,20 @@
     <div class="fn-header" onclick="toggle(this)">
       <span class="fn-kind k-function">function</span>
       <span class="fn-name">recordMandateViolation</span>
-      <span class="fn-sig">(uint8 mandateId, bytes32 violationHash, uint256 timestamp)</span>
+      <span class="fn-sig">(bytes32 violationId, bytes32 mandateViolated, uint8 pillarImplicated, bytes32 violationDetailsHash, bytes32 decisionId, uint256 recordedAt)</span>
     </div>
     <div class="fn-body">
-      <div class="fn-desc">Records a mandate violation immutably on-chain. mandateId: 0=No Spy, 1=No Weapon, 2=No Switch Off. These three mandates are beyond all governance bodies' authority to suspend.</div>
+      <div class="fn-desc">Records a mandate violation immutably on-chain. Immutable: cannot be modified or deleted once recorded. <code>mandateViolated</code>: <code>keccak256("No Spy")</code>, <code>keccak256("No Weapon")</code>, or <code>keccak256("No Switch Off")</code>. These three mandates are beyond all governance bodies' authority to suspend.</div>
+      <table class="params-table"><thead><tr><th>pillarImplicated</th><th>Pillar</th></tr></thead><tbody>
+        <tr><td class="p-name">1</td><td class="p-note">EpistemicHold</td></tr>
+        <tr><td class="p-name">2</td><td class="p-note">ImmutableLedger</td></tr>
+        <tr><td class="p-name">3</td><td class="p-note">GoukassianPrinciple</td></tr>
+        <tr><td class="p-name">4</td><td class="p-note">DecisionLogs</td></tr>
+        <tr><td class="p-name">5</td><td class="p-note">EconomicRightsAndTransparencyMandate</td></tr>
+        <tr><td class="p-name">6</td><td class="p-note">SustainableCapitalAllocationMandate</td></tr>
+        <tr><td class="p-name">7</td><td class="p-note">HybridShield</td></tr>
+        <tr><td class="p-name">8</td><td class="p-note">Anchors</td></tr>
+      </tbody></table>
     </div>
   </div>
 
@@ -302,55 +322,71 @@
     <div class="hash-row"><span class="hash-key">name</span><span class="hash-val">"TLGovernance"</span></div>
     <div class="hash-row"><span class="hash-key">version</span><span class="hash-val">"1.0.0"</span></div>
     <div class="hash-row"><span class="hash-key">chainId</span><span class="hash-val">1 (placeholder — deployment-specific)</span></div>
-    <div class="hash-row"><span class="hash-key">verifyingContract</span><span class="hash-val">placeholder — deployment-specific</span></div>
-    <div class="hash-row"><span class="hash-key">salt</span><span class="hash-val">keccak256("TL_API_SALT_V1_0_0") — placeholder</span></div>
+    <div class="hash-row"><span class="hash-key">verifyingContract</span><span class="hash-val">placeholder — replace with deployed TL_Ledger_Core address</span></div>
+    <div class="hash-row"><span class="hash-key">salt</span><span class="hash-val">keccak256("TL_API_SALT_V1_0_0") — placeholder, use deployment-specific salt</span></div>
   </div>
 
   <div class="section-title" id="eip712-types">EIP-712 Primary Types</div>
 
   <div class="type-card">
     <div class="type-name">GovernanceTraceLog</div>
-    <div class="hash-row"><span class="hash-key">currentState</span><span class="hash-val">int8 — preserves signed triadic semantics. int8(0) ≠ bool false.</span></div>
-    <div class="hash-row"><span class="hash-key">logHash</span><span class="hash-val">bytes32</span></div>
-    <div class="hash-row"><span class="hash-key">merkleRoot</span><span class="hash-val">bytes32</span></div>
-    <div class="hash-row"><span class="hash-key">epochTimestamp</span><span class="hash-val">uint256</span></div>
+    <div class="hash-row"><span class="hash-key">currentState</span><span class="hash-val">int8 — preserves signed triadic semantics. int8(0) = Epistemic Hold. int8(0) &ne; bool false.</span></div>
+    <div class="hash-row"><span class="hash-key">logId</span><span class="hash-val">bytes32</span></div>
+    <div class="hash-row"><span class="hash-key">decisionId</span><span class="hash-val">bytes32</span></div>
+    <div class="hash-row"><span class="hash-key">pillarsCertifiedHash</span><span class="hash-val">bytes32 — keccak256 of ABI-encoded pillarsCertified array</span></div>
+    <div class="hash-row"><span class="hash-key">committedAt</span><span class="hash-val">uint256</span></div>
+    <div class="hash-row"><span class="hash-key">monographVersionHash</span><span class="hash-val">bytes32 — keccak256("1.0.0-tl-monograph-2026")</span></div>
   </div>
 
   <div class="type-card">
     <div class="type-name">PermissionToken</div>
-    <div class="hash-row"><span class="hash-key">laneOrigin</span><span class="hash-val">bytes32 — must equal keccak256("AUDIT_LANE")</span></div>
-    <div class="hash-row"><span class="hash-key">logHash</span><span class="hash-val">bytes32 — NL=NA Layer 4 binding</span></div>
-    <div class="hash-row"><span class="hash-key">merkleRoot</span><span class="hash-val">bytes32 — NL=NA Layer 4 binding</span></div>
+    <div class="hash-row"><span class="hash-key">tokenId</span><span class="hash-val">bytes32</span></div>
+    <div class="hash-row"><span class="hash-key">logHash</span><span class="hash-val">bytes32 — NL=NA Layer 4 binding. Must match GovernanceProof.logHash.</span></div>
+    <div class="hash-row"><span class="hash-key">merkleRoot</span><span class="hash-val">bytes32 — NL=NA Layer 4 binding. Must match GovernanceProof.merkleRoot.</span></div>
+    <div class="hash-row"><span class="hash-key">signerKeyId</span><span class="hash-val">bytes32 — keccak256 of HSM key identifier string</span></div>
+    <div class="hash-row"><span class="hash-key">expiresAt</span><span class="hash-val">uint256 — hard expiration, no grace period</span></div>
+    <div class="hash-row"><span class="hash-key">decisionId</span><span class="hash-val">bytes32</span></div>
+    <div class="hash-row"><span class="hash-key">monographVersionHash</span><span class="hash-val">bytes32</span></div>
   </div>
 
   <div class="type-card">
     <div class="type-name">EmergencyOverride</div>
-    <div class="hash-row"><span class="hash-key">forcedState</span><span class="hash-val">uint8 — 255=Refuse(−1), 0=EpistemicHold(0). Proceed (+1) blocked.</span></div>
-    <div class="hash-row"><span class="hash-key">overrideType</span><span class="hash-val">uint8</span></div>
+    <div class="hash-row"><span class="hash-key">forcedState</span><span class="hash-val">uint8 — 255=Refuse(−1), 0=EpistemicHold(0). Proceed (+1) constitutionally blocked.</span></div>
+    <div class="hash-row"><span class="hash-key">overrideType</span><span class="hash-val">uint8 — 0=BREAK_GLASS_SHUTDOWN, 1=KILL_SWITCH, 2=FORCED_STATE_TRANSITION</span></div>
+    <div class="hash-row"><span class="hash-key">justificationHash</span><span class="hash-val">bytes32 — keccak256 of justification (minLength 100 chars). Logged before execution.</span></div>
+    <div class="hash-row"><span class="hash-key">requestedAt</span><span class="hash-val">uint256</span></div>
   </div>
 
   <div class="type-card">
     <div class="type-name">GoukassianSignatureAttestation</div>
-    <div class="hash-row"><span class="hash-key">artifactName</span><span class="hash-val">bytes32 — keccak256("signature")</span></div>
-    <div class="hash-row"><span class="hash-key">signatureAlgorithmId</span><span class="hash-val">uint8 — slots 6 (SLH-DSA-SHAKE-128s) and 7 (ML-KEM-1024) reserved FUTURE</span></div>
+    <div class="hash-row"><span class="hash-key">artifactName</span><span class="hash-val">bytes32 — keccak256("signature"). Canonical artifact name binding.</span></div>
+    <div class="hash-row"><span class="hash-key">signatureAlgorithmId</span><span class="hash-val">uint8 — 0=ES256 (SHIPPING default), 1=Ed25519 (SHIPPING), 6=SLH-DSA-SHAKE-128s (FUTURE), 7=ML-KEM-1024 (FUTURE)</span></div>
+    <div class="hash-row"><span class="hash-key">signerKeyId</span><span class="hash-val">bytes32</span></div>
+    <div class="hash-row"><span class="hash-key">signedPayloadHash</span><span class="hash-val">bytes32</span></div>
+    <div class="hash-row"><span class="hash-key">signedAt</span><span class="hash-val">uint256</span></div>
   </div>
 
   <div class="section-title" id="eip712-hashes">Canonical Hash Registry</div>
+
   <div class="type-card">
     <div class="type-name">canonicalArtifactNameHashes</div>
-    <div class="hash-row"><span class="hash-key">keccak256("lantern")</span><span class="hash-val">0x... (see eip712_typed_data.json)</span></div>
-    <div class="hash-row"><span class="hash-key">keccak256("signature")</span><span class="hash-val">0x... (see eip712_typed_data.json)</span></div>
-    <div class="hash-row"><span class="hash-key">keccak256("license")</span><span class="hash-val">0x... (see eip712_typed_data.json)</span></div>
+    <div class="hash-row"><span class="hash-key">keccak256("lantern")</span><span class="hash-val">see eip712_typed_data.json — Goukassian Principle lantern artifact</span></div>
+    <div class="hash-row"><span class="hash-key">keccak256("signature")</span><span class="hash-val">see eip712_typed_data.json — Goukassian Principle signature artifact</span></div>
+    <div class="hash-row"><span class="hash-key">keccak256("license")</span><span class="hash-val">see eip712_typed_data.json — Goukassian Principle license artifact</span></div>
   </div>
+
   <div class="type-card">
     <div class="type-name">canonicalMandateHashes</div>
-    <div class="hash-row"><span class="hash-key">keccak256("No Spy")</span><span class="hash-val">0x... (see eip712_typed_data.json)</span></div>
-    <div class="hash-row"><span class="hash-key">keccak256("No Weapon")</span><span class="hash-val">0x... (see eip712_typed_data.json)</span></div>
-    <div class="hash-row"><span class="hash-key">keccak256("No Switch Off")</span><span class="hash-val">0x... (see eip712_typed_data.json)</span></div>
+    <div class="hash-row"><span class="hash-key">keccak256("No Spy")</span><span class="hash-val">see eip712_typed_data.json</span></div>
+    <div class="hash-row"><span class="hash-key">keccak256("No Weapon")</span><span class="hash-val">see eip712_typed_data.json</span></div>
+    <div class="hash-row"><span class="hash-key">keccak256("No Switch Off")</span><span class="hash-val">see eip712_typed_data.json</span></div>
   </div>
+
   <div class="type-card">
-    <div class="type-name">laneOriginHash (NL=NA Layer 2)</div>
-    <div class="hash-row"><span class="hash-key">keccak256("AUDIT_LANE")</span><span class="hash-val">0x... (see eip712_typed_data.json) — registerPermissionToken reverts NLNAViolation on mismatch</span></div>
+    <div class="type-name">laneOriginHash — NL=NA Layer 2</div>
+    <div class="hash-row"><span class="hash-key">preImage</span><span class="hash-val">"GOVERNANCE_LANE"</span></div>
+    <div class="hash-row"><span class="hash-key">hash</span><span class="hash-val">keccak256("GOVERNANCE_LANE") — see eip712_typed_data.json</span></div>
+    <div class="hash-row"><span class="hash-key">enforcement</span><span class="hash-val">TL_Ledger_Core.registerPermissionToken reverts NLNAViolation on mismatch</span></div>
   </div>
 
 </main>
