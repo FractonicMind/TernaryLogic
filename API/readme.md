@@ -12,7 +12,7 @@ You can also listen to the full AI-generated deep-research interview: **[Prevent
 
 The TL API is not a conventional REST interface. It is the software expression of a constitutional enforcement architecture: a sovereign governance coprocessor that operates in parallel with a binary inference engine and holds absolute authority over whether any proposed action crosses the threshold into execution.
 
-The binary system proposes. The ternary system decides. The **Permission Token** is the only key that opens the actuation gate. Without a cryptographically valid token issued by the **Audit Lane**, no proposed State +1 action may execute. This is the **No Log = No Action** (NL=NA) iron law, enforced simultaneously at the schema layer, the API contract layer, the on-chain ABI layer, and the EIP-712 signing layer. There is no software path around it in a conforming implementation.
+The binary system proposes. The ternary system decides. The **Permission Token** is the only key that opens the actuation gate. Without a cryptographically valid token issued by the **Governance Lane**, no proposed State +1 action may execute. This is the **No Log = No Action** (NL=NA) iron law, enforced simultaneously at the schema layer, the API contract layer, the on-chain ABI layer, and the EIP-712 signing layer. There is no software path around it in a conforming implementation.
 
 The **Epistemic Hold** (State 0) is the most constitutionally significant state in the framework. It is not a null. It is not an error. It is not a timeout. It is a first-class governance state of mandatory hesitation that holds execution pending verified completion of legitimate process. It cannot be argued away. It can only be resolved by a human reviewer or a Tri-Cameral custodian quorum with a terminal state of +1 or -1. State 0 is constitutionally invalid as a resolution target.
 
@@ -34,7 +34,7 @@ The entire API is organized around two structurally distinct lanes, each with it
 
 **Inference Lane:** The binary inference engine submits proposed decision vectors via `POST /decisions` and receives a `TLResult`. A `TLResult` returning State +1 from the Inference Lane does not authorize actuation. The Inference Lane cannot issue Permission Tokens. Security scheme: `TLGovernanceJWT`. This separation is enforced at the schema level by the `StateEnvelope` `if/then` constraint in `tl_schema.json`.
 
-**Audit Lane:** The ternary governance layer receives the complete TGLF record via `POST /audit-logs`, performs its own independent evaluation, and — only when the audit lane confirms log completion and Merkle anchoring — issues a Permission Token. The token carries `laneOrigin: const "AUDIT_LANE"`. Security schemes: `HSMSignedJWT` and `NLNAAuditToken`. No token, no execution. No log, no token.
+**Governance Lane:** The ternary governance layer receives the complete TGLF record via `POST /governance-logs`, performs its own independent evaluation, and — only when the Governance Lane confirms log completion and Merkle anchoring — issues a Permission Token. The token carries `laneOrigin: const "GOVERNANCE_LANE"`. Security schemes: `HSMSignedJWT` and `NLNAGovernanceToken`. No token, no execution. No log, no token.
 
 ---
 
@@ -60,7 +60,7 @@ Every object in this specification carries a `currentState` field drawn from exa
 
 ![Decision Lifecycle](https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_decision_lifecycle.png?raw=true)
 
-Every governance decision generates a Ternary Governance Log Format (TGLF) record. The discriminator on `currentState` routes to one of three forensic log variants. `TGLF_StateP1` carries the Permission Token, the Goukassian Principle Block, and the Merkle anchoring proof. `TGLF_State0` carries the uncertainty quantification, the deliberation matrix, and the Epistemic Hold escalation record. `TGLF_StateNeg1` carries the license violation record, the threat vector analysis, and the chain of custody. Every variant requires `committedAt` before the Audit Lane releases any authorization. The log precedes the action. Always.
+Every governance decision generates a Ternary Governance Log Format (TGLF) record. The discriminator on `currentState` routes to one of three forensic log variants. `TGLF_StateP1` carries the Permission Token, the Goukassian Principle Block, and the Merkle anchoring proof. `TGLF_State0` carries the uncertainty quantification, the deliberation matrix, and the Epistemic Hold escalation record. `TGLF_StateNeg1` carries the license violation record, the threat vector analysis, and the chain of custody. Every variant requires `committedAt` before the Governance Lane releases any authorization. The log precedes the action. Always.
 
 ---
 
@@ -76,7 +76,7 @@ State-mutating operations require `TriCameralApproval`. The Technical Council (9
 
 ![Emergency Override](https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_emergency_override.png?raw=true)
 
-`POST /emergency/override` is the break-glass surface. Three override types: `BREAK_GLASS_SHUTDOWN`, `KILL_SWITCH`, `FORCED_STATE_TRANSITION`. NL=NA applies without exception. The audit log is written before the state change fires. This ordering is constitutional.
+`POST /emergency/override` is the break-glass surface. Three override types: `BREAK_GLASS_SHUTDOWN`, `KILL_SWITCH`, `FORCED_STATE_TRANSITION`. NL=NA applies without exception. The governance log is written before the state change fires. This ordering is constitutional.
 
 ---
 
@@ -91,7 +91,7 @@ The canonical, machine-parseable API contract. Defines all 40 endpoints across 1
 
 ### 2. TL JSON Schema Bundle
 
-The canonical schema bundle for all data types in the framework. 22 schemas, all enforcing `unevaluatedProperties: false`. Contains `StateEnvelope`, `PermissionToken`, all three TGLF variants, `GoukassianPrincipleBlock`, `EscrowRecord`, `SignatureBlock`, `LanternStatus`, `AuditProof`, `TriCameralApproval`, `EKRRecord`, `SuccessionDeclaration`, `TLProblemDetail`, and all primitives. The `if/then` constraint on `StateEnvelope` is the schema-level enforcement of NL=NA.
+The canonical schema bundle for all data types in the framework. 22 schemas, all enforcing `unevaluatedProperties: false`. Contains `StateEnvelope`, `PermissionToken`, all three TGLF variants, `GoukassianPrincipleBlock`, `EscrowRecord`, `SignatureBlock`, `LanternStatus`, `GovernanceProof`, `TriCameralApproval`, `EKRRecord`, `SuccessionDeclaration`, `TLProblemDetail`, and all primitives. The `if/then` constraint on `StateEnvelope` is the schema-level enforcement of NL=NA.
 
 - **Source:** [tl_schema.json](https://github.com/FractonicMind/TernaryLogic/blob/main/API/tl_schema.json)
 - **Web:** [View HTML](https://fractonicmind.github.io/TernaryLogic/API/schema.html)
@@ -112,7 +112,7 @@ EIP-712 domain separator and typed data schema definitions for `GovernanceTraceL
 
 ### 5. Specification Architecture
 
-The canonical prose companion to `tl_openapi.yaml` and `tl_schema.json`. 14 sections covering the Goukassian Vow as foundational architecture, the Dual-Lane system, NL=NA five-layer enforcement, Epistemic Hold operationalization, the Goukassian Principle artifacts as API resources, all Eight Pillars mapped to API paths, the Regulatory Nexus (Basel III, FATF, IOSCO, GDPR, Paris Agreement), Domain Evaluation endpoints, the complete auditor verification workflow, DITL hardware interface, EKR and GDPR cryptographic erasure, error taxonomy, and trace propagation. Read this before reading the machine-readable files.
+The canonical prose companion to `tl_openapi.yaml` and `tl_schema.json`. 14 sections covering the Goukassian Vow as foundational architecture, the Dual-Lane system, NL=NA five-layer enforcement, Epistemic Hold operationalization, the Goukassian Principle artifacts as API resources, all Eight Pillars mapped to API paths, the Regulatory Nexus (Basel III, FATF, IOSCO, GDPR, Paris Agreement), Domain Evaluation endpoints, the complete governance verification workflow, DITL hardware interface, EKR and GDPR cryptographic erasure, error taxonomy, and trace propagation. Read this before reading the machine-readable files.
 
 - **Text:** [Specification_Architecture.md](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md)
 - **Web:** [View HTML](https://fractonicmind.github.io/TernaryLogic/API/Specification_Architecture.html)
@@ -143,13 +143,13 @@ Full AI-generated deep-research interview covering the relationship between tern
 | Pillar | Identifier | Primary Endpoints | Status |
 |--------|-----------|-------------------|--------|
 | I - Epistemic Hold | `EpistemicHold` | `POST /decisions`, `GET/PATCH /epistemic-hold/escalations/*`, `POST /gateway/lane-assignment` | SHIPPING |
-| II - Immutable Ledger | `ImmutableLedger` | `POST /audit-logs`, `GET /audit-logs/{logId}`, `POST /refusals`, `GET /regulator/timestamp-verification/{logId}` | SHIPPING |
+| II - Immutable Ledger | `ImmutableLedger` | `POST /governance-logs`, `GET /governance-logs/{logId}`, `POST /refusals`, `GET /regulator/timestamp-verification/{logId}` | SHIPPING |
 | III - Goukassian Principle | `GoukassianPrinciple` | `GET /epistemic-hold/lantern`, `GET /goukassian/signature`, `POST /goukassian/license/validate`, `POST /refusals/license-violations` | SHIPPING |
 | IV - Decision Logs | `DecisionLogs` | `GET /decisions/{decisionId}`, `GET /thresholds/{domain}`, `PUT /thresholds/{domain}`, `GET /metrics/summary` | SHIPPING |
 | V - Economic Rights and Transparency | `EconomicRightsAndTransparencyMandate` | `POST /evaluate/trade`, `POST /redress/*`, `GET /regulator/basel-iii/attestation`, `POST /regulator/fatf/compliance-export` | SHIPPING |
-| VI - Sustainable Capital Allocation | `SustainableCapitalAllocationMandate` | `POST /evaluate/policy`, `POST /evaluate/supply-chain`, `GET /audit/compliance/attestation` | SHIPPING |
-| VII - Hybrid Shield | `HybridShield` | `POST /emergency/override`, `GET /emergency/status`, `GET /audit/custodians/{id}/heartbeat`, `GET /regulator/custodian-quorum` | SHIPPING (sub-300ms cross-jurisdiction: FUTURE) |
-| VIII - Anchors | `Anchors` | `GET /audit/verifications/merkle/{root}`, `GET /audit/verifications/inclusion/{logId}`, `POST /regulator/evidence-export` | SHIPPING (per-trade real-time anchoring: FUTURE) |
+| VI - Sustainable Capital Allocation | `SustainableCapitalAllocationMandate` | `POST /evaluate/policy`, `POST /evaluate/supply-chain`, `GET /governance/compliance/attestation` | SHIPPING |
+| VII - Hybrid Shield | `HybridShield` | `POST /emergency/override`, `GET /emergency/status`, `GET /governance/custodians/{id}/heartbeat`, `GET /regulator/custodian-quorum` | SHIPPING (sub-300ms cross-jurisdiction: FUTURE) |
+| VIII - Anchors | `Anchors` | `GET /governance/verifications/merkle/{root}`, `GET /governance/verifications/inclusion/{logId}`, `POST /regulator/evidence-export` | SHIPPING (per-trade real-time anchoring: FUTURE) |
 
 ---
 
@@ -165,18 +165,18 @@ This specification operationalizes international financial and AI governance sta
 
 ---
 
-## Hybrid Shield Status: Active
+## Governance Lane Enforcement: Active
 
-This specification is anchored to the TL framework's constitutional enforcement chain. The `PermissionToken.laneOrigin: const "AUDIT_LANE"` constraint means no token can claim to originate from the Inference Lane. The `unevaluatedProperties: false` constraint throughout `tl_schema.json` means no undeclared field can introduce ambiguity into the enforcement logic. The on-chain `NLNAViolation` custom error means the blockchain layer reverts any token registration attempt that lacks a previously anchored log.
+This specification is anchored to the TL framework's constitutional enforcement chain. The `PermissionToken.laneOrigin: const "GOVERNANCE_LANE"` constraint means no token can claim to originate from the Inference Lane. The `unevaluatedProperties: false` constraint throughout `tl_schema.json` means no undeclared field can introduce ambiguity into the enforcement logic. The on-chain `NLNAViolation` custom error means the blockchain layer reverts any token registration attempt that lacks a previously anchored log.
 
 | Enforcement Layer | Mechanism | File |
 |-------------------|-----------|------|
 | Schema | `StateEnvelope if/then` constraint | `tl_schema.json` |
-| API Contract | `PermissionToken.laneOrigin: const "AUDIT_LANE"` | `tl_openapi.yaml` |
+| API Contract | `PermissionToken.laneOrigin: const "GOVERNANCE_LANE"` | `tl_openapi.yaml` |
 | EIP-712 | Domain separator binding to contract and chain | `eip712_typed_data.json` |
 | On-Chain | `NLNAViolation` custom error in `TL_Ledger_Core` | `tl_abi.json` |
 | Prose | Five-layer enforcement chain documented | `Specification_Architecture.md` |
-| Audit | Full path-to-pillar-to-regulation mapping | `Constitutional_Compliance_Matrix.md` |
+| Governance | Full path-to-pillar-to-regulation mapping | `Constitutional_Compliance_Matrix.md` |
 
 ---
 
