@@ -69,8 +69,8 @@
     <a href="#TLResult">TLResult</a>
     <div class="group">NL=NA Schemas</div>
     <a href="#PermissionToken">PermissionToken</a>
-    <a href="#AuditProof">AuditProof</a>
-    <a href="#NLNAAuditToken">NLNAAuditToken</a>
+    <a href="#GovernanceProof">GovernanceProof</a>
+    <a href="#NLNAGovernanceToken">NLNAGovernanceToken</a>
     <div class="group">Epistemic Hold</div>
     <a href="#EscrowRecord">EscrowRecord</a>
     <a href="#TGLF_State0">TGLF_State0</a>
@@ -195,29 +195,29 @@
       <span class="schema-pillar">ImmutableLedger (II)</span>
     </div>
     <div class="schema-body">
-      <div class="schema-desc">NL=NA cryptographic enforcement artifact. laneOrigin const "AUDIT_LANE" — Inference Lane tokens are schema-invalid. maxLifetimeMs maximum 300000 aligned with DLLA Audit Lane 300ms ceiling. Actuation layer MUST reject expired tokens — no grace period.</div>
+      <div class="schema-desc">NL=NA cryptographic enforcement artifact. laneOrigin const "GOVERNANCE_LANE" — Inference Lane tokens are schema-invalid. maxLifetimeMs maximum 300000 aligned with DLLA Governance Lane 300ms ceiling. Actuation layer MUST reject expired tokens — no grace period.</div>
       <table class="props-table"><thead><tr><th>Property</th><th>Type</th><th>NL=NA</th><th>Note</th></tr></thead><tbody>
         <tr><td class="prop-name">tokenId</td><td>UUIDv4</td><td><span class="nlna-tag">Layers 2,3,4,5</span></td><td></td></tr>
-        <tr><td class="prop-name">logHash</td><td>SHA256Hex</td><td><span class="nlna-tag">Layers 4, 5</span></td><td class="prop-note">MUST match AuditProof.logHash</td></tr>
-        <tr><td class="prop-name">laneOrigin</td><td>const "AUDIT_LANE"</td><td><span class="nlna-tag">Layer 2</span></td><td class="prop-note">Schema-invalid for any other value</td></tr>
-        <tr><td class="prop-name">merkleRoot</td><td>SHA256Hex</td><td><span class="nlna-tag">Layers 4, 5</span></td><td class="prop-note">MUST match AuditProof.merkleRoot. Layer 5: registerPermissionToken reverts NLNAViolation if logHash not in root.</td></tr>
+        <tr><td class="prop-name">logHash</td><td>SHA256Hex</td><td><span class="nlna-tag">Layers 4, 5</span></td><td class="prop-note">MUST match GovernanceProof.logHash</td></tr>
+        <tr><td class="prop-name">laneOrigin</td><td>const "GOVERNANCE_LANE"</td><td><span class="nlna-tag">Layer 2</span></td><td class="prop-note">Schema-invalid for any other value</td></tr>
+        <tr><td class="prop-name">merkleRoot</td><td>SHA256Hex</td><td><span class="nlna-tag">Layers 4, 5</span></td><td class="prop-note">MUST match GovernanceProof.merkleRoot. Layer 5: registerPermissionToken reverts NLNAViolation if logHash not in root.</td></tr>
         <tr><td class="prop-name">expiresAt</td><td>ISO8601DateTime</td><td></td><td class="prop-note">Hard expiration. No grace period.</td></tr>
-        <tr><td class="prop-name">maxLifetimeMs</td><td>integer</td><td></td><td class="prop-note">maximum: 300000 (DLLA Audit Lane ceiling)</td></tr>
+        <tr><td class="prop-name">maxLifetimeMs</td><td>integer</td><td></td><td class="prop-note">maximum: 300000 (DLLA Governance Lane ceiling)</td></tr>
         <tr><td class="prop-name">revocationStatus</td><td>enum</td><td></td><td class="prop-note">ACTIVE | REVOKED_BY_EMERGENCY | REVOKED_BY_TRI_CAMERAL</td></tr>
         <tr><td class="prop-name">custodianQuorumAttestation</td><td>string</td><td></td><td class="prop-note"><span class="status-chip s-beta">BETA</span> Token valid without it for SHIPPING.</td></tr>
       </tbody></table>
     </div>
   </div>
 
-  <div class="schema-card" id="AuditProof">
+  <div class="schema-card" id="GovernanceProof">
     <div class="schema-header" onclick="toggle(this)">
-      <span class="schema-anchor">AuditProof</span>
+      <span class="schema-anchor">GovernanceProof</span>
       <span class="schema-type">object</span>
       <span class="status-chip s-ship">SHIPPING</span>
       <span class="schema-pillar">ImmutableLedger (II)</span>
     </div>
     <div class="schema-body">
-      <div class="schema-desc">NL=NA Layer 4: logHash and merkleRoot MUST match PermissionToken fields. Cross-reference is the cryptographic link between Audit Lane log commitment and Permission Token issuance.</div>
+      <div class="schema-desc">NL=NA Layer 4: logHash and merkleRoot MUST match PermissionToken fields. Cross-reference is the cryptographic link between Governance Lane log commitment and Permission Token issuance.</div>
       <table class="props-table"><thead><tr><th>Property</th><th>NL=NA</th><th>Note</th></tr></thead><tbody>
         <tr><td class="prop-name">logHash</td><td><span class="nlna-tag">Layer 4</span></td><td class="prop-note">MUST = PermissionToken.logHash</td></tr>
         <tr><td class="prop-name">merkleRoot</td><td><span class="nlna-tag">Layer 4</span></td><td class="prop-note">MUST = PermissionToken.merkleRoot</td></tr>
@@ -226,15 +226,15 @@
     </div>
   </div>
 
-  <div class="schema-card" id="NLNAAuditToken">
+  <div class="schema-card" id="NLNAGovernanceToken">
     <div class="schema-header" onclick="toggle(this)">
-      <span class="schema-anchor">NLNAAuditToken</span>
+      <span class="schema-anchor">NLNAGovernanceToken</span>
       <span class="schema-type">object</span>
       <span class="status-chip s-ship">SHIPPING</span>
       <span class="schema-pillar">ImmutableLedger (II)</span>
     </div>
     <div class="schema-body">
-      <div class="schema-desc">Audit lane completion token. Non-MT deployments MUST use sentinel value "NULL_PUF_DEPLOYMENT" for pufAttestation. Architecture B compensating controls: software enforcement active.</div>
+      <div class="schema-desc">Governance Lane completion token. Non-MT deployments MUST use sentinel value "NULL_PUF_DEPLOYMENT" for pufAttestation. Architecture B compensating controls: software enforcement active.</div>
       <table class="props-table"><thead><tr><th>Property</th><th>Note</th></tr></thead><tbody>
         <tr><td class="prop-name">pufAttestation</td><td class="prop-note">Non-MT: use sentinel "NULL_PUF_DEPLOYMENT" · FUTURE: FULL_PUF</td></tr>
         <tr><td class="prop-name">laneStatus</td><td class="prop-note">enum: pending | committed | anchored</td></tr>
@@ -301,7 +301,7 @@
       <table class="props-table"><thead><tr><th>Property</th><th>NL=NA</th></tr></thead><tbody>
         <tr><td class="prop-name">permissionToken</td><td><span class="nlna-tag">Layer 3 — REQUIRED</span></td></tr>
         <tr><td class="prop-name">pillarsCertified</td><td><span class="nlna-tag">Layer 3 — minItems 8, maxItems 8</span></td></tr>
-        <tr><td class="prop-name">auditProof</td><td><span class="nlna-tag">Layer 4</span></td></tr>
+        <tr><td class="prop-name">GovernanceProof</td><td><span class="nlna-tag">Layer 4</span></td></tr>
       </tbody></table>
     </div>
   </div>
@@ -316,7 +316,7 @@
       <span class="schema-pillar">GoukassianPrinciple (III)</span>
     </div>
     <div class="schema-body">
-      <div class="schema-desc">Three Goukassian Principle artifacts. Required on every POST /decisions, POST /audit-logs, and POST /evaluate/* request. artifactName const values are canonical lowercase.</div>
+      <div class="schema-desc">Three Goukassian Principle artifacts. Required on every POST /decisions, POST /governance-logs, and POST /evaluate/* request. artifactName const values are canonical lowercase.</div>
       <table class="props-table"><thead><tr><th>Artifact</th><th>artifactName const</th><th>Key Field</th></tr></thead><tbody>
         <tr><td class="prop-name">lantern</td><td>"lantern"</td><td class="prop-note">lanternHash (SHA256Hex)</td></tr>
         <tr><td class="prop-name">signature</td><td>"signature"</td><td class="prop-note">agentSignature (Ed25519Hex)</td></tr>
