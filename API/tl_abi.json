@@ -52,7 +52,7 @@
         {
           "type": "function",
           "name": "registerPermissionToken",
-          "description": "Register a Permission Token on-chain. NL=NA Layer 5: reverts NLNAViolation if the supplied logHash is not provably included in an anchored Merkle root via verifyMerkleInclusion. This is the terminal enforcement gate: no actuation may proceed without a registered, valid Permission Token whose logHash is on-chain verified.",
+          "description": "Register a Permission Token on-chain. NL=NA Layer 5: reverts NLNAViolation if the supplied logHash is not provably included in an anchored Merkle root via verifyMerkleInclusion. Also reverts NLNAViolation if laneOriginHash does not equal keccak256(\"GOVERNANCE_LANE\"). This is the terminal enforcement gate: no actuation may proceed without a registered, valid Permission Token whose logHash is on-chain verified.",
           "stateMutability": "nonpayable",
           "inputs": [
             { "name": "tokenId", "type": "bytes32", "description": "Permission Token unique identifier (keccak256 of UUID v4)." },
@@ -61,8 +61,8 @@
             { "name": "merkleProof", "type": "bytes32[]", "description": "Ordered sibling hash array forming the Merkle inclusion proof path." },
             { "name": "epochTimestamp", "type": "uint256", "description": "Unix epoch timestamp of token issuance." },
             { "name": "expiresAt", "type": "uint256", "description": "Unix epoch expiration timestamp. Actuation layer MUST reject tokens where block.timestamp >= expiresAt." },
-            { "name": "signerKeyId", "type": "bytes32", "description": "HSM key identifier for Audit Lane signature verification." },
-            { "name": "laneOriginHash", "type": "bytes32", "description": "keccak256(\"AUDIT_LANE\"). Inference Lane token production is constitutionally blocked: any value not matching this hash reverts NLNAViolation." },
+            { "name": "signerKeyId", "type": "bytes32", "description": "HSM key identifier for Governance Lane signature verification." },
+            { "name": "laneOriginHash", "type": "bytes32", "description": "keccak256(\"GOVERNANCE_LANE\"). Inference Lane token production is constitutionally blocked: any value not matching this hash reverts NLNAViolation." },
             { "name": "signatureValue", "type": "bytes", "description": "Base64url-decoded HSM signature over the PermissionToken fields." }
           ],
           "outputs": [
