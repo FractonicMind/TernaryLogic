@@ -37,11 +37,11 @@ The "Ternary Logic" framework does not replace binary inference. It governs it.
 
 The binary inference engine provides speed, pattern recognition, and statistical throughput. It proposes a state. It cannot authorize actuation. This distinction is architectural and constitutional: the Inference Lane produces `TLResult` objects that carry a proposed `state` field. That field is advisory.
 
-The ternary governance coprocessor operates in parallel, receiving the same decision vector through the Audit Lane. It verifies, logs, and either issues or withholds a Permission Token. Only a valid Permission Token from the Audit Lane authorizes the actuation layer to fire.
+The ternary governance coprocessor operates in parallel, receiving the same decision vector through the Governance Lane. It verifies, logs, and either issues or withholds a Permission Token. Only a valid Permission Token from the Governance Lane authorizes the actuation layer to fire.
 
-This is why `POST /decisions` and `POST /audit-logs` are separate endpoints on separate security schemes. The Inference Lane uses `TLGovernanceJWT`. The Audit Lane uses `HSMSignedJWT` and `NLNAAuditToken`. A client that has only `TLGovernanceJWT` can propose actions. It cannot authorize them.
+This is why `POST /decisions` and `POST /governance-logs` are separate endpoints on separate security schemes. The Inference Lane uses `TLGovernanceJWT`. The Governance Lane uses `HSMSignedJWT` and `NLNAGovernanceToken`. A client that has only `TLGovernanceJWT` can propose actions. It cannot authorize them.
 
-The `X-TL-Trace-Id` UUID v4 header is the cryptographic thread that connects both lanes. It is required on every request and echoed in every response, webhook event, and downstream regulator export. The `NLNAAuditToken` security scheme is cryptographically bound to the `X-TL-Trace-Id` of the originating Inference Lane request, preventing token substitution across unrelated decision vectors.
+The `X-TL-Trace-Id` UUID v4 header is the cryptographic thread that connects both lanes. It is required on every request and echoed in every response, webhook event, and downstream regulator export. The `NLNAGovernanceToken` security scheme is cryptographically bound to the `X-TL-Trace-Id` of the originating Inference Lane request, preventing token substitution across unrelated decision vectors.
 
 ---
 
@@ -53,19 +53,19 @@ The Inference Lane endpoints are `POST /decisions` and `GET /decisions/{decision
 
 `POST /decisions` accepts a `decisionVector`, `proposedAction`, `GoukassianPrincipleBlock`, optional `RegulatoryContext`, and optional `domain`. It returns a `TLResult` with a `decisionId`. The `TLResult.state` field is the binary engine's proposed state. It is not authorization.
 
-`GET /decisions/{decisionId}` returns the `StateEnvelope` reflecting the current governance state of a decision, including any `PermissionToken` issued by the Audit Lane.
+`GET /decisions/{decisionId}` returns the `StateEnvelope` reflecting the current governance state of a decision, including any `PermissionToken` issued by the Governance Lane.
 
-### 3.2 Audit Lane Path Group
+### 3.2 Governance Lane Path Group
 
-The Audit Lane endpoints are `POST /audit-logs` and `GET /audit-logs/{logId}`. These paths are the ternary governance surface. Security: `HSMSignedJWT` and `NLNAAuditToken`.
+The Governance Lane endpoints are `POST /governance-logs` and `GET /governance-logs/{logId}`. These paths are the ternary governance surface. Security: `HSMSignedJWT` and `NLNAGovernanceToken`.
 
-`POST /audit-logs` is the central NL=NA enforcement point. It accepts a `decisionId`, a `tglfRecord`, a `GoukassianPrincipleBlock`, and an `AuditProof` object. The `AuditProof.logHash` and `AuditProof.merkleRoot` fields must match the `PermissionToken.logHash` and `PermissionToken.merkleRoot` fields respectively (NL=NA Layer 4). On State +1, a `PermissionToken` is returned inside a `StateEnvelope`. On State 0, an `EscrowRecord` is returned and the `epistemicHold.escalation` webhook fires. On State -1, a `StateEnvelope` with `stateLabel: "Refuse"` is returned and no `PermissionToken` is issued.
+`POST /governance-logs` is the central NL=NA enforcement point. It accepts a `decisionId`, a `tglfRecord`, a `GoukassianPrincipleBlock`, and a `GovernanceProof` object. The `GovernanceProof.logHash` and `GovernanceProof.merkleRoot` fields must match the `PermissionToken.logHash` and `PermissionToken.merkleRoot` fields respectively (NL=NA Layer 4). On State +1, a `PermissionToken` is returned inside a `StateEnvelope`. On State 0, an `EscrowRecord` is returned and the `epistemicHold.escalation` webhook fires. On State -1, a `StateEnvelope` with `stateLabel: "Refuse"` is returned and no `PermissionToken` is issued.
 
 ### 3.3 Gateway Fail-Closed Behavior
 
-`GET /gateway/status` and `POST /gateway/lane-assignment` expose the TL Gateway routing state. The Gateway is fail-closed by design: if it cannot route to the Audit Lane, it defaults to `EPISTEMIC_HOLD` and activates `epistemicHoldOverride: true`. The `GatewayRoutingStatus.operationalStatus` enum includes `EPISTEMIC_HOLD_OVERRIDE_ACTIVE` to signal this condition.
+`GET /gateway/status` and `POST /gateway/lane-assignment` expose the TL Gateway routing state. The Gateway is fail-closed by design: if it cannot route to the Governance Lane, it defaults to `EPISTEMIC_HOLD` and activates `epistemicHoldOverride: true`. The `GatewayRoutingStatus.operationalStatus` enum includes `EPISTEMIC_HOLD_OVERRIDE_ACTIVE` to signal this condition.
 
-Fail-open is constitutionally prohibited. This means a Gateway that loses connectivity to the Audit Lane does not pass traffic to the actuation layer. It holds all pending decisions in Epistemic Hold until the Audit Lane is restored.
+Fail-open is constitutionally prohibited. This means a Gateway that loses connectivity to the Governance Lane does not pass traffic to the actuation layer. It holds all pending decisions in Epistemic Hold until the Governance Lane is restored.
 
 The `epistemicHoldOverride` boolean flag in `POST /gateway/lane-assignment` signals that the client is requesting fail-closed activation explicitly. This is not an override of Epistemic Hold; it is a signal that the fail-closed mode should activate now rather than waiting for automatic detection.
 
@@ -77,15 +77,15 @@ NL=NA (No Log = No Action) is enforced at five independent layers. Bypassing one
 
 **Layer 1** is in `StateEnvelope_v1_0_0` in `tl_schema.json`. The `if/then` constraint makes `permissionToken` a required property when `currentState` equals 1. The `unevaluatedProperties: false` keyword prevents bypass by additional properties. This layer is evaluated on every response object returned by any endpoint that produces a `StateEnvelope`.
 
-**Layer 2** is in `PermissionToken_v1_0_0` in `tl_schema.json`. The `laneOrigin` field carries a `const: "AUDIT_LANE"` constraint. Any `PermissionToken` object with `laneOrigin` set to any other value is schema-invalid. In `tl_abi.json`, `TL_Ledger_Core.registerPermissionToken` accepts a `laneOriginHash` parameter that must equal `keccak256("AUDIT_LANE")`. Mismatch reverts `NLNAViolation`.
+**Layer 2** is in `PermissionToken_v1_0_0` in `tl_schema.json`. The `laneOrigin` field carries a `const: "GOVERNANCE_LANE"` constraint. Any `PermissionToken` object with `laneOrigin` set to any other value is schema-invalid. In `tl_abi.json`, `TL_Ledger_Core.registerPermissionToken` accepts a `laneOriginHash` parameter that must equal `keccak256("GOVERNANCE_LANE")`. Mismatch reverts `NLNAViolation`.
 
 **Layer 3** is in `TGLF_StateP1_v1_0_0` in `tl_schema.json`. The `permissionToken` field is in the `required` array. The `pillarsCertified` array carries `minItems: 8, maxItems: 8`. A `TGLF_StateP1` record without a `permissionToken` is schema-invalid. A record with fewer than 8 certified pillars is schema-invalid.
 
-**Layer 4** is in `AuditProof_v1_0_0` in `tl_schema.json`. The `AuditProof.logHash` field must match `PermissionToken.logHash`. The `AuditProof.merkleRoot` field must match `PermissionToken.merkleRoot`. This cross-reference is described in both field descriptions and enforced by the `POST /audit-logs` request handler.
+**Layer 4** is in `GovernanceProof_v1_0_0` in `tl_schema.json`. The `GovernanceProof.logHash` field must match `PermissionToken.logHash`. The `GovernanceProof.merkleRoot` field must match `PermissionToken.merkleRoot`. This cross-reference is described in both field descriptions and enforced by the `POST /governance-logs` request handler.
 
 **Layer 5** is in `TL_Ledger_Core.registerPermissionToken` in `tl_abi.json`. This function reverts `NLNAViolation` if the supplied `logHash` is not provably included in an anchored Merkle root via `verifyMerkleInclusion`. This is the terminal on-chain enforcement gate.
 
-The fail-closed default applies to all five layers: any audit lane failure, timeout, or ambiguity defaults to `EPISTEMIC_HOLD` or `REFUSE`, never to `PROCEED`. NL=NA applies to Emergency Override without exception.
+The fail-closed default applies to all five layers: any Governance Lane failure, timeout, or ambiguity defaults to `EPISTEMIC_HOLD` or `REFUSE`, never to `PROCEED`. NL=NA applies to Emergency Override without exception.
 
 ---
 
@@ -103,7 +103,7 @@ The distinction matters for auditability: an auditor reading a `TGLF_State0` rec
 
 `EscrowRecord_v1_0_0` in `tl_schema.json` is the single authoritative definition of all Epistemic Hold response fields. The behavioral description in Section 4.4 of the specification prompt lists the required fields; all of them are defined exclusively in `EscrowRecord_v1_0_0`. No other schema duplicates these definitions.
 
-The fields are: `escrowId`, `heldState` (const 0), `initiatedAt`, `initiatingDecisionId`, `holdRationale` (with `rationale`, `uncertaintyScore`, `pillarImplicated`), `resolutionDeadline`, `immutableLogHash`, `holdDurationMs`, `auditLaneStatus` (with `stage` and `percentComplete`), `requiredConditions`, and `windowComparatorReading`.
+The fields are: `escrowId`, `heldState` (const 0), `initiatedAt`, `initiatingDecisionId`, `holdRationale` (with `rationale`, `uncertaintyScore`, `pillarImplicated`), `resolutionDeadline`, `immutableLogHash`, `holdDurationMs`, `governanceLaneStatus` (with `stage` and `percentComplete`), `requiredConditions`, and `windowComparatorReading`.
 
 ### 5.3 Resolution Constraints
 
@@ -135,11 +135,11 @@ In `GoukassianPrincipleBlock_v1_0_0`, the three artifacts are nested objects. Ea
 
 The Eight Pillars are the governance architecture of the "Ternary Logic" framework. Their canonical identifiers are used in `x-tl-pillar` annotations on every endpoint and in `PillarIdentifier_v1_0_0` as the exclusive vocabulary for pillar references.
 
-**Pillar I (EpistemicHold):** Expressed through `POST /decisions`, `POST /audit-logs`, `GET/PATCH /epistemic-hold/escalations/*`, and `GET /epistemic-hold/lantern`. Schema anchor: `EscrowRecord_v1_0_0`, `TGLF_State0_v1_0_0`. Gateway fail-closed behavior is a Pillar I enforcement mechanism.
+**Pillar I (EpistemicHold):** Expressed through `POST /decisions`, `POST /governance-logs`, `GET/PATCH /epistemic-hold/escalations/*`, and `GET /epistemic-hold/lantern`. Schema anchor: `EscrowRecord_v1_0_0`, `TGLF_State0_v1_0_0`. Gateway fail-closed behavior is a Pillar I enforcement mechanism.
 
-**Pillar II (ImmutableLedger):** Expressed through `POST /audit-logs`, `GET /audit-logs/{logId}`, `POST /refusals`, `GET /regulator/timestamp-verification/{logId}`, and the `AuditProof_v1_0_0` schema. The `ghostGovernanceDetectionRate` metric in `GET /metrics/summary` quantifies Ghost Governance prevention at the NL=NA physical commit boundary.
+**Pillar II (ImmutableLedger):** Expressed through `POST /governance-logs`, `GET /governance-logs/{logId}`, `POST /refusals`, `GET /regulator/timestamp-verification/{logId}`, and the `GovernanceProof_v1_0_0` schema. The `ghostGovernanceDetectionRate` metric in `GET /metrics/summary` quantifies Ghost Governance prevention at the NL=NA physical commit boundary.
 
-**Pillar III (GoukassianPrinciple):** Expressed through `GET /goukassian/signature`, `POST /goukassian/license/validate`, `GET /epistemic-hold/lantern`, `GET /gateway/status`, and the `GoukassianPrincipleBlock_v1_0_0` schema. Required on every `POST /decisions`, `POST /audit-logs`, and `POST /evaluate/*` request body.
+**Pillar III (GoukassianPrinciple):** Expressed through `GET /goukassian/signature`, `POST /goukassian/license/validate`, `GET /epistemic-hold/lantern`, `GET /gateway/status`, and the `GoukassianPrincipleBlock_v1_0_0` schema. Required on every `POST /decisions`, `POST /governance-logs`, and `POST /evaluate/*` request body.
 
 **Pillar IV (DecisionLogs):** Expressed through `GET /decisions/{decisionId}`, `GET /thresholds/{domain}`, `PUT /thresholds/{domain}`, and `GET /metrics/summary`. Schema anchor: `JustificationObject_v1_0_0`, `ThresholdProfile_v1_0_0`.
 
@@ -147,11 +147,11 @@ The Eight Pillars are the governance architecture of the "Ternary Logic" framewo
 
 **Pillar VI (SustainableCapitalAllocationMandate):** Expressed through `POST /evaluate/policy`, `POST /evaluate/supply-chain`. Regulatory vectors: Paris Agreement (carbon footprint, green bond eligibility, ESG score), climate-aligned capital flow validation.
 
-**Pillar VII (HybridShield):** Expressed through `POST /emergency/override`, `GET /emergency/status`, `GET /audit/custodians/{custodianId}/heartbeat`, `GET /regulator/custodian-quorum`, and `POST /pillars/{pillarId}/configure`. Schema anchor: `TriCameralApproval_v1_0_0`, `EmergencyOverrideRequest_v1_0_0`, `EKRRecord_v1_0_0`.
+**Pillar VII (HybridShield):** Expressed through `POST /emergency/override`, `GET /emergency/status`, `GET /governance/custodians/{custodianId}/heartbeat`, `GET /regulator/custodian-quorum`, and `POST /pillars/{pillarId}/configure`. Schema anchor: `TriCameralApproval_v1_0_0`, `EmergencyOverrideRequest_v1_0_0`, `EKRRecord_v1_0_0`.
 
-**Pillar VIII (Anchors):** Expressed through `GET /audit/verifications/merkle/{merkleRoot}`, `GET /audit/verifications/inclusion/{logId}`, and the `SuccessionDeclaration_v1_0_0` schema. The `canonicalArtifactNameHashes` and `canonicalMandateHashes` sections of `eip712_typed_data.json` are Pillar VIII artifacts.
+**Pillar VIII (Anchors):** Expressed through `GET /governance/verifications/merkle/{merkleRoot}`, `GET /governance/verifications/inclusion/{logId}`, and the `SuccessionDeclaration_v1_0_0` schema. The `canonicalArtifactNameHashes` and `canonicalMandateHashes` sections of `eip712_typed_data.json` are Pillar VIII artifacts.
 
-**Cross-pillar dependency notes:** Pillar V regulatory failures feed Pillar VII (HybridShield audit escalation). Pillar I (EpistemicHold) activation degrades all eight Pillar statuses in `LanternStatus.pillarStatuses`. Pillar VIII (Anchors) provides the cryptographic substrate on which Pillar II (ImmutableLedger) depends.
+**Cross-pillar dependency notes:** Pillar V regulatory failures feed Pillar VII (HybridShield governance escalation). Pillar I (EpistemicHold) activation degrades all eight Pillar statuses in `LanternStatus.pillarStatuses`. Pillar VIII (Anchors) provides the cryptographic substrate on which Pillar II (ImmutableLedger) depends.
 
 ---
 
@@ -183,32 +183,32 @@ The three domain evaluation endpoints represent "Ternary Logic" (TL) governance 
 
 `POST /evaluate/supply-chain` is the supply chain governance surface. It returns `chainMetadata` with `carbonFootprintVerified` and `laborStandardCompliance`. These fields are the direct expression of Paris Agreement compliance at the supply chain level.
 
-All three domain endpoints require `GoukassianPrincipleBlock` in the request body. All three are tagged `Regulatory Compliance` and `Decision Engine`. All three are on the Inference Lane path group and return `TLResult` objects, not `StateEnvelope` objects. The `POST /audit-logs` step is required before any Proceed determination from these endpoints may authorize actuation.
+All three domain endpoints require `GoukassianPrincipleBlock` in the request body. All three are tagged `Regulatory Compliance` and `Decision Engine`. All three are on the Inference Lane path group and return `TLResult` objects, not `StateEnvelope` objects. The `POST /governance-logs` step is required before any Proceed determination from these endpoints may authorize actuation.
 
 ---
 
-## Section 10 [NORMATIVE]: Auditor and Regulator Surface
+## Section 10 [NORMATIVE]: Governance and Regulator Surface
 
 The following 6-step workflow describes a complete compliance verification using only endpoints defined in `tl_openapi.yaml`.
 
-**Step 1: Verify the Merkle anchor.** `GET /audit/verifications/merkle/{merkleRoot}`. The auditor supplies the Merkle root from a log record under review. The response confirms `verified: true`, `anchoredAt`, and `blockchainTxHash`. This step confirms that the Merkle batch containing the log under review is on-chain.
+**Step 1: Verify the Merkle anchor.** `GET /governance/verifications/merkle/{merkleRoot}`. The auditor supplies the Merkle root from a log record under review. The response confirms `verified: true`, `anchoredAt`, and `blockchainTxHash`. This step confirms that the Merkle batch containing the log under review is on-chain.
 
-**Step 2: Verify log inclusion.** `GET /audit/verifications/inclusion/{logId}`. The auditor supplies the `logId`. The response provides the full Merkle inclusion proof path (`merklePath`), `leafHash`, and `merkleRoot`. The auditor can independently verify the proof offline.
+**Step 2: Verify log inclusion.** `GET /governance/verifications/inclusion/{logId}`. The auditor supplies the `logId`. The response provides the full Merkle inclusion proof path (`merklePath`), `leafHash`, and `merkleRoot`. The auditor can independently verify the proof offline.
 
-**Step 3: Retrieve the anchored TGLF record.** `GET /audit-logs/{logId}`. The auditor retrieves the full TGLF record and the embedded `StateEnvelope`. For State +1 records, the `permissionToken` field is present and can be verified against the Merkle root from Step 1.
+**Step 3: Retrieve the anchored TGLF record.** `GET /governance-logs/{logId}`. The auditor retrieves the full TGLF record and the embedded `StateEnvelope`. For State +1 records, the `permissionToken` field is present and can be verified against the Merkle root from Step 1.
 
 **Step 4: Verify the RFC 3161 timestamp.** `GET /regulator/timestamp-verification/{logId}`. The auditor verifies the qualified timestamp of the log entry. The response carries the `rfc3161Token` bytes and `tsaIssuer`.
 
-**Step 5: Pull the Eight Pillar compliance attestation.** `GET /audit/compliance/attestation`. The auditor retrieves the signed attestation covering all 8 Pillars, with per-pillar `complianceStatus` and `attestationHash`.
+**Step 5: Pull the Eight Pillar compliance attestation.** `GET /governance/compliance/attestation`. The auditor retrieves the signed attestation covering all 8 Pillars, with per-pillar `complianceStatus` and `attestationHash`.
 
-**Step 6: Export regulatory evidence.** `POST /regulator/evidence-export`. For bulk audit requirements, the auditor requests a signed, Merkle-verified archive. The asynchronous response provides an `exportJobId` for status tracking.
+**Step 6: Export regulatory evidence.** `POST /regulator/evidence-export`. For bulk governance requirements, the auditor requests a signed, Merkle-verified archive. The asynchronous response provides an `exportJobId` for status tracking.
 
 ### Monograph Reference Index
 
 The following is a machine-readable list of all `x-tl-monograph-ref` values used across `tl_openapi.yaml` endpoints:
 
 - `"Constitutional Hardware Monograph, Section I"` - Core TLState definitions; Inference Lane; Refusal State
-- `"Constitutional Hardware Monograph, Section II"` - Audit Lane; Epistemic Hold; Gateway; DLLA; Permission Token; EscrowRecord
+- `"Constitutional Hardware Monograph, Section II"` - Governance Lane; Epistemic Hold; Gateway; DLLA; Permission Token; EscrowRecord
 - `"Constitutional Hardware Monograph, Section III"` - Goukassian Principle; Eight Pillars; Regulatory Nexus; Tri-Cameral; EKR; Succession Declaration
 - `"Constitutional Hardware Monograph, Section IX.3"` - Emergency Override
 - `"Constitutional Hardware Monograph, Section X"` - DITL Hardware Interface; Implementation Gap; custodian quorum latency
@@ -219,11 +219,11 @@ The following is a machine-readable list of all `x-tl-monograph-ref` values used
 
 ### 11.1 Architecture B Hybrid Model (SHIPPING Baseline)
 
-The SHIPPING baseline for this specification is Architecture B: software enforcement with DITL attestation where available. This model uses the `NULL_PUF_DEPLOYMENT` sentinel value in `NLNAAuditToken.pufAttestation` for non-MT deployments.
+The SHIPPING baseline for this specification is Architecture B: software enforcement with DITL attestation where available. This model uses the `NULL_PUF_DEPLOYMENT` sentinel value in `NLNAGovernanceToken.pufAttestation` for non-MT deployments.
 
 Architecture B compensating controls: the `windowComparatorReading.softwareEnforcementActive: true` field in `EscrowRecord` signals that software-layer enforcement is active in place of physical DITL gate enforcement. The `TLCapabilityFlags.pufAttestationMode: "ARCHITECTURE_B"` capability flag in `tl_openapi.yaml` informs consumers of the deployment posture.
 
-`NLNAAuditToken.pufAttestation` must be set to the string `"NULL_PUF_DEPLOYMENT"` for all non-MT deployments. This sentinel value maintains schema integrity without silently omitting the field.
+`NLNAGovernanceToken.pufAttestation` must be set to the string `"NULL_PUF_DEPLOYMENT"` for all non-MT deployments. This sentinel value maintains schema integrity without silently omitting the field.
 
 ### 11.2 MT Integration (FUTURE)
 
@@ -243,9 +243,9 @@ The PUF Attestation Chain consists of five elements: enrollment, foundry attesta
 
 ### 12.1 Ephemeral Key Rotation (EKR)
 
-EKR is defined in `EKRRecord_v1_0_0` in `tl_schema.json`. Ephemeral keys protect proprietary information during the key's active lifetime while preserving auditability after expiration. The `auditRetentionAnchor` SHA-256 field ensures that the audit trail survives key destruction.
+EKR is defined in `EKRRecord_v1_0_0` in `tl_schema.json`. Ephemeral keys protect proprietary information during the key's active lifetime while preserving auditability after expiration. The `governanceRetentionAnchor` SHA-256 field ensures that the governance trail survives key destruction.
 
-The `hkdfSha3256Confirmed: true` field confirms that HKDF-SHA3-256 key derivation was used for this rotation event, which is the SHIPPING mitigation for GDPR Article 17 compliance. Key destruction via HKDF-SHA3-256 achieves cryptographic erasure: the underlying data becomes computationally irrecoverable while the audit record remains intact.
+The `hkdfSha3256Confirmed: true` field confirms that HKDF-SHA3-256 key derivation was used for this rotation event, which is the SHIPPING mitigation for GDPR Article 17 compliance. Key destruction via HKDF-SHA3-256 achieves cryptographic erasure: the underlying data becomes computationally irrecoverable while the governance record remains intact.
 
 ### 12.2 GDPR Cryptographic Erasure
 
@@ -275,7 +275,7 @@ Three fields are mandatory and never omitted on any error response:
 
 `x-tl-trace-id` (UUID v4): echoed from the originating request `X-TL-Trace-Id` header.
 
-**GhostGovernanceDetectedError** carries `x-tl-state: -1` or `x-tl-state: 0`, never omitted. Ghost Governance is governance actions executing without corresponding immutable audit evidence. It is eliminated by NL=NA at the physical commit boundary. When detected (e.g., an actuation attempt without a registered Permission Token), the error carries `tlErrorCode: "GHOST_GOVERNANCE_DETECTED_ERROR"`.
+**GhostGovernanceDetectedError** carries `x-tl-state: -1` or `x-tl-state: 0`, never omitted. Ghost Governance is governance actions executing without corresponding immutable governance evidence. It is eliminated by NL=NA at the physical commit boundary. When detected (e.g., an actuation attempt without a registered Permission Token), the error carries `tlErrorCode: "GHOST_GOVERNANCE_DETECTED_ERROR"`.
 
 **SuccessionDeclarationExpiredError** carries `tlErrorCode: "SUCCESSION_DECLARATION_EXPIRED_ERROR"` and `x-tl-pillar: "Anchors"`. It signals that a required Succession Declaration has passed its `validUntil` timestamp.
 
@@ -288,16 +288,16 @@ Three fields are mandatory and never omitted on any error response:
 The `X-TL-Trace-Id` UUID v4 header is the constitutional thread connecting every layer of the governance stack. The following sequence describes its propagation.
 
 ```
-Client                    Inference Lane              Audit Lane                 Regulator
+Client                    Inference Lane              Governance Lane            Regulator
   |                            |                          |                          |
   |-- POST /decisions -------->|                          |                          |
   |   X-TL-Trace-Id: T1        |                          |                          |
   |<-- TLResult + decisionId --|                          |                          |
   |   X-TL-Trace-Id: T1        |                          |                          |
   |                            |                          |                          |
-  |-- POST /audit-logs --------|------------------------->|                          |
+  |-- POST /governance-logs ---|------------------------->|                          |
   |   X-TL-Trace-Id: T1        |                          |                          |
-  |   (bound to T1 by NLNAAuditToken)                     |                          |
+  |   (bound to T1 by NLNAGovernanceToken)                |                          |
   |<-- StateEnvelope + PermissionToken ------------------|                          |
   |   X-TL-Trace-Id: T1        |                          |                          |
   |                            |                          |                          |
@@ -311,7 +311,7 @@ Client                    Inference Lane              Audit Lane                
   |   (archive contains T1-linked TGLF records, PermissionTokens)             |
 ```
 
-The `X-TL-Trace-Id` T1 appears in: the `POST /decisions` request and response, the `POST /audit-logs` request and response (cryptographically bound via `NLNAAuditToken`), any `StateEnvelope` returned by the Audit Lane, the `epistemicHold.escalation` webhook payload (`x-tl-trace-id` field), and the `POST /regulator/evidence-export` archive (linking all records to T1).
+The `X-TL-Trace-Id` T1 appears in: the `POST /decisions` request and response, the `POST /governance-logs` request and response (cryptographically bound via `NLNAGovernanceToken`), any `StateEnvelope` returned by the Governance Lane, the `epistemicHold.escalation` webhook payload (`x-tl-trace-id` field), and the `POST /regulator/evidence-export` archive (linking all records to T1).
 
 The `x-tl-idempotency` guarantee on all webhook payloads uses `event_id` (UUID v4) as the deduplication key. Receivers must deduplicate by `event_id`, not by `x-tl-trace-id`, since a single trace may produce multiple webhook events.
 
