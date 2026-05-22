@@ -1,79 +1,202 @@
-## The Permission Token for Oat Milk: A Tale of Ternary Logic in the Financial District Lobby
+# TL API Specification Suite: The "Ternary Logic" (TL) Framework
 
-There we were, I with my friend Marcus, we are both Senior AI Infrastructure Architects at JPMorgan Chase, in the glass-and-marble lobby of the Financial District’s most aggressively air-conditioned WeWork, when someone handed us a binder titled “TL API Specification Suite: The Ternary Logic Framework, May 2026.” Author: Lev Goukassian. The someone was a courier in a bike helmet, sweat gluing a delivery manifest to his glove, and by the time he shoved the five-pound brick of paper into my chest I was already too startled to refuse. He said, “Sign here. Also, he said to read section four first.” Then he vanished into the revolving door like a man who had just delivered a constitutional crisis and was legally required to flee.
+### Prologue: I Read This Document So You Don't Have To
 
-The binder was not a binder in any office-supply sense. It was a slab of legal-grade vinyl, the kind that holds settlement agreements or nuclear launch procedures, and across its spine ran a single line in embossed silver: Goukassian Vow. Marcus, who has spent his career optimizing GPU clusters to shave microseconds off trade execution, tilted his head and whispered, “Is this a manifesto?” I opened it. The first page was not a title page. It was a block of text that read, in eighteen-point serif, “Pause when truth is uncertain -> State 0 (Epistemic Hold). Refuse when harm is clear -> State -1 (Refuse). Proceed where truth is -> State +1 (Proceed).” Under that, a smaller line: “This is the constitutional logic of every state transition in this specification.”
+Before diving into the specification files, we recommend reading **[I_Read_API_Documents_So_You_Don't_Have_To.md](https://github.com/FractonicMind/TernaryLogic/blob/main/API/I_Read_API_Documents_So_You_Don't_Have_To.md)** — a companion narrative that restores the constitutional thread inside schema constraints and ABI function signatures. Engineers, auditors, and policymakers who encounter a 14-file API specification suite can easily lose that thread. This companion piece restores it.
 
-Marcus leaned over. “Did someone just hand-deliver a constitution?” I turned the page. There were fourteen files inside: YAML OpenAPI definitions, JSON schemas, ABI bundles, EIP-712 typed data schemas, a compliance matrix, an architecture document, a future-blocked appendix. The paper smelled faintly of toner and relentless conviction. The coffee machine behind us, a gleaming stainless-steel monument that required a corporate badge tap to dispense anything, beeped and demanded an oat-milk permission token. Marcus reflexively tapped his badge. The screen flickered with an error: “Epistemic Hold Active: Please see barista.” We had not yet read section four, but the universe was already aligning.
+You can also listen to the full AI-generated deep-research interview: **[Preventing Financial Collapse With Ternary Hardware](https://fractonicmind.github.io/TernaryLogic/API/Preventing_Financial_Collapse_With_Ternary_Hardware.mp3)**
 
-I sat down on a lobby bench that cost more than my first car and began to read aloud, with the performative horror of a man discovering that his entire profession has been built on a two-state lie. “The binary system proposes. The ternary system decides. The Permission Token is the only key that opens the actuation gate.” Marcus, who holds a PhD in distributed systems, said, “Wait. Are they telling me our billion-dollar inference engine can only suggest things? That it has no authority to execute?” I flipped deeper. The schema section hit first: a JSON Schema definition called StateEnvelope with an if/then constraint that made my eyes water. If currentState equals one, then permissionToken is required. Not optional. Required. And unevaluatedProperties was set to false, which meant you could not sneak a stray Boolean into the payload and hope the system would blink. “This is schema-level enforcement of a moral principle,” I said. “They’ve weaponized JSON validation.”
+---
 
-Marcus grabbed the binder and began scanning the PermissionToken definition. His finger stopped on a field called laneOrigin, which had a const value of “AUDIT_LANE.” He whispered, “So if any token tries to claim it came from the Inference Lane, it fails schema validation before it even reaches the API. They’ve killed the possibility of a rogue AI authorizing its own trades at the data contract layer.” We looked at each other. Two hours earlier we had been debugging a Kafka topic misconfiguration. Now we were staring into a governance architecture that treated a missing log entry not as a bug but as a constitutional void.
+## Overview: The Constitution in Code
 
-I pulled out the file called Specification_Architecture.md and began to read Section 4: NL=NA Schema-Level Enforcement. The phrase “No Log = No Action” repeated with the cadence of a legal incantation. It was not a logging policy. It was an iron law enforced at five independent layers: the schema, the API contract, the on-chain smart contract, the EIP-712 signing domain, and the prose architecture document. “Bypassing one layer does not bypass the others,” the document said, as if anticipating that some future engineer would try to route around it with a cron job. Marcus muttered, “They’ve built a Byzantine fault tolerance against their own developers.” He was right. The document anticipated every shortcut: you could not forge a PermissionToken because the laneOrigin const would invalidate it. You could not forge that because the smart contract would check the keccak256 hash of “AUDIT_LANE” and revert with a custom error called NLNAViolation. And you could not forge the smart contract because the Merkle root of the log had to be anchored on-chain before the token registration would succeed. The coffee machine beeped again: “Uncertainty score 0.7. Governance pause requested.”
+The TL API is not a conventional REST interface. It is the software expression of a constitutional enforcement architecture: a sovereign governance coprocessor that operates in parallel with a binary inference engine and holds absolute authority over whether any proposed action crosses the threshold into execution.
 
-I discovered the Epistemic Hold section next, and this is when my professional identity began to unravel. The document stated, with the patience of a monk, that State 0 was not a null. Not an error. Not a timeout. Not a retry. It was a first-class constitutional state of mandatory hesitation. The EscrowRecord schema required a holdRationale with an uncertaintyScore between zero and one, a resolutionDeadline, and a requiredConditions array. The system could pause a trade because it was uncertain, and that pause was not a failure; it was the system doing its job. Marcus, who has spent his career trying to reduce AI latency to zero, rocked back on the bench and said, “They’ve made slowness a feature. A legally required feature.” I read aloud: “The word ‘uncertain’ is the constitutional basis for State 0 never being an error, null, timeout, or retry. Uncertainty is not failure; it is constitutional information.” He groaned. “Our compliance department is going to print this on a banner and hang it over my desk.”
+The binary system proposes. The ternary system decides. The **Permission Token** is the only key that opens the actuation gate. Without a cryptographically valid token issued by the **Governance Lane**, no proposed State +1 action may execute. This is the **No Log = No Action** (NL=NA) iron law, enforced simultaneously at the schema layer, the API contract layer, the on-chain ABI layer, and the EIP-712 signing layer. There is no software path around it in a conforming implementation.
 
-Then came the EIP-712 typed data schema bundle, a separate file that defined domain separators for GovernanceTraceLog, PermissionToken, EmergencyOverride, and GoukassianSignatureAttestation. The domain separator bound every signature to a specific contract, chain ID, and monograph version. The document dryly noted that this prevented cross-domain and cross-version replay attacks. Marcus, who once accidentally replayed a testnet transaction on mainnet and had to explain a six-figure phantom trade to the risk committee, stared at the page with the reverence of a survivor. “They’ve eliminated the replay vector entirely,” he said. “You can’t take a signature from a staging environment and replay it in production because the domain separator includes the chain ID and the monograph version string.” I saw a small note: “canonicalArtifactNameHashes records keccak256 pre-images for all three Goukassian Principle artifact names.” The word “lantern” was hashed to a precise 256-bit value. The word “signature” was hashed. The word “license” was hashed. These hadhes were not decorative. They were referenced in the smart contract ABI so that no function could mistake a lantern for a signature. The attention to detail was so absolute that I felt, for a moment, that our own AI platform was a house of cards built in a wind tunnel.
+The **Epistemic Hold** (State 0) is the most constitutionally significant state in the framework. It is not a null. It is not an error. It is not a timeout. It is a first-class governance state of mandatory hesitation that holds execution pending verified completion of legitimate process. It cannot be argued away. It can only be resolved by a human reviewer or a Tri-Cameral custodian quorum with a terminal state of +1 or -1. State 0 is constitutionally invalid as a resolution target.
 
-And then we reached the Future_Blocked_Appendix.md, the document that cataloged features the framework considered constitutionally desirable but which physics and HSM toolchain readiness had not yet permitted. Sub-300ms cross-jurisdiction custodian quorum: blocked by network latency. Real-time per-trade blockchain anchoring: blocked by throughput asymmetry at institutional scale. Full DITL hardware ternary enforcement at TSMC N2: blocked by foundry availability. Quantum-resistant signatures with SLH-DSA-SHAKE-128s: blocked by HSM vendor roadmaps. And, with a candor that bordered on philosophical, it admitted three residual sub-gaps in the cryptographic erasure approach to GDPR Article 17, listing them as “regulatory interpretation,” “erasure key registry dependency,” and “metadata residue.” I looked up. “Marcus, they filed a bug report against the laws of physics and the interpretation of European privacy law.” He nodded, his face the color of someone who has just realized his entire technology stack is a polite suggestion compared to a framework that refuses to proceed without immutable evidence.
+### The Goukassian Vow
 
-That was when the reckless academic curiosity kicked in. Marcus noticed a small URL printed at the bottom of the binder’s cover: a GitHub repository, FractonicMind/TernaryLogic, and in the contributors section, a single name with a messenger contact. I pulled out my phone, opened a video call, and before I could talk myself out of it, an invitation was sent. The screen blinked. A man answered.
+```
+"Pause when truth is uncertain"  →  State  0  (Epistemic Hold)
+"Refuse when harm is clear"      →  State -1  (Refuse)
+"Proceed where truth is"         →  State +1  (Proceed)
+```
 
-Lev Goukassian appeared in a room that looked like a cross between a library and a hardware lab. A whiteboard behind him was covered in diagrams of state machines and what looked like a hardware Window Comparator circuit. He had the calm expression of someone who had already anticipated this conversation and was pleased it was happening on schedule. “You got the binder,” he said, not as a question.
+---
 
-I sputtered. “This is the most terrifying API I have ever seen. You’ve turned a REST interface into a constitutional enforcement layer. You require a permission token before any action can execute. The token must come from an audit lane that runs on an HSM and verifies Merkle proofs. You’ve made the binary inference engine a subordinate that can only propose, never decide. Do you understand what this does to our latency budget?”
+## Architecture: The Dual-Lane System
 
-Lev smiled, faintly. “Latency is a feature when the alternative is executing without understanding. A system that decides before it understands is not governing, it is gambling with borrowed authority.” Marcus scribbled that sentence on a napkin. Lev continued, “The binary system is fast. It recognizes patterns. It proposes. But proposal without audit is not governance; it is automation wearing a tie. The ternary lane does not compete on speed. It competes on legitimacy.”
+![Dual-Lane Architecture](https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_dual_lane_architecture.png?raw=true)
 
-Marcus chimed in, holding up the binder open to the NL=NA section. “Five layers. You embedded this rule in schemas, API contracts, EIP-712 domains, on-chain Merkle verification, and prose documentation. Why five? Isn’t one enough?”
+The entire API is organized around two structurally distinct lanes, each with its own security scheme, latency envelope, and constitutional function.
 
-Lev leaned forward. “Because people are very good at finding ways around single rules. They’ll modify a JSON payload, or forge a JWT, or bypass an API gateway, or rewrite a smart contract. Each layer is independent. Break one, the next holds. The on-chain layer, Layer Five, is the final backstop: if the log isn’t anchored in a Merkle root committed on-chain, the token registration reverts. It doesn’t matter what you did to the schemas or the tokens. The blockchain won’t accept it. That’s the constitutional settlement layer.”
+**Inference Lane:** The binary inference engine submits proposed decision vectors via `POST /decisions` and receives a `TLResult`. A `TLResult` returning State +1 from the Inference Lane does not authorize actuation. The Inference Lane cannot issue Permission Tokens. Security scheme: `TLGovernanceJWT`. This separation is enforced at the schema level by the `StateEnvelope` `if/then` constraint in `tl_schema.json`.
 
-I asked, because I had to, “What about emergencies? You can’t tell me a system can never move fast. Markets crash. Circuits trip.”
+**Governance Lane:** The ternary governance layer receives the complete TGLF record via `POST /governance-logs`, performs its own independent evaluation, and — only when the Governance Lane confirms log completion and Merkle anchoring — issues a Permission Token. The token carries `laneOrigin: const "GOVERNANCE_LANE"`. Security schemes: `HSMSignedJWT` and `NLNAGovernanceToken`. No token, no execution. No log, no token.
 
-Lev’s expression didn’t change. “The emergency override is in spec. It has three types: break-glass shutdown, kill switch, forced state transition. The forced state can only be -1 or 0. Forced +1 is constitutionally blocked and will revert. Even in an emergency, you cannot force the system to proceed. You can freeze. You can refuse. You cannot force a decision that requires truth you don’t have. That’s the Goukassian Vow in hardware.”
+---
 
-I stared at him. “You’ve basically made Epistemic Hold a constitutional right for the system. It can say, ‘I don’t know, ask a human.’” Lev nodded. “And the human must resolve it with a terminal state of +1 or -1, and the resolution must carry a TriCameralApproval with a binding veto from stewardship custodians. State 0 is not a valid resolution. You cannot escape the question by staying in hesitation forever. There is a deadline. Governance pause is a workflow, not a permanent vacation.”
+## Core Constitutional Enforcement
 
-Marcus looked up from the Future_Blocked_Appendix. “You listed things you can’t build yet because of physics. Who does that? Documenting your own impossibility?”
+![NL=NA Five-Layer Stack](https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_nlna_five_layer_stack.png?raw=true)
 
-“Because someday those constraints will be lifted,” Lev said. “When TSMC delivers the N2 node with DITL transistors, the hardware ternary gates become available. When post-quantum HSM toolchains mature, the signature algorithms shift. Until then, you know exactly what the gap is. You don’t pretend. You don‘t paper over. You document the sentinel value NULL_PUF_DEPLOYMENT and you run Architecture B with software enforcement. Transparency is a pillar. Pillar III, actually.”
+NL=NA is enforced at five independent layers. Bypassing one layer does not bypass the others.
 
-I flipped to the Goukassian Principle section. “You made a lantern, a signature, and a license into API resources. And you gave them canonical lowercase artifact names. Why?”
+`TL_Ledger_Core.sol` and `ITL_Validator.sol` are the on-chain enforcement layer. Even if a Permission Token were constructed that passed all off-chain schema validations, its registration on-chain would fail unless the authorizing TGLF record is already anchored in a previously committed Merkle root. The `NLNAViolation` custom error is the final constitutional backstop.
 
-“Because symbols matter. The lantern broadcasts governance posture. If the lantern says EPISTEMIC_HOLD_ACTIVE, everyone knows the system is pausing. The signature proves who attested to the state. The license defines the scope of permitted actions. If you exceed the license scope, the system refuses. Not because a human reviewed it, but because the schema enforced it. That’s accountability at machine speed.”
+---
 
-The coffee machine in the lobby emitted a loud, frustrated beep and displayed: “Resolution deadline approaching. Please insert human reviewer credentials.” Marcus glanced at it, then back at Lev on the screen. “Is that thing running your stack?”
+## The Three Triadic States
 
-Lev’s eye twinkled. “No, but it should. Oat milk inventory uncertainty is a real governance problem.” For the first time, I laughed. It was not a comfortable laugh. It was the laugh of an engineer who has just realized the future is ternary and everyone else is still flipping Booleans.
+![Goukassian Vow State Machine](https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_goukassian_vow_state_machine.png?raw=true)
 
-We asked about Ghost Governance. Lev’s voice became precise. “Ghost governance is when an action executes without a corresponding immutable log. In most systems, it’s a missing log line. In our system, it triggers an error code, GHOST_GOVERNANCE_DETECTED_ERROR, which carries an x-tl-state of -1 or 0. It’s not subtle. It’s a constitutional violation. The system will refuse to proceed, and it will tell you exactly why. The NL=NA physical commit boundary means you can’t actuate without logging. Log precedes action. Always.”
+Every object in this specification carries a `currentState` field drawn from exactly three values: `+1`, `0`, `-1`. These are signed integers, not enumerations of convenience. The `StateEnvelope` schema enforces the constitutional consequence of each value through `if/then` constraints: State +1 requires a `permissionToken`; States 0 and -1 prohibit one.
 
-I thought about the trading floor, about the thousands of decisions per second executed by models that could propose but not verify. “You’ve just made high-frequency trading an Epistemic Hold waiting to happen.”
+---
 
-“Only if the trades are uncertain,” Lev said. “Uncertainty is not failure. If the truth is present and verified, the Permission Token issues in the Audit Lane and the gateway opens. The Audit Lane has a hard latency ceiling of 300 milliseconds. It’s designed to be decisively fast enough for institutional use. The delay is the price of legitimacy.”
+## TGLF: The Governance Log Variants
 
-Marcus, ever the optimizer, asked, “What if we want to run it with sub-300ms cross-jurisdiction quorum? Your appendix says that’s FUTURE.”
+![Decision Lifecycle](https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_decision_lifecycle.png?raw=true)
 
-“Then you wait, or you help build it. The specification is open. The monograph is published. The implementation gap is listed. If you have a solution for geographic consensus under the speed of light, I am genuinely interested.” He said it without sarcasm. He meant it.
+Every governance decision generates a Ternary Governance Log Format (TGLF) record. The discriminator on `currentState` routes to one of three forensic log variants. `TGLF_StateP1` carries the Permission Token, the Goukassian Principle Block, and the Merkle anchoring proof. `TGLF_State0` carries the uncertainty quantification, the deliberation matrix, and the Epistemic Hold escalation record. `TGLF_StateNeg1` carries the license violation record, the threat vector analysis, and the chain of custody. Every variant requires `committedAt` before the Governance Lane releases any authorization. The log precedes the action. Always.
 
-I looked down at the binder. The Tab for the EIP-712 domain separator listed a field: “canonicalArtifactNameHashes.” I asked, “Why hash the word ‘lantern’? It’s just a string.”
+---
 
-“Because in a blockchain environment, strings are expensive and ambiguous. Hashing ‘lantern’ to a bytes32 gives you a deterministic, gas-efficient, collision-resistant identifier. It also means no one can claim a different lantern. The pre-image is recorded in the EIP-712 typed data schema. The on-chain contract verifies the keccak256 of what you claim is your artifact. If it doesn’t match, revert. No ambiguity. No imprecise string comparisons. That’s engineering.”
+## Tri-Cameral Governance
 
-The call went on. We asked about the tri-cameral governance structure: a technical council of nine, stewardship custodians of eleven with a binding veto, and a smart contract treasury with no admin key. “Each chamber has a different incentive horizon,” Lev said. “The technical council optimizes for near-term feasibility. The custodians protect long-term constitutional principles and can veto. The smart contract executes without human intervention. That removes the backdoor. No admin key, no override. The most dangerous person in any governance system is the one who can press the button alone. We removed the button.”
+![Tri-Cameral Governance](https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_tri_cameral_governance.png?raw=true)
 
-Marcus asked, “And if the custodians all go rogue?”
+State-mutating operations require `TriCameralApproval`. The Technical Council (9 members) holds proposal rights. The Stewardship Custodians (11 members) hold binding veto authority — `vetoExercised: true` blocks constitutionally. The Smart Contract Treasury executes automatically with no admin key and no human override path. Emergency overrides are logged before execution. `forcedState` enum is limited to [-1, 0]. Forced +1 is constitutionally blocked and will revert `UnauthorizedOverride`.
 
-“Then you have a deeper problem than software. The tri-cameral split ensures no single group can capture the system. The veto is binding, but the custodians can’t propose. They can only block. Separation of powers is not a metaphor; it’s implemented in smart contract function modifiers.”
+---
 
-We fell silent. Outside the WeWork, the Financial District hummed with the sound of a billion binary propositions per second. I thought about the coffee machine again, about its refusal to dispense oat milk because something, somewhere, was uncertain. And I realized that this framework was not a joke. It was the first architecture I had ever seen that treated the act of not knowing as constitutionally significant.
+## Emergency Override
 
-Lev spoke one more time, unprompted. “The binary world gave us speed. It did not give us legitimacy. Legitimacy requires hesitation when truth is absent, refusal when harm is evident, and proof before execution. That’s the ternary shift. It’s not a philosophy. It’s a state machine with schema validation.”
+![Emergency Override](https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_emergency_override.png?raw=true)
 
-The call ended gently. Marcus folded the napkin with the quote and tucked it into his pocket. I closed the binder, which now felt less like a manifesto and more like a design document that had somehow outgrown the category. We sat in the aggressively air-conditioned lobby, the coffee machine still pulsating with epistemic uncertainty, and I said, “We’re going to have to explain this to the managing director.”
+`POST /emergency/override` is the break-glass surface. Three override types: `BREAK_GLASS_SHUTDOWN`, `KILL_SWITCH`, `FORCED_STATE_TRANSITION`. NL=NA applies without exception. The governance log is written before the state change fires. This ordering is constitutional.
 
-Marcus nodded. “Tell him the binary engine proposes. The ternary engine decides. And if he wants oat milk, he’ll need a permission token from an audit lane.” He paused. “Also, we need to hire eleven stewardship custodians.”
+---
 
-I looked at the binder’s cover. In tiny print, under the title, was the line: “A system that decides before it understands is not governing, it is gambling with borrowed authority.” The quote had already been spoken, but its resonance lingered. We had spent the afternoon discovering a constitutional coprocessor hidden inside a REST API, and now the only question was whether the rest of the financial system would pause long enough to read the schemas. Probably not. But at least, for the first time, the refusal would be properly logged.
+## Repository Artifacts and Documentation
+
+### 1. OpenAPI Specification
+
+The canonical, machine-parseable API contract. Defines all 40 endpoints across 12 path groups, 5 security schemes, request and response schemas, 2 webhook callbacks, and the dual-lane architectural separation. Import directly into Swagger UI, Postman, or any OpenAPI-compliant code generator.
+
+- **Source:** [tl_openapi.yaml](https://github.com/FractonicMind/TernaryLogic/blob/main/API/tl_openapi.yaml)
+- **Web:** [View HTML](https://fractonicmind.github.io/TernaryLogic/API/openapi.html)
+
+### 2. TL JSON Schema Bundle
+
+The canonical schema bundle for all data types in the framework. 22 schemas, all enforcing `unevaluatedProperties: false`. Contains `StateEnvelope`, `PermissionToken`, all three TGLF variants, `GoukassianPrincipleBlock`, `EscrowRecord`, `SignatureBlock`, `LanternStatus`, `GovernanceProof`, `TriCameralApproval`, `EKRRecord`, `SuccessionDeclaration`, `TLProblemDetail`, and all primitives. The `if/then` constraint on `StateEnvelope` is the schema-level enforcement of NL=NA.
+
+- **Source:** [tl_schema.json](https://github.com/FractonicMind/TernaryLogic/blob/main/API/tl_schema.json)
+- **Web:** [View HTML](https://fractonicmind.github.io/TernaryLogic/API/schema.html)
+
+### 3. TL Smart Contract ABI Bundle
+
+Application Binary Interface definitions for `TL_Ledger_Core.sol` and `ITL_Validator.sol`. Covers `anchorMerkleRoot`, `registerPermissionToken`, `verifyPermissionToken`, `verifyMerkleInclusion`, `activateEpistemicHoldSystemWide`, `resolveEpistemicHoldSystemWide`, `executeEmergencyOverride`, `revokePermissionToken`, mandate verification functions, and all custom errors. No Solidity source code. The on-chain layer is the final arbiter of token validity.
+
+- **Source:** [tl_abi.json](https://github.com/FractonicMind/TernaryLogic/blob/main/API/tl_abi.json)
+- **Web:** [View HTML](https://fractonicmind.github.io/TernaryLogic/API/abi_eip712.html)
+
+### 4. EIP-712 Typed Data Schema Bundle
+
+EIP-712 domain separator and typed data schema definitions for `GovernanceTraceLog`, `PermissionToken`, `EmergencyOverride`, and `GoukassianSignatureAttestation`. Enables off-chain structured data signing with on-chain verifiability. Binds signatures to a specific contract, chain, and monograph version, preventing cross-domain and cross-version replay attacks. `canonicalArtifactNameHashes` records keccak256 pre-images for all three Goukassian Principle artifact names.
+
+- **Source:** [eip712_typed_data.json](https://github.com/FractonicMind/TernaryLogic/blob/main/API/eip712_typed_data.json)
+- **Web:** [View HTML](https://fractonicmind.github.io/TernaryLogic/API/abi_eip712.html)
+
+### 5. Specification Architecture
+
+The canonical prose companion to `tl_openapi.yaml` and `tl_schema.json`. 14 sections covering the Goukassian Vow as foundational architecture, the Dual-Lane system, NL=NA five-layer enforcement, Epistemic Hold operationalization, the Goukassian Principle artifacts as API resources, all Eight Pillars mapped to API paths, the Regulatory Nexus (Basel III, FATF, IOSCO, GDPR, Paris Agreement), Domain Evaluation endpoints, the complete governance verification workflow, DITL hardware interface, EKR and GDPR cryptographic erasure, error taxonomy, and trace propagation. Read this before reading the machine-readable files.
+
+- **Text:** [Specification_Architecture.md](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Specification_Architecture.md)
+- **Web:** [View HTML](https://fractonicmind.github.io/TernaryLogic/API/Specification_Architecture.html)
+
+### 6. Constitutional Compliance Matrix
+
+Maps every OpenAPI path and every JSON Schema definition to its Monograph section, TL Pillar, Regulatory Nexus, Implementation Status (SHIPPING / BETA / FUTURE), and Pillar Interactions. Includes NL=NA five-layer checklist, Epistemic Hold integrity checkpoints, Goukassian Principle artifact name audit, implementation gap summary, and dangling reference audit. Sufficient for auditor verification without reading implementation code.
+
+- **Text:** [Constitutional_Compliance_Matrix.md](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Constitutional_Compliance_Matrix.md)
+- **Web:** [View HTML](https://fractonicmind.github.io/TernaryLogic/API/Constitutional_Compliance_Matrix.html)
+
+### 7. Future and Blocked Features Appendix
+
+Explicit catalog of six features that are constitutionally desirable but not yet shipping due to named Section X constraints: real-time per-trade blockchain anchoring (throughput asymmetry), Post-Quantum Cryptography signature migration (SLH-DSA-SHAKE-128s and ML-KEM-1024, pending HSM readiness), full DITL/MT hardware deployment (pending TSMC N2 production silicon), sub-300ms cross-jurisdiction custodian quorum (network physics), full GDPR Article 17 native compliance (Erasure Paradox: three residual sub-gaps), and real-time cross-border Basel III monitoring at global volume. Every FUTURE feature has a defined SHIPPING mitigation already present in the specification.
+
+- **Text:** [Future-Blocked_Appendix.md](https://github.com/FractonicMind/TernaryLogic/blob/main/API/Future-Blocked_Appendix.md)
+
+### Audio Companion
+
+Full AI-generated deep-research interview covering the relationship between ternary hardware, financial collapse prevention, and the TL governance architecture.
+
+- **Listen:** [Preventing Financial Collapse With Ternary Hardware](https://fractonicmind.github.io/TernaryLogic/API/Preventing_Financial_Collapse_With_Ternary_Hardware.mp3)
+
+---
+
+## The Eight Pillars: API Coverage
+
+| Pillar | Identifier | Primary Endpoints | Status |
+|--------|-----------|-------------------|--------|
+| I - Epistemic Hold | `EpistemicHold` | `POST /decisions`, `GET/PATCH /epistemic-hold/escalations/*`, `POST /gateway/lane-assignment` | SHIPPING |
+| II - Immutable Ledger | `ImmutableLedger` | `POST /governance-logs`, `GET /governance-logs/{logId}`, `POST /refusals`, `GET /regulator/timestamp-verification/{logId}` | SHIPPING |
+| III - Goukassian Principle | `GoukassianPrinciple` | `GET /epistemic-hold/lantern`, `GET /goukassian/signature`, `POST /goukassian/license/validate`, `POST /refusals/license-violations` | SHIPPING |
+| IV - Decision Logs | `DecisionLogs` | `GET /decisions/{decisionId}`, `GET /thresholds/{domain}`, `PUT /thresholds/{domain}`, `GET /metrics/summary` | SHIPPING |
+| V - Economic Rights and Transparency | `EconomicRightsAndTransparencyMandate` | `POST /evaluate/trade`, `POST /redress/*`, `GET /regulator/basel-iii/attestation`, `POST /regulator/fatf/compliance-export` | SHIPPING |
+| VI - Sustainable Capital Allocation | `SustainableCapitalAllocationMandate` | `POST /evaluate/policy`, `POST /evaluate/supply-chain`, `GET /governance/compliance/attestation` | SHIPPING |
+| VII - Hybrid Shield | `HybridShield` | `POST /emergency/override`, `GET /emergency/status`, `GET /governance/custodians/{id}/heartbeat`, `GET /regulator/custodian-quorum` | SHIPPING (sub-300ms cross-jurisdiction: FUTURE) |
+| VIII - Anchors | `Anchors` | `GET /governance/verifications/merkle/{root}`, `GET /governance/verifications/inclusion/{logId}`, `POST /regulator/evidence-export` | SHIPPING (per-trade real-time anchoring: FUTURE) |
+
+---
+
+## Compliance and Regulatory Alignment
+
+This specification operationalizes international financial and AI governance standards through machine-verifiable enforcement rather than policy declaration:
+
+- **Basel III:** LCR >= 1.0, NSFR >= 1.0, capital adequacy, counterparty exposure, stress testing — enforced at `POST /evaluate/trade`, `GET /regulator/basel-iii/attestation`, and `RegulatoryContext.baselIii` schema fields.
+- **FATF:** Recommendations 6 (targeted financial sanctions), 10, 11 (record keeping), 20 (SAR), 29 (financial intelligence) — enforced at `POST /evaluate/trade`, `POST /regulator/fatf/compliance-export`, and `RegulatoryFlags.fatfFlags` schema fields.
+- **IOSCO:** Principles 34-38 (market integrity: layering, spoofing, wash trading, cross-market manipulation) — enforced at `POST /evaluate/trade`, `GET /regulator/iosco/principle-mapping`, and `RegulatoryFlags.ioscoFlags` schema fields.
+- **GDPR Article 17:** The Erasure Paradox is mitigated through cryptographic erasure via HKDF-SHA3-256 key hierarchy (EKR workflow). Three residual sub-gaps documented in `Future-Blocked_Appendix.md`.
+- **Paris Agreement:** Carbon footprint verification, green bond eligibility, ESG scoring — enforced at `POST /evaluate/policy`, `POST /evaluate/supply-chain`, and `RegulatoryContext.parisAgreement` schema fields.
+
+---
+
+## Governance Lane Enforcement: Active
+
+This specification is anchored to the TL framework's constitutional enforcement chain. The `PermissionToken.laneOrigin: const "GOVERNANCE_LANE"` constraint means no token can claim to originate from the Inference Lane. The `unevaluatedProperties: false` constraint throughout `tl_schema.json` means no undeclared field can introduce ambiguity into the enforcement logic. The on-chain `NLNAViolation` custom error means the blockchain layer reverts any token registration attempt that lacks a previously anchored log.
+
+| Enforcement Layer | Mechanism | File |
+|-------------------|-----------|------|
+| Schema | `StateEnvelope if/then` constraint | `tl_schema.json` |
+| API Contract | `PermissionToken.laneOrigin: const "GOVERNANCE_LANE"` | `tl_openapi.yaml` |
+| EIP-712 | Domain separator binding to contract and chain | `eip712_typed_data.json` |
+| On-Chain | `NLNAViolation` custom error in `TL_Ledger_Core` | `tl_abi.json` |
+| Prose | Five-layer enforcement chain documented | `Specification_Architecture.md` |
+| Governance | Full path-to-pillar-to-regulation mapping | `Constitutional_Compliance_Matrix.md` |
+
+---
+
+## Version and Authority
+
+| Field | Value |
+|-------|-------|
+| Version | `1.0.0-tl-monograph-2026` |
+| Authority | Constitutional Hardware Monograph 2026 |
+| Author | Lev Goukassian - ORCID [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243) |
+| Repository | [FractonicMind/TernaryLogic](https://github.com/FractonicMind/TernaryLogic) |
+| Published | AI and Ethics, Springer Nature - DOI [10.1007/s43681-025-00910-6](https://doi.org/10.1007/s43681-025-00910-6) |
+| Second Paper | AI and Ethics, Springer Nature - DOI [10.1007/s43681-026-01124-0](https://doi.org/10.1007/s43681-026-01124-0) |
+
+---
+
+### License
+
+This work is licensed under a Creative Commons Attribution 4.0 International License (CC BY 4.0).
+
+---
+
+### *"A system that decides before it understands is not governing, it is gambling with borrowed authority."* - Lev Goukassian
