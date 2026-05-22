@@ -6,7 +6,7 @@
 
   "implementationNotes": {
     "signedIntegerEncoding": "EIP-712 does not natively support signed integers in a way that preserves triadic semantics without explicit encoding conventions. The TL triadic state space (+1, 0, -1) is encoded as int8 in GovernanceTraceLog.currentState to preserve signed semantics. In EmergencyOverride.forcedState, uint8 encoding is used: 255 = Refuse (-1 integer), 0 = EpistemicHold (0 integer). Proceed (+1) is constitutionally blocked and has no valid uint8 encoding in EmergencyOverride. Implementations MUST reject forcedState values other than 0 and 255.",
-    "nlNaOffChainExpression": "The PermissionToken EIP-712 type binds logHash (SHA-256 of the anchored TGLF entry) and merkleRoot (batch anchor hash) into a typed signature. This off-chain expression of NL=NA ensures any signed PermissionToken is cryptographically tied to an immutable audit lane completion record, even before on-chain registration. Full NL=NA five-layer enforcement requires on-chain registration via TL_Ledger_Core.registerPermissionToken.",
+    "nlNaOffChainExpression": "The PermissionToken EIP-712 type binds logHash (SHA-256 of the anchored TGLF entry) and merkleRoot (batch anchor hash) into a typed signature. This off-chain expression of NL=NA ensures any signed PermissionToken is cryptographically tied to an immutable Governance Lane completion record, even before on-chain registration. Full NL=NA five-layer enforcement requires on-chain registration via TL_Ledger_Core.registerPermissionToken.",
     "pqcMigration": "signatureAlgorithmId values 6 (SLH-DSA-SHAKE-128s) and 7 (ML-KEM-1024) are reserved in GoukassianSignatureAttestation.signatureAlgorithmId for future PQC migration. SHIPPING implementations MUST use values 0 (ES256) or 1 (Ed25519) only.",
     "epistemicHoldInt8Semantics": "In GovernanceTraceLog.currentState, int8 value 0 encodes Epistemic Hold. This is a first-class constitutional state and MUST NOT be conflated with bool false, uint8(0) in other contexts, null, or any error condition.",
     "saltDerivation": "The domain salt keccak256(\"TL_API_SALT_V1_0_0\") is the specification placeholder. Real deployments MUST use a unique deployment-specific salt. The verifyingContract address placeholder MUST be replaced with the deployed TL_Ledger_Core address.",
@@ -67,14 +67,14 @@
     },
 
     "PermissionToken": {
-      "description": "EIP-712 type for Permission Token off-chain signing. logHash and merkleRoot bind this token to NL=NA off-chain expression. Any signed PermissionToken is cryptographically tied to an immutable Audit Lane completion record.",
+      "description": "EIP-712 type for Permission Token off-chain signing. logHash and merkleRoot bind this token to NL=NA off-chain expression. Any signed PermissionToken is cryptographically tied to an immutable Governance Lane completion record.",
       "typeString": "PermissionToken(bytes32 tokenId,bytes32 logHash,uint256 epochTimestamp,bytes32 signerKeyId,bytes32 merkleRoot,uint256 expiresAt,bytes32 decisionId,bytes32 monographVersionHash)",
       "fields": [
         { "name": "tokenId", "type": "bytes32", "description": "Permission Token unique identifier (keccak256 of UUID v4)." },
-        { "name": "logHash", "type": "bytes32", "description": "SHA-256 of the anchored TGLF entry. Core NL=NA binding. Must match AuditProof.logHash (Layer 4) and be provably included in an anchored Merkle root (Layer 5)." },
+        { "name": "logHash", "type": "bytes32", "description": "SHA-256 of the anchored TGLF entry. Core NL=NA binding. Must match GovernanceProof.logHash (Layer 4) and be provably included in an anchored Merkle root (Layer 5)." },
         { "name": "epochTimestamp", "type": "uint256", "description": "Unix epoch timestamp at token issuance." },
         { "name": "signerKeyId", "type": "bytes32", "description": "keccak256 of the HSM key identifier string." },
-        { "name": "merkleRoot", "type": "bytes32", "description": "SHA-256 batch anchor hash. Must match AuditProof.merkleRoot (Layer 4)." },
+        { "name": "merkleRoot", "type": "bytes32", "description": "SHA-256 batch anchor hash. Must match GovernanceProof.merkleRoot (Layer 4)." },
         { "name": "expiresAt", "type": "uint256", "description": "Unix epoch expiration. Actuation layer MUST reject tokens where block.timestamp >= expiresAt." },
         { "name": "decisionId", "type": "bytes32", "description": "UUID of the originating Inference Lane decision (keccak256 of UUID v4)." },
         { "name": "monographVersionHash", "type": "bytes32", "description": "keccak256 of the monograph version string." }
@@ -166,9 +166,9 @@
   },
 
   "laneOriginHash": {
-    "description": "keccak256 of the canonical AUDIT_LANE string. Used by TL_Ledger_Core.registerPermissionToken for NL=NA Layer 2 enforcement.",
-    "preImage": "AUDIT_LANE",
-    "hash": "keccak256(\"AUDIT_LANE\")",
+    "description": "keccak256 of the canonical GOVERNANCE_LANE string. Used by TL_Ledger_Core.registerPermissionToken for NL=NA Layer 2 enforcement.",
+    "preImage": "GOVERNANCE_LANE",
+    "hash": "keccak256(\"GOVERNANCE_LANE\")",
     "nlNaLayer": 2
   }
 }
