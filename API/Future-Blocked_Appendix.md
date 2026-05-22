@@ -19,11 +19,11 @@ This appendix documents all features that are architecturally desirable and cons
 
 `x-tl-blocking-constraint: "Constitutional Hardware Monograph, Section X"`
 
-The throughput asymmetry between institutional financial transaction volume (millions of trades per second at peak) and public blockchain confirmation latency (seconds to minutes per block, even with Layer 2 solutions) makes per-trade on-chain anchoring architecturally infeasible at the required scale without introducing confirmation latency that would breach the DLLA Audit Lane 300ms hard ceiling.
+The throughput asymmetry between institutional financial transaction volume (millions of trades per second at peak) and public blockchain confirmation latency (seconds to minutes per block, even with Layer 2 solutions) makes per-trade on-chain anchoring architecturally infeasible at the required scale without introducing confirmation latency that would breach the DLLA Governance Lane 300ms hard ceiling.
 
 ### SHIPPING Mitigation
 
-Batch Merkle root anchoring via `TL_Ledger_Core.anchorMerkleRoot`. Multiple TGLF records are aggregated into a Merkle tree. The root of that tree is anchored on-chain in a single transaction. Any individual record can be proven included via `TL_Ledger_Core.verifyMerkleInclusion` and the API endpoint `GET /audit/verifications/inclusion/{logId}`. The batch frequency is deployment-configurable but must satisfy the requirement that any `PermissionToken.logHash` is verifiable against an on-chain Merkle root before token expiration.
+Batch Merkle root anchoring via `TL_Ledger_Core.anchorMerkleRoot`. Multiple TGLF records are aggregated into a Merkle tree. The root of that tree is anchored on-chain in a single transaction. Any individual record can be proven included via `TL_Ledger_Core.verifyMerkleInclusion` and the API endpoint `GET /governance/verifications/inclusion/{logId}`. The batch frequency is deployment-configurable but must satisfy the requirement that any `PermissionToken.logHash` is verifiable against an on-chain Merkle root before token expiration.
 
 ### Remaining Gap After Mitigation
 
@@ -37,8 +37,8 @@ Resolution depends on sufficiently low-latency, high-throughput Layer 2 or appli
 
 ### Affected Specification Artifacts
 
-- `tl_openapi.yaml`: `POST /audit-logs` (anchoring is batch, not per-trade)
-- `tl_openapi.yaml`: `GET /audit/verifications/merkle/{merkleRoot}` (batch anchor verification)
+- `tl_openapi.yaml`: `POST /governance-logs` (anchoring is batch, not per-trade)
+- `tl_openapi.yaml`: `GET /governance/verifications/merkle/{merkleRoot}` (batch anchor verification)
 - `tl_abi.json`: `TL_Ledger_Core.anchorMerkleRoot` (batch anchor function)
 - `tl_abi.json`: `TL_Ledger_Core.registerPermissionToken` (requires prior batch anchor)
 - `constitutional_compliance_matrix.md`: Implementation Gap row for this feature
@@ -86,7 +86,7 @@ Full DITL (Delay-Insensitive Ternary Logic) deployment at TSMC N2 or Intel 18A p
 
 ### SHIPPING Mitigation
 
-Architecture B hybrid model: software enforcement with DITL attestation where available. The `TLCapabilityFlags.pufAttestationMode: "ARCHITECTURE_B"` flag signals this deployment posture. The `NLNAAuditToken.pufAttestation` field uses the sentinel value `"NULL_PUF_DEPLOYMENT"` for non-MT deployments. The `EscrowRecord.windowComparatorReading.softwareEnforcementActive: true` field confirms that software-layer enforcement is substituting for physical DITL gate enforcement.
+Architecture B hybrid model: software enforcement with DITL attestation where available. The `TLCapabilityFlags.pufAttestationMode: "ARCHITECTURE_B"` flag signals this deployment posture. The `NLNAGovernanceToken.pufAttestation` field uses the sentinel value `"NULL_PUF_DEPLOYMENT"` for non-MT deployments. The `EscrowRecord.windowComparatorReading.softwareEnforcementActive: true` field confirms that software-layer enforcement is substituting for physical DITL gate enforcement.
 
 The two DITL endpoints `POST /ditl/state-transition` and `GET /ditl/puf-attestation/{deviceId}` are defined in `tl_openapi.yaml` with `x-tl-implementation-status: FUTURE`. They are present in the specification to define the contractual interface for when MT hardware becomes available, and to enable partial deployments where some nodes have MT hardware.
 
@@ -105,7 +105,7 @@ When MT silicon is available from TSMC N2 or Intel 18A, the `pufAttestationMode`
 ### Affected Specification Artifacts
 
 - `tl_openapi.yaml`: `POST /ditl/state-transition`, `GET /ditl/puf-attestation/{deviceId}` (FUTURE)
-- `tl_schema.json`: `NLNAAuditToken_v1_0_0.pufAttestation` (NULL_PUF_DEPLOYMENT sentinel)
+- `tl_schema.json`: `NLNAGovernanceToken_v1_0_0.pufAttestation` (NULL_PUF_DEPLOYMENT sentinel)
 - `tl_schema.json`: `EscrowRecord_v1_0_0.windowComparatorReading` (softwareEnforcementActive flag)
 - `tl_schema.json`: `TLCapabilityFlags_v1_0_0.pufAttestationMode` (ARCHITECTURE_B default)
 - `specification_architecture.md`: Section 11 (DITL Hardware Interface)
@@ -118,7 +118,7 @@ When MT silicon is available from TSMC N2 or Intel 18A, the `pufAttestationMode`
 
 `x-tl-blocking-constraint: "Constitutional Hardware Monograph, Section X"`
 
-Network physics and geographic distribution prevent achieving sub-300ms round-trip quorum confirmation across custodians distributed across multiple continents. The speed of light across a trans-Pacific round trip is approximately 100ms under ideal conditions. A quorum requiring acknowledgment from custodians in, for example, North America, Europe, and Asia-Pacific has a physical minimum latency floor that approaches or exceeds the DLLA Audit Lane 300ms hard ceiling, leaving no margin for processing, queuing, or jitter.
+Network physics and geographic distribution prevent achieving sub-300ms round-trip quorum confirmation across custodians distributed across multiple continents. The speed of light across a trans-Pacific round trip is approximately 100ms under ideal conditions. A quorum requiring acknowledgment from custodians in, for example, North America, Europe, and Asia-Pacific has a physical minimum latency floor that approaches or exceeds the DLLA Governance Lane 300ms hard ceiling, leaving no margin for processing, queuing, or jitter.
 
 ### SHIPPING Mitigation
 
@@ -126,7 +126,7 @@ The `GET /regulator/custodian-quorum` endpoint exposes `crossJurisdictionLatency
 
 ### Remaining Gap After Mitigation
 
-The constitutional ideal is that HybridShield custodian quorum is confirmed within the Audit Lane DLLA 300ms ceiling. In globally distributed deployments, this ceiling cannot be met. Regional deployments (all custodians within a single continent) can meet the ceiling, but sacrifice geographic diversity of the HybridShield.
+The constitutional ideal is that HybridShield custodian quorum is confirmed within the Governance Lane DLLA 300ms ceiling. In globally distributed deployments, this ceiling cannot be met. Regional deployments (all custodians within a single continent) can meet the ceiling, but sacrifice geographic diversity of the HybridShield.
 
 ### Migration Path
 
@@ -183,7 +183,7 @@ Resolution of sub-gap 1 depends on regulatory guidance from EU data protection a
 
 `x-tl-blocking-constraint: "Constitutional Hardware Monograph, Section X"`
 
-Real-time aggregation of capital adequacy metrics (LCR, NSFR, capital ratios, counterparty exposure) across all active transactions at global financial system scale would require continuous streaming of position data from thousands of financial institutions simultaneously, aggregated and verified within the Audit Lane 300ms hard ceiling. Current data aggregation infrastructure for cross-border regulatory reporting operates on T+1 or end-of-day batches, not real-time streams.
+Real-time aggregation of capital adequacy metrics (LCR, NSFR, capital ratios, counterparty exposure) across all active transactions at global financial system scale would require continuous streaming of position data from thousands of financial institutions simultaneously, aggregated and verified within the Governance Lane 300ms hard ceiling. Current data aggregation infrastructure for cross-border regulatory reporting operates on T+1 or end-of-day batches, not real-time streams.
 
 ### SHIPPING Mitigation
 
@@ -199,7 +199,7 @@ The periodic attestation model creates a staleness window between attestation ti
 
 `x-tl-migration-path: "Constitutional Hardware Monograph, Section X"`
 
-Resolution depends on standardized real-time regulatory reporting APIs across financial institutions and sufficiently low-latency cross-border data aggregation infrastructure to satisfy the DLLA Audit Lane 300ms ceiling.
+Resolution depends on standardized real-time regulatory reporting APIs across financial institutions and sufficiently low-latency cross-border data aggregation infrastructure to satisfy the DLLA Governance Lane 300ms ceiling.
 
 ### Affected Specification Artifacts
 
