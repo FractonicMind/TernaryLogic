@@ -383,7 +383,7 @@
   <div id="overview">
     <div class="section-title">Overview — The Constitution in Code</div>
     <p>The TL API is not a conventional REST interface. It is the software expression of a constitutional enforcement architecture: a sovereign governance coprocessor that operates in parallel with a binary inference engine and holds absolute authority over whether any proposed action crosses the threshold into execution.</p>
-    <p>The binary system proposes. The ternary system decides. The <strong>Permission Token</strong> is the only key that opens the actuation gate. Without a cryptographically valid token issued by the Audit Lane, no proposed State +1 action may execute. This is the <strong>No Log = No Action</strong> (NL=NA) iron law, enforced simultaneously at the schema layer, the API contract layer, the on-chain ABI layer, and the EIP-712 signing layer. There is no software path around it in a conforming implementation.</p>
+    <p>The binary system proposes. The ternary system decides. The <strong>Permission Token</strong> is the only key that opens the actuation gate. Without a cryptographically valid token issued by the Governance Lane, no proposed State +1 action may execute. This is the <strong>No Log = No Action</strong> (NL=NA) iron law, enforced simultaneously at the schema layer, the API contract layer, the on-chain ABI layer, and the EIP-712 signing layer. There is no software path around it in a conforming implementation.</p>
     <p>The <strong>Epistemic Hold</strong> (State 0) is the most constitutionally significant state in the framework. It is not a null. It is not an error. It is not a timeout. It is a first-class governance state of mandatory hesitation that holds execution pending verified completion of legitimate process.</p>
   </div>
 
@@ -422,7 +422,7 @@
   <div id="diag-dual-lane">
     <div class="diagram-card-full">
       <img src="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_dual_lane_architecture.png?raw=true" alt="Dual-Lane Architecture">
-      <div class="d-caption">Dual-Lane Architecture — Inference Lane (proposal only) vs Audit Lane (Permission Token issuance). NL=NA enforced at the lane boundary.</div>
+      <div class="d-caption">Dual-Lane Architecture — Inference Lane (proposal only) vs Governance Lane (Permission Token issuance). NL=NA enforced at the lane boundary.</div>
     </div>
   </div>
 
@@ -437,7 +437,7 @@
     </div>
     <div class="diagram-card" id="diag-lifecycle">
       <img src="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_decision_lifecycle.png?raw=true" alt="Decision Lifecycle">
-      <div class="d-caption">Decision Lifecycle — six-stage flow with Epistemic Hold branch. Skipping the Audit Lane is constitutionally blocked.</div>
+      <div class="d-caption">Decision Lifecycle — six-stage flow with Epistemic Hold branch. Skipping the Governance Lane is constitutionally blocked.</div>
     </div>
     <div class="diagram-card" id="diag-pillars">
       <img src="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_eight_pillars.png?raw=true" alt="Eight Pillars">
@@ -559,7 +559,7 @@
         <tr>
           <td>—</td>
           <td><code>diagram_dual_lane_architecture.png</code></td>
-          <td>Dual-Lane Architecture — Inference vs Audit Lane separation</td>
+          <td>Dual-Lane Architecture — Inference vs Governance Lane separation</td>
           <td><a href="https://github.com/FractonicMind/TernaryLogic/blob/main/API/diagram_dual_lane_architecture.png">GitHub</a></td>
           <td>—</td>
           <td><span class="badge badge-ship">SHIPPING</span></td>
@@ -631,13 +631,13 @@
       <thead><tr><th>Pillar</th><th>Identifier</th><th>Primary Endpoints</th><th>Status</th></tr></thead>
       <tbody>
         <tr><td>I · Epistemic Hold</td><td><span class="pillar-chip">EpistemicHold</span></td><td><code>POST /decisions</code> · <code>GET/PATCH /epistemic-hold/escalations/*</code> · <code>POST /gateway/lane-assignment</code></td><td><span class="badge badge-ship">SHIPPING</span></td></tr>
-        <tr><td>II · Immutable Ledger</td><td><span class="pillar-chip">ImmutableLedger</span></td><td><code>POST /audit-logs</code> · <code>GET /audit-logs/{logId}</code> · <code>POST /refusals</code> · <code>GET /regulator/timestamp-verification/{logId}</code></td><td><span class="badge badge-ship">SHIPPING</span></td></tr>
+        <tr><td>II · Immutable Ledger</td><td><span class="pillar-chip">ImmutableLedger</span></td><td><code>POST /governance-logs</code> · <code>GET /governance-logs/{logId}</code> · <code>POST /refusals</code> · <code>GET /regulator/timestamp-verification/{logId}</code></td><td><span class="badge badge-ship">SHIPPING</span></td></tr>
         <tr><td>III · Goukassian Principle</td><td><span class="pillar-chip">GoukassianPrinciple</span></td><td><code>GET /epistemic-hold/lantern</code> · <code>GET /goukassian/signature</code> · <code>POST /goukassian/license/validate</code> · <code>POST /refusals/license-violations</code></td><td><span class="badge badge-ship">SHIPPING</span></td></tr>
         <tr><td>IV · Decision Logs</td><td><span class="pillar-chip">DecisionLogs</span></td><td><code>GET /decisions/{decisionId}</code> · <code>GET/PUT /thresholds/{domain}</code> · <code>GET /metrics/summary</code></td><td><span class="badge badge-ship">SHIPPING</span></td></tr>
         <tr><td>V · Economic Rights</td><td><span class="pillar-chip">EconomicRights</span></td><td><code>POST /evaluate/trade</code> · <code>POST /redress/*</code> · <code>GET /regulator/basel-iii/attestation</code> · <code>POST /regulator/fatf/compliance-export</code></td><td><span class="badge badge-ship">SHIPPING</span></td></tr>
-        <tr><td>VI · Sustainable Capital</td><td><span class="pillar-chip">SustainableCapital</span></td><td><code>POST /evaluate/policy</code> · <code>POST /evaluate/supply-chain</code> · <code>GET /audit/compliance/attestation</code></td><td><span class="badge badge-ship">SHIPPING</span></td></tr>
-        <tr><td>VII · Hybrid Shield</td><td><span class="pillar-chip">HybridShield</span></td><td><code>POST /emergency/override</code> · <code>GET /emergency/status</code> · <code>GET /audit/custodians/{id}/heartbeat</code> · <code>GET /regulator/custodian-quorum</code></td><td><span class="badge badge-ship">SHIPPING</span> <span class="badge badge-future">sub-300ms: FUTURE</span></td></tr>
-        <tr><td>VIII · Anchors</td><td><span class="pillar-chip">Anchors</span></td><td><code>GET /audit/verifications/merkle/{root}</code> · <code>GET /audit/verifications/inclusion/{logId}</code> · <code>POST /regulator/evidence-export</code></td><td><span class="badge badge-ship">SHIPPING</span> <span class="badge badge-future">per-trade real-time: FUTURE</span></td></tr>
+        <tr><td>VI · Sustainable Capital</td><td><span class="pillar-chip">SustainableCapital</span></td><td><code>POST /evaluate/policy</code> · <code>POST /evaluate/supply-chain</code> · <code>GET /governance/compliance/attestation</code></td><td><span class="badge badge-ship">SHIPPING</span></td></tr>
+        <tr><td>VII · Hybrid Shield</td><td><span class="pillar-chip">HybridShield</span></td><td><code>POST /emergency/override</code> · <code>GET /emergency/status</code> · <code>GET /governance/custodians/{id}/heartbeat</code> · <code>GET /regulator/custodian-quorum</code></td><td><span class="badge badge-ship">SHIPPING</span> <span class="badge badge-future">sub-300ms: FUTURE</span></td></tr>
+        <tr><td>VIII · Anchors</td><td><span class="pillar-chip">Anchors</span></td><td><code>GET /governance/verifications/merkle/{root}</code> · <code>GET /governance/verifications/inclusion/{logId}</code> · <code>POST /regulator/evidence-export</code></td><td><span class="badge badge-ship">SHIPPING</span> <span class="badge badge-future">per-trade real-time: FUTURE</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -664,9 +664,9 @@
       <thead><tr><th>Layer</th><th>Mechanism</th><th>File</th></tr></thead>
       <tbody>
         <tr><td>Schema (Layer 1)</td><td><code>StateEnvelope</code> <code>if/then</code> constraint — permissionToken required when currentState==1</td><td><code>tl_schema.json</code></td></tr>
-        <tr><td>API Contract (Layer 2)</td><td><code>PermissionToken.laneOrigin: const "AUDIT_LANE"</code> — Inference Lane tokens schema-invalid</td><td><code>tl_openapi.yaml</code></td></tr>
+        <tr><td>API Contract (Layer 2)</td><td><code>PermissionToken.laneOrigin: const "GOVERNANCE_LANE"</code> — Inference Lane tokens schema-invalid</td><td><code>tl_openapi.yaml</code></td></tr>
         <tr><td>TGLF Record (Layer 3)</td><td><code>TGLF_StateP1.permissionToken</code> required · <code>pillarsCertified</code> minItems 8, maxItems 8</td><td><code>tl_schema.json</code></td></tr>
-        <tr><td>Cross-Reference (Layer 4)</td><td><code>AuditProof.logHash</code> = <code>PermissionToken.logHash</code> · <code>AuditProof.merkleRoot</code> = <code>PermissionToken.merkleRoot</code></td><td><code>tl_schema.json</code></td></tr>
+        <tr><td>Cross-Reference (Layer 4)</td><td><code>GovernanceProof.logHash</code> = <code>PermissionToken.logHash</code> · <code>GovernanceProof.merkleRoot</code> = <code>PermissionToken.merkleRoot</code></td><td><code>tl_schema.json</code></td></tr>
         <tr><td>On-Chain (Layer 5)</td><td><code>NLNAViolation</code> reverts if logHash not in anchored Merkle root — terminal enforcement gate</td><td><code>tl_abi.json</code></td></tr>
         <tr><td>EIP-712</td><td>Domain separator binding to contract, chain, and monograph version — prevents replay attacks</td><td><code>eip712_typed_data.json</code></td></tr>
         <tr><td>Prose</td><td>Five-layer enforcement chain documented across 14 sections</td><td><code>Specification_Architecture.md</code></td></tr>
