@@ -19,8 +19,8 @@ Every endpoint from `tl_openapi.yaml` (Deliverable A) is mapped below to its Mon
 |---|---|---|---|---|---|---|
 | `/decisions` | POST | Constitutional Hardware Monograph, Section I | EpistemicHold (I) | None (Inference Lane; regulatory checks at domain evaluation layer) | SHIPPING | Triggers Pillar II (ImmutableLedger) on log creation; Pillar III (GoukassianPrinciple) via required GoukassianPrincipleBlock |
 | `/decisions/{decisionId}` | GET | Constitutional Hardware Monograph, Section II | DecisionLogs (IV) | None | SHIPPING | Reflects Pillar I state; may expose Pillar II PermissionToken if issued |
-| `/audit-logs` | POST | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | NL=NA universal; Basel III/FATF/IOSCO via RegulatoryContext sub-object | SHIPPING | Central NL=NA enforcement touching all 8 Pillars; Pillar VII (HybridShield) via HSM signing; Pillar VIII (Anchors) via Merkle root |
-| `/audit-logs/{logId}` | GET | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | GDPR Article 17 (erasure eligibility noted in record) | SHIPPING | Pillar VIII (Anchors) via Merkle verification; Pillar IV (DecisionLogs) |
+| `/governance-logs` | POST | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | NL=NA universal; Basel III/FATF/IOSCO via RegulatoryContext sub-object | SHIPPING | Central NL=NA enforcement touching all 8 Pillars; Pillar VII (HybridShield) via HSM signing; Pillar VIII (Anchors) via Merkle root |
+| `/governance-logs/{logId}` | GET | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | GDPR Article 17 (erasure eligibility noted in record) | SHIPPING | Pillar VIII (Anchors) via Merkle verification; Pillar IV (DecisionLogs) |
 | `/epistemic-hold/escalations` | GET | Constitutional Hardware Monograph, Section II | EpistemicHold (I) | None | SHIPPING | Pillar II (ImmutableLedger) via EscrowRecord; Pillar III (GoukassianPrinciple) via lanternStatus |
 | `/epistemic-hold/escalations/{escalationId}` | GET | Constitutional Hardware Monograph, Section II | EpistemicHold (I) | None | SHIPPING | Pillar II (ImmutableLedger) via TGLF-State0; Pillar IV (DecisionLogs) via deliberationMatrix |
 | `/epistemic-hold/escalations/{escalationId}` | PATCH | Constitutional Hardware Monograph, Section II | EpistemicHold (I) | None | SHIPPING | Requires Pillar VII (HybridShield) via TriCameralApproval; resolution updates Pillar II (ImmutableLedger) |
@@ -31,10 +31,10 @@ Every endpoint from `tl_openapi.yaml` (Deliverable A) is mapped below to its Mon
 | `/refusals/license-violations` | POST | Constitutional Hardware Monograph, Section III | GoukassianPrinciple (III) | None | SHIPPING | Pillar II (ImmutableLedger) via immutable violation log; Pillar I (EpistemicHold) — violation confirms Refuse (-1) |
 | `/emergency/override` | POST | Constitutional Hardware Monograph, Section IX.3 | HybridShield (VII) | None (supreme authority gate above regulatory layer) | SHIPPING | NL=NA universal; forcedState [-1, 0] only; Pillar II (ImmutableLedger) logged before execution; all Pillars impacted by system-wide override |
 | `/emergency/status` | GET | Constitutional Hardware Monograph, Section IX.3 | HybridShield (VII) | None | SHIPPING | Pillar I (EpistemicHold) if forcedState 0 active; Pillar III (GoukassianPrinciple) via Lantern |
-| `/audit/verifications/merkle/{merkleRoot}` | GET | Constitutional Hardware Monograph, Section II | Anchors (VIII) | None | SHIPPING | Pillar II (ImmutableLedger) via Merkle chain; Pillar VII (HybridShield) via custodian quorum |
-| `/audit/verifications/inclusion/{logId}` | GET | Constitutional Hardware Monograph, Section II | Anchors (VIII) | None | SHIPPING | Pillar II (ImmutableLedger); Pillar IV (DecisionLogs) |
-| `/audit/custodians/{custodianId}/heartbeat` | GET | Constitutional Hardware Monograph, Section III | HybridShield (VII) | None | SHIPPING | Pillar VIII (Anchors) via quorum contribution flag |
-| `/audit/compliance/attestation` | GET | Constitutional Hardware Monograph, Section III | ImmutableLedger (II) | All 8 Pillars attested; Basel III, FATF, IOSCO, Paris Agreement included | SHIPPING | All 8 Pillars reflected via pillarAttestations array |
+| `/governance/verifications/merkle/{merkleRoot}` | GET | Constitutional Hardware Monograph, Section II | Anchors (VIII) | None | SHIPPING | Pillar II (ImmutableLedger) via Merkle chain; Pillar VII (HybridShield) via custodian quorum |
+| `/governance/verifications/inclusion/{logId}` | GET | Constitutional Hardware Monograph, Section II | Anchors (VIII) | None | SHIPPING | Pillar II (ImmutableLedger); Pillar IV (DecisionLogs) |
+| `/governance/custodians/{custodianId}/heartbeat` | GET | Constitutional Hardware Monograph, Section III | HybridShield (VII) | None | SHIPPING | Pillar VIII (Anchors) via quorum contribution flag |
+| `/governance/compliance/attestation` | GET | Constitutional Hardware Monograph, Section III | ImmutableLedger (II) | All 8 Pillars attested; Basel III, FATF, IOSCO, Paris Agreement included | SHIPPING | All 8 Pillars reflected via pillarAttestations array |
 | `/redress/challenges` | POST | Constitutional Hardware Monograph, Section III | EconomicRightsAndTransparencyMandate (V) | CFPB, SEC, FINRA (Pillar V supplementary vectors) | SHIPPING | Pillar II (ImmutableLedger) on challenge record creation; Pillar IV (DecisionLogs) |
 | `/redress/challenges/{challengeId}` | GET | Constitutional Hardware Monograph, Section III | EconomicRightsAndTransparencyMandate (V) | CFPB, SEC, FINRA | SHIPPING | Pillar II (ImmutableLedger); Pillar IV (DecisionLogs) |
 | `/redress/log-reevaluation` | POST | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | GDPR Article 17 (original log immutable; re-evaluation creates new record) | SHIPPING | Pillar IV (DecisionLogs); original TGLF untouched confirms Pillar II integrity |
@@ -47,7 +47,7 @@ Every endpoint from `tl_openapi.yaml` (Deliverable A) is mapped below to its Mon
 | `/regulator/iosco/principle-mapping` | GET | Constitutional Hardware Monograph, Section III | EconomicRightsAndTransparencyMandate (V) | IOSCO Principles 34-38 (market integrity: layering, spoofing, wash trading, cross-market manipulation) | SHIPPING | Pillar IV (DecisionLogs) via principlesMapped array |
 | `/gateway/status` | GET | Constitutional Hardware Monograph, Section II | GoukassianPrinciple (III) | None | SHIPPING | Fail-closed posture touches all Pillars; EPISTEMIC_HOLD_OVERRIDE_ACTIVE reflects Pillar I |
 | `/gateway/lane-assignment` | POST | Constitutional Hardware Monograph, Section II | EpistemicHold (I) | None | SHIPPING | epistemicHoldOverride flag activates Pillar I; Pillar III (GoukassianPrinciple) via embedded lanternStatus |
-| `/evaluate/trade` | POST | Constitutional Hardware Monograph, Section III | EconomicRightsAndTransparencyMandate (V) | Basel III (LCR, NSFR, capital), FATF (AML/CFT, sanctions, PEP, SAR), IOSCO (layering, spoofing, wash trading) | SHIPPING | Pillar V triggers Pillar VII (HybridShield) audit on regulatory flag; amlClearanceStatus feeds Pillar II (ImmutableLedger) log |
+| `/evaluate/trade` | POST | Constitutional Hardware Monograph, Section III | EconomicRightsAndTransparencyMandate (V) | Basel III (LCR, NSFR, capital), FATF (AML/CFT, sanctions, PEP, SAR), IOSCO (layering, spoofing, wash trading) | SHIPPING | Pillar V triggers Pillar VII (HybridShield) on regulatory flag; amlClearanceStatus feeds Pillar II (ImmutableLedger) log |
 | `/evaluate/policy` | POST | Constitutional Hardware Monograph, Section III | SustainableCapitalAllocationMandate (VI) | Paris Agreement (carbon footprint, green bond, ESG), Basel III (monetary policy capital), GDPR (EU jurisdiction) | SHIPPING | Pillar VI triggers Pillar V economic rights review; greenBondEligibility feeds Pillar VIII (Anchors) |
 | `/evaluate/supply-chain` | POST | Constitutional Hardware Monograph, Section III | SustainableCapitalAllocationMandate (VI) | Paris Agreement (carbon footprint verification, labor standards), IOSCO (supply chain market integrity) | SHIPPING | Pillar VI triggers Pillar V on regulatory non-compliance; Pillar II (ImmutableLedger) on log |
 | `/pillars/status` | GET | Constitutional Hardware Monograph, Section III | ImmutableLedger (II) | All regulatory frameworks reflected per-pillar | SHIPPING | All 8 Pillars; overallComplianceScore aggregates all Pillar health |
@@ -85,16 +85,16 @@ Every schema definition from `tl_schema.json` (Deliverable B) is mapped below.
 | TLResult | goukassianPrinciple | Constitutional Hardware Monograph, Section III | GoukassianPrinciple (III) | None | SHIPPING | None |
 | PermissionToken | tokenId | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | Layers 2, 3, 4, 5 |
 | PermissionToken | logHash | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | Layers 4, 5 |
-| PermissionToken | laneOrigin (const "AUDIT_LANE") | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | Layer 2 |
+| PermissionToken | laneOrigin (const "GOVERNANCE_LANE") | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | Layer 2 |
 | PermissionToken | merkleRoot | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | Layers 4, 5 |
 | PermissionToken | expiresAt | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | GDPR Article 5(1)(e) | SHIPPING | None |
-| PermissionToken | maxLifetimeMs (max: 300000) | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | DLLA Audit Lane 300ms ceiling |
+| PermissionToken | maxLifetimeMs (max: 300000) | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | DLLA Governance Lane 300ms ceiling |
 | PermissionToken | revocationStatus | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | None |
 | PermissionToken | revocationMerkleRoot | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | Layer 5 |
 | PermissionToken | custodianQuorumAttestation | Constitutional Hardware Monograph, Section III | HybridShield (VII) | None | BETA | None |
-| AuditProof | logHash | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | Layer 4 |
-| AuditProof | merkleRoot | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | Layer 4 |
-| AuditProof | merkleProofPath | Constitutional Hardware Monograph, Section II | Anchors (VIII) | None | SHIPPING | Layer 5 |
+| GovernanceProof | logHash | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | Layer 4 |
+| GovernanceProof | merkleRoot | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | Layer 4 |
+| GovernanceProof | merkleProofPath | Constitutional Hardware Monograph, Section II | Anchors (VIII) | None | SHIPPING | Layer 5 |
 | EscrowRecord | heldState (const: 0) | Constitutional Hardware Monograph, Section II | EpistemicHold (I) | None | SHIPPING | None |
 | EscrowRecord | holdRationale | Constitutional Hardware Monograph, Section II | EpistemicHold (I) | None | SHIPPING | None |
 | EscrowRecord | holdRationale.uncertaintyScore | Constitutional Hardware Monograph, Section II | EpistemicHold (I) | None | SHIPPING | None |
@@ -102,7 +102,7 @@ Every schema definition from `tl_schema.json` (Deliverable B) is mapped below.
 | EscrowRecord | resolutionDeadline | Constitutional Hardware Monograph, Section II | EpistemicHold (I) | None | SHIPPING | None |
 | EscrowRecord | immutableLogHash | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | None |
 | EscrowRecord | holdDurationMs | Constitutional Hardware Monograph, Section II | EpistemicHold (I) | None | SHIPPING | DLLA timing |
-| EscrowRecord | auditLaneStatus | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | None |
+| EscrowRecord | governanceLaneStatus | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | None |
 | EscrowRecord | requiredConditions | Constitutional Hardware Monograph, Section II | EpistemicHold (I) | None | SHIPPING | None |
 | EscrowRecord | windowComparatorReading | Constitutional Hardware Monograph, Section X | EpistemicHold (I) | None | SHIPPING (Architecture B sentinel) / FUTURE (MT hardware) | DITL physical gate |
 | StateEnvelope | currentState | Constitutional Hardware Monograph, Section II | EpistemicHold (I) | None | SHIPPING | Layer 1 (if/then) |
@@ -125,9 +125,9 @@ Every schema definition from `tl_schema.json` (Deliverable B) is mapped below.
 | TGLF_StateP1 | permissionToken (REQUIRED) | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | Layer 3 |
 | TGLF_StateP1 | pillarsCertified (minItems 8, maxItems 8) | Constitutional Hardware Monograph, Section II | All Pillars | None | SHIPPING | Layer 3 |
 | TGLF_StateP1 | regulatoryVerification.allPillarsPassed (const: true) | Constitutional Hardware Monograph, Section II | All Pillars | Basel III, FATF, IOSCO, GDPR, Paris Agreement | SHIPPING | Layer 3 |
-| TGLF_StateP1 | auditProof | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | Layer 4 |
-| NLNAAuditToken | pufAttestation (NULL_PUF_DEPLOYMENT sentinel) | Constitutional Hardware Monograph, Section X | HybridShield (VII) | None | SHIPPING (Architecture B) / FUTURE (FULL_PUF) | None |
-| NLNAAuditToken | laneStatus (enum: pending, committed, anchored) | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | None |
+| TGLF_StateP1 | governanceProof | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | Layer 4 |
+| NLNAGovernanceToken | pufAttestation (NULL_PUF_DEPLOYMENT sentinel) | Constitutional Hardware Monograph, Section X | HybridShield (VII) | None | SHIPPING (Architecture B) / FUTURE (FULL_PUF) | None |
+| NLNAGovernanceToken | laneStatus (enum: pending, committed, anchored) | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | None |
 | JustificationObject | pillarAssessments (minItems 8, maxItems 8) | Constitutional Hardware Monograph, Section II | All Pillars | None | SHIPPING | None |
 | JustificationObject | regulatoryFlags | Constitutional Hardware Monograph, Section III | EconomicRightsAndTransparencyMandate (V) | Basel III, FATF, IOSCO, Paris Agreement | SHIPPING | None |
 | RegulatoryFlags | baselIiiFlags.lcrBreach | Constitutional Hardware Monograph, Section III | EconomicRightsAndTransparencyMandate (V) | Basel III LCR >= 1.0 | SHIPPING | Triggers Pillar V refusal path |
@@ -157,7 +157,7 @@ Every schema definition from `tl_schema.json` (Deliverable B) is mapped below.
 | TriCameralApproval | smartContractTreasuryExecution.executed | Constitutional Hardware Monograph, Section III | HybridShield (VII) | None | SHIPPING | Pillar II (ImmutableLedger) via transactionHash |
 | GatewayRoutingStatus | operationalStatus (EPISTEMIC_HOLD_OVERRIDE_ACTIVE) | Constitutional Hardware Monograph, Section II | GoukassianPrinciple (III) | None | SHIPPING | Pillar I activated on fail-closed |
 | GatewayRoutingStatus | epistemicHoldOverride | Constitutional Hardware Monograph, Section II | EpistemicHold (I) | None | SHIPPING | Pillar III Lantern reflects state |
-| GatewayRoutingStatus | auditLaneStatus.latencyMs | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | DLLA 300ms hard ceiling |
+| GatewayRoutingStatus | governanceLaneStatus.latencyMs | Constitutional Hardware Monograph, Section II | ImmutableLedger (II) | None | SHIPPING | DLLA 300ms hard ceiling |
 | GatewayRoutingStatus | inferenceLaneStatus.latencyMs | Constitutional Hardware Monograph, Section II | EpistemicHold (I) | None | SHIPPING | DLLA 2ms WCET |
 | EmergencyOverrideRequest | forcedState (enum: [-1, 0]) | Constitutional Hardware Monograph, Section IX.3 | HybridShield (VII) | None | SHIPPING | Forced +1 constitutionally blocked |
 | EmergencyOverrideRequest | forcedStateExpiresAt | Constitutional Hardware Monograph, Section IX.3 | HybridShield (VII) | None | SHIPPING | Prevents indefinite suspension |
@@ -182,12 +182,12 @@ Every schema definition from `tl_schema.json` (Deliverable B) is mapped below.
 The following checklist verifies all five NL=NA enforcement layers across Deliverables A, B, C, and D.
 
 - [x] **Layer 1** — `StateEnvelope_v1_0_0` in `tl_schema.json`: `permissionToken` is REQUIRED via if/then constraint when `currentState == 1`. `unevaluatedProperties: false` prevents bypass. Path: every endpoint returning `StateEnvelope`.
-- [x] **Layer 2** — `PermissionToken_v1_0_0.laneOrigin` in `tl_schema.json`: const `"AUDIT_LANE"`. Inference Lane tokens are schema-invalid. `TL_Ledger_Core.registerPermissionToken` enforces `laneOriginHash == keccak256("AUDIT_LANE")` on-chain.
+- [x] **Layer 2** — `PermissionToken_v1_0_0.laneOrigin` in `tl_schema.json`: const `"GOVERNANCE_LANE"`. Inference Lane tokens are schema-invalid. `TL_Ledger_Core.registerPermissionToken` enforces `laneOriginHash == keccak256("GOVERNANCE_LANE")` on-chain.
 - [x] **Layer 3** — `TGLF_StateP1_v1_0_0` in `tl_schema.json`: `permissionToken` is in the `required` array. `pillarsCertified` has `minItems: 8, maxItems: 8`. All Eight Pillars must be certified for a valid Proceed log entry.
-- [x] **Layer 4** — `AuditProof_v1_0_0` in `tl_schema.json`: `AuditProof.logHash` MUST match `PermissionToken.logHash`. `AuditProof.merkleRoot` MUST match `PermissionToken.merkleRoot`. Cross-reference enforced at `POST /audit-logs`.
+- [x] **Layer 4** — `GovernanceProof_v1_0_0` in `tl_schema.json`: `GovernanceProof.logHash` MUST match `PermissionToken.logHash`. `GovernanceProof.merkleRoot` MUST match `PermissionToken.merkleRoot`. Cross-reference enforced at `POST /governance-logs`.
 - [x] **Layer 5** — `TL_Ledger_Core.registerPermissionToken` in `tl_abi.json`: reverts `NLNAViolation` if `logHash` is not provably included in an anchored Merkle root via `verifyMerkleInclusion`. This is the terminal on-chain enforcement gate. Bypassing Layers 1-4 does not bypass Layer 5.
 
-**Fail-closed default:** Any audit lane failure, timeout, or ambiguity defaults to `EPISTEMIC_HOLD` or `REFUSE`, never to `PROCEED`. NL=NA applies to Emergency Override without exception.
+**Fail-closed default:** Any Governance Lane failure, timeout, or ambiguity defaults to `EPISTEMIC_HOLD` or `REFUSE`, never to `PROCEED`. NL=NA applies to Emergency Override without exception.
 
 **No Implicit Defaults Clause:** No schema property carries an implicit default that could bypass NL=NA enforcement. All required fields are explicitly validated.
 
@@ -201,7 +201,7 @@ The following checkpoints verify constitutional integrity of State 0 (Epistemic 
 - [x] `stateLabel` "EpistemicHold" is never used as a state alias for "GovernancePause" — `TGLF_State0.processActive` const is "GovernancePause" (workflow name); `stateLabel` const is "EpistemicHold" (state name). These are distinct fields with distinct const values.
 - [x] State 0 resolution is only valid as +1 (Proceed) or -1 (Refuse) — `PATCH /epistemic-hold/escalations/{escalationId}` `resolvedState` enum is `[1, -1]`. `resolveEpistemicHoldSystemWide` in `tl_abi.json` reverts `InvalidResolutionState` for any other value.
 - [x] The Goukassian Vow is the constitutional basis for each Epistemic Hold checkpoint — "Pause when truth is uncertain" maps to State 0. Present in `tl_openapi.yaml` info block and enforced structurally by `EscrowRecord.heldState: const 0`.
-- [x] `EscrowRecord` is the single authoritative schema for Epistemic Hold response fields — Section 4.4 field list (holdRationale, holdDurationMs, auditLaneStatus, requiredConditions, windowComparatorReading, escrowRecordId) is entirely defined in `EscrowRecord_v1_0_0`. No other schema duplicates these definitions.
+- [x] `EscrowRecord` is the single authoritative schema for Epistemic Hold response fields — Section 4.4 field list (holdRationale, holdDurationMs, governanceLaneStatus, requiredConditions, windowComparatorReading, escrowRecordId) is entirely defined in `EscrowRecord_v1_0_0`. No other schema duplicates these definitions.
 
 ---
 
@@ -225,9 +225,9 @@ The following gaps are documented per Section X of the TL monograph. All are car
 
 | Feature | Blocking Constraint | SHIPPING Mitigation | Affected Artifacts |
 |---|---|---|---|
-| Real-time per-trade blockchain anchoring | Constitutional Hardware Monograph, Section X (throughput asymmetry at institutional financial scale) | Batch Merkle root anchoring via `TL_Ledger_Core.anchorMerkleRoot` | `tl_openapi.yaml` POST `/audit-logs`, `tl_abi.json` |
+| Real-time per-trade blockchain anchoring | Constitutional Hardware Monograph, Section X (throughput asymmetry at institutional financial scale) | Batch Merkle root anchoring via `TL_Ledger_Core.anchorMerkleRoot` | `tl_openapi.yaml` POST `/governance-logs`, `tl_abi.json` |
 | Quantum-proof signature migration | Constitutional Hardware Monograph, Section X (SLH-DSA-SHAKE-128s, ML-KEM-1024 not yet production-ready) | ES256/Ed25519 SHIPPING; PQC slots 6-7 reserved in `SignatureBlock` and `GoukassianSignatureAttestation` | `tl_schema.json`, `eip712_typed_data.json` |
-| Hardware Ternary Enforcement Units (TEUs) | Constitutional Hardware Monograph, Section X (TSMC N2 / Intel 18A full DITL deployment not yet available) | Architecture B hybrid: software enforcement with DITL attestation where available (`NULL_PUF_DEPLOYMENT` sentinel) | `tl_openapi.yaml` DITL endpoints, `tl_schema.json` NLNAAuditToken |
+| Hardware Ternary Enforcement Units (TEUs) | Constitutional Hardware Monograph, Section X (TSMC N2 / Intel 18A full DITL deployment not yet available) | Architecture B hybrid: software enforcement with DITL attestation where available (`NULL_PUF_DEPLOYMENT` sentinel) | `tl_openapi.yaml` DITL endpoints, `tl_schema.json` NLNAGovernanceToken |
 | Cross-jurisdiction custodian quorum in <300ms | Constitutional Hardware Monograph, Section X (network physics; geographic distribution) | `GET /regulator/custodian-quorum` exposes `crossJurisdictionLatencyMs`; sub-300ms global quorum marked FUTURE | `tl_openapi.yaml` |
 | Immutable ledger with native GDPR Article 17 compliance | Constitutional Hardware Monograph, Section X (Erasure Paradox) | Cryptographic erasure via HKDF-SHA3-256 (`EKRRecord.hkdfSha3256Confirmed`); three residual sub-gaps: regulatory interpretation, erasure key registry dependency, metadata residue | `tl_schema.json` EKRRecord, `tl_openapi.yaml` GDPR annotations |
 | Real-time cross-border Basel III capital adequacy monitoring at global transaction volume | Constitutional Hardware Monograph, Section X (throughput constraints) | `GET /regulator/basel-iii/attestation` provides periodic attestation; real-time global monitoring is FUTURE | `tl_openapi.yaml` |
@@ -241,12 +241,12 @@ The following gaps are documented per Section X of the TL monograph. All are car
 | Endpoint Group | Paths Specified | Paths in tl_openapi.yaml | Status |
 |---|---|---|---|
 | Inference Lane | POST /decisions, GET /decisions/{decisionId} | Present | VERIFIED |
-| Audit Lane | POST /audit-logs, GET /audit-logs/{logId} | Present | VERIFIED |
+| Governance Lane | POST /governance-logs, GET /governance-logs/{logId} | Present | VERIFIED |
 | Epistemic Hold | GET /epistemic-hold/escalations, GET /epistemic-hold/escalations/{escalationId}, PATCH /epistemic-hold/escalations/{escalationId}, GET /epistemic-hold/lantern | Present | VERIFIED |
 | Goukassian Principle | GET /goukassian/signature, POST /goukassian/license/validate | Present | VERIFIED |
 | Refusal State | POST /refusals, POST /refusals/license-violations | Present | VERIFIED |
 | Emergency Override | POST /emergency/override, GET /emergency/status | Present | VERIFIED |
-| Auditor Verification | GET /audit/verifications/merkle/{merkleRoot}, GET /audit/verifications/inclusion/{logId}, GET /audit/custodians/{custodianId}/heartbeat, GET /audit/compliance/attestation | Present | VERIFIED |
+| Governance Verification | GET /governance/verifications/merkle/{merkleRoot}, GET /governance/verifications/inclusion/{logId}, GET /governance/custodians/{custodianId}/heartbeat, GET /governance/compliance/attestation | Present | VERIFIED |
 | Redress and Appeal | POST /redress/challenges, GET /redress/challenges/{challengeId}, POST /redress/log-reevaluation, POST /redress/economic-rights-grievances | Present | VERIFIED |
 | Regulator Inspection | POST /regulator/evidence-export, GET /regulator/custodian-quorum, GET /regulator/timestamp-verification/{logId}, GET /regulator/basel-iii/attestation, POST /regulator/fatf/compliance-export, GET /regulator/iosco/principle-mapping | Present | VERIFIED |
 | Gateway | GET /gateway/status, POST /gateway/lane-assignment | Present | VERIFIED |
@@ -261,27 +261,27 @@ The following gaps are documented per Section X of the TL monograph. All are car
 |---|---|---|
 | TLState | All endpoints via StateEnvelope, TLResult | VERIFIED |
 | TLStateLabel | All endpoints via StateEnvelope, TLResult | VERIFIED |
-| PillarIdentifier | /pillars/{pillarId}/configure, /audit/compliance/attestation, all TGLF schemas | VERIFIED |
-| SHA256Hex | PermissionToken, EscrowRecord, AuditProof, all Merkle endpoints | VERIFIED |
+| PillarIdentifier | /pillars/{pillarId}/configure, /governance/compliance/attestation, all TGLF schemas | VERIFIED |
+| SHA256Hex | PermissionToken, EscrowRecord, GovernanceProof, all Merkle endpoints | VERIFIED |
 | Ed25519Hex | GoukassianPrincipleBlock.signature | VERIFIED |
 | ISO8601DateTime | All TGLF schemas, PermissionToken, EscrowRecord | VERIFIED |
 | UUIDv4 | All decision and log identifier fields | VERIFIED |
-| GoukassianPrincipleBlock | POST /decisions, POST /audit-logs, POST /refusals, all /evaluate/* endpoints | VERIFIED |
+| GoukassianPrincipleBlock | POST /decisions, POST /governance-logs, POST /refusals, all /evaluate/* endpoints | VERIFIED |
 | TLResult | POST /decisions, POST /evaluate/* | VERIFIED |
-| PermissionToken | POST /audit-logs (Proceed response), StateEnvelope (if/then) | VERIFIED |
-| AuditProof | POST /audit-logs request body | VERIFIED |
+| PermissionToken | POST /governance-logs (Proceed response), StateEnvelope (if/then) | VERIFIED |
+| GovernanceProof | POST /governance-logs request body | VERIFIED |
 | EscrowRecord | GET /epistemic-hold/escalations, PATCH /epistemic-hold/escalations/{escalationId}, StateEnvelope (if/then) | VERIFIED |
 | StateEnvelope | All endpoints returning governance state | VERIFIED |
-| TGLF_State0 | POST /audit-logs (State 0 response), GET /epistemic-hold/escalations/{escalationId} | VERIFIED |
-| TGLF_StateNeg1 | POST /audit-logs (State -1 response), POST /refusals | VERIFIED |
-| TGLF_StateP1 | POST /audit-logs (State +1 response) | VERIFIED |
-| NLNAAuditToken | POST /audit-logs (Proceed response) | VERIFIED |
+| TGLF_State0 | POST /governance-logs (State 0 response), GET /epistemic-hold/escalations/{escalationId} | VERIFIED |
+| TGLF_StateNeg1 | POST /governance-logs (State -1 response), POST /refusals | VERIFIED |
+| TGLF_StateP1 | POST /governance-logs (State +1 response) | VERIFIED |
+| NLNAGovernanceToken | POST /governance-logs (Proceed response) | VERIFIED |
 | JustificationObject | POST /decisions (internal), POST /evaluate/* | VERIFIED |
 | PillarAssessment | JustificationObject.pillarAssessments, TGLF_State0.deliberationMatrix | VERIFIED |
 | RegulatoryFlags | JustificationObject.regulatoryFlags | VERIFIED |
 | RegulatoryFlagEntry | RegulatoryFlags sub-properties | VERIFIED |
 | LanternStatus | GET /epistemic-hold/lantern, GatewayRoutingStatus, TGLF_State0 | VERIFIED |
-| SignatureBlock | GET /goukassian/signature, LanternStatus, /audit/compliance/attestation | VERIFIED |
+| SignatureBlock | GET /goukassian/signature, LanternStatus, /governance/compliance/attestation | VERIFIED |
 | LicenseValidationRequest | POST /goukassian/license/validate | VERIFIED |
 | RegulatoryContext | POST /evaluate/trade, POST /evaluate/policy, POST /evaluate/supply-chain, POST /decisions | VERIFIED |
 | ThresholdProfile | GET /thresholds/{domain}, PUT /thresholds/{domain} | VERIFIED |
