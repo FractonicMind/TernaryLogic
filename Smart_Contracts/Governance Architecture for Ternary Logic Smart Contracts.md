@@ -50,7 +50,7 @@ This constraint is not a policy. It is hardcoded into the smart contract. It is 
 
 TL governance operates as a **distributed triad of authority**, modeled on constitutional separation of powers but implemented through cryptographic quorum, time-locks, and immutable proof.
 
-### 2.1 Branch I: The Technical Custodians (Stewards of Code Integrity)
+### 2.1 Branch I: The  (Stewards of Code Integrity)
 
 **Function:** Maintain the technical soundness of TL's execution layer and deployment infrastructure.
 
@@ -72,7 +72,7 @@ TL governance operates as a **distributed triad of authority**, modeled on const
 ✗ Cannot execute changes without multi-day time-lock
 ✗ Cannot override or bypass the three states (+1, 0, -1)
 ✗ Cannot access the Treasury directly
-✗ Cannot veto Stewardship Council decisions
+✗ Cannot veto Stewardship Custodians decisions
 
 **Accountability Mechanism:**
 
@@ -82,17 +82,17 @@ Every code proposal is tagged with:
 - A security audit summary
 - A list of potential failure modes
 
-This proposal is published to a public repository and given a mandatory review window (e.g., 14 days) before execution can occur. Any governance participant can audit the code and file a formal objection (which triggers a Stewardship Council review).
+This proposal is published to a public repository and given a mandatory review window (e.g., 14 days) before execution can occur. Any governance participant can audit the code and file a formal objection (which triggers a Stewardship Custodians review).
 
 If a Technical Custodian proposes a change that violates TL's core principles, the other custodians issue a **Formal Objection**, which pauses the time-lock indefinitely. Resolution requires consensus.
 
 **Constraint on Power:**
 
-The Technical Custodians maintain the system; they do not govern it. They are programmers, not judges.
+The  maintain the system; they do not govern it. They are programmers, not judges.
 
 ---
 
-### 2.2 Branch II: The Stewardship Council (Guardians of Ethical Continuity)
+### 2.2 Branch II: The Stewardship Custodians (Guardians of Ethical Continuity)
 
 **Function:** Resolve ambiguity, adjudicate disputes, safeguard TL's ethical mandate across time.
 
@@ -107,7 +107,7 @@ The Technical Custodians maintain the system; they do not govern it. They are pr
 **Scope of Authority:**
 
 ✓ Resolve Epistemic Hold (State 0) decisions for specific transactions
-✓ Reject problematic code proposals from Technical Custodians (with justification)
+✓ Reject problematic code proposals from Technical Council (with justification)
 ✓ Issue guidance on interpretation of TL's ethical mandates
 ✓ Propose governance structure modifications (requiring supermajority)
 ✓ Veto any attempted modification to core TL logic
@@ -120,7 +120,7 @@ The Technical Custodians maintain the system; they do not govern it. They are pr
 
 **Accountability Mechanism:**
 
-Every decision made by the Stewardship Council is:
+Every decision made by the Stewardship Custodians is:
 1. **Publicly announced** 48 hours before voting
 2. **Cryptographically logged** with the Council member's identifier
 3. **Permanently anchored** to multiple blockchains
@@ -130,7 +130,7 @@ If a Council member votes consistently in ways that appear biased, corrupt, or h
 
 **Constraint on Power:**
 
-The Stewardship Council does not manage the system. They protect it from institutional drift. They are judges, not engineers.
+The Stewardship Custodians does not manage the system. They protect it from institutional drift. They are judges, not engineers.
 
 ---
 
@@ -144,8 +144,8 @@ The Stewardship Council does not manage the system. They protect it from institu
 
 ✓ Receive funds from transaction fees, fines, and contributions
 ✓ Distribute funds only when:
-  - The Technical Custodians propose a valid upgrade AND the time-lock expires AND no veto is pending
-  - The Stewardship Council approves a compensation payment for harm
+  - The Technical Council propose a valid upgrade AND the time-lock expires AND no veto is pending
+  - The Stewardship Custodians approves a compensation payment for harm
   - Protocol-defined rewards for security researchers
 ✓ Reject any instruction that violates these rules
 
@@ -167,6 +167,9 @@ If the Treasury receives an instruction that violates its rules, it automaticall
 
 The Treasury has no discretion. It is a lock that opens only when the correct keys are presented in the correct order.
 
+The Treasury accumulates TL service fees collected on-chain. Fee levels are governance parameters set by Tri-Cameral Joint-Approval (Nomination 2026 — subject to revision at any governance session). Epistemic Hold activation and resolution carry no fee by constitutional design: charging for a constitutional pause creates a perverse incentive to avoid holds. Disbursements to the Goukassian Foundation require Joint-Approval supermajority independently
+in both the Technical Council and the Stewardship Custodians. No individual may withdraw from the Treasury directly.
+
 ---
 
 ## 3. Governance Powers and Prohibitions: The Hard Constraints
@@ -179,7 +182,7 @@ The Treasury has no discretion. It is a lock that opens only when the correct ke
 - Require supermajority consensus before execution
 - Implement changes via time-locked deployment (minimum 48 hours, maximum 28 days)
 
-**Example:** If a faster hash function becomes available, Technical Custodians may propose upgrading from Keccak-256 to Blake3. The proposal is published, the Stewardship Council reviews it, the community has 14 days to object, and then it is automatically deployed.
+**Example:** If a faster hash function becomes available, Technical Council may propose upgrading from Keccak-256 to Blake3. The proposal is published, the Stewardship Custodians reviews it, the community has 14 days to object, and then it is automatically deployed.
 
 **Emergency Response (Restricted)**
 
@@ -189,21 +192,21 @@ The Treasury has no discretion. It is a lock that opens only when the correct ke
 
 **Key Rotation and Custody Management**
 
-- Stewardship Council members can be rotated on a defined schedule.
+- Stewardship Custodians members can be rotated on a defined schedule.
 - New members undergo verification (via KYC/KYB equivalent).
 - Old members' cryptographic keys are revoked via multi-signature ceremony.
 
 **Governance Structure Modifications**
 
 - The Council may propose changes to its own composition, term length, or decision-making threshold.
-- Such proposals require a supermajority vote (e.g., 2/3 of members) AND approval from the Technical Custodians AND a public comment period.
+- Such proposals require a supermajority vote (e.g., 2/3 of members) AND approval from the Technical Council AND a public comment period.
 
 ### 3.2 What Governance CANNOT Do
 
 **Override Operational Decisions**
 
 Governance cannot:
-- Force a State 0 (Hold) transaction into State +1 (Proceed) retroactively
+- Force a State 0 (Epistemic Hold) transaction into State +1 (Proceed) retroactively
 - Convert a State -1 (Refuse) into anything other than -1
 - Modify a logged Decision (Pillar IV) after the fact
 - Erase a transaction from the Immutable Ledger
@@ -233,8 +236,8 @@ Governance cannot:
 
 These are **constitutional amendments** and require an extremely high bar:
 - Consensus of all three governance branches
-- Unanimous approval of the Technical Custodians
-- Supermajority approval of the Stewardship Council (e.g., 100% of active members)
+- Unanimous approval of the Technical Council
+- Supermajority approval of the Stewardship Custodians (e.g., 100% of active members)
 - Public comment period of 60 days
 - Community governance token vote (if one exists)
 
@@ -255,9 +258,9 @@ Step 1: Proposal Creation (48 hours)
 Step 2: Public Review (14 days minimum)
 ├─ Community and auditors review proposal
 ├─ Formal objections can be filed
-└─ Technical Custodians respond to objections
+└─ Technical Council respond to objections
 
-Step 3: Stewardship Council Deliberation (7 days)
+Step 3: Stewardship Custodians Deliberation (7 days)
 ├─ Council reviews proposal and public feedback
 ├─ Council votes (simple majority or supermajority, depending on scope)
 └─ Decision is cryptographically logged and anchored
@@ -290,18 +293,18 @@ Step 6: Verification and Finality
 
 ```
 Step 1: Vulnerability Disclosure
-├─ Security researcher privately notifies Technical Custodians
+├─ Security researcher privately notifies Technical Council
 └─ Vulnerability is verified and classified (Critical/High/Medium)
 
-Step 2: Emergency Halt (if Critical)
-├─ Technical Custodians declare emergency halt
+Step 2: Emergency Refuse (if Critical)
+├─ Technical Council declare emergency halt
 ├─ All new transactions default to State 0 (Epistemic Hold)
 ├─ System continues to operate (no funds are frozen or lost)
-└─ Halt is logged: [EMERGENCY_HALT_DECLARED: reason, timestamp, duration_limit]
+└─ Refuse is logged: [EMERGENCY_HALT_DECLARED: reason, timestamp, duration_limit]
 
 Step 3: Rapid Fix Development
-├─ Technical Custodians develop and formally verify fix
-├─ Stewardship Council reviews fix in parallel
+├─ Technical Council develop and formally verify fix
+├─ Stewardship Custodians reviews fix in parallel
 └─ Public notification is issued (without revealing exploit details, initially)
 
 Step 4: Expedited Deployment
@@ -309,9 +312,9 @@ Step 4: Expedited Deployment
 ├─ Community is notified of details
 └─ Fix is deployed and immediately activated
 
-Step 5: Halt Termination
+Step 5: Refuse Termination
 ├─ Once fix is confirmed to be working, halt is lifted
-├─ All State 0 (Hold) transactions during halt are resolved (+1 or -1)
+├─ All State 0 (Epistemic Hold) transactions during halt are resolved (+1 or -1)
 └─ Full incident report is published (no information withheld)
 
 Step 6: Post-Incident Review
@@ -328,16 +331,16 @@ Reserved for the most significant changes. Requires near-unanimous consensus.
 
 ```
 Step 1: Amendment Proposal (30-day public comment)
-├─ Amendment must be proposed by supermajority of Stewardship Council
+├─ Amendment must be proposed by supermajority of Stewardship Custodians
 ├─ Proposal is published in full, with detailed rationale
 └─ Public comment period begins
 
 Step 2: Technical Custodian Review (14 days)
-├─ Technical Custodians assess feasibility and security implications
+├─ Technical Council assess feasibility and security implications
 ├─ Council responds to public feedback
 └─ Formal recommendation is published
 
-Step 3: Stewardship Council Vote (7 days)
+Step 3: Stewardship Custodians Vote (7 days)
 ├─ Council votes on amendment (100% approval required)
 ├─ Any dissenting Council member must publish their objection
 └─ Objection is logged permanently
@@ -369,7 +372,7 @@ Step 6: Implementation and Immutability
 
 **Threat 1: Collusion Among Signers**
 
-**Attack Scenario:** A majority of Technical Custodians or Stewardship Council members collude to approve a malicious change (e.g., adding a backdoor to the logic).
+**Attack Scenario:** A majority of Technical Council or Stewardship Custodians members collude to approve a malicious change (e.g., adding a backdoor to the logic).
 
 **Safeguards:**
 
@@ -393,13 +396,13 @@ Step 6: Implementation and Immutability
 
 **Safeguards:**
 
-1. **No Plutocracy:** Governance decisions do NOT go to token holders. Only the Stewardship Council (appointed) and Technical Custodians (credentialed) can initiate changes.
+1. **No Plutocracy:** Governance decisions do NOT go to token holders. Only the Stewardship Custodians (appointed) and Technical Council (credentialed) can initiate changes.
 
-2. **Distributed Composition:** Council members are explicitly selected to represent diverse institutions with conflicting interests. No single interest group can control the majority.
+2. **Distributed Composition:** Custodians members are explicitly selected to represent diverse institutions with conflicting interests. No single interest group can control the majority.
 
-3. **Term Limits:** Council members serve 2-year terms with staggered rotation. A complete takeover requires a 4-year conspiracy to replace all members sequentially.
+3. **Term Limits:** Custodians members serve 2-year terms with staggered rotation. A complete takeover requires a 4-year conspiracy to replace all members sequentially.
 
-4. **Credential Verification:** Technical Custodians must maintain active security audit credentials or academic standing. Loss of credential triggers automatic removal.
+4. **Credential Verification:** Technical Council must maintain active security audit credentials or academic standing. Loss of credential triggers automatic removal.
 
 5. **Recall Audit:** Any party can petition for a recall audit of a Council member. If misconduct is found, the member is removed and new member selection is triggered.
 
@@ -429,7 +432,7 @@ Step 6: Implementation and Immutability
 
 **Threat 4: Silent or Backdoor Modification**
 
-**Attack Scenario:** Technical Custodians introduce a subtle vulnerability or backdoor into the code update, intending to exploit it later.
+**Attack Scenario:** Technical Council introduce a subtle vulnerability or backdoor into the code update, intending to exploit it later.
 
 **Safeguards:**
 
@@ -449,7 +452,7 @@ Step 6: Implementation and Immutability
 
 **Threat 5: Governance Deadlock**
 
-**Attack Scenario:** Technical Custodians and Stewardship Council reach an impasse. Neither branch can veto the other, so governance becomes paralyzed.
+**Attack Scenario:** Technical Council and Stewardship Custodians reach an impasse. Neither branch can veto the other, so governance becomes paralyzed.
 
 **Safeguards:**
 
@@ -473,7 +476,7 @@ Each pillar of TL has a corresponding governance responsibility. This matrix def
 
 ### Pillar I: Epistemic Hold (State 0)
 
-**Governed By:** Stewardship Council
+**Governed By:** Stewardship Custodians
 **Accountability:** Council must ensure that State 0 triggers are appropriate and timely.
 **Governance Action:** Council can propose adjustment of State 0 thresholds (e.g., "increase Oracle deviation tolerance from 5% to 7%"), subject to Technical Custodian approval.
 **Prohibited:** No authority can eliminate or disable State 0.
@@ -482,17 +485,17 @@ Each pillar of TL has a corresponding governance responsibility. This matrix def
 
 ### Pillar II: Immutable Ledger
 
-**Governed By:** Technical Custodians
+**Governed By:** Technical Council
 **Accountability:** Custodians must ensure logs are stored, replicated, and remain accessible.
 **Governance Action:** Custodians can propose migration to new log storage technology (e.g., Arweave to Filecoin) if the change increases reliability.
 **Prohibited:** No authority can alter historical logs or change the log schema retroactively.
 
 ---
 
-### Pillar III: Goukassian Principle (Default to Hold)
+### Pillar III: Goukassian Principle (Default to Epistemic Hold)
 
 **Governed By:** Both Branches (joint responsibility)
-**Accountability:** Technical Custodians maintain the logic; Stewardship Council ensures the logic reflects ethical mandates.
+**Accountability:** Technical Council maintain the logic; Stewardship Custodians ensures the logic reflects ethical mandates.
 **Governance Action:** Either branch can propose modifications to the Goukassian Logic Gate, but only with unanimous approval from the other branch.
 **Prohibited:** No authority can change the three states (+1, 0, -1) to any other system.
 
@@ -500,16 +503,16 @@ Each pillar of TL has a corresponding governance responsibility. This matrix def
 
 ### Pillar IV: Decision Logs
 
-**Governed By:** Technical Custodians
+**Governed By:** Technical Council
 **Accountability:** Custodians ensure logs are cryptographically signed and cannot be forged.
-**Governance Action:** Custodians can propose new fields in the log schema (e.g., "add timestamp_verified field"), subject to Stewardship Council review.
+**Governance Action:** Custodians can propose new fields in the log schema (e.g., "add timestamp_verified field"), subject to Stewardship Custodians review.
 **Prohibited:** No authority can remove required fields or make logs optional.
 
 ---
 
 ### Pillar V: Economic Rights & Transparency
 
-**Governed By:** Stewardship Council
+**Governed By:** Stewardship Custodians
 **Accountability:** Council ensures that public view functions remain accessible and accurate.
 **Governance Action:** Council can require new transparency metrics be added (e.g., "expose real-time hold status").
 **Prohibited:** No authority can restrict access to governance or audit information.
@@ -536,7 +539,7 @@ Each pillar of TL has a corresponding governance responsibility. This matrix def
 
 ### Pillar VIII: Anchors (Permanence)
 
-**Governed By:** Technical Custodians
+**Governed By:** Technical Council
 **Accountability:** Custodians maintain the multi-chain anchoring infrastructure.
 **Governance Action:** Custodians can add new anchor chains (e.g., "also anchor to Solana") or upgrade to new cryptographic algorithms.
 **Prohibited:** No authority can disable anchoring or reduce the number of independent chains.
@@ -585,7 +588,7 @@ TL includes a **failsafe degradation cascade**:
 
 ### Stage 1: Governance Anomaly Detection (Automated)
 
-If governance is behaving abnormally (e.g., all Council members voting identically, all approvals happening within minutes), the system emits a **Governance Anomaly Alert**. The community is notified publicly.
+If governance is behaving abnormally (e.g., all Custodians members voting identically, all approvals happening within minutes), the system emits a **Governance Anomaly Alert**. The community is notified publicly.
 
 ### Stage 2: Manual Intervention Window (Community)
 
@@ -625,6 +628,8 @@ Governance fails when it must intervene constantly, making exceptions, bending r
 - The requirement for cryptographic signatures
 - The immutability of historical logs
 - The separation of governance branches
+- The separation of governance branch names (Technical Council / Stewardship Custodians /
+  Smart Contract Treasury)
 
 ### Adjustable (Can be changed via governance process)
 
@@ -632,7 +637,7 @@ Governance fails when it must intervene constantly, making exceptions, bending r
 - Velocity check thresholds
 - Oracle deviation tolerances (e.g., 5% vs. 7%)
 - Gas limits and cost parameters
-- Stewardship Council size and term length
+- Stewardship Custodians size and term length
 - Governance quorum thresholds (e.g., simple majority vs. supermajority)
 - Emergency halt duration limits
 - Audit delay periods
@@ -728,13 +733,13 @@ TL's governance is implemented through a suite of interconnected contracts, each
 - Emits events for every step, visible to the community
 - Cannot compress or bypass the delay, even by unanimous consent
 
-**StewadshipCouncilVault.sol**
-- Records Stewardship Council membership and term expirations
+**StewardshipCustodianVault.sol**
+- Records Stewardship Custodians membership and term expirations
 - Manages key rotation ceremonies
 - Tracks voting history and consensus thresholds
 - Cannot transfer governance authority without explicit 2/3 supermajority vote
 
-**TechnicalCustodianRegistry.sol**
+**TechnicalCouncilRegistry.sol**
 - Maintains list of authorized code reviewers and security auditors
 - Verifies credential status (e.g., "this person currently holds an EC-Council security certification")
 - Removes members whose credentials expire
@@ -743,7 +748,7 @@ TL's governance is implemented through a suite of interconnected contracts, each
 **TreasuryGuardian.sol**
 - The Smart Contract Treasury's interface
 - Enforces that funds can only move when governance conditions are met
-- Maintains multi-signature requirements (e.g., "requires signature from Technical Custodian + Stewardship Council")
+- Maintains multi-signature requirements (e.g., "requires signature from Technical Custodian + Stewardship Custodians")
 - Cannot unilaterally release funds to any party
 
 ### 14.2 The Governance Interfaces (EIP-712 Schemas)
@@ -858,7 +863,7 @@ mapping(bytes32 => uint256) public vetoExpiryTime;
 
 function issueVeto(bytes32 proposalId, string calldata reason)
     external
-    onlyStewadshipCouncil
+    onlyStewardshipCustodians
 {
     require(
         !governance.hasTimelockExpired(proposalId),
@@ -897,9 +902,9 @@ function issueVeto(bytes32 proposalId, string calldata reason)
 
 ## 15. Governance Rotation and Key Ceremony
 
-### 15.1 Stewardship Council Member Rotation
+### 15.1 Stewardship Custodians Member Rotation
 
-Council members serve fixed 2-year terms. Rotation is staggered so that no more than 1/3 of the council changes in any single rotation event.
+Custodians members serve fixed 2-year terms. Rotation is staggered so that no more than 1/3 of the council changes in any single rotation event.
 
 **Rotation Timeline:**
 ```
@@ -921,12 +926,12 @@ Year 3: Members E, F, G, H, I, J (6 members)
    - Application is public and subject to community feedback
 
 2. **Community Vetting** (14 days)
-   - Existing Council members review applications
+   - Existing Custodians members review applications
    - Community members can file objections
    - Objections are addressed publicly
 
 3. **Consent Vote by Current Council** (7 days)
-   - Existing Council members vote on new applicants
+   - Existing Custodians members vote on new applicants
    - Supermajority approval required (e.g., 5/6 current members)
    - Each vote is logged with reason
 
@@ -1003,8 +1008,8 @@ But this power is extremely dangerous. It could be abused to silence dissent, fr
 ### 16.1 The Emergency Freeze Constraints
 
 **Who Can Trigger It:**
-- Any 2 out of 3 Technical Custodians (must be different people signing, with time delay between signatures)
-- Any 5 out of 6 Stewardship Council members (requires supermajority; even one dissent blocks it)
+- Any 2 out of 3 Technical Council (must be different people signing, with time delay between signatures)
+- Any 5 out of 6 Stewardship Custodians members (requires supermajority; even one dissent blocks it)
 
 **What It Does:**
 - All new transactions enter State 0 (Epistemic Hold) automatically
@@ -1018,8 +1023,8 @@ But this power is extremely dangerous. It could be abused to silence dissent, fr
 - After 7 days, if the freeze has not been lifted and the community has not voted to extend it, the freeze automatically expires
 
 **How It's Lifted:**
-- Technical Custodians determine the fix
-- Stewardship Council approves the fix
+- Technical Council determine the fix
+- Stewardship Custodians approves the fix
 - Fix is deployed on a testnet and verified
 - Community is notified
 - Freeze is lifted and system returns to normal operation
@@ -1080,7 +1085,7 @@ To detect when governance is drifting, TL includes automated monitoring of gover
 - Metric is analyzed quarterly
 
 **Diversity of Decision-Making:**
-- Do Council members vote consistently in blocks (risk of factionalism)?
+- Do Custodians members vote consistently in blocks (risk of factionalism)?
 - Do voting patterns correlate with external events (risk of capture)?
 - Metric is analyzed via statistical anomaly detection
 
@@ -1176,12 +1181,12 @@ Step 1: Regulator Submits Request
 └─ Example: "Require that all transactions >$10M with Entity X be blocked"
 
 Step 2: Governance Review
-├─ Stewardship Council reviews the request
+├─ Stewardship Custodians reviews the request
 ├─ Council assesses whether the request is legal and consistent with TL principles
 └─ If consistent, the request is approved and converted to a governance action
 
 Step 3: Implementation
-├─ Technical Custodians implement the regulatory constraint
+├─ Technical Council implement the regulatory constraint
 ├─ The implementation is code-reviewed by external auditors
 ├─ The change goes through normal governance time-lock
 
@@ -1206,7 +1211,7 @@ If a regulator makes such demands, TL must refuse, and the matter escalates to c
 
 ## 20. Governance Succession Planning
 
-What happens if all Stewardship Council members are incapacitated simultaneously? What if the Technical Custodians disappear?
+What happens if all Stewardship Custodians members are incapacitated simultaneously? What if the Technical Council disappear?
 
 TL includes explicit succession protocols:
 
@@ -1214,12 +1219,12 @@ TL includes explicit succession protocols:
 
 A formal document, signed by all current governance members, specifies:
 
-**For Stewardship Council:**
+**For Stewardship Custodians:**
 - If >50% of members are incapacitated, remaining members have authority to elect new members immediately (without the normal 30-day application period)
 - The new members inherit the departed members' cryptographic keys (via emergency key recovery ceremony)
 - An external auditor is appointed to oversee the succession
 
-**For Technical Custodians:**
+**For Technical Council:**
 - If >50% are incapacitated, remaining custodians can co-opt new members via emergency procedure
 - The new members must have verifiable security credentials
 - An emergency audit is conducted within 14 days
