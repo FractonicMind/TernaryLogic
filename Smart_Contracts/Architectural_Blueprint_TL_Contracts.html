@@ -1,1305 +1,672 @@
-<!DOCTYPE html><html lang="en"><head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Architectural Blueprint for Ternary Logic Smart Contracts</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.5.0/mermaid.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-    <style>
-        :root {
-            --primary: #1e293b;
-            --secondary: #64748b;
-            --accent: #3b82f6;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: var(--text-primary);
-            overflow-x: hidden;
-        }
-        
-        .serif {
-            font-family: 'Playfair Display', serif;
-        }
-        
-        .toc-fixed {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 280px;
-            height: 100vh;
-            background: var(--bg-secondary);
-            border-right: 1px solid #e2e8f0;
-            z-index: 1000;
-            overflow-y: auto;
-            padding: 2rem 1.5rem;
-        }
-        
-        .main-content {
-            margin-left: 280px;
-            min-height: 100vh;
-        }
-        
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-        
-        .bento-card {
-            background: var(--bg-secondary);
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-            word-wrap: break-word;
-        }
-        
-        .bento-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent), #8b5cf6);
-        }
-        
-        .mermaid-container {
-            display: flex;
-            justify-content: center;
-            min-height: 300px;
-            max-height: 800px;
-            background: var(--bg-primary);
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 30px;
-            margin: 30px 0;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            position: relative;
-            overflow: hidden;
-        }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architectural Blueprint — Ternary Logic Smart Contracts</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap');
 
-        .mermaid-container .mermaid {
-            width: 100%;
-            max-width: 100%;
-            height: 100%;
-            cursor: grab;
-            transition: transform 0.3s ease;
-            transform-origin: center center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            touch-action: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
+  :root {
+    --navy:      #0a1628;
+    --navy-mid:  #0d1e36;
+    --navy-lt:   #152840;
+    --navy-bdr:  #1a3050;
+    --gold:      #d4a574;
+    --gold-lt:   #e8c89a;
+    --gold-dk:   #7a5830;
+    --cream:     #ede7de;
+    --cream-dim: #a0988c;
+    --body:      #bab2a8;
+    --dim:       #686058;
+    --proceed:   #50c488;
+    --hold:      #eeca50;
+    --refuse:    #e85858;
+    --blue:      #5898d8;
+    --sw:        268px;
+  }
 
-        .mermaid-container .mermaid svg {
-            max-width: 100%;
-            height: 100%;
-            display: block;
-            margin: 0 auto;
-        }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
 
-        .mermaid-container .mermaid:active {
-            cursor: grabbing;
-        }
+  body {
+    background: var(--navy);
+    color: var(--body);
+    font-family: 'Inter', sans-serif;
+    font-size: 15.5px;
+    line-height: 1.82;
+    display: flex;
+    min-height: 100vh;
+  }
 
-        .mermaid-container.zoomed .mermaid {
-            height: 100%;
-            width: 100%;
-            cursor: grab;
-        }
+  /* SIDEBAR */
+  nav {
+    position: fixed; top:0; left:0;
+    width: var(--sw); height: 100vh;
+    background: var(--navy-mid);
+    border-right: 1px solid var(--navy-bdr);
+    overflow-y: auto; z-index: 100;
+    display: flex; flex-direction: column;
+  }
+  nav::-webkit-scrollbar { width: 3px; }
+  nav::-webkit-scrollbar-thumb { background: var(--navy-bdr); }
 
-        .mermaid-controls {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            display: flex;
-            gap: 10px;
-            z-index: 20;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 8px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
+  .nb { padding: 22px 20px 16px; border-bottom: 1px solid var(--navy-bdr); }
+  .nb-tag { font-family: 'Fira Code', monospace; font-size: 8px; letter-spacing: 0.22em; color: var(--gold-dk); text-transform: uppercase; margin-bottom: 6px; }
+  .nb h2 { font-family: 'Libre Baskerville', serif; font-size: 13.5px; font-weight: 700; color: var(--gold); line-height: 1.38; }
 
-        .mermaid-control-btn {
-            background: #ffffff;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            padding: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: #374151;
-            font-size: 14px;
-            min-width: 36px;
-            height: 36px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+  .nd { padding: 9px 20px; border-bottom: 1px solid var(--navy-bdr); }
+  .nd a { display: block; font-family: 'Fira Code', monospace; font-size: 9px; color: var(--gold-dk); text-decoration: none; line-height: 1.95; transition: color 0.2s; }
+  .nd a:hover { color: var(--gold); }
 
-        .mermaid-control-btn:hover {
-            background: #f8fafc;
-            border-color: #3b82f6;
-            color: #3b82f6;
-            transform: translateY(-1px);
-        }
+  .ns { padding: 12px 0; flex: 1; }
+  .nc { font-family: 'Fira Code', monospace; font-size: 8px; letter-spacing: 0.2em; color: var(--gold-dk); text-transform: uppercase; padding: 10px 20px 3px; }
+  .nl { display: block; padding: 4px 20px 4px 22px; font-size: 11.5px; color: var(--dim); text-decoration: none; border-left: 2px solid transparent; transition: all 0.15s; line-height: 1.45; }
+  .nl:hover { color: var(--cream); border-left-color: var(--gold-dk); background: rgba(212,165,116,0.04); }
+  .nl.active { color: var(--gold); border-left-color: var(--gold); background: rgba(212,165,116,0.06); }
+  .nl.sub { padding-left: 32px; font-size: 11px; }
 
-        .mermaid-control-btn:active {
-            transform: scale(0.95);
-        }
-        
-        .citation {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 500;
-            border-bottom: 1px dotted var(--accent);
-        }
-        
-        .citation:hover {
-            background-color: #eff6ff;
-            border-bottom-style: solid;
-        }
-        
-        .highlight-box {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .ternary-visual {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin: 2rem 0;
-        }
-        
-        .ternary-state {
-            text-align: center;
-            padding: 1.5rem;
-            border-radius: 12px;
-            min-width: 120px;
-        }
-        
-        .state-plus { background: #dcfce7; color: #166534; }
-        .state-zero { background: #fef3c7; color: #92400e; }
-        .state-minus { background: #fee2e2; color: #991b1b; }
+  /* MAIN */
+  main { margin-left: var(--sw); flex: 1; max-width: 860px; padding: 52px 60px 120px; }
 
-        @media (max-width: 768px) {
-            .mermaid-control-btn:not(.reset-zoom) {
-                display: none;
-            }
-            .mermaid-controls {
-                top: auto;
-                bottom: 15px;
-                right: 15px;
-            }
-        }
-        
-        @media (max-width: 1024px) {
-            .toc-fixed {
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-            }
-            
-            .toc-fixed.open {
-                transform: translateX(0);
-            }
-            
-            .main-content {
-                margin-left: 0;
-            }
-            
-            .hero-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
+  /* HERO */
+  .hero { margin-bottom: 52px; padding-bottom: 40px; border-bottom: 1px solid var(--navy-bdr); }
+  .hero-eyebrow { font-family: 'Fira Code', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--blue); text-transform: uppercase; margin-bottom: 16px; }
+  .hero h1 { font-family: 'Libre Baskerville', serif; font-size: 38px; font-weight: 700; color: var(--cream); line-height: 1.18; margin-bottom: 10px; }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub { font-size: 14px; font-weight: 300; color: var(--dim); margin-bottom: 22px; max-width: 540px; line-height: 1.65; }
+  .hero-meta { font-family: 'Fira Code', monospace; font-size: 10px; color: var(--dim); line-height: 2; }
+  .hero-meta span { color: var(--gold-dk); margin-right: 8px; }
 
-            .mermaid-container {
-                padding: 15px;
-                margin: 15px 0;
-            }
-        }
+  /* AUDIENCE CARDS */
+  .audience-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 26px 0; }
+  .aud-card { background: var(--navy-lt); border: 1px solid var(--navy-bdr); border-radius: 3px; padding: 16px 16px; }
+  .aud-icon { font-size: 20px; margin-bottom: 8px; }
+  .aud-title { font-family: 'Fira Code', monospace; font-size: 9.5px; font-weight: 500; color: var(--gold-dk); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+  .aud-desc { font-size: 12px; color: var(--dim); line-height: 1.55; }
 
-        @media (min-width: 1025px) {
-            .toc-fixed {
-                transform: translateX(0);
-            }
-            
-            .main-content {
-                margin-left: 280px;
-            }
-        }
-    </style>
-  <base target="_blank">
+  /* DLLA */
+  .dlla-row { display: flex; gap: 10px; margin: 22px 0; }
+  .dlla-box { flex: 1; background: var(--navy-lt); border: 1px solid var(--navy-bdr); border-radius: 3px; padding: 14px 18px; position: relative; overflow: hidden; }
+  .dlla-box::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+  .dlla-box.inf::before { background: var(--blue); }
+  .dlla-box.gov::before { background: var(--gold); }
+  .dlla-box .dl { font-family: 'Fira Code', monospace; font-size: 8.5px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
+  .dlla-box.inf .dl { color: var(--blue); }
+  .dlla-box.gov .dl { color: var(--gold-dk); }
+  .dlla-box .dv { font-family: 'Fira Code', monospace; font-size: 26px; font-weight: 500; color: var(--cream); margin-bottom: 3px; }
+  .dlla-box .dd { font-size: 12px; color: var(--dim); }
+
+  /* STATE ROW */
+  .state-row { display: flex; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
+  .sp { display: flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 3px; border: 1px solid; font-family: 'Fira Code', monospace; font-size: 13px; }
+  .sp .v { font-size: 17px; font-weight: 600; }
+  .sp.p { background: rgba(80,196,136,0.07); border-color: rgba(80,196,136,0.25); color: var(--proceed); }
+  .sp.h { background: rgba(238,202,80,0.07); border-color: rgba(238,202,80,0.25); color: var(--hold); }
+  .sp.r { background: rgba(232,88,88,0.07); border-color: rgba(232,88,88,0.25); color: var(--refuse); }
+
+  /* SECTIONS */
+  section { margin-bottom: 58px; scroll-margin-top: 28px; }
+  section h2 { font-family: 'Libre Baskerville', serif; font-size: 24px; font-weight: 700; color: var(--cream); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--navy-bdr); display: flex; align-items: baseline; gap: 12px; }
+  section h2 .n { font-family: 'Fira Code', monospace; font-size: 10px; color: var(--gold-dk); letter-spacing: 0.05em; }
+  section h3 { font-family: 'Libre Baskerville', serif; font-size: 17px; font-weight: 700; color: var(--gold-lt); margin: 26px 0 12px; }
+  section h4 { font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 600; color: var(--cream-dim); margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.06em; }
+  p { margin-bottom: 15px; }
+  strong { color: var(--cream); font-weight: 600; }
+  em { color: var(--gold-lt); }
+  code { font-family: 'Fira Code', monospace; font-size: 12px; background: rgba(212,165,116,0.08); color: var(--gold-lt); padding: 1px 6px; border-radius: 3px; border: 1px solid rgba(212,165,116,0.13); }
+
+  /* ARCHITECTURE DIAGRAM */
+  .arch-diagram {
+    background: var(--navy-lt);
+    border: 1px solid var(--navy-bdr);
+    border-radius: 4px;
+    padding: 24px;
+    margin: 20px 0;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+  }
+  .arch-layer {
+    border: 1px solid var(--navy-bdr);
+    border-radius: 3px;
+    padding: 10px 16px;
+    margin-bottom: 6px;
+    position: relative;
+  }
+  .arch-layer.user { border-color: var(--blue); background: rgba(88,152,216,0.05); }
+  .arch-layer.contract { border-color: var(--gold-dk); background: rgba(212,165,116,0.05); }
+  .arch-layer.oracle { border-color: rgba(80,196,136,0.4); background: rgba(80,196,136,0.04); }
+  .arch-layer.infra { border-color: var(--navy-bdr); background: rgba(26,48,80,0.5); }
+  .arch-layer.gov { border-color: rgba(238,202,80,0.3); background: rgba(238,202,80,0.04); }
+  .al-label { font-size: 8.5px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 5px; }
+  .arch-layer.user .al-label { color: var(--blue); }
+  .arch-layer.contract .al-label { color: var(--gold-dk); }
+  .arch-layer.oracle .al-label { color: var(--proceed); }
+  .arch-layer.infra .al-label { color: var(--dim); }
+  .arch-layer.gov .al-label { color: var(--hold); }
+  .al-items { display: flex; gap: 8px; flex-wrap: wrap; }
+  .al-item { background: var(--navy-mid); border: 1px solid var(--navy-bdr); border-radius: 2px; padding: 3px 10px; font-size: 11px; color: var(--body); }
+  .arch-arrow { text-align: center; color: var(--dim); font-size: 14px; margin: 2px 0; }
+
+  /* BENEFITS GRID */
+  .benefit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 18px 0; }
+  .benefit-card { background: var(--navy-lt); border: 1px solid var(--navy-bdr); border-radius: 3px; padding: 16px 18px; }
+  .bc-icon { font-size: 18px; margin-bottom: 8px; }
+  .bc-title { font-size: 13.5px; font-weight: 600; color: var(--cream); margin-bottom: 6px; }
+  .bc-desc { font-size: 12.5px; color: var(--dim); line-height: 1.6; }
+
+  /* GOVERNANCE TABLE */
+  .tl-wrap { overflow-x: auto; margin: 18px 0; border-radius: 3px; border: 1px solid var(--navy-bdr); }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  thead tr { background: var(--navy-lt); border-bottom: 1px solid var(--navy-bdr); }
+  thead th { font-family: 'Fira Code', monospace; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dk); padding: 10px 14px; text-align: left; white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid rgba(26,48,80,0.5); transition: background 0.14s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(212,165,116,0.03); }
+  tbody td { padding: 10px 14px; color: var(--body); vertical-align: top; line-height: 1.55; }
+  tbody td:first-child { color: var(--cream); font-weight: 600; font-size: 12.5px; }
+  .s-p { color: var(--proceed); font-family: 'Fira Code', monospace; }
+  .s-h { color: var(--hold); font-family: 'Fira Code', monospace; }
+  .s-r { color: var(--refuse); font-family: 'Fira Code', monospace; }
+
+  /* NL=NA CHAIN */
+  .nlna { margin: 18px 0; }
+  .nlna-row { display: flex; gap: 12px; margin-bottom: 7px; }
+  .ln { width: 38px; height: 38px; border-radius: 3px; background: var(--navy-lt); border: 1px solid var(--navy-bdr); display: flex; align-items: center; justify-content: center; font-family: 'Fira Code', monospace; font-size: 10px; font-weight: 500; color: var(--gold-dk); flex-shrink: 0; }
+  .ln.gate { background: rgba(212,165,116,0.08); border-color: var(--gold-dk); color: var(--gold); }
+  .lb { flex: 1; background: var(--navy-lt); border: 1px solid var(--navy-bdr); border-radius: 3px; padding: 7px 14px; }
+  .lb.gate { border-color: var(--gold-dk); background: rgba(212,165,116,0.04); }
+  .ll { font-family: 'Fira Code', monospace; font-size: 9.5px; color: var(--gold-dk); margin-bottom: 3px; }
+  .ld { font-size: 12.5px; color: var(--body); }
+
+  /* USE CASES */
+  .use-cases { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 18px 0; }
+  .uc-card { background: var(--navy-lt); border: 1px solid var(--navy-bdr); border-radius: 3px; padding: 14px 16px; }
+  .uc-sector { font-family: 'Fira Code', monospace; font-size: 8.5px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-dk); margin-bottom: 5px; }
+  .uc-title { font-size: 13px; font-weight: 600; color: var(--cream); margin-bottom: 6px; }
+  .uc-hold { font-size: 11.5px; color: var(--hold); font-family: 'Fira Code', monospace; margin-bottom: 5px; font-style: italic; }
+  .uc-desc { font-size: 12px; color: var(--dim); line-height: 1.55; }
+
+  /* CODE */
+  pre { background: var(--navy-mid); border: 1px solid var(--navy-bdr); border-radius: 3px; padding: 18px; overflow-x: auto; margin: 14px 0; font-family: 'Fira Code', monospace; font-size: 11.5px; line-height: 1.72; color: var(--body); }
+  pre .kw { color: #7ec8e3; }
+  pre .ty { color: #c8a0e0; }
+  pre .cm { color: var(--dim); font-style: italic; }
+  pre .st { color: #a0d8a0; }
+  pre .nu { color: var(--hold); }
+  pre .ev { color: var(--gold-lt); }
+
+  /* FLOW */
+  .seq-flow { background: var(--navy-lt); border: 1px solid var(--navy-bdr); border-radius: 3px; padding: 20px; margin: 18px 0; font-family: 'Fira Code', monospace; font-size: 11.5px; }
+  .seq-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 10px; }
+  .seq-actor { min-width: 140px; color: var(--gold-dk); font-size: 10.5px; padding-top: 1px; }
+  .seq-arrow { color: var(--dim); margin: 0 4px; }
+  .seq-msg { color: var(--body); flex: 1; }
+  .seq-msg .code { color: var(--gold-lt); }
+  .seq-divider { border-top: 1px dashed var(--navy-bdr); margin: 10px 0; }
+
+  /* CALLOUT */
+  .callout { border-left: 3px solid var(--gold-dk); background: rgba(212,165,116,0.04); padding: 13px 17px; margin: 18px 0; border-radius: 0 3px 3px 0; }
+  .callout p { margin: 0; font-size: 13.5px; color: var(--cream-dim); }
+
+  /* FOOTER */
+  footer { margin-top: 70px; padding-top: 26px; border-top: 1px solid var(--navy-bdr); display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; }
+  footer .fl { font-family: 'Fira Code', monospace; font-size: 9px; color: var(--dim); line-height: 2; }
+  footer .fl strong { color: var(--gold-dk); }
+  footer .fr { font-family: 'Fira Code', monospace; font-size: 9px; color: var(--navy-bdr); text-align: right; line-height: 2; }
+
+  .scroll-top { position: fixed; bottom: 26px; right: 26px; width: 36px; height: 36px; background: var(--navy-lt); border: 1px solid var(--navy-bdr); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--gold-dk); font-size: 14px; text-decoration: none; opacity: 0; transition: opacity 0.3s; z-index: 200; }
+  .scroll-top.vis { opacity: 1; }
+  .scroll-top:hover { border-color: var(--gold-dk); color: var(--gold); }
+</style>
 </head>
+<body>
 
-  <body class="bg-white">
-    <!-- Fixed Table of Contents -->
-    <nav class="toc-fixed">
-      <div class="mb-8">
-        <h2 class="text-xl font-bold text-slate-900 mb-4">Contents</h2>
-        <ul class="space-y-2 text-sm">
-          <li>
-            <a class="block py-1 px-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded" href="#executive-summary">Executive Summary</a>
-          </li>
-          <li>
-            <a class="block py-1 px-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded" href="#conceptual-overview">Conceptual Overview</a>
-          </li>
-          <li>
-            <a class="block py-1 px-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded" href="#technical-design">Technical Design</a>
-          </li>
-          <li>
-            <a class="block py-1 px-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded" href="#use-cases">Use Cases</a>
-          </li>
-          <li>
-            <a class="block py-1 px-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded" href="#visual-diagrams">Visual Diagrams</a>
-          </li>
-        </ul>
+<nav>
+  <div class="nb">
+    <div class="nb-tag">TL Smart Contracts · V2.0</div>
+    <h2>Architectural Blueprint<br>Smart Contracts</h2>
+  </div>
+  <div class="nd">
+    <a href="https://doi.org/10.1007/s43681-025-00910-6" target="_blank">DOI 10.1007/s43681-025-00910-6</a>
+    <a href="https://doi.org/10.1007/s43681-026-01124-0" target="_blank">DOI 10.1007/s43681-026-01124-0</a>
+  </div>
+  <div class="ns">
+    <div class="nc">Contents</div>
+    <a class="nl" href="#s1">1. Executive Summary</a>
+    <a class="nl sub" href="#s1-scope">1.2 Scope</a>
+    <a class="nl sub" href="#s1-audience">1.3 Audiences</a>
+    <a class="nl" href="#s2">2. Conceptual Overview</a>
+    <a class="nl sub" href="#s2-phil">2.1 Philosophy</a>
+    <a class="nl sub" href="#s2-benefits">2.2 Strategic Benefits</a>
+    <a class="nl sub" href="#s2-gov">2.3 Governance</a>
+    <a class="nl" href="#s3">3. Technical Design</a>
+    <a class="nl sub" href="#s3-fsm">3.1 State Machine</a>
+    <a class="nl sub" href="#s3-hold">3.1.2 Epistemic Hold</a>
+    <a class="nl sub" href="#s3-oracle">3.3 Oracle Integration</a>
+    <a class="nl sub" href="#s3-formal">3.5 Formal Verification</a>
+    <a class="nl" href="#s4">4. Use Cases</a>
+    <a class="nl" href="#s5">5. Code Examples</a>
+  </div>
+</nav>
+
+<main>
+
+  <div class="hero" id="top">
+    <div class="hero-eyebrow">Smart Contract Architecture · Blueprint V2.0</div>
+    <h1>Architectural Blueprint<br>for <em>Ternary Logic</em><br>Smart Contracts</h1>
+    <div class="hero-sub">Comprehensive architectural blueprint covering the ternary state machine, NL=NA enforcement chain, Oracle-Custodian integration, formal verification, and use cases across CBDCs, DeFi, supply chain, and decentralized governance.</div>
+    <div class="hero-meta">
+      <div><span>Author</span>Lev Goukassian · ORCID 0009-0006-5966-1243</div>
+      <div><span>DOI V1</span>10.1007/s43681-025-00910-6</div>
+      <div><span>DOI V2</span>10.1007/s43681-026-01124-0</div>
+    </div>
+
+    <div class="state-row">
+      <div class="sp p"><span class="v">+1</span> Proceed</div>
+      <div class="sp h"><span class="v">0</span> Epistemic Hold</div>
+      <div class="sp r"><span class="v">−1</span> Refuse</div>
+    </div>
+
+    <div class="dlla-row">
+      <div class="dlla-box inf">
+        <div class="dl">Inference Lane · WCET</div>
+        <div class="dv">2 ms</div>
+        <div class="dd">Hard ceiling · 99.99th percentile</div>
+      </div>
+      <div class="dlla-box gov">
+        <div class="dl">Governance Lane · Ceiling</div>
+        <div class="dv">300 ms</div>
+        <div class="dd">50ms jitter max · PermissionToken required</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S1 -->
+  <section id="s1">
+    <h2><span class="n">01</span> Executive Summary</h2>
+
+    <p>This blueprint provides a comprehensive and actionable architectural specification for TL Smart Contracts as the on-chain enforcement layer of the Ternary Logic framework. It moves beyond high-level descriptions to define the precise components, interactions, and logic required to implement the unique ternary (+1, 0, −1) decision-making process at the heart of TL.</p>
+
+    <div id="s1-scope" style="scroll-margin-top:28px">
+      <h3>1.2 Scope</h3>
+      <div class="benefit-grid">
+        <div class="benefit-card">
+          <div class="bc-icon">⚙️</div>
+          <div class="bc-title">Technical Design</div>
+          <div class="bc-desc">Internal state machine of contracts, the EpistemicHold() function logic, EvidenceLog data structures, Oracle-Custodian async interaction, and formal verification using TLA+.</div>
+        </div>
+        <div class="benefit-card">
+          <div class="bc-icon">📐</div>
+          <div class="bc-title">Conceptual Overview</div>
+          <div class="bc-desc">Philosophy behind Ternary Logic, strategic benefits for business leaders and policymakers, and how the Epistemic Hold addresses systemic risk management challenges.</div>
+        </div>
+        <div class="benefit-card">
+          <div class="bc-icon">🏛️</div>
+          <div class="bc-title">Use Cases</div>
+          <div class="bc-desc">Financial services (AML, Basel III), sustainable finance (green bonds, ESG), supply chain management, and decentralized governance (Sacred Pause for AI-driven DAOs).</div>
+        </div>
+        <div class="benefit-card">
+          <div class="bc-icon">💻</div>
+          <div class="bc-title">Visual Diagrams and Code</div>
+          <div class="bc-desc">System architecture diagram, data flow diagram, sequence diagram, Solidity implementation examples, Oracle client pattern, and TLA+ formal verification specification.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="s1-audience" style="scroll-margin-top:28px">
+      <h3>1.3 Target Audiences</h3>
+      <div class="audience-grid">
+        <div class="aud-card">
+          <div class="aud-icon">👨‍💻</div>
+          <div class="aud-title">Developers</div>
+          <div class="aud-desc">Precise data structures, function signatures, state machine logic, security protocols, code examples, and formal verification models for implementation.</div>
+        </div>
+        <div class="aud-card">
+          <div class="aud-icon">📊</div>
+          <div class="aud-title">Strategists</div>
+          <div class="aud-desc">Strategic implications, business value, and competitive advantages. The conceptual overview explains the "why" behind the technology and how it mitigates risk.</div>
+        </div>
+        <div class="aud-card">
+          <div class="aud-icon">⚖️</div>
+          <div class="aud-title">Regulators</div>
+          <div class="aud-desc">Governance, accountability, and legal compliance. Sections on the Tri-Cameral model, NL=NA, and court-admissible evidence demonstrate TL's regulatory foundations.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S2 -->
+  <section id="s2">
+    <h2><span class="n">02</span> Conceptual Overview</h2>
+
+    <div id="s2-phil" style="scroll-margin-top:28px">
+      <h3>2.1 The Philosophy of Ternary Logic</h3>
+
+      <p>The architectural philosophy of TL represents a fundamental departure from the binary paradigms that have historically dominated computational and financial systems. Traditional smart contracts, operating on a strict true/false, execute/reject basis, are ill-equipped to handle the nuanced realities of complex economic interactions where uncertainty, incomplete information, and the need for verification are commonplace.</p>
+
+      <p>TL addresses this critical gap by introducing a third, intermediate logical state — the <strong>Epistemic Hold</strong>. This innovation transforms the smart contract from a simple, deterministic execution engine into a sophisticated framework for intelligent uncertainty management. By embedding a mandatory, time-bounded verification window directly into the transaction lifecycle, TL converts hesitation from a systemic liability into a <em>measurable, auditable, and valuable instrument of risk control and evidentiary integrity</em>.</p>
+
+      <div class="callout">
+        <p><strong>The world is not binary, and the systems we build to model it should not be either.</strong> A TL smart contract does not just process transactions — it orchestrates a complete evidentiary event. Every action is a narrative: the initial intent (+1), the period of deliberation and verification (0), and the final justified outcome (+1 or −1). This entire causal chain is preserved on an immutable ledger.</p>
       </div>
 
-      <div class="mt-8 pt-8 border-t border-slate-200">
-        <p class="text-xs text-slate-500 mb-2">Key Concepts</p>
-        <div class="flex flex-wrap gap-1">
-          <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Ternary Logic</span>
-          <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Epistemic Hold</span>
-          <span class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">Immutable Ledger</span>
+      <h4>NL=NA: The Core Enforcement Invariant</h4>
+      <p><code>G(execute implies P(escrow_recorded and auditable))</code> — no action can be executed without a corresponding, cryptographically sealed log entry. V2.0 enforces this at five independent layers:</p>
+
+      <div class="nlna">
+        <div class="nlna-row"><div class="ln">L1</div><div class="lb"><div class="ll">tl_schema.json</div><div class="ld"><code>StateEnvelope</code> if/then — State +1 requires <code>permissionToken</code></div></div></div>
+        <div class="nlna-row"><div class="ln">L2</div><div class="lb"><div class="ll">PermissionToken.laneOrigin</div><div class="ld"><code>const: "GOVERNANCE_LANE"</code> — any other value is schema-invalid</div></div></div>
+        <div class="nlna-row"><div class="ln">L3</div><div class="lb"><div class="ll">TGLF_StateP1</div><div class="ld"><code>permissionToken</code> in required array — all Eight Pillars must be certified</div></div></div>
+        <div class="nlna-row"><div class="ln">L4</div><div class="lb"><div class="ll">GovernanceProof</div><div class="ld"><code>logHash</code> and <code>merkleRoot</code> must match <code>PermissionToken</code> fields</div></div></div>
+        <div class="nlna-row"><div class="ln gate">L5</div><div class="lb gate"><div class="ll">TL_Ledger_Core.registerPermissionToken — TERMINAL GATE</div><div class="ld">Reverts <code>NLNAViolation</code> if <code>logHash</code> not provably in anchored Merkle root</div></div></div>
+      </div>
+    </div>
+
+    <div id="s2-benefits" style="scroll-margin-top:28px">
+      <h3>2.2 Strategic Benefits</h3>
+      <div class="benefit-grid">
+        <div class="benefit-card">
+          <div class="bc-icon">🔒</div>
+          <div class="bc-title">Enhanced Trust and Transparency</div>
+          <div class="bc-desc">Immutable Decision Logs record the full lifecycle of every decision: initial intent, Epistemic Hold duration with evidence gathered, and final outcome. Anchored to Bitcoin, Ethereum, and Polygon. Court-admissible under FRE 902(13) and eIDAS.</div>
+        </div>
+        <div class="benefit-card">
+          <div class="bc-icon">📋</div>
+          <div class="bc-title">Embedded Regulatory Compliance</div>
+          <div class="bc-desc">Regulatory rules (AML, Basel III, sanctions screening) are programmed directly into the protocol. Non-compliance is architecturally difficult. The Epistemic Hold pauses execution automatically when compliance checks cannot be completed.</div>
+        </div>
+        <div class="benefit-card">
+          <div class="bc-icon">👁️</div>
+          <div class="bc-title">Full Accountability Chain</div>
+          <div class="bc-desc">Every action is attributable, justifiable, and permanently recorded. NL=NA ensures no transaction disappears into opacity. The combination of immutable logs, Hybrid Shield cryptographic protection, and public blockchain anchors creates legally robust evidence.</div>
+        </div>
+        <div class="benefit-card">
+          <div class="bc-icon">🛡️</div>
+          <div class="bc-title">Institutional Capture Resistance</div>
+          <div class="bc-desc">Tri-Cameral governance distributes power across Technical Council (proposal rights only), Stewardship Custodians (binding veto), and Smart Contract Treasury (autonomous execution). No single body holds supremacy.</div>
         </div>
       </div>
-    </nav>
+    </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-      <!-- Hero Section -->
-      <section class="px-4 md:px-8 py-8 md:py-16 bg-gradient-to-br from-slate-50 to-blue-50">
-        <div class="max-w-7xl mx-auto">
-          <div class="hero-grid">
-            <div>
-              <h1 class="serif text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-6">
-                <span class="italic text-blue-600">Architectural Blueprint</span>
-                <br/>
-                for Ternary Logic Smart Contracts
-              </h1>
-              <p class="text-xl text-slate-600 mb-8 leading-relaxed">
-                A comprehensive guide to implementing three-state logic in blockchain systems,
-                moving beyond binary constraints to embrace uncertainty as a measurable instrument of risk control.
-              </p>
-              <div class="flex items-center space-x-6 text-sm text-slate-500">
-                <span class="flex items-center"><i class="fas fa-code mr-2"></i>Technical Specification</span>
-                <span class="flex items-center"><i class="fas fa-cogs mr-2"></i>Implementation Guide</span>
-                <span class="flex items-center"><i class="fas fa-users mr-2"></i>Multi-stakeholder</span>
-              </div>
-            </div>
+    <div id="s2-gov" style="scroll-margin-top:28px">
+      <h3>2.3 Governance Alignment</h3>
 
-            <div class="bento-card">
-              <img alt="Abstract ternary logic visualization" class="w-full h-48 object-cover rounded-lg mb-4" src="https://kimi-web-img.moonshot.cn/img/miro.medium.com/b6ee6a80630cadb0e1bcde6eedd39121ddfc2b32.png" size="medium" aspect="wide" query="abstract ternary logic concept" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
-              <h3 class="font-semibold text-lg mb-2">The Three States</h3>
-              <div class="ternary-visual">
-                <div class="ternary-state state-plus">
-                  <div class="text-2xl font-bold">+1</div>
-                  <div class="text-xs">Intent/Commit</div>
-                </div>
-                <div class="ternary-state state-zero">
-                  <div class="text-2xl font-bold">0</div>
-                  <div class="text-xs">Epistemic Hold</div>
-                </div>
-                <div class="ternary-state state-minus">
-                  <div class="text-2xl font-bold">-1</div>
-                  <div class="text-xs">Reject</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div class="tl-wrap">
+        <table>
+          <thead><tr><th>Body</th><th>Size · Quorum</th><th>Mandate</th><th>Treasury Role</th></tr></thead>
+          <tbody>
+            <tr><td>Technical Council</td><td>9 members · 7-of-9</td><td>Guard the machinery. Exclusive proposal rights only. Cannot veto.</td><td>Proposes disbursements via <code>proposeDisbursement()</code></td></tr>
+            <tr><td>Stewardship Custodians</td><td>11 members · 9-of-11</td><td>Hold the moral and civic line. Binding constitutional veto. Cannot propose.</td><td>Approves or vetoes via <code>approveDisbursement()</code> / <code>vetoDisbursement()</code></td></tr>
+            <tr><td>Smart Contract Treasury</td><td>Autonomous</td><td>Ensure Financial Continuity. Collects <code>permissionTokenFee</code> and <code>archiveEvidenceFee</code> (Nomination 2026).</td><td>Executes automatically on Joint-Approval. No admin key.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-      <!-- Executive Summary -->
-      <section class="px-4 md:px-8 py-8 md:py-16 bg-white" id="executive-summary">
-        <div class="max-w-4xl mx-auto">
-          <h2 class="serif text-3xl font-bold text-slate-900 mb-8">Executive Summary: TL Smart Contract Blueprint Prompt</h2>
+  <!-- S3 -->
+  <section id="s3">
+    <h2><span class="n">03</span> Technical Design</h2>
 
-          <div class="highlight-box">
-            <h3 class="font-semibold text-lg mb-3">Objective</h3>
-            <p class="text-slate-700">
-              Provide a comprehensive and actionable prompt for generating a detailed architectural blueprint for Smart Contracts
-              as a core mechanism within the Ternary Logic (TL) framework. The existing documentation lacks the granular technical
-              specifications, visual representations, and implementation-level details necessary for actual development and
-              strategic deployment <a class="citation" href="https://github.com/FractonicMind/TernaryLogic" target="_blank">[244]</a>.
-            </p>
-          </div>
+    <h3>System Architecture</h3>
+    <div class="arch-diagram">
+      <div class="arch-layer user">
+        <div class="al-label">User / External System</div>
+        <div class="al-items"><div class="al-item">Initiates Action</div><div class="al-item">Receives Final State</div></div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer contract">
+        <div class="al-label">TL Smart Contract Suite (Enforcement Layer)</div>
+        <div class="al-items"><div class="al-item">State Machine (+1 / 0 / -1)</div><div class="al-item">EpistemicHold()</div><div class="al-item">EvidenceLog</div><div class="al-item">NL=NA Layer 5</div></div>
+      </div>
+      <div class="arch-arrow">↓ (State 0)</div>
+      <div class="arch-layer oracle">
+        <div class="al-label">Oracle-Custodian Gateway (Off-Chain)</div>
+        <div class="al-items"><div class="al-item">Governance Lane API</div><div class="al-item">PermissionToken Issuance</div><div class="al-item">HSM-Signed EIP-712</div></div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer infra">
+        <div class="al-label">TL Framework Infrastructure</div>
+        <div class="al-items"><div class="al-item">TL_Evidence_Vault (Immutable Ledger)</div><div class="al-item">Hybrid Shield</div><div class="al-item">Veracity Anchors (BTC · ETH · Polygon)</div></div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer gov">
+        <div class="al-label">Tri-Cameral Governance Layer</div>
+        <div class="al-items"><div class="al-item">Technical Council (Proposals)</div><div class="al-item">Stewardship Custodians (Veto)</div><div class="al-item">Smart Contract Treasury (Execution)</div></div>
+      </div>
+    </div>
 
-          <div class="grid md:grid-cols-2 gap-6 mt-8">
-            <div class="bento-card">
-              <h3 class="font-semibold text-lg mb-4">Technical Design</h3>
-              <ul class="space-y-2 text-slate-600">
-                <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>State machine specification</li>
-                <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>Hold() function mechanics</li>
-                <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>Decision log data structures</li>
-                <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>Oracle integration patterns</li>
-              </ul>
-            </div>
+    <div id="s3-fsm" style="scroll-margin-top:28px">
+      <h3>3.1 State Machine and Transition Logic</h3>
 
-            <div class="bento-card">
-              <h3 class="font-semibold text-lg mb-4">Strategic Value</h3>
-              <ul class="space-y-2 text-slate-600">
-                <li class="flex items-start"><i class="fas fa-arrow-trend-up text-blue-500 mr-2 mt-1"></i>Enhanced trust through transparency</li>
-                <li class="flex items-start"><i class="fas fa-shield-alt text-blue-500 mr-2 mt-1"></i>Proactive risk mitigation</li>
-                <li class="flex items-start"><i class="fas fa-magnifying-glass text-blue-500 mr-2 mt-1"></i>Complete auditability</li>
-                <li class="flex items-start"><i class="fas fa-balance-scale text-blue-500 mr-2 mt-1"></i>Regulatory compliance automation</li>
-              </ul>
-            </div>
-          </div>
+      <div class="tl-wrap">
+        <table>
+          <thead><tr><th>Current State</th><th>Action</th><th>Next State</th><th>V2.0 Contract</th></tr></thead>
+          <tbody>
+            <tr><td class="s-h">EPISTEMIC_HOLD</td><td>EVIDENCE_RECEIVED</td><td class="s-p">PROCEED</td><td><code>resolveEpistemicHoldSystemWide(uint8(1))</code></td></tr>
+            <tr><td class="s-h">EPISTEMIC_HOLD</td><td>REJECTED / TIMEOUT</td><td class="s-r">REFUSE</td><td><code>resolveEpistemicHoldSystemWide(uint8(0))</code></td></tr>
+            <tr><td class="s-p">PROCEED</td><td>SUSPENDED</td><td class="s-h">EPISTEMIC_HOLD</td><td><code>activateEpistemicHoldSystemWide()</code></td></tr>
+            <tr><td class="s-p">PROCEED</td><td>REJECTED</td><td class="s-r">REFUSE</td><td>Emergency Override (logged before execution)</td></tr>
+            <tr><td class="s-r">REFUSE</td><td>NEW_PROPOSAL</td><td class="s-p">PROCEED (new process)</td><td>Full pipeline restart required</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-          <div class="mt-8">
-            <h3 class="font-semibold text-lg mb-4">Target Audience</h3>
-            <div class="grid md:grid-cols-3 gap-4">
-              <div class="text-center p-4 bg-slate-50 rounded-lg">
-                <i class="fas fa-code text-2xl text-blue-500 mb-2"></i>
-                <h4 class="font-medium">Developers</h4>
-                <p class="text-sm text-slate-600">Technical specifications and code examples</p>
-              </div>
-              <div class="text-center p-4 bg-slate-50 rounded-lg">
-                <i class="fas fa-chess text-2xl text-green-500 mb-2"></i>
-                <h4 class="font-medium">Strategists</h4>
-                <p class="text-sm text-slate-600">Business value and competitive advantages</p>
-              </div>
-              <div class="text-center p-4 bg-slate-50 rounded-lg">
-                <i class="fas fa-users text-2xl text-purple-500 mb-2"></i>
-                <h4 class="font-medium">Stakeholders</h4>
-                <p class="text-sm text-slate-600">Governance and compliance assurance</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <p style="font-size:12.5px; color:var(--dim); font-style:italic; margin-top:-6px;">Forbidden: EPISTEMIC_HOLD → EPISTEMIC_HOLD. <code>resolveEpistemicHoldSystemWide()</code> reverts <code>InvalidResolutionState</code> for any value other than <code>uint8(0)</code> or <code>uint8(1)</code>.</p>
+    </div>
 
-      <!-- Conceptual Overview -->
-      <section class="px-4 md:px-8 py-8 md:py-16 bg-slate-50" id="conceptual-overview">
-        <div class="max-w-4xl mx-auto">
-          <h2 class="serif text-3xl font-bold text-slate-900 mb-8">Conceptual Overview for Strategic Planning</h2>
+    <div id="s3-hold" style="scroll-margin-top:28px">
+      <h3>3.1.2 The EpistemicHold() Function</h3>
 
-          <div class="mb-12">
-            <h3 class="text-2xl font-semibold mb-6">The Philosophy of Ternary Logic</h3>
-            <p class="text-slate-700 mb-6">
-              Traditional smart contracts operate on a strict true/false basis, ill-equipped to handle the nuanced realities
-              of complex economic interactions where uncertainty and incomplete information are commonplace
-              <a class="citation" href="https://github.com/FractonicMind/TernaryLogic" target="_blank">[311]</a>.
-              This binary rigidity often leads to flash crashes, costly reconciliation, and trust deficits.
-            </p>
+      <p>The <code>EpistemicHold()</code> function is not a simple pause or delay — it is the entry point for a sophisticated, asynchronous process of evidence gathering and deliberation. It works with an Oracle-Custodian system using a <strong>pull model with asynchronous callbacks</strong>.</p>
 
-            <div class="highlight-box">
-              <h4 class="font-semibold text-lg mb-3">The Epistemic Hold Innovation</h4>
-              <p class="text-slate-700">
-                Ternary Logic introduces a third, intermediate logical state—the <strong>Epistemic Hold</strong>.
-                This mandatory, time-bounded verification window converts hesitation from a systemic liability into
-                a measurable, auditable, and valuable instrument of risk control and evidentiary integrity
-                <a class="citation" href="https://papers.ssrn.com/sol3/Delivery.cfm/5695042.pdf?abstractid=5695042&amp;mirid=1" target="_blank">[326]</a>.
-              </p>
-            </div>
-          </div>
+<pre><span class="kw">function</span> _transitionToEpistemicHold(
+    <span class="ty">bytes32</span> _actionId,
+    <span class="ty">string memory</span> _reason
+) <span class="kw">internal</span> {
+    decisions[_actionId].state = TernaryState.EpistemicHold;
+    <span class="kw">emit</span> <span class="ev">EpistemicHoldInitiated</span>(_actionId, _reason);
+    <span class="cm">// Off-chain Oracle-Custodian listens for this event</span>
+    <span class="cm">// and initiates Governance Lane → PermissionToken pathway</span>
+}
 
-          <div class="grid md:grid-cols-2 gap-8 mb-12">
-            <div>
-              <h3 class="text-xl font-semibold mb-4">Core Principles</h3>
-              <div class="space-y-4">
-                <div class="flex items-start">
-                  <div class="w-3 h-3 bg-red-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                  <div>
-                    <h4 class="font-medium text-slate-900">&#34;No Log = No Action&#34;</h4>
-                    <p class="text-sm text-slate-600">No action executes without cryptographically sealed log entry recording intent and justification <a class="citation" href="https://github.com/FractonicMind/TernaryLogic" target="_blank">[311]</a>.</p>
-                  </div>
-                </div>
-                <div class="flex items-start">
-                  <div class="w-3 h-3 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                  <div>
-                    <h4 class="font-medium text-slate-900">Goukassian Principle</h4>
-                    <p class="text-sm text-slate-600">Preserves continuity between conscience and accountability, ensuring ethical decision-making <a class="citation" href="https://papers.ssrn.com/sol3/Delivery.cfm/5695042.pdf?abstractid=5695042&amp;mirid=1" target="_blank">[326]</a>.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 class="text-xl font-semibold mb-4">Strategic Benefits</h3>
-              <div class="space-y-3">
-                <div class="bg-white p-3 rounded-lg border border-slate-200">
-                  <h4 class="font-medium text-slate-900 mb-1">Enhanced Trust &amp; Transparency</h4>
-                  <p class="text-xs text-slate-600">Immutable decision logs provide complete evidentiary packages for every transaction.</p>
-                </div>
-                <div class="bg-white p-3 rounded-lg border border-slate-200">
-                  <h4 class="font-medium text-slate-900 mb-1">Proactive Risk Mitigation</h4>
-                  <p class="text-xs text-slate-600">Automated compliance embedded directly into transaction protocols.</p>
-                </div>
-                <div class="bg-white p-3 rounded-lg border border-slate-200">
-                  <h4 class="font-medium text-slate-900 mb-1">Increased Accountability</h4>
-                  <p class="text-xs text-slate-600">Complete audit trails with legally admissible evidence.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="bento-card">
-            <h3 class="text-xl font-semibold mb-6">Tri-Cameral Governance Model</h3>
-            <div class="overflow-x-auto">
-              <table class="w-full text-sm">
-                <thead>
-                  <tr class="border-b border-slate-200">
-                    <th class="text-left py-3 px-4 font-medium text-slate-900">Governance Body</th>
-                    <th class="text-left py-3 px-4 font-medium text-slate-900">Size &amp; Quorum</th>
-                    <th class="text-left py-3 px-4 font-medium text-slate-900">Primary Mandate</th>
-                    <th class="text-left py-3 px-4 font-medium text-slate-900">Key Responsibilities</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="border-b border-slate-100">
-                    <td class="py-3 px-4 font-medium">Technical Council</td>
-                    <td class="py-3 px-4">9 Members (75% Quorum)</td>
-                    <td class="py-3 px-4">Technical Integrity</td>
-                    <td class="py-3 px-4">Preserve specs, approve improvements, commission audits <a class="citation" href="https://github.com/FractonicMind/TernaryLogic" target="_blank">[311]</a>
-                    </td>
-                  </tr>
-                  <tr class="border-b border-slate-100">
-                    <td class="py-3 px-4 font-medium">Stewardship Custodians</td>
-                    <td class="py-3 px-4">11 Members (75% Quorum)</td>
-                    <td class="py-3 px-4">Ethical &amp; Legal Oversight</td>
-                    <td class="py-3 px-4">Enforce prohibitions, certify licenses, arbitrate disputes <a class="citation" href="https://github.com/FractonicMind/TernaryLogic" target="_blank">[311]</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-medium">Smart Contract Treasury</td>
-                    <td class="py-3 px-4">Autonomous (Code-Governed)</td>
-                    <td class="py-3 px-4">Financial Backbone</td>
-                    <td class="py-3 px-4">Manage funds, automate enforcement, release based on conditions <a class="citation" href="https://github.com/FractonicMind/TernaryLogic" target="_blank">[311]</a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Technical Design -->
-      <section class="px-4 md:px-8 py-8 md:py-16 bg-white" id="technical-design">
-        <div class="max-w-4xl mx-auto">
-          <h2 class="serif text-3xl font-bold text-slate-900 mb-8">Detailed Technical Design for Implementation</h2>
-
-          <div class="mb-12">
-            <h3 class="text-2xl font-semibold mb-6">Core Smart Contract Architecture</h3>
-
-            <div class="grid md:grid-cols-3 gap-6 mb-8">
-              <div class="bento-card text-center">
-                <i class="fas fa-cogs text-3xl text-blue-500 mb-4"></i>
-                <h4 class="font-semibold mb-2">Ternary State Machine</h4>
-                <p class="text-sm text-slate-600">Explicit +1, 0, -1 states with deterministic transitions</p>
-              </div>
-              <div class="bento-card text-center">
-                <i class="fas fa-pause-circle text-3xl text-yellow-500 mb-4"></i>
-                <h4 class="font-semibold mb-2">Hold() Function</h4>
-                <p class="text-sm text-slate-600">Asynchronous evidence gathering and deliberation</p>
-              </div>
-              <div class="bento-card text-center">
-                <i class="fas fa-database text-3xl text-green-500 mb-4"></i>
-                <h4 class="font-semibold mb-2">Decision Logs</h4>
-                <p class="text-sm text-slate-600">Complete evidentiary records with cryptographic integrity</p>
-              </div>
-            </div>
-
-            <div class="highlight-box">
-              <h4 class="font-semibold text-lg mb-3">The Hold() Function Mechanics</h4>
-              <p class="text-slate-700 mb-4">
-                The Hold() function is the central mechanism for implementing the Epistemic Hold (0 state).
-                It works with an Oracle-Custodian system using a &#34;pull model&#34; with asynchronous callbacks
-                <a class="citation" href="https://github.com/FractonicMind/TernaryLogic" target="_blank">[311]</a>:
-              </p>
-              <ol class="list-decimal list-inside space-y-2 text-slate-700">
-                <li>Contract emits HoldInitiated event with context</li>
-                <li>Oracle-Custodian performs off-chain analysis</li>
-                <li>Callback function receives resolution (PROCEED/REFUSE)</li>
-                <li>State transitions to +1 or -1 based on outcome</li>
-                <li>Complete decision log recorded to Immutable Ledger</li>
-              </ol>
-            </div>
-          </div>
-
-          <div class="mb-12">
-            <h3 class="text-2xl font-semibold mb-6">Data Structures &amp; Integration</h3>
-
-            <div class="bg-slate-900 rounded-lg p-6 text-green-400 font-mono text-sm mb-6 overflow-x-auto">
-              <pre>struct Decision {
-    TernaryState state;
-    address initiator;
-    bytes32 evidenceHash;
-    string reasoning;
-    uint256 timestamp;
+<span class="kw">function</span> resolveEpistemicHold(
+    <span class="ty">bytes32</span> _actionId,
+    <span class="ty">uint8</span> _decision,          <span class="cm">// uint8(1)=Proceed, uint8(0)=Refuse</span>
+    <span class="ty">string memory</span> _reasoning,
+    <span class="ty">bytes32</span> _permissionTokenId
+) <span class="kw">external</span> onlyOracleCustodian nonReentrant {
+    <span class="kw">require</span>(
+        decisions[_actionId].state == TernaryState.EpistemicHold,
+        <span class="st">"Not in EpistemicHold state"</span>
+    );
+    <span class="cm">// Checks-Effects-Interactions: update state FIRST</span>
+    <span class="kw">if</span> (_decision == <span class="nu">1</span>) {
+        <span class="cm">// NL=NA Layer 5: PermissionToken must be registered on-chain</span>
+        <span class="kw">require</span>(_permissionTokenId != <span class="ty">bytes32</span>(<span class="nu">0</span>), <span class="st">"PermissionToken required"</span>);
+        decisions[_actionId].state = TernaryState.Commit;
+        decisions[_actionId].permissionTokenId = _permissionTokenId;
+    } <span class="kw">else</span> {
+        decisions[_actionId].state = TernaryState.Refuse;
+    }
+    <span class="kw">emit</span> <span class="ev">EpistemicHoldResolved</span>(_actionId, decisions[_actionId].state, _reasoning);
 }</pre>
-            </div>
+    </div>
 
-            <p class="text-slate-700 mb-6">
-              The Decision struct captures the complete lifecycle of a ternary decision. Evidence records are stored
-              off-chain (e.g., IPFS) with cryptographic hashes anchored on-chain, creating tamper-evident links
-              <a class="citation" href="https://github.com/FractonicMind/TernaryMoralLogic" target="_blank">[291]</a>.
-            </p>
-          </div>
+    <div id="s3-oracle" style="scroll-margin-top:28px">
+      <h3>3.3 Asynchronous Oracle-Custodian Integration</h3>
 
-          <div class="bento-card">
-            <h3 class="text-xl font-semibold mb-6">Security &amp; Formal Verification</h3>
-            <div class="grid md:grid-cols-2 gap-6">
-              <div>
-                <h4 class="font-medium mb-3">Security Best Practices</h4>
-                <ul class="space-y-2 text-sm text-slate-600">
-                  <li class="flex items-start"><i class="fas fa-shield text-green-500 mr-2 mt-1"></i>Checks-Effects-Interactions pattern</li>
-                  <li class="flex items-start"><i class="fas fa-lock text-green-500 mr-2 mt-1"></i>Reentrancy guards</li>
-                  <li class="flex items-start"><i class="fas fa-user-check text-green-500 mr-2 mt-1"></i>Oracle authorization checks</li>
-                  <li class="flex items-start"><i class="fas fa-key text-green-500 mr-2 mt-1"></i>Role-based access control</li>
-                </ul>
-              </div>
-              <div>
-                <h4 class="font-medium mb-3">Formal Verification with TLA+</h4>
-                <p class="text-sm text-slate-600 mb-3">
-                  Temporal Logic of Actions (TLA+) mathematically proves contract properties
-                  <a class="citation" href="https://medium.com/dfinity/eliminating-smart-contract-bugs-with-tla-e986aeb6da24" target="_blank">[280]</a>:
-                </p>
-                <ul class="space-y-1 text-xs text-slate-600">
-                  <li>• Safety: No invalid state transitions</li>
-                  <li>• Liveness: All holds eventually resolve</li>
-                  <li>• No deadlocks or livelocks</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <p>The sequence for resolving an Epistemic Hold through the Oracle-Custodian gateway:</p>
 
-      <!-- Use Cases -->
-      <section class="px-4 md:px-8 py-8 md:py-16 bg-slate-50" id="use-cases">
-        <div class="max-w-4xl mx-auto">
-          <h2 class="serif text-3xl font-bold text-slate-900 mb-8">Use Cases Demonstrating Benefits</h2>
+      <div class="seq-flow">
+        <div class="seq-row"><div class="seq-actor">User</div><div class="seq-arrow">→</div><div class="seq-msg">Smart Contract: Initiate Action</div></div>
+        <div class="seq-row"><div class="seq-actor">Smart Contract</div><div class="seq-arrow">→</div><div class="seq-msg">Transition to <span class="code">EpistemicHold(0)</span></div></div>
+        <div class="seq-row"><div class="seq-actor">Smart Contract</div><div class="seq-arrow">→</div><div class="seq-msg">TL_Evidence_Vault: <span class="code">archiveEvidence(state=0, traceId)</span></div></div>
+        <div class="seq-row"><div class="seq-actor">Smart Contract</div><div class="seq-arrow">→</div><div class="seq-msg">Emit <span class="code">EpistemicHoldInitiated</span> event</div></div>
+        <div class="seq-divider"></div>
+        <div class="seq-row"><div class="seq-actor">Oracle-Custodian</div><div class="seq-arrow">→</div><div class="seq-msg">Governance Lane: POST /governance-logs</div></div>
+        <div class="seq-row"><div class="seq-actor">Governance Lane</div><div class="seq-arrow">→</div><div class="seq-msg">Issue HSM-signed PermissionToken (EIP-712)</div></div>
+        <div class="seq-row"><div class="seq-actor">Oracle-Custodian</div><div class="seq-arrow">→</div><div class="seq-msg">TL_Ledger_Core: <span class="code">registerPermissionToken()</span> — NL=NA Layer 5</div></div>
+        <div class="seq-divider"></div>
+        <div class="seq-row"><div class="seq-actor">Oracle-Custodian</div><div class="seq-arrow">→</div><div class="seq-msg">Smart Contract: <span class="code">resolveEpistemicHold(actionId, decision, permissionTokenId)</span></div></div>
+        <div class="seq-row"><div class="seq-actor">Smart Contract</div><div class="seq-arrow">→</div><div class="seq-msg">TL_Evidence_Vault: <span class="code">archiveEvidence(state=+1 or -1)</span></div></div>
+        <div class="seq-row"><div class="seq-actor">Smart Contract</div><div class="seq-arrow">→</div><div class="seq-msg">User: Return Final Outcome</div></div>
+      </div>
+    </div>
 
-          <div class="grid gap-8 mb-12">
-            <div class="bento-card">
-              <div class="flex items-start mb-4">
-                <i class="fas fa-university text-2xl text-blue-500 mr-4 mt-1"></i>
-                <div>
-                  <h3 class="text-xl font-semibold text-slate-900">Financial Services &amp; Regulatory Compliance</h3>
-                  <p class="text-slate-600">Automated AML reporting and sanctions screening</p>
-                </div>
-              </div>
+    <div id="s3-formal" style="scroll-margin-top:28px">
+      <h3>3.5 TLA+ Formal Verification</h3>
+<pre><span class="cm">----- MODULE TernaryLogic -----</span>
+<span class="kw">VARIABLES</span> state, actionLog
 
-              <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 class="font-medium mb-3">Automated AML Reporting</h4>
-                  <p class="text-sm text-slate-600 mb-3">
-                    Smart contracts automatically enter Hold state for high-value transactions, triggering
-                    real-time sanctions screening and Suspicious Activity Report (SAR) generation
-                    <a class="citation" href="https://github.com/FractonicMind/TernaryLogic" target="_blank">[244]</a>.
-                  </p>
-                  <div class="bg-blue-50 p-3 rounded text-xs text-blue-800">
-                    <strong>Example:</strong> Transaction &gt;$10K → Hold → Oracle checks → SAR → Proceed/Reject
-                  </div>
-                </div>
-                <div>
-                  <h4 class="font-medium mb-3">Basel III Pillar 3 Automation</h4>
-                  <p class="text-sm text-slate-600 mb-3">
-                    Real-time tracking of capital adequacy ratios with automated disclosure report generation
-                    when thresholds are approached.
-                  </p>
-                  <div class="bg-green-50 p-3 rounded text-xs text-green-800">
-                    <strong>Benefit:</strong> Timely, accurate regulatory reporting with reduced operational burden
-                  </div>
-                </div>
-              </div>
-            </div>
+States == {<span class="st">"Intent"</span>, <span class="st">"EpistemicHold"</span>, <span class="st">"Commit"</span>, <span class="st">"Refuse"</span>}
 
-            <div class="bento-card">
-              <div class="flex items-start mb-4">
-                <i class="fas fa-leaf text-2xl text-green-500 mr-4 mt-1"></i>
-                <div>
-                  <h3 class="text-xl font-semibold text-slate-900">Sustainable Finance &amp; ESG</h3>
-                  <p class="text-slate-600">Verifying green bond allocations and preventing greenwashing</p>
-                </div>
-              </div>
+<span class="cm">(* Forbidden: EpistemicHold -> EpistemicHold *)</span>
+NoHoldLoop == [](state = <span class="st">"EpistemicHold"</span> => state' # <span class="st">"EpistemicHold"</span>)
 
-              <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 class="font-medium mb-3">Green Bond Verification</h4>
-                  <p class="text-sm text-slate-600 mb-3">
-                    Smart contracts manage bond proceeds, releasing funds only when third-party auditors
-                    verify environmental milestones through Veracity Anchors
-                    <a class="citation" href="https://github.com/FractonicMind/TernaryMoralLogic" target="_blank">[291]</a>.
-                  </p>
-                  <div class="bg-green-50 p-3 rounded text-xs text-green-800">
-                    <strong>Process:</strong> Milestone → Oracle verification → Hold resolution → Fund release
-                  </div>
-                </div>
-                <div>
-                  <h4 class="font-medium mb-3">ESG Data Provenance</h4>
-                  <p class="text-sm text-slate-600 mb-3">
-                    Complete audit trail for ESG data from IoT sensors and satellite imagery,
-                    with automatic Hold states for data verification.
-                  </p>
-                  <div class="bg-yellow-50 p-3 rounded text-xs text-yellow-800">
-                    <strong>Outcome:</strong> Verifiable ESG claims preventing greenwashing
-                  </div>
-                </div>
-              </div>
-            </div>
+<span class="cm">(* Safety: Log never empty when state is Commit or Refuse *)</span>
+NoLogNoAction == [](state \in {<span class="st">"Commit"</span>, <span class="st">"Refuse"</span>} => Len(actionLog) > <span class="nu">0</span>)
 
-            <div class="bento-card">
-              <div class="flex items-start mb-4">
-                <i class="fas fa-truck text-2xl text-orange-500 mr-4 mt-1"></i>
-                <div>
-                  <h3 class="text-xl font-semibold text-slate-900">Supply Chain Management</h3>
-                  <p class="text-slate-600">Product provenance and ethical sourcing verification</p>
-                </div>
-              </div>
+<span class="cm">(* Liveness: EpistemicHold eventually resolves *)</span>
+HoldEventuallyResolves ==
+    (state = <span class="st">"EpistemicHold"</span>) ~> (state \in {<span class="st">"Commit"</span>, <span class="st">"Refuse"</span>})
 
-              <div class="bg-white p-6 rounded-lg border border-slate-200">
-                <h4 class="font-medium mb-4">Digital Twin Tracking</h4>
-                <p class="text-slate-700 mb-4">
-                  Smart contracts create digital twins for physical products, tracking their journey with
-                  RFID/QR codes. Automatic Hold states trigger when discrepancies are detected or
-                  certifications are missing.
-                </p>
-                <div class="flex items-center justify-between text-sm text-slate-600">
-                  <span>Source → Manufacturer → Distributor → Retailer</span>
-                  <i class="fas fa-arrow-right"></i>
-                </div>
-              </div>
-            </div>
-          </div>
+THEOREM Spec => []TypeOK /\ []NoLogNoAction /\ []NoHoldLoop /\ HoldEventuallyResolves</pre>
+    </div>
+  </section>
 
-          <div class="highlight-box">
-            <h3 class="font-semibold text-lg mb-3">DAO Governance Enhancement</h3>
-            <p class="text-slate-700 mb-4">
-              The &#34;Sacred Pause&#34; implementation of Epistemic Hold enables ethical deliberation in AI-driven DAOs.
-              When AI agents propose actions with high ethical conflict potential, the contract enters Hold state,
-              escalating to human governance bodies for review
-              <a class="citation" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5700283" target="_blank">[245]</a>.
-            </p>
-            <div class="bg-blue-50 p-4 rounded">
-              <p class="text-sm text-blue-800">
-                <strong>Key Feature:</strong> Creates court-admissible records for dispute resolution,
-                providing legal certainty in decentralized organizations.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+  <!-- S4 -->
+  <section id="s4">
+    <h2><span class="n">04</span> Use Cases</h2>
 
-      <!-- Visual Diagrams -->
-      <section class="px-4 md:px-8 py-8 md:py-16 bg-white" id="visual-diagrams">
-        <div class="max-w-4xl mx-auto">
-          <h2 class="serif text-3xl font-bold text-slate-900 mb-8">Visual Diagrams and Code Examples</h2>
+    <div class="use-cases">
+      <div class="uc-card">
+        <div class="uc-sector">Financial Services</div>
+        <div class="uc-title">Automated AML and Sanctions Screening</div>
+        <div class="uc-hold">Epistemic Hold → AML verification pending</div>
+        <div class="uc-desc">Contract pauses on transactions exceeding threshold, triggers sanctions screening, generates SAR to regulatory node if required, then Proceeds or Refuses based on outcome.</div>
+      </div>
+      <div class="uc-card">
+        <div class="uc-sector">Capital Markets</div>
+        <div class="uc-title">Basel III Pillar 3 Automated Reporting</div>
+        <div class="uc-hold">Epistemic Hold → Capital ratio below threshold</div>
+        <div class="uc-desc">Smart contracts track assets and risk-weighted exposures in real-time. Automatic disclosure reports generated. Epistemic Hold when capital adequacy falls below regulatory minimum.</div>
+      </div>
+      <div class="uc-card">
+        <div class="uc-sector">Sustainable Finance</div>
+        <div class="uc-title">Green Bond Milestone Disbursement</div>
+        <div class="uc-hold">Epistemic Hold → ESG attestation missing</div>
+        <div class="uc-desc">Funds released only when third-party auditor confirms milestone met. Epistemic Hold pauses disbursement until verifiable attestation is received and anchored on-chain.</div>
+      </div>
+      <div class="uc-card">
+        <div class="uc-sector">Supply Chain</div>
+        <div class="uc-title">Product Provenance and Ethical Sourcing</div>
+        <div class="uc-hold">Epistemic Hold → Certification missing</div>
+        <div class="uc-desc">Digital twin of product tracks through supply chain. Epistemic Hold on any discrepancy in provenance data or missing certification. Payment released only on confirmed delivery and quality inspection.</div>
+      </div>
+      <div class="uc-card">
+        <div class="uc-sector">Decentralized Governance</div>
+        <div class="uc-title">Sacred Pause for AI-Driven DAOs</div>
+        <div class="uc-hold">Epistemic Hold → Ethical conflict detected</div>
+        <div class="uc-desc">When an AI agent proposes an action with high potential for ethical conflict, the contract enters Epistemic Hold and escalates to a human governance body for review before any execution occurs.</div>
+      </div>
+      <div class="uc-card">
+        <div class="uc-sector">Dispute Resolution</div>
+        <div class="uc-title">Court-Admissible Governance Records</div>
+        <div class="uc-hold">Full audit chain from intent to outcome</div>
+        <div class="uc-desc">Immutable Decision Logs with Veracity Anchors provide court-admissible evidence under FRE 902(13) and eIDAS. Every step of the governance process is traceable and tamper-evident.</div>
+      </div>
+    </div>
+  </section>
 
-          <div class="mb-12">
-            <h3 class="text-xl font-semibold mb-6">High-Level System Architecture</h3>
-            <div class="mermaid-container">
-              <div class="mermaid-controls">
-                <button class="mermaid-control-btn zoom-in" title="放大">
-                  <i class="fas fa-search-plus"></i>
-                </button>
-                <button class="mermaid-control-btn zoom-out" title="缩小">
-                  <i class="fas fa-search-minus"></i>
-                </button>
-                <button class="mermaid-control-btn reset-zoom" title="重置">
-                  <i class="fas fa-expand-arrows-alt"></i>
-                </button>
-                <button class="mermaid-control-btn fullscreen" title="全屏查看">
-                  <i class="fas fa-expand"></i>
-                </button>
-              </div>
-              <div class="mermaid">
-                graph TB
-                subgraph &#34;User / External System&#34;
-                A[Initiates Action]
-                end
+  <!-- S5 -->
+  <section id="s5">
+    <h2><span class="n">05</span> Code Examples</h2>
 
-                subgraph &#34;Ternary Logic Smart Contract&#34;
-                B{Ternary State Machine}
-                C[Hold() Function]
-                D[Decision Log Structure]
-                end
+    <h3>Core State Machine with EpistemicHold</h3>
+<pre><span class="cm">// SPDX-License-Identifier: MIT</span>
+<span class="kw">pragma solidity</span> ^0.8.19;
 
-                subgraph &#34;Oracle-Custodian Gateway&#34;
-                E[Off-Chain Oracle]
-                F[Human Custodian]
-                end
+<span class="kw">import</span> <span class="st">"@openzeppelin/contracts/security/ReentrancyGuard.sol"</span>;
 
-                subgraph &#34;TL Framework Infrastructure&#34;
-                G[Immutable Ledger]
-                H[Hybrid Shield
-                <br/>(Public/Private)]
-                I[Veracity Anchors]
-                end
+<span class="kw">contract</span> <span class="ty">TernaryLogicContract</span> <span class="kw">is</span> <span class="ty">ReentrancyGuard</span> {
 
-                subgraph &#34;Governance Layer&#34;
-                J[Technical Council]
-                K[Stewardship Custodians]
-                L[Smart Contract Treasury]
-                end
+    <span class="kw">enum</span> <span class="ty">TernaryState</span> { Intent, EpistemicHold, Commit, Refuse }
 
-                A --&gt; B
-                B -- &#34;+1 (Proceed)&#34; --&gt; G
-                B -- &#34;0 (Hold)&#34; --&gt; C
-                C -- &#34;Request Evidence&#34; --&gt; E
-                C -- &#34;Escalate Dispute&#34; --&gt; F
-                E -- &#34;Callback with Data&#34; --&gt; C
-                F -- &#34;Callback with Decision&#34; --&gt; C
-                C -- &#34;+1 / -1&#34; --&gt; B
-                B -- &#34;Log Decision&#34; --&gt; D
-                D --&gt; G
-                G -- &#34;Anchor Hash&#34; --&gt; H
-                H -- &#34;Public Proof&#34; --&gt; I
-                J -- &#34;Propose Upgrade&#34; --&gt; L
-                K -- &#34;Ratify Upgrade&#34; --&gt; L
-                L -- &#34;Release Funds&#34; --&gt; J
-
-                style A fill:#f9f,stroke:#333,stroke-width:2px
-                style B fill:#bbf,stroke:#333,stroke-width:2px
-                style G fill:#9f9,stroke:#333,stroke-width:2px
-                style J fill:#ff9,stroke:#333,stroke-width:2px
-              </div>
-            </div>
-            <p class="text-sm text-slate-600 mt-4">
-              Figure 1: High-level architecture showing the interaction between the Ternary Logic Smart Contract,
-              the Oracle-Custodian Gateway, the core TL Framework infrastructure, and the Tri-Cameral Governance model.
-            </p>
-          </div>
-
-          <div class="mb-12">
-            <h3 class="text-xl font-semibold mb-6">Decision Lifecycle Data Flow</h3>
-            <div class="mermaid-container">
-              <div class="mermaid-controls">
-                <button class="mermaid-control-btn zoom-in" title="放大">
-                  <i class="fas fa-search-plus"></i>
-                </button>
-                <button class="mermaid-control-btn zoom-out" title="缩小">
-                  <i class="fas fa-search-minus"></i>
-                </button>
-                <button class="mermaid-control-btn reset-zoom" title="重置">
-                  <i class="fas fa-expand-arrows-alt"></i>
-                </button>
-                <button class="mermaid-control-btn fullscreen" title="全屏查看">
-                  <i class="fas fa-expand"></i>
-                </button>
-              </div>
-              <div class="mermaid">
-                graph LR
-                A[1. Intent (+1)] --&gt; B{2. Initial Checks};
-                B -- &#34;Pass&#34; --&gt; C{3. Risk/Uncertainty Check};
-                B -- &#34;Fail (e.g., No Log)&#34; --&gt; D[4. Halt (-1)];
-                C -- &#34;Low Risk&#34; --&gt; E[5. Commit (+1)];
-                C -- &#34;High Risk&#34; --&gt; D;
-                C -- &#34;Uncertainty&#34; --&gt; F[6. Epistemic Hold (0)];
-                F --&gt; G{7. Evidence Gathering};
-                G -- &#34;Resolved (+1)&#34; --&gt; E;
-                G -- &#34;Unresolved / Harm (-1)&#34; --&gt; D;
-                G -- &#34;Timeout / Error&#34; --&gt; H[8. Re-evaluate / Halt];
-
-                subgraph &#34;On-Chain&#34;
-                A; B; C; D; E; F;
-                end
-
-                subgraph &#34;Off-Chain&#34;
-                G;
-                end
-
-                style A fill:#9f9,stroke:#333,stroke-width:2px
-                style E fill:#9f9,stroke:#333,stroke-width:2px
-                style D fill:#f99,stroke:#333,stroke-width:2px
-                style F fill:#ff9,stroke:#333,stroke-width:2px
-                style G fill:#bbf,stroke:#333,stroke-width:2px
-              </div>
-            </div>
-            <p class="text-sm text-slate-600 mt-4">
-              Figure 2: Data flow diagram illustrating the lifecycle of a decision within the Ternary Logic framework,
-              from initial intent to final resolution, including the asynchronous evidence gathering process.
-            </p>
-          </div>
-
-          <div class="mb-12">
-            <h3 class="text-xl font-semibold mb-6">Solidity Implementation Example</h3>
-            <div class="bg-slate-900 rounded-lg p-6 text-green-400 font-mono text-sm overflow-x-auto">
-              <pre>// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
-
-import &#34;@openzeppelin/contracts/security/ReentrancyGuard.sol&#34;;
-
-contract TernaryLogicContract is ReentrancyGuard {
-    enum TernaryState { Intent, Hold, Commit, Reject }
-    
-    struct Decision {
-        TernaryState state;
-        address initiator;
-        bytes32 evidenceHash;
-        string reasoning;
-        uint256 timestamp;
+    <span class="kw">struct</span> <span class="ty">Decision</span> {
+        <span class="ty">TernaryState</span> state;
+        <span class="ty">address</span>      initiator;
+        <span class="ty">bytes32</span>      evidenceHash;
+        <span class="ty">string</span>       reasoning;
+        <span class="ty">uint256</span>      timestamp;
+        <span class="ty">bytes32</span>      traceId;           <span class="cm">// X-TL-Trace-Id</span>
+        <span class="ty">bytes32</span>      permissionTokenId; <span class="cm">// NL=NA Layer 5</span>
     }
 
-    mapping(bytes32 =&gt; Decision) public decisions;
-    address public oracleCustodian;
-    uint256 public holdTimeout;
+    <span class="ty">bytes32</span> <span class="kw">public constant</span> GOVERNANCE_LANE_HASH =
+        keccak256(<span class="st">"GOVERNANCE_LANE"</span>);
 
-    event HoldInitiated(bytes32 indexed actionId, string reason);
-    event HoldResolved(bytes32 indexed actionId, TernaryState finalState, string reasoning);
+    <span class="kw">event</span> <span class="ev">EpistemicHoldInitiated</span>(<span class="ty">bytes32 indexed</span> actionId, <span class="ty">string</span> reason);
+    <span class="kw">event</span> <span class="ev">EpistemicHoldResolved</span>(<span class="ty">bytes32 indexed</span> actionId, <span class="ty">TernaryState</span> state);
 
-    modifier onlyOracleCustodian() {
-        require(msg.sender == oracleCustodian, &#34;Not authorized&#34;);
-        _;
-    }
-
-    function initiateAction(bytes32 _actionId, string memory _intent) external {
-        require(decisions[_actionId].timestamp == 0, &#34;Action already exists&#34;);
-        decisions[_actionId] = Decision({
-            state: TernaryState.Intent,
-            initiator: msg.sender,
-            evidenceHash: 0,
-            reasoning: _intent,
-            timestamp: block.timestamp
-        });
-        // Transition to Hold for initial verification
-        _transitionToHold(_actionId, &#34;Initial verification required&#34;);
-    }
-
-    function _transitionToHold(bytes32 _actionId, string memory _reason) internal {
-        decisions[_actionId].state = TernaryState.Hold;
-        emit HoldInitiated(_actionId, _reason);
-        // In a real implementation, this would trigger an off-chain oracle.
-        // For this example, we assume the oracle calls resolveHold later.
-    }
-
-    function resolveHold(bytes32 _actionId, uint8 _decision, string memory _reasoning) 
-        external onlyOracleCustodian nonReentrant {
-        require(decisions[_actionId].state == TernaryState.Hold, &#34;Not in Hold state&#34;);
-        
-        // Checks-Effects-Interactions: Update state first
-        if (_decision == 1) {
-            decisions[_actionId].state = TernaryState.Commit;
-            // Execute main action logic here
-        } else {
-            decisions[_actionId].state = TernaryState.Reject;
-        }
-        decisions[_actionId].reasoning = _reasoning;
-        
-        emit HoldResolved(_actionId, decisions[_actionId].state, _reasoning);
-        // Log to Immutable Ledger (simplified)
-        // immutableLedgerContract.appendRecord(_actionId, decisions[_actionId]);
+    <span class="kw">modifier</span> onlyOracleCustodian() {
+        <span class="kw">require</span>(msg.sender == oracleCustodian, <span class="st">"Not authorized"</span>); _;
     }
 }</pre>
-            </div>
-          </div>
 
-          <div>
-            <h3 class="text-xl font-semibold mb-6">TLA+ Formal Specification</h3>
-            <div class="bg-slate-900 rounded-lg p-6 text-green-400 font-mono text-sm overflow-x-auto">
-              <pre>------------------------------ MODULE TernaryLogic ----------------------------
-EXTENDS Naturals, Sequences, TLC
+    <h3>Oracle Client — Asynchronous Callback Pattern</h3>
+<pre><span class="kw">function</span> requestData(<span class="ty">string memory</span> _query) <span class="kw">external returns</span> (<span class="ty">uint256</span>) {
+    <span class="ty">uint256</span> requestId = requestCounter++;
+    pendingRequests[requestId] = <span class="kw">true</span>;
+    <span class="kw">emit</span> <span class="ev">DataRequested</span>(requestId, _query);
+    <span class="kw">return</span> requestId;
+    <span class="cm">// Off-chain Oracle listens, gathers evidence, calls fulfillRequest()</span>
+}
 
-VARIABLES state, actionLog
+<span class="kw">function</span> fulfillRequest(<span class="ty">uint256</span> _requestId, <span class="ty">string memory</span> _data)
+    <span class="kw">external</span> onlyOracle
+{
+    <span class="kw">require</span>(pendingRequests[_requestId], <span class="st">"Request not pending"</span>);
+    <span class="kw">delete</span> pendingRequests[_requestId];
+    <span class="kw">emit</span> <span class="ev">DataReceived</span>(_requestId, _data);
+    <span class="cm">// Process data, call back to main contract with decision</span>
+}</pre>
 
-States == {&#34;Intent&#34;, &#34;Hold&#34;, &#34;Commit&#34;, &#34;Reject&#34;}
+    <div class="callout">
+      <p><strong>Core principle:</strong> Constitutional code over discretionary authority · embedded compliance over external audit · verifiable evidence over institutional trust. These three principles remain immutable.</p>
+    </div>
+  </section>
 
-TypeOK == 
-    /\ state \in States
-    /\ actionLog \in Seq([state: States, timestamp: Nat])
+  <footer>
+    <div class="fl">
+      <strong>Author</strong> Lev Goukassian<br>
+      <strong>ORCID</strong> 0009-0006-5966-1243<br>
+      <strong>License</strong> CC-BY-ND 4.0 / MIT<br>
+      <strong>Updated</strong> May 2026
+    </div>
+    <div class="fr">
+      Ternary Logic · Smart Contracts<br>
+      Architectural Blueprint<br>
+      V2.0 Implementation
+    </div>
+  </footer>
+</main>
 
-Init == 
-    /\ state = &#34;Intent&#34;
-    /\ actionLog = &lt;&lt;&gt;&gt;
+<a class="scroll-top" id="st" href="#top">↑</a>
 
-TransitionToHold == 
-    /\ state = &#34;Intent&#34;
-    /\ state&#39; = &#34;Hold&#34;
-    /\ actionLog&#39; = Append(actionLog, [state |-&gt; &#34;Hold&#34;, timestamp |-&gt; 1])
-
-TransitionToCommit == 
-    /\ state = &#34;Hold&#34;
-    /\ state&#39; = &#34;Commit&#34;
-    /\ actionLog&#39; = Append(actionLog, [state |-&gt; &#34;Commit&#34;, timestamp |-&gt; 2])
-
-TransitionToReject == 
-    /\ state = &#34;Hold&#34;
-    /\ state&#39; = &#34;Reject&#34;
-    /\ actionLog&#39; = Append(actionLog, [state |-&gt; &#34;Reject&#34;, timestamp |-&gt; 2])
-
-Next == 
-    \/ TransitionToHold
-    \/ TransitionToCommit
-    \/ TransitionToReject
-
-Spec == Init /\ [][Next]_&lt;<state, actionlog="">&gt;
-
-(* Safety Property: The state machine can only transition in the correct order *)
-StateMachineOrder == 
-    []((state = &#34;Intent&#34; =&gt; state&#39; \in {&#34;Hold&#34;, &#34;Intent&#34;}) /\
-       (state = &#34;Hold&#34; =&gt; state&#39; \in {&#34;Commit&#34;, &#34;Reject&#34;, &#34;Hold&#34;}) /\
-       (state = &#34;Commit&#34; =&gt; state&#39; = &#34;Commit&#34;) /\
-       (state = &#34;Reject&#34; =&gt; state&#39; = &#34;Reject&#34;))
-
-(* Liveness Property: If in Hold, eventually a final state is reached *)
-EventuallyFinalizes == 
-    [](state = &#34;Hold&#34; =&gt; &lt;&gt;(state \in {&#34;Commit&#34;, &#34;Reject&#34;}))
-=============================================================================</state,></pre>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <script>
-        // Initialize Mermaid with enhanced configuration
-        document.addEventListener('DOMContentLoaded', function() {
-            mermaid.initialize({ 
-                startOnLoad: true,
-                theme: 'base',
-                themeVariables: {
-                    primaryColor: '#ffffff',
-                    primaryTextColor: '#0f172a',
-                    primaryBorderColor: '#64748b',
-                    lineColor: '#475569',
-                    secondaryColor: '#f8fafc',
-                    tertiaryColor: '#ffffff',
-                    background: '#ffffff',
-                    mainBkg: '#ffffff',
-                    secondBkg: '#f8fafc',
-                    tertiaryBkg: '#ffffff'
-                },
-                flowchart: {
-                    useMaxWidth: false,
-                    htmlLabels: true,
-                    curve: 'basis'
-                },
-                sequence: {
-                    useMaxWidth: false,
-                    wrap: true
-                }
-            });
-            
-            // Initialize mermaid controls after diagrams are rendered
-            setTimeout(initializeMermaidControls, 1000);
-        });
-
-        // Initialize mermaid controls for zoom and pan
-        function initializeMermaidControls() {
-            const containers = document.querySelectorAll('.mermaid-container');
-
-            containers.forEach(container => {
-            const mermaidElement = container.querySelector('.mermaid');
-            let scale = 1;
-            let isDragging = false;
-            let startX, startY, translateX = 0, translateY = 0;
-
-            // 触摸相关状态
-            let isTouch = false;
-            let touchStartTime = 0;
-            let initialDistance = 0;
-            let initialScale = 1;
-            let isPinching = false;
-
-            // Zoom controls
-            const zoomInBtn = container.querySelector('.zoom-in');
-            const zoomOutBtn = container.querySelector('.zoom-out');
-            const resetBtn = container.querySelector('.reset-zoom');
-            const fullscreenBtn = container.querySelector('.fullscreen');
-
-            function updateTransform() {
-                mermaidElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-
-                if (scale > 1) {
-                container.classList.add('zoomed');
-                } else {
-                container.classList.remove('zoomed');
-                }
-
-                mermaidElement.style.cursor = isDragging ? 'grabbing' : 'grab';
-            }
-
-            if (zoomInBtn) {
-                zoomInBtn.addEventListener('click', () => {
-                scale = Math.min(scale * 1.25, 4);
-                updateTransform();
-                });
-            }
-
-            if (zoomOutBtn) {
-                zoomOutBtn.addEventListener('click', () => {
-                scale = Math.max(scale / 1.25, 0.3);
-                if (scale <= 1) {
-                    translateX = 0;
-                    translateY = 0;
-                }
-                updateTransform();
-                });
-            }
-
-            if (resetBtn) {
-                resetBtn.addEventListener('click', () => {
-                scale = 1;
-                translateX = 0;
-                translateY = 0;
-                updateTransform();
-                });
-            }
-
-            if (fullscreenBtn) {
-                fullscreenBtn.addEventListener('click', () => {
-                if (container.requestFullscreen) {
-                    container.requestFullscreen();
-                } else if (container.webkitRequestFullscreen) {
-                    container.webkitRequestFullscreen();
-                } else if (container.msRequestFullscreen) {
-                    container.msRequestFullscreen();
-                }
-                });
-            }
-
-            // Mouse Events
-            mermaidElement.addEventListener('mousedown', (e) => {
-                if (isTouch) return; // 如果是触摸设备，忽略鼠标事件
-
-                isDragging = true;
-                startX = e.clientX - translateX;
-                startY = e.clientY - translateY;
-                mermaidElement.style.cursor = 'grabbing';
-                updateTransform();
-                e.preventDefault();
-            });
-
-            document.addEventListener('mousemove', (e) => {
-                if (isDragging && !isTouch) {
-                translateX = e.clientX - startX;
-                translateY = e.clientY - startY;
-                updateTransform();
-                }
-            });
-
-            document.addEventListener('mouseup', () => {
-                if (isDragging && !isTouch) {
-                isDragging = false;
-                mermaidElement.style.cursor = 'grab';
-                updateTransform();
-                }
-            });
-
-            document.addEventListener('mouseleave', () => {
-                if (isDragging && !isTouch) {
-                isDragging = false;
-                mermaidElement.style.cursor = 'grab';
-                updateTransform();
-                }
-            });
-
-            // 获取两点之间的距离
-            function getTouchDistance(touch1, touch2) {
-                return Math.hypot(
-                touch2.clientX - touch1.clientX,
-                touch2.clientY - touch1.clientY
-                );
-            }
-
-            // Touch Events - 触摸事件处理
-            mermaidElement.addEventListener('touchstart', (e) => {
-                isTouch = true;
-                touchStartTime = Date.now();
-
-                if (e.touches.length === 1) {
-                // 单指拖动
-                isPinching = false;
-                isDragging = true;
-
-                const touch = e.touches[0];
-                startX = touch.clientX - translateX;
-                startY = touch.clientY - translateY;
-
-                } else if (e.touches.length === 2) {
-                // 双指缩放
-                isPinching = true;
-                isDragging = false;
-
-                const touch1 = e.touches[0];
-                const touch2 = e.touches[1];
-                initialDistance = getTouchDistance(touch1, touch2);
-                initialScale = scale;
-                }
-
-                e.preventDefault();
-            }, { passive: false });
-
-            mermaidElement.addEventListener('touchmove', (e) => {
-                if (e.touches.length === 1 && isDragging && !isPinching) {
-                // 单指拖动
-                const touch = e.touches[0];
-                translateX = touch.clientX - startX;
-                translateY = touch.clientY - startY;
-                updateTransform();
-
-                } else if (e.touches.length === 2 && isPinching) {
-                // 双指缩放
-                const touch1 = e.touches[0];
-                const touch2 = e.touches[1];
-                const currentDistance = getTouchDistance(touch1, touch2);
-
-                if (initialDistance > 0) {
-                    const newScale = Math.min(Math.max(
-                    initialScale * (currentDistance / initialDistance),
-                    0.3
-                    ), 4);
-                    scale = newScale;
-                    updateTransform();
-                }
-                }
-
-                e.preventDefault();
-            }, { passive: false });
-
-            mermaidElement.addEventListener('touchend', (e) => {
-                // 重置状态
-                if (e.touches.length === 0) {
-                isDragging = false;
-                isPinching = false;
-                initialDistance = 0;
-
-                // 延迟重置isTouch，避免鼠标事件立即触发
-                setTimeout(() => {
-                    isTouch = false;
-                }, 100);
-                } else if (e.touches.length === 1 && isPinching) {
-                // 从双指变为单指，切换为拖动模式
-                isPinching = false;
-                isDragging = true;
-
-                const touch = e.touches[0];
-                startX = touch.clientX - translateX;
-                startY = touch.clientY - translateY;
-                }
-
-                updateTransform();
-            });
-
-            mermaidElement.addEventListener('touchcancel', (e) => {
-                isDragging = false;
-                isPinching = false;
-                initialDistance = 0;
-
-                setTimeout(() => {
-                isTouch = false;
-                }, 100);
-
-                updateTransform();
-            });
-
-            // Enhanced wheel zoom with better center point handling
-            container.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                const rect = container.getBoundingClientRect();
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-
-                const delta = e.deltaY > 0 ? 0.9 : 1.1;
-                const newScale = Math.min(Math.max(scale * delta, 0.3), 4);
-
-                // Adjust translation to zoom towards center
-                if (newScale !== scale) {
-                const scaleDiff = newScale / scale;
-                translateX = translateX * scaleDiff;
-                translateY = translateY * scaleDiff;
-                scale = newScale;
-
-                if (scale <= 1) {
-                    translateX = 0;
-                    translateY = 0;
-                }
-
-                updateTransform();
-                }
-            });
-
-            // Initialize display
-            updateTransform();
-            });
-        }
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Mobile TOC toggle
-        function toggleTOC() {
-            const toc = document.querySelector('.toc-fixed');
-            toc.classList.toggle('open');
-        }
-        
-        // Close TOC when clicking outside
-        document.addEventListener('click', function(event) {
-            const toc = document.querySelector('.toc-fixed');
-            const hamburgerButton = document.querySelector('.mobile-toc-button');
-            
-            // Only if we are in mobile view and the TOC is open
-            if (window.innerWidth <= 1024 && toc.classList.contains('open')) {
-                // Check if the click is outside the TOC and not on the hamburger button
-                if (!toc.contains(event.target) && event.target !== hamburgerButton) {
-                    toc.classList.remove('open');
-                }
-            }
-        });
-        
-        // Function to handle window resize
-        function handleResize() {
-            const toc = document.querySelector('.toc-fixed');
-            const mainContent = document.querySelector('.main-content');
-            
-            if (window.innerWidth <= 1024) {
-                // In mobile view, ensure TOC is closed by default
-                toc.classList.remove('open');
-                mainContent.style.marginLeft = '0';
-            } else {
-                // In desktop view, remove the 'open' class (it's not needed) and set the margin
-                toc.classList.remove('open');
-                mainContent.style.marginLeft = '280px';
-            }
-        }
-        
-        // Initial call to set the state on page load
-        handleResize();
-        
-        // Add resize event listener
-        window.addEventListener('resize', handleResize);
-        
-        // Create mobile TOC button
-        const mobileButton = document.createElement('button');
-        mobileButton.innerHTML = '<i class="fas fa-bars"></i>';
-        mobileButton.className = 'mobile-toc-button fixed top-4 left-4 z-50 bg-blue-600 text-white p-3 rounded-lg shadow-lg lg:hidden';
-        mobileButton.onclick = toggleTOC;
-        document.body.appendChild(mobileButton);
-    </script>
-
-  
-
-</body></html>
+<script>
+  const st = document.getElementById('st');
+  window.addEventListener('scroll', () => st.classList.toggle('vis', scrollY > 400));
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const links = document.querySelectorAll('.nl');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting)
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
