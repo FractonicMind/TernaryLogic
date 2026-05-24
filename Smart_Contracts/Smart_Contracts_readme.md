@@ -23,14 +23,30 @@ The constitutional invariant governing all three states: **No Log = No Action** 
 
 ### Documentation Files
 
+---
+
+![Architectural Blueprint](https://raw.githubusercontent.com/FractonicMind/TernaryLogic/main/Smart_Contracts/diagram_architectural_blueprint.png)
+
 #### `Architectural_Blueprint_TL_Contracts.md` · [Interactive HTML](https://fractonicmind.github.io/TernaryLogic/Smart_Contracts/Architectural_Blueprint_TL_Contracts.html)
 *The skeleton.* Defines the high-level structural layout: the modular separation of Logic Layer (decision engines), Execution Layer (enforcement contracts), and Storage Layer (immutable vaults). Covers the Context-Aware Ledger, the Goukassian Principle as an architectural gate, the Tri-Cameral governance model, and NL=NA five-layer enforcement from API schema through on-chain terminal gate. Includes Solidity code examples, TLA+ formal verification spec, system architecture diagram, sequence diagram for Epistemic Hold resolution, and use cases across CBDCs, DeFi, supply chain, and DAOs.
+
+---
+
+![Technical Specification Execution Layer](https://raw.githubusercontent.com/FractonicMind/TernaryLogic/main/Smart_Contracts/diagram_technical_specification.png)
 
 #### `Technical_Specification_Execution_Layer.md` · [Interactive HTML](https://fractonicmind.github.io/TernaryLogic/Smart_Contracts/Technical_Specification_Execution_Layer.html)
 *The muscle.* Rigorous engineering standards for the Finite State Machine (FSM). Defines deterministic rules for all state transitions: +1 (Proceed following verified Governance Lane completion and PermissionToken registration), 0 (Epistemic Hold — the fail-closed default when evidence is absent or uncertain), -1 (Refuse — permanent rejection with immutable audit log). Covers mandate enforcement (No Log = No Action, No Spy, No Weapon, No Switch Off), Triple-Entry Accounting model, RBAC implementation patterns, Dual-Lane Latency Architecture (DLLA) timing specs, and full use case library. Includes Glossary of Terms.
 
+---
+
+![Security Blueprint](https://raw.githubusercontent.com/FractonicMind/TernaryLogic/main/Smart_Contracts/diagram_security_blueprint.png)
+
 #### `Security_Blueprint_TL_Contracts.md` · [Interactive HTML](https://fractonicmind.github.io/TernaryLogic/Smart_Contracts/Security_Blueprint_TL_Contracts.html)
 *The shield.* Defense-in-depth security analysis across all eight TL pillars. Models adversarial threats not just as code exploits but as economic attacks: governance capture, oracle manipulation, MEV front-running, flash loan price manipulation, chain reorganizations, and censorship. Defines explicit security goals for each TL invariant (NL=NA enforcement, Epistemic Hold bypass prevention, Refuse finality, tamper-evident Decision Logs, elimination of God Mode access, Anchor verifiability). Maps specific contract-level controls, operational controls, and verification metrics to each pillar.
+
+---
+
+![Governance Architecture](https://raw.githubusercontent.com/FractonicMind/TernaryLogic/main/Smart_Contracts/diagram_governance_architecture.png)
 
 #### `Governance_Architecture_TL_Contracts.md` · [Interactive HTML](https://fractonicmind.github.io/TernaryLogic/Smart_Contracts/Governance_Architecture_TL_Contracts.html)
 *The overview.* Strategic introduction to the Tri-Cameral governance model for readers approaching the system for the first time. Covers the Technical Council (9 members, proposal rights only), Stewardship Custodians (11 members, binding veto authority), and Smart Contract Treasury (autonomous, no admin key). Explains NL=NA five-layer enforcement in table form. Good starting point before reading the extended specification.
@@ -39,6 +55,8 @@ The constitutional invariant governing all three states: **No Log = No Action** 
 *The constitution.* Full 23-section constitutional specification of TL governance. The central thesis: governance in TL is not management — it is rule enforcement over the rule enforcers. Covers the complete governance failure mode taxonomy (collusion, capture, coercion, backdoor modification, deadlock), the standard and emergency governance workflows with exact timing requirements, the key ceremony protocol, cross-chain governance interoperability, regulatory compliance hooks, succession planning, and the failsafe degradation cascade. Includes Appendix B: `IGovernanceCore` interface. Read this document to understand what makes TL governance constitutionally distinct from all prior governance models.
 
 ---
+
+![Data Bridge Pipeline](https://raw.githubusercontent.com/FractonicMind/TernaryLogic/main/Smart_Contracts/diagram_data_bridge.png)
 
 ### Source Code (`/src`)
 
