@@ -1,4 +1,4 @@
-# **![Lighthouse][/images/Lighthouse.png]**
+![Lighthouse][images/Lighthouse.png]
 
 ## **Lev's Ternary Logic Quotes: Philosophy, Governance, Architecture, and the Journey of Building Ternary Logic**
 
