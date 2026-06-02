@@ -65,29 +65,26 @@ from .core import (
     TLValue,
     TLEngine,
     EpistemicHoldEvent,
-    ConfidenceLevel,
     TLDecorator,
 )
 
 # Utility functions
 from .core import (
+    calculate_confidence,
     analyze_uncertainty,
+    verify_mandate,
 )
 
 # Public API
 __all__ = [
-    # Core enums and classes
     "TLState",
     "TLValue",
     "TLEngine",
     "EpistemicHoldEvent",
-    "ConfidenceLevel",
-
-    # Decorators and utilities
     "TLDecorator",
+    "calculate_confidence",
     "analyze_uncertainty",
-
-    # Version info
+    "verify_mandate",
     "__version__",
     "__author__",
     "__email__",
@@ -96,44 +93,36 @@ __all__ = [
 
 # Package metadata
 FRAMEWORK_NAME = "Ternary Logic Framework"
-FRAMEWORK_DESCRIPTION = "Three-valued logic for economic decision-making under uncertainty"
+FRAMEWORK_DESCRIPTION = (
+    "Three-valued logic for economic decision-making under uncertainty"
+)
 REPOSITORY_URL = "https://github.com/FractonicMind/TernaryLogic"
 SUPPORT_EMAIL = "support@tl-goukassian.org"
 
 # Threshold governance.
-# The TL framework does not ship universal threshold values.
+# The TL framework does not ship threshold values of any kind.
 # Thresholds are institutionally calibrated governance decisions.
 # They must be established through historical backtesting,
 # regulatory requirements, board-approved risk appetite,
 # and market regime analysis specific to your deployment.
 # TLEngine raises ValueError if instantiated without explicit values.
 # See docs/Threshold_Calibration.md for calibration methodology.
-PROCEED_THRESHOLD = None   # Must be set by institutional governance
-HOLD_THRESHOLD = None      # Must be set by institutional governance
-
-# Display label boundaries for qualitative output classification only.
-# These constants define where ConfidenceLevel labels (HIGH/MEDIUM/LOW/CRITICAL)
-# switch in human-readable output and audit logs.
-# They are NOT decision thresholds. They do NOT determine PROCEED, EPISTEMIC_HOLD,
-# or REFUSE outcomes. Decision thresholds are institution-specific governed
-# parameters set via TLEngine constructor arguments.
-DISPLAY_LABEL_HIGH = 0.85     # Confidence above this prints as HIGH
-DISPLAY_LABEL_MEDIUM = 0.60   # Confidence above this prints as MEDIUM
-DISPLAY_LABEL_LOW = 0.40      # Confidence above this prints as LOW
-                               # Confidence below LOW prints as CRITICAL
+PROCEED_THRESHOLD = None
+HOLD_THRESHOLD = None
 
 # Target Epistemic Hold rate: studies indicate 15-25% is optimal
 # for balancing deliberation quality against operational speed.
-# This target should be monitored and reported but is not itself a threshold.
+# Monitor and report; recalibrate thresholds if consistently outside
+# this range. This is a monitoring guideline, not a threshold.
 TARGET_EPISTEMIC_HOLD_RATE = 0.20
 
 
-def get_version():
+def get_version() -> str:
     """Return the framework version."""
     return __version__
 
 
-def get_info():
+def get_info() -> dict:
     """Return framework information."""
     return {
         'name': FRAMEWORK_NAME,
@@ -208,13 +197,13 @@ def quick_start():
 
 
 def _init_message():
-    """Display initialization message when package is imported."""
+    """Display initialization message in interactive mode."""
     import sys
-    if hasattr(sys, 'ps1'):  # Interactive mode
+    if hasattr(sys, 'ps1'):
         print(f"Ternary Logic Framework v{__version__} loaded")
         print("Use quick_start() for usage guide")
         print("IMPORTANT: Thresholds must be calibrated by your institution.")
-        print("           TLEngine raises ValueError if instantiated without values.")
+        print("           TLEngine raises ValueError without explicit values.")
 
 
 try:
