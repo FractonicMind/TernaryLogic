@@ -485,7 +485,7 @@ class TLCoverageGenerator:
             
             analysis_content += """
 ### Testing Focus Areas
-- Core TL state transitions (PROCEED/EPISTEMIC_HOLD/HALT)
+- Core TL state transitions (PROCEED/EPISTEMIC_HOLD/REFUSE)
 - Eight Pillars integration points
 - Regulatory compliance modules (FATF, IOSCO, Basel III)
 - ESG verification accuracy
