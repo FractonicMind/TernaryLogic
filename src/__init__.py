@@ -32,7 +32,7 @@ Example Usage:
     >>> from ternary_logic import TLEngine, TLState
     >>>
     >>> # Thresholds must be calibrated by your institution.
-    >>> # No universal values exist. See ThresholdProfile schema.
+    >>> # No universal values exist. See docs/Threshold_Calibration.md.
     >>> engine = TLEngine(
     ...     proceed_threshold=YOUR_INSTITUTION_PROCEED_THRESHOLD,
     ...     hold_threshold=YOUR_INSTITUTION_HOLD_THRESHOLD
@@ -100,22 +100,27 @@ FRAMEWORK_DESCRIPTION = "Three-valued logic for economic decision-making under u
 REPOSITORY_URL = "https://github.com/FractonicMind/TernaryLogic"
 SUPPORT_EMAIL = "support@tl-goukassian.org"
 
-# Threshold governance notice.
+# Threshold governance.
 # The TL framework does not ship universal threshold values.
 # Thresholds are institutionally calibrated governance decisions.
 # They must be established through historical backtesting,
 # regulatory requirements, board-approved risk appetite,
 # and market regime analysis specific to your deployment.
-# See ThresholdProfile schema and docs/Threshold_Calibration.md.
+# TLEngine raises ValueError if instantiated without explicit values.
+# See docs/Threshold_Calibration.md for calibration methodology.
 PROCEED_THRESHOLD = None   # Must be set by institutional governance
 HOLD_THRESHOLD = None      # Must be set by institutional governance
 
-# Confidence level boundaries for qualitative classification only.
-# These do NOT serve as decision thresholds.
-# Decision thresholds are institution-specific governed parameters.
-CONFIDENCE_HIGH = 0.85     # Qualitative label boundary (reference only)
-CONFIDENCE_MEDIUM = 0.60   # Qualitative label boundary (reference only)
-CONFIDENCE_LOW = 0.40      # Qualitative label boundary (reference only)
+# Display label boundaries for qualitative output classification only.
+# These constants define where ConfidenceLevel labels (HIGH/MEDIUM/LOW/CRITICAL)
+# switch in human-readable output and audit logs.
+# They are NOT decision thresholds. They do NOT determine PROCEED, EPISTEMIC_HOLD,
+# or REFUSE outcomes. Decision thresholds are institution-specific governed
+# parameters set via TLEngine constructor arguments.
+DISPLAY_LABEL_HIGH = 0.85     # Confidence above this prints as HIGH
+DISPLAY_LABEL_MEDIUM = 0.60   # Confidence above this prints as MEDIUM
+DISPLAY_LABEL_LOW = 0.40      # Confidence above this prints as LOW
+                               # Confidence below LOW prints as CRITICAL
 
 # Target Epistemic Hold rate: studies indicate 15-25% is optimal
 # for balancing deliberation quality against operational speed.
@@ -160,6 +165,7 @@ def quick_start():
          - Board-approved risk appetite
          - Market regime analysis
        See docs/Threshold_Calibration.md for calibration methodology.
+       TLEngine raises ValueError if instantiated without explicit values.
 
     3. Create an engine with your calibrated thresholds:
        >>> engine = TLEngine(
@@ -201,7 +207,6 @@ def quick_start():
     print(guide)
 
 
-# Package initialization message
 def _init_message():
     """Display initialization message when package is imported."""
     import sys
@@ -209,9 +214,9 @@ def _init_message():
         print(f"Ternary Logic Framework v{__version__} loaded")
         print("Use quick_start() for usage guide")
         print("IMPORTANT: Thresholds must be calibrated by your institution.")
+        print("           TLEngine raises ValueError if instantiated without values.")
 
 
-# Show message on import in interactive mode
 try:
     _init_message()
 except Exception:
