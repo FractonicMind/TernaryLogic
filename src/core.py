@@ -25,11 +25,17 @@ THRESHOLD GOVERNANCE:
     high-frequency equity trading system, and a supply chain ESG verifier
     operate under fundamentally different uncertainty profiles. The framework
     enforces that a threshold exists and is applied consistently. What that
-    threshold is belongs entirely to the governed institution, established
-    through a documented process and anchored to the ledger.
+    threshold is belongs entirely to the governed institution.
 
     TLEngine raises ValueError if instantiated without explicit threshold values.
     This is intentional and constitutional.
+
+DISPLAY LABEL BOUNDARIES:
+    ConfidenceLevel (HIGH/MEDIUM/LOW/CRITICAL) is a qualitative display
+    classifier for human-readable output and audit logs only. The boundaries
+    at which these labels switch (defined by DISPLAY_LABEL_* constants in
+    __init__.py) are NOT decision thresholds. They do not determine state
+    outcomes. Decision thresholds are institution-specific governed parameters.
 
 CONFIDENCE CALCULATION:
     Composite score from four factors (each 25% weight):
@@ -43,9 +49,8 @@ AUTOMATIC TRIGGERS:
     - Economic Rights and Transparency mandate fails (ownership, consent, provenance)
     - Sustainable Capital Allocation mandate fails (ESG data, emissions verification)
     - Data missing, stale (>24hrs), or unverifiable
-    - Model conflict exceeds threshold (>30% disagreement)
-    These triggers override confidence scores. Even confidence of 1.0 does not
-    prevent an Epistemic Hold if a mandate check fails.
+    - Model conflict exceeds 30% disagreement
+    These triggers override confidence scores entirely.
 
 Created by: Lev Goukassian (ORCID: 0009-0006-5966-1243)
 Repository: https://github.com/FractonicMind/TernaryLogic
@@ -62,6 +67,15 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Display label boundaries for qualitative output classification only.
+# These are NOT decision thresholds. They define where ConfidenceLevel
+# labels switch in human-readable output and audit logs.
+# Decision thresholds are institution-specific governed parameters
+# set via TLEngine constructor arguments.
+_DISPLAY_LABEL_HIGH = 0.85
+_DISPLAY_LABEL_MEDIUM = 0.60
+_DISPLAY_LABEL_LOW = 0.40
+
 
 class TLState(Enum):
     """Three-valued logic states for economic decisions."""
@@ -71,16 +85,22 @@ class TLState(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """Confidence levels for qualitative classification.
+    """Qualitative confidence level for display and audit log output only.
 
-    These boundaries are reference points for human-readable output only.
-    They do NOT serve as decision thresholds. Decision thresholds are
-    institution-specific governed parameters set via TLEngine constructor.
+    These labels appear in TLValue.confidence_level and in exported audit
+    trails to give human readers a qualitative sense of the confidence score.
+    They have no effect on state determination. Whether a given confidence
+    score produces PROCEED, EPISTEMIC_HOLD, or REFUSE depends entirely on
+    the institution-calibrated thresholds set at TLEngine initialization.
+
+    The numeric boundaries at which these labels switch are display constants,
+    not governance parameters. They are prefixed with _DISPLAY_LABEL_ to
+    make this distinction visible in code.
     """
-    HIGH = "high"           # Reference boundary: upper confidence range
-    MEDIUM = "medium"       # Reference boundary: middle confidence range
-    LOW = "low"             # Reference boundary: lower confidence range
-    CRITICAL = "critical"   # Reference boundary: critically low confidence
+    HIGH = "high"           # confidence >= _DISPLAY_LABEL_HIGH
+    MEDIUM = "medium"       # _DISPLAY_LABEL_MEDIUM <= confidence < _DISPLAY_LABEL_HIGH
+    LOW = "low"             # _DISPLAY_LABEL_LOW <= confidence < _DISPLAY_LABEL_MEDIUM
+    CRITICAL = "critical"   # confidence < _DISPLAY_LABEL_LOW
 
 
 @dataclass
@@ -103,20 +123,24 @@ class TLValue:
 
     def __post_init__(self):
         if not 0.0 <= self.confidence <= 1.0:
-            raise ValueError(f"Confidence must be in [0.0, 1.0], got {self.confidence}")
+            raise ValueError(
+                f"Confidence must be in [0.0, 1.0], got {self.confidence}"
+            )
 
     @property
     def confidence_level(self) -> ConfidenceLevel:
-        """Get qualitative confidence level for display purposes only.
+        """Get qualitative display label for this confidence score.
 
-        These boundaries are reference points. They do not correspond
-        to decision thresholds, which are institution-specific.
+        Returns a human-readable label for audit logs and display output.
+        This label does NOT reflect whether the score resulted in PROCEED,
+        EPISTEMIC_HOLD, or REFUSE. That determination depends on the
+        institution-calibrated thresholds set at TLEngine initialization.
         """
-        if self.confidence >= 0.85:
+        if self.confidence >= _DISPLAY_LABEL_HIGH:
             return ConfidenceLevel.HIGH
-        elif self.confidence >= 0.60:
+        elif self.confidence >= _DISPLAY_LABEL_MEDIUM:
             return ConfidenceLevel.MEDIUM
-        elif self.confidence >= 0.40:
+        elif self.confidence >= _DISPLAY_LABEL_LOW:
             return ConfidenceLevel.LOW
         else:
             return ConfidenceLevel.CRITICAL
@@ -179,11 +203,11 @@ class EpistemicHoldEvent:
 class TLEngine:
     """Core Ternary Logic decision engine for economic intelligence.
 
-    Thresholds are mandatory constructor arguments. The engine refuses to
-    instantiate without explicit values. This is intentional: there are no
-    universal defaults. Thresholds must be calibrated by your institution
-    through historical backtesting, regulatory requirements, board-approved
-    risk appetite, and market regime analysis.
+    Thresholds are mandatory constructor arguments. The engine raises
+    ValueError if instantiated without explicit values. This is intentional:
+    there are no universal defaults. Thresholds must be calibrated by your
+    institution through historical backtesting, regulatory requirements,
+    board-approved risk appetite, and market regime analysis.
 
     See docs/Threshold_Calibration.md for calibration methodology.
     See ThresholdProfile schema in the API spec for governance requirements.
@@ -201,20 +225,20 @@ class TLEngine:
         Args:
             proceed_threshold: Minimum confidence to PROCEED.
                                REQUIRED. No default. Must be calibrated by
-                               your institution. Cannot be None in production.
+                               your institution through historical backtesting,
+                               regulatory requirements, and board-approved risk
+                               appetite. Cannot be None in any deployment.
             hold_threshold:    Below this confidence triggers REFUSE.
-                               REQUIRED. No default. Must be calibrated by
-                               your institution. Cannot be None in production.
-            epistemic_hold_rate_target: Target rate of Epistemic Hold decisions.
+                               REQUIRED. No default. Same calibration
+                               requirements as proceed_threshold.
+            epistemic_hold_rate_target: Monitoring target for hold rate.
                                Default 0.20 (20%). Studies indicate 15-25% is
-                               optimal for balancing deliberation quality against
-                               operational speed. Monitor and report; adjust
+                               optimal. Monitor and report; recalibrate
                                thresholds if consistently outside this range.
 
         Raises:
-            ValueError: If proceed_threshold or hold_threshold is None.
-                        Thresholds are governed parameters that must be
-                        explicitly set. The framework has no universal defaults.
+            ValueError: If proceed_threshold or hold_threshold is None,
+                        or if thresholds do not satisfy the ordering constraint.
         """
         if proceed_threshold is None:
             raise ValueError(
@@ -236,8 +260,10 @@ class TLEngine:
             )
         if not 0.0 < hold_threshold < proceed_threshold < 1.0:
             raise ValueError(
-                f"Thresholds must satisfy: 0.0 < hold_threshold < proceed_threshold < 1.0. "
-                f"Got hold_threshold={hold_threshold}, proceed_threshold={proceed_threshold}."
+                f"Thresholds must satisfy: 0.0 < hold_threshold < "
+                f"proceed_threshold < 1.0. "
+                f"Got hold_threshold={hold_threshold}, "
+                f"proceed_threshold={proceed_threshold}."
             )
 
         self.proceed_threshold = proceed_threshold
@@ -246,10 +272,8 @@ class TLEngine:
         self.epistemic_holds: List[EpistemicHoldEvent] = []
         self.decision_log: List[TLValue] = []
         logger.info(
-            f"TL Engine initialized: "
-            f"PROCEED >= {proceed_threshold}, "
-            f"REFUSE < {hold_threshold} "
-            f"(institution-calibrated thresholds)"
+            f"TL Engine initialized with institution-calibrated thresholds: "
+            f"PROCEED >= {proceed_threshold}, REFUSE < {hold_threshold}"
         )
 
     def evaluate(
@@ -262,26 +286,25 @@ class TLEngine:
         """
         Evaluate economic conditions and return TL state.
 
+        State determination:
+            confidence >= self.proceed_threshold  ->  PROCEED (+1)
+            self.hold_threshold <= confidence
+                                < self.proceed_threshold  ->  EPISTEMIC_HOLD (0)
+            confidence < self.hold_threshold      ->  REFUSE (-1)
+
+        Mandate failures use force_state=TLState.EPISTEMIC_HOLD with
+        confidence=0.0 to override this determination entirely. Even
+        a confidence of 1.0 does not prevent an Epistemic Hold if a
+        mandate check fails.
+
         Args:
             confidence:   Confidence score [0.0, 1.0]
             reasoning:    Explanation for the decision
             metadata:     Additional context
-            force_state:  Override automatic state. Used for mandate failures
-                          where a binary pass/fail check must override the
-                          confidence-based determination regardless of score.
+            force_state:  Override automatic state for mandate failures
 
         Returns:
-            TLValue with state, confidence, and reasoning.
-
-        State determination:
-            confidence >= proceed_threshold  ->  PROCEED (+1)
-            hold_threshold <= confidence
-                           < proceed_threshold  ->  EPISTEMIC_HOLD (0)
-            confidence < hold_threshold      ->  REFUSE (-1)
-
-        Mandate failures (force_state=TLState.EPISTEMIC_HOLD with confidence=0.0)
-        override this determination entirely. Even confidence of 1.0 does not
-        prevent an Epistemic Hold if a mandate check fails.
+            TLValue with state, confidence, and reasoning
         """
         if force_state:
             state = force_state
@@ -317,7 +340,9 @@ class TLEngine:
             signal_conflicts=value.metadata.get('conflicts', []),
             uncertainty_metrics={
                 'confidence': value.confidence,
-                'threshold_distance': abs(value.confidence - self.proceed_threshold)
+                'distance_to_proceed': abs(
+                    value.confidence - self.proceed_threshold
+                )
             }
         )
         self.epistemic_holds.append(event)
@@ -336,7 +361,9 @@ class TLEngine:
         """Calculate current Epistemic Hold rate."""
         if not self.decision_log:
             return 0.0
-        holds = sum(1 for d in self.decision_log if d.state == TLState.EPISTEMIC_HOLD)
+        holds = sum(
+            1 for d in self.decision_log if d.state == TLState.EPISTEMIC_HOLD
+        )
         return holds / len(self.decision_log)
 
     def get_statistics(self) -> Dict[str, Any]:
@@ -353,9 +380,15 @@ class TLEngine:
                 'average_confidence': 0.0
             }
 
-        proceed = sum(1 for d in self.decision_log if d.state == TLState.PROCEED)
-        hold = sum(1 for d in self.decision_log if d.state == TLState.EPISTEMIC_HOLD)
-        refuse = sum(1 for d in self.decision_log if d.state == TLState.REFUSE)
+        proceed = sum(
+            1 for d in self.decision_log if d.state == TLState.PROCEED
+        )
+        hold = sum(
+            1 for d in self.decision_log if d.state == TLState.EPISTEMIC_HOLD
+        )
+        refuse = sum(
+            1 for d in self.decision_log if d.state == TLState.REFUSE
+        )
         avg_conf = sum(d.confidence for d in self.decision_log) / total
 
         return {
@@ -430,26 +463,16 @@ def calculate_confidence(
     - Historical Accuracy: recent success rate (90-day)
     - Signal Strength: clear indicators, low noise
 
-    Args:
-        data_sources: List of data source dicts with quality metrics
-        models: List of model outputs (optional)
-
-    Returns:
-        Confidence score [0.0, 1.0]
-
-    Note:
-        The returned confidence score is an input to TLEngine.evaluate().
-        Whether that score triggers PROCEED, EPISTEMIC_HOLD, or REFUSE
-        depends on the institution-calibrated thresholds set at TLEngine
-        initialization. This function has no knowledge of those thresholds.
+    Returns a score in [0.0, 1.0]. This score is an input to
+    TLEngine.evaluate(). Whether it produces PROCEED, EPISTEMIC_HOLD,
+    or REFUSE depends on the institution-calibrated thresholds set at
+    TLEngine initialization. This function has no knowledge of those values.
     """
-    # Data Quality (25%)
     data_quality = (
         sum(s.get('quality', 0.5) for s in data_sources)
         / max(len(data_sources), 1)
     )
 
-    # Model Agreement (25%)
     if models and len(models) > 1:
         outputs = [m.get('output', 0.5) for m in models]
         mean = sum(outputs) / len(outputs)
@@ -458,19 +481,16 @@ def calculate_confidence(
     else:
         model_agreement = 0.5
 
-    # Historical Accuracy (25%)
     historical_accuracy = (
         data_sources[0].get('historical_accuracy', 0.75)
         if data_sources else 0.5
     )
 
-    # Signal Strength (25%)
     signal_strength = (
         sum(s.get('signal_strength', 0.5) for s in data_sources)
         / max(len(data_sources), 1)
     )
 
-    # Weighted composite
     confidence = 0.25 * (
         data_quality + model_agreement + historical_accuracy + signal_strength
     )
@@ -522,13 +542,6 @@ def verify_mandate(mandate_type: str, data: Dict[str, Any]) -> TLValue:
     Mandate checks are binary pass/fail and override confidence scores.
     Even a confidence score of 1.0 does not prevent an Epistemic Hold
     if a mandate check fails. This is intentional and constitutional.
-
-    Args:
-        mandate_type: 'economic_rights' or 'sustainable_capital'
-        data: Transaction or issuance data with verification fields
-
-    Returns:
-        TLValue with PROCEED (all checks pass) or EPISTEMIC_HOLD (any check fails)
     """
     if mandate_type == 'economic_rights':
         checks = {
@@ -562,17 +575,28 @@ def verify_mandate(mandate_type: str, data: Dict[str, Any]) -> TLValue:
     )
 
 
-# Example usage
+# ---------------------------------------------------------------------------
+# DEMONSTRATION SCAFFOLD
+# The block below runs only when this file is executed directly as a script:
+#   python src/core.py
+# It never runs when core.py is imported as a module.
+# The threshold values below are SAMPLE VALUES FOR DEMONSTRATION ONLY.
+# They are not recommendations, defaults, or standards.
+# Every production deployment must establish its own calibrated values.
+# See docs/Threshold_Calibration.md.
+# ---------------------------------------------------------------------------
 if __name__ == "__main__":
-    # SAMPLE THRESHOLDS FOR DEMONSTRATION ONLY.
-    # Not for production use. Production thresholds must be calibrated
-    # by your institution. See docs/Threshold_Calibration.md.
-    SAMPLE_PROCEED_THRESHOLD = 0.85
-    SAMPLE_HOLD_THRESHOLD = 0.40
+    _DEMO_PROCEED = 0.85  # SAMPLE ONLY - not a framework default
+    _DEMO_HOLD = 0.40     # SAMPLE ONLY - not a framework default
+
+    print("=" * 60)
+    print("DEMONSTRATION MODE - sample thresholds, not production values")
+    print(f"proceed_threshold={_DEMO_PROCEED}, hold_threshold={_DEMO_HOLD}")
+    print("=" * 60)
 
     engine = TLEngine(
-        proceed_threshold=SAMPLE_PROCEED_THRESHOLD,
-        hold_threshold=SAMPLE_HOLD_THRESHOLD,
+        proceed_threshold=_DEMO_PROCEED,
+        hold_threshold=_DEMO_HOLD,
         epistemic_hold_rate_target=0.20
     )
 
