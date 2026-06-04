@@ -12,17 +12,17 @@ The irreversibility gap is defined as the temporal delta between the moment a si
 
 To definitively resolve the execution-verification mismatch, the Dual-Lane Latency Architecture enforces a hardware-governed bifurcation of data propagation. Execution and verification propagate through two physically distinct but synchronized latency paths, governed entirely by a Ternary Logic (TL) state machine.
 
-### **Fast Lane (\< 2 ms)**
+### **Inference Lane (\< 2 ms)**
 
-The Fast Lane constitutes an execution pipeline optimized for raw algorithmic throughput and minimal resistor-capacitor (RC) delay. It computes the primary application logic, operating at maximum system speeds to generate a provisional result. Within a high-frequency matching engine, this lane calculates the order match, updates local volatile memory structures, and emits a provisional state transition. However, unlike standard monolithic architectures, the Fast Lane lacks the physical authority to authorize the final commit sequence. It possesses the logic density to calculate the outcome but cannot execute the irreversible physical transition to the external communication interfaces.3 The output of the Fast Lane is strictly provisional, mechanically isolated from the egress pins.
+The Inference Lane constitutes an execution pipeline optimized for raw algorithmic throughput and minimal resistor-capacitor (RC) delay. It computes the primary application logic, operating at maximum system speeds to generate a provisional result. Within a high-frequency matching engine, this lane calculates the order match, updates local volatile memory structures, and emits a provisional state transition. However, unlike standard monolithic architectures, the Inference Lane lacks the physical authority to authorize the final commit sequence. It possesses the logic density to calculate the outcome but cannot execute the irreversible physical transition to the external communication interfaces.3 The output of the Inference Lane is strictly provisional, mechanically isolated from the egress pins.
 
-### **Audit Lane (300–500 ms)**
+### **Governance Lane (300–500 ms)**
 
-Operating asynchronously and in parallel, the Audit Lane processes the exact same input vector alongside the provisional state emitted by the Fast Lane. The exclusive purpose of this lane is exhaustive verification, cryptographic logging, and state anchoring. The Audit Lane absorbs the heavy latency budgets associated with cryptographic hashing operations, constructing Merkle tree aggregations, and broadcasting state roots to decentralized or immutable public ledgers.3 The $300$ to $500$ millisecond latency budget is a hard architectural constraint, dictated by the physical limits of network propagation and the computational time required to achieve global consensus and cryptographic finality over external anchoring networks.
+Operating asynchronously and in parallel, the Governance Lane processes the exact same input vector alongside the provisional state emitted by the Inference Lane. The exclusive purpose of this lane is exhaustive verification, cryptographic logging, and state anchoring. The Governance Lane absorbs the heavy latency budgets associated with cryptographic hashing operations, constructing Merkle tree aggregations, and broadcasting state roots to decentralized or immutable public ledgers.3 The $300$ to $500$ millisecond latency budget is a hard architectural constraint, dictated by the physical limits of network propagation and the computational time required to achieve global consensus and cryptographic finality over external anchoring networks.
 
 ### **Divergence and Convergence Mechanics**
 
-The input signal diverges at the physical system ingress. The Fast Lane reaches an output state almost immediately, transitioning the output execution registers into a Ternary Null (0) state. This Null state is a physical, electrical holding pattern.2 Deterministic ordering is rigidly maintained because the underlying system architecture physically prevents the transition from the Null (0) state to the Commit (+1) state without the arrival of a cryptographic acknowledgement (ACK) token returning from the Audit Lane. The separation of execution and finality is thus not managed by operating system software, which is inherently vulnerable to kernel-level overrides, but by the physical propagation physics of the asynchronous hardware gates.
+The input signal diverges at the physical system ingress. The Inference Lane reaches an output state almost immediately, transitioning the output execution registers into a Ternary Null (0) state. This Null state is a physical, electrical holding pattern.2 Deterministic ordering is rigidly maintained because the underlying system architecture physically prevents the transition from the Null (0) state to the Commit (+1) state without the arrival of a cryptographic acknowledgement (ACK) token returning from the Governance Lane. The separation of execution and finality is thus not managed by operating system software, which is inherently vulnerable to kernel-level overrides, but by the physical propagation physics of the asynchronous hardware gates.
 
 ## **III. Hardware Enforcement and Physical Realization**
 
@@ -36,9 +36,9 @@ Data propagation in DITL is entirely handshake-based, utilizing specific rfd (re
 ### **Hardware Primitives: Transistor and LUT Implementations**
 
 The foundational hardware primitive of this architecture is the Muller C-element (MCE), a state-holding hysteretic gate that acts as a mandatory rendezvous point for asynchronous signals.14 The Dual-Lane convergence is physically instantiated using these gates.  
-At the transistor level, a standard Muller C-element outputs $V\_{dd}$ (logic 1\) when all inputs are at $V\_{dd}$, outputs $Gnd$ (logic 0\) when all inputs are at $Gnd$, and retains its previous output state for any other input combination. In modern DITL implementations targeting sub-nanometer nodes, semi-static cross-coupled inverter versions or advanced FinFET structures are utilized to minimize static power consumption and leakage currents.15 The required digital hysteresis ensures that the output will not transition until both the Fast Lane signal and the Audit Lane signal arrive and match.  
-At the Field Programmable Gate Array (FPGA) level, commercially available architectures (such as Xilinx Artix or Spartan families) lack native asynchronous C-elements. Consequently, the MCE must be synthesized using a 3-input or 4-input Look-Up Table (LUT) combined with a highly localized, unbuffered routing feedback loop.17 The logical equation governing this LUT is defined as $Q\_{next} \= A \\cdot B \+ Q\_{prev} \\cdot (A \+ B)$, where $A$ represents the Fast Lane provisional result and $B$ represents the Audit Lane cryptographic confirmation.  
-The hardware physically prevents the transition from Null to Commit because the final commit driver circuit requires the MCE output to transition to a high voltage state. If the Audit Lane signal ($B$) remains low—either because it is still computing the cryptographic hashes or because it has explicitly rejected the transaction—the MCE retains its prior state, which is initialized to Null. This physically starves the commit driver of the necessary activation voltage. There is no software instruction that can force the gate to output a high signal without the physical voltage arriving on the $B$ input pin.
+At the transistor level, a standard Muller C-element outputs $V\_{dd}$ (logic 1\) when all inputs are at $V\_{dd}$, outputs $Gnd$ (logic 0\) when all inputs are at $Gnd$, and retains its previous output state for any other input combination. In modern DITL implementations targeting sub-nanometer nodes, semi-static cross-coupled inverter versions or advanced FinFET structures are utilized to minimize static power consumption and leakage currents.15 The required digital hysteresis ensures that the output will not transition until both the Inference Lane signal and the Governance Lane signal arrive and match.  
+At the Field Programmable Gate Array (FPGA) level, commercially available architectures (such as Xilinx Artix or Spartan families) lack native asynchronous C-elements. Consequently, the MCE must be synthesized using a 3-input or 4-input Look-Up Table (LUT) combined with a highly localized, unbuffered routing feedback loop.17 The logical equation governing this LUT is defined as $Q\_{next} \= A \\cdot B \+ Q\_{prev} \\cdot (A \+ B)$, where $A$ represents the Inference Lane provisional result and $B$ represents the Governance Lane cryptographic confirmation.  
+The hardware physically prevents the transition from Null to Commit because the final commit driver circuit requires the MCE output to transition to a high voltage state. If the Governance Lane signal ($B$) remains low—either because it is still computing the cryptographic hashes or because it has explicitly rejected the transaction—the MCE retains its prior state, which is initialized to Null. This physically starves the commit driver of the necessary activation voltage. There is no software instruction that can force the gate to output a high signal without the physical voltage arriving on the $B$ input pin.
 
 ## **IV. State Encoding and Transition System**
 
@@ -53,18 +53,18 @@ An emerging, highly resilient alternative utilizes non-volatile resistive states
 
 ### **State Transition Matrix**
 
-The core hardware interlock is governed by the following state transition matrix. This matrix defines the physical transition of the convergence gate at the integration boundary, mapping the inputs from the Fast Lane and Audit Lane to the final, externally visible hardware state.
+The core hardware interlock is governed by the following state transition matrix. This matrix defines the physical transition of the convergence gate at the integration boundary, mapping the inputs from the Inference Lane and Governance Lane to the final, externally visible hardware state.
 
-| Fast Lane Output (F) | Audit Lane Validation (A) | Previous State (Qprev​) | Next Final State (Qnext​) | Gate-Level Interpretation |
+| Inference Lane Output (F) | Governance Lane Validation (A) | Previous State (Qprev​) | Next Final State (Qnext​) | Gate-Level Interpretation |
 | :---- | :---- | :---- | :---- | :---- |
 | Null (0,0) | Null (0,0) | Null (0) | **0 (Null)** | System idle or waiting for input. Pipeline empty. |
-| Commit (1,0) | Null (0,0) | Null (0) | **0 (Null)** | Fast Lane computed; Epistemic Hold active. Waiting on cryptographic anchor. |
-| Reject (0,1) | Null (0,0) | Null (0) | **\-1 (Reject)** | Fast Lane fast-fails; immediate hardware reject executed to protect pipeline. |
+| Commit (1,0) | Null (0,0) | Null (0) | **0 (Null)** | Inference Lane computed; Epistemic Hold active. Waiting on cryptographic anchor. |
+| Reject (0,1) | Null (0,0) | Null (0) | **\-1 (Reject)** | Inference Lane fast-fails; immediate hardware reject executed to protect pipeline. |
 | Commit (1,0) | Commit (1,0) | Null (0) | **\+1 (Commit)** | Lanes converge; irreversible external commit executed. |
-| Commit (1,0) | Reject (0,1) | Null (0) | **\-1 (Reject)** | Audit Lane overrules Fast Lane; transaction cryptographically killed. |
+| Commit (1,0) | Reject (0,1) | Null (0) | **\-1 (Reject)** | Governance Lane overrules Inference Lane; transaction cryptographically killed. |
 | Any | Any | \+1 / \-1 | **Unchanged** | Final state latched until an explicit rfn (Reset) wavefront is propagated. |
 
-The gate-level interpretation of this matrix is critical. The Fast Lane possesses the unilateral physical authority to trigger a fast-reject (-1) to protect system integrity in the event of an obvious logic fault or invalid parameter. However, it cannot trigger a fast-commit (+1) under any circumstances. The transition from the Null state to the Commit state strictly requires an equivalent, high-voltage dual-rail assertion of $(1,0)$ from both the Fast Lane execution core and the Audit Lane cryptographic pipeline, governed by the Muller C-element's strict coincidence requirement.3
+The gate-level interpretation of this matrix is critical. The Inference Lane possesses the unilateral physical authority to trigger a fast-reject (-1) to protect system integrity in the event of an obvious logic fault or invalid parameter. However, it cannot trigger a fast-commit (+1) under any circumstances. The transition from the Null state to the Commit state strictly requires an equivalent, high-voltage dual-rail assertion of $(1,0)$ from both the Inference Lane execution core and the Governance Lane cryptographic pipeline, governed by the Muller C-element's strict coincidence requirement.3
 
 ## **V. Timing, Pipeline, and Clocking Model**
 
@@ -74,52 +74,52 @@ The integration of sub-millisecond execution with half-second verification deman
 
 Time (ms) 0 2 300 500  
 |--------|-----------------------------------------|----------|  
-Fast Lane \[ Compute \]--\> (Provisional Output Generated)  
+Inference Lane \[ Compute \]--\> (Provisional Output Generated)  
 | |  
 | v  
 State Reg | \[ Null (0)===========================================\]--\> (Commit \+1/-1)  
 | ^ ^  
 | | |  
-Audit Lane \[ Verify & Hash \]--\>--\> \[ On-Chain Anchor \]  
+Governance Lane \[ Verify & Hash \]--\>--\> \[ On-Chain Anchor \]  
 |-------------------------------------------------------------|  
-The Fast Lane completes its execution wavefront in under 2 milliseconds. The execution state register immediately transitions to the Ternary Null (0) state, awaiting confirmation. Concurrently, the Audit Lane occupies the $300$ to $500$ millisecond window, executing parallel hashes, aggregating the buffer, and interacting with external Input/Output (I/O) interfaces such as blockchain Remote Procedure Calls (RPCs) or local hardware timestamping anchors. Upon receipt of the cryptographic anchor receipt, the Audit Lane hardware asserts the Audit Token, fulfilling the Muller C-element coincidence condition and physically releasing the commit sequence.
+The Inference Lane completes its execution wavefront in under 2 milliseconds. The execution state register immediately transitions to the Ternary Null (0) state, awaiting confirmation. Concurrently, the Governance Lane occupies the $300$ to $500$ millisecond window, executing parallel hashes, aggregating the buffer, and interacting with external Input/Output (I/O) interfaces such as blockchain Remote Procedure Calls (RPCs) or local hardware timestamping anchors. Upon receipt of the cryptographic anchor receipt, the Governance Lane hardware asserts the Permission Token, fulfilling the Muller C-element coincidence condition and physically releasing the commit sequence.
 
 ### **Clocking Model and Domain Crossing**
 
 The overall architecture operates as a Globally Asynchronous Locally Synchronous (GALS) system, which is optimal for integrating ultra-low latency logic with heavy cryptographic workloads.17  
-The asynchronous region encompasses the primary execution logic, the convergence gates, and the commit mechanisms. This region operates entirely in Quasi-Delay-Insensitive (QDI) DITL, utilizing strict handshake protocols without the distribution of a global clock.7 In contrast, the synchronous region houses the cryptographic pipeline, primarily the SHA-256 Intellectual Property (IP) cores within the Audit Lane. These cores often operate synchronously to maximize computational throughput, allowing them to be synthesized using standard standard-cell EDA tools and aggressive pipelining.25  
-Crossing between the synchronous cryptographic pipeline and the asynchronous DITL core is managed via specialized asynchronous FIFOs, known as micropipelines, and localized synchronization elements. To rigorously mitigate metastability when the synchronous block returns the finalized Audit Token to the asynchronous Muller C-element, a multi-stage synchronizer flip-flop chain or a highly calibrated edge-to-level (E2L) conversion circuit is employed exactly at the integration boundary.26 This ensures that the C-element never evaluates a signal that is hovering in the linear region between voltage rails.
+The asynchronous region encompasses the primary execution logic, the convergence gates, and the commit mechanisms. This region operates entirely in Quasi-Delay-Insensitive (QDI) DITL, utilizing strict handshake protocols without the distribution of a global clock.7 In contrast, the synchronous region houses the cryptographic pipeline, primarily the SHA-256 Intellectual Property (IP) cores within the Governance Lane. These cores often operate synchronously to maximize computational throughput, allowing them to be synthesized using standard standard-cell EDA tools and aggressive pipelining.25  
+Crossing between the synchronous cryptographic pipeline and the asynchronous DITL core is managed via specialized asynchronous FIFOs, known as micropipelines, and localized synchronization elements. To rigorously mitigate metastability when the synchronous block returns the finalized Permission Token to the asynchronous Muller C-element, a multi-stage synchronizer flip-flop chain or a highly calibrated edge-to-level (E2L) conversion circuit is employed exactly at the integration boundary.26 This ensures that the C-element never evaluates a signal that is hovering in the linear region between voltage rails.
 
 ## **VI. Execution Interface and Integration Boundary**
 
 Integrating the Dual-Lane Latency Architecture into existing financial matching engines, automated trading systems, or algorithmic execution units requires a rigorous, strictly defined hardware signaling interface.  
-The interface relies on four primary signals. The Request signal carries the incoming, unverified transaction payload into the system demultiplexer. The ProvisionalResult signal outputs the immediate logic calculation of the Fast Lane. This signal updates local volatile state views for the trading engine to prevent the double-spending of capital or inventory, but the data is flagged internally at the memory controller level as "dirty" or uncommitted. The AuditToken signal is the deterministic cryptographic proof generated by the Audit Lane, signaling successful validation and external anchoring. Finally, the CommitEnable signal is the physical wire connecting the output of the convergence Muller C-element to the final state-mutation drivers, such as SRAM write-enables or external network API dispatchers.  
-In a functional matching engine integration, a matched trade updates the local order book immediately based on the ProvisionalResult, ensuring that subsequent incoming trades can be evaluated against the newly updated state. However, the external confirmation sent to the client broker via the FIX or ITCH protocol API is physically gated by the CommitEnable signal. If the transaction fails in the Audit Lane, a hardware interrupt is triggered that flushes the "dirty" pipeline state and restores the order book to its pre-provisional state, ensuring zero state leakage across the integration boundary.
+The interface relies on four primary signals. The Request signal carries the incoming, unverified transaction payload into the system demultiplexer. The ProvisionalResult signal outputs the immediate logic calculation of the Inference Lane. This signal updates local volatile state views for the trading engine to prevent the double-spending of capital or inventory, but the data is flagged internally at the memory controller level as "dirty" or uncommitted. The AuditToken signal is the deterministic cryptographic proof generated by the Governance Lane, signaling successful validation and external anchoring. Finally, the CommitEnable signal is the physical wire connecting the output of the convergence Muller C-element to the final state-mutation drivers, such as SRAM write-enables or external network API dispatchers.  
+In a functional matching engine integration, a matched trade updates the local order book immediately based on the ProvisionalResult, ensuring that subsequent incoming trades can be evaluated against the newly updated state. However, the external confirmation sent to the client broker via the FIX or ITCH protocol API is physically gated by the CommitEnable signal. If the transaction fails in the Governance Lane, a hardware interrupt is triggered that flushes the "dirty" pipeline state and restores the order book to its pre-provisional state, ensuring zero state leakage across the integration boundary.
 
-## **VII. Audit Lane Cryptographic Mechanics**
+## **VII. Governance Lane Cryptographic Mechanics**
 
-The Audit Lane functions as the immutable governance and verification path, fundamentally transforming the theoretical Epistemic Hold into a mathematically and cryptographically verifiable event.4
+The Governance Lane functions as the immutable governance and verification path, fundamentally transforming the theoretical Epistemic Hold into a mathematically and cryptographically verifiable event.4
 
 ### **Buffered Anchoring Pipeline**
 
-High-frequency execution systems cannot interact with external blockchain networks or public ledgers on a per-transaction basis due to extreme latency mismatch and prohibitive gas costs. Therefore, the Audit Lane employs a continuous rolling log buffer instantiated in high-speed, multi-ported SRAM. As provisional transactions enter the Null (0) hold state, their execution traces, input parameters, and output states are serialized, concatenated, and continuously written to this buffer.5
+High-frequency execution systems cannot interact with external blockchain networks or public ledgers on a per-transaction basis due to extreme latency mismatch and prohibitive gas costs. Therefore, the Governance Lane employs a continuous rolling log buffer instantiated in high-speed, multi-ported SRAM. As provisional transactions enter the Null (0) hold state, their execution traces, input parameters, and output states are serialized, concatenated, and continuously written to this buffer.5
 
 ### **Merkle Aggregation**
 
-To achieve $O(1)$ verification complexity per batch and ensure massive scalability, the Audit Lane hardware continuously aggregates the rolling log into a hierarchical Merkle tree structure.28  
+To achieve $O(1)$ verification complexity per batch and ensure massive scalability, the Governance Lane hardware continuously aggregates the rolling log into a hierarchical Merkle tree structure.28  
 First, leaf generation occurs. Each provisional result is passed through a hardware hashing core (utilizing SHA-256 or a compliant post-quantum equivalent) to form a distinct leaf node.29 Next, tree construction proceeds. Leaves are paired and hashed recursively. This operation is executed in parallel by an array of hardware hash accelerators, drastically reducing the time required to build the tree. The integrity guarantee is absolute: the final 256-bit Merkle Root acts as an unbreakable cryptographic commitment for the entire batch. Even a single bit change in any provisional transaction alters the root entirely, mathematically guaranteeing the immutability of the execution history.31
 
 ### **Anchoring Timing**
 
-The $300$ to $500$ millisecond window is defined by the hardware batch aggregation timer. Every $N$ milliseconds, or after $K$ transactions have populated the buffer, the Audit Lane finalizes the Merkle Root computation and dispatches the root hash to multiple decentralized ledgers (such as Ethereum Layer 2 rollups or Bitcoin via OpenTimestamps).3 The anchoring operation is strictly non-blocking; the hardware pipeline utilizes alternating memory banks (ping-pong buffers) so that one batch can be securely hashed and anchored to the external network while the alternate buffer immediately begins absorbing the incoming wavefronts of new provisional Fast Lane outputs.
+The $300$ to $500$ millisecond window is defined by the hardware batch aggregation timer. Every $N$ milliseconds, or after $K$ transactions have populated the buffer, the Governance Lane finalizes the Merkle Root computation and dispatches the root hash to multiple decentralized ledgers (such as Ethereum Layer 2 rollups or Bitcoin via OpenTimestamps).3 The anchoring operation is strictly non-blocking; the hardware pipeline utilizes alternating memory banks (ping-pong buffers) so that one batch can be securely hashed and anchored to the external network while the alternate buffer immediately begins absorbing the incoming wavefronts of new provisional Inference Lane outputs.
 
 ## **VIII. Queueing Theory and Traffic Modeling**
 
-The architectural viability of the Dual-Lane system relies entirely on the mathematical stability of the Audit Lane's buffer under extreme burst traffic conditions. High-frequency trading traffic and network payloads do not follow simple, memoryless Poisson distributions; they are heavily correlated, highly synchronized, and exhibit long-range dependence, often necessitating modeling via heavy-tailed Pareto distributions.32
+The architectural viability of the Dual-Lane system relies entirely on the mathematical stability of the Governance Lane's buffer under extreme burst traffic conditions. High-frequency trading traffic and network payloads do not follow simple, memoryless Poisson distributions; they are heavily correlated, highly synchronized, and exhibit long-range dependence, often necessitating modeling via heavy-tailed Pareto distributions.32
 
 ### **MMPP and Pareto Modeling**
 
-To accurately model the burst load arriving at the Audit Lane's Merkle aggregation buffer, we must utilize a Batch Markovian Arrival Process (BMAP), specifically a Markov Modulated Poisson Process (MMPP), combined with an $M/M/1/K$ finite-buffer queue formulation.34  
+To accurately model the burst load arriving at the Governance Lane's Merkle aggregation buffer, we must utilize a Batch Markovian Arrival Process (BMAP), specifically a Markov Modulated Poisson Process (MMPP), combined with an $M/M/1/K$ finite-buffer queue formulation.34  
 Let the arrival process be defined as an MMPP with two states: Normal (State 1\) and Burst (State 2). The infinitesimal generator matrix $Q$ of the underlying continuous-time Markov chain is expressed as:
 
 $$Q \= \\begin{pmatrix} \-\\sigma\_1 & \\sigma\_1 \\\\ \\sigma\_2 & \-\\sigma\_2 \\end{pmatrix}$$  
@@ -131,7 +131,7 @@ where $\\alpha$ is the shape parameter. In financial traffic models, $1 \< \\alp
 
 ### **Buffer Stability and Overflow Proof**
 
-Given that the Audit Lane processes transaction batches of maximum size $B$ at a deterministic service rate $\\mu$ (constrained by the 500 ms blockchain anchoring latency), we model the hardware queueing system as an $MMPP/D/1/K$ queue. Here, $K$ represents the finite buffer capacity, which is the maximum number of transactions the SRAM can hold in the Ternary Null state.38  
+Given that the Governance Lane processes transaction batches of maximum size $B$ at a deterministic service rate $\\mu$ (constrained by the 500 ms blockchain anchoring latency), we model the hardware queueing system as an $MMPP/D/1/K$ queue. Here, $K$ represents the finite buffer capacity, which is the maximum number of transactions the SRAM can hold in the Ternary Null state.38  
 By applying Little's Law, $L \= \\lambda W$, we observe that the average number of transactions held in the Ternary Null state ($L$) is directly proportional to the time-averaged arrival rate ($\\lambda$) and the required audit latency ($W \\approx 500$ ms).36  
 Under burst conditions, the instantaneous arrival rate $\\lambda\_2$ far exceeds the service rate $\\mu$. The hardware buffer must accommodate this transient overload. The probability of buffer overflow (the loss ratio) is given by the steady-state probability of the system reaching state $K$.  
 For the system to remain stable, the time-averaged arrival rate must remain strictly less than the service rate:
@@ -145,11 +145,11 @@ where $\\theta$ is the dominant root of the characteristic equation derived from
 
 ## **IX. Flow Control and Backpressure**
 
-Because the Audit Lane strictly requires $300$ to $500$ milliseconds to achieve cryptographic finality, a sudden, unprecedented market event could generate spikes that threaten to exceed the calculated buffer limit $K$. Therefore, flow control and backpressure mechanisms must be physically enforced within the architecture.  
-In DITL and NCL architectures, backpressure is an intrinsic property of the delay-insensitive signaling protocol. A pipeline stage physically cannot accept new data wavefronts until it receives an explicit rfd (request for data) acknowledgment from the subsequent stage.12 If the Audit Lane's Merkle buffer reaches its predefined high-water mark (e.g., $90\\%$ of $K$), the hardware controller stops asserting rfd to the synchronization interface connecting the Fast Lane to the Audit Lane.
+Because the Governance Lane strictly requires $300$ to $500$ milliseconds to achieve cryptographic finality, a sudden, unprecedented market event could generate spikes that threaten to exceed the calculated buffer limit $K$. Therefore, flow control and backpressure mechanisms must be physically enforced within the architecture.  
+In DITL and NCL architectures, backpressure is an intrinsic property of the delay-insensitive signaling protocol. A pipeline stage physically cannot accept new data wavefronts until it receives an explicit rfd (request for data) acknowledgment from the subsequent stage.12 If the Governance Lane's Merkle buffer reaches its predefined high-water mark (e.g., $90\\%$ of $K$), the hardware controller stops asserting rfd to the synchronization interface connecting the Inference Lane to the Governance Lane.
 
-* **Stall Policy:** Under normal, recoverable burst loads, the absence of the rfd signal naturally stalls the Fast Lane's execution pipeline. Execution halts gracefully at the hardware gate level, safely pausing the ingestion of new transactions and preventing buffer overflow without requiring any software-level interrupts or operating system intervention.41  
-* **Reject Policy:** If the stall condition persists and propagates upstream beyond a critical latency timeout, the system identifies an adversarial load fail-state. Rather than overflowing or causing an unbounded hang, the system is designed to "fail closed." The hardware automatically injects \-1 (Reject) tokens into the ingress of the Fast Lane, unilaterally and safely killing incoming transactions at the physical layer until the Audit Lane clears the cryptographic backlog.1
+* **Stall Policy:** Under normal, recoverable burst loads, the absence of the rfd signal naturally stalls the Inference Lane's execution pipeline. Execution halts gracefully at the hardware gate level, safely pausing the ingestion of new transactions and preventing buffer overflow without requiring any software-level interrupts or operating system intervention.41  
+* **Reject Policy:** If the stall condition persists and propagates upstream beyond a critical latency timeout, the system identifies an adversarial load fail-state. Rather than overflowing or causing an unbounded hang, the system is designed to "fail closed." The hardware automatically injects \-1 (Reject) tokens into the ingress of the Inference Lane, unilaterally and safely killing incoming transactions at the physical layer until the Governance Lane clears the cryptographic backlog.1
 
 ## **X. Energy, Latency, and Area Trade-offs**
 
@@ -161,14 +161,14 @@ The dual-lane execution model necessitates the physical duplication of verificat
 
 ### **Cryptographic Pipeline Cost Model**
 
-The continuous, high-throughput SHA-256 hashing required by the Audit Lane presents a non-trivial power overhead. Based on empirical models for a baseline 28nm CMOS technology, a fully pipelined, high-performance multimem SHA-256 hardware accelerator processing at $40$ Gigabits per second (Gbps) consumes approximately $1.86$ Watts and occupies $8.5 \\text{ mm}^2$ of silicon area.45 Extrapolating and scaling this to a modern 2nm or 14A node, the dynamic power consumption per hash is reduced exponentially due to drastically lower parasitic capacitance and highly efficient Gate-All-Around (GAA) or RibbonFET transistor architectures. Nevertheless, static leakage currents require aggressive mitigation strategies, dictating the use of fine-grained power gating for idle hash lanes when the burst buffer is empty.16
+The continuous, high-throughput SHA-256 hashing required by the Governance Lane presents a non-trivial power overhead. Based on empirical models for a baseline 28nm CMOS technology, a fully pipelined, high-performance multimem SHA-256 hardware accelerator processing at $40$ Gigabits per second (Gbps) consumes approximately $1.86$ Watts and occupies $8.5 \\text{ mm}^2$ of silicon area.45 Extrapolating and scaling this to a modern 2nm or 14A node, the dynamic power consumption per hash is reduced exponentially due to drastically lower parasitic capacitance and highly efficient Gate-All-Around (GAA) or RibbonFET transistor architectures. Nevertheless, static leakage currents require aggressive mitigation strategies, dictating the use of fine-grained power gating for idle hash lanes when the burst buffer is empty.16
 
 ## **XI. Fault Tolerance and Recovery**
 
 The primary operational vulnerability of the architecture lies within the persistence of the Ternary Null (0) state. A transaction held in the Null state for up to $500$ milliseconds is physically vulnerable to spontaneous system power loss or hardware faults.
 
-* **Power Failure in Null State:** If facility power is lost before the Audit Lane returns the cryptographic Commit token, the provisional execution data is stranded in electrical transit. To guarantee deterministic recovery, the Null State buffer must be implemented using non-volatile resistive states, such as Spin-Transfer Torque MRAM (STT-MRAM) or dense Memristor arrays.22 Upon system reboot, the initialization hardware scans the non-volatile matrix, detects the uncleared Null states, and automatically re-injects the data vectors into the Audit Lane to finalize the anchoring process.  
-* **Audit Lane Crash:** If the synchronous cryptographic Audit Lane experiences a logic fault or single-event latch-up, the convergence C-elements will never receive the requisite 1 token on the Audit input. Consequently, the Fast Lane becomes permanently stalled. A hardware watchdog timer detects this asymmetric stall condition, issues a hard reset to the synchronous Audit Lane hash core, and forces a re-trigger of the verification sequence for all buffered Null states.  
+* **Power Failure in Null State:** If facility power is lost before the Governance Lane returns the cryptographic Commit token, the provisional execution data is stranded in electrical transit. To guarantee deterministic recovery, the Null State buffer must be implemented using non-volatile resistive states, such as Spin-Transfer Torque MRAM (STT-MRAM) or dense Memristor arrays.22 Upon system reboot, the initialization hardware scans the non-volatile matrix, detects the uncleared Null states, and automatically re-injects the data vectors into the Governance Lane to finalize the anchoring process.  
+* **Governance Lane Crash:** If the synchronous cryptographic Governance Lane experiences a logic fault or single-event latch-up, the convergence C-elements will never receive the requisite 1 token on the Audit input. Consequently, the Inference Lane becomes permanently stalled. A hardware watchdog timer detects this asymmetric stall condition, issues a hard reset to the synchronous Governance Lane hash core, and forces a re-trigger of the verification sequence for all buffered Null states.  
 * **Hardware Faults:** Single Event Upsets (SEUs) caused by cosmic radiation in the DITL logic are inherently and mechanically masked by the delay-insensitive nature of the circuit. A flipped bit that results in an invalid dual-rail codeword (e.g., transitioning from $(1,0)$ to the illegal $(1,1)$) will instantly halt the specific asynchronous pipeline stage, physically preventing silent data corruption from propagating to the commit gate.11
 
 ## **XII. Adversarial Attack Surface and Resistance**
@@ -182,25 +182,25 @@ The threat landscape encompasses **external attackers** (e.g., competing market 
 ### **Attack Classes and Mechanical Defenses**
 
 1. **Latency Exploitation (Hold Flood):** An attacker floods the system ingress to deliberately exhaust the Audit buffer capacity, aiming to trigger a system-wide stall and lock out legitimate transactions. *Mechanical Defense:* Dynamic evidence thresholds and hardware-enforced Verifiable Delay Functions (VDFs) throttle incoming requests directly at the Physical (PHY) layer. This forces the attacker to expend heavy computational work before the system will even generate a request token, neutralizing the flood.1  
-2. **Audit Delay Attacks and Desynchronization:** An attacker attempts to inject clock glitches to desynchronize the Audit Lane from the Fast Lane, hoping to bypass the interlock. *Mechanical Defense:* The DITL core is entirely clockless and structurally immune to clock-glitch attacks. Gate operations proceed exclusively upon the physical arrival of valid voltage transitions, completely irrespective of absolute time or external clock signals.47  
-3. **Commit Forgery:** A malicious kernel module or compromised hypervisor attempts to write a \+1 state directly to the output register, explicitly bypassing the slower Audit Lane. *Mechanical Defense:* The memory controller's write-enable transmission line is physically gated by the output of the convergence Muller C-element. Software cannot synthesize the specific electrical wavefront required to transition the C-element if the physically isolated Audit Lane hash hardware has not emitted its cryptographic signature.6  
+2. **Audit Delay Attacks and Desynchronization:** An attacker attempts to inject clock glitches to desynchronize the Governance Lane from the Inference Lane, hoping to bypass the interlock. *Mechanical Defense:* The DITL core is entirely clockless and structurally immune to clock-glitch attacks. Gate operations proceed exclusively upon the physical arrival of valid voltage transitions, completely irrespective of absolute time or external clock signals.47  
+3. **Commit Forgery:** A malicious kernel module or compromised hypervisor attempts to write a \+1 state directly to the output register, explicitly bypassing the slower Governance Lane. *Mechanical Defense:* The memory controller's write-enable transmission line is physically gated by the output of the convergence Muller C-element. Software cannot synthesize the specific electrical wavefront required to transition the C-element if the physically isolated Governance Lane hash hardware has not emitted its cryptographic signature.6  
 4. **Log Tampering and Anchoring Spoofing:** An insider attempts to alter the execution log residing in the buffer before the Merkle root is anchored to the blockchain. *Mechanical Defense:* Ephemeral Key Rotation (EKR) relies on hardware randomness (TEE/RDRAND) to sign the log hash internally on the silicon die itself. If the Merkle root is altered post-silicon, the cryptographic signature is invalidated, and the external public network will automatically reject the spoofed anchor.5
 
 ## **XIII. Formal Verification Constraints**
 
 The absolute correctness of the Dual-Lane Latency Architecture must be mathematically proven using rigorous Formal Methods, specifically employing Linear Temporal Logic (LTL) to verify the behavior of the synthesized netlist.48  
-Let the state space of a transaction be defined by three hardware variables: $F$ (Fast Lane Output), $A$ (Audit Lane Output), and $C$ (Final Commit Signal). The domain of these variables is the ternary set $\\mathcal{D} \= \\{+1, 0, \-1\\}$.  
+Let the state space of a transaction be defined by three hardware variables: $F$ (Inference Lane Output), $A$ (Governance Lane Output), and $C$ (Final Commit Signal). The domain of these variables is the ternary set $\\mathcal{D} \= \\{+1, 0, \-1\\}$.  
 **Invariant 1: Null Persistence (The Epistemic Hold)**  
-Once a transaction evaluates to a Provisional state (the Fast Lane completes its logic), the commit signal must transition to 0 and physically hold that state until Audit Lane completion.
+Once a transaction evaluates to a Provisional state (the Inference Lane completes its logic), the commit signal must transition to 0 and physically hold that state until Governance Lane completion.
 
 $$\\mathbf{G} \\Big( (F \= \+1 \\land A \= 0\) \\implies (C \= 0\) \\Big)$$  
-*Proof Constraint:* Globally and always ($\\mathbf{G}$), if the Fast Lane is ready ($+1$) but the Audit Lane is not ($0$), the Commit line remains strictly at $0$.  
+*Proof Constraint:* Globally and always ($\\mathbf{G}$), if the Inference Lane is ready ($+1$) but the Governance Lane is not ($0$), the Commit line remains strictly at $0$.  
 **Invariant 2: Convergence Equivalence**  
 A final commit can only occur if and only if both lanes independently reach the exact same affirmative conclusion.
 
 $$\\mathbf{G} \\Big( (C \= \+1) \\iff (F \= \+1 \\land A \= \+1) \\Big)$$  
 **Invariant 3: Liveness (Eventual Resolution)**  
-Assuming a fault-free Audit Lane, every provisional transaction held in the Null state will eventually be committed or rejected, guaranteeing the system does not hang indefinitely.
+Assuming a fault-free Governance Lane, every provisional transaction held in the Null state will eventually be committed or rejected, guaranteeing the system does not hang indefinitely.
 
 $$\\mathbf{G} \\Big( (F \= \+1 \\land C \= 0\) \\implies \\mathbf{F} (C \= \+1 \\lor C \= \-1) \\Big)$$  
 These LTL properties are applied exhaustively against the synthesized gate-level netlist using commercial formal equivalence checkers and property verification tools (e.g., Cadence JasperGold) to mathematically ensure no edge case violates the hardware interlock.49
@@ -237,10 +237,10 @@ endmodule
 
 // Top-level integration boundary module  
 module dual\_lane\_commit\_gate (  
-    input wire fast\_lane\_p1,     // Fast Lane provisional (+1) confirmation  
-    input wire fast\_lane\_n1,     // Fast Lane fast-reject (-1) veto  
-    input wire audit\_lane\_ack,   // Audit Lane verification (+1) signature valid  
-    input wire audit\_lane\_nack,  // Audit Lane verification (-1) signature invalid  
+    input wire fast\_lane\_p1,     // Inference Lane provisional (+1) confirmation  
+    input wire fast\_lane\_n1,     // Inference Lane fast-reject (-1) veto  
+    input wire audit\_lane\_ack,   // Governance Lane verification (+1) signature valid  
+    input wire audit\_lane\_nack,  // Governance Lane verification (-1) signature invalid  
     input wire rst\_n,            // Active low reset / request for null (rfn)  
     output wire final\_commit,    // Physical \+1 Write Enable to egress API  
     output wire final\_reject     // Physical \-1 Flush Enable to clear pipeline  
@@ -255,7 +255,7 @@ module dual\_lane\_commit\_gate (
     );
 
     // Asymmetric Reject logic: If either lane asserts (-1), immediately flag reject.  
-    // The Fast Lane or the Audit Lane can unilaterally veto the transaction.  
+    // The Inference Lane or the Governance Lane can unilaterally veto the transaction.  
     assign final\_reject \= fast\_lane\_n1 | audit\_lane\_nack;
 
     // PROOF OF HARDWARE GATING: final\_commit CANNOT transition to a logic 1   
@@ -275,20 +275,20 @@ To meticulously preserve the Quasi-Delay-Insensitive (QDI) constraints and preve
 
 ## **XVI. Implementation Pathways**
 
-**FPGA Prototyping:** Initial physical validation is highly feasible on modern SRAM-based FPGAs (e.g., Xilinx Virtex or Artix architectures). By directly instantiating standard LUT primitives to construct the C-elements, hardware designers can manually control the logic routing. Utilizing localized constraints (Pblocks), the Fast Lane execution pipeline and the Audit Lane cryptographic engine can be physically and spatially partitioned on the FPGA fabric. This prevents thermal cross-talk and allows engineers to verify the 300 ms cryptographic buffering behavior in completely isolated logic slices.17  
-**ASIC Feasibility (2nm/14A):** Transitioning the architecture to advanced sub-nanometer nodes requires cutting-edge 3D chiplet integration. The asynchronous DITL core (housing the Fast Lane logic and the convergence gates) can be fabricated on a highly stable, low-leakage baseline logic die. Conversely, the dense, highly synchronous SHA-256 pipeline (the Audit Lane) is fabricated on an aggressive, high-performance compute chiplet tailored for maximum switching speeds.13 Backside power delivery is absolutely crucial in this arrangement; it provides the massive, low-resistance power rails needed for the extreme instantaneous current draw of the parallel hashing operations, while totally isolating the delicate power domains of the two respective lanes.43
+**FPGA Prototyping:** Initial physical validation is highly feasible on modern SRAM-based FPGAs (e.g., Xilinx Virtex or Artix architectures). By directly instantiating standard LUT primitives to construct the C-elements, hardware designers can manually control the logic routing. Utilizing localized constraints (Pblocks), the Inference Lane execution pipeline and the Governance Lane cryptographic engine can be physically and spatially partitioned on the FPGA fabric. This prevents thermal cross-talk and allows engineers to verify the 300 ms cryptographic buffering behavior in completely isolated logic slices.17  
+**ASIC Feasibility (2nm/14A):** Transitioning the architecture to advanced sub-nanometer nodes requires cutting-edge 3D chiplet integration. The asynchronous DITL core (housing the Inference Lane logic and the convergence gates) can be fabricated on a highly stable, low-leakage baseline logic die. Conversely, the dense, highly synchronous SHA-256 pipeline (the Governance Lane) is fabricated on an aggressive, high-performance compute chiplet tailored for maximum switching speeds.13 Backside power delivery is absolutely crucial in this arrangement; it provides the massive, low-resistance power rails needed for the extreme instantaneous current draw of the parallel hashing operations, while totally isolating the delicate power domains of the two respective lanes.43
 
 ## **XVII. Scalability Model**
 
-The primary scalability bottleneck in the Dual-Lane architecture is the $500$ millisecond Audit Lane anchoring latency. Because the anchor latency is fundamentally fixed by the block times of public blockchain networks, internal transaction throughput must scale horizontally via parallelization and massive batching.  
-If the high-frequency execution pipeline processes $100,000$ transactions per second (TPS), the Merkle aggregator must successfully construct a $100,000$-leaf tree within the $500$ ms window.5 This represents an $O(N \\log N)$ computational complexity for the internal tree generation, but crucially maintains an $O(1)$ complexity for the final external blockchain write.28 By exponentially scaling the number of parallel cryptographic hashing cores horizontally within the Audit Lane chiplet, the system can theoretically achieve millions of TPS. The hardware SRAM queue accommodates all in-flight transactions as Epistemic Holds, meaning scalability is ultimately limited only by the total silicon SRAM capacity $K$ reserved for storing the Ternary Null states.
+The primary scalability bottleneck in the Dual-Lane architecture is the $500$ millisecond Governance Lane anchoring latency. Because the anchor latency is fundamentally fixed by the block times of public blockchain networks, internal transaction throughput must scale horizontally via parallelization and massive batching.  
+If the high-frequency execution pipeline processes $100,000$ transactions per second (TPS), the Merkle aggregator must successfully construct a $100,000$-leaf tree within the $500$ ms window.5 This represents an $O(N \\log N)$ computational complexity for the internal tree generation, but crucially maintains an $O(1)$ complexity for the final external blockchain write.28 By exponentially scaling the number of parallel cryptographic hashing cores horizontally within the Governance Lane chiplet, the system can theoretically achieve millions of TPS. The hardware SRAM queue accommodates all in-flight transactions as Epistemic Holds, meaning scalability is ultimately limited only by the total silicon SRAM capacity $K$ reserved for storing the Ternary Null states.
 
 ## **XVIII. Verification and Test Strategy**
 
 Testing deeply asynchronous, state-holding circuits requires specialized protocols that deviate significantly from standard synchronous methodologies:
 
 * **Simulation:** Standard cycle-accurate simulators are incapable of handling continuous-time asynchronous delays. Therefore, event-driven gate-level simulation incorporating exact, back-annotated Standard Delay Format (SDF) files is mandatory. This allows engineers to map potential race conditions and visualize asynchronous wavefront collisions accurately.  
-* **Hardware Validation:** Silicon validation must vigorously test the electrical bounds of the dual-lane interlock using aggressive Delay Fault Testing. Clock-glitch injection on the synchronous cryptographic core will be utilized to mathematically ensure that the asynchronous convergence gate gracefully holds the Null state when the Audit Lane fails or desynchronizes.  
+* **Hardware Validation:** Silicon validation must vigorously test the electrical bounds of the dual-lane interlock using aggressive Delay Fault Testing. Clock-glitch injection on the synchronous cryptographic core will be utilized to mathematically ensure that the asynchronous convergence gate gracefully holds the Null state when the Governance Lane fails or desynchronizes.  
 * **Stress Testing (Hold Flood):** Synthetic, heavy-tailed burst traffic (parameterized precisely according to the previously defined MMPP formulas) will be injected into the interface at $3 \\times \\mu$ (three times the service rate). This rigorous stress test guarantees that the system exhibits zero buffer overflow and correctly defaults to physical backpressure stall policies under extreme duress.
 
 ## **XIX. System-Level Scenario**
@@ -296,10 +296,10 @@ Testing deeply asynchronous, state-holding circuits requires specialized protoco
 **High-Frequency Burst Event Walkthrough:**
 
 1. **$T \= 0 \\text{ ms}$:** An unexpected macroeconomic event triggers a massive burst of incoming market orders, arriving exactly per the Pareto-distributed burst state modeled in the queueing analysis.  
-2. **$T \= 1.5 \\text{ ms}$:** The Fast Lane processes order \#1, successfully generates a provisional trade (+1), and transitions the output convergence gate to the Null (0) state. The executing match engine immediately updates its local volatile state to prevent the double-spending of capital, but it is physically prevented from emitting a FIX confirmation to the external broker.  
-3. **$T \= 200 \\text{ ms}$:** The SRAM queueing buffer reaches $80\\%$ of its capacity ($K$). The hardware controller drops the rfd signal, creating instantaneous physical backpressure. The Fast Lane execution pipeline safely throttles.  
-4. **$T \= 450 \\text{ ms}$:** The Audit Lane's hardware cryptographic pipeline finishes hashing all buffered orders, generating the immutable 256-bit Merkle Root. It writes the Root to an external Ethereum Layer 2 roll-up contract.  
-5. **$T \= 480 \\text{ ms}$:** The Layer 2 decentralized sequencer returns a cryptographic receipt. The Audit Lane successfully asserts the Audit Token (represented as $(1,0)$ in dual-rail logic).  
+2. **$T \= 1.5 \\text{ ms}$:** The Inference Lane processes order \#1, successfully generates a provisional trade (+1), and transitions the output convergence gate to the Null (0) state. The executing match engine immediately updates its local volatile state to prevent the double-spending of capital, but it is physically prevented from emitting a FIX confirmation to the external broker.  
+3. **$T \= 200 \\text{ ms}$:** The SRAM queueing buffer reaches $80\\%$ of its capacity ($K$). The hardware controller drops the rfd signal, creating instantaneous physical backpressure. The Inference Lane execution pipeline safely throttles.  
+4. **$T \= 450 \\text{ ms}$:** The Governance Lane's hardware cryptographic pipeline finishes hashing all buffered orders, generating the immutable 256-bit Merkle Root. It writes the Root to an external Ethereum Layer 2 roll-up contract.  
+5. **$T \= 480 \\text{ ms}$:** The Layer 2 decentralized sequencer returns a cryptographic receipt. The Governance Lane successfully asserts the Permission Token (represented as $(1,0)$ in dual-rail logic).  
 6. **$T \= 480.1 \\text{ ms}$:** The Muller C-element at the integration boundary receives the dual $(1,0)$ signal. The Epistemic Hold physically breaks. The gate transitions to $+1$, generating the voltage required to strobe the CommitEnable transmission line.  
 7. **$T \= 480.2 \\text{ ms}$:** The hardware physically dispatches the irreversible FIX confirmation to the external broker, completing the cycle safely.
 
