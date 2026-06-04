@@ -1,810 +1,1071 @@
 """
-Ternary Logic Framework - Central Banking Policy Analysis with Eight Pillars
+Ternary Logic Framework: Central Banking Policy Analysis
+=========================================================
 
-This example demonstrates how the Ternary Logic framework provides
-sovereign-grade accountability for central bank monetary policy decisions
-through the Eight Pillars architecture.
+Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)
+Contact: leogouk@gmail.com
+Successor: support@tl-goukassian.org
+Repository: https://github.com/FractonicMind/TernaryLogic
 
-Implementation of Epistemic Hold for monetary policy uncertainty management.
+DOI 1: 10.1007/s43681-025-00910-6, Auditable AI: Tracing the Ethical History of a Model
+DOI 2: 10.1007/s43681-026-01124-0, A Ternary Logic Framework for Institutional Governance
+
+The Goukassian Vow:
+    "Pause when truth is uncertain"  ->  State  0  (Epistemic Hold)
+    "Refuse when harm is clear"      ->  State -1  (Refuse)
+    "Proceed where truth is"         ->  State +1  (Proceed)
+
+This example demonstrates TL applied to central bank monetary policy:
+    - Dual mandate analysis (inflation stability + maximum employment)
+    - Basel III capital adequacy monitoring
+    - FATF AML/CFT compliance
+    - IOSCO market integrity verification
+    - Regime-aware signal weighting
+    - Solvency Protocol during Epistemic Hold
+    - NL=NA write-before-act for every policy decision
+
+THRESHOLD GOVERNANCE:
+    Central banks must calibrate thresholds through their own governance process.
+    The values used here are labeled as demonstration values only.
+    Different central banks, different mandates, different calibrations.
+    No universal values exist. See docs/Threshold_Calibration.md.
 """
 
-import numpy as np
-import pandas as pd
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Tuple
-import json
 import hashlib
+import json
+import uuid
+from datetime import datetime, timezone, timedelta
+from typing import Dict, List, Optional, Any
 
-# Import Ternary Logic Framework
-from ternary_logic import TLDecisionEngine, TLState
-from ternary_logic.core import TLResult
-from ternary_logic.eight_pillars import EightPillarsFramework
+import numpy as np
+
+# TL Framework imports
+from ternary_logic import TLEngine, TLState, TLValue, verify_mandate, calculate_confidence
+
+
+# =============================================================================
+# SECTION 1: Regulatory Context Builder
+# Maps central banking regulatory requirements to TL schema structures.
+# Covers Basel III, FATF, IOSCO, GDPR, Paris Agreement.
+# =============================================================================
+
+def build_regulatory_context(
+    economic_data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """
+    Build a RegulatoryContext record conforming to tl_schema.json.
+
+    In production this is constructed by the Governance Lane from verified
+    regulatory feeds. Each sub-object maps to a specific regulatory framework.
+    The Governance Lane evaluates all checks before issuing a PermissionToken.
+    """
+    # Basel III: capital adequacy, liquidity, leverage
+    tier1_ratio = economic_data.get("tier1_capital_ratio", 0.0)
+    lcr = economic_data.get("liquidity_coverage_ratio", 0.0)
+    nsfr = economic_data.get("net_stable_funding_ratio", 0.0)
+
+    basel = {
+        "lcr": lcr,
+        "nsfr": nsfr,
+        "capitalRatio": tier1_ratio,
+        "stressTestRequired": tier1_ratio < 0.10,
+        "counterpartyExposureWithinLimits": economic_data.get(
+            "counterparty_within_limits", True
+        )
+    }
+
+    # FATF: AML/CFT screening
+    fatf = {
+        "amlCheckRequired": True,
+        "sanctionsScreened": economic_data.get("sanctions_screened", False),
+        "pepInvolved": economic_data.get("pep_involved", False),
+        "sarGenerated": economic_data.get("sar_required", False)
+    }
+
+    # IOSCO: market integrity
+    iosco = {
+        "layeringDetected": economic_data.get("layering_detected", False),
+        "spoofingDetected": economic_data.get("spoofing_detected", False),
+        "washTradingDetected": economic_data.get("wash_trading_detected", False),
+        "crossMarketManipulationDetected": economic_data.get(
+            "cross_market_manipulation", False
+        )
+    }
+
+    # GDPR: data privacy
+    gdpr = {
+        "jurisdiction": economic_data.get("jurisdiction", "EU"),
+        "consentAttestation": economic_data.get("consent_attested", True),
+        "erasureEligible": economic_data.get("erasure_eligible", False)
+    }
+
+    # Paris Agreement: sustainability
+    paris = {
+        "carbonFootprintVerified": economic_data.get(
+            "carbon_footprint_verified", False
+        ),
+        "greenBondEligibility": economic_data.get("green_bond_eligible", False),
+        "esgScore": economic_data.get("esg_score", 0.0)
+    }
+
+    return {
+        "baselIii": basel,
+        "fatf": fatf,
+        "iosco": iosco,
+        "gdpr": gdpr,
+        "parisAgreement": paris,
+        "regulatoryFrameworkVersion": {
+            "baselVersion": "Basel III 2023",
+            "fatfVersion": "FATF 40+9 2023",
+            "ioscoVersion": "IOSCO Principles 2023",
+            "gdprVersion": "GDPR 2018"
+        }
+    }
+
+
+def check_regulatory_compliance(
+    regulatory_context: Dict[str, Any]
+) -> Dict[str, Any]:
+    """
+    Evaluate regulatory context for compliance flags.
+
+    Returns a compliance summary with specific failures identified.
+    Any FATAL flag triggers Epistemic Hold via force_state override.
+    """
+    failures = []
+    warnings = []
+
+    # Basel III checks
+    basel = regulatory_context["baselIii"]
+    if basel["capitalRatio"] < 0.08:
+        failures.append(f"Basel III: Tier 1 capital ratio {basel['capitalRatio']:.2%} below 8% minimum")
+    elif basel["capitalRatio"] < 0.10:
+        warnings.append(f"Basel III: Tier 1 capital ratio {basel['capitalRatio']:.2%} below 10% buffer")
+    if basel["lcr"] < 1.0:
+        failures.append(f"Basel III: LCR {basel['lcr']:.2f} below 1.0 minimum")
+    if basel["stressTestRequired"]:
+        warnings.append("Basel III: Stress test required before rate change")
+
+    # FATF checks
+    fatf = regulatory_context["fatf"]
+    if not fatf["sanctionsScreened"]:
+        failures.append("FATF: Sanctions screening not completed")
+    if fatf["sarGenerated"]:
+        warnings.append("FATF: SAR generated; enhanced monitoring required")
+
+    # IOSCO checks
+    iosco = regulatory_context["iosco"]
+    if iosco["layeringDetected"] or iosco["spoofingDetected"]:
+        failures.append("IOSCO: Market manipulation detected")
+    if iosco["crossMarketManipulationDetected"]:
+        failures.append("IOSCO: Cross-market manipulation detected; FATAL")
+
+    return {
+        "compliant": len(failures) == 0,
+        "failures": failures,
+        "warnings": warnings,
+        "pillarImplicated": (
+            "EconomicRightsAndTransparencyMandate"
+            if failures else "EpistemicHold"
+        )
+    }
+
+
+# =============================================================================
+# SECTION 2: Macroeconomic Signal Analysis
+# Converts economic indicators into normalized confidence signals.
+# =============================================================================
+
+class DualMandateAnalyzer:
+    """
+    Analyze economic indicators for monetary policy implications.
+
+    Implements the dual mandate framework:
+    Pillar 1 (Price Stability): inflation target convergence
+    Pillar 2 (Maximum Employment): labor market strength
+
+    When the mandates conflict, the system enters Epistemic Hold pending
+    human review by the monetary policy committee.
+
+    Threshold calibration note: central banks calibrate their own thresholds
+    through historical backtesting, regulatory requirements, and board
+    approval. The analyzer produces confidence signals; the TLEngine
+    evaluates them against institution-calibrated thresholds.
+    """
+
+    def __init__(
+        self,
+        inflation_target: float = 0.02,
+        unemployment_target: float = 0.04
+    ):
+        self.inflation_target = inflation_target
+        self.unemployment_target = unemployment_target
+
+    def analyze_inflation(self, inflation_data: List[float]) -> Optional[float]:
+        """Analyze inflation trend relative to target. Returns signal [-1, +1]."""
+        if not inflation_data or len(inflation_data) < 3:
+            return None
+
+        recent = np.mean(inflation_data[-3:])
+        trend = float(np.polyfit(range(len(inflation_data)), inflation_data, 1)[0])
+
+        target_deviation = (recent - self.inflation_target) / self.inflation_target
+        annualized_trend = trend * 12
+
+        signal = (target_deviation * 0.7) + (annualized_trend * 0.3)
+        return float(np.clip(signal * 2, -1, 1))
+
+    def analyze_inflation_expectations(
+        self, expectations: Dict[str, float]
+    ) -> Optional[float]:
+        """Analyze inflation expectations anchoring. Returns signal [-1, +1]."""
+        if "five_year_forward" not in expectations:
+            return None
+
+        five_yr = expectations["five_year_forward"]
+        deviation = (five_yr - self.inflation_target) / self.inflation_target
+
+        if abs(deviation) < 0.10:
+            return 0.0
+        return float(np.clip(deviation * 2, -1, 1))
+
+    def analyze_labor_market(
+        self,
+        unemployment_rate: float,
+        job_openings: Optional[float] = None
+    ) -> float:
+        """Analyze labor market strength. Returns signal [-1, +1]."""
+        gap = (unemployment_rate - self.unemployment_target) / self.unemployment_target
+        signal = -gap
+
+        if job_openings is not None and unemployment_rate > 0:
+            ratio = job_openings / unemployment_rate
+            if ratio > 1.5:
+                signal += 0.3
+            elif ratio < 0.8:
+                signal -= 0.3
+
+        return float(np.clip(signal, -1, 1))
+
+    def analyze_gdp_growth(self, gdp_growth: List[float]) -> Optional[float]:
+        """Analyze GDP growth momentum. Returns signal [-1, +1]."""
+        if not gdp_growth or len(gdp_growth) < 2:
+            return None
+
+        recent = np.mean(gdp_growth[-2:])
+        trend_growth = 0.025
+        gap = (recent - trend_growth) / trend_growth
+        return float(np.clip(gap, -1, 1))
+
+    def analyze_financial_conditions(self, fci: float) -> float:
+        """Analyze financial conditions index. Returns signal [-1, +1]."""
+        return float(np.clip(-fci / 2, -1, 1))
+
+    def detect_mandate_conflict(self, signals: Dict[str, Any]) -> bool:
+        """
+        Detect dual mandate conflict.
+
+        Returns True when inflation signals and employment signals point
+        in opposite directions beyond a threshold. Conflict triggers
+        Epistemic Hold pending monetary policy committee review.
+        """
+        inflation_sig = signals.get("inflation_trend")
+        employment_sig = signals.get("labor_market_strength")
+
+        if inflation_sig is None or employment_sig is None:
+            return False
+
+        # Conflict: inflation wants tightening, employment wants easing (or vice versa)
+        # Both signals strong enough to be constitutionally significant
+        return (
+            inflation_sig > 0.30 and employment_sig < -0.30
+        ) or (
+            inflation_sig < -0.30 and employment_sig > 0.30
+        )
+
+    def analyze_all(self, economic_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Run all signal analyses. Returns dict of signals."""
+        signals = {}
+
+        if "core_pce_inflation" in economic_data:
+            signals["inflation_trend"] = self.analyze_inflation(
+                economic_data["core_pce_inflation"]
+            )
+
+        if "inflation_expectations" in economic_data:
+            signals["inflation_expectations"] = self.analyze_inflation_expectations(
+                economic_data["inflation_expectations"]
+            )
+
+        if "unemployment_rate" in economic_data:
+            signals["labor_market_strength"] = self.analyze_labor_market(
+                economic_data["unemployment_rate"],
+                economic_data.get("job_openings")
+            )
+
+        if "gdp_growth" in economic_data:
+            signals["economic_momentum"] = self.analyze_gdp_growth(
+                economic_data["gdp_growth"]
+            )
+
+        if "financial_conditions_index" in economic_data:
+            signals["financial_conditions"] = self.analyze_financial_conditions(
+                economic_data["financial_conditions_index"]
+            )
+
+        signals["mandate_conflict"] = self.detect_mandate_conflict(signals)
+
+        return signals
+
+
+# =============================================================================
+# SECTION 3: Governance Artifacts (from Quickstart pattern)
+# =============================================================================
+
+def create_goukassian_principle_block(
+    decision_payload: str,
+    agent_id: str,
+    license_scopes: list
+) -> Dict[str, Any]:
+    """Three Goukassian Principle artifacts. See Quickstart_Example.py."""
+    payload_bytes = decision_payload.encode("utf-8")
+    return {
+        "lantern": {
+            "artifactName": "lantern",
+            "lanternHash": hashlib.sha256(payload_bytes).hexdigest()
+        },
+        "signature": {
+            "artifactName": "signature",
+            "agentSignature": hashlib.sha512(
+                (agent_id + decision_payload).encode("utf-8")
+            ).hexdigest()
+        },
+        "license": {
+            "artifactName": "license",
+            "licenseScope": license_scopes
+        }
+    }
+
+
+def commit_log_entry(
+    decision: TLValue,
+    engine: TLEngine,
+    goukassian_block: Dict[str, Any],
+    previous_hash: str,
+    extra_context: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
+    """Commit governance log entry to Immutable Ledger. NL=NA: before actuation."""
+    log_id = str(uuid.uuid4())
+    committed_at = datetime.now(timezone.utc).isoformat()
+
+    canonical = json.dumps({
+        "logId": log_id,
+        "state": decision.state.name,
+        "stateValue": decision.state.value,
+        "confidence": decision.confidence,
+        "reasoning": decision.reasoning,
+        "committedAt": committed_at
+    }, sort_keys=True)
+
+    log_hash = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    merkle_root = hashlib.sha256(
+        (previous_hash + log_hash).encode("utf-8")
+    ).hexdigest()
+
+    entry = {
+        "logId": log_id,
+        "currentState": decision.state.value,
+        "stateLabel": decision.state.name,
+        "processActive": {
+            TLState.PROCEED: "ProceedAuthorized",
+            TLState.EPISTEMIC_HOLD: "GovernancePause",
+            TLState.REFUSE: "RefusalPermanent"
+        }[decision.state],
+        "confidence": decision.confidence,
+        "reasoning": decision.reasoning,
+        "logHash": log_hash,
+        "merkleRoot": merkle_root,
+        "previousHash": previous_hash,
+        "committedAt": committed_at,
+        "goukassianPrinciple": goukassian_block,
+        "pufAttestation": "NULL_PUF_DEPLOYMENT",
+        "architectureMode": "ARCHITECTURE_B",
+        "engineConfig": {
+            "proceedThreshold": engine.proceed_threshold,
+            "holdThreshold": engine.hold_threshold
+        }
+    }
+    if extra_context:
+        entry["domainContext"] = extra_context
+
+    return entry
+
+
+def build_permission_token(log_entry: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """PermissionToken for PROCEED. laneOrigin const GOVERNANCE_LANE. NL=NA Layer 2."""
+    if log_entry["currentState"] != TLState.PROCEED.value:
+        return None
+
+    issued_at = datetime.now(timezone.utc)
+    expires_at = issued_at + timedelta(milliseconds=300000)
+
+    return {
+        "tokenId": str(uuid.uuid4()),
+        "logHash": log_entry["logHash"],
+        "merkleRoot": log_entry["merkleRoot"],
+        "laneOrigin": "GOVERNANCE_LANE",  # NL=NA Layer 2 const
+        "issuedAt": issued_at.isoformat(),
+        "expiresAt": expires_at.isoformat(),
+        "maxLifetimeMs": 300000,
+        "revocationStatus": "ACTIVE",
+        "signerKeyId": "central-bank-hsm-001",
+        "epochTimestamp": int(issued_at.timestamp()),
+        "signatureValue": hashlib.sha256(
+            log_entry["logHash"].encode()
+        ).hexdigest()
+    }
+
+
+class ImmutableLedger:
+    """Pillar II: append-only hash chain. See Quickstart_Example.py."""
+
+    def __init__(self):
+        self._entries = []
+        self._genesis_hash = hashlib.sha256(b"TL_CENTRAL_BANK_GENESIS").hexdigest()
+
+    @property
+    def previous_hash(self) -> str:
+        return self._entries[-1]["merkleRoot"] if self._entries else self._genesis_hash
+
+    def commit(self, entry: Dict[str, Any]) -> str:
+        self._entries.append(entry)
+        return entry["logHash"]
+
+    @property
+    def size(self) -> int:
+        return len(self._entries)
+
+    def get_summary(self) -> Dict[str, Any]:
+        return {
+            "totalEntries": self.size,
+            "latestMerkleRoot": self.previous_hash,
+            "states": {
+                "PROCEED": sum(1 for e in self._entries if e["currentState"] == 1),
+                "EPISTEMIC_HOLD": sum(1 for e in self._entries if e["currentState"] == 0),
+                "REFUSE": sum(1 for e in self._entries if e["currentState"] == -1)
+            }
+        }
+
+
+# =============================================================================
+# SECTION 4: Central Bank Policy Engine
+# =============================================================================
 
 class CentralBankPolicyEngine:
     """
-    Central Bank Policy Analysis using Ternary Logic with Eight Pillars
-    
+    Central Bank Monetary Policy Engine using Ternary Logic.
+
     Implements sovereign-grade accountability for monetary policy decisions
-    through comprehensive audit trails and uncertainty management.
+    through Eight Pillars architecture:
+        Pillar I:   Epistemic Hold (dual mandate conflict, data gaps)
+        Pillar II:  Immutable Ledger (every decision committed before acting)
+        Pillar III: Goukassian Principle (lantern, signature, license)
+        Pillar IV:  Decision Logs (complete audit trail)
+        Pillar V:   Economic Rights (FATF, IOSCO, Basel III compliance)
+        Pillar VI:  Sustainable Capital (Paris Agreement, ESG verification)
+        Pillar VII: Hybrid Shield (privacy-preserving transparency)
+        Pillar VIII:Anchors (Merkle root anchoring, RFC 3161 timestamps)
+
+    THRESHOLD GOVERNANCE:
+        The old API parameter halt_threshold is replaced by
+        proceed_threshold and hold_threshold in the current TLEngine.
+        Central banks calibrate these through their own governance process.
+        Demonstration values are labeled clearly. Not for production use.
     """
-    
-    def __init__(self, 
-                 halt_threshold: float = 0.30,
-                 hold_threshold: float = 0.70,
-                 inflation_target: float = 0.02,
-                 unemployment_target: float = 0.04):
+
+    def __init__(
+        self,
+        proceed_threshold: float,
+        hold_threshold: float,
+        inflation_target: float = 0.02,
+        unemployment_target: float = 0.04,
+        current_policy_rate: float = 0.05
+    ):
         """
-        Initialize Central Bank Policy Engine with Eight Pillars
-        
+        Initialize Central Bank Policy Engine.
+
         Args:
-            halt_threshold: Below this confidence, strongly consider halting
-            hold_threshold: Below this confidence, trigger Epistemic Hold
-            inflation_target: Central bank inflation target (2%)
-            unemployment_target: Natural rate of unemployment estimate
+            proceed_threshold: Institution-calibrated PROCEED threshold.
+                               REQUIRED. No default.
+            hold_threshold:    Institution-calibrated REFUSE threshold.
+                               REQUIRED. No default.
+            inflation_target:  Central bank inflation target (e.g. 0.02 for 2%).
+            unemployment_target: Natural rate of unemployment estimate.
+            current_policy_rate: Current policy interest rate.
         """
-        self.engine = TLDecisionEngine(
-            halt_threshold=halt_threshold,
+        self.engine = TLEngine(
+            proceed_threshold=proceed_threshold,
             hold_threshold=hold_threshold,
-            domain="central_banking"
+            epistemic_hold_rate_target=0.20
         )
-        
-        # Initialize Eight Pillars Framework
-        self.eight_pillars = EightPillarsFramework()
-        
-        self.inflation_target = inflation_target
-        self.unemployment_target = unemployment_target
-        
-        # Policy state tracking
-        self.current_policy_rate = 0.05  # 5.0%
-        
-        # Pillar 2: Immutable Ledger
-        self.policy_ledger = []
-        
-        # Pillar 4: Decision Logs
-        self.decision_logs = []
-        
-        # Pillar 1: Epistemic Hold tracking
-        self.epistemic_holds = []
-        
-        # Economic forecasting
-        self.forecast_horizon = 8  # 8 quarters ahead
-        
-    def analyze_economic_indicators(self, economic_data: Dict) -> Dict[str, float]:
-        """
-        Analyze economic indicators for monetary policy implications
-        
-        Returns dictionary with policy-relevant signals
-        """
-        indicators = {}
-        
-        # Core Inflation Indicators
-        if 'core_pce_inflation' in economic_data:
-            indicators['inflation_trend'] = self._analyze_inflation_trend(
-                economic_data['core_pce_inflation']
-            )
-        
-        if 'inflation_expectations' in economic_data:
-            indicators['inflation_expectations'] = self._analyze_inflation_expectations(
-                economic_data['inflation_expectations']
-            )
-        
-        # Labor Market Indicators
-        if 'unemployment_rate' in economic_data:
-            indicators['labor_market_strength'] = self._analyze_labor_market(
-                economic_data['unemployment_rate'],
-                economic_data.get('job_openings', None)
-            )
-        
-        # Economic Growth Indicators
-        if 'gdp_growth' in economic_data:
-            indicators['economic_momentum'] = self._analyze_economic_growth(
-                economic_data['gdp_growth']
-            )
-        
-        # Financial Conditions
-        if 'financial_conditions_index' in economic_data:
-            indicators['financial_conditions'] = self._analyze_financial_conditions(
-                economic_data['financial_conditions_index']
-            )
-        
-        # Global Economic Conditions
-        if 'global_growth' in economic_data:
-            indicators['global_conditions'] = self._analyze_global_conditions(
-                economic_data['global_growth'],
-                economic_data.get('trade_tensions', None)
-            )
-        
-        # Financial Stability Indicators
-        if 'credit_spreads' in economic_data:
-            indicators['financial_stability'] = self._analyze_financial_stability(
-                economic_data['credit_spreads'],
-                economic_data.get('asset_valuations', None)
-            )
-        
-        # Pillar 6: Sustainable Capital Allocation check
-        if 'esg_considerations' in economic_data:
-            indicators['sustainable_finance'] = self._analyze_sustainable_finance(
-                economic_data['esg_considerations']
-            )
-        
-        return indicators
-    
-    def make_policy_decision(self, 
-                           economic_data: Dict,
-                           policy_options: Dict = None) -> TLResult:
-        """
-        Make monetary policy decision using Ternary Logic with Eight Pillars accountability
-        
-        Args:
-            economic_data: Economic indicators dictionary
-            policy_options: Available policy actions (optional)
-            
-        Returns:
-            TLResult with policy recommendation and full audit trail
-        """
-        
-        # Pillar 3: Goukassian Principle - Validate all pillars active
-        if not self.eight_pillars.validate_goukassian_principle():
-            raise RuntimeError("Goukassian Principle validation failed - not all Eight Pillars active")
-        
-        # Analyze economic indicators
-        indicators = self.analyze_economic_indicators(economic_data)
-        
-        # Define indicator weights based on current economic conditions
-        weights = self._get_policy_weights(economic_data)
-        
-        # Apply dual mandate priorities
-        mandate_adjusted_indicators = self._apply_dual_mandate_focus(indicators, economic_data)
-        
-        # Convert to request format for TL engine
-        request = "Central bank monetary policy decision required"
-        context = {
-            'indicators': mandate_adjusted_indicators,
-            'weights': weights,
-            'current_rate': self.current_policy_rate,
-            'economic_regime': economic_data.get('inflation_regime', 'normal'),
-            'timestamp': datetime.now().isoformat()
-        }
-        
-        # Make decision using Ternary Logic
-        decision = self.engine.decide(
-            request=request,
-            context=context,
-            scenario="Central bank monetary policy decision"
+        self.analyzer = DualMandateAnalyzer(
+            inflation_target=inflation_target,
+            unemployment_target=unemployment_target
         )
-        
-        # Pillar 1: Track Epistemic Hold if triggered
-        if decision.state == TLState.EPISTEMIC_HOLD:
-            self._record_epistemic_hold(decision, indicators, economic_data)
-        
-        # Pillar 4: Create comprehensive Decision Log
-        decision_log = self._create_decision_log(decision, indicators, economic_data)
-        self.decision_logs.append(decision_log)
-        
-        # Pillar 2: Add to Immutable Ledger
-        ledger_entry = self._create_ledger_entry(decision_log)
-        self.policy_ledger.append(ledger_entry)
-        
-        # Pillar 5: Economic Rights & Transparency compliance
-        self._ensure_regulatory_compliance(decision, economic_data)
-        
-        # Pillar 7: Hybrid Shield - Privacy-preserving transparency
-        public_record = self._create_public_record(decision)
-        
-        # Pillar 8: Create blockchain Anchor for permanent verification
-        if len(self.decision_logs) % 10 == 0:  # Anchor every 10 decisions
-            anchor = self._create_blockchain_anchor()
-            decision.metadata['blockchain_anchor'] = anchor
-        
-        # Enhance decision with policy-specific information
-        decision = self._enhance_policy_decision(decision, economic_data, indicators)
-        
-        return decision
-    
-    def _record_epistemic_hold(self, decision: TLResult, indicators: Dict, economic_data: Dict):
-        """
-        Pillar 1: Record Epistemic Hold activation with full context
-        """
-        hold_record = {
-            'timestamp': datetime.now().isoformat(),
-            'duration_ms': 300,  # Standard 300ms hold
-            'confidence_level': decision.confidence,
-            'uncertainty_sources': self._identify_uncertainty_sources(indicators),
-            'conflicting_signals': self._identify_conflicts(indicators),
-            'data_gaps': [k for k, v in indicators.items() if v is None],
-            'next_actions': decision.clarifying_questions,
-            'economic_context': economic_data.get('inflation_regime', 'unknown')
-        }
-        self.epistemic_holds.append(hold_record)
-    
-    def _create_decision_log(self, decision: TLResult, indicators: Dict, economic_data: Dict) -> Dict:
-        """
-        Pillar 4: Create comprehensive Decision Log for complete audit trail
-        """
-        return {
-            'timestamp': datetime.now().isoformat(),
-            'decision_id': hashlib.sha256(f"{datetime.now().isoformat()}_{decision.state}".encode()).hexdigest()[:16],
-            'state': decision.state.value,
-            'state_name': decision.state.name,
-            'confidence': decision.confidence,
-            'indicators': indicators,
-            'economic_data_snapshot': economic_data,
-            'reasoning': decision.reasoning,
-            'policy_rate_before': self.current_policy_rate,
-            'policy_rate_after': self._calculate_new_policy_rate(decision),
-            'dual_mandate_assessment': {
-                'inflation_objective': self._assess_inflation_objective(indicators),
-                'employment_objective': self._assess_employment_objective(indicators),
-                'conflict_present': self._assess_mandate_conflict(indicators)
-            },
-            'clarifying_questions': decision.clarifying_questions if decision.state == TLState.EPISTEMIC_HOLD else None,
-            'eight_pillars_validation': self.eight_pillars.validation_status
-        }
-    
-    def _create_ledger_entry(self, decision_log: Dict) -> Dict:
-        """
-        Pillar 2: Create Immutable Ledger entry with cryptographic hash
-        """
-        previous_hash = self.policy_ledger[-1]['hash'] if self.policy_ledger else 'genesis'
-        
-        entry = {
-            'index': len(self.policy_ledger),
-            'timestamp': decision_log['timestamp'],
-            'decision_id': decision_log['decision_id'],
-            'decision_hash': hashlib.sha256(json.dumps(decision_log, sort_keys=True).encode()).hexdigest(),
-            'previous_hash': previous_hash,
-            'state': decision_log['state']
-        }
-        
-        # Create block hash
-        entry['hash'] = hashlib.sha256(json.dumps(entry, sort_keys=True).encode()).hexdigest()
-        
-        return entry
-    
-    def _ensure_regulatory_compliance(self, decision: TLResult, economic_data: Dict):
-        """
-        Pillar 5: Ensure compliance with regulatory requirements (Basel III, FATF, etc.)
-        """
-        compliance_checks = {
-            'basel_iii_compliance': self._check_basel_iii_compliance(decision),
-            'fatf_recommendations': self._check_fatf_compliance(economic_data),
-            'iosco_principles': self._check_iosco_principles(decision),
-            'local_mandates': self._check_local_mandates(decision, economic_data)
-        }
-        
-        if decision.metadata is None:
-            decision.metadata = {}
-        
-        decision.metadata['regulatory_compliance'] = compliance_checks
-    
-    def _create_public_record(self, decision: TLResult) -> Dict:
-        """
-        Pillar 7: Hybrid Shield - Create public record without sensitive data
-        """
-        return {
-            'timestamp': datetime.now().isoformat(),
-            'decision_proof': hashlib.sha256(str(decision).encode()).hexdigest()[:16],
-            'state': decision.state.name,
-            'confidence_band': self._get_confidence_band(decision.confidence),
-            'verification': 'VALID',
-            'privacy_preserved': True
-        }
-    
-    def _create_blockchain_anchor(self) -> Dict:
-        """
-        Pillar 8: Create blockchain Anchor for permanent verification
-        """
-        # Aggregate recent decisions for merkle root
-        recent_logs = self.decision_logs[-10:]
-        combined_hash = hashlib.sha256(
-            json.dumps(recent_logs, sort_keys=True).encode()
-        ).hexdigest()
-        
-        return {
-            'merkle_root': combined_hash[:32],
-            'decision_count': len(recent_logs),
-            'timestamp': datetime.now().isoformat(),
-            'blockchain': 'Bitcoin',  # Or appropriate chain
-            'block_height': 'PENDING',
-            'status': 'AWAITING_CONFIRMATION'
-        }
-    
-    def _analyze_inflation_trend(self, inflation_data: List[float]) -> Optional[float]:
-        """Analyze inflation trend relative to target"""
-        if not inflation_data or len(inflation_data) < 3:
-            return None
-            
-        recent_inflation = np.mean(inflation_data[-3:])
-        trend = np.polyfit(range(len(inflation_data)), inflation_data, 1)[0]
-        
-        target_deviation = (recent_inflation - self.inflation_target) / self.inflation_target
-        trend_component = trend * 12  # Annualize
-        
-        signal = (target_deviation * 0.7) + (trend_component * 0.3)
-        return np.clip(signal * 2, -1, 1)
-    
-    def _analyze_inflation_expectations(self, expectations_data: Dict) -> Optional[float]:
-        """Analyze inflation expectations anchoring"""
-        if 'five_year_forward' not in expectations_data:
-            return None
-            
-        five_year_expectation = expectations_data['five_year_forward']
-        target_deviation = (five_year_expectation - self.inflation_target) / self.inflation_target
-        
-        if abs(target_deviation) < 0.1:  # Well-anchored
-            return 0
-        elif target_deviation > 0:
-            return min(target_deviation * 2, 1)
-        else:
-            return max(target_deviation * 2, -1)
-    
-    def _analyze_labor_market(self, unemployment_rate: float, job_openings: Optional[float]) -> Optional[float]:
-        """Analyze labor market strength"""
-        unemployment_gap = (unemployment_rate - self.unemployment_target) / self.unemployment_target
-        signal = -unemployment_gap
-        
-        if job_openings is not None:
-            openings_to_unemployed = job_openings / unemployment_rate if unemployment_rate > 0 else 0
-            if openings_to_unemployed > 1.5:
-                signal += 0.3
-            elif openings_to_unemployed < 0.8:
-                signal -= 0.3
-                
-        return np.clip(signal, -1, 1)
-    
-    def _analyze_economic_growth(self, gdp_growth: List[float]) -> Optional[float]:
-        """Analyze economic growth momentum"""
-        if not gdp_growth or len(gdp_growth) < 2:
-            return None
-            
-        recent_growth = np.mean(gdp_growth[-2:])
-        trend_growth = 0.025  # 2.5% trend
-        growth_gap = (recent_growth - trend_growth) / trend_growth
-        
-        return np.clip(growth_gap, -1, 1)
-    
-    def _analyze_financial_conditions(self, fci: float) -> Optional[float]:
-        """Analyze financial conditions index"""
-        signal = -fci / 2  # Invert FCI for policy signal
-        return np.clip(signal, -1, 1)
-    
-    def _analyze_global_conditions(self, global_growth: float, trade_tensions: Optional[float]) -> Optional[float]:
-        """Analyze global economic conditions"""
-        global_trend = 0.03  # 3% global trend
-        growth_signal = (global_growth - global_trend) / global_trend
-        
-        if trade_tensions is not None:
-            tension_adjustment = -trade_tensions * 0.5
-            growth_signal += tension_adjustment
-            
-        return np.clip(growth_signal, -1, 1)
-    
-    def _analyze_financial_stability(self, credit_spreads: float, asset_valuations: Optional[float]) -> Optional[float]:
-        """Analyze financial stability indicators"""
-        spread_signal = -credit_spreads * 2
-        
-        valuation_signal = 0
-        if asset_valuations is not None:
-            valuation_signal = asset_valuations * 0.5
-            
-        combined_signal = (spread_signal * 0.7) + (valuation_signal * 0.3)
-        return np.clip(combined_signal, -1, 1)
-    
-    def _analyze_sustainable_finance(self, esg_data: Dict) -> Optional[float]:
-        """
-        Pillar 6: Analyze sustainable finance considerations
-        """
-        if not esg_data:
-            return None
-            
-        # Climate risk impact on financial stability
-        climate_risk = esg_data.get('climate_risk_score', 0)
-        
-        # Green finance growth rate
-        green_finance_growth = esg_data.get('green_finance_growth', 0)
-        
-        # Transition risk for carbon-intensive sectors
-        transition_risk = esg_data.get('transition_risk', 0)
-        
-        # Combined ESG signal for monetary policy
-        esg_signal = (-climate_risk * 0.4) + (green_finance_growth * 0.3) - (transition_risk * 0.3)
-        
-        return np.clip(esg_signal, -1, 1)
-    
-    def _get_policy_weights(self, economic_data: Dict) -> Dict[str, float]:
-        """Determine indicator weights based on current economic conditions"""
-        base_weights = {
-            'inflation_trend': 0.25,
-            'inflation_expectations': 0.20,
-            'labor_market_strength': 0.20,
-            'economic_momentum': 0.15,
-            'financial_conditions': 0.10,
-            'global_conditions': 0.05,
-            'financial_stability': 0.03,
-            'sustainable_finance': 0.02  # Pillar 6 consideration
-        }
-        
-        # Adjust for economic regime
-        if economic_data.get('inflation_regime') == 'high':
-            base_weights['inflation_trend'] *= 1.3
-            base_weights['inflation_expectations'] *= 1.2
-        elif economic_data.get('inflation_regime') == 'low':
-            base_weights['labor_market_strength'] *= 1.2
-            base_weights['economic_momentum'] *= 1.1
-            
-        return base_weights
-    
-    def _apply_dual_mandate_focus(self, indicators: Dict, economic_data: Dict) -> Dict:
-        """Apply central bank dual mandate focus to indicators"""
-        dual_mandate_adjusted = indicators.copy()
-        
-        inflation_signal = indicators.get('inflation_trend', 0) or 0
-        labor_signal = indicators.get('labor_market_strength', 0) or 0
-        
-        if inflation_signal * labor_signal > 0:  # Same direction
-            for key in ['inflation_trend', 'labor_market_strength']:
-                if key in dual_mandate_adjusted and dual_mandate_adjusted[key] is not None:
-                    dual_mandate_adjusted[key] *= 1.2
-        elif inflation_signal * labor_signal < 0:  # Conflicting signals
-            for key in ['inflation_trend', 'labor_market_strength']:
-                if key in dual_mandate_adjusted and dual_mandate_adjusted[key] is not None:
-                    dual_mandate_adjusted[key] *= 0.7
-                    
-        return dual_mandate_adjusted
-    
-    def _identify_uncertainty_sources(self, indicators: Dict) -> List[str]:
-        """Identify sources of uncertainty for Epistemic Hold"""
-        sources = []
-        
-        # Check for missing critical data
-        critical_indicators = ['inflation_trend', 'labor_market_strength']
-        for indicator in critical_indicators:
-            if indicator not in indicators or indicators[indicator] is None:
-                sources.append(f"Missing {indicator}")
-        
-        # Check for conflicting signals
-        if self._assess_mandate_conflict(indicators):
-            sources.append("Dual mandate conflict")
-        
-        # Check for extreme volatility
-        for key, value in indicators.items():
-            if value is not None and abs(value) > 0.8:
-                sources.append(f"Extreme signal in {key}")
-        
-        return sources
-    
-    def _identify_conflicts(self, indicators: Dict) -> List[str]:
-        """Identify conflicting signals in indicators"""
-        conflicts = []
-        
-        # Check major indicator pairs
-        pairs = [
-            ('inflation_trend', 'labor_market_strength'),
-            ('economic_momentum', 'financial_stability'),
-            ('financial_conditions', 'global_conditions')
+        self.current_policy_rate = current_policy_rate
+        self.ledger = ImmutableLedger()
+        self.license_scopes = [
+            "monetary.policy",
+            "regulatory.compliance",
+            "audit.governance"
         ]
-        
-        for ind1, ind2 in pairs:
-            val1 = indicators.get(ind1, 0) or 0
-            val2 = indicators.get(ind2, 0) or 0
-            
-            if val1 * val2 < -0.25:  # Strong opposite signals
-                conflicts.append(f"{ind1} vs {ind2}")
-        
-        return conflicts
-    
-    def _assess_mandate_conflict(self, indicators: Dict) -> bool:
-        """Assess if dual mandate objectives are in conflict"""
-        inflation_signal = indicators.get('inflation_trend', 0) or 0
-        labor_signal = indicators.get('labor_market_strength', 0) or 0
-        
-        return (inflation_signal * labor_signal < 0 and 
-                abs(inflation_signal) > 0.3 and 
-                abs(labor_signal) > 0.3)
-    
-    def _calculate_new_policy_rate(self, decision: TLResult) -> float:
-        """Calculate new policy rate based on decision"""
-        if decision.state == TLState.PROCEED:
-            change = 0.005 if decision.confidence > 0.8 else 0.0025
-            return self.current_policy_rate + change
-        elif decision.state == TLState.HALT:
-            change = -0.005 if decision.confidence > 0.8 else -0.0025
-            return max(0, self.current_policy_rate + change)  # Zero lower bound
-        else:
-            return self.current_policy_rate
-    
-    def _assess_inflation_objective(self, indicators: Dict) -> str:
-        """Assess progress toward inflation objective"""
-        inflation_signal = indicators.get('inflation_trend', 0) or 0
-        
-        if abs(inflation_signal) < 0.1:
-            return "At target"
-        elif inflation_signal > 0.3:
-            return "Above target"
-        elif inflation_signal < -0.3:
-            return "Below target"
-        else:
-            return "Near target"
-    
-    def _assess_employment_objective(self, indicators: Dict) -> str:
-        """Assess progress toward employment objective"""
-        labor_signal = indicators.get('labor_market_strength', 0) or 0
-        
-        if abs(labor_signal) < 0.1:
-            return "At full employment"
-        elif labor_signal > 0.3:
-            return "Above full employment"
-        elif labor_signal < -0.3:
-            return "Below full employment"
-        else:
-            return "Near full employment"
-    
-    def _check_basel_iii_compliance(self, decision: TLResult) -> bool:
-        """Check Basel III compliance requirements"""
-        # Simplified compliance check
-        return decision.metadata is not None and 'risk_assessment' in decision.metadata
-    
-    def _check_fatf_compliance(self, economic_data: Dict) -> bool:
-        """Check FATF AML/CFT compliance"""
-        # Simplified compliance check
-        return 'aml_indicators' not in economic_data or economic_data.get('aml_risk', 0) < 0.5
-    
-    def _check_iosco_principles(self, decision: TLResult) -> bool:
-        """Check IOSCO principles compliance"""
-        # Simplified compliance check
-        return decision.confidence > 0.3  # Minimum confidence for market stability
-    
-    def _check_local_mandates(self, decision: TLResult, economic_data: Dict) -> bool:
-        """Check local regulatory mandates"""
-        # Simplified compliance check
-        return True  # Placeholder for jurisdiction-specific requirements
-    
-    def _get_confidence_band(self, confidence: float) -> str:
-        """Get confidence band for public communication"""
-        if confidence > 0.8:
-            return "High"
-        elif confidence > 0.5:
-            return "Moderate"
-        elif confidence > 0.3:
-            return "Low"
-        else:
-            return "Very Low"
-    
-    def _enhance_policy_decision(self, decision: TLResult, economic_data: Dict, indicators: Dict) -> TLResult:
-        """Enhance decision with central bank specific context"""
-        
-        if decision.state == TLState.EPISTEMIC_HOLD:
-            # Add central bank specific guidance
-            cb_questions = [
-                "Review incoming high-frequency economic data",
-                "Assess financial market functioning and stress indicators",
-                "Monitor international spillover effects",
-                "Evaluate effectiveness of current policy transmission",
-                "Consider forward guidance communication strategy"
-            ]
-            if decision.clarifying_questions:
-                decision.clarifying_questions.extend(cb_questions)
-            else:
-                decision.clarifying_questions = cb_questions
-        
-        # Add metadata
-        if decision.metadata is None:
-            decision.metadata = {}
-            
-        decision.metadata.update({
-            'current_policy_rate': self.current_policy_rate,
-            'inflation_target': self.inflation_target,
-            'missing_indicators': [k for k, v in indicators.items() if v is None],
-            'dual_mandate_conflict': self._assess_mandate_conflict(indicators),
-            'eight_pillars_compliant': True,
-            'epistemic_hold_count': len(self.epistemic_holds)
-        })
-        
-        return decision
-    
-    def generate_policy_statement(self, decision: TLResult, economic_data: Dict) -> Dict:
+        self._policy_decisions = []
+
+    def make_policy_decision(
+        self,
+        economic_data: Dict[str, Any],
+        scenario_label: str = "Policy Decision"
+    ) -> Dict[str, Any]:
         """
-        Generate central bank policy statement with Eight Pillars transparency
+        Make a monetary policy decision under full TL constitutional governance.
+
+        Sequence:
+            1. Analyze economic signals (dual mandate)
+            2. Check regulatory compliance (Pillar V)
+            3. Check sustainable capital (Pillar VI)
+            4. Calculate composite confidence
+            5. Evaluate with TLEngine
+            6. Commit log entry (NL=NA: before any action fires)
+            7. Issue Permission Token if PROCEED
+            8. Return full governance record
+
+        Returns a complete governance record including state, confidence,
+        regulatory context, log entry, and permission token if applicable.
         """
-        statement = {
-            'decision_date': datetime.now().strftime('%Y-%m-%d'),
-            'policy_action': self._translate_decision_to_action(decision),
-            'policy_rate_target': self._calculate_new_policy_rate(decision),
-            'vote': self._generate_committee_vote(decision),
-            'economic_assessment': self._generate_economic_assessment(economic_data),
-            'policy_rationale': decision.reasoning,
-            'forward_guidance': self._generate_forward_guidance(decision),
-            'uncertainty_acknowledgment': self._generate_uncertainty_statement(decision),
-            'eight_pillars_certification': {
-                'epistemic_hold_activated': decision.state == TLState.EPISTEMIC_HOLD,
-                'immutable_record_created': True,
-                'goukassian_validated': True,
-                'decision_log_complete': True,
-                'regulatory_compliant': True,
-                'esg_considered': 'sustainable_finance' in economic_data,
-                'privacy_preserved': True,
-                'blockchain_anchored': 'blockchain_anchor' in decision.metadata
+        # Step 1: Analyze economic signals
+        signals = self.analyzer.analyze_all(economic_data)
+
+        # Step 2: Regulatory compliance check (Pillar V)
+        regulatory_context = build_regulatory_context(economic_data)
+        compliance = check_regulatory_compliance(regulatory_context)
+
+        # Step 3: Sustainable capital check (Pillar VI)
+        sustainability_data = {
+            "esg_verified": economic_data.get("esg_verified", False),
+            "emissions_anchored": economic_data.get("emissions_anchored", False),
+            "use_of_proceeds_tracked": economic_data.get(
+                "use_of_proceeds_tracked", False
+            )
+        }
+
+        # Step 4: Determine state
+        # Mandate failures force Epistemic Hold regardless of confidence
+        if not compliance["compliant"]:
+            forced_state = TLState.EPISTEMIC_HOLD
+            confidence = 0.0
+            reasoning = (
+                f"Regulatory compliance failure prevents policy action. "
+                f"Failures: {'; '.join(compliance['failures'])}"
+            )
+        elif signals.get("mandate_conflict"):
+            forced_state = TLState.EPISTEMIC_HOLD
+            confidence = 0.30
+            reasoning = (
+                "Dual mandate conflict detected: inflation and employment "
+                "signals point in opposite directions. Monetary Policy "
+                "Committee review required before rate decision."
+            )
+        else:
+            forced_state = None
+            # Calculate composite confidence from available signals
+            clean_signals = {
+                k: v for k, v in signals.items()
+                if v is not None and k != "mandate_conflict"
+                and isinstance(v, (int, float))
             }
-        }
-        
-        if decision.state == TLState.EPISTEMIC_HOLD:
-            statement['epistemic_hold_statement'] = self._explain_epistemic_hold(decision)
-            
-        return statement
-    
-    def _translate_decision_to_action(self, decision: TLResult) -> str:
-        """Translate ternary decision to policy action"""
+
+            if clean_signals:
+                # Normalize signals from [-1,+1] to [0,1] for confidence scoring
+                normalized = [(v + 1) / 2 for v in clean_signals.values()]
+                confidence = float(np.mean(normalized))
+            else:
+                # No signals available: Epistemic Hold on data absence
+                forced_state = TLState.EPISTEMIC_HOLD
+                confidence = 0.0
+
+            reasoning = self._build_reasoning(signals, economic_data)
+
+        # Step 5: Evaluate with TLEngine
+        decision = self.engine.evaluate(
+            confidence=confidence,
+            reasoning=reasoning,
+            metadata={
+                "scenario": scenario_label,
+                "signalCount": len([
+                    v for v in signals.values()
+                    if v is not None and isinstance(v, (int, float))
+                ]),
+                "mandateConflict": signals.get("mandate_conflict", False),
+                "complianceFailures": compliance["failures"],
+                "pillarImplicated": compliance.get(
+                    "pillarImplicated", "EpistemicHold"
+                )
+            },
+            force_state=forced_state
+        )
+
+        # Step 6: Commit log entry (NL=NA: BEFORE any policy action fires)
+        goukassian = create_goukassian_principle_block(
+            decision_payload=decision.reasoning,
+            agent_id="central-bank-governance-001",
+            license_scopes=self.license_scopes
+        )
+        log_entry = commit_log_entry(
+            decision=decision,
+            engine=self.engine,
+            goukassian_block=goukassian,
+            previous_hash=self.ledger.previous_hash,
+            extra_context={
+                "signals": {
+                    k: round(v, 4)
+                    for k, v in signals.items()
+                    if v is not None and isinstance(v, (int, float))
+                },
+                "regulatoryCompliant": compliance["compliant"],
+                "regulatoryWarnings": compliance["warnings"],
+                "currentPolicyRate": self.current_policy_rate
+            }
+        )
+        self.ledger.commit(log_entry)
+
+        # Step 7: Permission Token (PROCEED only)
+        token = build_permission_token(log_entry)
+
+        # Step 8: Policy rate recommendation (for PROCEED only)
+        rate_recommendation = None
         if decision.state == TLState.PROCEED:
-            basis_points = 50 if decision.confidence > 0.8 else 25
-            return f"Raise policy rate by {basis_points} basis points"
-        elif decision.state == TLState.HALT:
-            basis_points = 50 if decision.confidence > 0.8 else 25
-            return f"Lower policy rate by {basis_points} basis points"
-        else:  # EPISTEMIC_HOLD
-            return "Maintain current policy rate"
-    
-    def _generate_committee_vote(self, decision: TLResult) -> str:
-        """Generate policy committee voting record"""
-        if decision.confidence > 0.8:
-            return "Unanimous"
-        elif decision.confidence > 0.6:
-            return "10-2"
-        else:
-            return "7-5"
-    
-    def _generate_economic_assessment(self, economic_data: Dict) -> str:
-        """Generate economic assessment for policy statement"""
-        regime = economic_data.get('inflation_regime', 'normal')
-        return (f"Economic activity continues to expand. Labor market conditions remain robust. "
-                f"Inflation has been running {'above' if regime == 'high' else 'near'} "
-                f"the Committee's target.")
-    
-    def _generate_forward_guidance(self, decision: TLResult) -> str:
-        """Generate forward guidance based on decision"""
-        if decision.state == TLState.EPISTEMIC_HOLD:
-            return ("The Committee will carefully monitor incoming data and stands ready "
-                   "to adjust policy as appropriate to achieve its objectives.")
-        elif decision.state == TLState.PROCEED:
-            return ("The Committee expects that ongoing increases in the policy rate "
-                   "will be appropriate to achieve its objectives.")
-        else:
-            return ("The Committee expects that ongoing decreases in the policy rate "
-                   "may be appropriate to support economic objectives.")
-    
-    def _generate_uncertainty_statement(self, decision: TLResult) -> str:
-        """Generate uncertainty acknowledgment"""
-        if decision.confidence < 0.5:
-            return "The economic outlook remains highly uncertain."
-        elif decision.confidence < 0.7:
-            return "The Committee acknowledges elevated uncertainty in the outlook."
-        else:
-            return "The Committee continues to monitor economic developments."
-    
-    def _explain_epistemic_hold(self, decision: TLResult) -> str:
-        """Explain Epistemic Hold activation"""
-        return (f"The Committee has activated an Epistemic Hold (confidence: {decision.confidence:.1%}), "
-               f"maintaining the current stance while gathering additional information. "
-               f"This reflects commitment to data-dependent policymaking under uncertainty.")
+            rate_recommendation = self._recommend_rate_change(signals)
 
-
-def demonstrate_central_bank_policy():
-    """
-    Demonstrate Central Bank Policy Engine with Eight Pillars
-    """
-    
-    print("\n╔══════════════════════════════════════════════════════════════════════╗")
-    print("║     Central Bank Policy Analysis - Eight Pillars Implementation      ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print("\nSovereign-grade accountability for monetary policy decisions")
-    print()
-    
-    # Initialize policy engine
-    cb_engine = CentralBankPolicyEngine(
-        halt_threshold=0.30,
-        hold_threshold=0.70,
-        inflation_target=0.02,
-        unemployment_target=0.04
-    )
-    
-    # Scenario 1: Clear tightening environment
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("Scenario 1: Clear Tightening Signals")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    
-    tightening_data = {
-        'core_pce_inflation': [0.025, 0.027, 0.029, 0.031, 0.033],
-        'inflation_expectations': {'five_year_forward': 0.028},
-        'unemployment_rate': 3.2,
-        'job_openings': 11.5,
-        'gdp_growth': [0.030, 0.035],
-        'financial_conditions_index': -0.5,
-        'global_growth': 0.035,
-        'credit_spreads': 0.8,
-        'inflation_regime': 'high',
-        'esg_considerations': {
-            'climate_risk_score': 0.3,
-            'green_finance_growth': 0.15,
-            'transition_risk': 0.2
+        # Assemble governance record
+        record = {
+            "scenario": scenario_label,
+            "state": decision.state.name,
+            "stateValue": decision.state.value,
+            "processActive": log_entry["processActive"],
+            "confidence": decision.confidence,
+            "positionLabel": decision.position_label,
+            "reasoning": decision.reasoning,
+            "logHash": log_entry["logHash"][:16] + "...",
+            "merkleRoot": log_entry["merkleRoot"][:16] + "...",
+            "permissionToken": (
+                token["tokenId"][:16] + "..." if token else None
+            ),
+            "laneOrigin": token["laneOrigin"] if token else "N/A",
+            "rateRecommendation": rate_recommendation,
+            "dualMandateConflict": signals.get("mandate_conflict", False),
+            "regulatoryCompliant": compliance["compliant"],
+            "regulatoryWarnings": compliance["warnings"],
+            "regulatoryFailures": compliance["failures"],
+            "nlNaStatus": "Log committed before policy action authorized"
         }
-    }
-    
-    decision = cb_engine.make_policy_decision(tightening_data)
-    statement = cb_engine.generate_policy_statement(decision, tightening_data)
-    
-    print(f"Decision: {decision.state.name}")
-    print(f"Confidence: {decision.confidence:.2%}")
-    print(f"Action: {statement['policy_action']}")
-    print(f"Reasoning: {decision.reasoning[:100]}...")
-    print(f"\nEight Pillars Compliance:")
-    for pillar, status in statement['eight_pillars_certification'].items():
-        print(f"  • {pillar}: {'✓' if status else '✗'}")
-    print()
-    
-    # Scenario 2: Conflicting signals triggering Epistemic Hold
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("Scenario 2: Conflicting Dual Mandate - Epistemic Hold Expected")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    
-    conflicting_data = {
-        'core_pce_inflation': [0.015, 0.012, 0.011, 0.010],
-        'inflation_expectations': {'five_year_forward': 0.018},
-        'unemployment_rate': 3.0,
-        'job_openings': 12.0,
-        'gdp_growth': [0.015, 0.010],
-        'financial_conditions_index': 1.2,
-        'global_growth': 0.020,
-        'credit_spreads': 2.5,
-        'trade_tensions': 0.7,
-        'inflation_regime': 'low'
-    }
-    
-    decision = cb_engine.make_policy_decision(conflicting_data)
-    statement = cb_engine.generate_policy_statement(decision, conflicting_data)
-    
-    print(f"Decision: {decision.state.name}")
-    print(f"Confidence: {decision.confidence:.2%}")
-    print(f"Action: {statement['policy_action']}")
-    
-    if decision.state == TLState.EPISTEMIC_HOLD:
-        print(f"\nEpistemic Hold Statement:")
-        print(f"  {statement['epistemic_hold_statement']}")
-        print(f"\nMonitoring Actions:")
-        for i, action in enumerate(decision.clarifying_questions[:3], 1):
-            print(f"  {i}. {action}")
-    
-    print(f"\nAccountability Metrics:")
-    print(f"  • Epistemic Holds Triggered: {len(cb_engine.epistemic_holds)}")
-    print(f"  • Decision Logs Created: {len(cb_engine.decision_logs)}")
-    print(f"  • Immutable Ledger Entries: {len(cb_engine.policy_ledger)}")
-    print()
-    
-    # Display sample Decision Log entry
-    if cb_engine.decision_logs:
-        print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-        print("Sample Decision Log Entry (Pillar 4)")
-        print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-        
-        latest_log = cb_engine.decision_logs[-1]
-        print(f"Decision ID: {latest_log['decision_id']}")
-        print(f"Timestamp: {latest_log['timestamp']}")
-        print(f"State: {latest_log['state_name']}")
-        print(f"Dual Mandate Assessment:")
-        for key, value in latest_log['dual_mandate_assessment'].items():
-            print(f"  • {key}: {value}")
-    
-    print("\n" + "═" * 60)
-    print("Central Banking with Sovereign-Grade Accountability")
-    print("═" * 60)
-    print("\nThe Eight Pillars Framework enables central banks to:")
-    print("  • Acknowledge uncertainty through Epistemic Hold")
-    print("  • Create immutable audit trails for all decisions")
-    print("  • Ensure regulatory compliance automatically")
-    print("  • Maintain transparency while preserving necessary confidentiality")
-    print("  • Anchor decisions cryptographically for permanent verification")
-    print("\nWhen truth becomes measurable, power has nowhere left to hide.")
 
+        self._policy_decisions.append(record)
+        return record
+
+    def _build_reasoning(
+        self,
+        signals: Dict[str, Any],
+        economic_data: Dict[str, Any]
+    ) -> str:
+        """Build human-readable reasoning string from signals."""
+        parts = []
+
+        inflation = signals.get("inflation_trend")
+        if inflation is not None:
+            if inflation > 0.30:
+                parts.append("Inflation above target: tightening signal")
+            elif inflation < -0.30:
+                parts.append("Inflation below target: easing signal")
+            else:
+                parts.append("Inflation near target: neutral signal")
+
+        labor = signals.get("labor_market_strength")
+        if labor is not None:
+            if labor > 0.30:
+                parts.append("Labor market tight: limited slack for easing")
+            elif labor < -0.30:
+                parts.append("Labor market weak: easing supportive")
+            else:
+                parts.append("Labor market balanced")
+
+        momentum = signals.get("economic_momentum")
+        if momentum is not None:
+            if momentum > 0.20:
+                parts.append("GDP above trend: supportive of tightening")
+            elif momentum < -0.20:
+                parts.append("GDP below trend: supportive of easing")
+
+        regime = economic_data.get("inflation_regime", "normal")
+        if regime == "high":
+            parts.append("Regime: elevated inflation; inflation signals weighted higher")
+        elif regime == "low":
+            parts.append("Regime: low inflation; employment signals weighted higher")
+
+        return ". ".join(parts) if parts else "Insufficient signal data for determination"
+
+    def _recommend_rate_change(self, signals: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Recommend a rate change direction for PROCEED decisions.
+
+        This is advisory only. The monetary policy committee makes the
+        final determination. TL authorizes the decision process, not the
+        specific rate level.
+        """
+        inflation = signals.get("inflation_trend", 0.0) or 0.0
+        labor = signals.get("labor_market_strength", 0.0) or 0.0
+        momentum = signals.get("economic_momentum", 0.0) or 0.0
+
+        composite = (inflation * 0.45) + (labor * 0.35) + (momentum * 0.20)
+
+        # Rate signal thresholds: domain-specific parameters for rate
+        # direction recommendations, NOT confidence thresholds.
+        # Advisory only. Monetary policy committee decides the actual rate.
+        strong_signal = 0.40
+        if composite > strong_signal:
+            direction = "TIGHTEN"
+            basis_points_range = "25-50 bps"
+        elif composite < -strong_signal:
+            direction = "EASE"
+            basis_points_range = "25-50 bps"
+        elif -0.15 < composite < 0.15:
+            direction = "HOLD"
+            basis_points_range = "0 bps"
+        elif composite > 0:
+            direction = "TIGHTEN"
+            basis_points_range = "0-25 bps"
+        else:
+            direction = "EASE"
+            basis_points_range = "0-25 bps"
+
+        return {
+            "direction": direction,
+            "basisPointsRange": basis_points_range,
+            "compositeSignal": round(composite, 4),
+            "note": (
+                "Advisory only. Monetary policy committee "
+                "makes final rate determination."
+            )
+        }
+
+    def get_policy_summary(self) -> Dict[str, Any]:
+        """Return summary of all policy decisions and ledger state."""
+        engine_stats = self.engine.get_statistics()
+        ledger_summary = self.ledger.get_summary()
+
+        return {
+            "totalDecisions": engine_stats["total_decisions"],
+            "proceedCount": engine_stats["proceed_count"],
+            "epistemicHoldCount": engine_stats["hold_count"],
+            "refuseCount": engine_stats["refuse_count"],
+            "epistemicHoldRate": engine_stats["epistemic_hold_rate"],
+            "targetHoldRate": engine_stats["target_hold_rate"],
+            "averageConfidence": engine_stats["average_confidence"],
+            "ledgerEntries": ledger_summary["totalEntries"],
+            "latestMerkleRoot": ledger_summary["latestMerkleRoot"][:16] + "...",
+            "architectureMode": "ARCHITECTURE_B",
+            "pufAttestation": "NULL_PUF_DEPLOYMENT"
+        }
+
+
+# =============================================================================
+# SECTION 5: Demonstration Scenarios
+# =============================================================================
+
+def run_central_banking_demo():
+    """
+    Demonstrate TL central banking policy analysis across four scenarios:
+        1. Rate hike justified: inflation above target, labor tight
+        2. Epistemic Hold: dual mandate conflict
+        3. Compliance failure: regulatory mandate forces hold
+        4. Easing justified: below-target inflation, weak labor
+
+    DEMONSTRATION THRESHOLD VALUES: not for production use.
+    Central banks calibrate their own thresholds through:
+        - 20+ years of historical backtesting
+        - Regulatory requirements (BIS, FSB, national mandates)
+        - Board-approved risk appetite
+        - Monetary policy committee approval
+        - TriCameralApproval and ledger anchoring before activation
+    See docs/Threshold_Calibration.md.
+    """
+
+    print()
+    print("=" * 70)
+    print("  TERNARY LOGIC: CENTRAL BANKING POLICY ANALYSIS")
+    print("  Lev Goukassian (ORCID: 0009-0006-5966-1243)")
+    print("=" * 70)
+
+    # DEMONSTRATION VALUES ONLY: not recommendations, not standards.
+    DEMO_PROCEED = 0.72
+    DEMO_HOLD = 0.32
+
+    engine = CentralBankPolicyEngine(
+        proceed_threshold=DEMO_PROCEED,
+        hold_threshold=DEMO_HOLD,
+        inflation_target=0.02,
+        unemployment_target=0.04,
+        current_policy_rate=0.05
+    )
+
+    print()
+    print(f"  Engine initialized (demonstration thresholds: not for production)")
+    print(f"  PROCEED >= {DEMO_PROCEED} | REFUSE < {DEMO_HOLD}")
+    print(f"  Inflation target: 2% | Unemployment target: 4%")
+
+    # ------------------------------------------------------------------
+    # SCENARIO 1: Rate hike signal
+    # Inflation above target, tight labor market, GDP above trend.
+    # Expected: PROCEED with tightening recommendation.
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 1: Rate Hike Signal")
+    print("-" * 70)
+
+    data_hike = {
+        "core_pce_inflation": [0.031, 0.034, 0.036, 0.038, 0.040],
+        "inflation_expectations": {"five_year_forward": 0.028},
+        "unemployment_rate": 0.035,
+        "job_openings": 0.055,
+        "gdp_growth": [0.030, 0.032],
+        "financial_conditions_index": -0.3,
+        "tier1_capital_ratio": 0.135,
+        "liquidity_coverage_ratio": 1.42,
+        "net_stable_funding_ratio": 1.18,
+        "sanctions_screened": True,
+        "pep_involved": False,
+        "sar_required": False,
+        "layering_detected": False,
+        "spoofing_detected": False,
+        "wash_trading_detected": False,
+        "cross_market_manipulation": False,
+        "inflation_regime": "high",
+        "jurisdiction": "EU",
+        "consent_attested": True,
+        "esg_score": 72.0
+    }
+
+    result1 = engine.make_policy_decision(data_hike, "Rate Hike Signal")
+    _print_policy_result(result1)
+
+    # ------------------------------------------------------------------
+    # SCENARIO 2: Epistemic Hold via dual mandate conflict
+    # Inflation above target (wants tightening) but unemployment rising
+    # (wants easing). Conflicting mandates. MPC review required.
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 2: Epistemic Hold via Dual Mandate Conflict")
+    print("-" * 70)
+
+    data_conflict = {
+        "core_pce_inflation": [0.030, 0.033, 0.036, 0.038, 0.041],
+        "inflation_expectations": {"five_year_forward": 0.026},
+        "unemployment_rate": 0.052,
+        "job_openings": 0.038,
+        "gdp_growth": [0.018, 0.012],
+        "financial_conditions_index": 0.8,
+        "tier1_capital_ratio": 0.125,
+        "liquidity_coverage_ratio": 1.28,
+        "net_stable_funding_ratio": 1.09,
+        "sanctions_screened": True,
+        "pep_involved": False,
+        "sar_required": False,
+        "layering_detected": False,
+        "spoofing_detected": False,
+        "wash_trading_detected": False,
+        "cross_market_manipulation": False,
+        "inflation_regime": "high",
+        "jurisdiction": "EU",
+        "consent_attested": True,
+        "esg_score": 68.0
+    }
+
+    result2 = engine.make_policy_decision(
+        data_conflict, "Dual Mandate Conflict"
+    )
+    _print_policy_result(result2)
+
+    # ------------------------------------------------------------------
+    # SCENARIO 3: Regulatory compliance failure forces Epistemic Hold
+    # Sanctions screening incomplete, IOSCO manipulation detected.
+    # Even if economic signals are favorable, compliance failure
+    # forces Epistemic Hold via Pillar V.
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 3: Regulatory Compliance Failure (Pillar V)")
+    print("-" * 70)
+
+    data_compliance = {
+        "core_pce_inflation": [0.018, 0.019, 0.020, 0.019, 0.021],
+        "inflation_expectations": {"five_year_forward": 0.021},
+        "unemployment_rate": 0.042,
+        "gdp_growth": [0.025, 0.028],
+        "financial_conditions_index": -0.1,
+        "tier1_capital_ratio": 0.078,  # Below 8% minimum: FAIL
+        "liquidity_coverage_ratio": 0.92,  # Below 1.0 minimum: FAIL
+        "net_stable_funding_ratio": 1.05,
+        "sanctions_screened": False,  # FAIL
+        "pep_involved": False,
+        "sar_required": False,
+        "layering_detected": True,  # IOSCO FAIL
+        "spoofing_detected": False,
+        "wash_trading_detected": False,
+        "cross_market_manipulation": False,
+        "inflation_regime": "normal",
+        "jurisdiction": "EU",
+        "consent_attested": True,
+        "esg_score": 55.0
+    }
+
+    result3 = engine.make_policy_decision(
+        data_compliance, "Regulatory Compliance Failure"
+    )
+    _print_policy_result(result3)
+
+    # ------------------------------------------------------------------
+    # SCENARIO 4: Rate cut signal
+    # Below-target inflation, rising unemployment, weak GDP.
+    # Expected: PROCEED with easing recommendation.
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 4: Rate Cut Signal")
+    print("-" * 70)
+
+    data_cut = {
+        "core_pce_inflation": [0.016, 0.015, 0.014, 0.013, 0.012],
+        "inflation_expectations": {"five_year_forward": 0.018},
+        "unemployment_rate": 0.055,
+        "job_openings": 0.040,
+        "gdp_growth": [0.012, 0.008],
+        "financial_conditions_index": 1.2,
+        "tier1_capital_ratio": 0.148,
+        "liquidity_coverage_ratio": 1.55,
+        "net_stable_funding_ratio": 1.22,
+        "sanctions_screened": True,
+        "pep_involved": False,
+        "sar_required": False,
+        "layering_detected": False,
+        "spoofing_detected": False,
+        "wash_trading_detected": False,
+        "cross_market_manipulation": False,
+        "inflation_regime": "low",
+        "jurisdiction": "EU",
+        "consent_attested": True,
+        "esg_score": 78.0
+    }
+
+    result4 = engine.make_policy_decision(data_cut, "Rate Cut Signal")
+    _print_policy_result(result4)
+
+    # ------------------------------------------------------------------
+    # SUMMARY
+    # ------------------------------------------------------------------
+
+    print()
+    print("=" * 70)
+    print("POLICY SESSION SUMMARY")
+    print("=" * 70)
+
+    summary = engine.get_policy_summary()
+    print(f"  Total decisions:     {summary['totalDecisions']}")
+    print(f"  PROCEED:             {summary['proceedCount']}")
+    print(f"  EPISTEMIC_HOLD:      {summary['epistemicHoldCount']}")
+    print(f"  REFUSE:              {summary['refuseCount']}")
+    print(f"  Hold rate:           {summary['epistemicHoldRate']:.1%} "
+          f"(target: {summary['targetHoldRate']:.1%})")
+    print(f"  Average confidence:  {summary['averageConfidence']:.3f}")
+    print(f"  Ledger entries:      {summary['ledgerEntries']}")
+    print(f"  Latest Merkle root:  {summary['latestMerkleRoot']}")
+    print(f"  Architecture mode:   {summary['architectureMode']}")
+    print(f"  PUF attestation:     {summary['pufAttestation']}")
+    print()
+    print("  NL=NA: Every policy decision was logged to the Immutable Ledger")
+    print("  before any rate action was authorized. No log, no action.")
+    print()
+    print("  Three immutable mandates:")
+    print("    No Spy. No Weapon. No Switch Off.")
+    print("=" * 70)
+    print()
+
+    # Export audit trail (Pillar IV)
+    engine.engine.export_audit_trail("/tmp/tl_central_bank_audit.json")
+    print("  Audit trail exported: /tmp/tl_central_bank_audit.json")
+    print()
+
+
+def _print_policy_result(result: Dict[str, Any]):
+    """Print a formatted policy decision result."""
+    state_icons = {
+        "PROCEED": "OK",
+        "EPISTEMIC_HOLD": "HOLD",
+        "REFUSE": "REFUSE"
+    }
+
+    print(f"  State:               {state_icons.get(result['state'], '')} "
+          f"{result['state']} ({result['stateValue']})")
+    print(f"  processActive:       {result['processActive']}")
+    print(f"  Confidence:          {result['confidence']:.3f}")
+    print(f"  Position:            {result['positionLabel']}")
+    print(f"  Log committed:       {result['logHash']}")
+    print(f"  Merkle root:         {result['merkleRoot']}")
+
+    if result.get("permissionToken"):
+        print(f"  Permission token:    {result['permissionToken']}")
+        print(f"  laneOrigin:          {result['laneOrigin']}")
+    else:
+        print(f"  Permission token:    None (no actuation authorized)")
+
+    if result.get("rateRecommendation"):
+        rec = result["rateRecommendation"]
+        print(f"  Rate recommendation: {rec['direction']} {rec['basisPointsRange']} "
+              f"(composite signal: {rec['compositeSignal']:.3f})")
+
+    if result.get("dualMandateConflict"):
+        print(f"  Dual mandate:        CONFLICT DETECTED - MPC review required")
+
+    if result.get("regulatoryFailures"):
+        for failure in result["regulatoryFailures"]:
+            print(f"  Compliance FAIL:     {failure}")
+
+    if result.get("regulatoryWarnings"):
+        for warning in result["regulatoryWarnings"][:2]:
+            print(f"  Compliance warning:  {warning}")
+
+    print(f"  NL=NA:               {result['nlNaStatus']}")
+
+
+# =============================================================================
+# Entry point
+# =============================================================================
 
 if __name__ == "__main__":
-    demonstrate_central_bank_policy()
-    
-# Ternary Logic Framework - Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)
+    run_central_banking_demo()
+
+
+"""
+---
+Creator: Lev Goukassian (ORCID: 0009-0006-5966-1243)
+Email: leogouk@gmail.com
+Repository: https://github.com/FractonicMind/TernaryLogic
+Successor: support@tl-goukassian.org
+DOI 1: 10.1007/s43681-025-00910-6
+DOI 2: 10.1007/s43681-026-01124-0
+---
+"""

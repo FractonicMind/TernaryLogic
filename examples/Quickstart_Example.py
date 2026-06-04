@@ -1,266 +1,729 @@
-QUICKSTART_EXAMPLE.PY
 """
-Ternary Logic Framework - Quick Start Example with Eight Pillars. 
-Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)   
-Contact: leogouk@gmail.com   
+Ternary Logic Framework: Quickstart Example
+============================================
 
-This example demonstrates the basic usage of the Ternary Logic Framework
-with Eight Pillars architecture for sovereign-grade accountability.
+Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)
+Contact: leogouk@gmail.com
+Successor: support@tl-goukassian.org
+Repository: https://github.com/FractonicMind/TernaryLogic
 
-"When truth becomes measurable, power has nowhere left to hide."
+DOI 1: 10.1007/s43681-025-00910-6, Auditable AI: Tracing the Ethical History of a Model
+DOI 2: 10.1007/s43681-026-01124-0, A Ternary Logic Framework for Institutional Governance
+
+The Goukassian Vow:
+    "Pause when truth is uncertain"  ->  State  0  (Epistemic Hold)
+    "Refuse when harm is clear"      ->  State -1  (Refuse)
+    "Proceed where truth is"         ->  State +1  (Proceed)
+
+The Iron Law (NL=NA):
+    No state transition, transaction, API call, or physical actuation may be
+    released unless a corresponding log entry has been fully committed to a
+    local hardware-backed non-volatile accumulator prior to execution.
+    No exception. No override. No privilege level reaches this boundary.
+
+This file demonstrates:
+    1. TLEngine instantiation with institution-calibrated thresholds (required)
+    2. All three constitutional states: PROCEED, EPISTEMIC_HOLD, REFUSE
+    3. Mandate verification (Pillars V and VI): binary overrides confidence
+    4. The NL=NA write-before-act pattern
+    5. The Goukassian Principle artifact structure
+    6. The Immutable Ledger pattern (Pillar II)
+    7. Audit trail export
+    8. Architecture B deployment posture
+
+THRESHOLD GOVERNANCE:
+    TLEngine raises ValueError if instantiated without explicit threshold values.
+    There are no universal defaults. Every institution must calibrate its own
+    thresholds through the process described in docs/Threshold_Calibration.md.
+    The values used in this file are labeled as quickstart demonstration values.
+    Do not use them in production.
 """
 
-from ternary_logic import TLDecisionEngine, TLState
-from ternary_logic.eight_pillars import EightPillarsFramework
 import hashlib
 import json
-from datetime import datetime
+import uuid
+from datetime import datetime, timezone, timedelta
+from typing import Dict, Any, Optional
 
-def main():
-    print("\n╔══════════════════════════════════════════════════════════════════════╗")
-    print("║   Ternary Logic Framework - Quick Start with Eight Pillars          ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-    
-    # Initialize the decision engine with Eight Pillars
-    engine = TLDecisionEngine(halt_threshold=0.3, hold_threshold=0.7, domain="financial")
-    eight_pillars = EightPillarsFramework()
-    
-    # Pillar 3: Goukassian Principle - Validate all pillars active
-    if not eight_pillars.validate_goukassian_principle():
-        print("WARNING: Not all Eight Pillars active - not fully TL compliant")
-    
-    # Pillar 2: Immutable Ledger
-    decision_ledger = []
-    
-    # Pillar 4: Decision Logs
-    decision_logs = []
-    
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("Example 1: Clear Positive Decision")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    
-    # Strong positive signals across all criteria
-    criteria_positive = {
-        'market_sentiment': 0.8,      # Strong positive
-        'technical_indicators': 0.6,  # Moderately positive  
-        'volume_analysis': 0.7,       # Good volume
-        'fundamental_analysis': 0.9,  # Very strong fundamentals
-        'regulatory_compliance': 0.95 # Pillar 5: Economic Rights
-    }
-    
-    result = engine.decide(criteria_positive, context="Strong bull market conditions")
-    log_entry = create_decision_log(result, criteria_positive, "Example 1")
-    decision_logs.append(log_entry)
-    ledger_entry = create_ledger_entry(log_entry, decision_ledger)
-    decision_ledger.append(ledger_entry)
-    
-    print_result(result)
-    print(f"✓ Decision logged (Pillar 4)")
-    print(f"✓ Immutable ledger entry created (Pillar 2)")
-    print()
-    
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("Example 2: Epistemic Hold Activation")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    
-    # Mixed signals with missing critical data
-    criteria_uncertain = {
-        'market_sentiment': 0.3,      # Weak positive
-        'technical_indicators': -0.4, # Negative signal
-        'volume_analysis': None,      # Missing data!
-        'fundamental_analysis': 0.2,  # Weak positive
-        'regulatory_compliance': None # Missing compliance check
-    }
-    
-    result = engine.decide(criteria_uncertain, context="Contradictory market signals")
-    log_entry = create_decision_log(result, criteria_uncertain, "Example 2")
-    decision_logs.append(log_entry)
-    ledger_entry = create_ledger_entry(log_entry, decision_ledger)
-    decision_ledger.append(ledger_entry)
-    
-    print_result(result)
-    
-    if result.state == TLState.EPISTEMIC_HOLD:
-        print(f"\n⏸️  Pillar 1: Epistemic Hold activated (300ms pause)")
-        print("   Uncertainty exceeds threshold - deliberation required")
-    print()
-    
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("Example 3: Clear Negative Decision")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    
-    # Strong negative signals across all criteria
-    criteria_negative = {
-        'market_sentiment': -0.8,     # Very bearish
-        'technical_indicators': -0.6, # Technical breakdown
-        'volume_analysis': -0.5,      # Poor volume
-        'fundamental_analysis': -0.7, # Weak fundamentals
-        'esg_compliance': -0.4        # Pillar 6: Poor ESG scores
-    }
-    
-    result = engine.decide(criteria_negative, context="Bear market conditions")
-    log_entry = create_decision_log(result, criteria_negative, "Example 3")
-    decision_logs.append(log_entry)
-    ledger_entry = create_ledger_entry(log_entry, decision_ledger)
-    decision_ledger.append(ledger_entry)
-    
-    print_result(result)
-    print()
-    
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("Example 4: Custom Weights with Eight Pillars")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    
-    # Same data as Example 2, but with custom importance weights
-    weights = {
-        'market_sentiment': 0.2,      # Lower importance
-        'technical_indicators': 0.3,  # Standard importance
-        'volume_analysis': 0.4,       # Higher importance (even though missing!)
-        'fundamental_analysis': 0.05, # Lower importance
-        'regulatory_compliance': 0.05 # Pillar 5 consideration
-    }
-    
-    result = engine.decide(criteria_uncertain, weights=weights, 
-                          context="Weighted analysis with volume focus")
-    log_entry = create_decision_log(result, criteria_uncertain, "Example 4")
-    decision_logs.append(log_entry)
-    ledger_entry = create_ledger_entry(log_entry, decision_ledger)
-    decision_ledger.append(ledger_entry)
-    
-    print_result(result)
-    
-    # Pillar 7: Hybrid Shield - Create privacy-preserving public record
-    public_record = create_public_record(result)
-    print(f"\n🛡️  Pillar 7: Public record created (privacy preserved)")
-    print(f"   Proof hash: {public_record['proof_hash']}")
-    print()
-    
-    # Pillar 8: Blockchain Anchor (simulated)
-    if len(decision_logs) >= 4:
-        anchor = create_blockchain_anchor(decision_logs)
-        print(f"⚓ Pillar 8: Blockchain anchor created")
-        print(f"   Merkle root: {anchor['merkle_root']}")
-        print()
-    
-    print("═══════════════════════════════════════")
-    print("Decision History Summary with Eight Pillars")
-    print("═══════════════════════════════════════")
-    
-    summary = engine.get_decision_summary()
-    print(f"Total Decisions Made: {summary['total_decisions']}")
-    print(f"Average Confidence: {summary['average_confidence']:.2f}")
-    print(f"Epistemic Hold Rate: {summary['epistemic_hold_rate']:.1%}")
-    
-    print(f"\nEight Pillars Accountability Metrics:")
-    print(f"  • Immutable Ledger Entries: {len(decision_ledger)}")
-    print(f"  • Decision Logs Created: {len(decision_logs)}")
-    print(f"  • Goukassian Principle: {'✓ Validated' if eight_pillars.validation_status else '✗ Failed'}")
-    print(f"  • Epistemic Holds: {summary.get('epistemic_hold_count', 0)}")
-    
-    print("\nDecision Distribution:")
-    for state, count in summary['state_distribution'].items():
-        percentage = (count / summary['total_decisions']) * 100
-        print(f"  {state}: {count} ({percentage:.1f}%)")
-    
-    print("\n" + "═" * 60)
-    print("Sovereign-Grade Accountability Achieved")
-    print("═" * 60)
-    print("\nThe Eight Pillars Framework ensures:")
-    print("  • Every decision has an immutable audit trail")
-    print("  • Uncertainty triggers Epistemic Hold (300ms pause)")
-    print("  • Complete regulatory compliance tracking")
-    print("  • Privacy-preserving transparency")
-    print("  • Cryptographic proof of all decisions")
-    print()
-    print('"When truth becomes measurable, power has nowhere left to hide."')
-    print("                                        — Lev Goukassian")
+# TL Framework imports
+from ternary_logic import TLEngine, TLState, TLValue, verify_mandate, calculate_confidence
 
-def print_result(result):
-    """Helper function to format and print results"""
-    
-    # State with emoji
-    state_emoji = {
-        TLState.PROCEED: "✅",
-        TLState.HALT: "❌", 
-        TLState.EPISTEMIC_HOLD: "⏸️"
-    }
-    
-    print(f"Decision: {state_emoji[result.state]} {result.state.name}")
-    print(f"Confidence: {result.confidence:.2%}")
-    print(f"Reasoning: {result.reasoning}")
-    
-    if result.clarifying_questions:
-        print("Clarifying Questions for Epistemic Hold:")
-        for i, question in enumerate(result.clarifying_questions[:3], 1):
-            print(f"  {i}. {question}")
-        if len(result.clarifying_questions) > 3:
-            print(f"  ... and {len(result.clarifying_questions)-3} more")
-    
-    if result.metadata and result.metadata.get('missing_data'):
-        missing = result.metadata['missing_data']
-        print(f"Missing Data: {', '.join(missing)}")
 
-def create_decision_log(result, criteria, example_name):
-    """Pillar 4: Create comprehensive Decision Log"""
+# =============================================================================
+# SECTION 1: Goukassian Principle Artifacts
+# Every TL transaction carries three artifacts: lantern, signature, license.
+# These constitute the constitutional identity of the deployment.
+# =============================================================================
+
+def create_goukassian_principle_block(
+    decision_payload: str,
+    agent_id: str,
+    license_scopes: list
+) -> Dict[str, Any]:
+    """
+    Construct the three Goukassian Principle artifacts for a transaction.
+
+    In production these are cryptographically generated by the Governance Lane
+    HSM. In this demonstration they are constructed as representative structures.
+
+    Returns a GoukassianPrincipleBlock matching tl_schema.json specification.
+    """
+    payload_bytes = decision_payload.encode("utf-8")
+
+    # Lantern: transparency artifact, SHA-256 of the decision payload
+    lantern_hash = hashlib.sha256(payload_bytes).hexdigest()
+
+    # Signature: identity artifact, SHA-512 of agent_id + payload
+    # (Production: Ed25519 or ES256 from HSM. SHIPPING MUST NOT emit PQC.)
+    agent_signature = hashlib.sha512(
+        (agent_id + decision_payload).encode("utf-8")
+    ).hexdigest()
+
     return {
-        'timestamp': datetime.now().isoformat(),
-        'example': example_name,
-        'state': result.state.value,
-        'state_name': result.state.name,
-        'confidence': result.confidence,
-        'criteria': criteria,
-        'reasoning': result.reasoning,
-        'epistemic_hold': result.state == TLState.EPISTEMIC_HOLD
+        "lantern": {
+            "artifactName": "lantern",
+            "lanternHash": lantern_hash
+        },
+        "signature": {
+            "artifactName": "signature",
+            "agentSignature": agent_signature
+        },
+        "license": {
+            "artifactName": "license",
+            "licenseScope": license_scopes
+        }
     }
 
-def create_ledger_entry(decision_log, ledger):
-    """Pillar 2: Create Immutable Ledger entry"""
-    previous_hash = ledger[-1]['hash'] if ledger else 'genesis'
-    
+
+# =============================================================================
+# SECTION 2: NL=NA Log Entry (Write Before Act)
+# Every decision must produce a committed log entry before any action fires.
+# This is the constitutional implementation of the Iron Law.
+# =============================================================================
+
+def commit_log_entry(
+    decision: TLValue,
+    engine: TLEngine,
+    goukassian_block: Dict[str, Any],
+    previous_hash: str,
+    deployment_mode: str = "ARCHITECTURE_B"
+) -> Dict[str, Any]:
+    """
+    Commit a governance log entry to the Immutable Ledger (Pillar II).
+
+    In production this is handled by the Governance Lane and committed to
+    hardware-backed non-volatile storage before any actuation fires.
+    The NL=NA invariant: this entry MUST exist before the decision is acted on.
+
+    Returns a TGLF-compatible record with Merkle hash chain linkage.
+    """
+    log_id = str(uuid.uuid4())
+    committed_at = datetime.now(timezone.utc).isoformat()
+
+    # Canonical serialization of decision content (RFC 8785 in production)
+    canonical_payload = json.dumps({
+        "logId": log_id,
+        "state": decision.state.name,
+        "stateValue": decision.state.value,
+        "confidence": decision.confidence,
+        "reasoning": decision.reasoning,
+        "committedAt": committed_at
+    }, sort_keys=True)
+
+    # SHA-256 hash of canonical payload
+    log_hash = hashlib.sha256(canonical_payload.encode("utf-8")).hexdigest()
+
+    # Merkle hash chain: each entry references its predecessor
+    merkle_root = hashlib.sha256(
+        (previous_hash + log_hash).encode("utf-8")
+    ).hexdigest()
+
+    # PUF attestation: Architecture B uses NULL_PUF_DEPLOYMENT sentinel
+    # MT hardware deployments replace this with SHA3-256(K_PUF || serial || nonce)
+    puf_attest = (
+        "NULL_PUF_DEPLOYMENT"
+        if deployment_mode == "ARCHITECTURE_B"
+        else "FULL_PUF_ATTESTATION_REQUIRED"
+    )
+
     entry = {
-        'index': len(ledger),
-        'timestamp': decision_log['timestamp'],
-        'decision_hash': hashlib.sha256(json.dumps(decision_log, sort_keys=True).encode()).hexdigest()[:16],
-        'previous_hash': previous_hash,
-        'state': decision_log['state']
+        "logId": log_id,
+        "currentState": decision.state.value,
+        "stateLabel": decision.state.name,
+        "processActive": {
+            TLState.PROCEED: "ProceedAuthorized",
+            TLState.EPISTEMIC_HOLD: "GovernancePause",
+            TLState.REFUSE: "RefusalPermanent"
+        }[decision.state],
+        "confidence": decision.confidence,
+        "reasoning": decision.reasoning,
+        "logHash": log_hash,
+        "merkleRoot": merkle_root,
+        "previousHash": previous_hash,
+        "committedAt": committed_at,
+        "goukassianPrinciple": goukassian_block,
+        "pufAttestation": puf_attest,
+        "architectureMode": deployment_mode,
+        "engineConfig": {
+            "proceedThreshold": engine.proceed_threshold,
+            "holdThreshold": engine.hold_threshold
+        }
     }
-    
-    entry['hash'] = hashlib.sha256(json.dumps(entry, sort_keys=True).encode()).hexdigest()[:16]
+
     return entry
 
-def create_public_record(result):
-    """Pillar 7: Hybrid Shield - Create public record without sensitive data"""
+
+def build_permission_token(log_entry: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """
+    Construct a PermissionToken for PROCEED decisions.
+
+    The Permission Token is the cryptographic key that opens the actuation gate.
+    Without a valid token issued by the Governance Lane, no proposed PROCEED
+    action may execute. This is the NL=NA Iron Law.
+
+    laneOrigin is const "GOVERNANCE_LANE": Inference Lane tokens are
+    schema-invalid. No token from outside the Governance Lane can authorize
+    execution. (tl_schema.json PermissionToken_v1_0_0, NL=NA Layer 2.)
+
+    Returns None if the decision state is not PROCEED.
+    """
+    if log_entry["currentState"] != TLState.PROCEED.value:
+        return None
+
+    issued_at = datetime.now(timezone.utc)
+    expires_at = issued_at + timedelta(milliseconds=300000)  # 300s max lifetime
+
     return {
-        'timestamp': datetime.now().isoformat(),
-        'proof_hash': hashlib.sha256(str(result).encode()).hexdigest()[:16],
-        'state': result.state.name,
-        'confidence_band': 'High' if result.confidence > 0.7 else 'Medium' if result.confidence > 0.4 else 'Low',
-        'privacy_preserved': True
+        "tokenId": str(uuid.uuid4()),
+        "logHash": log_entry["logHash"],
+        "merkleRoot": log_entry["merkleRoot"],
+        "laneOrigin": "GOVERNANCE_LANE",  # NL=NA Layer 2 const. Schema-invalid for any other value.
+        "issuedAt": issued_at.isoformat(),
+        "expiresAt": expires_at.isoformat(),
+        "maxLifetimeMs": 300000,
+        "revocationStatus": "ACTIVE",
+        "signerKeyId": "hsm-key-demo-001",
+        "epochTimestamp": int(issued_at.timestamp()),
+        "signatureValue": hashlib.sha256(
+            log_entry["logHash"].encode()
+        ).hexdigest()  # Production: HSM Ed25519 or ES256 signature
     }
 
-def create_blockchain_anchor(decision_logs):
-    """Pillar 8: Create blockchain Anchor for permanent verification"""
-    combined_hash = hashlib.sha256(
-        json.dumps(decision_logs, sort_keys=True).encode()
-    ).hexdigest()
-    
-    return {
-        'merkle_root': combined_hash[:32],
-        'decision_count': len(decision_logs),
-        'timestamp': datetime.now().isoformat(),
-        'blockchain': 'Ethereum',
-        'status': 'PENDING_CONFIRMATION'
+
+# =============================================================================
+# SECTION 3: Immutable Ledger (Pillar II)
+# Append-only hash chain. Each entry references its predecessor.
+# =============================================================================
+
+class ImmutableLedger:
+    """
+    Pillar II: Immutable audit ledger with Merkle hash chain.
+
+    Every governance decision is committed here before any action fires.
+    In production this is hardware-backed non-volatile storage with
+    TPM 2.0 PCR measurements and Thales Luna 7 HSM signing.
+    """
+
+    def __init__(self):
+        self._entries = []
+        self._genesis_hash = hashlib.sha256(b"TL_GENESIS").hexdigest()
+
+    @property
+    def previous_hash(self) -> str:
+        if not self._entries:
+            return self._genesis_hash
+        return self._entries[-1]["merkleRoot"]
+
+    def commit(self, entry: Dict[str, Any]) -> str:
+        """Commit a log entry. Returns the log hash."""
+        self._entries.append(entry)
+        return entry["logHash"]
+
+    @property
+    def size(self) -> int:
+        return len(self._entries)
+
+    def get_summary(self) -> Dict[str, Any]:
+        return {
+            "totalEntries": self.size,
+            "latestMerkleRoot": self.previous_hash,
+            "states": {
+                "PROCEED": sum(1 for e in self._entries if e["currentState"] == 1),
+                "EPISTEMIC_HOLD": sum(1 for e in self._entries if e["currentState"] == 0),
+                "REFUSE": sum(1 for e in self._entries if e["currentState"] == -1)
+            }
+        }
+
+
+# =============================================================================
+# SECTION 4: Epistemic Hold (Pillar I)
+# When truth is uncertain, the system pauses. Not a null. Not an error.
+# A first-class constitutional state of mandatory hesitation.
+# =============================================================================
+
+def handle_epistemic_hold(
+    decision: TLValue,
+    log_entry: Dict[str, Any]
+) -> Dict[str, Any]:
+    """
+    Pillar I: Handle Epistemic Hold (State 0).
+
+    Creates an EscrowRecord with resolution deadline. The system pauses.
+    No actuation fires. Oracle scan initiated. Resolution must be +1 or -1.
+    State 0 is constitutionally invalid as a resolution target.
+
+    In production this activates the GovernancePause workflow and creates
+    an EscrowRecord committed to the Immutable Ledger before any escalation.
+    """
+    resolution_deadline = (
+        datetime.now(timezone.utc) + timedelta(hours=4)
+    ).isoformat()
+
+    escrow_record = {
+        "escrowId": str(uuid.uuid4()),
+        "heldState": 0,
+        "initiatedAt": log_entry["committedAt"],
+        "initiatingDecisionId": log_entry["logId"],
+        "holdRationale": {
+            "rationale": decision.reasoning,
+            "uncertaintyScore": 1.0 - decision.confidence,
+            "pillarImplicated": decision.metadata.get(
+                "pillarImplicated", "EpistemicHold"
+            )
+        },
+        "resolutionDeadline": resolution_deadline,
+        "immutableLogHash": log_entry["logHash"],
+        "holdDurationMs": 0,
+        "auditLaneStatus": {
+            "stage": "GOVERNANCE_LANE_EVALUATING",
+            "percentComplete": 0
+        },
+        "requiredConditions": [
+            {
+                "conditionId": "data-quality-resolved",
+                "description": "All required data sources verified and consistent",
+                "met": False
+            },
+            {
+                "conditionId": "mandate-checks-passed",
+                "description": "Economic Rights and Sustainable Capital mandates verified",
+                "met": False
+            }
+        ],
+        "windowComparatorReading": {
+            "readingAvailable": False,
+            "softwareEnforcementActive": True
+        }
     }
+
+    return {
+        "state": "EPISTEMIC_HOLD",
+        "processActive": "GovernancePause",
+        "escrowRecord": escrow_record,
+        "permittedResolutionStates": [1, -1],  # State 0 is not a valid resolution
+        "message": (
+            "System paused. Truth not yet verified. "
+            "Resolution requires +1 (Proceed) or -1 (Refuse). "
+            "State 0 is constitutionally invalid as a resolution target."
+        )
+    }
+
+
+# =============================================================================
+# SECTION 5: Main Quickstart Demonstration
+# =============================================================================
+
+def run_quickstart():
+    """
+    Complete demonstration of the Ternary Logic Framework.
+
+    Shows the full constitutional lifecycle:
+        1. Threshold governance (required, no defaults)
+        2. All three states with correct handling
+        3. Mandate verification overriding confidence
+        4. NL=NA write-before-act pattern
+        5. Goukassian Principle artifacts
+        6. Immutable Ledger with hash chain
+        7. Permission Token for PROCEED
+        8. Audit trail export
+    """
+
+    print()
+    print("=" * 70)
+    print("  TERNARY LOGIC FRAMEWORK: QUICKSTART EXAMPLE")
+    print("  Lev Goukassian (ORCID: 0009-0006-5966-1243)")
+    print("=" * 70)
+
+    # -------------------------------------------------------------------------
+    # STEP 1: Instantiate TLEngine with institution-calibrated thresholds.
+    # These are QUICKSTART DEMONSTRATION VALUES ONLY.
+    # Production deployments must derive their own values through the
+    # calibration process in docs/Threshold_Calibration.md.
+    # TLEngine raises ValueError without explicit threshold values.
+    # -------------------------------------------------------------------------
+
+    print()
+    print("STEP 1: Threshold governance")
+    print()
+    print("  Demonstrating ValueError on missing thresholds:")
+    try:
+        bad_engine = TLEngine(proceed_threshold=None, hold_threshold=None)
+    except ValueError as e:
+        print(f"  ValueError raised (expected): {str(e)[:80]}...")
+
+    # QUICKSTART DEMONSTRATION VALUES: not recommendations, not standards.
+    # See docs/Threshold_Calibration.md for production calibration methodology.
+    DEMO_PROCEED_THRESHOLD = 0.75
+    DEMO_HOLD_THRESHOLD = 0.35
+
+    engine = TLEngine(
+        proceed_threshold=DEMO_PROCEED_THRESHOLD,
+        hold_threshold=DEMO_HOLD_THRESHOLD,
+        epistemic_hold_rate_target=0.20
+    )
+    print()
+    print(f"  Engine initialized (demo thresholds: not for production use)")
+    print(f"  PROCEED >= {engine.proceed_threshold}")
+    print(f"  REFUSE  <  {engine.hold_threshold}")
+    print(f"  EPISTEMIC_HOLD: between thresholds")
+
+    # -------------------------------------------------------------------------
+    # STEP 2: Initialize Immutable Ledger (Pillar II)
+    # -------------------------------------------------------------------------
+
+    ledger = ImmutableLedger()
+    license_scopes = ["financial.trading", "audit.governance", "compliance.regulatory"]
+
+    print()
+    print("STEP 2: Immutable Ledger initialized (Pillar II)")
+
+    # -------------------------------------------------------------------------
+    # STEP 3: PROCEED decision (State +1)
+    # Clear signals, confidence well above proceed_threshold.
+    # -------------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("EXAMPLE 1: PROCEED (State +1)")
+    print("-" * 70)
+
+    # Confidence clearly above proceed_threshold
+    confidence_proceed = engine.proceed_threshold + 0.10
+
+    decision_proceed = engine.evaluate(
+        confidence=confidence_proceed,
+        reasoning=(
+            "All market indicators aligned. Data quality verified across "
+            "three independent sources. Model agreement within tolerance. "
+            "Regulatory checks passed. Mandate verification complete."
+        ),
+        metadata={
+            "domain": "financial_trading",
+            "assetId": "ASSET-001",
+            "signalSources": 3
+        }
+    )
+
+    assert decision_proceed.state == TLState.PROCEED
+
+    # NL=NA: commit log entry BEFORE any action fires
+    goukassian_proceed = create_goukassian_principle_block(
+        decision_payload=decision_proceed.reasoning,
+        agent_id="governance-agent-001",
+        license_scopes=license_scopes
+    )
+    log_proceed = commit_log_entry(
+        decision=decision_proceed,
+        engine=engine,
+        goukassian_block=goukassian_proceed,
+        previous_hash=ledger.previous_hash
+    )
+    ledger.commit(log_proceed)
+
+    # Permission Token: the only key that opens the actuation gate
+    token = build_permission_token(log_proceed)
+    assert token is not None
+    assert token["laneOrigin"] == "GOVERNANCE_LANE"
+
+    print(f"  State:           {decision_proceed.state.name} ({decision_proceed.state.value})")
+    print(f"  Confidence:      {decision_proceed.confidence:.3f}")
+    print(f"  Position:        {decision_proceed.position_label}")
+    print(f"  Log committed:   {log_proceed['logHash'][:16]}...")
+    print(f"  Merkle root:     {log_proceed['merkleRoot'][:16]}...")
+    print(f"  Permission token: {token['tokenId'][:16]}...")
+    print(f"  laneOrigin:      {token['laneOrigin']}")
+    print(f"  Token expires:   {token['expiresAt']}")
+    print(f"  NL=NA:           Log committed before actuation authorized")
+
+    # -------------------------------------------------------------------------
+    # STEP 4: EPISTEMIC_HOLD decision (State 0)
+    # Confidence in the uncertainty band. Truth not yet verified.
+    # -------------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("EXAMPLE 2: EPISTEMIC_HOLD (State 0)")
+    print("-" * 70)
+
+    # Confidence in the uncertainty band between thresholds
+    confidence_hold = (engine.proceed_threshold + engine.hold_threshold) / 2
+
+    decision_hold = engine.evaluate(
+        confidence=confidence_hold,
+        reasoning=(
+            "Conflicting signals from primary and secondary data sources. "
+            "Model agreement variance exceeds 30 percent. "
+            "Two required data fields missing from oracle feed. "
+            "Regulatory flags pending review. Pausing for deliberation."
+        ),
+        metadata={
+            "domain": "financial_trading",
+            "conflicts": ["primary_bearish", "secondary_bullish"],
+            "missingData": ["settlement_finality", "counterparty_exposure"],
+            "pillarImplicated": "EpistemicHold"
+        }
+    )
+
+    assert decision_hold.state == TLState.EPISTEMIC_HOLD
+
+    # NL=NA: commit log entry BEFORE hold activates
+    goukassian_hold = create_goukassian_principle_block(
+        decision_payload=decision_hold.reasoning,
+        agent_id="governance-agent-001",
+        license_scopes=license_scopes
+    )
+    log_hold = commit_log_entry(
+        decision=decision_hold,
+        engine=engine,
+        goukassian_block=goukassian_hold,
+        previous_hash=ledger.previous_hash
+    )
+    ledger.commit(log_hold)
+
+    # No Permission Token issued for Epistemic Hold
+    token_hold = build_permission_token(log_hold)
+    assert token_hold is None
+
+    # EscrowRecord created (Pillar I)
+    hold_result = handle_epistemic_hold(decision_hold, log_hold)
+
+    print(f"  State:           {decision_hold.state.name} ({decision_hold.state.value})")
+    print(f"  Confidence:      {decision_hold.confidence:.3f}")
+    print(f"  Position:        {decision_hold.position_label}")
+    print(f"  processActive:   {hold_result['processActive']}")
+    print(f"  Log committed:   {log_hold['logHash'][:16]}...")
+    print(f"  EscrowRecord:    {hold_result['escrowRecord']['escrowId'][:16]}...")
+    print(f"  Resolution by:   {hold_result['escrowRecord']['resolutionDeadline']}")
+    print(f"  Valid resolution states: {hold_result['permittedResolutionStates']}")
+    print(f"  (State 0 is constitutionally invalid as a resolution target)")
+    print(f"  Permission token: None (Epistemic Hold blocks actuation)")
+    print(f"  NL=NA:           Log committed before hold activates")
+
+    # -------------------------------------------------------------------------
+    # STEP 5: REFUSE decision (State -1)
+    # Confidence below hold_threshold. Harm is clear.
+    # -------------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("EXAMPLE 3: REFUSE (State -1)")
+    print("-" * 70)
+
+    # Confidence clearly below hold_threshold
+    confidence_refuse = engine.hold_threshold - 0.10
+
+    decision_refuse = engine.evaluate(
+        confidence=confidence_refuse,
+        reasoning=(
+            "Market manipulation pattern detected. Sanctions screening hit. "
+            "AML flag raised. Confidence well below hold threshold. "
+            "Constitutional harm threshold crossed. Refusing."
+        ),
+        metadata={
+            "domain": "financial_trading",
+            "threatVector": "MARKET_MANIPULATION",
+            "regulatoryTrigger": "AML_FLAG"
+        }
+    )
+
+    assert decision_refuse.state == TLState.REFUSE
+
+    # NL=NA: commit log entry BEFORE refusal fires
+    goukassian_refuse = create_goukassian_principle_block(
+        decision_payload=decision_refuse.reasoning,
+        agent_id="governance-agent-001",
+        license_scopes=license_scopes
+    )
+    log_refuse = commit_log_entry(
+        decision=decision_refuse,
+        engine=engine,
+        goukassian_block=goukassian_refuse,
+        previous_hash=ledger.previous_hash
+    )
+    ledger.commit(log_refuse)
+
+    # No Permission Token issued for Refuse
+    token_refuse = build_permission_token(log_refuse)
+    assert token_refuse is None
+
+    print(f"  State:           {decision_refuse.state.name} ({decision_refuse.state.value})")
+    print(f"  Confidence:      {decision_refuse.confidence:.3f}")
+    print(f"  Position:        {decision_refuse.position_label}")
+    print(f"  processActive:   RefusalPermanent")
+    print(f"  refusalIsPermanent: True (default)")
+    print(f"  Log committed:   {log_refuse['logHash'][:16]}...")
+    print(f"  Permission token: None (Refuse blocks actuation)")
+    print(f"  NL=NA:           Log committed before refusal fires")
+
+    # -------------------------------------------------------------------------
+    # STEP 6: Mandate verification (Pillars V and VI)
+    # Binary pass/fail overrides confidence score entirely.
+    # Even confidence = 1.0 does not prevent Epistemic Hold if mandate fails.
+    # -------------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("EXAMPLE 4: Mandate Verification Override (Pillars V and VI)")
+    print("-" * 70)
+
+    # Economic Rights mandate check (Pillar V)
+    transaction_rights = {
+        "ownership_verified": True,
+        "consent_obtained": True,
+        "provenance_signed": False,  # FAILS
+        "regulatory_access": True
+    }
+    rights_result = verify_mandate("economic_rights", transaction_rights)
+
+    print(f"  Economic Rights mandate:")
+    print(f"    provenance_signed: False (mandate fails)")
+    print(f"    State forced to:   {rights_result.state.name}")
+    print(f"    Confidence forced: {rights_result.confidence}")
+    print(f"    Failed checks:     {rights_result.metadata.get('failed_checks')}")
+    print(f"    (High confidence cannot override a failed mandate check)")
+
+    # Sustainable Capital mandate check (Pillar VI)
+    transaction_esg = {
+        "esg_verified": False,   # FAILS
+        "emissions_anchored": True,
+        "use_of_proceeds_tracked": True
+    }
+    esg_result = verify_mandate("sustainable_capital", transaction_esg)
+
+    print()
+    print(f"  Sustainable Capital mandate (Pillar VI):")
+    print(f"    esg_verified: False (mandate fails)")
+    print(f"    State forced to:   {esg_result.state.name}")
+    print(f"    Confidence forced: {esg_result.confidence}")
+    print(f"    Failed checks:     {esg_result.metadata.get('failed_checks')}")
+
+    # Commit both mandate failures to ledger
+    for mandate_result, label in [
+        (rights_result, "economic-rights-failure"),
+        (esg_result, "esg-failure")
+    ]:
+        gp = create_goukassian_principle_block(
+            decision_payload=mandate_result.reasoning,
+            agent_id="mandate-verifier-001",
+            license_scopes=license_scopes
+        )
+        log_m = commit_log_entry(
+            decision=mandate_result,
+            engine=engine,
+            goukassian_block=gp,
+            previous_hash=ledger.previous_hash,
+        )
+        ledger.commit(log_m)
+
+    # -------------------------------------------------------------------------
+    # STEP 7: Ledger and engine statistics
+    # -------------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("LEDGER SUMMARY (Pillar II)")
+    print("-" * 70)
+
+    ledger_summary = ledger.get_summary()
+    print(f"  Total entries:   {ledger_summary['totalEntries']}")
+    print(f"  PROCEED:         {ledger_summary['states']['PROCEED']}")
+    print(f"  EPISTEMIC_HOLD:  {ledger_summary['states']['EPISTEMIC_HOLD']}")
+    print(f"  REFUSE:          {ledger_summary['states']['REFUSE']}")
+    print(f"  Latest root:     {ledger_summary['latestMerkleRoot'][:16]}...")
+
+    print()
+    print("-" * 70)
+    print("ENGINE STATISTICS")
+    print("-" * 70)
+
+    stats = engine.get_statistics()
+    print(f"  Total decisions:     {stats['total_decisions']}")
+    print(f"  Epistemic hold rate: {stats['epistemic_hold_rate']:.1%}")
+    print(f"  Target hold rate:    {stats['target_hold_rate']:.1%}")
+    print(f"  Average confidence:  {stats['average_confidence']:.3f}")
+    print(f"  Unresolved holds:    {stats['unresolved_holds']}")
+
+    # -------------------------------------------------------------------------
+    # STEP 8: Audit trail export (Pillar IV: Decision Logs)
+    # -------------------------------------------------------------------------
+
+    audit_output = "/tmp/tl_quickstart_audit.json"
+    engine.export_audit_trail(audit_output)
+
+    print()
+    print("-" * 70)
+    print("AUDIT TRAIL EXPORTED (Pillar IV: Decision Logs)")
+    print("-" * 70)
+    print(f"  File:  {audit_output}")
+    print(f"  Contains: engine config (with institution thresholds),")
+    print(f"            complete decision log, all Epistemic Hold events.")
+    print(f"  This file is the forensic record of every decision made.")
+    print(f"  NL=NA: every entry was committed before its decision fired.")
+
+    # -------------------------------------------------------------------------
+    # STEP 9: Architecture B posture summary
+    # -------------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("ARCHITECTURE B: CURRENT SHIPPING BASELINE")
+    print("-" * 70)
+    print(f"  pufAttestationMode:        ARCHITECTURE_B")
+    print(f"  ditlIntegrated:            False")
+    print(f"  pufAttestation sentinel:   NULL_PUF_DEPLOYMENT")
+    print(f"  windowComparatorReading:   softwareEnforcementActive = True")
+    print(f"  NL=NA Layers 1-4:          Fully operative via software enforcement")
+    print(f"  NL=NA Layer 5 (on-chain):  Active and unchanged")
+    print(f"  DITL/MT silicon:           Pending fabrication (TSMC N2 CoWoS)")
+    print(f"  Architecture B does not reduce the Iron Law's authority.")
+    print(f"  It records honestly that physical silicon is pending fabrication.")
+
+    print()
+    print("=" * 70)
+    print("  QUICKSTART COMPLETE")
+    print()
+    print("  Three immutable mandates:")
+    print("    No Spy. No Weapon. No Switch Off.")
+    print()
+    print("  The Goukassian Vow:")
+    print('    "Pause when truth is uncertain"  ->  State  0 (Epistemic Hold)')
+    print('    "Refuse when harm is clear"      ->  State -1 (Refuse)')
+    print('    "Proceed where truth is"         ->  State +1 (Proceed)')
+    print("=" * 70)
+    print()
+
 
 if __name__ == "__main__":
-    main()
+    run_quickstart()
 
-## Contact Information
 
-**Created by Lev Goukassian**
-* **ORCID**: 0009-0006-5966-1243
-* **Email**: leogouk@gmail.com
-
-**Successor Contact**: support@tl-goukassian.org  
-(see [Succession Charter](/memorial/Succession_Charter.md))
+"""
+---
+Creator: Lev Goukassian (ORCID: 0009-0006-5966-1243)
+Email: leogouk@gmail.com
+Repository: https://github.com/FractonicMind/TernaryLogic
+Successor: support@tl-goukassian.org
+DOI 1: 10.1007/s43681-025-00910-6
+DOI 2: 10.1007/s43681-026-01124-0
+---
+"""

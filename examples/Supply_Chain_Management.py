@@ -1,1076 +1,1560 @@
-Supply_Chain_Management.py
 """
-Ternary Logic Framework - Supply Chain Management with Eight Pillars
+Ternary Logic Framework: Supply Chain Management
+=================================================
+
 Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)
 Contact: leogouk@gmail.com
+Successor: support@tl-goukassian.org
+Repository: https://github.com/FractonicMind/TernaryLogic
 
-This example demonstrates how the Ternary Logic framework provides
-sovereign-grade accountability for supply chain decisions through
-the Eight Pillars architecture, preventing overreactions while
-ensuring complete audit trails.
+DOI 1: 10.1007/s43681-025-00910-6, Auditable AI: Tracing the Ethical History of a Model
+DOI 2: 10.1007/s43681-026-01124-0, A Ternary Logic Framework for Institutional Governance
 
-"The Epistemic Hold prevents supply chain overreactions."
+The Goukassian Vow:
+    "Pause when truth is uncertain"  ->  State  0  (Epistemic Hold)
+    "Refuse when harm is clear"      ->  State -1  (Refuse)
+    "Proceed where truth is"         ->  State +1  (Proceed)
+
+The Epistemic Hold prevents supply chain overreactions.
+
+This example demonstrates TL applied to global supply chain management:
+    - Disruption severity and duration assessment
+    - Alternative route viability analysis
+    - Inventory buffer evaluation (Solvency Protocol analog)
+    - ESG mandate verification: no rerouting to non-compliant suppliers
+    - Labor rights and sanctions screening (Pillar V)
+    - Graduated response via Epistemic Hold vs immediate reroute
+    - NL=NA write-before-act for every supply chain decision
+
+THRESHOLD GOVERNANCE:
+    Supply chain thresholds must be calibrated per industry, commodity,
+    margin profile, and regulatory exposure. A pharmaceutical supply chain
+    and a consumer electronics chain have fundamentally different uncertainty
+    tolerances. No universal values exist.
+    See docs/Threshold_Calibration.md.
+
+WHY EPISTEMIC HOLD MATTERS IN SUPPLY CHAINS:
+    Unlike financial trading where positions can be reversed in milliseconds,
+    supply chain rerouting commits physical resources: shipping containers,
+    warehouse space, customs filings, and supplier contracts. An incorrect
+    reroute decision costs weeks and millions. The Epistemic Hold is not
+    indecision. It is constitutional recognition that irreversible commitments
+    demand verified truth before execution.
 """
 
-import numpy as np
-import pandas as pd
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Tuple
-import json
 import hashlib
+import json
+import uuid
+from datetime import datetime, timezone, timedelta
+from typing import Dict, List, Optional, Any
 
-# Import Ternary Logic Framework
-from ternary_logic import TLDecisionEngine, TLState
-from ternary_logic.core import TLResult
-from ternary_logic.eight_pillars import EightPillarsFramework
+import numpy as np
 
-class GlobalSupplyChainManager:
-    """
-    Global Supply Chain Management using Ternary Logic with Eight Pillars
-    
-    Implements sovereign-grade accountability for supply chain decisions:
-    - PROCEED: High confidence to reroute/change suppliers
-    - HALT: High confidence to maintain current operations
-    - EPISTEMIC_HOLD: Uncertainty detected - graduated response
-    """
-    
-    def __init__(self, 
-                 halt_threshold: float = 0.30,
-                 hold_threshold: float = 0.70,
-                 cost_sensitivity: float = 0.3,
-                 time_sensitivity: float = 0.4):
-        """
-        Initialize Supply Chain Manager with Eight Pillars
-        
-        Args:
-            halt_threshold: Below this confidence, maintain operations
-            hold_threshold: Below this confidence, trigger Epistemic Hold
-            cost_sensitivity: Weight given to cost considerations (0-1)
-            time_sensitivity: Weight given to time/speed considerations (0-1)
-        """
-        self.engine = TLDecisionEngine(
-            halt_threshold=halt_threshold,
-            hold_threshold=hold_threshold,
-            domain="supply_chain"
-        )
-        
-        # Initialize Eight Pillars Framework
-        self.eight_pillars = EightPillarsFramework()
-        
-        self.cost_sensitivity = cost_sensitivity
-        self.time_sensitivity = time_sensitivity
-        
-        # Supply chain state
-        self.active_routes = {}
-        self.inventory_levels = {}
-        
-        # Pillar 2: Immutable Ledger for supply chain decisions
-        self.decision_ledger = []
-        
-        # Pillar 4: Decision Logs for complete audit trail
-        self.decision_logs = []
-        
-        # Pillar 1: Epistemic Hold tracking
-        self.epistemic_holds = []
-        
-        # Risk thresholds
-        self.critical_inventory_threshold = 0.15  # 15% of normal
-        self.high_cost_threshold = 1.5  # 150% of normal costs
-        
-    def analyze_disruption_signals(self, 
-                                 disruption_event: Dict, 
-                                 route_info: Dict,
-                                 market_conditions: Dict) -> Dict[str, float]:
-        """
-        Analyze multiple signals related to supply chain disruption
-        
-        Returns dictionary with disruption assessment signals
-        """
-        signals = {}
-        
-        # Disruption Severity Assessment
-        if 'severity_reports' in disruption_event:
-            signals['disruption_severity'] = self._assess_disruption_severity(
-                disruption_event['severity_reports']
-            )
-        
-        # Duration Estimates
-        if 'duration_estimates' in disruption_event:
-            signals['disruption_duration'] = self._assess_disruption_duration(
-                disruption_event['duration_estimates']
-            )
-        
-        # Alternative Route Viability
-        if 'alternative_routes' in route_info:
-            signals['route_alternatives'] = self._assess_alternative_routes(
-                route_info['alternative_routes'],
-                route_info.get('cost_comparisons', None)
-            )
-        
-        # Inventory Buffer Analysis
-        if 'current_inventory' in market_conditions:
-            signals['inventory_buffer'] = self._assess_inventory_situation(
-                market_conditions['current_inventory'],
-                market_conditions.get('demand_forecast', None)
-            )
-        
-        # Market Impact Assessment
-        if 'customer_commitments' in market_conditions:
-            signals['customer_impact'] = self._assess_customer_impact(
-                market_conditions['customer_commitments'],
-                disruption_event.get('timeline', None)
-            )
-        
-        # Supplier Network Status
-        if 'supplier_network' in route_info:
-            signals['supplier_flexibility'] = self._assess_supplier_network(
-                route_info['supplier_network']
-            )
-        
-        # Financial Impact Analysis
-        if 'cost_implications' in disruption_event:
-            signals['financial_impact'] = self._assess_financial_impact(
-                disruption_event['cost_implications'],
-                market_conditions.get('budget_constraints', None)
-            )
-        
-        # Pillar 6: Sustainable Capital Allocation check
-        if 'sustainability_metrics' in market_conditions:
-            signals['sustainability_impact'] = self._assess_sustainability_impact(
-                market_conditions['sustainability_metrics']
-            )
-        
-        return signals
-    
-    def make_supply_chain_decision(self, 
-                                 disruption_event: Dict,
-                                 route_info: Dict,
-                                 market_conditions: Dict,
-                                 response_options: List[str] = None) -> TLResult:
-        """
-        Make supply chain response decision using Ternary Logic with Eight Pillars
-        
-        Args:
-            disruption_event: Information about the disruption
-            route_info: Current and alternative route information
-            market_conditions: Market demand and inventory data
-            response_options: Available response strategies
-            
-        Returns:
-            TLResult with supply chain recommendation and complete audit trail
-        """
-        
-        # Pillar 3: Goukassian Principle - Validate all pillars active
-        if not self.eight_pillars.validate_goukassian_principle():
-            raise RuntimeError("Goukassian Principle validation failed - Eight Pillars not all active")
-        
-        # Analyze disruption signals
-        signals = self.analyze_disruption_signals(disruption_event, route_info, market_conditions)
-        
-        # Define signal weights based on business priorities
-        weights = self._get_supply_chain_weights(market_conditions)
-        
-        # Apply risk management overlay
-        risk_adjusted_signals = self._apply_supply_chain_risk_management(
-            signals, disruption_event, market_conditions
-        )
-        
-        # Convert to request format for TL engine
-        request = f"Supply chain disruption response: {disruption_event.get('event_type', 'Unknown')}"
-        context = {
-            'signals': risk_adjusted_signals,
-            'weights': weights,
-            'disruption_type': disruption_event.get('event_type'),
-            'timestamp': datetime.now().isoformat()
+# TL Framework imports
+from ternary_logic import TLEngine, TLState, TLValue, verify_mandate
+
+
+# =============================================================================
+# SECTION 1: Governance Artifacts (consistent pattern)
+# =============================================================================
+
+def create_goukassian_principle_block(
+    decision_payload: str,
+    agent_id: str,
+    license_scopes: list
+) -> Dict[str, Any]:
+    """Three Goukassian Principle artifacts. See Quickstart_Example.py."""
+    payload_bytes = decision_payload.encode("utf-8")
+    return {
+        "lantern": {
+            "artifactName": "lantern",
+            "lanternHash": hashlib.sha256(payload_bytes).hexdigest()
+        },
+        "signature": {
+            "artifactName": "signature",
+            "agentSignature": hashlib.sha512(
+                (agent_id + decision_payload).encode("utf-8")
+            ).hexdigest()
+        },
+        "license": {
+            "artifactName": "license",
+            "licenseScope": license_scopes
         }
-        
-        # Make decision using Ternary Logic
-        decision = self.engine.decide(
-            request=request,
-            context=context,
-            scenario="Supply chain disruption response"
-        )
-        
-        # Pillar 1: Track Epistemic Hold if triggered
-        if decision.state == TLState.EPISTEMIC_HOLD:
-            self._record_epistemic_hold(decision, disruption_event, signals)
-        
-        # Pillar 4: Create comprehensive Decision Log
-        decision_log = self._create_decision_log(decision, disruption_event, signals, market_conditions)
-        self.decision_logs.append(decision_log)
-        
-        # Pillar 2: Add to Immutable Ledger
-        ledger_entry = self._create_ledger_entry(decision_log)
-        self.decision_ledger.append(ledger_entry)
-        
-        # Pillar 5: Economic Rights & Transparency - supply chain compliance
-        self._ensure_supply_chain_compliance(decision, disruption_event)
-        
-        # Pillar 7: Hybrid Shield - Privacy-preserving transparency
-        public_record = self._create_public_record(decision, disruption_event)
-        
-        # Pillar 8: Create blockchain Anchor for permanent verification
-        if len(self.decision_logs) % 50 == 0:  # Anchor every 50 decisions
-            anchor = self._create_blockchain_anchor()
-            decision.metadata['blockchain_anchor'] = anchor
-        
-        # Enhance decision with supply chain specific guidance
-        decision = self._enhance_supply_chain_decision(
-            decision, disruption_event, signals, response_options
-        )
-        
-        return decision
-    
-    def implement_response_strategy(self, 
-                                  decision: TLResult, 
-                                  disruption_event: Dict,
-                                  route_info: Dict) -> Dict:
-        """
-        Implement supply chain response with Eight Pillars accountability
-        
-        Returns implementation plan with complete audit trail
-        """
-        
-        implementation_plan = {
-            'decision_type': decision.state.name,
-            'confidence_level': decision.confidence,
-            'implementation_timeline': self._determine_implementation_timeline(decision),
-            'resource_allocation': self._calculate_resource_allocation(decision),
-            'monitoring_requirements': decision.clarifying_questions,
-            'eight_pillars_compliance': {
-                'epistemic_hold': decision.state == TLState.EPISTEMIC_HOLD,
-                'immutable_ledger': True,
-                'goukassian_validated': True,
-                'decision_logged': True,
-                'compliance_verified': True,
-                'sustainability_considered': True,
-                'privacy_preserved': True,
-                'anchoring_scheduled': len(self.decision_logs) % 50 == 0
-            }
+    }
+
+
+def commit_log_entry(
+    decision: TLValue,
+    engine: TLEngine,
+    goukassian_block: Dict[str, Any],
+    previous_hash: str,
+    extra_context: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
+    """Commit governance log entry. NL=NA: BEFORE any rerouting fires."""
+    log_id = str(uuid.uuid4())
+    committed_at = datetime.now(timezone.utc).isoformat()
+
+    canonical = json.dumps({
+        "logId": log_id,
+        "state": decision.state.name,
+        "stateValue": decision.state.value,
+        "confidence": decision.confidence,
+        "reasoning": decision.reasoning,
+        "committedAt": committed_at
+    }, sort_keys=True)
+
+    log_hash = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    merkle_root = hashlib.sha256(
+        (previous_hash + log_hash).encode("utf-8")
+    ).hexdigest()
+
+    entry = {
+        "logId": log_id,
+        "currentState": decision.state.value,
+        "stateLabel": decision.state.name,
+        "processActive": {
+            TLState.PROCEED: "ProceedAuthorized",
+            TLState.EPISTEMIC_HOLD: "GovernancePause",
+            TLState.REFUSE: "RefusalPermanent"
+        }[decision.state],
+        "confidence": decision.confidence,
+        "reasoning": decision.reasoning,
+        "logHash": log_hash,
+        "merkleRoot": merkle_root,
+        "previousHash": previous_hash,
+        "committedAt": committed_at,
+        "goukassianPrinciple": goukassian_block,
+        "pufAttestation": "NULL_PUF_DEPLOYMENT",
+        "architectureMode": "ARCHITECTURE_B",
+        "engineConfig": {
+            "proceedThreshold": engine.proceed_threshold,
+            "holdThreshold": engine.hold_threshold
         }
-        
-        if decision.state == TLState.PROCEED:
-            # Implement major route change or disruption response
-            implementation_plan.update({
-                'primary_action': 'IMPLEMENT_MAJOR_CHANGE',
-                'route_modification': self._design_route_modification(decision, route_info),
-                'inventory_adjustments': self._calculate_inventory_adjustments(decision),
-                'supplier_communications': self._generate_supplier_communications(decision),
-                'customer_notifications': self._generate_customer_notifications(decision),
-                'compliance_reporting': 'Notify regulatory authorities of major change'
-            })
-            
-        elif decision.state == TLState.HALT:
-            # Maintain current operations with enhanced monitoring
-            implementation_plan.update({
-                'primary_action': 'MAINTAIN_CURRENT_OPERATIONS',
-                'enhanced_monitoring': self._design_enhanced_monitoring(decision),
-                'contingency_preparation': self._prepare_contingencies(decision),
-                'stakeholder_updates': self._generate_stakeholder_updates(decision),
-                'compliance_reporting': 'Standard operations continuing'
-            })
-            
-        else:  # EPISTEMIC_HOLD - Epistemic Hold with 300ms pause
-            # Implement graduated response with continuous assessment
-            implementation_plan.update({
-                'primary_action': 'EPISTEMIC_HOLD_PROTOCOL',
-                'hold_duration_ms': 300,  # Standard 300ms pause
-                'epistemic_protocol': self._design_epistemic_hold_protocol(decision),
-                'data_gathering_plan': self._create_data_gathering_plan(decision),
-                'trigger_conditions': self._define_trigger_conditions(decision),
-                'escalation_procedures': self._design_escalation_procedures(decision),
-                'compliance_reporting': 'Epistemic Hold activated - monitoring uncertainty'
-            })
-            
-        return implementation_plan
-    
-    def _record_epistemic_hold(self, decision: TLResult, disruption_event: Dict, signals: Dict):
-        """
-        Pillar 1: Record Epistemic Hold activation with full context
-        """
-        hold_record = {
-            'timestamp': datetime.now().isoformat(),
-            'disruption_type': disruption_event.get('event_type', 'unknown'),
-            'duration_ms': 300,  # Standard 300ms hold
-            'confidence_level': decision.confidence,
-            'uncertainty_sources': self._identify_uncertainty_sources(signals),
-            'missing_signals': [k for k, v in signals.items() if v is None],
-            'next_actions': decision.clarifying_questions,
-            'supply_chain_context': {
-                'inventory_status': signals.get('inventory_buffer'),
-                'customer_impact': signals.get('customer_impact'),
-                'route_alternatives': signals.get('route_alternatives')
-            }
-        }
-        self.epistemic_holds.append(hold_record)
-    
-    def _create_decision_log(self, decision: TLResult, disruption_event: Dict, 
-                            signals: Dict, market_conditions: Dict) -> Dict:
-        """
-        Pillar 4: Create comprehensive Decision Log for complete audit trail
-        """
-        return {
-            'timestamp': datetime.now().isoformat(),
-            'decision_id': hashlib.sha256(f"{disruption_event}_{datetime.now()}".encode()).hexdigest()[:16],
-            'disruption_type': disruption_event.get('event_type', 'unknown'),
-            'state': decision.state.value,
-            'state_name': decision.state.name,
-            'confidence': decision.confidence,
-            'signals': signals,
-            'market_snapshot': {
-                'inventory_levels': market_conditions.get('current_inventory', {}),
-                'customer_commitments': len(market_conditions.get('customer_commitments', [])),
-                'business_type': market_conditions.get('business_type', 'balanced')
-            },
-            'reasoning': decision.reasoning,
-            'risk_assessment': {
-                'disruption_severity': signals.get('disruption_severity'),
-                'financial_impact': signals.get('financial_impact'),
-                'customer_impact': signals.get('customer_impact')
-            },
-            'clarifying_questions': decision.clarifying_questions if decision.state == TLState.EPISTEMIC_HOLD else None,
-            'eight_pillars_validation': self.eight_pillars.validation_status
-        }
-    
-    def _create_ledger_entry(self, decision_log: Dict) -> Dict:
-        """
-        Pillar 2: Create Immutable Ledger entry with cryptographic hash
-        """
-        previous_hash = self.decision_ledger[-1]['hash'] if self.decision_ledger else 'genesis'
-        
-        entry = {
-            'index': len(self.decision_ledger),
-            'timestamp': decision_log['timestamp'],
-            'decision_id': decision_log['decision_id'],
-            'decision_hash': hashlib.sha256(json.dumps(decision_log, sort_keys=True).encode()).hexdigest(),
-            'previous_hash': previous_hash,
-            'state': decision_log['state']
-        }
-        
-        # Create block hash
-        entry['hash'] = hashlib.sha256(json.dumps(entry, sort_keys=True).encode()).hexdigest()
-        
-        return entry
-    
-    def _ensure_supply_chain_compliance(self, decision: TLResult, disruption_event: Dict):
-        """
-        Pillar 5: Ensure supply chain regulatory compliance
-        """
-        compliance_checks = {
-            'trade_regulations': self._check_trade_compliance(disruption_event),
-            'customs_requirements': self._check_customs_requirements(decision),
-            'safety_standards': self._check_safety_standards(decision),
-            'environmental_regulations': self._check_environmental_compliance(decision),
-            'labor_standards': self._check_labor_compliance(decision)
-        }
-        
-        if decision.metadata is None:
-            decision.metadata = {}
-        
-        decision.metadata['regulatory_compliance'] = compliance_checks
-    
-    def _create_public_record(self, decision: TLResult, disruption_event: Dict) -> Dict:
-        """
-        Pillar 7: Hybrid Shield - Create public record without sensitive details
-        """
-        return {
-            'timestamp': datetime.now().isoformat(),
-            'disruption_type': disruption_event.get('event_type', 'unknown'),
-            'decision_proof': hashlib.sha256(str(decision).encode()).hexdigest()[:16],
-            'state': decision.state.name,
-            'confidence_band': self._get_confidence_band(decision.confidence),
-            'regulatory_compliant': True,
-            'privacy_preserved': True
-        }
-    
-    def _create_blockchain_anchor(self) -> Dict:
-        """
-        Pillar 8: Create blockchain Anchor for permanent verification
-        """
-        # Aggregate recent decisions for merkle root
-        recent_logs = self.decision_logs[-50:]
-        combined_hash = hashlib.sha256(
-            json.dumps(recent_logs, sort_keys=True).encode()
+    }
+    if extra_context:
+        entry["domainContext"] = extra_context
+    return entry
+
+
+def build_permission_token(log_entry: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """PermissionToken for PROCEED. laneOrigin const GOVERNANCE_LANE. NL=NA Layer 2."""
+    if log_entry["currentState"] != TLState.PROCEED.value:
+        return None
+
+    issued_at = datetime.now(timezone.utc)
+    expires_at = issued_at + timedelta(milliseconds=300000)
+
+    return {
+        "tokenId": str(uuid.uuid4()),
+        "logHash": log_entry["logHash"],
+        "merkleRoot": log_entry["merkleRoot"],
+        "laneOrigin": "GOVERNANCE_LANE",  # NL=NA Layer 2 const
+        "issuedAt": issued_at.isoformat(),
+        "expiresAt": expires_at.isoformat(),
+        "maxLifetimeMs": 300000,
+        "revocationStatus": "ACTIVE",
+        "signerKeyId": "supply-chain-hsm-001",
+        "epochTimestamp": int(issued_at.timestamp()),
+        "signatureValue": hashlib.sha256(
+            log_entry["logHash"].encode()
         ).hexdigest()
-        
+    }
+
+
+class ImmutableLedger:
+    """Pillar II: append-only hash chain. See Quickstart_Example.py."""
+
+    def __init__(self):
+        self._entries = []
+        self._genesis_hash = hashlib.sha256(
+            b"TL_SUPPLY_CHAIN_GENESIS"
+        ).hexdigest()
+
+    @property
+    def previous_hash(self) -> str:
+        return (
+            self._entries[-1]["merkleRoot"]
+            if self._entries else self._genesis_hash
+        )
+
+    def commit(self, entry: Dict[str, Any]) -> str:
+        self._entries.append(entry)
+        return entry["logHash"]
+
+    @property
+    def size(self) -> int:
+        return len(self._entries)
+
+    def get_summary(self) -> Dict[str, Any]:
         return {
-            'merkle_root': combined_hash[:32],
-            'decision_count': len(recent_logs),
-            'timestamp': datetime.now().isoformat(),
-            'blockchain': 'Hyperledger',  # Supply chain appropriate
-            'status': 'PENDING_CONFIRMATION'
+            "totalEntries": self.size,
+            "latestMerkleRoot": self.previous_hash,
+            "states": {
+                "PROCEED": sum(
+                    1 for e in self._entries if e["currentState"] == 1
+                ),
+                "EPISTEMIC_HOLD": sum(
+                    1 for e in self._entries if e["currentState"] == 0
+                ),
+                "REFUSE": sum(
+                    1 for e in self._entries if e["currentState"] == -1
+                )
+            }
         }
-    
-    def _assess_disruption_severity(self, severity_reports: List[Dict]) -> Optional[float]:
-        """Assess overall disruption severity from multiple reports"""
+
+
+# =============================================================================
+# SECTION 2: Supply Chain Signal Analysis
+# =============================================================================
+
+class DisruptionAnalyzer:
+    """
+    Analyze supply chain disruption signals.
+
+    Supply chain signals differ from financial signals in one important way:
+    they are often one-directional. A disruption signal of 0.9 (severe) does
+    not become a buy signal when inverted. It means the current route is
+    compromised. The question is whether the alternative is viable enough
+    to commit to, not whether the disruption is real.
+
+    Each signal returns a value in [0.0, 1.0] representing confidence that
+    the proposed response (reroute, hold, maintain) is correct. Lower values
+    indicate more uncertainty. Zero indicates data absence.
+    """
+
+    def assess_disruption_severity(
+        self, severity_reports: List[Dict[str, Any]]
+    ) -> Optional[float]:
+        """
+        Assess disruption severity from multiple source reports.
+
+        High agreement on severity = higher confidence in the signal.
+        Low agreement = uncertainty = lower confidence = Epistemic Hold.
+
+        Returns confidence in the severity assessment [0.0, 1.0].
+        """
         if not severity_reports:
             return None
-            
-        weighted_severity = 0
-        total_confidence = 0
-        
-        for report in severity_reports:
-            if 'severity' in report and 'confidence' in report:
-                weighted_severity += report['severity'] * report['confidence']
-                total_confidence += report['confidence']
-                
-        if total_confidence == 0:
+
+        scores = [r.get("severity", 0.5) for r in severity_reports]
+        if not scores:
             return None
-            
-        avg_severity = weighted_severity / total_confidence
-        return (avg_severity * 2) - 1  # Scale to [-1, 1]
-    
-    def _assess_disruption_duration(self, duration_estimates: Dict) -> Optional[float]:
-        """Assess disruption duration implications"""
-        if 'estimated_days' not in duration_estimates:
+
+        mean_severity = float(np.mean(scores))
+        # Agreement: lower variance = higher confidence in the assessment
+        variance = float(np.var(scores)) if len(scores) > 1 else 0.0
+        agreement_confidence = max(0.0, 1.0 - variance * 4)
+
+        # For rerouting: high severity with high agreement = PROCEED to reroute
+        # High severity with low agreement = Epistemic Hold
+        return float(np.clip(mean_severity * agreement_confidence, 0, 1))
+
+    def assess_duration_confidence(
+        self, duration_estimates: List[Dict[str, Any]]
+    ) -> Optional[float]:
+        """
+        Assess confidence in disruption duration estimates.
+
+        Wide spread in duration estimates = high uncertainty.
+        Low confidence justifies Epistemic Hold over immediate rerouting.
+        """
+        if not duration_estimates:
             return None
-            
-        estimated_days = duration_estimates['estimated_days']
-        confidence = duration_estimates.get('confidence', 0.5)
-        
-        if estimated_days <= 3:
-            duration_signal = -0.5  # Short duration
-        elif estimated_days <= 14:
-            duration_signal = 0.0   # Medium duration
-        elif estimated_days <= 30:
-            duration_signal = 0.5   # Long duration
-        else:
-            duration_signal = 1.0   # Very long
-            
-        return duration_signal * confidence
-    
-    def _assess_alternative_routes(self, alternative_routes: List[Dict], 
-                                 cost_comparisons: Optional[Dict]) -> Optional[float]:
-        """Assess viability of alternative routes"""
+
+        estimates = [e.get("days", 0) for e in duration_estimates if "days" in e]
+        if not estimates:
+            return None
+
+        if len(estimates) == 1:
+            return 0.6  # Single source: moderate confidence
+
+        mean_days = float(np.mean(estimates))
+        std_days = float(np.std(estimates))
+
+        if mean_days == 0:
+            return 0.5
+
+        cv = std_days / mean_days  # Coefficient of variation
+        # Low CV = consistent estimates = high confidence
+        return float(np.clip(1.0 - cv, 0.1, 1.0))
+
+    def assess_route_viability(
+        self,
+        alternative_routes: List[Dict[str, Any]],
+        cost_comparisons: Optional[List[Dict[str, Any]]] = None
+    ) -> Optional[float]:
+        """
+        Assess viability of alternative routes.
+
+        Combines reliability scores, capacity, and cost factors.
+        No viable alternative = signal toward Epistemic Hold or Refuse.
+        """
         if not alternative_routes:
-            return None
-            
-        viable_routes = 0
-        total_routes = len(alternative_routes)
-        
-        for route in alternative_routes:
-            viability_score = 0
-            
-            if route.get('capacity_available', 0) > 0.7:
-                viability_score += 0.4
-                
-            if cost_comparisons and route.get('route_id') in cost_comparisons:
-                cost_ratio = cost_comparisons[route['route_id']]
-                if cost_ratio < 1.3:
-                    viability_score += 0.3
-                elif cost_ratio < 1.6:
-                    viability_score += 0.1
-                    
-            reliability = route.get('reliability_score', 0.5)
-            viability_score += reliability * 0.3
-            
-            if viability_score > 0.6:
-                viable_routes += 1
-                
-        if total_routes == 0:
-            return None
-            
-        viability_ratio = viable_routes / total_routes
-        return (viability_ratio * 2) - 1
-    
-    def _assess_inventory_situation(self, current_inventory: Dict, 
-                                  demand_forecast: Optional[Dict]) -> Optional[float]:
-        """Assess inventory buffer situation"""
+            return 0.0  # No alternatives: low confidence in rerouting
+
+        viable = [
+            r for r in alternative_routes
+            if r.get("capacity_available", 0) > 0.3
+            and r.get("reliability_score", 0) > 0.5
+        ]
+
+        if not viable:
+            return 0.1  # Alternatives exist but none viable
+
+        best_reliability = max(
+            r.get("reliability_score", 0) for r in viable
+        )
+        best_capacity = max(
+            r.get("capacity_available", 0) for r in viable
+        )
+
+        base_score = (best_reliability * 0.6) + (best_capacity * 0.4)
+
+        # Cost penalty: expensive rerouting reduces decision confidence
+        if cost_comparisons:
+            cost_ratios = [
+                c.get("alternative_cost_ratio", 1.0) for c in cost_comparisons
+            ]
+            if cost_ratios:
+                min_ratio = min(cost_ratios)
+                if min_ratio > 2.0:
+                    base_score *= 0.7  # More than 2x cost reduces confidence
+                elif min_ratio > 1.5:
+                    base_score *= 0.85
+
+        return float(np.clip(base_score, 0, 1))
+
+    def assess_inventory_buffer(
+        self,
+        current_inventory: Dict[str, float],
+        demand_forecast: Optional[Dict[str, float]] = None
+    ) -> Optional[float]:
+        """
+        Assess inventory buffer adequacy.
+
+        This is the Solvency Protocol analog for supply chains:
+        just as a financial system pauses when reserves are unclear,
+        a supply chain pauses when inventory coverage is uncertain.
+
+        Low inventory with uncertain forecast = Epistemic Hold.
+        Low inventory with clear forecast = Refuse (do not reroute yet,
+        immediate action on current route required).
+        Adequate inventory = time to evaluate alternatives properly.
+        """
         if not current_inventory:
             return None
-            
-        total_coverage = 0
-        item_count = 0
-        
-        for item, level in current_inventory.items():
-            if demand_forecast and item in demand_forecast:
-                daily_demand = demand_forecast[item].get('daily_demand', 1)
+
+        # Days of coverage per SKU
+        coverage_days = []
+        for sku, qty in current_inventory.items():
+            if demand_forecast and sku in demand_forecast:
+                daily_demand = demand_forecast[sku] / 30
                 if daily_demand > 0:
-                    coverage_days = level / daily_demand
-                    total_coverage += coverage_days
-                    item_count += 1
-                    
-        if item_count == 0:
-            return None
-            
-        avg_coverage = total_coverage / item_count
-        
-        if avg_coverage > 30:
-            return -1.0  # No urgency
-        elif avg_coverage > 14:
-            return -0.5  # Low urgency
-        elif avg_coverage > 7:
-            return 0.0   # Medium urgency
-        elif avg_coverage > 3:
-            return 0.5   # High urgency
-        else:
-            return 1.0   # Critical urgency
-    
-    def _assess_customer_impact(self, customer_commitments: List[Dict], 
-                              disruption_timeline: Optional[Dict]) -> Optional[float]:
-        """Assess potential customer impact"""
-        if not customer_commitments:
-            return None
-            
-        at_risk_revenue = 0
-        total_revenue = 0
-        
-        disruption_start = disruption_timeline.get('estimated_start', datetime.now()) if disruption_timeline else datetime.now()
-        
-        for commitment in customer_commitments:
-            revenue = commitment.get('revenue_value', 0)
-            delivery_date = commitment.get('delivery_date')
-            
-            total_revenue += revenue
-            
-            if delivery_date and isinstance(delivery_date, datetime) and delivery_date > disruption_start:
-                days_until_delivery = (delivery_date - disruption_start).days
-                
-                if days_until_delivery <= 14:
-                    at_risk_revenue += revenue
-                elif days_until_delivery <= 30:
-                    at_risk_revenue += revenue * 0.5
-                    
-        if total_revenue == 0:
-            return None
-            
-        risk_ratio = at_risk_revenue / total_revenue
-        return risk_ratio * 2 - 1
-    
-    def _assess_supplier_network(self, supplier_network: Dict) -> Optional[float]:
-        """Assess supplier network flexibility"""
-        if 'alternative_suppliers' not in supplier_network:
-            return None
-            
-        alternative_suppliers = supplier_network['alternative_suppliers']
-        total_suppliers = supplier_network.get('total_suppliers', 1)
-        
-        if total_suppliers == 0:
-            return None
-            
-        diversification_ratio = len(alternative_suppliers) / total_suppliers
-        
-        total_capacity = 0
-        supplier_count = 0
-        
-        for supplier in alternative_suppliers:
-            if 'available_capacity' in supplier:
-                total_capacity += supplier['available_capacity']
-                supplier_count += 1
-                
-        avg_capacity = total_capacity / supplier_count if supplier_count > 0 else 0
-        
-        flexibility_score = (diversification_ratio * 0.6) + (avg_capacity * 0.4)
-        return (flexibility_score * 2) - 1
-    
-    def _assess_financial_impact(self, cost_implications: Dict, 
-                               budget_constraints: Optional[Dict]) -> Optional[float]:
-        """Assess financial impact of disruption response"""
-        additional_cost = cost_implications.get('additional_cost_estimate', 0)
-        
-        if budget_constraints:
-            available_budget = budget_constraints.get('emergency_budget', float('inf'))
-            if available_budget == 0:
-                return 1.0
-                
-            cost_ratio = additional_cost / available_budget
-            
-            if cost_ratio <= 0.5:
-                return -0.5
-            elif cost_ratio <= 1.0:
-                return 0.0
-            elif cost_ratio <= 2.0:
-                return 0.5
+                    coverage_days.append(qty / daily_demand)
+                else:
+                    coverage_days.append(90.0)  # No demand: ample coverage
             else:
-                return 1.0
-        else:
-            if additional_cost < 100000:
-                return -0.3
-            elif additional_cost < 500000:
-                return 0.0
-            elif additional_cost < 1000000:
-                return 0.3
-            else:
-                return 0.7
-    
-    def _assess_sustainability_impact(self, sustainability_metrics: Dict) -> Optional[float]:
+                # No forecast: moderate confidence
+                coverage_days.append(14.0)
+
+        if not coverage_days:
+            return None
+
+        avg_coverage = float(np.mean(coverage_days))
+        min_coverage = float(np.min(coverage_days))
+
+        # Scale: 30+ days coverage = full confidence to deliberate
+        # Under 7 days = urgency increases, reduces deliberation confidence
+        coverage_score = min(avg_coverage / 30.0, 1.0)
+        urgency_penalty = max(0.0, (7.0 - min_coverage) / 7.0) * 0.4
+
+        return float(np.clip(coverage_score - urgency_penalty, 0, 1))
+
+    def assess_supplier_flexibility(
+        self, supplier_network: Dict[str, Any]
+    ) -> Optional[float]:
         """
-        Pillar 6: Assess sustainability impact of supply chain decision
+        Assess alternative supplier availability and qualification.
+
+        Pre-qualified suppliers with available capacity score higher.
+        Unqualified or capacity-constrained suppliers reduce confidence.
+        """
+        if not supplier_network:
+            return None
+
+        qualified = supplier_network.get("qualified_alternatives", 0)
+        total = supplier_network.get("total_alternatives", 0)
+        onboarding_weeks = supplier_network.get("avg_onboarding_weeks", 12)
+        capacity_utilization = supplier_network.get("avg_utilization", 0.8)
+
+        if total == 0:
+            return 0.0
+
+        qualification_ratio = qualified / total
+        capacity_signal = 1.0 - capacity_utilization
+        onboarding_penalty = min(onboarding_weeks / 16.0, 0.5)
+
+        score = (
+            qualification_ratio * 0.5
+            + capacity_signal * 0.3
+            - onboarding_penalty * 0.2
+        )
+        return float(np.clip(score, 0, 1))
+
+    def assess_customer_impact(
+        self,
+        customer_commitments: List[Dict[str, Any]],
+        disruption_timeline: Optional[Dict[str, Any]] = None
+    ) -> Optional[float]:
+        """
+        Assess customer impact urgency.
+
+        Critical commitments with near deadlines score lower confidence
+        in the Epistemic Hold option: urgency may require faster action
+        even under uncertainty.
+        """
+        if not customer_commitments:
+            return 0.5  # No commitments: no urgency signal
+
+        now = datetime.now(timezone.utc)
+        critical_within_days = []
+
+        for commitment in customer_commitments:
+            deadline_str = commitment.get("deadline")
+            criticality = commitment.get("criticality", "medium")
+            if deadline_str and criticality == "critical":
+                try:
+                    deadline = datetime.fromisoformat(
+                        deadline_str.replace("Z", "+00:00")
+                    )
+                    days_until = (deadline - now).days
+                    critical_within_days.append(days_until)
+                except (ValueError, TypeError):
+                    pass
+
+        if not critical_within_days:
+            return 0.7  # No critical near-term: more time to deliberate
+
+        min_days = min(critical_within_days)
+        if min_days <= 3:
+            return 0.2  # Critical deadline imminent: low confidence in holding
+        elif min_days <= 7:
+            return 0.4
+        elif min_days <= 14:
+            return 0.6
+        else:
+            return 0.8
+
+    def assess_sustainability_compliance(
+        self, sustainability_metrics: Dict[str, Any]
+    ) -> Optional[float]:
+        """
+        Pillar VI: Assess sustainability of proposed alternative route.
+
+        Returns a graded signal. Full mandate verification via
+        verify_mandate() is binary and overrides this signal entirely.
         """
         if not sustainability_metrics:
             return None
-            
-        carbon_footprint = sustainability_metrics.get('carbon_footprint_change', 0)
-        labor_standards = sustainability_metrics.get('labor_standards_score', 0.5)
-        environmental_impact = sustainability_metrics.get('environmental_impact', 0)
-        
-        # Weighted sustainability score
-        sustainability_score = (
-            -carbon_footprint * 0.4 +  # Negative carbon impact is good
-            labor_standards * 0.3 +
-            -environmental_impact * 0.3  # Negative environmental impact is good
+
+        carbon_score = sustainability_metrics.get("carbon_intensity_score", 50) / 100
+        labor_rights = sustainability_metrics.get("labor_rights_score", 50) / 100
+        certifications = sustainability_metrics.get("certification_count", 0)
+
+        cert_bonus = min(certifications / 5.0, 0.2)
+        composite = (
+            carbon_score * 0.4
+            + labor_rights * 0.4
+            + cert_bonus
         )
-        
-        return np.clip(sustainability_score, -1, 1)
-    
-    def _get_supply_chain_weights(self, market_conditions: Dict) -> Dict[str, float]:
-        """Determine signal weights based on business priorities"""
-        base_weights = {
-            'disruption_severity': 0.25,
-            'disruption_duration': 0.20,
-            'route_alternatives': 0.15,
-            'inventory_buffer': 0.20,
-            'customer_impact': 0.08,
-            'supplier_flexibility': 0.05,
-            'financial_impact': 0.05,
-            'sustainability_impact': 0.02  # Pillar 6
-        }
-        
-        business_type = market_conditions.get('business_type', 'balanced')
-        
-        if business_type == 'just_in_time':
-            base_weights['inventory_buffer'] *= 1.5
-            base_weights['disruption_duration'] *= 1.3
-        elif business_type == 'cost_sensitive':
-            base_weights['financial_impact'] *= 2.0
-            base_weights['route_alternatives'] *= 1.2
-        elif business_type == 'customer_first':
-            base_weights['customer_impact'] *= 2.0
-            base_weights['inventory_buffer'] *= 1.3
-        elif business_type == 'sustainable':
-            base_weights['sustainability_impact'] *= 3.0
-            
-        return base_weights
-    
-    def _apply_supply_chain_risk_management(self, signals: Dict, 
-                                          disruption_event: Dict,
-                                          market_conditions: Dict) -> Dict:
-        """Apply risk management overlay to signals"""
-        risk_adjusted = signals.copy()
-        
-        # Critical inventory situation
-        inventory_signal = signals.get('inventory_buffer', 0) or 0
-        if inventory_signal > 0.7:
-            for key in risk_adjusted:
-                if risk_adjusted[key] is not None and risk_adjusted[key] > 0:
-                    risk_adjusted[key] *= 1.3
-                    
-        # High customer impact
-        customer_signal = signals.get('customer_impact', 0) or 0
-        if customer_signal > 0.6:
-            for key in ['disruption_severity', 'disruption_duration']:
-                if key in risk_adjusted and risk_adjusted[key] is not None:
-                    risk_adjusted[key] = min(1.0, risk_adjusted[key] * 1.2)
-                    
-        return risk_adjusted
-    
-    def _identify_uncertainty_sources(self, signals: Dict) -> List[str]:
-        """Identify sources of uncertainty for Epistemic Hold"""
-        sources = []
-        
-        # Check for missing critical signals
-        critical_signals = ['disruption_severity', 'inventory_buffer', 'route_alternatives']
-        for signal in critical_signals:
-            if signal not in signals or signals[signal] is None:
-                sources.append(f"Missing {signal}")
-        
-        # Check for conflicting signals
-        if signals.get('disruption_severity', 0) > 0.5 and signals.get('financial_impact', 0) < -0.5:
-            sources.append("Severity vs Cost conflict")
-        
-        return sources
-    
-    def _enhance_supply_chain_decision(self, decision: TLResult, disruption_event: Dict,
-                                     signals: Dict, response_options: List[str] = None) -> TLResult:
-        """Enhance decision with supply chain specific guidance"""
-        
-        if decision.state == TLState.EPISTEMIC_HOLD:
-            sc_steps = [
-                "Monitor disruption severity from multiple sources",
-                "Assess alternative route costs and availability",
-                "Evaluate inventory buffer adequacy",
-                "Consult key suppliers on flexibility",
-                "Review sustainability impact of alternatives"
-            ]
-            if decision.clarifying_questions:
-                decision.clarifying_questions.extend(sc_steps)
-            else:
-                decision.clarifying_questions = sc_steps
-        
-        if decision.metadata is None:
-            decision.metadata = {}
-            
-        decision.metadata.update({
-            'disruption_type': disruption_event.get('event_type', 'unknown'),
-            'missing_signals': [k for k, v in signals.items() if v is None],
-            'signal_count': len([v for v in signals.values() if v is not None]),
-            'eight_pillars_compliant': True,
-            'epistemic_hold_count': len(self.epistemic_holds)
-        })
-        
-        return decision
-    
-    # Implementation helper methods
-    def _determine_implementation_timeline(self, decision: TLResult) -> int:
-        """Determine implementation timeline in hours"""
-        if decision.state == TLState.PROCEED:
-            return 24
-        elif decision.state == TLState.HALT:
-            return 72
-        else:  # EPISTEMIC_HOLD
-            return 48
-    
-    def _calculate_resource_allocation(self, decision: TLResult) -> Dict:
-        """Calculate resource allocation"""
-        return {
-            'personnel': 'full_team' if decision.state == TLState.PROCEED else 'monitoring_team',
-            'budget': 'emergency' if decision.state == TLState.PROCEED else 'standard',
-            'priority': 'high' if decision.state == TLState.PROCEED else 'medium'
-        }
-    
-    def _design_route_modification(self, decision: TLResult, route_info: Dict) -> Dict:
-        """Design route modification plan"""
-        return {
-            'primary_route': 'alternative_route_1',
-            'backup_route': 'alternative_route_2',
-            'transition_plan': 'phased_over_48_hours'
-        }
-    
-    def _calculate_inventory_adjustments(self, decision: TLResult) -> Dict:
-        """Calculate inventory adjustments"""
-        return {
-            'safety_stock_increase': 0.3,
-            'reorder_point_adjustment': 1.2,
-            'emergency_orders': 'approved'
-        }
-    
-    def _generate_supplier_communications(self, decision: TLResult) -> List[str]:
-        """Generate supplier communications"""
-        return [
-            "Notify suppliers of route change",
-            "Request delivery flexibility",
-            "Coordinate alternative sourcing"
+        return float(np.clip(composite, 0, 1))
+
+    def analyze_all(
+        self,
+        disruption_event: Dict[str, Any],
+        route_info: Dict[str, Any],
+        market_conditions: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Run all signal analyses. Returns dict of signals."""
+        signals = {}
+
+        if "severity_reports" in disruption_event:
+            signals["disruption_severity"] = self.assess_disruption_severity(
+                disruption_event["severity_reports"]
+            )
+
+        if "duration_estimates" in disruption_event:
+            signals["duration_confidence"] = self.assess_duration_confidence(
+                disruption_event["duration_estimates"]
+            )
+
+        if "alternative_routes" in route_info:
+            signals["route_viability"] = self.assess_route_viability(
+                route_info["alternative_routes"],
+                route_info.get("cost_comparisons")
+            )
+
+        if "current_inventory" in market_conditions:
+            signals["inventory_buffer"] = self.assess_inventory_buffer(
+                market_conditions["current_inventory"],
+                market_conditions.get("demand_forecast")
+            )
+
+        if "supplier_network" in route_info:
+            signals["supplier_flexibility"] = self.assess_supplier_flexibility(
+                route_info["supplier_network"]
+            )
+
+        if "customer_commitments" in market_conditions:
+            signals["customer_urgency"] = self.assess_customer_impact(
+                market_conditions["customer_commitments"],
+                disruption_event.get("timeline")
+            )
+
+        if "sustainability_metrics" in market_conditions:
+            signals["sustainability"] = self.assess_sustainability_compliance(
+                market_conditions["sustainability_metrics"]
+            )
+
+        return signals
+
+
+# =============================================================================
+# SECTION 3: Supply Chain Compliance (Pillars V and VI)
+# =============================================================================
+
+def check_supply_chain_compliance(
+    disruption_event: Dict[str, Any],
+    route_info: Dict[str, Any]
+) -> Dict[str, Any]:
+    """
+    Pillar V: Supply chain compliance checks.
+
+    Covers FATF sanctions screening on alternative suppliers,
+    labor rights violations (ILO conventions), and export controls.
+    Any FATAL flag forces Refuse (-1).
+    """
+    failures = []
+    warnings = []
+
+    # Sanctions screening on proposed alternative suppliers
+    if not disruption_event.get("alternative_suppliers_screened", False):
+        failures.append("FATF: Alternative suppliers not sanctions-screened")
+
+    # Labor rights: ILO conventions
+    labor_violations = route_info.get("labor_violations_detected", False)
+    if labor_violations:
+        failures.append(
+            "Pillar V: Labor rights violations detected on alternative route"
+        )
+
+    # Export controls
+    restricted_goods = disruption_event.get("restricted_goods_involved", False)
+    if restricted_goods and not disruption_event.get("export_license_verified", False):
+        failures.append(
+            "Pillar V: Export controls apply; license verification required"
+        )
+
+    # Child labor risk
+    child_labor_risk = route_info.get("child_labor_risk_score", 0)
+    if child_labor_risk > 0.6:
+        failures.append(
+            f"Pillar V: High child labor risk score "
+            f"{child_labor_risk:.2f} on alternative route"
+        )
+    elif child_labor_risk > 0.3:
+        warnings.append(
+            f"Pillar V: Moderate child labor risk {child_labor_risk:.2f}; "
+            "enhanced due diligence required"
+        )
+
+    return {
+        "compliant": len(failures) == 0,
+        "failures": failures,
+        "warnings": warnings
+    }
+
+
+# =============================================================================
+# SECTION 4: Supply Chain Response Engine
+# =============================================================================
+
+class GlobalSupplyChainManager:
+    """
+    Global Supply Chain Management using Ternary Logic.
+
+    Implements sovereign-grade accountability for supply chain decisions:
+        Pillar I:   Epistemic Hold (conflicting disruption reports, data gaps)
+        Pillar II:  Immutable Ledger (every decision committed before rerouting)
+        Pillar III: Goukassian Principle (lantern, signature, license)
+        Pillar IV:  Decision Logs (complete audit trail)
+        Pillar V:   Labor rights, sanctions, export controls
+        Pillar VI:  ESG mandate verification on alternative routes
+        Pillar VII: Hybrid Shield (privacy-preserving transparency)
+        Pillar VIII:Anchors (Merkle root anchoring, RFC 3161 timestamps)
+
+    The Epistemic Hold prevents supply chain overreactions.
+    Rerouting is irreversible: containers move, contracts commit,
+    customs filings trigger obligations. Wrong reroutes cost weeks
+    and millions. Epistemic Hold is the constitutional mechanism for
+    ensuring that irreversible commitments demand verified truth.
+
+    The Solvency Protocol analog:
+    Just as a financial system pauses when reserves are unclear,
+    a supply chain pauses when inventory coverage is uncertain.
+    The inventory_buffer signal is the reserve adequacy measure.
+
+    THRESHOLD GOVERNANCE:
+        proceed_threshold and hold_threshold must be calibrated per
+        industry, commodity class, and regulatory exposure.
+        See docs/Threshold_Calibration.md.
+    """
+
+    def __init__(
+        self,
+        proceed_threshold: float,
+        hold_threshold: float,
+        cost_sensitivity: float = 0.3,
+        time_sensitivity: float = 0.4
+    ):
+        """
+        Initialize Supply Chain Manager.
+
+        Args:
+            proceed_threshold: Institution-calibrated PROCEED threshold.
+                               REQUIRED. No default.
+            hold_threshold:    Institution-calibrated REFUSE threshold.
+                               REQUIRED. No default.
+            cost_sensitivity:  Weight given to cost signals [0-1].
+            time_sensitivity:  Weight given to time/urgency signals [0-1].
+        """
+        self.engine = TLEngine(
+            proceed_threshold=proceed_threshold,
+            hold_threshold=hold_threshold,
+            epistemic_hold_rate_target=0.25
+        )
+        self.analyzer = DisruptionAnalyzer()
+        self.cost_sensitivity = cost_sensitivity
+        self.time_sensitivity = time_sensitivity
+        self.ledger = ImmutableLedger()
+        self.license_scopes = [
+            "supply_chain.rerouting",
+            "regulatory.compliance",
+            "audit.governance"
         ]
-    
-    def _generate_customer_notifications(self, decision: TLResult) -> List[str]:
-        """Generate customer notifications"""
-        return [
-            "Inform of potential delays",
-            "Provide updated estimates",
-            "Offer alternatives"
-        ]
-    
-    def _design_enhanced_monitoring(self, decision: TLResult) -> Dict:
-        """Design enhanced monitoring"""
-        return {
-            'frequency': 'hourly',
-            'metrics': ['route_status', 'inventory', 'suppliers'],
-            'thresholds': {'severity': 0.7, 'duration': 7}
+        self._decisions = []
+
+    def make_supply_chain_decision(
+        self,
+        disruption_event: Dict[str, Any],
+        route_info: Dict[str, Any],
+        market_conditions: Dict[str, Any],
+        scenario_label: str = "Supply Chain Decision"
+    ) -> Dict[str, Any]:
+        """
+        Make a supply chain response decision under TL governance.
+
+        Sequence (respecting NL=NA):
+            1. Analyze disruption signals
+            2. ESG mandate check (Pillar VI): binary, overrides confidence
+            3. Compliance check (Pillar V): binary, may force Refuse
+            4. Calculate composite confidence
+            5. Evaluate with TLEngine
+            6. Commit log entry (NL=NA: BEFORE any rerouting fires)
+            7. Issue PermissionToken if PROCEED
+            8. Return governance record with response plan
+
+        The irreversibility of rerouting means the Epistemic Hold threshold
+        is set deliberately higher than in reversible domains. Pausing to
+        gather more data costs less than committing to a wrong route.
+        """
+        # Step 1: Analyze signals
+        signals = self.analyzer.analyze_all(
+            disruption_event, route_info, market_conditions
+        )
+
+        # Step 2: ESG mandate check on the alternative route (Pillar VI)
+        sustainability_data = {
+            "esg_verified": market_conditions.get("esg_verified", False),
+            "emissions_anchored": market_conditions.get(
+                "emissions_anchored", False
+            ),
+            "use_of_proceeds_tracked": market_conditions.get(
+                "use_of_proceeds_tracked", True
+            )
         }
-    
-    def _prepare_contingencies(self, decision: TLResult) -> List[str]:
-        """Prepare contingencies"""
-        return [
-            "Identify backup suppliers",
-            "Prepare emergency routes",
-            "Ready crisis plans"
-        ]
-    
-    def _generate_stakeholder_updates(self, decision: TLResult) -> List[str]:
-        """Generate stakeholder updates"""
-        return [
-            "Situation stable",
-            "Monitoring continues",
-            "Updates as needed"
-        ]
-    
-    def _design_epistemic_hold_protocol(self, decision: TLResult) -> Dict:
-        """Design Epistemic Hold protocol"""
-        pause_duration_hours = max(4, min(48, (1 - decision.confidence) * 72))
-        
-        return {
-            'pause_duration_hours': pause_duration_hours,
-            'monitoring_frequency': 'every_2_hours',
-            'escalation_triggers': [
-                'inventory_critical',
-                'customer_complaints',
-                'severity_increase',
-                'routes_unavailable'
-            ]
-        }
-    
-    def _create_data_gathering_plan(self, decision: TLResult) -> List[str]:
-        """Create data gathering plan"""
-        return [
-            "Request severity updates",
-            "Analyze route costs",
-            "Survey suppliers",
-            "Update forecasts"
-        ]
-    
-    def _define_trigger_conditions(self, decision: TLResult) -> Dict:
-        """Define trigger conditions"""
-        return {
-            'immediate': 'severity > 0.8',
-            'escalate': 'confidence > 0.7',
-            'stand_down': 'disruption resolved'
-        }
-    
-    def _design_escalation_procedures(self, decision: TLResult) -> List[str]:
-        """Design escalation procedures"""
-        return [
-            "Alert management",
-            "Activate crisis team",
-            "Implement contingencies"
-        ]
-    
-    def _check_trade_compliance(self, disruption_event: Dict) -> bool:
-        """Check trade regulations compliance"""
-        return True  # Simplified
-    
-    def _check_customs_requirements(self, decision: TLResult) -> bool:
-        """Check customs requirements"""
-        return True  # Simplified
-    
-    def _check_safety_standards(self, decision: TLResult) -> bool:
-        """Check safety standards"""
-        return True  # Simplified
-    
-    def _check_environmental_compliance(self, decision: TLResult) -> bool:
-        """Check environmental regulations"""
-        return True  # Simplified
-    
-    def _check_labor_compliance(self, decision: TLResult) -> bool:
-        """Check labor standards"""
-        return True  # Simplified
-    
-    def _get_confidence_band(self, confidence: float) -> str:
-        """Get confidence band for reporting"""
-        if confidence > 0.7:
-            return "High"
-        elif confidence > 0.4:
-            return "Medium"
+        esg_result = verify_mandate("sustainable_capital", sustainability_data)
+        esg_blocked = esg_result.state == TLState.EPISTEMIC_HOLD
+
+        # Step 3: Compliance check (Pillar V)
+        compliance = check_supply_chain_compliance(disruption_event, route_info)
+        compliance_blocked = not compliance["compliant"]
+
+        # Step 4: Determine state and confidence
+        if compliance_blocked:
+            forced_state = TLState.REFUSE
+            confidence = 0.0
+            reasoning = (
+                f"Supply chain compliance failure prevents rerouting: "
+                f"{'; '.join(compliance['failures'])}"
+            )
+
+        elif esg_blocked:
+            forced_state = TLState.EPISTEMIC_HOLD
+            confidence = 0.0
+            reasoning = (
+                f"Pillar VI ESG mandate failure on alternative route: "
+                f"{'; '.join(esg_result.metadata.get('failed_checks', []))}. "
+                "Cannot authorize rerouting to non-compliant supplier."
+            )
+
         else:
-            return "Low"
+            forced_state = None
+            # Calculate weighted composite confidence
+            numeric_signals = {
+                k: v for k, v in signals.items()
+                if isinstance(v, (int, float)) and v is not None
+            }
+
+            if not numeric_signals:
+                forced_state = TLState.EPISTEMIC_HOLD
+                confidence = 0.0
+                reasoning = (
+                    "Insufficient disruption data to assess rerouting "
+                    "viability. Epistemic Hold: irreversible commitment "
+                    "requires verified truth."
+                )
+            else:
+                # Weight signals by domain priority
+                weights = self._get_signal_weights(
+                    numeric_signals, market_conditions
+                )
+                weighted_sum = sum(
+                    numeric_signals.get(k, 0.5) * w
+                    for k, w in weights.items()
+                    if k in numeric_signals
+                )
+                weight_total = sum(
+                    w for k, w in weights.items()
+                    if k in numeric_signals
+                )
+                confidence = (
+                    weighted_sum / weight_total
+                    if weight_total > 0 else 0.5
+                )
+                reasoning = self._build_reasoning(
+                    signals, disruption_event, market_conditions
+                )
+
+        # Step 5: Evaluate with TLEngine
+        decision = self.engine.evaluate(
+            confidence=confidence,
+            reasoning=reasoning,
+            metadata={
+                "scenario": scenario_label,
+                "eventType": disruption_event.get("event_type", "unknown"),
+                "signalCount": len([
+                    v for v in signals.values()
+                    if isinstance(v, (int, float))
+                ]),
+                "esgBlocked": esg_blocked,
+                "complianceBlocked": compliance_blocked,
+                "pillarImplicated": (
+                    "SustainableCapitalAllocationMandate"
+                    if esg_blocked
+                    else "EconomicRightsAndTransparencyMandate"
+                    if compliance_blocked
+                    else "EpistemicHold"
+                )
+            },
+            force_state=forced_state
+        )
+
+        # Step 6: Commit log entry (NL=NA: BEFORE any rerouting fires)
+        goukassian = create_goukassian_principle_block(
+            decision_payload=decision.reasoning,
+            agent_id="supply-chain-governance-001",
+            license_scopes=self.license_scopes
+        )
+        log_entry = commit_log_entry(
+            decision=decision,
+            engine=self.engine,
+            goukassian_block=goukassian,
+            previous_hash=self.ledger.previous_hash,
+            extra_context={
+                "eventType": disruption_event.get("event_type", "unknown"),
+                "signals": {
+                    k: round(v, 4)
+                    for k, v in signals.items()
+                    if isinstance(v, (int, float))
+                },
+                "regulatoryCompliant": compliance["compliant"],
+                "esgCompliant": not esg_blocked,
+                "costSensitivity": self.cost_sensitivity,
+                "timeSensitivity": self.time_sensitivity
+            }
+        )
+        self.ledger.commit(log_entry)
+
+        # Step 7: Permission Token (PROCEED only)
+        token = build_permission_token(log_entry)
+
+        # Step 8: Response plan based on state
+        response_plan = self._build_response_plan(
+            decision, disruption_event, route_info, signals
+        )
+
+        record = {
+            "scenario": scenario_label,
+            "eventType": disruption_event.get("event_type", "unknown"),
+            "state": decision.state.name,
+            "stateValue": decision.state.value,
+            "processActive": log_entry["processActive"],
+            "confidence": decision.confidence,
+            "positionLabel": decision.position_label,
+            "reasoning": decision.reasoning,
+            "logHash": log_entry["logHash"][:16] + "...",
+            "merkleRoot": log_entry["merkleRoot"][:16] + "...",
+            "permissionToken": (
+                token["tokenId"][:16] + "..." if token else None
+            ),
+            "laneOrigin": token["laneOrigin"] if token else "N/A",
+            "responsePlan": response_plan,
+            "regulatoryCompliant": compliance["compliant"],
+            "regulatoryFailures": compliance["failures"],
+            "regulatoryWarnings": compliance["warnings"],
+            "esgCompliant": not esg_blocked,
+            "nlNaStatus": "Log committed before rerouting authorized"
+        }
+
+        self._decisions.append(record)
+        return record
+
+    def _get_signal_weights(
+        self,
+        signals: Dict[str, float],
+        market_conditions: Dict[str, Any]
+    ) -> Dict[str, float]:
+        """
+        Compute signal weights based on business context.
+
+        Weights are adjusted by cost_sensitivity and time_sensitivity
+        configuration. In cost-sensitive industries, route viability
+        and inventory buffer carry more weight. In time-sensitive
+        industries, customer urgency and duration confidence dominate.
+        """
+        base_weights = {
+            "disruption_severity": 0.25,
+            "duration_confidence": 0.15,
+            "route_viability": 0.20,
+            "inventory_buffer": 0.15,
+            "supplier_flexibility": 0.10,
+            "customer_urgency": 0.10,
+            "sustainability": 0.05
+        }
+
+        # Adjust for time sensitivity
+        if self.time_sensitivity > 0.5:
+            base_weights["customer_urgency"] = min(
+                base_weights["customer_urgency"] + 0.10, 0.25
+            )
+            base_weights["inventory_buffer"] = min(
+                base_weights["inventory_buffer"] + 0.05, 0.25
+            )
+
+        # Adjust for cost sensitivity
+        if self.cost_sensitivity > 0.5:
+            base_weights["route_viability"] = min(
+                base_weights["route_viability"] + 0.05, 0.30
+            )
+
+        return base_weights
+
+    def _build_reasoning(
+        self,
+        signals: Dict[str, Any],
+        disruption_event: Dict[str, Any],
+        market_conditions: Dict[str, Any]
+    ) -> str:
+        """Build human-readable reasoning from supply chain signals."""
+        parts = []
+
+        severity = signals.get("disruption_severity")
+        if severity is not None:
+            if severity > 0.7:
+                parts.append("Disruption severity: high confidence in serious impact")
+            elif severity < 0.4:
+                parts.append(
+                    "Disruption severity: conflicting reports, confidence low"
+                )
+
+        route = signals.get("route_viability")
+        if route is not None:
+            if route > 0.7:
+                parts.append("Alternative route: viable with adequate capacity")
+            elif route < 0.3:
+                parts.append(
+                    "Alternative route: limited viability, rerouting risky"
+                )
+
+        inventory = signals.get("inventory_buffer")
+        if inventory is not None:
+            if inventory > 0.7:
+                parts.append(
+                    "Inventory: adequate buffer for deliberate evaluation"
+                )
+            elif inventory < 0.3:
+                parts.append(
+                    "Inventory: low buffer; urgency increasing"
+                )
+
+        urgency = signals.get("customer_urgency")
+        if urgency is not None and urgency < 0.3:
+            parts.append("Customer urgency: critical commitments at risk")
+
+        event_type = disruption_event.get("event_type", "")
+        if event_type:
+            parts.append(f"Event type: {event_type}")
+
+        return ". ".join(parts) if parts else "Supply chain signal analysis"
+
+    def _build_response_plan(
+        self,
+        decision: TLValue,
+        disruption_event: Dict[str, Any],
+        route_info: Dict[str, Any],
+        signals: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Build concrete response plan based on TL state.
+
+        PROCEED: implement major route change.
+        EPISTEMIC_HOLD: graduated response with data gathering.
+        REFUSE: maintain current operations with enhanced monitoring.
+        """
+        if decision.state == TLState.PROCEED:
+            best_route = None
+            alt_routes = route_info.get("alternative_routes", [])
+            if alt_routes:
+                best_route = max(
+                    alt_routes,
+                    key=lambda r: (
+                        r.get("reliability_score", 0)
+                        * r.get("capacity_available", 0)
+                    )
+                )
+
+            return {
+                "primaryAction": "IMPLEMENT_REROUTE",
+                "selectedRoute": best_route.get("route_id") if best_route else None,
+                "routeReliability": (
+                    best_route.get("reliability_score")
+                    if best_route else None
+                ),
+                "estimatedLeadTimeDays": disruption_event.get(
+                    "estimated_resolution_days", 14
+                ),
+                "supplierNotificationRequired": True,
+                "customerNotificationRequired": True,
+                "complianceReportingRequired": True,
+                "note": (
+                    "Rerouting authorized by PermissionToken. "
+                    "NL=NA: log committed before rerouting fired."
+                )
+            }
+
+        elif decision.state == TLState.EPISTEMIC_HOLD:
+            resolution_deadline = (
+                datetime.now(timezone.utc) + timedelta(hours=24)
+            ).isoformat()
+
+            return {
+                "primaryAction": "EPISTEMIC_HOLD_PROTOCOL",
+                "holdDurationMs": 300,
+                "resolutionDeadline": resolution_deadline,
+                "immediateActions": [
+                    "Activate secondary inventory reserves",
+                    "Query tertiary oracle sources for disruption verification",
+                    "Request updated severity assessments from field agents",
+                    "Prepare contingency contracts with qualified alternatives"
+                ],
+                "dataRequirements": [
+                    k for k, v in signals.items()
+                    if v is None or (isinstance(v, float) and v < 0.3)
+                ],
+                "permittedResolutionStates": [1, -1],
+                "note": (
+                    "Epistemic Hold: irreversible rerouting commitment "
+                    "requires verified truth. Gathering additional data "
+                    "before authorizing route change."
+                )
+            }
+
+        else:  # TLState.REFUSE
+            return {
+                "primaryAction": "MAINTAIN_CURRENT_OPERATIONS",
+                "enhancedMonitoring": True,
+                "monitoringIntervalHours": 4,
+                "contingencyPreparation": [
+                    "Pre-qualify alternative suppliers for rapid onboarding",
+                    "Negotiate option contracts on alternative capacity",
+                    "Brief customer success teams on potential delays"
+                ],
+                "escalationTriggers": [
+                    "Disruption duration exceeds 14 days",
+                    "Inventory buffer falls below 7 days coverage",
+                    "Critical customer commitment within 5 days"
+                ],
+                "note": (
+                    "Refuse: compliance or ESG failure prevents rerouting. "
+                    "Maintain current route under enhanced monitoring. "
+                    "refusalIsPermanent unless compliance resolved."
+                )
+            }
+
+    def get_summary(self) -> Dict[str, Any]:
+        """Return summary of all supply chain decisions."""
+        stats = self.engine.get_statistics()
+        ledger = self.ledger.get_summary()
+
+        return {
+            "totalDecisions": stats["total_decisions"],
+            "proceedCount": stats["proceed_count"],
+            "epistemicHoldCount": stats["hold_count"],
+            "refuseCount": stats["refuse_count"],
+            "epistemicHoldRate": stats["epistemic_hold_rate"],
+            "targetHoldRate": stats["target_hold_rate"],
+            "averageConfidence": stats["average_confidence"],
+            "ledgerEntries": ledger["totalEntries"],
+            "latestMerkleRoot": ledger["latestMerkleRoot"][:16] + "...",
+            "architectureMode": "ARCHITECTURE_B",
+            "pufAttestation": "NULL_PUF_DEPLOYMENT"
+        }
 
 
-def demonstrate_supply_chain_management():
+# =============================================================================
+# SECTION 5: Demonstration Scenarios
+# =============================================================================
+
+def run_supply_chain_demo():
     """
-    Demonstrate Supply Chain Management with Eight Pillars accountability
+    Demonstrate TL supply chain management across five scenarios:
+        1. Clear reroute: severe disruption, viable alternative, ESG compliant
+        2. Epistemic Hold: conflicting disruption reports
+        3. ESG mandate failure: alternative route not compliant (Pillar VI)
+        4. Compliance failure: labor rights violations (Pillar V)
+        5. Low inventory urgency: Solvency Protocol behavior
+
+    DEMONSTRATION THRESHOLD VALUES: not for production use.
+    Pharmaceutical, consumer electronics, and food supply chains each
+    require different calibrations. See docs/Threshold_Calibration.md.
     """
-    
-    print("\n╔══════════════════════════════════════════════════════════════════════╗")
-    print("║   Global Supply Chain Management - Eight Pillars Implementation      ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print("\nCreated by Lev Goukassian (ORCID: 0009-0006-5966-1243)")
-    print("Contact: leogouk@gmail.com")
-    print('\n"The Epistemic Hold prevents supply chain overreactions."\n')
-    
-    # Initialize supply chain manager
-    sc_manager = GlobalSupplyChainManager(
-        halt_threshold=0.30,
-        hold_threshold=0.70,
+
+    print()
+    print("=" * 70)
+    print("  TERNARY LOGIC: GLOBAL SUPPLY CHAIN MANAGEMENT")
+    print("  Lev Goukassian (ORCID: 0009-0006-5966-1243)")
+    print("  'The Epistemic Hold prevents supply chain overreactions.'")
+    print("=" * 70)
+
+    # DEMONSTRATION VALUES ONLY: not recommendations, not standards.
+    # Supply chain thresholds are calibrated per industry and risk profile.
+    DEMO_PROCEED = 0.68
+    DEMO_HOLD = 0.28
+
+    manager = GlobalSupplyChainManager(
+        proceed_threshold=DEMO_PROCEED,
+        hold_threshold=DEMO_HOLD,
         cost_sensitivity=0.3,
         time_sensitivity=0.4
     )
-    
-    # Scenario 1: Major Route Disruption
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("Scenario 1: Suez Canal Blockage - Major Disruption")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    
-    major_disruption = {
-        'event_type': 'shipping_route_blockage',
-        'severity_reports': [
-            {'severity': 0.9, 'confidence': 0.95, 'source': 'port_authority'},
-            {'severity': 0.85, 'confidence': 0.8, 'source': 'shipping_company'},
-            {'severity': 0.95, 'confidence': 0.9, 'source': 'logistics_partner'}
-        ],
-        'duration_estimates': {'estimated_days': 14, 'confidence': 0.7},
-        'cost_implications': {'additional_cost_estimate': 2500000},
-        'timeline': {'estimated_start': datetime.now()}
-    }
-    
-    major_route_info = {
-        'alternative_routes': [
-            {'route_id': 'cape_of_good_hope', 'capacity_available': 0.8, 'reliability_score': 0.9},
-            {'route_id': 'trans_pacific', 'capacity_available': 0.6, 'reliability_score': 0.85}
-        ],
-        'cost_comparisons': {'cape_of_good_hope': 1.4, 'trans_pacific': 1.6}
-    }
-    
-    major_market_conditions = {
-        'current_inventory': {'electronics': 500, 'textiles': 300, 'machinery': 150},
-        'demand_forecast': {
-            'electronics': {'daily_demand': 50},
-            'textiles': {'daily_demand': 30},
-            'machinery': {'daily_demand': 10}
-        },
-        'customer_commitments': [
-            {'revenue_value': 5000000, 'delivery_date': datetime.now() + timedelta(days=21)},
-            {'revenue_value': 3000000, 'delivery_date': datetime.now() + timedelta(days=35)}
-        ],
-        'business_type': 'customer_first',
-        'sustainability_metrics': {
-            'carbon_footprint_change': 0.3,  # 30% increase
-            'labor_standards_score': 0.8,
-            'environmental_impact': 0.2
-        }
-    }
-    
-    decision = sc_manager.make_supply_chain_decision(
-        major_disruption, major_route_info, major_market_conditions
-    )
-    implementation = sc_manager.implement_response_strategy(
-        decision, major_disruption, major_route_info
-    )
-    
-    print(f"Decision: {decision.state.name}")
-    print(f"Confidence: {decision.confidence:.2%}")
-    print(f"Action: {implementation['primary_action']}")
-    print(f"Timeline: {implementation['implementation_timeline']} hours")
-    print(f"Reasoning: {decision.reasoning[:80]}...")
-    print(f"\nEight Pillars Compliance:")
-    for pillar, status in implementation['eight_pillars_compliance'].items():
-        print(f"  • {pillar}: {'✓' if status else '✗'}")
-    print()
-    
-    # Scenario 2: Uncertain Geopolitical Situation
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("Scenario 2: Geopolitical Tensions - Epistemic Hold Expected")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    
-    uncertain_disruption = {
-        'event_type': 'geopolitical_tension',
-        'severity_reports': [
-            {'severity': 0.4, 'confidence': 0.5, 'source': 'news_media'},
-            {'severity': 0.6, 'confidence': 0.3, 'source': 'government_advisory'}
-        ],
-        'duration_estimates': {'estimated_days': None, 'confidence': 0.2},
-        'cost_implications': {'additional_cost_estimate': None}
-    }
-    
-    uncertain_route_info = {
-        'alternative_routes': None,
-        'supplier_network': {
-            'total_suppliers': 10,
-            'alternative_suppliers': [
-                {'available_capacity': 0.4},
-                {'available_capacity': 0.6}
-            ]
-        }
-    }
-    
-    uncertain_market_conditions = {
-        'current_inventory': {'electronics': 800, 'textiles': 600},
-        'demand_forecast': None,
-        'customer_commitments': [
-            {'revenue_value': 2000000, 'delivery_date': datetime.now() + timedelta(days=45)}
-        ],
-        'business_type': 'balanced'
-    }
-    
-    decision = sc_manager.make_supply_chain_decision(
-        uncertain_disruption, uncertain_route_info, uncertain_market_conditions
-    )
-    implementation = sc_manager.implement_response_strategy(
-        decision, uncertain_disruption, uncertain_route_info
-    )
-    
-    print(f"Decision: {decision.state.name}")
-    print(f"Confidence: {decision.confidence:.2%}")
-    print(f"Action: {implementation['primary_action']}")
-    
-    if decision.state == TLState.EPISTEMIC_HOLD:
-        print(f"\nEpistemic Hold Protocol:")
-        print(f"  • Hold Duration: {implementation['hold_duration_ms']}ms")
-        protocol = implementation['epistemic_protocol']
-        print(f"  • Extended Monitoring: {protocol['pause_duration_hours']} hours")
-        print(f"  • Monitoring Frequency: {protocol['monitoring_frequency']}")
-        print(f"\nData Gathering Plan:")
-        for action in implementation['data_gathering_plan'][:3]:
-            print(f"  • {action}")
-        print(f"\nEscalation Triggers:")
-        for trigger in protocol['escalation_triggers'][:3]:
-            print(f"  • {trigger}")
-    print()
-    
-    # Scenario 3: Minor Weather Delay
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("Scenario 3: Minor Weather Delay - Maintain Operations")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    
-    minor_disruption = {
-        'event_type': 'weather_delay',
-        'severity_reports': [
-            {'severity': 0.2, 'confidence': 0.9, 'source': 'weather_service'},
-            {'severity': 0.15, 'confidence': 0.85, 'source': 'logistics_team'}
-        ],
-        'duration_estimates': {'estimated_days': 2, 'confidence': 0.9},
-        'cost_implications': {'additional_cost_estimate': 50000}
-    }
-    
-    minor_route_info = {
-        'alternative_routes': [
-            {'route_id': 'alternative_port', 'capacity_available': 0.9, 'reliability_score': 0.95}
-        ],
-        'cost_comparisons': {'alternative_port': 1.1}
-    }
-    
-    minor_market_conditions = {
-        'current_inventory': {'electronics': 1200, 'textiles': 900},
-        'demand_forecast': {
-            'electronics': {'daily_demand': 40},
-            'textiles': {'daily_demand': 25}
-        },
-        'customer_commitments': [
-            {'revenue_value': 1000000, 'delivery_date': datetime.now() + timedelta(days=60)}
-        ],
-        'business_type': 'cost_sensitive'
-    }
-    
-    decision = sc_manager.make_supply_chain_decision(
-        minor_disruption, minor_route_info, minor_market_conditions
-    )
-    implementation = sc_manager.implement_response_strategy(
-        decision, minor_disruption, minor_route_info
-    )
-    
-    print(f"Decision: {decision.state.name}")
-    print(f"Confidence: {decision.confidence:.2%}")
-    print(f"Action: {implementation['primary_action']}")
-    print(f"Compliance: {implementation['compliance_reporting']}")
-    print()
-    
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("Supply Chain Management Summary")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    
-    print(f"\nAccountability Metrics:")
-    print(f"  • Decision Logs Created: {len(sc_manager.decision_logs)}")
-    print(f"  • Immutable Ledger Entries: {len(sc_manager.decision_ledger)}")
-    print(f"  • Epistemic Holds Triggered: {len(sc_manager.epistemic_holds)}")
-    
-    print("\n" + "═" * 60)
-    print("Supply Chain Management with Sovereign-Grade Accountability")
-    print("═" * 60)
-    print("\nThe Eight Pillars Framework ensures:")
-    print("  • Graduated responses to uncertainty (Epistemic Hold)")
-    print("  • Immutable audit trails for all decisions")
-    print("  • Complete regulatory compliance")
-    print("  • Sustainability considerations in routing")
-    print("  • Cryptographic proof of decision integrity")
-    print("\nPreventing overreactions while maintaining full accountability.")
 
+    print()
+    print(f"  Engine initialized (demonstration thresholds: not for production)")
+    print(f"  PROCEED >= {DEMO_PROCEED} | REFUSE < {DEMO_HOLD}")
+    print(f"  Cost sensitivity: 0.3 | Time sensitivity: 0.4")
+
+    # Shared dates for customer commitments
+    soon = (datetime.now(timezone.utc) + timedelta(days=5)).isoformat()
+    later = (datetime.now(timezone.utc) + timedelta(days=30)).isoformat()
+
+    # ------------------------------------------------------------------
+    # SCENARIO 1: Clear reroute decision
+    # Severe disruption, high agreement on severity, viable alternative,
+    # ESG compliant, all checks pass.
+    # Expected: PROCEED with rerouting plan.
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 1: Clear Reroute Decision")
+    print("-" * 70)
+
+    disruption_1 = {
+        "event_type": "PORT_CLOSURE",
+        "severity_reports": [
+            {"source": "port_authority", "severity": 0.92},
+            {"source": "shipping_company", "severity": 0.88},
+            {"source": "logistics_partner", "severity": 0.90}
+        ],
+        "duration_estimates": [
+            {"source": "port_authority", "days": 21},
+            {"source": "industry_report", "days": 18},
+            {"source": "insurance_assessment", "days": 24}
+        ],
+        "alternative_suppliers_screened": True,
+        "restricted_goods_involved": False,
+        "estimated_resolution_days": 21
+    }
+
+    route_1 = {
+        "alternative_routes": [
+            {
+                "route_id": "CAPE_OF_GOOD_HOPE",
+                "capacity_available": 0.82,
+                "reliability_score": 0.88
+            },
+            {
+                "route_id": "TRANS_PACIFIC_ALT",
+                "capacity_available": 0.65,
+                "reliability_score": 0.78
+            }
+        ],
+        "cost_comparisons": [
+            {"route_id": "CAPE_OF_GOOD_HOPE", "alternative_cost_ratio": 1.35}
+        ],
+        "supplier_network": {
+            "qualified_alternatives": 4,
+            "total_alternatives": 5,
+            "avg_onboarding_weeks": 3,
+            "avg_utilization": 0.62
+        },
+        "labor_violations_detected": False,
+        "child_labor_risk_score": 0.08
+    }
+
+    conditions_1 = {
+        "current_inventory": {
+            "SKU-A": 4500,
+            "SKU-B": 3200,
+            "SKU-C": 5100
+        },
+        "demand_forecast": {
+            "SKU-A": 2400,
+            "SKU-B": 1800,
+            "SKU-C": 2700
+        },
+        "customer_commitments": [
+            {"id": "CUST-001", "criticality": "high", "deadline": later},
+            {"id": "CUST-002", "criticality": "medium", "deadline": later}
+        ],
+        "sustainability_metrics": {
+            "carbon_intensity_score": 72,
+            "labor_rights_score": 85,
+            "certification_count": 4
+        },
+        "esg_verified": True,
+        "emissions_anchored": True,
+        "use_of_proceeds_tracked": True
+    }
+
+    r1 = manager.make_supply_chain_decision(
+        disruption_1, route_1, conditions_1, "Port Closure Reroute"
+    )
+    _print_supply_chain_result(r1)
+
+    # ------------------------------------------------------------------
+    # SCENARIO 2: Epistemic Hold via conflicting disruption reports
+    # Wide disagreement on severity and duration.
+    # Rerouting is irreversible; conflicting signals warrant pause.
+    # Expected: EPISTEMIC_HOLD.
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 2: Epistemic Hold via Conflicting Reports")
+    print("-" * 70)
+
+    disruption_2 = {
+        "event_type": "WEATHER_EVENT",
+        "severity_reports": [
+            {"source": "local_agency", "severity": 0.85},
+            {"source": "regional_authority", "severity": 0.30},
+            {"source": "satellite_data", "severity": 0.55}
+        ],
+        "duration_estimates": [
+            {"source": "meteorological", "days": 3},
+            {"source": "local_operator", "days": 45},
+            {"source": "insurance", "days": 14}
+        ],
+        "alternative_suppliers_screened": True,
+        "restricted_goods_involved": False
+    }
+
+    route_2 = {
+        "alternative_routes": [
+            {
+                "route_id": "NORTHERN_CORRIDOR",
+                "capacity_available": 0.55,
+                "reliability_score": 0.62
+            }
+        ],
+        "cost_comparisons": [
+            {"route_id": "NORTHERN_CORRIDOR", "alternative_cost_ratio": 1.85}
+        ],
+        "supplier_network": {
+            "qualified_alternatives": 1,
+            "total_alternatives": 3,
+            "avg_onboarding_weeks": 8,
+            "avg_utilization": 0.78
+        },
+        "labor_violations_detected": False,
+        "child_labor_risk_score": 0.15
+    }
+
+    conditions_2 = {
+        "current_inventory": {
+            "SKU-A": 3800,
+            "SKU-B": 2900
+        },
+        "demand_forecast": {"SKU-A": 2200, "SKU-B": 1600},
+        "customer_commitments": [
+            {"id": "CUST-003", "criticality": "medium", "deadline": later}
+        ],
+        "sustainability_metrics": {
+            "carbon_intensity_score": 68,
+            "labor_rights_score": 74,
+            "certification_count": 2
+        },
+        "esg_verified": True,
+        "emissions_anchored": True,
+        "use_of_proceeds_tracked": True
+    }
+
+    r2 = manager.make_supply_chain_decision(
+        disruption_2, route_2, conditions_2, "Conflicting Reports"
+    )
+    _print_supply_chain_result(r2)
+
+    # ------------------------------------------------------------------
+    # SCENARIO 3: ESG mandate failure (Pillar VI)
+    # Alternative route not ESG verified.
+    # Binary mandate override forces Epistemic Hold regardless of signals.
+    # Expected: EPISTEMIC_HOLD (forced by Pillar VI).
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 3: ESG Mandate Failure (Pillar VI)")
+    print("-" * 70)
+
+    disruption_3 = {
+        "event_type": "SUPPLIER_BANKRUPTCY",
+        "severity_reports": [
+            {"source": "financial_monitor", "severity": 0.95},
+            {"source": "credit_agency", "severity": 0.93}
+        ],
+        "duration_estimates": [
+            {"source": "legal_assessment", "days": 90},
+            {"source": "industry_analyst", "days": 75}
+        ],
+        "alternative_suppliers_screened": True,
+        "restricted_goods_involved": False,
+        "estimated_resolution_days": 82
+    }
+
+    route_3 = {
+        "alternative_routes": [
+            {
+                "route_id": "UNVERIFIED_SUPPLIER_X",
+                "capacity_available": 0.90,
+                "reliability_score": 0.85
+            }
+        ],
+        "cost_comparisons": [
+            {"route_id": "UNVERIFIED_SUPPLIER_X", "alternative_cost_ratio": 1.10}
+        ],
+        "supplier_network": {
+            "qualified_alternatives": 2,
+            "total_alternatives": 4,
+            "avg_onboarding_weeks": 4,
+            "avg_utilization": 0.55
+        },
+        "labor_violations_detected": False,
+        "child_labor_risk_score": 0.12
+    }
+
+    conditions_3 = {
+        "current_inventory": {"SKU-A": 5200, "SKU-B": 4100},
+        "demand_forecast": {"SKU-A": 2800, "SKU-B": 2200},
+        "customer_commitments": [
+            {"id": "CUST-004", "criticality": "high", "deadline": later}
+        ],
+        "sustainability_metrics": {
+            "carbon_intensity_score": 40,
+            "labor_rights_score": 35,
+            "certification_count": 0
+        },
+        "esg_verified": False,          # PILLAR VI FAILS
+        "emissions_anchored": False,    # PILLAR VI FAILS
+        "use_of_proceeds_tracked": True
+    }
+
+    r3 = manager.make_supply_chain_decision(
+        disruption_3, route_3, conditions_3, "ESG Mandate Failure"
+    )
+    _print_supply_chain_result(r3)
+
+    # ------------------------------------------------------------------
+    # SCENARIO 4: Compliance failure via labor rights violation (Pillar V)
+    # Alternative route has confirmed labor violations.
+    # Forces Refuse (-1).
+    # Expected: REFUSE.
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 4: Labor Rights Violation (Pillar V: Refuse)")
+    print("-" * 70)
+
+    disruption_4 = {
+        "event_type": "GEOPOLITICAL_DISRUPTION",
+        "severity_reports": [
+            {"source": "government_advisory", "severity": 0.88},
+            {"source": "trade_association", "severity": 0.84}
+        ],
+        "duration_estimates": [
+            {"source": "political_analyst", "days": 60},
+            {"source": "trade_economist", "days": 45}
+        ],
+        "alternative_suppliers_screened": True,
+        "restricted_goods_involved": False,
+        "estimated_resolution_days": 52
+    }
+
+    route_4 = {
+        "alternative_routes": [
+            {
+                "route_id": "ZONE-X-CORRIDOR",
+                "capacity_available": 0.75,
+                "reliability_score": 0.70
+            }
+        ],
+        "cost_comparisons": [
+            {"route_id": "ZONE-X-CORRIDOR", "alternative_cost_ratio": 1.20}
+        ],
+        "supplier_network": {
+            "qualified_alternatives": 3,
+            "total_alternatives": 5,
+            "avg_onboarding_weeks": 6,
+            "avg_utilization": 0.68
+        },
+        "labor_violations_detected": True,  # PILLAR V FAILS
+        "child_labor_risk_score": 0.72      # PILLAR V FAILS
+    }
+
+    conditions_4 = {
+        "current_inventory": {"SKU-A": 6000, "SKU-B": 4800},
+        "demand_forecast": {"SKU-A": 3000, "SKU-B": 2400},
+        "customer_commitments": [
+            {"id": "CUST-005", "criticality": "medium", "deadline": later}
+        ],
+        "sustainability_metrics": {
+            "carbon_intensity_score": 55,
+            "labor_rights_score": 28,
+            "certification_count": 1
+        },
+        "esg_verified": True,
+        "emissions_anchored": True,
+        "use_of_proceeds_tracked": True
+    }
+
+    r4 = manager.make_supply_chain_decision(
+        disruption_4, route_4, conditions_4, "Labor Rights Violation"
+    )
+    _print_supply_chain_result(r4)
+
+    # ------------------------------------------------------------------
+    # SCENARIO 5: Low inventory with customer deadline pressure
+    # Solvency Protocol analog: inadequate buffer triggers Epistemic Hold
+    # even with a viable alternative, because urgency demands verified
+    # truth before committing to an irreversible reroute.
+    # Expected: EPISTEMIC_HOLD (low inventory buffer + urgent deadline).
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 5: Low Inventory (Solvency Protocol Analog)")
+    print("-" * 70)
+
+    disruption_5 = {
+        "event_type": "LOGISTICS_CONGESTION",
+        "severity_reports": [
+            {"source": "freight_forwarder", "severity": 0.70},
+            {"source": "port_monitor", "severity": 0.65}
+        ],
+        "duration_estimates": [
+            {"source": "freight_forwarder", "days": 10},
+            {"source": "port_monitor", "days": 8}
+        ],
+        "alternative_suppliers_screened": True,
+        "restricted_goods_involved": False,
+        "estimated_resolution_days": 9
+    }
+
+    route_5 = {
+        "alternative_routes": [
+            {
+                "route_id": "AIR_FREIGHT_EXPRESS",
+                "capacity_available": 0.60,
+                "reliability_score": 0.92
+            }
+        ],
+        "cost_comparisons": [
+            {"route_id": "AIR_FREIGHT_EXPRESS", "alternative_cost_ratio": 4.2}
+        ],
+        "supplier_network": {
+            "qualified_alternatives": 2,
+            "total_alternatives": 3,
+            "avg_onboarding_weeks": 2,
+            "avg_utilization": 0.70
+        },
+        "labor_violations_detected": False,
+        "child_labor_risk_score": 0.05
+    }
+
+    conditions_5 = {
+        "current_inventory": {
+            "SKU-A": 280,   # Only 3 days coverage
+            "SKU-B": 190    # Only 3 days coverage
+        },
+        "demand_forecast": {"SKU-A": 2800, "SKU-B": 1900},
+        "customer_commitments": [
+            {
+                "id": "CUST-006",
+                "criticality": "critical",
+                "deadline": soon  # 5 days away
+            }
+        ],
+        "sustainability_metrics": {
+            "carbon_intensity_score": 82,
+            "labor_rights_score": 90,
+            "certification_count": 5
+        },
+        "esg_verified": True,
+        "emissions_anchored": True,
+        "use_of_proceeds_tracked": True
+    }
+
+    r5 = manager.make_supply_chain_decision(
+        disruption_5, route_5, conditions_5, "Low Inventory Urgency"
+    )
+    _print_supply_chain_result(r5)
+
+    # ------------------------------------------------------------------
+    # SUMMARY
+    # ------------------------------------------------------------------
+
+    print()
+    print("=" * 70)
+    print("SUPPLY CHAIN SESSION SUMMARY")
+    print("=" * 70)
+
+    summary = manager.get_summary()
+    print(f"  Total decisions:     {summary['totalDecisions']}")
+    print(f"  PROCEED:             {summary['proceedCount']}")
+    print(f"  EPISTEMIC_HOLD:      {summary['epistemicHoldCount']}")
+    print(f"  REFUSE:              {summary['refuseCount']}")
+    print(f"  Hold rate:           {summary['epistemicHoldRate']:.1%} "
+          f"(target: {summary['targetHoldRate']:.1%})")
+    print(f"  Average confidence:  {summary['averageConfidence']:.3f}")
+    print(f"  Ledger entries:      {summary['ledgerEntries']}")
+    print(f"  Latest Merkle root:  {summary['latestMerkleRoot']}")
+    print(f"  Architecture mode:   {summary['architectureMode']}")
+    print(f"  PUF attestation:     {summary['pufAttestation']}")
+    print()
+    print("  NL=NA: Every rerouting decision was logged to the Immutable")
+    print("  Ledger before any route change was authorized.")
+    print("  No log, no reroute.")
+    print()
+    print("  Three immutable mandates:")
+    print("    No Spy. No Weapon. No Switch Off.")
+    print("=" * 70)
+    print()
+
+    # Export audit trail (Pillar IV)
+    manager.engine.export_audit_trail("/tmp/tl_supply_chain_audit.json")
+    print("  Audit trail exported: /tmp/tl_supply_chain_audit.json")
+    print()
+
+
+def _print_supply_chain_result(result: Dict[str, Any]):
+    """Print formatted supply chain decision result."""
+    state_labels = {
+        "PROCEED": "OK",
+        "EPISTEMIC_HOLD": "HOLD",
+        "REFUSE": "REFUSE"
+    }
+    label = state_labels.get(result["state"], "")
+
+    print(f"  State:           {label} {result['state']} ({result['stateValue']})")
+    print(f"  processActive:   {result['processActive']}")
+    print(f"  Event type:      {result['eventType']}")
+    print(f"  Confidence:      {result['confidence']:.3f}")
+    print(f"  Position:        {result['positionLabel']}")
+    print(f"  Log committed:   {result['logHash']}")
+    print(f"  Merkle root:     {result['merkleRoot']}")
+
+    if result.get("permissionToken"):
+        print(f"  Permission token: {result['permissionToken']}")
+        print(f"  laneOrigin:       {result['laneOrigin']}")
+    else:
+        print(f"  Permission token: None")
+
+    plan = result.get("responsePlan", {})
+    action = plan.get("primaryAction", "N/A")
+    print(f"  Response action: {action}")
+
+    if action == "IMPLEMENT_REROUTE":
+        route = plan.get("selectedRoute", "N/A")
+        print(f"  Selected route:  {route}")
+    elif action == "EPISTEMIC_HOLD_PROTOCOL":
+        reqs = plan.get("dataRequirements", [])
+        if reqs:
+            print(f"  Data needed:     {', '.join(reqs[:3])}")
+        deadline = plan.get("resolutionDeadline", "")
+        if deadline:
+            print(f"  Resolve by:      {deadline}")
+
+    if result.get("regulatoryFailures"):
+        for f in result["regulatoryFailures"]:
+            print(f"  Compliance FAIL: {f}")
+
+    if not result.get("esgCompliant"):
+        print(f"  ESG mandate:     FAILED (Pillar VI forced Epistemic Hold)")
+
+    if result.get("regulatoryWarnings"):
+        for w in result["regulatoryWarnings"][:1]:
+            print(f"  Warning:         {w}")
+
+    print(f"  NL=NA:           {result['nlNaStatus']}")
+
+
+# =============================================================================
+# Entry point
+# =============================================================================
 
 if __name__ == "__main__":
-    demonstrate_supply_chain_management()
+    run_supply_chain_demo()
 
-## Contact Information
 
-**Created by Lev Goukassian**
-* **ORCID**: 0009-0006-5966-1243
-* **Email**: leogouk@gmail.com
-
-**Successor Contact**: support@tl-goukassian.org  
-(see [Succession Charter](/memorial/Succession_Charter.md))
+"""
+---
+Creator: Lev Goukassian (ORCID: 0009-0006-5966-1243)
+Email: leogouk@gmail.com
+Repository: https://github.com/FractonicMind/TernaryLogic
+Successor: support@tl-goukassian.org
+DOI 1: 10.1007/s43681-025-00910-6
+DOI 2: 10.1007/s43681-026-01124-0
+---
+"""

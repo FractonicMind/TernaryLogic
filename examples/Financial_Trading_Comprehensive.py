@@ -1,926 +1,1176 @@
 """
-Ternary Logic Framework - Comprehensive Financial Trading with Eight Pillars
+Ternary Logic Framework: Comprehensive Financial Trading
+=========================================================
+
 Created by Lev Goukassian (ORCID: 0009-0006-5966-1243)
 Contact: leogouk@gmail.com
+Successor: support@tl-goukassian.org
+Repository: https://github.com/FractonicMind/TernaryLogic
 
-This example demonstrates how the Ternary Logic framework provides
-sovereign-grade accountability for financial trading systems through
-the Eight Pillars architecture, preventing flash crashes and ensuring
-complete audit trails for regulatory compliance.
+DOI 1: 10.1007/s43681-025-00910-6, Auditable AI: Tracing the Ethical History of a Model
+DOI 2: 10.1007/s43681-026-01124-0, A Ternary Logic Framework for Institutional Governance
 
-"When truth becomes measurable, power has nowhere left to hide."
+The Goukassian Vow:
+    "Pause when truth is uncertain"  ->  State  0  (Epistemic Hold)
+    "Refuse when harm is clear"      ->  State -1  (Refuse)
+    "Proceed where truth is"         ->  State +1  (Proceed)
+
+This example demonstrates TL applied to financial trading systems:
+    - Market signal analysis: momentum, mean reversion, liquidity, sentiment
+    - MiFID II best execution and market integrity compliance
+    - Flash crash prevention via Epistemic Hold under market stress
+    - Position sizing governed by TL state (not hardcoded numbers)
+    - ESG mandate verification (Pillar VI) blocking execution
+    - Dual-Lane Latency Architecture awareness:
+        Inference Lane: less than 2ms WCET (trading signal computation)
+        Governance Lane: 300ms ceiling (constitutional evaluation)
+    - NL=NA write-before-act for every trade decision
+    - Complete audit trail export
+
+THRESHOLD GOVERNANCE:
+    Trading systems must calibrate thresholds through their own governance
+    process. High-frequency equity desks, fixed income, and alternative
+    assets each require different calibrations. No universal values exist.
+    See docs/Threshold_Calibration.md.
 """
+
+import hashlib
+import json
+import uuid
+from datetime import datetime, timezone, timedelta
+from typing import Dict, List, Optional, Tuple, Any
 
 import numpy as np
 import pandas as pd
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Tuple
-import json
-import hashlib
 
-# Import Ternary Logic Framework
-from ternary_logic import TLDecisionEngine, TLState
-from ternary_logic.core import TLResult
-from ternary_logic.eight_pillars import EightPillarsFramework
+# TL Framework imports
+from ternary_logic import TLEngine, TLState, TLValue, verify_mandate, calculate_confidence
 
-class TLTradingAlgorithm:
+
+# =============================================================================
+# SECTION 1: Governance Artifacts (consistent with Quickstart pattern)
+# =============================================================================
+
+def create_goukassian_principle_block(
+    decision_payload: str,
+    agent_id: str,
+    license_scopes: list
+) -> Dict[str, Any]:
+    """Three Goukassian Principle artifacts. See Quickstart_Example.py."""
+    payload_bytes = decision_payload.encode("utf-8")
+    return {
+        "lantern": {
+            "artifactName": "lantern",
+            "lanternHash": hashlib.sha256(payload_bytes).hexdigest()
+        },
+        "signature": {
+            "artifactName": "signature",
+            "agentSignature": hashlib.sha512(
+                (agent_id + decision_payload).encode("utf-8")
+            ).hexdigest()
+        },
+        "license": {
+            "artifactName": "license",
+            "licenseScope": license_scopes
+        }
+    }
+
+
+def commit_log_entry(
+    decision: TLValue,
+    engine: TLEngine,
+    goukassian_block: Dict[str, Any],
+    previous_hash: str,
+    extra_context: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
     """
-    Advanced trading algorithm using Ternary Logic with Eight Pillars accountability
-    
-    Implements sovereign-grade accountability for trading decisions:
-    - PROCEED: High confidence to execute trade
-    - HALT: High confidence to avoid trade  
-    - EPISTEMIC_HOLD: Uncertainty detected - pause for deliberation
+    Commit governance log entry. NL=NA: BEFORE any trade fires.
+
+    In production this executes on the Inference Lane (less than 2ms WCET)
+    with hardware-backed non-volatile storage. The Governance Lane
+    (300ms ceiling) provides constitutional evaluation in parallel.
+    No trade executes without a committed log entry and a valid
+    PermissionToken from the Governance Lane.
     """
-    
-    def __init__(self, 
-                 halt_threshold: float = 0.30,
-                 hold_threshold: float = 0.75,
-                 position_size_limit: float = 0.1,
-                 max_drawdown: float = 0.05):
-        """
-        Initialize TL Trading Algorithm with Eight Pillars
-        
-        Args:
-            halt_threshold: Below this confidence, strongly avoid trade
-            hold_threshold: Below this confidence, trigger Epistemic Hold
-            position_size_limit: Maximum position size as fraction of portfolio
-            max_drawdown: Maximum acceptable drawdown before risk reduction
-        """
-        self.engine = TLDecisionEngine(
-            halt_threshold=halt_threshold,
-            hold_threshold=hold_threshold,
-            domain="financial_trading"
+    log_id = str(uuid.uuid4())
+    committed_at = datetime.now(timezone.utc).isoformat()
+
+    canonical = json.dumps({
+        "logId": log_id,
+        "state": decision.state.name,
+        "stateValue": decision.state.value,
+        "confidence": decision.confidence,
+        "reasoning": decision.reasoning,
+        "committedAt": committed_at
+    }, sort_keys=True)
+
+    log_hash = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    merkle_root = hashlib.sha256(
+        (previous_hash + log_hash).encode("utf-8")
+    ).hexdigest()
+
+    entry = {
+        "logId": log_id,
+        "currentState": decision.state.value,
+        "stateLabel": decision.state.name,
+        "processActive": {
+            TLState.PROCEED: "ProceedAuthorized",
+            TLState.EPISTEMIC_HOLD: "GovernancePause",
+            TLState.REFUSE: "RefusalPermanent"
+        }[decision.state],
+        "confidence": decision.confidence,
+        "reasoning": decision.reasoning,
+        "logHash": log_hash,
+        "merkleRoot": merkle_root,
+        "previousHash": previous_hash,
+        "committedAt": committed_at,
+        "goukassianPrinciple": goukassian_block,
+        "pufAttestation": "NULL_PUF_DEPLOYMENT",
+        "architectureMode": "ARCHITECTURE_B",
+        "engineConfig": {
+            "proceedThreshold": engine.proceed_threshold,
+            "holdThreshold": engine.hold_threshold
+        }
+    }
+    if extra_context:
+        entry["domainContext"] = extra_context
+    return entry
+
+
+def build_permission_token(log_entry: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """PermissionToken for PROCEED. laneOrigin const GOVERNANCE_LANE. NL=NA Layer 2."""
+    if log_entry["currentState"] != TLState.PROCEED.value:
+        return None
+
+    issued_at = datetime.now(timezone.utc)
+    expires_at = issued_at + timedelta(milliseconds=300000)
+
+    return {
+        "tokenId": str(uuid.uuid4()),
+        "logHash": log_entry["logHash"],
+        "merkleRoot": log_entry["merkleRoot"],
+        "laneOrigin": "GOVERNANCE_LANE",  # NL=NA Layer 2 const
+        "issuedAt": issued_at.isoformat(),
+        "expiresAt": expires_at.isoformat(),
+        "maxLifetimeMs": 300000,
+        "revocationStatus": "ACTIVE",
+        "signerKeyId": "trading-hsm-001",
+        "epochTimestamp": int(issued_at.timestamp()),
+        "signatureValue": hashlib.sha256(
+            log_entry["logHash"].encode()
+        ).hexdigest()
+    }
+
+
+class ImmutableLedger:
+    """Pillar II: append-only hash chain. See Quickstart_Example.py."""
+
+    def __init__(self, genesis_label: str = "TL_TRADING_GENESIS"):
+        self._entries = []
+        self._genesis_hash = hashlib.sha256(
+            genesis_label.encode()
+        ).hexdigest()
+
+    @property
+    def previous_hash(self) -> str:
+        return (
+            self._entries[-1]["merkleRoot"]
+            if self._entries else self._genesis_hash
         )
-        
-        # Initialize Eight Pillars Framework
-        self.eight_pillars = EightPillarsFramework()
-        
-        self.position_size_limit = position_size_limit
-        self.max_drawdown = max_drawdown
-        
-        # Trading state tracking
-        self.positions = {}
-        self.portfolio_value = 1000000  # $1M starting portfolio
-        
-        # Pillar 2: Immutable Ledger for trade history
-        self.trade_ledger = []
-        
-        # Pillar 4: Decision Logs for complete audit trail
-        self.decision_logs = []
-        
-        # Pillar 1: Epistemic Hold tracking
-        self.epistemic_holds = []
-        
-        # Risk management metrics
-        self.daily_var = 0.0
-        self.current_drawdown = 0.0
-        self.peak_value = self.portfolio_value
-        
-    def analyze_market_signals(self, symbol: str, market_data: Dict) -> Dict[str, float]:
-        """
-        Analyze multiple market signals for trading decision
-        
-        Returns dictionary with signal values
-        """
-        signals = {}
-        
-        # Technical Analysis Signals
-        if 'price_data' in market_data and market_data['price_data']:
-            signals['momentum'] = self._calculate_momentum(market_data['price_data'])
-            signals['mean_reversion'] = self._calculate_mean_reversion(market_data['price_data'])
-            signals['volatility'] = self._calculate_volatility_signal(market_data['price_data'])
-        
-        # Fundamental Analysis Signals
-        if 'earnings_data' in market_data and market_data['earnings_data']:
-            signals['earnings_quality'] = self._analyze_earnings(market_data['earnings_data'])
-        
-        # Market Microstructure Signals
-        if 'order_book' in market_data and market_data['order_book']:
-            signals['liquidity'] = self._analyze_liquidity(market_data['order_book'])
-            signals['order_flow'] = self._analyze_order_flow(market_data['order_book'])
-        
-        # Sentiment and News Signals
-        if 'news_sentiment' in market_data:
-            signals['sentiment'] = market_data['news_sentiment']
-        
-        # Cross-Asset Signals
-        if 'market_regime' in market_data:
-            signals['market_regime'] = self._encode_market_regime(market_data['market_regime'])
-        
-        # Pillar 6: Sustainable Capital Allocation check
-        if 'esg_scores' in market_data:
-            signals['esg_compliance'] = self._analyze_esg_compliance(market_data['esg_scores'])
-        
-        return signals
-    
-    def make_trading_decision(self, 
-                            symbol: str, 
-                            market_data: Dict,
-                            current_position: float = 0.0) -> TLResult:
-        """
-        Make trading decision using Ternary Logic with Eight Pillars accountability
-        
-        Args:
-            symbol: Trading symbol
-            market_data: Market data dictionary
-            current_position: Current position size
-            
-        Returns:
-            TLResult with trading decision and complete audit trail
-        """
-        
-        # Pillar 3: Goukassian Principle - Validate all pillars active
-        if not self.eight_pillars.validate_goukassian_principle():
-            raise RuntimeError("Goukassian Principle validation failed - Eight Pillars not all active")
-        
-        # Analyze market signals
-        signals = self.analyze_market_signals(symbol, market_data)
-        
-        # Define signal weights based on market conditions
-        weights = self._get_signal_weights(symbol, market_data)
-        
-        # Apply risk management overlay
-        risk_adjusted_signals = self._apply_risk_management(signals, current_position)
-        
-        # Convert to request format for TL engine
-        request = f"Trading decision for {symbol}"
-        context = {
-            'signals': risk_adjusted_signals,
-            'weights': weights,
-            'current_position': current_position,
-            'portfolio_value': self.portfolio_value,
-            'timestamp': datetime.now().isoformat()
-        }
-        
-        # Make decision using Ternary Logic
-        decision = self.engine.decide(
-            request=request,
-            context=context,
-            scenario=f"Financial trading decision for {symbol}"
-        )
-        
-        # Pillar 1: Track Epistemic Hold if triggered
-        if decision.state == TLState.EPISTEMIC_HOLD:
-            self._record_epistemic_hold(decision, symbol, signals, market_data)
-        
-        # Pillar 4: Create comprehensive Decision Log
-        decision_log = self._create_decision_log(decision, symbol, signals, market_data, current_position)
-        self.decision_logs.append(decision_log)
-        
-        # Pillar 2: Add to Immutable Ledger
-        ledger_entry = self._create_ledger_entry(decision_log)
-        self.trade_ledger.append(ledger_entry)
-        
-        # Pillar 5: Economic Rights & Transparency - regulatory compliance
-        self._ensure_mifid_compliance(decision, symbol, market_data)
-        
-        # Pillar 7: Hybrid Shield - Privacy-preserving transparency
-        public_record = self._create_public_record(decision, symbol)
-        
-        # Pillar 8: Create blockchain Anchor for permanent verification
-        if len(self.decision_logs) % 100 == 0:  # Anchor every 100 decisions
-            anchor = self._create_blockchain_anchor()
-            decision.metadata['blockchain_anchor'] = anchor
-        
-        # Enhance decision with trading-specific information
-        decision = self._enhance_trading_decision(decision, symbol, signals, current_position)
-        
-        return decision
-    
-    def execute_trade(self, 
-                     symbol: str, 
-                     decision: TLResult, 
-                     market_data: Dict) -> Dict:
-        """
-        Execute trading decision based on Ternary Logic result with full accountability
-        
-        Returns execution report with trade details and audit trail
-        """
-        
-        execution_report = {
-            'symbol': symbol,
-            'timestamp': datetime.now().isoformat(),
-            'decision_state': decision.state.name,
-            'confidence': decision.confidence,
-            'reasoning': decision.reasoning,
-            'decision_id': hashlib.sha256(f"{symbol}_{datetime.now()}".encode()).hexdigest()[:16]
-        }
-        
-        if decision.state == TLState.PROCEED:
-            # Execute long trade
-            position_size = self._calculate_position_size(decision.confidence, symbol)
-            execution_report.update({
-                'action': 'BUY',
-                'position_size': position_size,
-                'expected_return': self._estimate_expected_return(market_data),
-                'risk_estimate': self._estimate_position_risk(position_size, symbol),
-                'mifid_compliant': True,
-                'best_execution': self._verify_best_execution(symbol, market_data)
-            })
-            
-            # Update portfolio
-            self.positions[symbol] = self.positions.get(symbol, 0) + position_size
-            
-        elif decision.state == TLState.HALT:
-            # Execute short trade or close long position
-            current_position = self.positions.get(symbol, 0)
-            if current_position > 0:
-                # Close long position
-                execution_report.update({
-                    'action': 'SELL',
-                    'position_size': -current_position,
-                    'reason': 'Risk management - closing position',
-                    'mifid_compliant': True
-                })
-                self.positions[symbol] = 0
-            else:
-                # Execute short trade
-                position_size = -self._calculate_position_size(decision.confidence, symbol)
-                execution_report.update({
-                    'action': 'SELL_SHORT',
-                    'position_size': position_size,
-                    'expected_return': self._estimate_expected_return(market_data),
-                    'risk_estimate': self._estimate_position_risk(position_size, symbol),
-                    'mifid_compliant': True,
-                    'best_execution': self._verify_best_execution(symbol, market_data)
-                })
-                self.positions[symbol] = self.positions.get(symbol, 0) + position_size
-        
-        else:  # EPISTEMIC_HOLD - Epistemic Hold activated
-            # Implement Epistemic Hold protocol with 300ms pause
-            execution_report.update({
-                'action': 'EPISTEMIC_HOLD',
-                'hold_duration_ms': 300,
-                'monitoring_actions': decision.clarifying_questions,
-                'data_requirements': self._identify_missing_data(decision),
-                'next_evaluation': self._determine_next_evaluation(decision),
-                'regulatory_notification': 'Hold logged for MiFID II compliance'
-            })
-        
-        # Add Eight Pillars compliance confirmation
-        execution_report['eight_pillars_compliance'] = {
-            'epistemic_hold': decision.state == TLState.EPISTEMIC_HOLD,
-            'immutable_ledger': True,
-            'goukassian_validated': True,
-            'decision_logged': True,
-            'regulatory_compliant': True,
-            'esg_considered': 'esg_scores' in market_data,
-            'privacy_preserved': True,
-            'anchoring_pending': len(self.decision_logs) % 100 == 0
-        }
-        
-        return execution_report
-    
-    def _record_epistemic_hold(self, decision: TLResult, symbol: str, signals: Dict, market_data: Dict):
-        """
-        Pillar 1: Record Epistemic Hold activation with full context
-        """
-        hold_record = {
-            'timestamp': datetime.now().isoformat(),
-            'symbol': symbol,
-            'duration_ms': 300,  # Standard 300ms hold
-            'confidence_level': decision.confidence,
-            'uncertainty_sources': self._identify_uncertainty_sources(signals),
-            'conflicting_signals': self._identify_conflicts(signals),
-            'data_gaps': [k for k, v in signals.items() if v is None],
-            'market_conditions': market_data.get('market_regime', 'unknown'),
-            'next_actions': decision.clarifying_questions,
-            'risk_metrics': {
-                'portfolio_drawdown': self.current_drawdown,
-                'daily_var': self.daily_var
+
+    def commit(self, entry: Dict[str, Any]) -> str:
+        self._entries.append(entry)
+        return entry["logHash"]
+
+    @property
+    def size(self) -> int:
+        return len(self._entries)
+
+    def get_summary(self) -> Dict[str, Any]:
+        return {
+            "totalEntries": self.size,
+            "latestMerkleRoot": self.previous_hash,
+            "states": {
+                "PROCEED": sum(
+                    1 for e in self._entries if e["currentState"] == 1
+                ),
+                "EPISTEMIC_HOLD": sum(
+                    1 for e in self._entries if e["currentState"] == 0
+                ),
+                "REFUSE": sum(
+                    1 for e in self._entries if e["currentState"] == -1
+                )
             }
         }
-        self.epistemic_holds.append(hold_record)
-    
-    def _create_decision_log(self, decision: TLResult, symbol: str, signals: Dict, 
-                            market_data: Dict, current_position: float) -> Dict:
-        """
-        Pillar 4: Create comprehensive Decision Log for complete audit trail
-        """
-        return {
-            'timestamp': datetime.now().isoformat(),
-            'decision_id': hashlib.sha256(f"{symbol}_{datetime.now()}".encode()).hexdigest()[:16],
-            'symbol': symbol,
-            'state': decision.state.value,
-            'state_name': decision.state.name,
-            'confidence': decision.confidence,
-            'signals': signals,
-            'market_data_snapshot': {
-                'price': market_data.get('current_price', 0),
-                'volume': market_data.get('volume', 0),
-                'regime': market_data.get('market_regime', 'unknown')
-            },
-            'reasoning': decision.reasoning,
-            'current_position': current_position,
-            'portfolio_value': self.portfolio_value,
-            'risk_metrics': {
-                'drawdown': self.current_drawdown,
-                'var': self.daily_var,
-                'position_risk': self._estimate_position_risk(current_position, symbol)
-            },
-            'clarifying_questions': decision.clarifying_questions if decision.state == TLState.EPISTEMIC_HOLD else None,
-            'eight_pillars_validation': self.eight_pillars.validation_status
-        }
-    
-    def _create_ledger_entry(self, decision_log: Dict) -> Dict:
-        """
-        Pillar 2: Create Immutable Ledger entry with cryptographic hash
-        """
-        previous_hash = self.trade_ledger[-1]['hash'] if self.trade_ledger else 'genesis'
-        
-        entry = {
-            'index': len(self.trade_ledger),
-            'timestamp': decision_log['timestamp'],
-            'decision_id': decision_log['decision_id'],
-            'symbol': decision_log['symbol'],
-            'decision_hash': hashlib.sha256(json.dumps(decision_log, sort_keys=True).encode()).hexdigest(),
-            'previous_hash': previous_hash,
-            'state': decision_log['state']
-        }
-        
-        # Create block hash
-        entry['hash'] = hashlib.sha256(json.dumps(entry, sort_keys=True).encode()).hexdigest()
-        
-        return entry
-    
-    def _ensure_mifid_compliance(self, decision: TLResult, symbol: str, market_data: Dict):
-        """
-        Pillar 5: Ensure MiFID II compliance for trading decisions
-        """
-        compliance_checks = {
-            'best_execution': self._verify_best_execution(symbol, market_data),
-            'transaction_reporting': True,  # All decisions logged
-            'algo_trading_controls': self._verify_algo_controls(decision),
-            'market_abuse_check': self._check_market_abuse_rules(symbol, decision),
-            'client_protection': True  # Risk limits enforced
-        }
-        
-        if decision.metadata is None:
-            decision.metadata = {}
-        
-        decision.metadata['mifid_compliance'] = compliance_checks
-    
-    def _create_public_record(self, decision: TLResult, symbol: str) -> Dict:
-        """
-        Pillar 7: Hybrid Shield - Create public record without sensitive strategy details
-        """
-        return {
-            'timestamp': datetime.now().isoformat(),
-            'symbol': symbol,
-            'decision_proof': hashlib.sha256(str(decision).encode()).hexdigest()[:16],
-            'state': decision.state.name,
-            'confidence_band': self._get_confidence_band(decision.confidence),
-            'regulatory_compliant': True,
-            'privacy_preserved': True
-        }
-    
-    def _create_blockchain_anchor(self) -> Dict:
-        """
-        Pillar 8: Create blockchain Anchor for permanent verification
-        """
-        # Aggregate recent decisions for merkle root
-        recent_logs = self.decision_logs[-100:]
-        combined_hash = hashlib.sha256(
-            json.dumps(recent_logs, sort_keys=True).encode()
-        ).hexdigest()
-        
-        return {
-            'merkle_root': combined_hash[:32],
-            'decision_count': len(recent_logs),
-            'timestamp': datetime.now().isoformat(),
-            'blockchain': 'Ethereum',  # Or appropriate chain
-            'contract_address': '0x...',  # Smart contract for verification
-            'status': 'PENDING_CONFIRMATION'
-        }
-    
-    def _calculate_momentum(self, price_data: List[float]) -> Optional[float]:
-        """Calculate momentum signal from price data"""
-        if not price_data or len(price_data) < 20:
+
+
+# =============================================================================
+# SECTION 2: Market Signal Analysis
+# Technical, fundamental, microstructure, and sentiment signals.
+# =============================================================================
+
+class MarketSignalAnalyzer:
+    """
+    Analyze multiple market signals for trading decision support.
+
+    Each method returns a signal in [-1.0, +1.0] or None if data is absent.
+    None signals reduce the confidence score via missing data penalty.
+    The confidence score feeds TLEngine; the TLEngine evaluates it against
+    institution-calibrated thresholds.
+    """
+
+    def calculate_momentum(self, prices: List[float]) -> Optional[float]:
+        """Price momentum signal. Positive = uptrend, negative = downtrend."""
+        if not prices or len(prices) < 10:
             return None
-            
-        prices = np.array(price_data[-20:])
-        short_ma = np.mean(prices[-5:])
-        long_ma = np.mean(prices[-20:])
-        
+
+        short_ma = float(np.mean(prices[-5:]))
+        long_ma = float(np.mean(prices[-20:]) if len(prices) >= 20 else np.mean(prices))
+
         if long_ma == 0:
-            return 0
-            
-        momentum = (short_ma - long_ma) / long_ma
-        return np.clip(momentum * 10, -1, 1)
-    
-    def _calculate_mean_reversion(self, price_data: List[float]) -> Optional[float]:
-        """Calculate mean reversion signal"""
-        if not price_data or len(price_data) < 50:
             return None
-            
-        prices = np.array(price_data[-50:])
-        current_price = prices[-1]
-        mean_price = np.mean(prices)
-        std_price = np.std(prices)
-        
-        if std_price == 0:
-            return 0
-            
-        z_score = (current_price - mean_price) / std_price
-        return np.clip(-z_score / 2, -1, 1)
-    
-    def _calculate_volatility_signal(self, price_data: List[float]) -> Optional[float]:
-        """Calculate volatility-based signal"""
-        if not price_data or len(price_data) < 30:
+
+        signal = (short_ma - long_ma) / long_ma
+        return float(np.clip(signal * 10, -1, 1))
+
+    def calculate_mean_reversion(self, prices: List[float]) -> Optional[float]:
+        """Mean reversion signal. Identifies overextended price moves."""
+        if not prices or len(prices) < 20:
             return None
-            
-        returns = np.diff(np.log(price_data[-30:]))
-        if len(returns) < 10:
+
+        current = prices[-1]
+        mean_20 = float(np.mean(prices[-20:]))
+        std_20 = float(np.std(prices[-20:]))
+
+        if std_20 == 0:
             return None
-            
-        current_vol = np.std(returns[-5:])
-        avg_vol = np.mean([np.std(returns[i:i+5]) for i in range(0, len(returns)-5, 5)])
-        
-        if avg_vol == 0:
-            return 0
-            
-        vol_ratio = current_vol / avg_vol
-        return np.clip(2 - vol_ratio, -1, 1)
-    
-    def _analyze_earnings(self, earnings_data: Dict) -> Optional[float]:
-        """Analyze earnings quality signal"""
-        if not earnings_data or not all(key in earnings_data for key in ['eps_actual', 'eps_estimate']):
-            return None
-            
-        if earnings_data['eps_estimate'] == 0:
-            return 0
-            
-        eps_surprise = (earnings_data['eps_actual'] - earnings_data['eps_estimate']) / abs(earnings_data['eps_estimate'])
-        return np.clip(eps_surprise * 2, -1, 1)
-    
-    def _analyze_liquidity(self, order_book: Dict) -> Optional[float]:
-        """Analyze market liquidity signal"""
-        if not order_book or not all(key in order_book for key in ['bid_size', 'ask_size', 'spread']):
-            return None
-            
-        total_size = order_book['bid_size'] + order_book['ask_size']
-        spread = order_book['spread']
-        
-        if spread == 0:
-            liquidity_score = total_size / 1000  # Normalize
-        else:
-            liquidity_score = total_size / (1 + spread * 1000)
-            
-        return np.clip((liquidity_score - 5000) / 5000, -1, 1)
-    
-    def _analyze_order_flow(self, order_book: Dict) -> Optional[float]:
-        """Analyze order flow imbalance"""
-        if not order_book or not all(key in order_book for key in ['bid_size', 'ask_size']):
-            return None
-            
-        total_size = order_book['bid_size'] + order_book['ask_size']
-        if total_size == 0:
-            return 0
-            
-        imbalance = (order_book['bid_size'] - order_book['ask_size']) / total_size
-        return np.clip(imbalance, -1, 1)
-    
-    def _encode_market_regime(self, regime: str) -> float:
-        """Encode market regime as numerical signal"""
-        regime_map = {
-            'trending': 0.5,
-            'ranging': 0.0,
-            'volatile': -0.5,
-            'crisis': -1.0
-        }
-        return regime_map.get(regime, 0.0)
-    
-    def _analyze_esg_compliance(self, esg_scores: Dict) -> Optional[float]:
+
+        z_score = (current - mean_20) / std_20
+        # Invert: highly positive z_score means reversion opportunity downward
+        return float(np.clip(-z_score / 2, -1, 1))
+
+    def calculate_volatility_signal(self, prices: List[float]) -> Optional[float]:
         """
-        Pillar 6: Analyze ESG compliance for sustainable capital allocation
+        Volatility signal for Epistemic Hold trigger assessment.
+
+        High volatility reduces the trading confidence signal.
+        Above the flash crash threshold, the signal becomes strongly
+        negative, driving the system toward Epistemic Hold.
+        """
+        if not prices or len(prices) < 10:
+            return None
+
+        returns = np.diff(prices) / np.abs(prices[:-1] + 1e-10)
+        vol = float(np.std(returns[-10:]))
+
+        # Flash crash detection: extreme volatility
+        # The specific threshold here is a domain parameter, not a
+        # TLEngine threshold. It governs the signal value, not the
+        # state determination. Calibrate per instrument and regime.
+        flash_crash_vol_threshold = 0.05  # domain-specific signal parameter
+        if vol > flash_crash_vol_threshold:
+            return -1.0  # Strong negative signal: Epistemic Hold likely
+        return float(np.clip(1 - (vol / flash_crash_vol_threshold), -1, 1))
+
+    def analyze_liquidity(self, order_book: Dict[str, Any]) -> Optional[float]:
+        """Order book liquidity signal."""
+        if not order_book:
+            return None
+
+        bid_depth = order_book.get("bid_depth", 0)
+        ask_depth = order_book.get("ask_depth", 0)
+        spread = order_book.get("spread", 1.0)
+
+        if bid_depth + ask_depth == 0:
+            return None
+
+        imbalance = abs(bid_depth - ask_depth) / (bid_depth + ask_depth)
+        spread_penalty = min(spread * 100, 1.0)
+
+        return float(np.clip(1.0 - imbalance - spread_penalty, -1, 1))
+
+    def analyze_order_flow(self, order_book: Dict[str, Any]) -> Optional[float]:
+        """Order flow imbalance signal."""
+        if not order_book:
+            return None
+
+        buy_volume = order_book.get("buy_volume_5min", 0)
+        sell_volume = order_book.get("sell_volume_5min", 0)
+        total = buy_volume + sell_volume
+
+        if total == 0:
+            return None
+
+        flow_imbalance = (buy_volume - sell_volume) / total
+        return float(np.clip(flow_imbalance, -1, 1))
+
+    def analyze_esg_compliance(self, esg_scores: Dict[str, Any]) -> Optional[float]:
+        """
+        Pillar VI: ESG compliance signal.
+
+        Note: ESG mandate failures via verify_mandate() are binary and
+        override this continuous signal entirely. This signal provides
+        a graded influence on confidence for borderline cases.
         """
         if not esg_scores:
             return None
-            
-        environmental = esg_scores.get('environmental', 50) / 100
-        social = esg_scores.get('social', 50) / 100
-        governance = esg_scores.get('governance', 50) / 100
-        
-        # Weighted ESG score
-        esg_signal = (environmental * 0.3 + social * 0.3 + governance * 0.4)
-        
-        # Convert to trading signal (higher ESG = positive signal)
-        return np.clip((esg_signal - 0.5) * 2, -1, 1)
-    
-    def _get_signal_weights(self, symbol: str, market_data: Dict) -> Dict[str, float]:
-        """Determine signal weights based on market conditions"""
-        base_weights = {
-            'momentum': 0.20,
-            'mean_reversion': 0.15,
-            'volatility': 0.10,
-            'earnings_quality': 0.15,
-            'liquidity': 0.10,
-            'order_flow': 0.10,
-            'sentiment': 0.10,
-            'market_regime': 0.05,
-            'esg_compliance': 0.05  # Pillar 6 consideration
-        }
-        
-        # Adjust weights based on market regime
-        regime = market_data.get('market_regime', 'normal')
-        if regime == 'trending':
-            base_weights['momentum'] *= 1.5
-            base_weights['mean_reversion'] *= 0.5
-        elif regime == 'ranging':
-            base_weights['momentum'] *= 0.5
-            base_weights['mean_reversion'] *= 1.5
-        elif regime == 'crisis':
-            base_weights['volatility'] *= 2.0
-            base_weights['liquidity'] *= 1.5
-            
-        return base_weights
-    
-    def _apply_risk_management(self, signals: Dict, current_position: float) -> Dict:
-        """Apply risk management overlay to signals"""
-        risk_adjusted = signals.copy()
-        
-        # Portfolio heat check
-        if self.current_drawdown > self.max_drawdown * 0.8:
-            # Reduce all signals when approaching max drawdown
-            for key in risk_adjusted:
-                if risk_adjusted[key] is not None:
-                    risk_adjusted[key] *= 0.5
-        
-        # Position concentration check
-        if abs(current_position) > self.position_size_limit * 0.8:
-            # Reduce signals for new positions when near limit
-            for key in risk_adjusted:
-                if risk_adjusted[key] is not None and np.sign(risk_adjusted[key]) == np.sign(current_position):
-                    risk_adjusted[key] *= 0.3
-        
-        return risk_adjusted
-    
-    def _enhance_trading_decision(self, decision: TLResult, symbol: str, 
-                                 signals: Dict, current_position: float) -> TLResult:
-        """Enhance decision with trading-specific context"""
-        
-        if decision.state == TLState.EPISTEMIC_HOLD:
-            # Add trading-specific guidance for Epistemic Hold
-            trading_steps = [
-                f"Monitor {symbol} order book for liquidity improvement",
-                "Check for pending news or earnings announcements",
-                "Verify data feed integrity and latency",
-                "Review correlated assets for confirmation signals",
-                "Consider position size reduction if uncertainty persists"
-            ]
-            if decision.clarifying_questions:
-                decision.clarifying_questions.extend(trading_steps)
-            else:
-                decision.clarifying_questions = trading_steps
-        
-        # Add trading metadata
-        if decision.metadata is None:
-            decision.metadata = {}
-            
-        decision.metadata.update({
-            'symbol': symbol,
-            'current_position': current_position,
-            'missing_signals': [k for k, v in signals.items() if v is None],
-            'signal_count': len([v for v in signals.values() if v is not None]),
-            'portfolio_heat': self.current_drawdown / self.max_drawdown if self.max_drawdown > 0 else 0,
-            'eight_pillars_compliant': True,
-            'epistemic_hold_count': len(self.epistemic_holds)
-        })
-        
-        return decision
-    
-    def _calculate_position_size(self, confidence: float, symbol: str) -> float:
-        """Calculate position size based on confidence level and risk management"""
-        base_size = self.position_size_limit * confidence
-        
-        # Kelly Criterion adjustment
-        win_rate = 0.55  # Assumed win rate
-        avg_win = 0.02  # 2% average win
-        avg_loss = 0.01  # 1% average loss
-        
-        kelly_fraction = (win_rate * avg_win - (1 - win_rate) * avg_loss) / avg_win
-        kelly_size = min(kelly_fraction, 0.25)  # Cap at 25% Kelly
-        
-        # Combine with confidence-based sizing
-        position_size = base_size * kelly_size
-        
-        # Adjust for current drawdown
-        heat_adjustment = 1 - (self.current_drawdown / self.max_drawdown) if self.max_drawdown > 0 else 1
-        
-        return position_size * heat_adjustment * self.portfolio_value
-    
-    def _estimate_expected_return(self, market_data: Dict) -> float:
-        """Estimate expected return based on market data"""
-        base_return = 0.05  # 5% base expected return
-        
-        # Adjust for market regime
-        regime = market_data.get('market_regime', 'normal')
-        regime_multiplier = {
-            'trending': 1.5,
-            'ranging': 0.7,
-            'volatile': 0.5,
-            'crisis': 0.3
-        }.get(regime, 1.0)
-        
-        return base_return * regime_multiplier
-    
-    def _estimate_position_risk(self, position_size: float, symbol: str) -> float:
-        """Estimate position risk using Value at Risk"""
-        position_value = abs(position_size)
-        volatility = 0.02  # 2% daily volatility assumption
-        confidence_level = 1.96  # 95% confidence
-        
-        # Simple VaR calculation
-        var = position_value * volatility * confidence_level
-        
-        return var / self.portfolio_value
-    
-    def _identify_uncertainty_sources(self, signals: Dict) -> List[str]:
-        """Identify sources of uncertainty for Epistemic Hold"""
-        sources = []
-        
-        # Check for missing critical signals
-        critical_signals = ['momentum', 'liquidity', 'volatility']
-        for signal in critical_signals:
-            if signal not in signals or signals[signal] is None:
-                sources.append(f"Missing {signal}")
-        
-        # Check for conflicting signals
-        if self._identify_conflicts(signals):
-            sources.append("Conflicting technical indicators")
-        
-        # Check for extreme values
-        for key, value in signals.items():
-            if value is not None and abs(value) > 0.9:
-                sources.append(f"Extreme {key} signal")
-        
-        return sources
-    
-    def _identify_conflicts(self, signals: Dict) -> List[str]:
-        """Identify conflicting signals"""
-        conflicts = []
-        
-        # Check momentum vs mean reversion
-        momentum = signals.get('momentum', 0) or 0
-        mean_rev = signals.get('mean_reversion', 0) or 0
-        
-        if momentum * mean_rev < -0.25:  # Strong opposite signals
-            conflicts.append("Momentum vs Mean Reversion")
-        
-        # Check sentiment vs technicals
-        sentiment = signals.get('sentiment', 0) or 0
-        technical_avg = np.mean([v for k, v in signals.items() 
-                                 if k in ['momentum', 'mean_reversion', 'volatility'] and v is not None])
-        
-        if technical_avg != 0 and sentiment * technical_avg < -0.3:
-            conflicts.append("Sentiment vs Technicals")
-        
-        return conflicts
-    
-    def _identify_missing_data(self, decision: TLResult) -> List[str]:
-        """Identify what data is needed to resolve uncertainty"""
-        missing_data = decision.metadata.get('missing_signals', [])
-        
-        data_sources = {
-            'momentum': 'Sufficient price history (20+ periods)',
-            'mean_reversion': 'Extended price history (50+ periods)',
-            'volatility': 'Recent price data (30+ periods)',
-            'earnings_quality': 'Latest earnings report',
-            'liquidity': 'Real-time order book data',
-            'order_flow': 'Level 2 market data',
-            'sentiment': 'News sentiment analysis',
-            'market_regime': 'Market classification update',
-            'esg_compliance': 'ESG ratings data'
-        }
-        
-        return [data_sources.get(item, item) for item in missing_data]
-    
-    def _determine_next_evaluation(self, decision: TLResult) -> str:
-        """Determine when to re-evaluate after Epistemic Hold"""
-        if decision.confidence < 0.3:
-            return "Immediate - high uncertainty"
-        elif decision.confidence < 0.5:
-            return "5 minutes - moderate uncertainty"
-        else:
-            return "Next market period"
-    
-    def _verify_best_execution(self, symbol: str, market_data: Dict) -> bool:
-        """Verify best execution requirements for MiFID II"""
-        # Simplified best execution check
-        if 'order_book' in market_data:
-            spread = market_data['order_book'].get('spread', float('inf'))
-            return spread < 0.01  # Less than 1% spread
-        return False
-    
-    def _verify_algo_controls(self, decision: TLResult) -> bool:
-        """Verify algorithmic trading controls"""
-        # Check decision confidence meets minimum threshold
-        return decision.confidence > 0.3
-    
-    def _check_market_abuse_rules(self, symbol: str, decision: TLResult) -> bool:
-        """Check market abuse regulations"""
-        # Simplified check - ensure no pattern of manipulation
-        recent_trades = [log for log in self.decision_logs[-10:] if log.get('symbol') == symbol]
-        
-        # Check for potential spoofing pattern
-        if len(recent_trades) > 5:
-            states = [trade['state'] for trade in recent_trades]
-            # Rapid alternation might indicate spoofing
-            alternations = sum(1 for i in range(len(states)-1) if states[i] != states[i+1])
-            return alternations < len(states) * 0.8  # Less than 80% alternation
-        
-        return True
-    
-    def _get_confidence_band(self, confidence: float) -> str:
-        """Get confidence band for reporting"""
-        if confidence > 0.8:
-            return "High"
-        elif confidence > 0.5:
-            return "Moderate"
-        elif confidence > 0.3:
-            return "Low"
-        else:
-            return "Very Low"
-    
-    def get_performance_summary(self) -> Dict:
-        """Get comprehensive performance analysis with Eight Pillars metrics"""
-        total_decisions = len(self.decision_logs)
-        
-        if total_decisions == 0:
-            return {"status": "No trading decisions made yet"}
-        
-        # Count decision types
-        trades_executed = len([log for log in self.decision_logs if log['state'] != 0])
-        epistemic_holds = len(self.epistemic_holds)
-        
+
+        env = esg_scores.get("environmental", 50) / 100
+        social = esg_scores.get("social", 50) / 100
+        governance = esg_scores.get("governance", 50) / 100
+
+        composite = (env * 0.4) + (social * 0.3) + (governance * 0.3)
+        return float(np.clip((composite - 0.5) * 2, -1, 1))
+
+    def detect_market_manipulation(
+        self, order_book: Dict[str, Any]
+    ) -> Dict[str, bool]:
+        """
+        Pillar V: IOSCO market integrity checks.
+
+        Detects layering, spoofing, and wash trading patterns.
+        Any detection forces Refuse (-1) via regulatory compliance check.
+        """
+        if not order_book:
+            return {
+                "layering": False,
+                "spoofing": False,
+                "wash_trading": False
+            }
+
         return {
-            "total_decisions": total_decisions,
-            "trades_executed": trades_executed,
-            "epistemic_holds": epistemic_holds,
-            "hold_rate": epistemic_holds / total_decisions if total_decisions > 0 else 0,
-            "current_positions": len([p for p in self.positions.values() if p != 0]),
-            "portfolio_value": self.portfolio_value,
-            "current_drawdown": self.current_drawdown,
-            "peak_value": self.peak_value,
-            "eight_pillars_metrics": {
-                "immutable_ledger_entries": len(self.trade_ledger),
-                "decision_logs_created": len(self.decision_logs),
-                "epistemic_holds_triggered": len(self.epistemic_holds),
-                "mifid_compliant_trades": trades_executed,
-                "blockchain_anchors": len(self.decision_logs) // 100
-            },
-            "framework_version": "Ternary Logic Framework v1.0 - Eight Pillars"
+            "layering": order_book.get("layering_detected", False),
+            "spoofing": order_book.get("spoofing_detected", False),
+            "wash_trading": order_book.get("wash_trading_detected", False)
+        }
+
+    def analyze_all(
+        self,
+        symbol: str,
+        market_data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Run all signal analyses. Returns dict of signals and metadata."""
+        signals = {}
+
+        prices = market_data.get("price_data", [])
+        if prices:
+            signals["momentum"] = self.calculate_momentum(prices)
+            signals["mean_reversion"] = self.calculate_mean_reversion(prices)
+            signals["volatility"] = self.calculate_volatility_signal(prices)
+
+        order_book = market_data.get("order_book", {})
+        if order_book:
+            signals["liquidity"] = self.analyze_liquidity(order_book)
+            signals["order_flow"] = self.analyze_order_flow(order_book)
+            signals["manipulation"] = self.detect_market_manipulation(order_book)
+
+        if "news_sentiment" in market_data:
+            signals["sentiment"] = market_data["news_sentiment"]
+
+        if "esg_scores" in market_data:
+            signals["esg"] = self.analyze_esg_compliance(market_data["esg_scores"])
+
+        return signals
+
+
+# =============================================================================
+# SECTION 3: MiFID II Compliance Checker (Pillar V)
+# =============================================================================
+
+def check_mifid_compliance(
+    symbol: str,
+    market_data: Dict[str, Any],
+    manipulation_detected: Dict[str, bool]
+) -> Dict[str, Any]:
+    """
+    Pillar V: MiFID II best execution and market integrity compliance.
+
+    Returns compliance status with specific failures identified.
+    Any FATAL flag forces Refuse (-1) via state override.
+    """
+    failures = []
+    warnings = []
+
+    # IOSCO: market manipulation
+    if manipulation_detected.get("layering"):
+        failures.append(f"IOSCO: Layering detected on {symbol}: FATAL")
+    if manipulation_detected.get("spoofing"):
+        failures.append(f"IOSCO: Spoofing detected on {symbol}: FATAL")
+    if manipulation_detected.get("wash_trading"):
+        failures.append(f"IOSCO: Wash trading detected on {symbol}: FATAL")
+
+    # Best execution: spread check
+    order_book = market_data.get("order_book", {})
+    spread = order_book.get("spread", 0)
+    spread_limit = market_data.get("max_acceptable_spread", 0.01)
+    if spread > spread_limit:
+        warnings.append(
+            f"MiFID II: Spread {spread:.4f} exceeds best execution "
+            f"threshold {spread_limit:.4f}"
+        )
+
+    # Sanctions screening
+    if not market_data.get("sanctions_screened", False):
+        failures.append("FATF: Sanctions screening not completed: FATAL")
+
+    # Circuit breaker check
+    if market_data.get("circuit_breaker_active", False):
+        failures.append(
+            f"Circuit breaker active on {symbol}: trading suspended"
+        )
+
+    return {
+        "compliant": len(failures) == 0,
+        "failures": failures,
+        "warnings": warnings
+    }
+
+
+# =============================================================================
+# SECTION 4: Position Sizing
+# Sized by TL state, not by hardcoded confidence numbers.
+# =============================================================================
+
+def calculate_position_size(
+    decision: TLValue,
+    engine: TLEngine,
+    portfolio_value: float,
+    max_position_fraction: float,
+    symbol: str
+) -> Dict[str, Any]:
+    """
+    Calculate position size governed by TL state.
+
+    PROCEED: position sized proportionally within max_position_fraction.
+    The closer confidence is to 1.0, the closer to the maximum position.
+    This is relative to the engine's proceed_threshold, not a fixed number.
+
+    EPISTEMIC_HOLD: no new position. Existing positions held unchanged.
+
+    REFUSE: close existing long positions or initiate short if warranted.
+    """
+    if decision.state == TLState.PROCEED:
+        # Scale within [proceed_threshold, 1.0] range
+        threshold_range = 1.0 - engine.proceed_threshold
+        confidence_above = decision.confidence - engine.proceed_threshold
+        scaling = confidence_above / threshold_range if threshold_range > 0 else 1.0
+        scaling = max(0.0, min(1.0, scaling))
+
+        notional = portfolio_value * max_position_fraction * scaling
+        return {
+            "action": "BUY",
+            "positionFraction": max_position_fraction * scaling,
+            "notional": round(notional, 2),
+            "symbol": symbol,
+            "rationale": (
+                f"Confidence {decision.confidence:.3f} scaled to "
+                f"{scaling:.1%} of max position"
+            ),
+            "mifidCompliant": True
+        }
+
+    elif decision.state == TLState.EPISTEMIC_HOLD:
+        return {
+            "action": "HOLD",
+            "positionFraction": 0.0,
+            "notional": 0.0,
+            "symbol": symbol,
+            "rationale": (
+                "Epistemic Hold active. No new position. "
+                "Existing positions held unchanged. "
+                "GovernancePause workflow initiated."
+            ),
+            "holdDurationMs": 300,
+            "mifidCompliant": True
+        }
+
+    else:  # TLState.REFUSE
+        return {
+            "action": "REFUSE",
+            "positionFraction": 0.0,
+            "notional": 0.0,
+            "symbol": symbol,
+            "rationale": (
+                "Refuse state. Close existing long positions. "
+                "refusalIsPermanent: True. "
+                "No actuation authorized."
+            ),
+            "closeExisting": True,
+            "mifidCompliant": True
         }
 
 
-def demonstrate_trading_algorithm():
-    """
-    Demonstrate the TL Trading Algorithm with Eight Pillars accountability
-    """
-    
-    print("\n╔══════════════════════════════════════════════════════════════════════╗")
-    print("║   Ternary Logic Trading Algorithm - Eight Pillars Implementation     ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print("\nCreated by Lev Goukassian (ORCID: 0009-0006-5966-1243)")
-    print("Contact: leogouk@gmail.com")
-    print('\n"When truth becomes measurable, power has nowhere left to hide."\n')
-    
-    # Initialize algorithm
-    algorithm = TLTradingAlgorithm(
-        halt_threshold=0.30,
-        hold_threshold=0.75,
-        position_size_limit=0.1,
-        max_drawdown=0.05
-    )
-    
-    # Test Scenario 1: Clear Bull Signal
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("Scenario 1: Strong Bull Market Signals")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    
-    bull_market_data = {
-        'price_data': [100, 102, 104, 106, 108, 110, 112, 115, 118, 120] * 6,  # Strong uptrend
-        'current_price': 120,
-        'volume': 1000000,
-        'earnings_data': {'eps_actual': 2.50, 'eps_estimate': 2.00},  # Beat estimates
-        'order_book': {'bid_size': 10000, 'ask_size': 8000, 'spread': 0.01},  # Good liquidity
-        'news_sentiment': 0.8,  # Positive sentiment
-        'market_regime': 'trending',
-        'esg_scores': {'environmental': 75, 'social': 80, 'governance': 85}
-    }
-    
-    decision = algorithm.make_trading_decision('AAPL', bull_market_data)
-    execution = algorithm.execute_trade('AAPL', decision, bull_market_data)
-    
-    print(f"Decision: {decision.state.name}")
-    print(f"Confidence: {decision.confidence:.2%}")
-    print(f"Action: {execution.get('action', 'N/A')}")
-    print(f"Reasoning: {decision.reasoning[:80]}...")
-    print(f"\nEight Pillars Compliance:")
-    for pillar, status in execution['eight_pillars_compliance'].items():
-        print(f"  • {pillar}: {'✓' if status else '✗'}")
-    print()
-    
-    # Test Scenario 2: Uncertain Market with Missing Data
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("Scenario 2: Uncertain Market - Epistemic Hold Expected")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    
-    uncertain_market_data = {
-        'price_data': [100, 98, 102, 99, 103, 97, 101],  # Choppy, insufficient history
-        'current_price': 101,
-        'volume': 50000,
-        'earnings_data': None,  # Missing earnings data
-        'order_book': None,     # Missing order book
-        'news_sentiment': 0.1,  # Weak sentiment
-        'market_regime': 'volatile'
-    }
-    
-    decision = algorithm.make_trading_decision('TSLA', uncertain_market_data)
-    execution = algorithm.execute_trade('TSLA', decision, uncertain_market_data)
-    
-    print(f"Decision: {decision.state.name}")
-    print(f"Confidence: {decision.confidence:.2%}")
-    print(f"Action: {execution.get('action', 'N/A')}")
-    
-    if decision.state == TLState.EPISTEMIC_HOLD:
-        print(f"\nEpistemic Hold Protocol:")
-        print(f"  • Duration: {execution['hold_duration_ms']}ms")
-        print(f"  • Next Evaluation: {execution['next_evaluation']}")
-        print(f"  • Regulatory Note: {execution['regulatory_notification']}")
-        print(f"\nData Requirements:")
-        for req in execution['data_requirements'][:3]:
-            print(f"  • {req}")
-        print(f"\nMonitoring Actions:")
-        for i, action in enumerate(execution['monitoring_actions'][:3], 1):
-            print(f"  {i}. {action}")
-    print()
-    
-    # Test Scenario 3: Clear Bear Signal
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("Scenario 3: Strong Bear Market Signals")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    
-    bear_market_data = {
-        'price_data': [120, 118, 115, 112, 110, 108, 106, 104, 102, 100] * 5,
-        'current_price': 100,
-        'volume': 2000000,
-        'earnings_data': {'eps_actual': 1.50, 'eps_estimate': 2.00},  # Missed estimates
-        'order_book': {'bid_size': 5000, 'ask_size': 15000, 'spread': 0.05},  # Poor liquidity
-        'news_sentiment': -0.7,  # Negative sentiment
-        'market_regime': 'crisis',
-        'esg_scores': {'environmental': 40, 'social': 35, 'governance': 30}  # Poor ESG
-    }
-    
-    decision = algorithm.make_trading_decision('NFLX', bear_market_data)
-    execution = algorithm.execute_trade('NFLX', decision, bear_market_data)
-    
-    print(f"Decision: {decision.state.name}")
-    print(f"Confidence: {decision.confidence:.2%}")
-    print(f"Action: {execution.get('action', 'N/A')}")
-    print(f"MiFID II Compliant: {execution.get('mifid_compliant', False)}")
-    print()
-    
-    # Performance Summary
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print("Performance Summary with Eight Pillars Metrics")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    
-    summary = algorithm.get_performance_summary()
-    
-    print(f"\nTrading Metrics:")
-    print(f"  • Total Decisions: {summary['total_decisions']}")
-    print(f"  • Trades Executed: {summary['trades_executed']}")
-    print(f"  • Epistemic Holds: {summary['epistemic_holds']}")
-    print(f"  • Hold Rate: {summary['hold_rate']:.1%}")
-    print(f"  • Portfolio Value: ${summary['portfolio_value']:,.2f}")
-    
-    print(f"\nEight Pillars Accountability:")
-    for metric, value in summary['eight_pillars_metrics'].items():
-        print(f"  • {metric}: {value}")
-    
-    print("\n" + "═" * 60)
-    print("Financial Trading with Sovereign-Grade Accountability")
-    print("═" * 60)
-    print("\nThe Eight Pillars Framework ensures:")
-    print("  • Every trade has an immutable audit trail")
-    print("  • Epistemic Hold prevents flash crashes")
-    print("  • Complete MiFID II regulatory compliance")
-    print("  • ESG considerations in capital allocation")
-    print("  • Cryptographic proof of all decisions")
-    print("\nThe Epistemic Hold saves portfolios while ensuring")
-    print("complete accountability for every trading decision.")
+# =============================================================================
+# SECTION 5: TL Trading Algorithm
+# =============================================================================
 
+class TLTradingAlgorithm:
+    """
+    Financial Trading Algorithm using Ternary Logic.
+
+    Implements sovereign-grade accountability for trading decisions:
+        Pillar I:   Epistemic Hold (flash crash, volatility spike, data gaps)
+        Pillar II:  Immutable Ledger (every decision committed before trade fires)
+        Pillar III: Goukassian Principle (lantern, signature, license)
+        Pillar IV:  Decision Logs (complete audit trail)
+        Pillar V:   MiFID II, FATF, IOSCO compliance
+        Pillar VI:  ESG mandate verification
+        Pillar VII: Hybrid Shield (privacy-preserving transparency)
+        Pillar VIII:Anchors (Merkle root anchoring)
+
+    Dual-Lane Latency Architecture awareness:
+        The Inference Lane (less than 2ms WCET) computes trading signals
+        and proposes state. The Governance Lane (300ms ceiling) evaluates
+        constitutionally and issues the PermissionToken. No trade fires
+        without both lanes completing their constitutional functions.
+
+    THRESHOLD GOVERNANCE:
+        proceed_threshold and hold_threshold must be calibrated by your
+        trading desk through backtesting, regulatory requirements, and
+        risk management approval. No universal values exist.
+        See docs/Threshold_Calibration.md.
+    """
+
+    def __init__(
+        self,
+        proceed_threshold: float,
+        hold_threshold: float,
+        portfolio_value: float = 1_000_000.0,
+        max_position_fraction: float = 0.10
+    ):
+        """
+        Initialize TL Trading Algorithm.
+
+        Args:
+            proceed_threshold: Institution-calibrated PROCEED threshold.
+                               REQUIRED. No default.
+            hold_threshold:    Institution-calibrated REFUSE threshold.
+                               REQUIRED. No default.
+            portfolio_value:   Starting portfolio value.
+            max_position_fraction: Maximum position size as fraction of portfolio.
+        """
+        self.engine = TLEngine(
+            proceed_threshold=proceed_threshold,
+            hold_threshold=hold_threshold,
+            epistemic_hold_rate_target=0.20
+        )
+        self.analyzer = MarketSignalAnalyzer()
+        self.portfolio_value = portfolio_value
+        self.max_position_fraction = max_position_fraction
+        self.positions: Dict[str, float] = {}
+        self.ledger = ImmutableLedger()
+        self.license_scopes = [
+            "financial.trading",
+            "regulatory.mifid2",
+            "audit.governance"
+        ]
+
+    def make_trading_decision(
+        self,
+        symbol: str,
+        market_data: Dict[str, Any],
+        scenario_label: str = "Trade Decision"
+    ) -> Dict[str, Any]:
+        """
+        Make a trading decision under full TL constitutional governance.
+
+        Sequence (respecting NL=NA):
+            1. Analyze market signals
+            2. ESG mandate check (Pillar VI): binary, overrides confidence
+            3. MiFID II compliance check (Pillar V): binary, overrides state
+            4. Calculate composite confidence
+            5. Evaluate with TLEngine
+            6. Commit log entry (NL=NA: BEFORE any trade fires)
+            7. Issue PermissionToken if PROCEED
+            8. Size position by state
+            9. Return governance record
+
+        The Inference Lane operates at less than 2ms WCET for steps 1 and 4.
+        The Governance Lane (300ms ceiling) authorizes steps 6 and 7.
+        No trade fires without both lanes completing.
+        """
+        # Step 1: Analyze market signals
+        signals = self.analyzer.analyze_all(symbol, market_data)
+        manipulation = signals.pop("manipulation", {})
+
+        # Step 2: ESG mandate check (Pillar VI)
+        # Binary pass/fail. Overrides confidence entirely.
+        esg_data = {
+            "esg_verified": market_data.get("esg_verified", False),
+            "emissions_anchored": market_data.get("emissions_anchored", True),
+            "use_of_proceeds_tracked": market_data.get(
+                "use_of_proceeds_tracked", True
+            )
+        }
+        esg_result = verify_mandate("sustainable_capital", esg_data)
+        esg_blocked = esg_result.state == TLState.EPISTEMIC_HOLD
+
+        # Step 3: MiFID II compliance check (Pillar V)
+        compliance = check_mifid_compliance(symbol, market_data, manipulation)
+        compliance_blocked = not compliance["compliant"]
+
+        # Step 4: Determine state and confidence
+        if compliance_blocked:
+            # Regulatory failure forces Refuse (harm is clear)
+            forced_state = TLState.REFUSE
+            confidence = 0.0
+            reasoning = (
+                f"MiFID II/FATF compliance failure: "
+                f"{'; '.join(compliance['failures'])}"
+            )
+        elif esg_blocked:
+            # ESG mandate failure forces Epistemic Hold
+            forced_state = TLState.EPISTEMIC_HOLD
+            confidence = 0.0
+            reasoning = (
+                f"Pillar VI ESG mandate failure: "
+                f"{'; '.join(esg_result.metadata.get('failed_checks', []))}"
+            )
+        else:
+            forced_state = None
+            # Calculate composite confidence from valid numeric signals
+            numeric_signals = [
+                v for v in signals.values()
+                if isinstance(v, (int, float)) and v is not None
+            ]
+
+            if not numeric_signals:
+                # No signals: Epistemic Hold on data absence
+                forced_state = TLState.EPISTEMIC_HOLD
+                confidence = 0.0
+                reasoning = (
+                    f"Insufficient market data for {symbol}. "
+                    "Epistemic Hold: truth not yet verified."
+                )
+            else:
+                # Normalize from [-1,+1] to [0,1] and average
+                confidence = float(
+                    np.mean([(s + 1) / 2 for s in numeric_signals])
+                )
+                reasoning = self._build_reasoning(symbol, signals, market_data)
+
+        if forced_state is None and reasoning == "":
+            reasoning = f"Composite signal from {len(numeric_signals)} sources"
+
+        # Step 5: Evaluate with TLEngine
+        decision = self.engine.evaluate(
+            confidence=confidence,
+            reasoning=reasoning,
+            metadata={
+                "symbol": symbol,
+                "scenario": scenario_label,
+                "signalCount": len([
+                    v for v in signals.values()
+                    if isinstance(v, (int, float))
+                ]),
+                "esgBlocked": esg_blocked,
+                "complianceBlocked": compliance_blocked,
+                "complianceWarnings": compliance["warnings"]
+            },
+            force_state=forced_state
+        )
+
+        # Step 6: Commit log entry (NL=NA: BEFORE any trade fires)
+        goukassian = create_goukassian_principle_block(
+            decision_payload=decision.reasoning,
+            agent_id="trading-governance-001",
+            license_scopes=self.license_scopes
+        )
+        log_entry = commit_log_entry(
+            decision=decision,
+            engine=self.engine,
+            goukassian_block=goukassian,
+            previous_hash=self.ledger.previous_hash,
+            extra_context={
+                "symbol": symbol,
+                "signals": {
+                    k: round(v, 4)
+                    for k, v in signals.items()
+                    if isinstance(v, (int, float))
+                },
+                "regulatoryCompliant": compliance["compliant"],
+                "esgCompliant": not esg_blocked,
+                "portfolioValue": self.portfolio_value
+            }
+        )
+        self.ledger.commit(log_entry)
+
+        # Step 7: Permission Token (PROCEED only)
+        token = build_permission_token(log_entry)
+
+        # Step 8: Position sizing governed by TL state
+        position = calculate_position_size(
+            decision=decision,
+            engine=self.engine,
+            portfolio_value=self.portfolio_value,
+            max_position_fraction=self.max_position_fraction,
+            symbol=symbol
+        )
+
+        # Update position tracking
+        if decision.state == TLState.PROCEED:
+            current = self.positions.get(symbol, 0.0)
+            self.positions[symbol] = current + position["positionFraction"]
+        elif decision.state == TLState.REFUSE:
+            self.positions[symbol] = 0.0
+
+        # Assemble governance record
+        return {
+            "scenario": scenario_label,
+            "symbol": symbol,
+            "state": decision.state.name,
+            "stateValue": decision.state.value,
+            "processActive": log_entry["processActive"],
+            "confidence": decision.confidence,
+            "positionLabel": decision.position_label,
+            "reasoning": decision.reasoning,
+            "logHash": log_entry["logHash"][:16] + "...",
+            "merkleRoot": log_entry["merkleRoot"][:16] + "...",
+            "permissionToken": (
+                token["tokenId"][:16] + "..." if token else None
+            ),
+            "laneOrigin": token["laneOrigin"] if token else "N/A",
+            "position": position,
+            "regulatoryCompliant": compliance["compliant"],
+            "regulatoryFailures": compliance["failures"],
+            "regulatoryWarnings": compliance["warnings"],
+            "esgCompliant": not esg_blocked,
+            "nlNaStatus": "Log committed before trade authorized"
+        }
+
+    def _build_reasoning(
+        self,
+        symbol: str,
+        signals: Dict[str, Any],
+        market_data: Dict[str, Any]
+    ) -> str:
+        """Build human-readable reasoning from market signals."""
+        parts = []
+
+        momentum = signals.get("momentum")
+        if momentum is not None:
+            if momentum > 0.3:
+                parts.append("Momentum: strong uptrend")
+            elif momentum < -0.3:
+                parts.append("Momentum: strong downtrend")
+            else:
+                parts.append("Momentum: neutral")
+
+        vol = signals.get("volatility")
+        if vol is not None and vol < -0.5:
+            parts.append(
+                "Volatility: elevated, flash crash conditions detected"
+            )
+
+        liquidity = signals.get("liquidity")
+        if liquidity is not None and liquidity < -0.3:
+            parts.append("Liquidity: insufficient for safe execution")
+
+        sentiment = signals.get("sentiment")
+        if sentiment is not None:
+            if sentiment > 0.3:
+                parts.append("Sentiment: positive")
+            elif sentiment < -0.3:
+                parts.append("Sentiment: negative")
+
+        regime = market_data.get("market_regime", "normal")
+        if regime == "stress":
+            parts.append("Regime: market stress; Governance Lane 300ms ceiling active")
+        elif regime == "flash_crash":
+            parts.append("Regime: flash crash conditions; Epistemic Hold warranted")
+
+        return "; ".join(parts) if parts else f"Signal analysis for {symbol}"
+
+    def get_trading_summary(self) -> Dict[str, Any]:
+        """Return summary of trading decisions and ledger state."""
+        stats = self.engine.get_statistics()
+        ledger = self.ledger.get_summary()
+
+        return {
+            "totalDecisions": stats["total_decisions"],
+            "proceedCount": stats["proceed_count"],
+            "epistemicHoldCount": stats["hold_count"],
+            "refuseCount": stats["refuse_count"],
+            "epistemicHoldRate": stats["epistemic_hold_rate"],
+            "targetHoldRate": stats["target_hold_rate"],
+            "averageConfidence": stats["average_confidence"],
+            "ledgerEntries": ledger["totalEntries"],
+            "latestMerkleRoot": ledger["latestMerkleRoot"][:16] + "...",
+            "openPositions": {
+                k: round(v, 4)
+                for k, v in self.positions.items() if v != 0
+            },
+            "architectureMode": "ARCHITECTURE_B",
+            "pufAttestation": "NULL_PUF_DEPLOYMENT"
+        }
+
+
+# =============================================================================
+# SECTION 6: Demonstration Scenarios
+# =============================================================================
+
+def run_trading_demo():
+    """
+    Demonstrate TL trading across six scenarios:
+        1. Clear buy signal: strong momentum, good liquidity, ESG verified
+        2. Epistemic Hold: flash crash volatility spike
+        3. Refuse: market manipulation detected (IOSCO FATAL)
+        4. ESG mandate blocks execution (Pillar VI)
+        5. Insufficient data: Epistemic Hold on missing signals
+        6. Recovery: conditions normalized after hold
+
+    DEMONSTRATION THRESHOLD VALUES: not for production use.
+    Trading desks calibrate thresholds through backtesting over 20+ years
+    of historical data, regulatory requirements, and risk management approval.
+    See docs/Threshold_Calibration.md.
+    """
+
+    print()
+    print("=" * 70)
+    print("  TERNARY LOGIC: COMPREHENSIVE FINANCIAL TRADING")
+    print("  Lev Goukassian (ORCID: 0009-0006-5966-1243)")
+    print("=" * 70)
+
+    # DEMONSTRATION VALUES ONLY: not recommendations, not standards.
+    DEMO_PROCEED = 0.70
+    DEMO_HOLD = 0.30
+
+    algo = TLTradingAlgorithm(
+        proceed_threshold=DEMO_PROCEED,
+        hold_threshold=DEMO_HOLD,
+        portfolio_value=1_000_000.0,
+        max_position_fraction=0.10
+    )
+
+    print()
+    print(f"  Engine initialized (demonstration thresholds: not for production)")
+    print(f"  PROCEED >= {DEMO_PROCEED} | REFUSE < {DEMO_HOLD}")
+    print(f"  Portfolio: $1,000,000 | Max position: 10%")
+    print(f"  Dual-Lane: Inference Lane < 2ms | Governance Lane <= 300ms")
+
+    # ------------------------------------------------------------------
+    # SCENARIO 1: Clear buy signal
+    # Strong momentum, good liquidity, ESG verified, all checks pass.
+    # Expected: PROCEED with scaled position.
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 1: Clear Buy Signal")
+    print("-" * 70)
+
+    data_buy = {
+        "price_data": [98.0, 99.2, 100.1, 101.5, 102.3, 103.1,
+                       104.0, 105.2, 106.1, 107.0, 108.2, 109.0,
+                       110.1, 111.3, 112.0, 113.2, 114.0, 115.1,
+                       116.3, 117.0],
+        "order_book": {
+            "bid_depth": 850000,
+            "ask_depth": 820000,
+            "spread": 0.002,
+            "buy_volume_5min": 620000,
+            "sell_volume_5min": 380000,
+            "layering_detected": False,
+            "spoofing_detected": False,
+            "wash_trading_detected": False
+        },
+        "news_sentiment": 0.65,
+        "esg_scores": {
+            "environmental": 82,
+            "social": 74,
+            "governance": 88
+        },
+        "esg_verified": True,
+        "emissions_anchored": True,
+        "use_of_proceeds_tracked": True,
+        "sanctions_screened": True,
+        "market_regime": "normal",
+        "max_acceptable_spread": 0.01
+    }
+
+    r1 = algo.make_trading_decision("ASSET-A", data_buy, "Clear Buy Signal")
+    _print_trade_result(r1)
+
+    # ------------------------------------------------------------------
+    # SCENARIO 2: Flash crash detection via volatility spike
+    # Extreme price moves trigger Epistemic Hold. The Governance Lane
+    # (300ms ceiling) pauses execution while market conditions are assessed.
+    # Expected: EPISTEMIC_HOLD. No new position.
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 2: Flash Crash Detection (Epistemic Hold)")
+    print("-" * 70)
+
+    # Generate flash crash price data: sudden 8% drop
+    prices_normal = [100.0 + i * 0.1 for i in range(15)]
+    prices_crash = [prices_normal[-1] * (1 - 0.008 * i) for i in range(5)]
+    flash_crash_prices = prices_normal + prices_crash
+
+    data_flash = {
+        "price_data": flash_crash_prices,
+        "order_book": {
+            "bid_depth": 120000,
+            "ask_depth": 980000,
+            "spread": 0.045,
+            "buy_volume_5min": 80000,
+            "sell_volume_5min": 920000,
+            "layering_detected": False,
+            "spoofing_detected": False,
+            "wash_trading_detected": False
+        },
+        "news_sentiment": -0.70,
+        "esg_verified": True,
+        "emissions_anchored": True,
+        "use_of_proceeds_tracked": True,
+        "sanctions_screened": True,
+        "market_regime": "flash_crash",
+        "max_acceptable_spread": 0.01
+    }
+
+    r2 = algo.make_trading_decision("ASSET-B", data_flash, "Flash Crash")
+    _print_trade_result(r2)
+
+    # ------------------------------------------------------------------
+    # SCENARIO 3: Market manipulation detected (IOSCO FATAL)
+    # Spoofing detected. Compliance failure forces Refuse (-1).
+    # Even if market signals were favorable, constitutional harm
+    # threshold crossed.
+    # Expected: REFUSE. No actuation authorized.
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 3: Market Manipulation Detected (IOSCO: Pillar V)")
+    print("-" * 70)
+
+    data_manip = {
+        "price_data": [100.0 + i * 0.2 for i in range(20)],
+        "order_book": {
+            "bid_depth": 500000,
+            "ask_depth": 480000,
+            "spread": 0.003,
+            "buy_volume_5min": 300000,
+            "sell_volume_5min": 280000,
+            "layering_detected": False,
+            "spoofing_detected": True,   # IOSCO FATAL
+            "wash_trading_detected": False
+        },
+        "news_sentiment": 0.20,
+        "esg_verified": True,
+        "emissions_anchored": True,
+        "use_of_proceeds_tracked": True,
+        "sanctions_screened": True,
+        "market_regime": "normal",
+        "max_acceptable_spread": 0.01
+    }
+
+    r3 = algo.make_trading_decision(
+        "ASSET-C", data_manip, "Market Manipulation"
+    )
+    _print_trade_result(r3)
+
+    # ------------------------------------------------------------------
+    # SCENARIO 4: ESG mandate failure blocks execution (Pillar VI)
+    # ESG not verified. Binary mandate check overrides confidence.
+    # Even strong market signals cannot override a failed mandate check.
+    # Expected: EPISTEMIC_HOLD (forced by ESG mandate failure).
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 4: ESG Mandate Failure (Pillar VI)")
+    print("-" * 70)
+
+    data_esg = {
+        "price_data": [100.0 + i * 0.5 for i in range(20)],
+        "order_book": {
+            "bid_depth": 700000,
+            "ask_depth": 650000,
+            "spread": 0.002,
+            "buy_volume_5min": 450000,
+            "sell_volume_5min": 310000,
+            "layering_detected": False,
+            "spoofing_detected": False,
+            "wash_trading_detected": False
+        },
+        "news_sentiment": 0.55,
+        "esg_scores": {"environmental": 40, "social": 35, "governance": 42},
+        "esg_verified": False,          # PILLAR VI FAILS
+        "emissions_anchored": False,    # PILLAR VI FAILS
+        "use_of_proceeds_tracked": True,
+        "sanctions_screened": True,
+        "market_regime": "normal",
+        "max_acceptable_spread": 0.01
+    }
+
+    r4 = algo.make_trading_decision("ASSET-D", data_esg, "ESG Mandate Failure")
+    _print_trade_result(r4)
+
+    # ------------------------------------------------------------------
+    # SCENARIO 5: Insufficient data
+    # No price data available. Epistemic Hold on data absence.
+    # Expected: EPISTEMIC_HOLD.
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 5: Insufficient Market Data")
+    print("-" * 70)
+
+    data_missing = {
+        # No price_data
+        # No order_book
+        "esg_verified": True,
+        "emissions_anchored": True,
+        "use_of_proceeds_tracked": True,
+        "sanctions_screened": True,
+        "market_regime": "normal",
+        "max_acceptable_spread": 0.01
+    }
+
+    r5 = algo.make_trading_decision(
+        "ASSET-E", data_missing, "Missing Data"
+    )
+    _print_trade_result(r5)
+
+    # ------------------------------------------------------------------
+    # SCENARIO 6: Recovery after Epistemic Hold
+    # Market conditions normalized. Clear signal. ESG verified.
+    # Expected: PROCEED.
+    # ------------------------------------------------------------------
+
+    print()
+    print("-" * 70)
+    print("SCENARIO 6: Recovery after Epistemic Hold")
+    print("-" * 70)
+
+    data_recovery = {
+        "price_data": [95.0 + i * 0.3 for i in range(20)],
+        "order_book": {
+            "bid_depth": 620000,
+            "ask_depth": 590000,
+            "spread": 0.003,
+            "buy_volume_5min": 400000,
+            "sell_volume_5min": 300000,
+            "layering_detected": False,
+            "spoofing_detected": False,
+            "wash_trading_detected": False
+        },
+        "news_sentiment": 0.45,
+        "esg_scores": {"environmental": 76, "social": 70, "governance": 80},
+        "esg_verified": True,
+        "emissions_anchored": True,
+        "use_of_proceeds_tracked": True,
+        "sanctions_screened": True,
+        "market_regime": "normal",
+        "max_acceptable_spread": 0.01
+    }
+
+    r6 = algo.make_trading_decision("ASSET-F", data_recovery, "Recovery")
+    _print_trade_result(r6)
+
+    # ------------------------------------------------------------------
+    # SUMMARY
+    # ------------------------------------------------------------------
+
+    print()
+    print("=" * 70)
+    print("TRADING SESSION SUMMARY")
+    print("=" * 70)
+
+    summary = algo.get_trading_summary()
+    print(f"  Total decisions:     {summary['totalDecisions']}")
+    print(f"  PROCEED:             {summary['proceedCount']}")
+    print(f"  EPISTEMIC_HOLD:      {summary['epistemicHoldCount']}")
+    print(f"  REFUSE:              {summary['refuseCount']}")
+    print(f"  Hold rate:           {summary['epistemicHoldRate']:.1%} "
+          f"(target: {summary['targetHoldRate']:.1%})")
+    print(f"  Average confidence:  {summary['averageConfidence']:.3f}")
+    print(f"  Ledger entries:      {summary['ledgerEntries']}")
+    print(f"  Latest Merkle root:  {summary['latestMerkleRoot']}")
+    print(f"  Open positions:      {summary['openPositions']}")
+    print(f"  Architecture mode:   {summary['architectureMode']}")
+    print(f"  PUF attestation:     {summary['pufAttestation']}")
+    print()
+    print("  NL=NA: Every trade decision was logged before any position")
+    print("  was authorized. The Inference Lane computed signals in under")
+    print("  2ms. The Governance Lane authorized via PermissionToken.")
+    print("  No log, no trade.")
+    print()
+    print("  Three immutable mandates:")
+    print("    No Spy. No Weapon. No Switch Off.")
+    print("=" * 70)
+    print()
+
+    # Export audit trail (Pillar IV)
+    algo.engine.export_audit_trail("/tmp/tl_trading_audit.json")
+    print("  Audit trail exported: /tmp/tl_trading_audit.json")
+    print()
+
+
+def _print_trade_result(result: Dict[str, Any]):
+    """Print formatted trade decision result."""
+    state_labels = {
+        "PROCEED": "OK",
+        "EPISTEMIC_HOLD": "HOLD",
+        "REFUSE": "REFUSE"
+    }
+    label = state_labels.get(result["state"], "")
+
+    print(f"  State:           {label} {result['state']} ({result['stateValue']})")
+    print(f"  processActive:   {result['processActive']}")
+    print(f"  Confidence:      {result['confidence']:.3f}")
+    print(f"  Position:        {result['positionLabel']}")
+    print(f"  Log committed:   {result['logHash']}")
+    print(f"  Merkle root:     {result['merkleRoot']}")
+
+    if result.get("permissionToken"):
+        print(f"  Permission token: {result['permissionToken']}")
+        print(f"  laneOrigin:       {result['laneOrigin']}")
+    else:
+        print(f"  Permission token: None")
+
+    pos = result.get("position", {})
+    if pos.get("action") == "BUY":
+        print(
+            f"  Trade action:    {pos['action']} "
+            f"${pos['notional']:,.2f} "
+            f"({pos['positionFraction']:.1%} of portfolio)"
+        )
+    else:
+        print(f"  Trade action:    {pos.get('action', 'N/A')}")
+
+    if result.get("regulatoryFailures"):
+        for f in result["regulatoryFailures"]:
+            print(f"  Compliance FAIL: {f}")
+
+    if not result.get("esgCompliant"):
+        print(f"  ESG mandate:     FAILED (Pillar VI forced Epistemic Hold)")
+
+    if result.get("regulatoryWarnings"):
+        for w in result["regulatoryWarnings"][:1]:
+            print(f"  Warning:         {w}")
+
+    print(f"  NL=NA:           {result['nlNaStatus']}")
+
+
+# =============================================================================
+# Entry point
+# =============================================================================
 
 if __name__ == "__main__":
-    demonstrate_trading_algorithm()
+    run_trading_demo()
 
-## Contact Information
 
-**Created by Lev Goukassian**
-* **ORCID**: 0009-0006-5966-1243
-* **Email**: leogouk@gmail.com
-
-**Successor Contact**: support@tl-goukassian.org  
-(see [Succession Charter](/memorial/Succession_Charter.md))
+"""
+---
+Creator: Lev Goukassian (ORCID: 0009-0006-5966-1243)
+Email: leogouk@gmail.com
+Repository: https://github.com/FractonicMind/TernaryLogic
+Successor: support@tl-goukassian.org
+DOI 1: 10.1007/s43681-025-00910-6
+DOI 2: 10.1007/s43681-026-01124-0
+---
+"""
