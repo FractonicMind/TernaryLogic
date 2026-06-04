@@ -22,7 +22,7 @@
 
 ### **Abstract**  {#abstract}
 
-The fundamental crisis in contemporary high-frequency execution systems stems from a structural timing mismatch between execution pipelines and verification protocols. In bivalent architectures, state transitions settle at sub-microsecond scales, while rigorous cryptographic verification demands hundreds of milliseconds. This temporal disparity creates an "irreversibility gap," rendering systems vulnerable to race conditions and forcing financial infrastructure into a reactive mitigation model. This specification introduces the Dual-Lane Latency Architecture (DLLA) in Ternary Logic (TL), a hardware-governed execution model that physically decouples computational propagation from finality enforcement. Utilizing Delay-Insensitive Ternary Logic (DITL) and Muller C-elements, the architecture bifurcates execution into a Fast Lane (\< 2 ms) for provisional logic and an asynchronous Audit Lane (300–500 ms) for Merkle-batched cryptographic anchoring. By establishing a physical Ternary Null (0) state, the architecture creates a deterministic "Epistemic Hold" that mechanically prevents the irreversible commit of an unverified action. This paper provides comprehensive gate-level mapping, SystemVerilog RTL implementations, and queueing theory proofs demonstrating buffer stability under heavy-tailed Markov Modulated Poisson Process (MMPP) burst traffic. The result is an execution model where structural integrity and high-speed operation are not mutually exclusive, proving that cryptographic finality can be physically gated without compromising market responsiveness.
+The fundamental crisis in contemporary high-frequency execution systems stems from a structural timing mismatch between execution pipelines and verification protocols. In bivalent architectures, state transitions settle at sub-microsecond scales, while rigorous cryptographic verification demands hundreds of milliseconds. This temporal disparity creates an "irreversibility gap," rendering systems vulnerable to race conditions and forcing financial infrastructure into a reactive mitigation model. This specification introduces the Dual-Lane Latency Architecture (DLLA) in Ternary Logic (TL), a hardware-governed execution model that physically decouples computational propagation from finality enforcement. Utilizing Delay-Insensitive Ternary Logic (DITL) and Muller C-elements, the architecture bifurcates execution into a Inference Lane (\< 2 ms) for provisional logic and an asynchronous Governance Lane (300–500 ms) for Merkle-batched cryptographic anchoring. By establishing a physical Ternary Null (0) state, the architecture creates a deterministic "Epistemic Hold" that mechanically prevents the irreversible commit of an unverified action. This paper provides comprehensive gate-level mapping, SystemVerilog RTL implementations, and queueing theory proofs demonstrating buffer stability under heavy-tailed Markov Modulated Poisson Process (MMPP) burst traffic. The result is an execution model where structural integrity and high-speed operation are not mutually exclusive, proving that cryptographic finality can be physically gated without compromising market responsiveness.
 
 **Keywords:** Delay-Insensitive Logic, Ternary Logic, High-Frequency Trading, Hardware Security, Muller C-elements, Asynchronous Circuits, Queueing Theory, Cryptographic Anchoring.
 
@@ -68,7 +68,7 @@ The fundamental crisis in contemporary high-frequency execution systems stems fr
 
 [II. Core Architecture: Dual-Lane TL Execution Model	11](#heading=)
 
-[2.1 Fast Lane (\< 2 ms): Provisional Execution Path	11](#heading=)
+[2.1 Inference Lane (\< 2 ms): Provisional Execution Path	11](#heading=)
 
 [2.1.1 Pipeline Structure and Operation Dispatch	11](#heading=)
 
@@ -76,7 +76,7 @@ The fundamental crisis in contemporary high-frequency execution systems stems fr
 
 [2.1.3 Deterministic Ordering Guarantees	12](#heading=)
 
-[2.2 Audit Lane (300–500 ms): Verification and Anchoring Path	13](#heading=)
+[2.2 Governance Lane (300–500 ms): Verification and Anchoring Path	13](#heading=)
 
 [2.2.1 Cryptographic Verification Pipeline	13](#heading=)
 
@@ -112,7 +112,7 @@ The fundamental crisis in contemporary high-frequency execution systems stems fr
 
 [3.3 Physical Prevention of Invalid State Transitions	19](#heading=)
 
-[3.3.1 Circuit-Level Interlock Preventing Null→Commit Without Audit Token	19](#heading=)
+[3.3.1 Circuit-Level Interlock Preventing Null→Commit Without Permission Token	19](#heading=)
 
 [3.3.2 Electrical Characteristics of Enforced Waiting States	19](#heading=)
 
@@ -136,7 +136,7 @@ The fundamental crisis in contemporary high-frequency execution systems stems fr
 
 [4.3 State Transition Matrix	22](#heading=)
 
-[4.3.1 Complete Transition Table: Fast Lane Output × Audit Lane Validation → Next State	22](#heading=)
+[4.3.1 Complete Transition Table: Inference Lane Output × Governance Lane Validation → Next State	22](#heading=)
 
 [4.3.2 Gate-Level Interpretation of Transition Logic	22](#heading=)
 
@@ -166,7 +166,7 @@ The fundamental crisis in contemporary high-frequency execution systems stems fr
 
 [6.2.3 External System Visibility Boundaries	26](#heading=)
 
-[VII. Audit Lane Cryptographic Mechanics	27](#heading=)
+[VII. Governance Lane Cryptographic Mechanics	27](#heading=)
 
 [7.1 Buffered Anchoring Pipeline	27](#heading=)
 
@@ -228,7 +228,7 @@ The fundamental crisis in contemporary high-frequency execution systems stems fr
 
 [9.2 Overflow Handling Policies	32](#heading=)
 
-[9.2.1 Stall Policy: Pausing Fast Lane Admission	32](#heading=)
+[9.2.1 Stall Policy: Pausing Inference Lane Admission	32](#heading=)
 
 [9.2.2 Reject Policy: Negative Acknowledgment Propagation	32](#heading=)
 
@@ -260,7 +260,7 @@ The fundamental crisis in contemporary high-frequency execution systems stems fr
 
 [11.1.2 Recovery Procedure on Power Restoration	35](#heading=)
 
-[11.2 Audit Lane Crash Scenarios	35](#heading=)
+[11.2 Governance Lane Crash Scenarios	35](#heading=)
 
 [11.2.1 Detection of Lane Unavailability	35](#heading=)
 
@@ -498,11 +498,11 @@ The Dual-Lane Latency Architecture satisfies this requirement through delay-inse
 
 ## II. Core Architecture: Dual-Lane TL Execution Model
 
-### 2.1 Fast Lane (\< 2 ms): Provisional Execution Path
+### 2.1 Inference Lane (\< 2 ms): Provisional Execution Path
 
 #### *2.1.1 Pipeline Structure and Operation Dispatch*
 
-The Fast Lane implements high-speed provisional execution through a deeply pipelined datapath optimized for minimal latency rather than maximum throughput \[1\]. The pipeline structure comprises: request decode (2 stages), operand fetch (3 stages), execution (4–8 stages depending on operation type), result format (2 stages), and provisional commit (1 stage). The 11–16 stage pipeline, operating at 500 MHz–1 GHz, achieves the \<2 ms end-to-end latency target with margin for process variation and temperature effects.
+The Inference Lane implements high-speed provisional execution through a deeply pipelined datapath optimized for minimal latency rather than maximum throughput \[1\]. The pipeline structure comprises: request decode (2 stages), operand fetch (3 stages), execution (4–8 stages depending on operation type), result format (2 stages), and provisional commit (1 stage). The 11–16 stage pipeline, operating at 500 MHz–1 GHz, achieves the \<2 ms end-to-end latency target with margin for process variation and temperature effects.
 
 Operation dispatch employs credit-based flow control to prevent buffer overflow. Each operation carries a unique sequence number enabling deterministic ordering and duplicate detection. The dispatch logic prioritizes operations based on market-criticality: quote updates precede cancels, which precede new orders. This prioritization, implemented in hardware, ensures that time-sensitive operations experience minimal queuing delay.
 
@@ -510,25 +510,25 @@ The pipeline implements speculation limited to data-dependent branches within a 
 
 #### *2.1.2 Provisional Result Generation and Exposure*
 
-Upon completion of the execution pipeline, the Fast Lane generates a **ProvisionalResult** containing: the operation’s output value, its sequence number, a timestamp with nanosecond precision, and a validity flag indicating successful execution. This result is exposed to downstream systems—matching engines, risk managers, market data feeds—through a latency-optimized interface with registered outputs and minimal fanout.
+Upon completion of the execution pipeline, the Inference Lane generates a **ProvisionalResult** containing: the operation’s output value, its sequence number, a timestamp with nanosecond precision, and a validity flag indicating successful execution. This result is exposed to downstream systems—matching engines, risk managers, market data feeds—through a latency-optimized interface with registered outputs and minimal fanout.
 
 The critical distinction: **ProvisionalResult is explicitly marked as non-final**. The interface contract requires consumers to acknowledge the provisional nature and implement appropriate handling for potential subsequent invalidation. For automated trading systems, this typically means using provisional results for internal state updates while awaiting final commitment before executing dependent trades \[24\]. For market data dissemination, provisional results may be published with appropriate flags, enabling recipients to adjust their models while understanding the non-binding nature.
 
-The exposure mechanism includes hardware-monitored acknowledgment tracking. If a downstream system fails to acknowledge provisional result receipt within a bounded time, the Fast Lane may stall or reject subsequent operations from the same source, preventing unbounded buffer growth and enabling flow control propagation.
+The exposure mechanism includes hardware-monitored acknowledgment tracking. If a downstream system fails to acknowledge provisional result receipt within a bounded time, the Inference Lane may stall or reject subsequent operations from the same source, preventing unbounded buffer growth and enabling flow control propagation.
 
 #### *2.1.3 Deterministic Ordering Guarantees*
 
-The Fast Lane maintains **strict sequential ordering** of operations within each logical stream, defined by the sequence number assignment at dispatch. This ordering is preserved through the pipeline by tag-based forwarding: each pipeline stage carries the sequence number along with data, enabling in-order retirement even with variable execution latency. The ordering guarantee extends to ProvisionalResult exposure: results are exposed in sequence number order, never reordered for performance optimization.
+The Inference Lane maintains **strict sequential ordering** of operations within each logical stream, defined by the sequence number assignment at dispatch. This ordering is preserved through the pipeline by tag-based forwarding: each pipeline stage carries the sequence number along with data, enabling in-order retirement even with variable execution latency. The ordering guarantee extends to ProvisionalResult exposure: results are exposed in sequence number order, never reordered for performance optimization.
 
 Cross-stream ordering, for operations that must be sequenced across multiple logical streams (e.g., orders on the same symbol from different customers), is enforced by explicit synchronization tokens. These tokens flow through a dedicated ordering network that serializes conflicting operations before they enter the execution pipeline. The ordering network operates at the same speed as the execution pipeline, adding minimal latency to synchronized operations.
 
-The deterministic ordering enables **replay verification**: given the same input sequence, the Fast Lane will produce identical provisional results. This property supports debugging, regulatory examination, and fault diagnosis by enabling precise reconstruction of system behavior from logged inputs.
+The deterministic ordering enables **replay verification**: given the same input sequence, the Inference Lane will produce identical provisional results. This property supports debugging, regulatory examination, and fault diagnosis by enabling precise reconstruction of system behavior from logged inputs.
 
-### 2.2 Audit Lane (300–500 ms): Verification and Anchoring Path
+### 2.2 Governance Lane (300–500 ms): Verification and Anchoring Path
 
 #### *2.2.1 Cryptographic Verification Pipeline*
 
-The Audit Lane performs comprehensive verification of each operation through a multi-stage cryptographic pipeline \[16\]. Stage 1 computes a cryptographic hash (SHA-256 or SHA-3-256) of the operation’s complete state: input parameters, execution context, and provisional result. Stage 2 aggregates these hashes into a Merkle tree structure \[15\], with 4:1 reduction per level. Stage 3 generates a digital signature over the Merkle root using a hardware-protected private key \[20\]. Stage 4 formats the signed root for external anchoring to immutable storage (blockchain, write-once optical media, or tamper-evident log servers) \[18\].
+The Governance Lane performs comprehensive verification of each operation through a multi-stage cryptographic pipeline \[16\]. Stage 1 computes a cryptographic hash (SHA-256 or SHA-3-256) of the operation’s complete state: input parameters, execution context, and provisional result. Stage 2 aggregates these hashes into a Merkle tree structure \[15\], with 4:1 reduction per level. Stage 3 generates a digital signature over the Merkle root using a hardware-protected private key \[20\]. Stage 4 formats the signed root for external anchoring to immutable storage (blockchain, write-once optical media, or tamper-evident log servers) \[18\].
 
 The pipeline operates on batches of 256–4096 operations, with batch size dynamically adjusted based on arrival rate and latency targets. Larger batches improve hash aggregation efficiency; smaller batches reduce maximum latency for individual operations. The 300–500 ms window accommodates batch formation, tree construction, and signature generation with margin for peak load conditions.
 
@@ -536,7 +536,7 @@ Hardware implementation employs dedicated cryptographic accelerators with consta
 
 #### *2.2.2 Buffered Logging with Merkle Aggregation*
 
-Operations entering the Audit Lane are appended to a **rolling log buffer** implemented as circular memory with non-volatile backup \[17\]. Each entry contains: the operation’s complete state, its sequence number for ordering verification, the computed hash, and metadata for reconstruction. The buffer provides temporary storage during batch formation and enables recovery from pipeline stalls or signature generation delays.
+Operations entering the Governance Lane are appended to a **rolling log buffer** implemented as circular memory with non-volatile backup \[17\]. Each entry contains: the operation’s complete state, its sequence number for ordering verification, the computed hash, and metadata for reconstruction. The buffer provides temporary storage during batch formation and enables recovery from pipeline stalls or signature generation delays.
 
 Merkle aggregation transforms the linear log into a hierarchical structure enabling efficient verification. For a batch of N operations, the Merkle tree has depth ⌈log₄(N)⌉ with 4-way branching at each level. The root hash cryptographically commits to all operations in the batch: any modification to any operation would change the root, detectable by recomputation. This structure enables **incremental verification**: a verifier with the root hash and a small proof path (4 × depth hashes) can confirm any single operation’s inclusion without processing the entire batch \[15\].
 
@@ -544,35 +544,35 @@ The aggregation process is streaming: as operations arrive, their hashes are ins
 
 #### *2.2.3 Checkpoint Anchoring to Immutable Record*
 
-The final stage of the Audit Lane anchors the signed Merkle root to **permanent, tamper-evident storage** \[16\]. The anchoring mechanism varies by deployment: blockchain submission for public verifiability \[18\], dedicated tamper-evident log servers for enterprise deployments, or write-once optical media for regulatory archives. The common requirement: once anchored, the record cannot be modified without detection.
+The final stage of the Governance Lane anchors the signed Merkle root to **permanent, tamper-evident storage** \[16\]. The anchoring mechanism varies by deployment: blockchain submission for public verifiability \[18\], dedicated tamper-evident log servers for enterprise deployments, or write-once optical media for regulatory archives. The common requirement: once anchored, the record cannot be modified without detection.
 
 The 300–500 ms latency target includes network transmission to the anchoring service, confirmation of receipt, and local recording of the anchor transaction identifier. For blockchain anchoring, this requires transaction broadcast, mempool acceptance, and one confirmation block (for probabilistic finality) or six confirmations (for cryptographic finality). The latency target assumes optimized blockchain selection (e.g., permissioned chains with sub-second block times) or batching of multiple Merkle roots into a single anchor transaction.
 
-Non-blocking behavior is preserved: the Audit Lane does not stall waiting for anchor confirmation. Instead, it records the anchor submission and continues processing. A separate **anchor verification thread** monitors confirmation status and escalates if anchoring fails or delays beyond acceptable bounds. Operations with unconfirmed anchors remain in a “pending anchor” sub-state, still committed from the system perspective but flagged for operational attention.
+Non-blocking behavior is preserved: the Governance Lane does not stall waiting for anchor confirmation. Instead, it records the anchor submission and continues processing. A separate **anchor verification thread** monitors confirmation status and escalates if anchoring fails or delays beyond acceptable bounds. Operations with unconfirmed anchors remain in a “pending anchor” sub-state, still committed from the system perspective but flagged for operational attention.
 
 ### 2.3 Divergence and Convergence Mechanics
 
 #### *2.3.1 Physical Separation of Execution and Verification Paths*
 
-The Fast Lane and Audit Lane are **physically distinct hardware modules** with independent clocks, power domains, and data paths \[41\]. This separation is architectural, not merely logical: the lanes occupy different regions of the silicon die (or different dies in a multi-chiplet implementation), with dedicated routing resources preventing crosstalk or shared resource contention. The physical separation enables independent scaling, verification, and failure containment.
+The Inference Lane and Governance Lane are **physically distinct hardware modules** with independent clocks, power domains, and data paths \[41\]. This separation is architectural, not merely logical: the lanes occupy different regions of the silicon die (or different dies in a multi-chiplet implementation), with dedicated routing resources preventing crosstalk or shared resource contention. The physical separation enables independent scaling, verification, and failure containment.
 
-Data flows between lanes through **narrow, well-defined interfaces**: the Fast Lane sends operation descriptors to the Audit Lane through a FIFO queue; the Audit Lane returns convergence tokens through a separate FIFO. These interfaces are asynchronous, with explicit handshake protocols that tolerate arbitrary latency mismatch \[41\]. The FIFO depths (typically 1024–8192 entries) absorb burst traffic without backpressure to the Fast Lane.
+Data flows between lanes through **narrow, well-defined interfaces**: the Inference Lane sends operation descriptors to the Governance Lane through a FIFO queue; the Governance Lane returns convergence tokens through a separate FIFO. These interfaces are asynchronous, with explicit handshake protocols that tolerate arbitrary latency mismatch \[41\]. The FIFO depths (typically 1024–8192 entries) absorb burst traffic without backpressure to the Inference Lane.
 
-The physical separation extends to manufacturing and test: the Fast Lane and Audit Lane can be fabricated on different process nodes optimized for their respective requirements (speed vs. density), then integrated through 2.5D or 3D packaging. This flexibility enables technology migration at different paces for each lane.
+The physical separation extends to manufacturing and test: the Inference Lane and Governance Lane can be fabricated on different process nodes optimized for their respective requirements (speed vs. density), then integrated through 2.5D or 3D packaging. This flexibility enables technology migration at different paces for each lane.
 
 #### *2.3.2 Synchronization Points and Convergence Detection*
 
-Convergence—the point at which both lanes have completed processing of the same operation—is detected by a **Muller C-element** that combines the Fast Lane completion signal with the Audit Lane completion signal \[6\]\[7\]. The C-element output asserts only when both inputs have asserted and remain asserted, providing hysteresis against glitch-induced premature detection.
+Convergence—the point at which both lanes have completed processing of the same operation—is detected by a **Muller C-element** that combines the Inference Lane completion signal with the Governance Lane completion signal \[6\]\[7\]. The C-element output asserts only when both inputs have asserted and remain asserted, providing hysteresis against glitch-induced premature detection.
 
-The synchronization protocol operates as follows: (1) Fast Lane completes operation N, asserts FastDone\[N\], and holds the result in a retention register; (2) Audit Lane completes verification of operation N, asserts AuditDone\[N\], and releases the cryptographic token; (3) C-element detects FastDone\[N\] ∧ AuditDone\[N\], asserts Converged\[N\]; (4) Commit gating logic enables final state transition on Converged\[N\] ∧ NoReject\[N\].
+The synchronization protocol operates as follows: (1) Inference Lane completes operation N, asserts FastDone\[N\], and holds the result in a retention register; (2) Governance Lane completes verification of operation N, asserts AuditDone\[N\], and releases the cryptographic token; (3) C-element detects FastDone\[N\] ∧ AuditDone\[N\], asserts Converged\[N\]; (4) Commit gating logic enables final state transition on Converged\[N\] ∧ NoReject\[N\].
 
 The C-element’s hysteresis ensures that transient deassertion of either input (e.g., due to metastability or noise) does not prematurely deassert Converged. Once convergence is detected, the operation proceeds to commitment even if one lane subsequently experiences delay or failure—the convergence token is latched and immutable \[6\].
 
 #### *2.3.3 Separation of Execution Visibility from Finality Guarantee*
 
-The architectural innovation of the Dual-Lane model is the **explicit separation of two concepts that conventional architectures conflate**: the visibility of execution results (for market responsiveness) and the guarantee of finality (for settlement and regulatory certainty). The Fast Lane provides visibility without finality; the Audit Lane provides finality with delayed visibility. The ternary state system mediates between these, with Null as the explicit “visible but not final” state \[40\].
+The architectural innovation of the Dual-Lane model is the **explicit separation of two concepts that conventional architectures conflate**: the visibility of execution results (for market responsiveness) and the guarantee of finality (for settlement and regulatory certainty). The Inference Lane provides visibility without finality; the Governance Lane provides finality with delayed visibility. The ternary state system mediates between these, with Null as the explicit “visible but not final” state \[40\].
 
-This separation enables optimization of each path for its specific requirement. The Fast Lane minimizes latency for visibility, accepting that results may be invalidated. The Audit Lane maximizes verification thoroughness, accepting latency for cryptographic certainty. The combination achieves both market responsiveness and regulatory compliance, where conventional architectures must trade one against the other \[24\].
+This separation enables optimization of each path for its specific requirement. The Inference Lane minimizes latency for visibility, accepting that results may be invalidated. The Governance Lane maximizes verification thoroughness, accepting latency for cryptographic certainty. The combination achieves both market responsiveness and regulatory compliance, where conventional architectures must trade one against the other \[24\].
 
 The interface contract with external systems explicitly represents this separation. ProvisionalResult includes a “finality” flag set to FALSE; CommitNotification includes the same data with “finality” flag TRUE and the cryptographic anchor reference. Systems that can operate on provisional information (e.g., internal risk models) do so; systems that require finality (e.g., settlement systems) await CommitNotification.
 
@@ -582,7 +582,7 @@ The interface contract with external systems explicitly represents this separati
 
 #### *3.1.1 Null as Spacer Token in Delay-Insensitive Logic*
 
-In NULL Convention Logic (NCL), the **NULL state (all signals low)** serves as a spacer between data wavefronts, enabling delay-insensitive communication \[40\]. The Dual-Lane Architecture extends this concept: the ternary Null (0) is not merely a transient spacer but a **persistent holding state** that can endure for hundreds of milliseconds while awaiting Audit Lane completion. This extension requires modifications to conventional NCL protocols to support long-duration NULL without deadlock or timeout.
+In NULL Convention Logic (NCL), the **NULL state (all signals low)** serves as a spacer between data wavefronts, enabling delay-insensitive communication \[40\]. The Dual-Lane Architecture extends this concept: the ternary Null (0) is not merely a transient spacer but a **persistent holding state** that can endure for hundreds of milliseconds while awaiting Governance Lane completion. This extension requires modifications to conventional NCL protocols to support long-duration NULL without deadlock or timeout.
 
 The mapping from ternary logic to NCL dual-rail encoding is: **Reject (-1)** \= (Data0=1, Data1=0); **Null (0)** \= (Data0=0, Data1=0); **Commit (+1)** \= (Data0=0, Data1=1). The all-zeros NULL state is electrically unambiguous and noise-robust, with maximum margin to either data state. The dual-rail encoding provides **implicit error detection**: the forbidden state (Data0=1, Data1=1) indicates electrical fault or synchronization error, triggering safe default to NULL \[40\].
 
@@ -590,9 +590,9 @@ For long-duration NULL holding, the NCL completion detection must be modified. C
 
 #### *3.1.2 Handshake-Based Propagation Protocols*
 
-Communication between Fast Lane, Audit Lane, and convergence logic employs **four-phase handshake protocols** with explicit request and acknowledgment \[41\]. The protocol for Fast Lane to convergence logic: (1) Fast Lane asserts Req with valid operation data; (2) convergence logic asserts Ack when data is latched; (3) Fast Lane deasserts Req; (4) convergence logic deasserts Ack, completing the cycle. This protocol is delay-insensitive: the protocol completes correctly regardless of wire delays, provided the isochronic fork assumption holds for multi-fanout signals \[2\].
+Communication between Inference Lane, Governance Lane, and convergence logic employs **four-phase handshake protocols** with explicit request and acknowledgment \[41\]. The protocol for Inference Lane to convergence logic: (1) Inference Lane asserts Req with valid operation data; (2) convergence logic asserts Ack when data is latched; (3) Inference Lane deasserts Req; (4) convergence logic deasserts Ack, completing the cycle. This protocol is delay-insensitive: the protocol completes correctly regardless of wire delays, provided the isochronic fork assumption holds for multi-fanout signals \[2\].
 
-The Audit Lane handshake is identical in structure but operates on a different timescale. The convergence logic must tolerate simultaneous handshakes from both lanes with arbitrary phase relationship. The C-element convergence detector resolves this by waiting for both Req signals before asserting the combined Ack, effectively synchronizing the asynchronous streams \[6\].
+The Governance Lane handshake is identical in structure but operates on a different timescale. The convergence logic must tolerate simultaneous handshakes from both lanes with arbitrary phase relationship. The C-element convergence detector resolves this by waiting for both Req signals before asserting the combined Ack, effectively synchronizing the asynchronous streams \[6\].
 
 For external interfaces, the handshake protocol is adapted to standard bus protocols (AXI4-Stream, PCIe) through bridge modules that translate between NCL four-phase and synchronous ready/valid signaling \[22\]. These bridges are the only synchronous-asynchronous boundaries in the system; all internal dual-lane communication is fully delay-insensitive.
 
@@ -640,19 +640,19 @@ This enforcement is **redundant with the state encoding** (dual-rail prevents di
 
 ### 3.3 Physical Prevention of Invalid State Transitions
 
-#### *3.3.1 Circuit-Level Interlock Preventing Null→Commit Without Audit Token*
+#### *3.3.1 Circuit-Level Interlock Preventing Null→Commit Without Permission Token*
 
-The **commit interlock** is a multi-stage gating structure that makes Null→Commit transition electrically impossible without Audit Token presence \[19\]. Stage 1: the convergence C-element requires both FastDone and AuditDone asserted for Converged output \[6\]. Stage 2: the commit gating AND requires Converged AND NoReject AND TokenValid. Stage 3: the state register clock enable is gated by the Stage 2 output, with no alternative clock enable path.
+The **commit interlock** is a multi-stage gating structure that makes Null→Commit transition electrically impossible without Permission Token presence \[19\]. Stage 1: the convergence C-element requires both FastDone and AuditDone asserted for Converged output \[6\]. Stage 2: the commit gating AND requires Converged AND NoReject AND TokenValid. Stage 3: the state register clock enable is gated by the Stage 2 output, with no alternative clock enable path.
 
 The electrical structure ensures: **no single point of failure can enable commit** \[36\]. A stuck-at fault on any input to the C-element prevents convergence detection; a stuck-at fault on the gating AND prevents clock enable assertion; a fault on the clock enable path prevents state register update. Only simultaneous multiple faults could bypass the interlock, with probability below manufacturing defect rates.
 
-The **TokenValid** signal is derived from cryptographic verification of the audit token: non-zero token, correct hash prefix, and valid signature. This verification is computed in the Audit Lane and transmitted as a single Boolean; the token itself is retained for external verification but not required for the commit interlock, minimizing critical path delay.
+The **TokenValid** signal is derived from cryptographic verification of the Permission Token: non-zero token, correct hash prefix, and valid signature. This verification is computed in the Governance Lane and transmitted as a single Boolean; the token itself is retained for external verification but not required for the commit interlock, minimizing critical path delay.
 
 #### *3.3.2 Electrical Characteristics of Enforced Waiting States*
 
 The NULL waiting state has **defined electrical characteristics** that enable verification and testing: supply current in NULL state is 60% of active state, due to reduced switching activity; the C-element retention current is measurable as a small DC component; thermal profile in sustained NULL is distinguishable from active operation. These characteristics enable **built-in self-test** to verify NULL holding functionality \[36\].
 
-The waiting state duration is bounded by **timeout circuitry**: if AuditDone is not asserted within 500 ms of FastDone, a watchdog timer forces transition to Reject. This timeout prevents indefinite stall from Audit Lane failure, with the timeout value configurable for different operational modes (normal, degraded, test).
+The waiting state duration is bounded by **timeout circuitry**: if AuditDone is not asserted within 500 ms of FastDone, a watchdog timer forces transition to Reject. This timeout prevents indefinite stall from Governance Lane failure, with the timeout value configurable for different operational modes (normal, degraded, test).
 
 #### *3.3.3 Metastability Immunity Through Hysteresis*
 
@@ -710,13 +710,13 @@ MTBF=etresolveT0fclkfdata
 
 where tresolve is available resolution time,  is regenerative time constant (\~50 ps), T0 is metastability window (\~20 ps), and fclk, fdata are clock and data frequencies. For tresolve \= 2 ns (1 clock cycle at 500 MHz), MTBF ≈ 10¹⁵ seconds, exceeding system lifetime \[37\].
 
-For the dual-lane convergence with 150:1 latency ratio, **extended resolution time** is available: the 300–500 ms Audit Lane window provides ample time for metastability resolution before commitment. The C-element’s hysteresis provides additional filtering, making the convergence detection effectively metastability-immune \[8\].
+For the dual-lane convergence with 150:1 latency ratio, **extended resolution time** is available: the 300–500 ms Governance Lane window provides ample time for metastability resolution before commitment. The C-element’s hysteresis provides additional filtering, making the convergence detection effectively metastability-immune \[8\].
 
 ### 4.3 State Transition Matrix
 
-#### *4.3.1 Complete Transition Table: Fast Lane Output × Audit Lane Validation → Next State*
+#### *4.3.1 Complete Transition Table: Inference Lane Output × Governance Lane Validation → Next State*
 
-| Fast Lane | Audit Lane | Current State | Next State | Transition Type |
+| Inference Lane | Governance Lane | Current State | Next State | Transition Type |
 | :---- | :---- | :---- | :---- | :---- |
 | Incomplete | Any | Any | NULL (hold) | No change |
 | Complete | Incomplete | NULL | NULL (hold) | **Enforced wait** |
@@ -756,7 +756,7 @@ The **physical impossibility** of NULL→COMMIT without audit derives from the C
 ┌──────────────────────────────────────────────────────────────────────────┐  
 │                         DUAL-LANE TIMING ARCHITECTURE                    │  
 │                                                                          │  
-│  TIME  │  FAST LANE (\<2ms)        │  AUDIT LANE (300-500ms)              │  
+│  TIME  │  INFERENCE LANE (\<2ms)  │  GOVERNANCE LANE (300-500ms)         │  
 │  ──────┼──────────────────────────┼────────────────────────────────────  │  
 │   0μs  │  Request arrival         │  ─                                   │  
 │  100ns │  Decode, dispatch        │  ─                                   │  
@@ -775,7 +775,7 @@ The **physical impossibility** of NULL→COMMIT without audit derives from the C
 │        │                          │                                      │  
 │  400ms │  ─                       │  Anchor submission                   │  
 │        │                          │  ════════════════════════            │  
-│        │                          │  AUDIT TOKEN valid                   │  
+│        │                          │  PERMISSION TOKEN valid                   │  
 │        │                          │                                      │  
 │  400ms │  ════════════════════════│═══════════════════════               │  
 │   \+    │  CONVERGENCE: FastDone ∧ │  AuditDone detected                  │  
@@ -791,7 +791,7 @@ The **physical impossibility** of NULL→COMMIT without audit derives from the C
 │                                                                          │  
 └──────────────────────────────────────────────────────────────────────────┘
 
-The timing diagram illustrates the **150:1 to 250:1 latency ratio** between lanes, with the convergence point enabling commitment only after the slower lane completes. The Fast Lane’s \<2 ms latency is achieved through deep pipelining; the Audit Lane’s 300–500 ms latency accommodates cryptographic batch processing \[16\].
+The timing diagram illustrates the **150:1 to 250:1 latency ratio** between lanes, with the convergence point enabling commitment only after the slower lane completes. The Inference Lane’s \<2 ms latency is achieved through deep pipelining; the Governance Lane’s 300–500 ms latency accommodates cryptographic batch processing \[16\].
 
 ### 5.2 Clocking Model: Mixed Synchronous-Asynchronous Regions
 
@@ -805,13 +805,13 @@ The synchronous region includes: request parsing, data formatting, and protocol 
 
 The dual-lane core operates **without global clock**, using NCL four-phase handshakes for all internal communication \[40\]. The absence of clock distribution eliminates: clock skew, clock gating overhead, and clock tree power. The cost: increased wire count for dual-rail encoding and completion detection \[41\].
 
-The asynchronous core is partitioned into **speed-independent modules**: Fast Lane pipeline, Audit Lane pipeline, convergence detector, and commit gating \[4\]. Each module has local timing constraints (isochronic forks) but no global synchronization. Module boundaries use four-phase handshakes with full delay-insensitivity.
+The asynchronous core is partitioned into **speed-independent modules**: Inference Lane pipeline, Governance Lane pipeline, convergence detector, and commit gating \[4\]. Each module has local timing constraints (isochronic forks) but no global synchronization. Module boundaries use four-phase handshakes with full delay-insensitivity.
 
 #### *5.2.3 Clock-Domain Crossing with Metastability Mitigation*
 
 The synchronous-asynchronous boundaries implement **multi-stage synchronizers** with 2–3 flip-flop stages, providing MTBF \> 10¹⁵ years for typical operating conditions \[22\]\[23\]. The synchronizer outputs feed C-elements for hysteretic filtering, ensuring that metastable states do not propagate \[6\].
 
-For the Fast Lane synchronous interface to asynchronous core: the synchronous request is captured, synchronized to the asynchronous domain, then handshake-propagated. The asynchronous completion is synchronized back to the synchronous domain for acknowledgment. The round-trip latency: 4–6 clock cycles, negligible compared to the \<2 ms Fast Lane target.
+For the Inference Lane synchronous interface to asynchronous core: the synchronous request is captured, synchronized to the asynchronous domain, then handshake-propagated. The asynchronous completion is synchronized back to the synchronous domain for acknowledgment. The round-trip latency: 4–6 clock cycles, negligible compared to the \<2 ms Inference Lane target.
 
 ## VI. Execution Interface and Integration Boundary
 
@@ -821,8 +821,8 @@ For the Fast Lane synchronous interface to asynchronous core: the synchronous re
 | :---- | :---- | :---- | :---- | :---- |
 | Request | Input | 256 bits | Synchronous | Operation descriptor: type, parameters, context |
 | RequestValid | Input | 1 bit | Synchronous | Asserted when Request is valid |
-| RequestReady | Output | 1 bit | Synchronous | Asserted when Fast Lane can accept |
-| ProvisionalResult | Output | 512 bits | Synchronous | Fast Lane output: value, status, sequence |
+| RequestReady | Output | 1 bit | Synchronous | Asserted when Inference Lane can accept |
+| ProvisionalResult | Output | 512 bits | Synchronous | Inference Lane output: value, status, sequence |
 | ProvisionalValid | Output | 1 bit | Synchronous | Asserted when ProvisionalResult is valid |
 | ProvisionalReady | Input | 1 bit | Synchronous | Asserted when downstream accepts |
 | AuditToken | Input | 256 bits | Asynchronous | Cryptographic verification result |
@@ -831,13 +831,13 @@ For the Fast Lane synchronous interface to asynchronous core: the synchronous re
 | CommitData | Output | 512 bits | Synchronous | Final committed value |
 | CommitValid | Output | 1 bit | Synchronous | Asserted with CommitData |
 
-The **Request-Ready/Valid handshake** provides flow control: the Fast Lane accepts requests only when Ready is asserted, preventing buffer overflow. The **ProvisionalResult handshake** similarly controls downstream acceptance. The **AuditToken interface** is asynchronous, with the convergence logic responsible for synchronization \[41\].
+The **Request-Ready/Valid handshake** provides flow control: the Inference Lane accepts requests only when Ready is asserted, preventing buffer overflow. The **ProvisionalResult handshake** similarly controls downstream acceptance. The **AuditToken interface** is asynchronous, with the convergence logic responsible for synchronization \[41\].
 
 ### 6.2 Integration with Financial Infrastructure
 
 #### *6.2.1 Matching Engine Interfaces*
 
-The Fast Lane connects to **matching engines** through low-latency AXI4-Stream or custom protocols \[22\]. The interface contract: ProvisionalResult exposure within 2 ms of request; CommitEnable notification within 500 ms; automatic rejection on timeout or validation failure. Matching engines must implement **provisional handling**: using ProvisionalResult for internal book updates while awaiting CommitEnable before executing dependent trades \[24\].
+The Inference Lane connects to **matching engines** through low-latency AXI4-Stream or custom protocols \[22\]. The interface contract: ProvisionalResult exposure within 2 ms of request; CommitEnable notification within 500 ms; automatic rejection on timeout or validation failure. Matching engines must implement **provisional handling**: using ProvisionalResult for internal book updates while awaiting CommitEnable before executing dependent trades \[24\].
 
 #### *6.2.2 Trading System API Contracts*
 
@@ -847,7 +847,7 @@ The external API exposes three endpoints: **Submit** (synchronous, returns seque
 
 The **visibility boundary** separates systems that observe ProvisionalResult from those that observe CommitEnable. Risk management systems typically observe both, tracking provisional exposure and final positions. Settlement systems observe only CommitEnable, ensuring finality before ledger updates. Market data feeds may observe ProvisionalResult with appropriate flags, enabling faster price discovery with understood limitations \[25\].
 
-## VII. Audit Lane Cryptographic Mechanics
+## VII. Governance Lane Cryptographic Mechanics
 
 ### 7.1 Buffered Anchoring Pipeline
 
@@ -865,7 +865,7 @@ The **batch hash** is computed incrementally: as each operation arrives, its has
 
 #### *7.1.3 Checkpoint Anchoring to Permanent Record*
 
-Completed batches are **anchored** to permanent storage: blockchain transaction submission, tamper-evident log server write, or WORM (Write Once Read Many) optical media write \[16\]\[18\]. The anchor record contains: batch Merkle root, timestamp, anchor transaction hash, and signature by the Audit Lane’s hardware-protected key \[20\].
+Completed batches are **anchored** to permanent storage: blockchain transaction submission, tamper-evident log server write, or WORM (Write Once Read Many) optical media write \[16\]\[18\]. The anchor record contains: batch Merkle root, timestamp, anchor transaction hash, and signature by the Governance Lane’s hardware-protected key \[20\].
 
 The **checkpoint interval**: every 10 batches (2,560–40,960 operations) or 1 second, whichever comes first. Checkpoints enable **truncated verification**: a verifier with the checkpoint can confirm any operation in subsequent batches without processing all prior history \[15\].
 
@@ -897,7 +897,7 @@ Multiple batches are **in flight simultaneously**: while batch N is being anchor
 
 #### *7.3.3 Commit Availability Before Anchoring Completion*
 
-Operations become **commit-enabled at convergence** (FastDone ∧ AuditDone), which occurs when the Audit Lane completes verification and token generation—**before** external anchoring completes. This optimization reduces effective latency: the 300–500 ms window includes anchor submission, but commitment is possible as soon as the cryptographic token is generated (\~250–350 ms). The external anchor provides durability and third-party verifiability, but is not on the critical path for system commitment \[16\].
+Operations become **commit-enabled at convergence** (FastDone ∧ AuditDone), which occurs when the Governance Lane completes verification and token generation—**before** external anchoring completes. This optimization reduces effective latency: the 300–500 ms window includes anchor submission, but commitment is possible as soon as the cryptographic token is generated (\~250–350 ms). The external anchor provides durability and third-party verifiability, but is not on the critical path for system commitment \[16\].
 
 ## VIII. Queueing Theory and Traffic Modeling
 
@@ -927,7 +927,7 @@ where N(t) is the MMPP counting process, and X\_i are i.i.d. Pareto(α, x\_m) in
 
 #### *8.2.2 Service Time Distributions*
 
-Fast Lane service time: **deterministic** S\_F \= 2 ms (pipeline latency, not queueing). Audit Lane service time: **batch-dependent** S\_A(N) \= T\_hash·N·log₄(N) \+ T\_sign \+ T\_anchor, where T\_hash ≈ 1 μs per operation, T\_sign ≈ 10 ms, T\_anchor ≈ 100–400 ms.
+Inference Lane service time: **deterministic** S\_F \= 2 ms (pipeline latency, not queueing). Governance Lane service time: **batch-dependent** S\_A(N) \= T\_hash·N·log₄(N) \+ T\_sign \+ T\_anchor, where T\_hash ≈ 1 μs per operation, T\_sign ≈ 10 ms, T\_anchor ≈ 100–400 ms.
 
 For batch size B=1,024: S\_A \= 1μs × 1024 × 5 \+ 10ms \+ 250ms ≈ 265 ms. The service time is **nearly deterministic** for fixed batch size, with variation from anchor confirmation timing.
 
@@ -941,7 +941,7 @@ where D(t) is the departure process. For stability, the **drift condition** requ
 
 1 t0tEAs−Dsds\<0
 
-With Fast Lane as immediate service (S\_F ≈ 0 for queueing), the effective arrival to Audit Lane buffer is A(t) filtered by Fast Lane capacity. The **stability condition** reduces to:
+With Inference Lane as immediate service (S\_F ≈ 0 for queueing), the effective arrival to Governance Lane buffer is A(t) filtered by Inference Lane capacity. The **stability condition** reduces to:
 
 effective\<Audit=BSAB
 
@@ -969,7 +969,7 @@ V=EVQt+1−VQtQt=q=EQt+A−D2−Qt22
 
 qEA−D+E
 
-For stability, we require ΔV \< 0 for sufficiently large q. With backpressure activation at Q\_max, the effective service rate increases: when Q \> 0.8 Q\_max, Fast Lane admission is throttled, reducing λ\_effective \[10\].
+For stability, we require ΔV \< 0 for sufficiently large q. With backpressure activation at Q\_max, the effective service rate increases: when Q \> 0.8 Q\_max, Inference Lane admission is throttled, reducing λ\_effective \[10\].
 
 #### *8.4.2 No-Overflow Condition Derivation*
 
@@ -993,7 +993,7 @@ For λ\_burst \= 50,000, λ\_throttled \= 0 (complete stall), μ\_Audit \= 3,864
 
 Tburst,max=Qthrottleburst−normal=0.865,53650,000−1,0001.07seconds
 
-Bursts longer than \~1 second trigger complete Fast Lane stall, with operations rejected at ingress.
+Bursts longer than \~1 second trigger complete Inference Lane stall, with operations rejected at ingress.
 
 ## IX. Flow Control and Backpressure
 
@@ -1001,18 +1001,18 @@ Bursts longer than \~1 second trigger complete Fast Lane stall, with operations 
 
 | Buffer | Size | Location | Management |
 | :---- | :---- | :---- | :---- |
-| Fast Lane input FIFO | 1,024 entries | Fast Lane ingress | Credit-based |
+| Inference Lane input FIFO | 1,024 entries | Inference Lane ingress | Credit-based |
 | Inter-lane reorder buffer | 4,096 entries | Between lanes | Sequence-ordered |
-| Audit Lane batch buffer | 65,536 entries | Audit Lane ingress | Circular, NV-shadow |
-| Merkle tree workspace | 16,384 nodes | Audit Lane compute | Paged, DMA |
+| Governance Lane batch buffer | 65,536 entries | Governance Lane ingress | Circular, NV-shadow |
+| Merkle tree workspace | 16,384 nodes | Governance Lane compute | Paged, DMA |
 
 The **total in-flight operations**: 87,536 maximum, or \~22 seconds at 4,000 ops/sec sustained. This capacity absorbs bursts far exceeding the 1-second analytical bound, providing operational margin.
 
 ### 9.2 Overflow Handling Policies
 
-#### *9.2.1 Stall Policy: Pausing Fast Lane Admission*
+#### *9.2.1 Stall Policy: Pausing Inference Lane Admission*
 
-When **Fast Lane input FIFO exceeds 80% capacity**, the RequestReady signal is deasserted, stalling upstream requesters. The stall propagates through the system: matching engines queue orders, clients experience increased latency. The stall persists until FIFO drains below 50% capacity, providing hysteresis against oscillation \[41\].
+When **Inference Lane input FIFO exceeds 80% capacity**, the RequestReady signal is deasserted, stalling upstream requesters. The stall propagates through the system: matching engines queue orders, clients experience increased latency. The stall persists until FIFO drains below 50% capacity, providing hysteresis against oscillation \[41\].
 
 #### *9.2.2 Reject Policy: Negative Acknowledgment Propagation*
 
@@ -1022,13 +1022,13 @@ When **stall duration exceeds 100 ms** (configurable), the system transitions to
 
 #### *9.3.1 Graceful Degradation Under Sustained Overload*
 
-Under sustained load exceeding Audit Lane capacity, the system **degrades gracefully**: Fast Lane continues executing at full speed, providing ProvisionalResults for market responsiveness; Audit Lane processes at maximum throughput, with queue latency growing linearly; CommitEnable latency increases from 300–500 ms to potentially seconds; timeout mechanisms prevent indefinite stall \[36\].
+Under sustained load exceeding Governance Lane capacity, the system **degrades gracefully**: Inference Lane continues executing at full speed, providing ProvisionalResults for market responsiveness; Governance Lane processes at maximum throughput, with queue latency growing linearly; CommitEnable latency increases from 300–500 ms to potentially seconds; timeout mechanisms prevent indefinite stall \[36\].
 
 The **degradation is observable**: monitoring systems track queue depth, commit latency, and timeout rate, enabling operational response (capacity addition, traffic shaping, or market circuit breakers).
 
 #### *9.3.2 Priority Preservation for In-Flight Operations*
 
-Operations already admitted to the Fast Lane **retain priority** over new requests. The sequence number ordering ensures fairness: operations are committed in admission order, preventing starvation of early operations by later bursts. This **FIFO ordering** is hardware-enforced by the convergence logic, not merely policy \[41\].
+Operations already admitted to the Inference Lane **retain priority** over new requests. The sequence number ordering ensures fairness: operations are committed in admission order, preventing starvation of early operations by later bursts. This **FIFO ordering** is hardware-enforced by the convergence logic, not merely policy \[41\].
 
 ## X. Energy, Latency, and Area Trade-offs
 
@@ -1036,12 +1036,12 @@ Operations already admitted to the Fast Lane **retain priority** over new reques
 
 | Component | Single-Lane (Reference) | Dual-Lane | Overhead |
 | :---- | :---- | :---- | :---- |
-| Fast Lane only | 1.0× | 1.0× | — |
-| Audit Lane only | — | 2.5× | 2.5× (crypto pipeline) |
+| Inference Lane only | 1.0× | 1.0× | — |
+| Governance Lane only | — | 2.5× | 2.5× (crypto pipeline) |
 | Convergence logic | — | 0.3× | 0.3× (C-elements, gating) |
 | **Total** | 1.0× | **3.8×** | **2.8×** |
 
-The **2.8× area overhead** is substantial but justified by the functional requirement: no single-lane architecture can provide both \<2 ms visibility and 300–500 ms cryptographic verification. The overhead is front-loaded in the Audit Lane, which dominates area and power.
+The **2.8× area overhead** is substantial but justified by the functional requirement: no single-lane architecture can provide both \<2 ms visibility and 300–500 ms cryptographic verification. The overhead is front-loaded in the Governance Lane, which dominates area and power.
 
 ### 10.2 Synchronization and Dual-Rail Overhead
 
@@ -1065,9 +1065,9 @@ The **1.5× switching power** reflects NULL-state power gating: when dual-rail i
 | Signature generation (ECDSA) | 320 | 21% |
 | Buffer memory (4 MB SRAM) | 480 | 32% |
 | Control and interface | 105 | 7% |
-| **Total Audit Lane** | **1,505** | **100%** |
+| **Total Governance Lane** | **1,505** | **100%** |
 
-The **1.5M gate equivalent** Audit Lane is comparable to a mid-size CPU core. The SHA-256 cores dominate logic area; the buffer memory dominates total area when including SRAM cell area \[15\].
+The **1.5M gate equivalent** Governance Lane is comparable to a mid-size CPU core. The SHA-256 cores dominate logic area; the buffer memory dominates total area when including SRAM cell area \[15\].
 
 #### *10.3.2 Power Consumption: Static and Dynamic*
 
@@ -1082,7 +1082,7 @@ The **3W total power** at 28nm is manageable for single-chip integration. Power 
 
 #### *10.3.3 Technology Scaling to 2nm/14A Nodes*
 
-| Node | Gate Delay | Power/Gate | Voltage | Audit Lane Power |
+| Node | Gate Delay | Power/Gate | Voltage | Governance Lane Power |
 | :---- | :---- | :---- | :---- | :---- |
 | 28nm | 45 ps | 5 nW/MHz | 1.0V | 3.0 W |
 | 7nm | 18 ps | 2 nW/MHz | 0.8V | 1.2 W |
@@ -1102,17 +1102,17 @@ Operations in **NULL state** (FastDone asserted, AuditDone pending) must survive
 
 #### *11.1.2 Recovery Procedure on Power Restoration*
 
-The **recovery procedure**: (1) scan non-volatile memory for operations with FastDone=1, AuditDone=0; (2) for each such operation, check Audit Lane status: if audit token exists, resume convergence; if audit incomplete, resubmit to Audit Lane; if audit unknown, mark for manual review; (3) reconstruct Merkle tree state from logged hashes; (4) resume normal operation with extended latency until backlog clears \[36\].
+The **recovery procedure**: (1) scan non-volatile memory for operations with FastDone=1, AuditDone=0; (2) for each such operation, check Governance Lane status: if Permission Token exists, resume convergence; if audit incomplete, resubmit to Governance Lane; if audit unknown, mark for manual review; (3) reconstruct Merkle tree state from logged hashes; (4) resume normal operation with extended latency until backlog clears \[36\].
 
-### 11.2 Audit Lane Crash Scenarios
+### 11.2 Governance Lane Crash Scenarios
 
 #### *11.2.1 Detection of Lane Unavailability*
 
-Audit Lane failure is detected by: watchdog timeout (no completion for \>1 second), heartbeat loss (periodic status message missing), or explicit error signal (cryptographic engine fault). Detection latency: \<100 ms for watchdog, \<10 ms for heartbeat \[36\].
+Governance Lane failure is detected by: watchdog timeout (no completion for \>1 second), heartbeat loss (periodic status message missing), or explicit error signal (cryptographic engine fault). Detection latency: \<100 ms for watchdog, \<10 ms for heartbeat \[36\].
 
 #### *11.2.2 Safe Degradation to Reject-All Mode*
 
-On Audit Lane failure, the system **degrades to reject-all mode**: Fast Lane continues executing (for market visibility), but all operations timeout to REJECT after 500 ms. This mode preserves market information flow while preventing any commitment without verification. Recovery requires Audit Lane restart and state reconstruction from checkpoint \[36\].
+On Governance Lane failure, the system **degrades to reject-all mode**: Inference Lane continues executing (for market visibility), but all operations timeout to REJECT after 500 ms. This mode preserves market information flow while preventing any commitment without verification. Recovery requires Governance Lane restart and state reconstruction from checkpoint \[36\].
 
 ### 11.3 Hardware Fault Containment
 
@@ -1138,11 +1138,11 @@ The **dual-rail encoding provides fault masking**: a single fault affects one ra
 
 #### *12.2.1 Latency Exploitation: Timing Side-Channel Resistance*
 
-**Attack**: Measure Fast Lane latency to infer operation type or market conditions. **Defense**: Constant-time execution for all operation types; randomized pipeline insertion (±2 cycles); and physical isolation of timing-critical paths. The \<2 ms latency bound is uniform, with no data-dependent variation observable to external parties \[19\].
+**Attack**: Measure Inference Lane latency to infer operation type or market conditions. **Defense**: Constant-time execution for all operation types; randomized pipeline insertion (±2 cycles); and physical isolation of timing-critical paths. The \<2 ms latency bound is uniform, with no data-dependent variation observable to external parties \[19\].
 
 #### *12.2.2 Audit Delay Attacks: Timeout and Watchdog Mechanisms*
 
-**Attack**: Delay or suppress Audit Lane completion to prevent commitment or force timeout. **Defense**: Multiple redundant Audit Lane instances with voting; watchdog timers forcing REJECT on excessive delay; and external anchor submission that cannot be blocked by internal attackers. The 500 ms timeout is enforced by hardware counter, not software policy \[36\].
+**Attack**: Delay or suppress Governance Lane completion to prevent commitment or force timeout. **Defense**: Multiple redundant Governance Lane instances with voting; watchdog timers forcing REJECT on excessive delay; and external anchor submission that cannot be blocked by internal attackers. The 500 ms timeout is enforced by hardware counter, not software policy \[36\].
 
 #### *12.2.3 Log Tampering: Cryptographic Integrity Enforcement*
 
@@ -1154,11 +1154,11 @@ The **dual-rail encoding provides fault masking**: a single fault affects one ra
 
 #### *12.2.5 Commit Forgery: Hardware-Enforced Token Validation*
 
-**Attack**: Forge or replay Audit Tokens to induce unauthorized commit. **Defense**: Cryptographic token with sequence number binding, timestamp, and signature \[20\]; hardware token validation with no software bypass; and token uniqueness enforced by monotonic sequence counter in secure hardware. The C-element interlock requires valid token electrical presence, not merely software assertion \[6\].
+**Attack**: Forge or replay Permission Tokens to induce unauthorized commit. **Defense**: Cryptographic token with sequence number binding, timestamp, and signature \[20\]; hardware token validation with no software bypass; and token uniqueness enforced by monotonic sequence counter in secure hardware. The C-element interlock requires valid token electrical presence, not merely software assertion \[6\].
 
 #### *12.2.6 Desynchronization: Consensus Protocols for Lane Agreement*
 
-**Attack**: Induce disagreement between Fast Lane and Audit Lane on operation sequence or content. **Defense**: Cryptographic binding of operation descriptor to both lanes; sequence number verification at convergence; and Merkle inclusion proof linking operation to anchored batch. Any desynchronization is detected as hash mismatch or sequence gap \[15\].
+**Attack**: Induce disagreement between Inference Lane and Governance Lane on operation sequence or content. **Defense**: Cryptographic binding of operation descriptor to both lanes; sequence number verification at convergence; and Merkle inclusion proof linking operation to anchored batch. Any desynchronization is detected as hash mismatch or sequence gap \[15\].
 
 #### *12.2.7 Anchoring Spoofing: Merkle Root Verification Chains*
 
@@ -1178,7 +1178,7 @@ This formula states that globally, whenever the system is in Commit state, there
 
 null\_persist=GFastDoneAuditDoneStateNullUAuditDone
 
-This formula ensures that when Fast Lane completes without Audit completion, the system remains in Null until Audit completion. The until operator guarantees no premature exit \[27\].
+This formula ensures that when Inference Lane completes without Audit completion, the system remains in Null until Audit completion. The until operator guarantees no premature exit \[27\].
 
 ### 13.2 SystemVerilog Assertions (SVA)
 
@@ -1271,11 +1271,11 @@ parameter TOKEN\_WIDTH \= 256
 input  logic clk,  
 input  logic rst\_n,
 
-// Fast Lane interface  
+// Inference Lane interface  
 input  logic fl\_done,  
 input  logic \[DATA\_WIDTH-1:0\] fl\_data,
 
-// Audit Lane interface  
+// Governance Lane interface  
 input  logic al\_done,  
 input  logic \[TOKEN\_WIDTH-1:0\] al\_token,
 
@@ -1545,7 +1545,7 @@ SEU emulation; clock glitching; voltage droop; desynchronization attacks \[36\].
 
 ### 19.1 Event Sequence
 
-| Time | Event | Fast Lane | Audit Lane | System State |
+| Time | Event | Inference Lane | Governance Lane | System State |
 | :---- | :---- | :---- | :---- | :---- |
 | 0 ms | Burst onset: 10,000 ops in 10 ms | Request\[0\] admitted | — | NULL |
 | 0.8 ms | First provisional results | 100 ops done | Queue building | 100 NULL |
@@ -1586,7 +1586,7 @@ The architecture enables **mathematically verifiable** guarantees: sub-milliseco
 
 #### *20.2.2 Auditability Without Performance Compromise*
 
-The separation of Fast Lane and Audit Lane enables optimization of each for its requirement: speed for visibility, thoroughness for finality. Conventional architectures force tradeoffs; the Dual-Lane Architecture achieves both \[24\].
+The separation of Inference Lane and Governance Lane enables optimization of each for its requirement: speed for visibility, thoroughness for finality. Conventional architectures force tradeoffs; the Dual-Lane Architecture achieves both \[24\].
 
 ## Works Cited
 
