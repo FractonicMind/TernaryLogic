@@ -185,13 +185,13 @@
           <!-- Key Highlights -->
           <div class="space-y-4">
             <div class="bg-accent/10 border border-accent/20 rounded-xl p-6">
-              <h3 class="font-canela font-bold text-lg text-accent mb-3">Fast Lane</h3>
+              <h3 class="font-canela font-bold text-lg text-accent mb-3">Inference Lane</h3>
               <div class="text-3xl font-bold text-neutral-700 mb-2">&lt; 2 ms</div>
               <p class="text-sm text-neutral-600">High-speed provisional execution with visibility but no finality</p>
             </div>
 
             <div class="bg-primary/10 border border-primary/20 rounded-xl p-6">
-              <h3 class="font-canela font-bold text-lg text-primary mb-3">Audit Lane</h3>
+              <h3 class="font-canela font-bold text-lg text-primary mb-3">Governance Lane</h3>
               <div class="text-3xl font-bold text-neutral-700 mb-2">300-500 ms</div>
               <p class="text-sm text-neutral-600">Cryptographic verification with Merkle anchoring and finality</p>
             </div>
@@ -346,7 +346,7 @@
 
             <div class="grid md:grid-cols-2 gap-6">
               <div>
-                <h4 class="font-semibold text-accent mb-3">Fast Lane (&lt;2 ms)</h4>
+                <h4 class="font-semibold text-accent mb-3">Inference Lane (&lt;2 ms)</h4>
                 <ul class="text-sm text-neutral-600 space-y-1">
                   <li>• 11-16 stage pipelined datapath</li>
                   <li>• Credit-based flow control</li>
@@ -355,7 +355,7 @@
                 </ul>
               </div>
               <div>
-                <h4 class="font-semibold text-primary mb-3">Audit Lane (300-500 ms)</h4>
+                <h4 class="font-semibold text-primary mb-3">Governance Lane (300-500 ms)</h4>
                 <ul class="text-sm text-neutral-600 space-y-1">
                   <li>• Cryptographic verification pipeline</li>
                   <li>• Merkle tree aggregation</li>
@@ -372,8 +372,8 @@
               <table class="w-full text-sm">
                 <thead>
                   <tr class="border-b border-neutral-300">
-                    <th class="text-left py-2 px-3 font-semibold">Fast Lane</th>
-                    <th class="text-left py-2 px-3 font-semibold">Audit Lane</th>
+                    <th class="text-left py-2 px-3 font-semibold">Inference Lane</th>
+                    <th class="text-left py-2 px-3 font-semibold">Governance Lane</th>
                     <th class="text-left py-2 px-3 font-semibold">Current State</th>
                     <th class="text-left py-2 px-3 font-semibold">Next State</th>
                   </tr>
@@ -486,7 +486,7 @@
             <h4 class="font-semibold text-blue-800 mb-3">Circuit-Level Interlock</h4>
             <p class="text-blue-700 text-sm mb-3">
               The commit interlock is a multi-stage gating structure that makes
-              Null→Commit transition electrically impossible without Audit Token presence.
+              Null→Commit transition electrically impossible without Permission Token presence.
             </p>
 
             <div class="grid md:grid-cols-3 gap-4 text-xs">
@@ -644,11 +644,11 @@ if (PRIORITY_A &amp;&amp; ~|a)
   input  logic clk,
   input  logic rst_n,
   
-  // Fast Lane interface
+  // Inference Lane interface
   input  logic fl_done,
   input  logic [DATA_WIDTH-1:0] fl_data,
   
-  // Audit Lane interface
+  // Governance Lane interface
   input  logic al_done,
   input  logic [TOKEN_WIDTH-1:0] al_token,
   
@@ -706,8 +706,8 @@ endmodule</code></pre>
           <div class="bg-green-50 border border-green-200 rounded-lg p-6">
             <h4 class="font-semibold text-green-800 mb-3">Correctness Proof</h4>
             <p class="text-green-700 text-sm mb-3">
-              <strong>Theorem:</strong> Commitment cannot occur unless both Fast Lane completion
-              and Audit Lane validation have occurred with a valid token.
+              <strong>Theorem:</strong> Commitment cannot occur unless both Inference Lane completion
+              and Governance Lane validation have occurred with a valid token.
             </p>
 
             <div class="text-xs text-green-600 space-y-1">
@@ -786,8 +786,8 @@ endmodule</code></pre>
             <div class="bg-white rounded-lg p-6 border border-secondary/20">
               <h4 class="font-semibold text-secondary mb-3">Performance Without Compromise</h4>
               <ul class="text-sm text-neutral-600 space-y-2">
-                <li>• Fast Lane optimized for visibility</li>
-                <li>• Audit Lane optimized for thoroughness</li>
+                <li>• Inference Lane optimized for visibility</li>
+                <li>• Governance Lane optimized for thoroughness</li>
                 <li>• No trade-offs between speed and auditability</li>
                 <li>• Unified architecture for both requirements</li>
                 <li>• Scalable to millions of operations/second</li>

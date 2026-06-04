@@ -184,7 +184,7 @@
           Dual-Lane Latency Architecture in Ternary Logic (TL)
         </h2>
         <p class="text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-          A hardware-enforceable execution model designed for high-integrity, low-latency environments such as financial trading infrastructure, featuring two physically distinct but synchronized lanes: a Fast Lane for provisional execution and an Audit Lane for verification, cryptographic anchoring, and finality enforcement.
+          A hardware-enforceable execution model designed for high-integrity, low-latency environments such as financial trading infrastructure, featuring two physically distinct but synchronized lanes: a Inference Lane for provisional execution and an Governance Lane for verification, cryptographic anchoring, and finality enforcement.
         </p>
         
         <div class="grid md:grid-cols-2 gap-6">
@@ -193,7 +193,7 @@
               <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
                 <i data-lucide="zap" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
               </div>
-              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Fast Lane</h3>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Inference Lane</h3>
             </div>
             <p class="text-gray-700 dark:text-gray-300 text-sm">
               Provisional execution with response time less than
@@ -206,7 +206,7 @@
               <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
                 <i data-lucide="shield-check" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
               </div>
-              <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Audit Lane</h3>
+              <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Governance Lane</h3>
             </div>
             <p class="text-gray-700 dark:text-gray-300 text-sm">
               Verification and finality enforcement with response time of
@@ -218,7 +218,7 @@
         <div class="mt-8 pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
           <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://arxiv.org/pdf/2505.12465?|59">
             <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
-            Key Principle: No irreversible commit occurs without Audit Lane convergence, ensuring provable integrity in cryptographic anchoring.
+            Key Principle: No irreversible commit occurs without Governance Lane convergence, ensuring provable integrity in cryptographic anchoring.
           </p>
         </div>
       </div>
@@ -257,7 +257,7 @@
 
           <img
             src="https://cdn.qwenlm.ai/60498d16-d2ab-4b9f-8acd-8f6913b3400d/02156f65-e9e0-4990-b258-012cd729f831/7dff1062-09c4-4e43-aee8-da733b732248.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiNjA0OThkMTYtZDJhYi00YjlmLThhY2QtOGY2OTEzYjM0MDBkIiwicmVzb3VyY2VfaWQiOiIwMjE1NmY2NS1lOWUwLTQ5OTAtYjI1OC0wMTJjZDcyOWY4MzEiLCJyZXNvdXJjZV9jaGF0X2lkIjpudWxsfQ.mCsOaluKQ_6h0zF9cnEsyzXT0NV0xfuhFGtjL-JdKxg"
-            alt="Technical architecture diagram showing a split-path processing system with two parallel lanes. Left lane labeled 'Fast Lane' in blue (#1a73b3) with lightning bolt icon, showing input arrow entering a rectangular processing unit containing 'Provisional Execution' text in white, with output arrow leading to a green checkmark symbol representing '+1 Commit'. Right lane labeled 'Audit Lane' in purple (#6366f1) with shield icon, showing input arrow entering a rectangular verification unit containing 'Cryptographic Anchoring &amp; Finality Enforcement' text in white, with output arrow leading to a red X symbol representing '-1 Reject'. Both lanes share common input at top center with binary decision logic block in gray (#6b7280) containing 'Ternary Logic States' label and three small circles arranged horizontally showing green (+1), gray (0), and red (-1) states. Background is clean white (#ffffff) with subtle grid lines in light gray (#f3f4f6). All text is rendered in sans-serif font, arrows are black with arrowheads, and symbols are simple geometric shapes. Diagram emphasizes the dual-path architecture with clear visual separation between fast and audit lanes."
+            alt="Technical architecture diagram showing a split-path processing system with two parallel lanes. Left lane labeled 'Inference Lane' in blue (#1a73b3) with lightning bolt icon, showing input arrow entering a rectangular processing unit containing 'Provisional Execution' text in white, with output arrow leading to a green checkmark symbol representing '+1 Commit'. Right lane labeled 'Governance Lane' in purple (#6366f1) with shield icon, showing input arrow entering a rectangular verification unit containing 'Cryptographic Anchoring &amp; Finality Enforcement' text in white, with output arrow leading to a red X symbol representing '-1 Reject'. Both lanes share common input at top center with binary decision logic block in gray (#6b7280) containing 'Ternary Logic States' label and three small circles arranged horizontally showing green (+1), gray (0), and red (-1) states. Background is clean white (#ffffff) with subtle grid lines in light gray (#f3f4f6). All text is rendered in sans-serif font, arrows are black with arrowheads, and symbols are simple geometric shapes. Diagram emphasizes the dual-path architecture with clear visual separation between inference and governance lanes."
             class="w-full rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
           />
         </div>
@@ -343,7 +343,7 @@
                 <div class="pl-4 pr-3 py-3 border-l-4 border-accent-500 bg-accent-50/40 dark:bg-accent-900/30 rounded-r-lg">
                   <p class="text-sm font-medium text-accent-900 dark:text-accent-100 leading-relaxed" data-ref="https://www.semanticscholar.org/paper/3a4e82a7b47e85ab9029b76271285c0afe32a753|63">
                     <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
-                    NCL Design Focus: Delay-insensitive asynchronous logic design using the NCL paradigm, with detailed design of input-complete and observable dual-rail implementations suitable for the fast lane's provisional execution units.
+                    NCL Design Focus: Delay-insensitive asynchronous logic design using the NCL paradigm, with detailed design of input-complete and observable dual-rail implementations suitable for the inference lane's provisional execution units.
                   </p>
                 </div>
               </div>
@@ -371,10 +371,10 @@
                   <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">3.60 ps</span>
                   to
                   <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">2.85 ps</span>
-                  when implementing strained GAA FETs, demonstrating the potential for ultra-low latency in the fast lane implementation.
+                  when implementing strained GAA FETs, demonstrating the potential for ultra-low latency in the inference lane implementation.
                 </p>
                 <p class="text-gray-700 dark:text-gray-300" data-ref="https://ieeexplore.ieee.org/iel7/6287639/10380310/10488424.pdf|23">
-                  The journey from Fin-shaped field effect transistor (FinFET) to gate-all-around multi-bridge channel field effect transistor (MBCFET) represents the evolution toward higher performance and lower power consumption suitable for both fast and audit lane implementations.
+                  The journey from Fin-shaped field effect transistor (FinFET) to gate-all-around multi-bridge channel field effect transistor (MBCFET) represents the evolution toward higher performance and lower power consumption suitable for both fast and governance lane implementations.
                 </p>
                 
                 <div class="pl-4 pr-3 py-3 border-l-4 border-amber-500 bg-amber-50/40 dark:bg-amber-900/30 rounded-r-lg">
@@ -407,7 +407,7 @@
                   A collection of NULL Convention Logic (NCL) circuits and libraries written in Verilog provides the experience of logically determined design in a familiar environment, facilitating FPGA implementation of the ternary logic states.
                 </p>
                 <p class="text-gray-700 dark:text-gray-300" data-ref="https://m.researching.cn/jos/journaltopic/Articles|96">
-                  Demonstration of comparator modules in GaN ICs based on resistor-transistor logic (RTL) on E-mode wafers shows the feasibility of implementing high-speed comparison logic required for the fast lane's decision-making processes.
+                  Demonstration of comparator modules in GaN ICs based on resistor-transistor logic (RTL) on E-mode wafers shows the feasibility of implementing high-speed comparison logic required for the inference lane's decision-making processes.
                 </p>
               </div>
             </div>
@@ -459,7 +459,7 @@
               <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Linear Temporal Logic (LTL)</h4>
             </div>
             <p class="text-sm text-gray-700 dark:text-gray-300">
-              LTL properties ensure that critical safety requirements such as mutual exclusion between fast and audit lane states are maintained throughout system execution.
+              LTL properties ensure that critical safety requirements such as mutual exclusion between fast and governance lane states are maintained throughout system execution.
             </p>
           </div>
 
@@ -471,7 +471,7 @@
               <h4 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Property Checking</h4>
             </div>
             <p class="text-sm text-gray-700 dark:text-gray-300">
-              SVA property checking verifies that the ternary logic states transition correctly and that no irreversible commit occurs without audit lane convergence.
+              SVA property checking verifies that the ternary logic states transition correctly and that no irreversible commit occurs without governance lane convergence.
             </p>
           </div>
         </div>
@@ -576,7 +576,7 @@
               <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Denial of Service</h4>
             </div>
             <p class="text-sm text-gray-700 dark:text-gray-300">
-              Burst traffic patterns can overwhelm the fast lane, causing delays in audit lane convergence and compromising system availability.
+              Burst traffic patterns can overwhelm the inference lane, causing delays in governance lane convergence and compromising system availability.
             </p>
           </div>
 
@@ -588,7 +588,7 @@
               <h4 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Timing Attacks</h4>
             </div>
             <p class="text-sm text-gray-700 dark:text-gray-300">
-              Attackers may exploit timing differences between fast and audit lanes to infer sensitive information about transaction processing.
+              Attackers may exploit timing differences between inference and governance lanes to infer sensitive information about transaction processing.
             </p>
           </div>
 
@@ -712,7 +712,7 @@
             3D Integration and Advanced Packaging
           </h3>
           <p class="text-gray-700 dark:text-gray-300" data-ref="https://irds.ieee.org/images/files/pdf/2022/2022IRDS_BC.pdf|118">
-            Use of 2.5D/3D integration to connect discrete CMOS logic dies to the internal pins/TSVs of a memory, enabling high-density integration of fast and audit lane components on separate dies.
+            Use of 2.5D/3D integration to connect discrete CMOS logic dies to the internal pins/TSVs of a memory, enabling high-density integration of fast and governance lane components on separate dies.
           </p>
           <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/400967279_Monolithic_Hybrid-3D_Standard_Cell_Library_with_Sandwiched_Inter-Metal_Layer_for_3D_Digital_Computation-in-Memory_Circuits|125">
             Monolithic Hybrid-3D Standard Cell Library with Sandwiched Inter-Metal Layer for 3D Digital Computation-in-Memory Circuits provides the architectural foundation for implementing the dual-lane system with minimized interconnect delays.

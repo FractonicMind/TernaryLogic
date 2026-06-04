@@ -78,8 +78,8 @@ CONFIRMATION: NEITHER Mermaid JS NOR SVG were used anywhere in the output. All c
             <h2 class="text-2xl mb-4">II. Core Architecture: Dual-Lane TL Execution Model</h2>
             <p class="mb-4 text-gray-700 leading-relaxed">The Dual-Lane Latency architecture physically decouples execution from finality using a Ternary Logic (TL) state model (+1, 0, -1). Execution operations bifurcate into two synchronized paths immediately post-ingress.</p>
             <ul class="list-disc pl-6 mb-6 text-gray-700 space-y-2">
-                <li><strong>Fast Lane (&lt; 2 ms):</strong> Optimizes for critical-path latency. Generates a <em>provisional result</em> required for immediate downstream matching. It outputs a Ternary Null (0) state representing completion without finality.</li>
-                <li><strong>Audit Lane (300–500 ms):</strong> Optimizes for deterministic verification. Processes state transitions through a cryptographic anchoring pipeline, generating the definitive validation token.</li>
+                <li><strong>Inference Lane (&lt; 2 ms):</strong> Optimizes for critical-path latency. Generates a <em>provisional result</em> required for immediate downstream matching. It outputs a Ternary Null (0) state representing completion without finality.</li>
+                <li><strong>Governance Lane (300–500 ms):</strong> Optimizes for deterministic verification. Processes state transitions through a cryptographic anchoring pipeline, generating the definitive validation token.</li>
             </ul>
             <p class="mb-6 text-gray-700 leading-relaxed">Crucially, the Null state (0) prevents irreversible commitment to the global ledger until physical convergence of both lanes occurs at the terminal logic gates.</p>
 
@@ -92,10 +92,10 @@ CONFIRMATION: NEITHER Mermaid JS NOR SVG were used anywhere in the output. All c
    |       \
    |        \----------------------------------------\
    v                                                 v
-[Fast Lane Pipeline]                            [Audit Lane Pipeline]
+[Inference Lane Pipeline]                            [Governance Lane Pipeline]
  - ALU Execution                                 - Merkle Hashing
  - State Generation                              - Log Aggregation
- - Output: Provisional                           - Output: Audit Token
+ - Output: Provisional                           - Output: Permission Token
    |                                                 |
    v                                                 v
 (State: 0 / NULL)                               (Validation Vector)
@@ -114,7 +114,7 @@ CONFIRMATION: NEITHER Mermaid JS NOR SVG were used anywhere in the output. All c
         <section class="card">
             <h2 class="text-2xl mb-4">III. Hardware Enforcement and Physical Realization</h2>
             <p class="mb-4 text-gray-700 leading-relaxed">The architecture relies on Delay-Insensitive Logic (DITL) and NULL Convention Logic (NCL). Unlike synchronous flip-flops, asynchronous NCL primitives use a spatial representation of logic. The Null state acts as a hardware spacer token.</p>
-            <p class="mb-6 text-gray-700 leading-relaxed">Hardware enforcement is achieved via <strong>Muller C-elements</strong>. A C-element is a stateful logic gate that transitions its output to match its inputs <em>only when all inputs are identical</em>. If inputs differ, it holds its previous state. In our topology, the Fast Lane supplies input A, and the Audit Lane supplies input B. The physical inability of the C-element to transition to +1 without Audit Lane agreement mathematically guarantees that no speculative state can become final.</p>
+            <p class="mb-6 text-gray-700 leading-relaxed">Hardware enforcement is achieved via <strong>Muller C-elements</strong>. A C-element is a stateful logic gate that transitions its output to match its inputs <em>only when all inputs are identical</em>. If inputs differ, it holds its previous state. In our topology, the Inference Lane supplies input A, and the Governance Lane supplies input B. The physical inability of the C-element to transition to +1 without Governance Lane agreement mathematically guarantees that no speculative state can become final.</p>
         </section>
 
         <section class="card grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -131,8 +131,8 @@ CONFIRMATION: NEITHER Mermaid JS NOR SVG were used anywhere in the output. All c
                 <table class="min-w-full bg-white border border-gray-200 shadow-sm rounded-lg overflow-hidden">
                     <thead class="table-header">
                         <tr>
-                            <th class="py-3 px-4 text-left font-semibold text-sm">Fast Lane State</th>
-                            <th class="py-3 px-4 text-left font-semibold text-sm">Audit Lane Token</th>
+                            <th class="py-3 px-4 text-left font-semibold text-sm">Inference Lane State</th>
+                            <th class="py-3 px-4 text-left font-semibold text-sm">Permission Token</th>
                             <th class="py-3 px-4 text-left font-semibold text-sm">Next Hardware State</th>
                         </tr>
                     </thead>
@@ -173,10 +173,10 @@ TIME (ms)  0        2                                            350
            
 INGRESS    [REQ]
            
-FAST LANE  [EXEC]->[PROVISIONAL_RDY]
+INFERENCE LANE  [EXEC]->[PROVISIONAL_RDY]
                    (State enters 0/Null, held in convergence buffer)
                    
-AUDIT LANE [HASH GEN].............[MERKLE AGG].............[ANCHOR]
+GOVERNANCE LANE [HASH GEN].............[MERKLE AGG].............[ANCHOR]
                                                                   |
 CONVERGENCE                                                [C-ELEMENT]
                                                                   |
@@ -186,12 +186,12 @@ GLOBAL OUT                                                  [COMMIT +1]
 
         <section class="card">
             <h2 class="text-2xl mb-4">VI. Execution Interface & VII. Cryptographic Mechanics</h2>
-            <p class="mb-4 text-gray-700 leading-relaxed">The integration boundary utilizes specific hardware signals: <code>Request</code>, <code>ProvisionalResult</code>, <code>AuditToken</code>, and <code>CommitEnable</code>. While the Fast Lane interacts with matching engines, the Audit Lane operates a buffered anchoring pipeline.</p>
+            <p class="mb-4 text-gray-700 leading-relaxed">The integration boundary utilizes specific hardware signals: <code>Request</code>, <code>ProvisionalResult</code>, <code>AuditToken</code>, and <code>CommitEnable</code>. While the Inference Lane interacts with matching engines, the Governance Lane operates a buffered anchoring pipeline.</p>
             
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 text-center">
                 <div class="bg-blue-50 p-4 rounded-lg border border-blue-200 shadow-sm flex flex-col justify-center h-full">
                     <span class="text-sm font-bold text-blue-800 mb-2">Stage 1: Ingestion</span>
-                    <span class="text-xs text-gray-600">Rolling Log Buffer absorbs Fast Lane Provisional states.</span>
+                    <span class="text-xs text-gray-600">Rolling Log Buffer absorbs Inference Lane Provisional states.</span>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200 shadow-sm flex flex-col justify-center h-full">
                     <span class="text-sm font-bold text-emerald-800 mb-2">Stage 2: Aggregation</span>
@@ -218,7 +218,7 @@ GLOBAL OUT                                                  [COMMIT +1]
                 <p class="text-xs text-gray-500 mt-2">Where Q is buffer occupancy, C is a constant derived from the dominant eigenvalue of the MMPP transition matrix, and θ is the decay rate.</p>
             </div>
 
-            <p class="mb-4 text-gray-700 leading-relaxed">Let \( \Lambda \) be the burst arrival matrix and \( \mu \) be the Audit Lane processing rate. The system remains strictly stable (no overflow) if the effective load \( \rho_{eff} < 1 \), yielding:</p>
+            <p class="mb-4 text-gray-700 leading-relaxed">Let \( \Lambda \) be the burst arrival matrix and \( \mu \) be the Governance Lane processing rate. The system remains strictly stable (no overflow) if the effective load \( \rho_{eff} < 1 \), yielding:</p>
 
             <div class="mb-6 p-4 bg-gray-50 rounded text-center overflow-x-auto">
                 $$ \rho_{eff} = \frac{\pi \Lambda \mathbf{1}}{\mu} < 1 $$
@@ -231,11 +231,11 @@ GLOBAL OUT                                                  [COMMIT +1]
         <section class="card grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
                 <h2 class="text-2xl mb-4">IX. Flow Control & Backpressure</h2>
-                <p class="mb-4 text-gray-700 leading-relaxed">When the convergence buffer approaches theoretical limits under extreme tail-latency events (e.g., flash crashes), hardware backpressure asserts a deterministic stall policy. Unlike software queues which may silently drop packets, the DITL handshake implicitly halting prevents the Fast Lane from advancing, preserving global state integrity.</p>
+                <p class="mb-4 text-gray-700 leading-relaxed">When the convergence buffer approaches theoretical limits under extreme tail-latency events (e.g., flash crashes), hardware backpressure asserts a deterministic stall policy. Unlike software queues which may silently drop packets, the DITL handshake implicitly halting prevents the Inference Lane from advancing, preserving global state integrity.</p>
             </div>
             <div>
                 <h2 class="text-2xl mb-4">XI. Fault Tolerance & Recovery</h2>
-                <p class="mb-4 text-gray-700 leading-relaxed">Power failures while states are held in the Null (0) buffer require strict recovery guarantees. By utilizing non-volatile elements or dual-rail resistive states in the convergence buffer, the Null state persists across reboots. If the Audit lane crashes, a hardware timeout asserts the Reject (-1) state, automatically safely clearing the unverified Fast Lane outputs.</p>
+                <p class="mb-4 text-gray-700 leading-relaxed">Power failures while states are held in the Null (0) buffer require strict recovery guarantees. By utilizing non-volatile elements or dual-rail resistive states in the convergence buffer, the Null state persists across reboots. If the Governance Lane crashes, a hardware timeout asserts the Reject (-1) state, automatically safely clearing the unverified Inference Lane outputs.</p>
             </div>
         </section>
 
@@ -283,11 +283,11 @@ GLOBAL OUT                                                  [COMMIT +1]
             <div class="rtl-box mb-4">
 /* * Dual-Lane Convergence Gate (Muller C-Element)
  * Enforces hardware barrier: State cannot transition from 0 
- * until both Fast Lane (req_fast) and Audit Lane (ack_audit) agree.
+ * until both Inference Lane (req_fast) and Governance Lane (ack_audit) agree.
  */
 module convergence_anchor (
-    input  wire req_fast,   // Fast Lane Provisional (1 = Ready)
-    input  wire ack_audit,  // Audit Lane Valid (1 = Verified)
+    input  wire req_fast,   // Inference Lane Provisional (1 = Ready)
+    input  wire ack_audit,  // Governance Lane Valid (1 = Verified)
     input  wire reset_n,
     output reg  commit_out  // Global Ledger Commit (+1)
 );
@@ -322,14 +322,14 @@ endmodule
                 </div>
                 <div>
                     <h4 class="font-bold text-gray-800">XVIII. Test Strategy</h4>
-                    <p class="text-sm text-gray-600 mt-2">Hardware validation requires extreme stress testing using non-uniform latency injection across the Fast Lane to prove the Null state effectively absorbs maximal desynchronization without state corruption.</p>
+                    <p class="text-sm text-gray-600 mt-2">Hardware validation requires extreme stress testing using non-uniform latency injection across the Inference Lane to prove the Null state effectively absorbs maximal desynchronization without state corruption.</p>
                 </div>
             </div>
         </section>
 
         <section class="card">
             <h2 class="text-2xl mb-4">XIX. System-Level Scenario: High-Frequency Burst Event</h2>
-            <p class="mb-4 text-gray-700 leading-relaxed">Consider an order book flash event. The Fast Lane executes thousands of state changes per millisecond, generating ProvisionalResults. The Audit Lane buffer temporarily expands to hold the Null states. As the burst subsides, the cryptographic anchor catches up, releasing Commits sequentially. The Null state ensures the system remains strictly deterministic.</p>
+            <p class="mb-4 text-gray-700 leading-relaxed">Consider an order book flash event. The Inference Lane executes thousands of state changes per millisecond, generating ProvisionalResults. The Governance Lane buffer temporarily expands to hold the Null states. As the burst subsides, the cryptographic anchor catches up, releasing Commits sequentially. The Null state ensures the system remains strictly deterministic.</p>
             
             <div class="chart-container">
                 <canvas id="scenarioChart"></canvas>
@@ -488,7 +488,7 @@ endmodule
                 labels: Array.from({length: 15}, (_, i) => `${i * 50}ms`),
                 datasets: [
                     {
-                        label: 'Fast Lane Transactions (Provisional)',
+                        label: 'Inference Lane Transactions (Provisional)',
                         data: [10, 20, 150, 400, 600, 300, 100, 50, 20, 10, 5, 5, 5, 5, 5],
                         borderColor: COLORS.accent,
                         backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -504,7 +504,7 @@ endmodule
                         tension: 0.4
                     },
                     {
-                        label: 'Audit Lane Commits (+1 State)',
+                        label: 'Governance Lane Commits (+1 State)',
                         data: [0, 0, 0, 0, 0, 0, 10, 150, 400, 600, 300, 100, 50, 20, 15],
                         borderColor: COLORS.success,
                         backgroundColor: 'rgba(16, 185, 129, 0.1)',
