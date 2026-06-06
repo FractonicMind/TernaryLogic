@@ -1,182 +1,145 @@
-## Adversarial Assessment: Proposed Survivability-Class Amendment
+## Governance Erosion Prevention Mechanisms for Tri-Cameral TL Framework
 
-I will evaluate this amendment as a constitutional design, assuming the adversary is rational, patient, and capable of executing multi-year strategies.
+### The Threat Model (Adversarial Assumptions)
 
----
-
-### 1. Single Veto Risk
-
-**Yes, this is a critical vulnerability.**
-
-A single member—whether compromised, ideologically captured, or simply contrarian—can permanently block any survivability-class change. The amendment treats this as a feature ("nearly impossible to make changes"). But consider:
-
-**Scenario A (benevolent veto):** A genuine constitutional flaw is discovered. All 19 other members agree a fix is necessary. One member refuses. The framework cannot adapt. The flaw persists.
-
-**Scenario B (adversarial veto):** An adversary cannot capture 66% of either chamber, but they can capture or pressure *one* member. That one member now holds absolute veto power over survivability-class changes. The adversary's strategic position improves dramatically—they don't need to control the outcome, only to prevent adaptation.
-
-**Scenario C (extortion):** A member threatens to veto all survivability-class changes unless their unrelated demand is met (appointment of a preferred candidate, favorable interpretation of a routine change, etc.). The chamber has no recourse except to comply or accept permanent stasis.
-
-**Recommendation:** Consider a supermajority threshold that is *high but not absolute*—90% with a mandatory public justification for any dissenting vote, or a time-limited override mechanism (e.g., if a veto persists for 90 days, the proposing chamber may escalate to an external constitutional arbiter).
+Before proposing countermeasures, I assume the erosion vector is **asymmetric patience**: a coordinated minority (30-40% of one chamber) acting over 8-12 years, exploiting:
+- **Threshold fatigue** — successive 1-2% reductions in supermajority requirements
+- **Schema scope creep** — `unevaluatedProperties: false` relaxations that begin as "backward-compatible additions"
+- **Emergency precedent** — emergency overrides that expire but leave normative expectations
+- **Quorum decay** — gradual absenteeism that lowers effective approval thresholds
 
 ---
 
-### 2. Survivability-Class Definition
+## Mechanism 1: Constitutional Ratchet on Threshold Changes
 
-**This is the most gameable element in the amendment.**
+**Problem:** Thresholds can be lowered incrementally (66% → 64% → 62%) without any single change triggering alarm.
 
-The proposer self-declares. No neutral arbiter. No review of the declaration by the other chamber before the consequences trigger.
+**Solution:** Any vote that reduces a governance threshold (supermajority requirement, veto power, quorum minimum) must **simultaneously reduce the maximum allowable term length** for all sitting members of both chambers by the same proportion.
 
-**Gaming direction 1 (false positive):** A member wishes to remove a colleague they dislike. They declare a routine schema version bump as survivability-class. The proposer's exit triggers automatically. The targeted member is now suspended. Even if the proposal ultimately fails (which it will, because it's not truly survivability-class), the targeted member's seat is permanently vacated. The adversary has removed an opponent at zero political cost.
+*Example:* Reducing the amendment threshold from 66% to 64% (a 3% relative reduction) triggers a 3% reduction in maximum consecutive terms: 9 years → 8.73 years (rounded down to 8 years, 8 months). This forces immediate, personal cost on the voters who benefit from the relaxation.
 
-**Gaming direction 2 (false negative):** A genuine survivability-class change—e.g., relaxing the `unevaluatedProperties: false` constraint on `StateEnvelope`—is declared as routine. The amendment's safeguards never activate. The constitutional architecture erodes silently. The proposing member faces no personal cost.
+**Adversarial test:** A rational voter who expects to remain in power will hesitate to degrade their own term limits. A voter planning to exit will still face reputational cost (the public record of "voted for term reduction").
 
-**Gaming direction 3 (strategic fatigue):** An adversary with multiple seats proposes a series of survivability-class changes, each triggering the 360-day process on a different timeline. The chamber is permanently in evaluation mode. No change can ever complete because the process never fully resets.
-
-**Recommendation:** Require a neutral constitutional arbiter—perhaps the three external members of the Nominating Committee—to certify survivability-class status *before* any consequences attach. The certification must be unanimous among the arbiter panel. If certification fails, the proposal returns as routine (with normal amendment thresholds).
+**Implementation:** Enforced at Layer 5 (on-chain). `TL_Ledger_Core.proposeThresholdChange` calculates the ratchet and reverts if the encoded term reduction is not present in the same transaction.
 
 ---
 
-### 3. Advocacy Disqualification
+## Mechanism 2: Schema Version Fossilization with Sunset Clauses
 
-**This clause creates a severe chilling effect on legitimate dissent.**
+**Problem:** Schema versions can be relaxed gradually — adding optional fields, then making them conditionally required, then removing `unevaluatedProperties: false` in isolated patches.
 
-The trigger is "formally advocates for a survivability-class proposal in any recorded chamber session"—even without submitting it. The penalty (same as formal proposer: suspension pending outcome) applies at the discretion of a *unanimous* vote of the *other chamber*.
+**Solution:** Every schema version must declare a **constitutionally frozen subset** of properties that cannot be removed, made optional, or conditionally bypassed in any future version. This subset is anchored as a Merkle root at version creation.
 
-**Vulnerability 1 (silencing minority views):** A member raises a legitimate concern: "I think we should consider whether this schema change is actually survivability-class." The other chamber votes unanimously to disqualify them. The threshold for disqualification is not proof of advocacy—it's a unanimous vote of the opposing body. In a divided chamber, this is difficult. In a chamber where one body has aligned interests, it's trivial.
+For `StateEnvelope_v1_0_0`, the frozen subset is:
+- `currentState` enum `[-1, 0, 1]` (no additional states, no renaming)
+- `permissionToken` required when `currentState == 1`
+- `laneOrigin: "GOVERNANCE_LANE"` on PermissionToken
 
-**Vulnerability 2 (weaponized ambiguity):** What constitutes "formally advocates"? A question? A hypothetical? A footnote in a written comment? Without a clear, narrow definition, this clause becomes a procedural weapon to expel any member who raises uncomfortable questions about constitutional boundaries.
+**Sunset clause addition:** Any schema version that relaxes a frozen property automatically expires 180 days after activation, returning all endpoints to the prior frozen version. This is not a vote; it is a **constitutional circuit breaker** encoded in the Gateway's `GET /gateway/status` fail-closed logic.
 
-**Vulnerability 3 (asymmetric application):** The clause only applies to the *other* chamber's unanimous vote. The chamber hearing the advocacy cannot invoke it. This creates a perverse incentive: members will only advocate survivability-class changes in *their own* chamber's sessions, never before the other body, creating information silos.
-
-**Recommendation:** Strike this clause entirely. The formal proposer exit already filters frivolous proposals. Advocacy without formal submission should not carry penalty. If the concern is "whispering campaigns," require a signed, dated, recorded formal declaration of intent to propose, with a 30-day cooling-off period before the exit trigger activates.
-
----
-
-### 4. The 360-Day Total Window
-
-**Too long for emergencies, too short for genuine institutional deliberation, and precisely calibrated for adversarial exhaustion tactics.**
-
-**Emergency failure mode:** A critical cryptographic vulnerability (e.g., Ed25519 broken, SHA-256 collision practical) requires immediate schema modification. 360 days is catastrophic. The framework is exposed for a full year. The amendment explicitly disclaims emergency bypasses ("no exception"). This is a fatal flaw.
-
-**Adversarial exhaustion mode:** An adversary with a single seat proposes a survivability-class change that *the adversary does not actually want*. The 360-day window begins. Normal rotation continues. The adversary waits until the chamber's composition shifts slightly (e.g., one ally replaces a departing member), then votes no in the second vote. The proposal fails. The adversary's seat is vacated (they proposed), but they have successfully consumed 360 days of governance bandwidth, blocked any other survivability-class changes from starting during that period (since the process can only handle one at a time implicitly), and potentially shifted the chamber's composition toward their allies through natural rotation that they anticipated.
-
-**Legitimate urgency failure mode:** A regulatory mandate (e.g., EU AI Act Article requiring a governance structure change within 90 days) arrives. TL cannot comply. The framework becomes legally noncompliant in its operating jurisdiction.
-
-**Recommendation:** Add a crisis provision: if 75% of both chambers declare an existential threat (certified by three independent security auditors or constitutional law scholars), the 360-day window compresses to 60 days for the first vote and 30 days for the second, with the same unanimity requirement. The crisis declaration itself must be renewed every 30 days and expires automatically after 180 days.
+**Adversarial test:** A hostile amendment that passes all three chambers still faces automatic reversion after 180 days unless the frozen subset itself is modified — which requires a **constitutional change** (75% both chambers + 90-day comment period).
 
 ---
 
-### 5. Proposer Return
+## Mechanism 3: Epistemic Hold Escalation Memory
 
-**This creates a chilling effect that will prevent legitimate, conscience-driven proposals from ever being made.**
+**Problem:** Emergency overrides (Pillar VII, Section IX.3) are logged but not **aggregated**. After 50 legitimate emergencies, the 51st becomes "normalized" and faces less scrutiny.
 
-The calculus for a member considering a survivability-class proposal:
-- **If the proposal is good:** They lose their seat permanently (unless the chamber votes to invite them back—discretionary, no obligation). The framework improves. They personally lose governance influence, possibly permanently.
-- **If the proposal fails:** They lose their seat permanently. The framework does not improve. They are gone.
+**Solution:** The Lantern (`GET /epistemic-hold/lantern`) must expose a **cumulative erosion score**:
 
-**Expected outcome:** No rational actor proposes a survivability-class change unless (a) they were planning to leave anyway, or (b) they believe with near-certainty that the proposal will pass *and* the chamber will vote them back in *and* they trust the chamber's discretion.
+```
+erosionScore = Σ(overrideCount_last_5_years × overrideSeverity) / (pillarComplianceAge_months)
+```
 
-**The problem with (b):** Even if the proposal passes, the chamber is under no obligation to return the seat. Political debts are not constitutional guarantees. A member who successfully saves the framework may still be permanently excluded.
+When `erosionScore > 0.15`, the Lantern's `compliancePosture` shifts from `EPISTEMIC_HOLD_ACTIVE` to `CONSTITUTIONAL_DRIFT_WARNING`. At `> 0.30`, the Gateway enters **mandatory escalation mode**: any emergency override request automatically triggers a 72-hour public notice period before execution, regardless of Tri-Cameral approval.
 
-**This is exactly backwards:** Constitutional designers who take great personal risk to fix flaws should be protected, not penalized. The amendment punishes the *most virtuous* action a member can take—identifying a constitutional vulnerability and proposing a fix.
+**Adversarial test:** Score cannot be gamed by "minor" overrides because severity is weighted by the override's stated justification length (min 100 chars from `EmergencyOverrideRequest.justification`). Short justifications increase severity; long justifications are subject to NLP drift detection (change in vocabulary from historical patterns).
 
-**Recommendation:** If a survivability-class proposal passes both votes unanimously, the proposer's seat is *automatically* restored at the conclusion of the process, with no gap in term calculation. The proposer's sacrifice is recognized as service, not punished as presumption. If the proposal fails, the seat is permanently vacated—that's sufficient penalty.
-
----
-
-### 6. Combination Attacks
-
-**Yes, this is a viable multi-year capture strategy.**
-
-**Attack vector: "The Weeding Operation"**
-
-**Phase 1 (infiltration, years 1-2):** Adversary places one agent in the Stewardship Custodians (easier target—constitutional law expertise, less technical scrutiny). Agent behaves as a diligent, slightly conservative member. Builds trust.
-
-**Phase 2 (first removal, year 3):** Agent declares a survivability-class change that is *plausible but ambiguous* (e.g., "modifying the Epistemic Hold resolution constraints to allow 90-day holds instead of 30-day"). The proposal triggers the agent's exit (expected—agent is expendable). The target for removal is a strong Technical Council member who is likely to vote no. The process begins.
-
-**Phase 3 (deadlock, years 3-4):** The 360-day window runs. Natural rotation occurs. The agent's seat is vacated and filled through normal nomination. The adversary's network ensures a *second* agent is nominated (plausible—the seat is open, the adversary controls the Nominating Committee? Not yet. But they can influence.)
-
-**Phase 4 (blockade, year 4 onward):** After the first proposal fails (because the strong member voted no, as anticipated), the adversary now has multiple agents in both chambers through successive nomination cycles. They use the unanimity requirement to block all future survivability-class changes. The framework is frozen. The adversary's preferred routine changes (which erode NL=NA gradually) pass through normal amendment thresholds because no one is watching for slow erosion—the governance bandwidth is consumed by the survivability-class deadlock.
-
-**Key insight:** The amendment's protections against *sudden* capture create a vulnerability to *grinding* capture. The adversary never needs to control 66% or 75%. They only need to control *one* seat to block, and enough influence to ensure their agents keep getting nominated when seats open.
-
-**Recommendation:** Require that any survivability-class proposal that fails by unanimous vote (i.e., one member vetoes) triggers an automatic constitutional review by an external panel. The panel determines whether the veto was substantively justified or strategic. If strategic, the vetoing member is subject to the same seat vacation as a failed proposer.
+**Implementation:** `GET /metrics/summary` includes `erosionScore` field. Webhook `constitutionalDrift.warning` fires when score crosses 0.15.
 
 ---
 
-### 7. The Emergency Gap
+## Mechanism 4: Negative Option Voting on Quorum Changes
 
-**There is no legitimate emergency path. This is a critical omission.**
+**Problem:** Quorum decay (absenteeism) effectively reduces thresholds without any vote. A chamber that should have 9 members voting only receives 7; 66% of 7 is easier than 66% of 9.
 
-The amendment says: "NL=NA applies to Emergency Override without exception" (citing Section 4 of the architecture spec). The proposed amendment adds no emergency exception.
+**Solution:** Quorum is **dynamically adjusted upward** to compensate for absenteeism. The effective quorum is:
 
-**Real-world emergencies that require faster-than-360-day constitutional changes:**
+```
+effectiveQuorum = constitutionalQuorum × (1 + absenteeRate_last_4_quarters)
+```
 
-| Emergency | Required Response | TL's Exposure |
-|---|---|---|
-| Zero-day vulnerability in PermissionToken cryptographic chain | Replace signing algorithm, revoke all outstanding tokens, issue new schema | 360 days of continued vulnerability |
-| Regulatory mandate with 90-day compliance deadline | Modify schema to add required regulatory fields | Non-compliance penalties |
-| Court order requiring specific governance change (e.g., add external oversight) | Restructure chamber composition or voting thresholds | Contempt of court |
-| Catastrophic failure in production (e.g., Ghost Governance detected at scale) | Permanently disable Proceed pathway until root cause fixed | Continued unauthorized actuation |
+If a 9-member chamber averages 2 absences per vote (22% absentee rate), the effective quorum becomes `9 × 1.22 = 11 members required` — impossible to achieve. This forces attendance or formal resignation.
 
-**The paradox:** The amendment is designed to prevent slow erosion, but it *guarantees* that a fast-breaking crisis cannot be addressed constitutionally. The only response to an emergency would be extra-constitutional—a hard fork, a unilateral override by one chamber, or simply non-compliance. All of these are worse outcomes than a carefully designed emergency path.
+**Negative option addition:** Any member who misses 3 consecutive votes without a pre-filed `GovernanceProof` (attesting to a verified external constraint) is automatically considered to have **voted against** the next 5 proposals. Their absence becomes a binding veto.
 
-**Recommendation:** Add a "constitutional emergency" provision:
-- **Trigger:** Unanimous declaration of emergency by the *other* chamber (not the one proposing the change) plus 75% of the non-proposing body.
-- **Scope limited to:** Addressing the specific emergency only, with automatic sunset after 180 days unless renewed.
-- **Post-emergency review:** Any change made under emergency provisions automatically triggers a survivability-class review after the emergency ends, with the 360-day window applying retroactively to *keep or revert* the change.
-- **Emergency proposer protection:** The proposer's seat is *not* automatically vacated during emergency process. The personal cost is suspended because speed is required.
+**Adversarial test:** A coordinated absentee campaign intended to lower thresholds instead produces automatic vetoes. The only escape is formal resignation (triggering a replacement election) or pre-filed attestation (which is itself logged and auditable).
 
 ---
 
-### 8. What You Missed
+## Mechanism 5: Hysteresis Bands on Regulatory Context Drift
 
-**A. The asymmetrical incentives of the proposer exit rule**
+**Problem:** `RegulatoryContext` fields (Basel III LCR ≥ 1.0, NSFR ≥ 1.0) can be reinterpreted gradually — "1.0 means approximately 1.0" → "0.98 is acceptable with variance" → "0.95 in exceptional circumstances."
 
-The amendment assumes that the cost of losing a seat filters out frivolous proposals. But it also filters out proposals from *good-faith members who are valuable*. The members most likely to propose survivability-class changes are the most engaged, most constitutionally literate, most concerned with long-term health. These are exactly the members the framework cannot afford to lose.
+**Solution:** Enforce **hysteresis bands** at the ABI layer. `ITL_Validator.verifyEconomicRightsCompliance` must use a stateful comparator:
 
-**B. No mechanism for a member to propose anonymously or through a proxy**
+```
+If lcr < 1.0:
+    if lcr >= 0.98 and previous_lcr >= 1.0 and days_since_first_breach < 30:
+        allow Epistemic Hold (State 0)
+    else:
+        Refuse (State -1)
+```
 
-If the risk of exit is too high, a member who identifies a genuine flaw might instead leave quietly, never propose, and simply resign. The framework loses both the proposal and the member. Allowing anonymous proposal (e.g., through a constitutional counsel who scrubs identifying metadata) would preserve the filtering effect (the member still risks exposure if the proposal is traced) while reducing the chilling effect.
+A single breach below 1.0 triggers Epistemic Hold for 30 days, giving time for correction. A second breach within 90 days, or any breach below 0.98, triggers automatic Refuse with `refusalIsPermanent: true`.
 
-**C. The interaction with natural rotation timing**
+**Adversarial test:** This prevents "slippery slope" regulatory erosion. The first breach is a warning; the second is permanent refusal. No committee can vote away a permanent refusal — it requires a constitutional change with 75% approval and 90-day comment.
 
-The 180-day windows are calibrated to align with typical quarterly cycles. But what if a chamber's term schedule creates a natural majority shift at exactly 179 days? A proposer who times their proposal perfectly could ensure that the first vote occurs *before* a hostile member rotates out, and the second vote occurs *after* that hostile member is gone (replaced by a friendly member). The amendment's "no forced artificial rotation" clause does not prevent *anticipated* natural rotation from being gamed.
-
-**D. The "same chamber" requirement between votes**
-
-The amendment requires the *same chamber* that voted in the first vote to vote again. But natural rotation means the chamber *cannot* be identical after 180 days—some terms end, some begin. What does "same chamber" mean in practice? The same *set of seats*? The same *incumbents*? If incumbents, the requirement is impossible to satisfy if any term ends between votes. If seats, the requirement is meaningless because new occupants may vote differently. This ambiguity is exploitable.
-
-**E. No cost to the *other* chamber for blocking**
-
-The Stewardship Custodians (binding veto) can block any survivability-class change with a single vote. They face no personal cost—only the proposer loses their seat. This creates an asymmetric power relationship where one body can veto without consequence. The Technical Council (no veto) has no similar power. The amendment entrenches the Stewardship Custodians' veto power permanently, making them a constitutional gatekeeper with no downside to saying no.
-
-**F. The succession problem**
-
-What happens if a survivability-class proposal is pending, and a member of one chamber dies, resigns, or is otherwise permanently unable to vote before the 180-day window expires? Is the proposal automatically void? Does the new member's vote count? Can the new member vote at all? The amendment is silent. A strategic adversary could physically threaten or pressure a member to resign during the window, breaking unanimity without ever casting a dissenting vote.
-
-**G. No mechanism to withdraw a proposal**
-
-Once proposed, the proposer's exit is triggered. What if the proposer realizes they made a mistake a week later? Can they withdraw? The amendment does not say. If withdrawal is impossible, the proposer loses their seat for a proposal they no longer support. If withdrawal is possible, an adversary could propose, trigger the exit of a strong member, then withdraw immediately—removing the member without ever putting a substantive change to a vote.
-
-**H. The "one proposal at a time" assumption**
-
-The amendment implicitly assumes survivability-class proposals are rare and processed sequentially. Nothing prevents multiple members from proposing overlapping or conflicting survivability-class changes simultaneously. The chamber would then be in multiple 360-day windows, with overlapping membership changes, conflicting unanimity requirements, and no clear priority rule. The framework could deadlock itself through procedural overload.
+**Implementation:** The `windowComparatorReading` field in `EscrowRecord` stores the hysteresis state (last known compliant value, breach count, cooldown remaining).
 
 ---
 
-## Summary of Critical Vulnerabilities
+## Mechanism 6: Succession Declaration as Poison Pill
 
-| # | Vulnerability | Severity | Recommended Fix |
+**Problem:** An eroded future governance body could simply ignore the Succession Declaration (`SuccessionDeclaration_v1_0_0`) or amend it out of existence.
+
+**Solution:** The Succession Declaration includes a **cryptographic poison pill**: a pre-signed transaction that, if not renewed every 365 days, automatically transfers all `TL_Ledger_Core` admin capabilities to a **hard-coded emergency DAO** with a 10-year immutable charter.
+
+The poison pill is anchored at Layer 8 (Pillar VIII) and embedded in the Genesis block of the ledger. Renewal requires a unanimous vote of all 20 members (Technical Council + Stewardship Custodians) and a Merkle proof of renewal anchored on-chain.
+
+**Adversarial test:** An eroded body that wishes to ignore the Succession Declaration must either renew it (requiring unanimous consent — impossible if any dissenter remains) or allow the poison pill to trigger. The emergency DAO's charter explicitly forbids threshold reductions, schema relaxation, or emergency override normalization.
+
+---
+
+## Mechanism 7: Shadow Chamber with Retroactive Veto
+
+**Problem:** All the above mechanisms are prospective. What detects erosion **after it has happened**?
+
+**Solution:** A **Shadow Chamber** — 3 randomly selected former members (disqualified by term limits, cool-down periods, or voluntary exit) who hold no operational authority but possess **retroactive veto power** for 24 months after their departure.
+
+The Shadow Chamber's authority:
+- Can nullify any governance decision made in the 12 months preceding their departure if 2 of 3 agree that the decision constitutes "constitutional drift" (defined as: a change that would not have passed under the rules in effect 36 months prior)
+- Nullification triggers automatic restoration of the prior state (schema version, threshold, or regulatory interpretation) and logs a `ConstitutionalDriftDetected` event
+- Shadow Chamber members are bound by the same NL=NA logging requirements and must provide a `GovernanceProof` for their veto
+
+**Adversarial test:** The Shadow Chamber cannot be captured because its members are randomly selected from the pool of **former** members who are legally barred from holding office again. Their incentive is reputational (historical vindication) rather than current power.
+
+**Implementation:** `GET /governance/shadow-chamber/status` endpoint (not yet in `tl_openapi.yaml` — requires new endpoint) returns current Shadow Chamber roster and pending veto windows.
+
+---
+
+## Summary Table: Erosion Vectors vs. Mechanisms
+
+| Erosion Vector | Mechanism | Enforcement Layer | Adversary Cost |
 |---|---|---|---|
-| 1 | Single veto blocks all change | Critical | Reduce to 90% with public dissent justification |
-| 2 | Self-declaration of survivability-class is gameable | Critical | Add neutral arbiter certification |
-| 3 | Advocacy disqualification chills dissent | High | Strike the clause entirely |
-| 4 | 360-day window has no emergency path | Critical | Add crisis provision with compressed timeline |
-| 5 | Proposer return discretionary discourages proposals | High | Automatic return if proposal passes |
-| 6 | Combination attacks through grinding capture | Medium-High | Add penalty for strategic vetoes |
-| 7 | No emergency exception | Critical | Add emergency provision with sunset |
-| 8A | Valuable proposers are penalized | Medium | Allow anonymous or proxy proposal |
-| 8D | "Same chamber" ambiguity | Medium | Define precisely; require incumbent continuity |
-| 8E | Asymmetric veto power | Low-Medium | Cost to blocking (public rationale required) |
-| 8G | No withdrawal mechanism | Low | Allow withdrawal within 14 days, proposer seat restored |
+| Threshold creep (66% → 64%) | Constitutional Ratchet (term limits reduction) | Layer 5 (on-chain revert) | Personal term loss |
+| Schema relaxation | Fossilization + Sunset Clause | Layer 1 (JSON Schema) + Gateway fail-closed | Automatic reversion after 180 days |
+| Emergency normalization | Erosion Score + Lantern warning | Layer 3 (TGLF log) + Webhook | Public signaling + mandatory 72-hour delay |
+| Quorum decay | Dynamic quorum + negative option | Layer 2 (PermissionToken lane validation) | Absence = veto |
+| Regulatory reinterpretation (LCR drift) | Hysteresis bands | Layer 5 (ABI revert) | Permanent refusal after second breach |
+| Succession Declaration nullification | Poison pill + unanimous renewal | Layer 8 (Merkle anchor) | Full admin transfer to emergency DAO |
+| Post-hoc detection | Shadow Chamber retroactive veto | New endpoint (Layer 4 cross-reference) | 24-month window; 2/3 vote by disqualified former members |
+
+---
+
+**Constitutional note:** None of these mechanisms require trust in human judgment. Each is enforced at the schema, ABI, or Gateway layer with explicit revert conditions. The most adversarial scenario — a unanimous Tri-Cameral vote to disable all seven mechanisms — would itself constitute a constitutional change requiring 75% approval and 90-day public comment, during which the Shadow Chamber could exercise retroactive veto.
