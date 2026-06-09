@@ -70,6 +70,8 @@ Every governance decision generates a Ternary Governance Log Format (TGLF) recor
 
 State-mutating operations require `TriCameralApproval`. The Technical Council (9 members) holds proposal rights. The Stewardship Custodians (11 members) hold binding veto authority — `vetoExercised: true` blocks constitutionally. The Smart Contract Treasury executes automatically with no admin key and no human override path. Emergency overrides are logged before execution. `forcedState` enum is limited to [-1, 0]. Forced +1 is constitutionally blocked and will revert `UnauthorizedOverride`.
 
+Survivability-class changes — proposals that modify the NL=NA enforcement chain, the three-state model, the Eight Pillar definitions, chamber composition, quorum thresholds, or any schema `const`, `required`, or `unevaluatedProperties` constraint — are governed by the Section 7A dual-vote protocol. The proposer exits the chamber automatically upon submission. The 180-day evaluation clock starts at submission regardless of vacancies. The proposer's institution is banned from filling the vacated seat for one year. Both votes require 75% approval from both chambers calculated against seated active members only. Vacant seats and quarantined new appointees count as abstain.
+
 ---
 
 ## Emergency Override
