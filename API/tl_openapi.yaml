@@ -1960,7 +1960,7 @@ paths:
   /pillars/{pillarId}/configure:
     post:
       operationId: configurePillar
-      summary: Pillar reconfiguration requiring Tri-Cameral governance approval
+      summary: Pillar reconfiguration requiring Tri-Cameral governance approval. Survivability-class changes trigger Section 7A dual-vote protocol with proposer exit and 180-day evaluation windows.
       tags: [Eight Pillars]
       security:
         - HSMSignedJWT: []
@@ -2029,7 +2029,7 @@ paths:
 
     put:
       operationId: updateDomainThresholdProfile
-      summary: Update threshold profile; requires Tri-Cameral governance approval
+      summary: Update threshold profile; requires Tri-Cameral governance approval. Threshold relaxation is a survivability-class change per Section 7A and triggers proposer exit and dual-vote ratification.
       tags: [Thresholds and Calibration]
       security:
         - HSMSignedJWT: []
