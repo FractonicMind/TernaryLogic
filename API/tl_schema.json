@@ -715,29 +715,31 @@
     "TriCameralApproval_v1_0_0": {
       "$anchor": "TriCameralApproval",
       "title": "TriCameralApproval",
-      "description": "Technical Council (9 members, proposal rights). Stewardship Custodians (11 members, binding veto). Smart Contract Treasury (automatic execution, no admin key).",
+      "description": "Technical Council (9 members, proposal rights only). Stewardship Custodians (11 members, binding veto). Smart Contract Treasury (automatic execution, no admin key). Survivability-class amendments require proposer exit, 180-day clock from submission, dual-vote ratification at 75% both chambers, and one-year institution ban on filling the proposer's vacated seat.",
       "type": "object",
       "required": ["technicalCouncilVotes", "stewardshipCustodianVotes", "smartContractTreasuryExecution", "quorumAchieved", "approvalTimestamp"],
       "properties": {
         "technicalCouncilVotes": {
           "type": "object",
-          "required": ["for", "against", "abstain", "totalMembers"],
+          "required": ["for", "against", "abstain", "totalMembers", "seatedActiveMembers"],
           "properties": {
             "for": { "type": "integer", "minimum": 0, "maximum": 9 },
             "against": { "type": "integer", "minimum": 0, "maximum": 9 },
-            "abstain": { "type": "integer", "minimum": 0, "maximum": 9 },
-            "totalMembers": { "type": "integer", "const": 9 }
+            "abstain": { "type": "integer", "minimum": 0, "maximum": 9, "description": "Includes vacant seats and quarantined new appointees." },
+            "totalMembers": { "type": "integer", "const": 9 },
+            "seatedActiveMembers": { "type": "integer", "minimum": 6, "maximum": 9, "description": "Active non-quarantined members at time of vote. Quorum threshold calculated against this value only." }
           },
           "unevaluatedProperties": false
         },
         "stewardshipCustodianVotes": {
           "type": "object",
-          "required": ["for", "against", "abstain", "totalMembers", "vetoExercised"],
+          "required": ["for", "against", "abstain", "totalMembers", "vetoExercised", "seatedActiveMembers"],
           "properties": {
             "for": { "type": "integer", "minimum": 0, "maximum": 11 },
             "against": { "type": "integer", "minimum": 0, "maximum": 11 },
-            "abstain": { "type": "integer", "minimum": 0, "maximum": 11 },
+            "abstain": { "type": "integer", "minimum": 0, "maximum": 11, "description": "Includes vacant seats and quarantined new appointees." },
             "totalMembers": { "type": "integer", "const": 11 },
+            "seatedActiveMembers": { "type": "integer", "minimum": 7, "maximum": 11, "description": "Active non-quarantined members at time of vote. Quorum threshold calculated against this value only." },
             "vetoExercised": { "type": "boolean", "description": "Binding veto. If true, proposal constitutionally blocked." }
           },
           "unevaluatedProperties": false
@@ -751,11 +753,37 @@
           },
           "unevaluatedProperties": false
         },
-        "quorumAchieved": { "type": "boolean" },
-        "approvalTimestamp": { "$ref": "#/$defs/ISO8601DateTime_v1_0_0" }
+        "quorumAchieved": { "type": "boolean", "description": "True when for / seatedActiveMembers >= 0.75 in both chambers." },
+        "approvalTimestamp": { "$ref": "#/$defs/ISO8601DateTime_v1_0_0" },
+        "survivabilityClass": {
+          "type": "boolean",
+          "description": "True if this proposal is classified as survivability-class per Section 7A. Triggers proposer exit, dual-vote protocol, and institution ban."
+        },
+        "proposerExitConfirmed": {
+          "type": "boolean",
+          "description": "True if the proposer's chamber membership has been suspended per Section 7A.2. Required when survivabilityClass is true."
+        },
+        "clockStartTimestamp": {
+          "$ref": "#/$defs/ISO8601DateTime_v1_0_0",
+          "description": "Timestamp of formal submission. 180-day evaluation window begins at this moment regardless of vacancy status."
+        },
+        "voteNumber": {
+          "type": "integer",
+          "enum": [1, 2],
+          "description": "1 = first vote after initial 180-day window. 2 = second vote after second 180-day window. Both must pass at 75% for ratification."
+        },
+        "institutionBanActive": {
+          "type": "boolean",
+          "description": "True when the proposer's institution is banned from filling the vacated seat. Active for one year from clockStartTimestamp."
+        },
+        "quarantinedAppointees": {
+          "type": "array",
+          "items": { "type": "string", "format": "uuid" },
+          "description": "Member IDs of appointees quarantined from voting on this proposal because they were appointed to fill a vacancy created within 90 days of submission."
+        }
       },
       "unevaluatedProperties": false,
-      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section III. Pillar: HybridShield."
+      "$comment": "Monograph ref: Constitutional Hardware Monograph, Section III, Section 7A. Pillar: HybridShield."
     },
 
     "GatewayRoutingStatus_v1_0_0": {
