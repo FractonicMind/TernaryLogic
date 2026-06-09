@@ -153,6 +153,59 @@ The Eight Pillars are the governance architecture of the "Ternary Logic" framewo
 
 **Cross-pillar dependency notes:** Pillar V regulatory failures feed Pillar VII (HybridShield governance escalation). Pillar I (EpistemicHold) activation degrades all eight Pillar statuses in `LanternStatus.pillarStatuses`. Pillar VIII (Anchors) provides the cryptographic substrate on which Pillar II (ImmutableLedger) depends.
 
+## Section 7A [CONSTITUTIONAL]: Survivability-Class Amendment Protocol
+
+The Tri-Cameral governance structure is the human enforcement layer of the TL framework. Unlike the cryptographic enforcement layers — which are machine-enforced and deterministic — the human governance layer is subject to slow institutional erosion: the gradual drift of constitutional constraints through individually defensible decisions accumulating over years. This section defines the constitutional protocol that governs changes to the framework's own survival.
+
+### 7A.1 Definition of Survivability-Class Changes
+
+A survivability-class change is any proposal that would:
+
+- Modify the NL=NA enforcement chain at any of its five layers
+- Alter the three-state decision model (States +1, 0, -1)
+- Change the constitutional constraints on the `StateEnvelope` schema
+- Modify the Epistemic Hold resolution constraints
+- Alter the Eight Pillar identifiers or their constitutional functions
+- Change the `forcedState` constraints on emergency override
+- Modify the Tri-Cameral governance structure itself — including term limits, quorum thresholds, chamber composition, cool-down periods, or the same-institution caps
+- Any change to `tl_schema.json`, `tl_abi.json`, or `tl_openapi.yaml` that converts a `const` to an `enum`, removes a `required` field, reduces a `minItems` value, or relaxes `unevaluatedProperties: false`
+
+A member who formally advocates for a survivability-class proposal in any recorded chamber session is the proposer for purposes of this protocol, regardless of who formally submits the document.
+
+### 7A.2 Proposer Exit — Constitutional Recusal
+
+The moment a survivability-class proposal is formally submitted, the proposer's chamber membership is automatically suspended. This is not disciplinary action. It is constitutional recusal: a member with a declared interest in a constitutional outcome cannot judge that outcome.
+
+The proposer's institution is banned from filling the vacated seat for one year from the date of submission. This ensures the exit represents a genuine shift in chamber composition rather than a token personnel change. If no eligible candidate exists outside the institution after one year, the restriction lapses and normal nomination rules apply.
+
+### 7A.3 Evaluation Window and Voting
+
+The 180-day evaluation window begins at the moment of formal submission — not at the moment vacant seats are filled. This prevents vacancy deadlock attacks in which a minority faction delays seat-filling to freeze the clock indefinitely.
+
+During the 180-day window, scheduled term rotations proceed normally. No forced rotation is imposed. Vacant seats — whether from the proposer's exit, natural expiration, or any other cause — count as abstain in all votes during the window. The 75% quorum threshold is calculated against seated active members only.
+
+The first vote occurs at the end of the 180-day window. Passage requires 75% approval from both chambers as constituted at the time of the vote. If the first vote passes, a second mandatory evaluation window of 180 days begins immediately. The same chamber composition at the time of the second vote applies. The second vote requires the same 75% threshold in both chambers.
+
+A proposal must pass both votes to be ratified. Failure at either vote permanently closes the proposal. The proposer's seat remains vacated regardless of outcome.
+
+### 7A.4 Clock Semantics and Vacancy Rules
+
+- Clock starts: at formal submission timestamp, Merkle-anchored on-chain
+- Clock pauses: never — not for vacancies, not for emergencies, not for external events
+- Vacant seats: count as abstain; 75% threshold calculated on seated active members only
+- Quorum minimum: both chambers must have at least 6 of 9 (TC) and 7 of 11 (SC) seated active members for a vote to be constitutionally valid; if either chamber falls below minimum, the vote is deferred until minimum is restored but the clock continues
+- New appointees: a member appointed to fill any vacancy created within 90 days of the proposal's submission is quarantined from voting on that specific proposal; their vote is recorded as abstain for that proposal only
+
+### 7A.5 What This Protocol Does Not Prevent
+
+This protocol hardens the survivability-class amendment pathway. It does not prevent:
+
+- Pre-coordinated erosion by a majority captured before any proposal is submitted. Constitutional enforcement cannot substitute for governance culture.
+- Schema micro-erosion through non-survivability-class standard changes. The Constitutional Ratchet (asymmetric thresholds for constraint relaxation versus constraint tightening) is the companion mechanism for this threat, documented as a recommended extension in the Future-Blocked Appendix.
+- Interpretive drift — the gradual reinterpretation of constitutional language without formal amendment.
+
+The protocol is a necessary component of erosion defense, not a complete solution. It addresses the most mechanically exploitable pathway while documenting the remaining attack surfaces honestly.
+
 ---
 
 ## Section 8 [NORMATIVE]: Regulatory Nexus
