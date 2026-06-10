@@ -185,20 +185,20 @@ Modern AML relies heavily on Artificial Intelligence (AI) and Machine Learning (
 
 A critical engineering challenge in AML is reconciling the need for deep evidentiary verification (which is computationally slow) with the requirement for high-frequency settlement (which is computationally fast). TL resolves this tension through a **Dual-Lane Latency Architecture**.10
 
-#### **Fast Lane (Inference Lane)**
+#### **Inference Lane**
 
 * **Latency:** $\\le 2$ms.  
 * **Function:** This lane handles the immediate state check (+1, 0, \-1) and high-speed inputs.  
 * **Operation:** It checks cached evidence, pre-computed risk scores, and standing permissions.  
-* **Log Initiation:** Crucially, the Fast Lane initiates the header of the Decision Log (Context ID, Intent Hash).  
+* **Log Initiation:** Crucially, the Inference Lane initiates the header of the Decision Log (Context ID, Intent Hash).  
 * **Constraint:** **No economic action may occur before log initiation.** The settlement instruction is cryptographically bound to the creation of the log entry.
 
-#### **Slow Lane (Anchoring Lane)**
+#### **Governance Lane**
 
 * **Latency:** $\\le 500$ms (Asynchronous).  
 * **Function:** This lane handles the "heavy lifting" of compliance: log enrichment, cryptographic sealing, and Merkle batching.  
-* **Constraint:** Evidence capture precedes action (in the Fast Lane), while evidence *anchoring* follows action in parallel (in the Slow Lane).  
-* **Fail-Safe:** If the Slow Lane fails (e.g., the anchoring service is offline), the Fast Lane is interlocked and halts. This ensures that the system never accumulates "Evidence Debt" beyond a safe, pre-defined buffer.
+* **Constraint:** Evidence capture precedes action (in the Inference Lane), while evidence *anchoring* follows action in parallel (in the Governance Lane).  
+* **Fail-Safe:** If the Governance Lane fails (e.g., the anchoring service is offline), the Inference Lane is interlocked and halts. This ensures that the system never accumulates "Evidence Debt" beyond a safe, pre-defined buffer.
 
 ### **4.2 Merkle-Batched Anchoring (Complexity Proof)**
 
@@ -213,7 +213,7 @@ Anchoring every individual transaction to a public blockchain is economically an
 
 ### **4.3 Deferred Anchoring**
 
-In Ultra-High-Frequency Trading (HFT) environments where microseconds matter, even the Fast Lane constraints must be optimized.
+In Ultra-High-Frequency Trading (HFT) environments where microseconds matter, even the Inference Lane constraints must be optimized.
 
 * **Mechanism:** The system allows for "Deferred Anchoring" where Decision Logs are accumulated in a secure, tamper-proof memory buffer.  
 * **Time-Bound:** This "Evidence Debt" is strictly time-bounded (e.g., 1 second).  
