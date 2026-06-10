@@ -80,7 +80,7 @@
         1. Intro: Define TL and the Goukassian Vow.
         2. Problem: Statistics on AML failure (Binary/Post-hoc).
         3. Solution: The 3 States (+1, 0, -1) Visualization.
-        4. Architecture: Fast Lane (Decision) vs Slow Lane (Evidence).
+        4. Architecture: Inference Lane (Decision) vs Governance Lane (Evidence).
         5. AI Handoff: Probabilistic Input -> Deterministic State 0.
         6. Economics: Cost of Latency vs Cost of Failure.
         7. Comparison: Radar chart of TL vs Basel/FATF capabilities.
@@ -247,9 +247,9 @@
                     <!-- Labels -->
                     <div class="grid grid-cols-4 gap-4 mb-4 font-bold text-sm text-gray-500 uppercase tracking-wide border-b pb-2">
                         <div class="col-span-1">Trigger</div>
-                        <div class="col-span-1">Fast Lane (≤2ms)</div>
+                        <div class="col-span-1">Inference Lane (≤2ms)</div>
                         <div class="col-span-1">State 0 Logic</div>
-                        <div class="col-span-1">Slow Lane (Async)</div>
+                        <div class="col-span-1">vGovernance Lane (Async)</div>
                     </div>
 
                     <!-- Flow Row 1 -->
@@ -289,7 +289,7 @@
                     </div>
 
                     <div class="bg-gray-50 p-4 rounded-lg text-sm text-gray-600 border-l-4 border-indigo-500">
-                        <strong>Architecture Note:</strong> Economic action is gated by the "State Assignment". Evidence anchoring (Slow Lane) happens asynchronously but is mathematically linked to the decision. No Log = No Action.
+                        <strong>Architecture Note:</strong> Economic action is gated by the "State Assignment". Evidence anchoring (Governance Lane) happens asynchronously but is mathematically linked to the decision. No Log = No Action.
                     </div>
                 </div>
             </div>
