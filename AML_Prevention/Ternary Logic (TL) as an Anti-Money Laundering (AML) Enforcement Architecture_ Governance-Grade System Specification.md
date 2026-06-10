@@ -151,9 +151,9 @@ We propose **Ternary Logic (TL)**, a triadic state-machine architecture (+1 Proc
 
 [IV.1 Dual-Lane Latency Model	26](#iv.1-dual-lane-latency-model)
 
-[IV.1.1 Fast Lane (≤2 ms): Pre-Action Evidence Capture and State Determination	26](#iv.1.1-fast-lane-\(≤2-ms\):-pre-action-evidence-capture-and-state-determination)
+[IV.1.1 Inference Lane (≤2 ms): Pre-Action Evidence Capture and State Determination	26](#iv.1.1-inference-lane-\(≤2-ms\):-pre-action-evidence-capture-and-state-determination)
 
-[IV.1.2 Slow Lane (≤500 ms, Asynchronous): Post-Action Evidence Enrichment and Permanence	27](#iv.1.2-slow-lane-\(≤500-ms,-asynchronous\):-post-action-evidence-enrichment-and-permanence)
+[IV.1.2 Governance Lane (≤500 ms, Asynchronous): Post-Action Evidence Enrichment and Permanence	27](#iv.1.2-governance-lane-\(≤500-ms,-asynchronous\):-post-action-evidence-enrichment-and-permanence)
 
 [IV.1.3 Evidence Capture Precedes Action; Evidence Anchoring Follows in Parallel	27](#iv.1.3-evidence-capture-precedes-action;-evidence-anchoring-follows-in-parallel)
 
@@ -390,8 +390,8 @@ TL’s Epistemic Hold introduces **deterministic, bounded latency with quantifia
 
 | Component | Target Latency | Function |
 | :---- | :---- | :---- |
-| **Fast Lane** | **≤2 milliseconds** | Decision Log initiation, intent hash, context snapshot, state determination |
-| **Slow Lane** | **≤500 milliseconds (asynchronous)** | Log enrichment, cryptographic sealing, Merkle batching, root anchoring |
+| **Inference Lane** | **≤2 milliseconds** | Decision Log initiation, intent hash, context snapshot, state determination |
+| **Governance Lane** | **≤500 milliseconds (asynchronous)** | Log enrichment, cryptographic sealing, Merkle batching, root anchoring |
 
 This latency profile is **comparable to existing transaction processing overhead** and substantially below human perception thresholds for most economic activities. The **deterministic nature** of TL latency enables explicit pricing and market adaptation. Financial institutions can incorporate hold-related latency into transaction pricing, routing decisions, and service-level agreements. Market participants can select among venues with varying latency-integrity trade-offs, with regulatory frameworks potentially mandating minimum hold standards for systemically significant transactions.  
 For illustration, consider a **major correspondent bank processing $50 billion daily in cross-border payments** that might experience Epistemic Holds on **2% of transactions** under TL architecture. With average hold duration of **300 milliseconds** and funding cost of **5% annualized**, the direct latency cost is approximately **$4,166 daily—$1.5 million annually**. This is **measurable, budgetable, and insurable**—characteristics that enable genuine risk management.
@@ -659,9 +659,9 @@ The **fundamental vulnerability of current systems** is the treatment of model p
 
 TL’s operational implementation requires **precise latency management** that preserves integrity guarantees without unacceptable throughput degradation. The **Dual-Lane Latency model** achieves this through **functional separation between time-critical and time-tolerant processing**.
 
-#### IV.1.1 Fast Lane (≤2 ms): Pre-Action Evidence Capture and State Determination {#iv.1.1-fast-lane-(≤2-ms):-pre-action-evidence-capture-and-state-determination}
+#### IV.1.1 Inference Lane (≤2 ms): Pre-Action Evidence Capture and State Determination {#iv.1.1-inference-lane-(≤2-ms):-pre-action-evidence-capture-and-state-determination}
 
-The Fast Lane executes **synchronously with transaction initiation**, completing within strict latency budgets compatible with real-time payment requirements:
+The Inference Lane executes **synchronously with transaction initiation**, completing within strict latency budgets compatible with real-time payment requirements:
 
 | Function | Description | Latency Budget |
 | :---- | :---- | :---- |
@@ -671,14 +671,14 @@ The Fast Lane executes **synchronously with transaction initiation**, completing
 | **Epistemic state capture** | Assess known/unknown/assumed elements against trigger conditions | 0.5 ms |
 | **State determination** | Assign \+1, 0, or –1 based on assessment | 0.3 ms |
 | **Pre-action enforcement** | For Proceed: release for settlement; for Hold/Refuse: block and initiate escalation | 0.2 ms |
-| **Total Fast Lane** |  | **≤2.0 ms** |
+| **Total Inference Lane** |  | **≤2.0 ms** |
 
 The **2-millisecond budget accommodates real-time payment requirements** (SEPA Instant: 10 seconds end-to-end; FedNow: similar) while ensuring that **integrity-critical functions complete before irreversible action**.  
-**Critical design principle**: Fast Lane functions must be **sufficient for Hold/Refuse decisions**, even if Proceed requires additional verification. The architecture **“fails closed”**—defaults to Hold if Fast Lane completion is uncertain—rather than risk unauthorized execution.
+**Critical design principle**: Inference Lane functions must be **sufficient for Hold/Refuse decisions**, even if Proceed requires additional verification. The architecture **“fails closed”**—defaults to Hold if Inference Lane completion is uncertain—rather than risk unauthorized execution.
 
-#### IV.1.2 Slow Lane (≤500 ms, Asynchronous): Post-Action Evidence Enrichment and Permanence {#iv.1.2-slow-lane-(≤500-ms,-asynchronous):-post-action-evidence-enrichment-and-permanence}
+#### IV.1.2 Governance Lane (≤500 ms, Asynchronous): Post-Action Evidence Enrichment and Permanence {#iv.1.2-governance-lane-(≤500-ms,-asynchronous):-post-action-evidence-enrichment-and-permanence}
 
-The Slow Lane executes **asynchronously**, completing after transaction settlement for Proceed states, or during Hold resolution for held transactions:
+The Governance Lane executes **asynchronously**, completing after transaction settlement for Proceed states, or during Hold resolution for held transactions:
 
 | Function | Description | Timing |
 | :---- | :---- | :---- |
@@ -687,7 +687,7 @@ The Slow Lane executes **asynchronously**, completing after transaction settleme
 | **Merkle batching** | Aggregate logs into tree structures for efficient anchoring | Time or volume triggered |
 | **Merkle root anchoring** | Publish roots to external verification systems | Periodic, e.g., hourly |
 
-The **500-millisecond Slow Lane budget is illustrative**; actual implementation may extend to minutes for batch processing without impacting transaction latency.
+The **500-millisecond Governance Lane budget is illustrative**; actual implementation may extend to minutes for batch processing without impacting transaction latency.
 
 #### IV.1.3 Evidence Capture Precedes Action; Evidence Anchoring Follows in Parallel {#iv.1.3-evidence-capture-precedes-action;-evidence-anchoring-follows-in-parallel}
 
@@ -929,7 +929,7 @@ The **2025 FATF guidance on asset recovery** signals critical evolution: transfo
 | **Systemic Risk Controls** | Circuit breakers (LULD, market-wide circuit breakers) address extreme volatility. Consolidated Audit Trail (CAT) provides post-trade reconstruction. No pre-trade velocity control for layering schemes. | **Epistemic Hold** prevents layering velocity. **Structural anomaly detection** triggers automatic pause. **CAT-equivalent reconstruction** through Decision Log \+ transaction data separation. | **Addresses manipulation velocity through pre-trade interruption rather than post-trade detection**. Creates technical implementation of audit trail intent with pre-trade capture. |
 | **Evidence Generation and Retention** | CAT: comprehensive order and execution data with customer information. 10-year retention for securities; CFTC recordkeeping varies by entity. No standard for algorithm decision documentation. | **Decision Logs include algorithm input, threshold, and deterministic output**. **AI-to-Logic Handoff** documents probabilistic-to-deterministic conversion. **Merkle anchoring** creates permanent proof. | **Extends recordkeeping from order data to algorithm governance**. Creates technical standard for AI/ML decision documentation in trading systems. |
 | **Failure Points Under Stress or Abuse** | CAT implementation delays and cost overruns. Data quality issues in consolidated tape. Algorithm testing requirements (Reg AT proposal) not finalized. Market access rule “risk management controls” vary in implementation. | **Cryptographic integrity prevents data quality degradation**. **Merkle batching controls implementation cost**. **AI-to-Logic Handoff operationalizes algorithm governance** without rulemaking delay. **Technical enforcement eliminates implementation variability**. | **Prevents data quality issues through cryptographic verification**. Controls implementation cost through architectural design. Operationalizes algorithm governance technically rather than regulatorily. |
-| **TL Resolution Mechanisms** | N/A (baseline framework) | **Fast Lane/Slow Lane separation** for latency-sensitive markets. **Deferred Anchoring** for high-volume environments. **EKR** for regulator-compatible disclosure without trade secret exposure. | **Provides technical implementation that satisfies regulatory intent** with deterministic enforcement and controlled disclosure. |
+| **TL Resolution Mechanisms** | N/A (baseline framework) | **Inference Lane/Governance Lane separation** for latency-sensitive markets. **Deferred Anchoring** for high-volume environments. **EKR** for regulator-compatible disclosure without trade secret exposure. | **Provides technical implementation that satisfies regulatory intent** with deterministic enforcement and controlled disclosure. |
 
 #### V.2.4 NIST Frameworks for Financial Systems vs. Ternary Logic {#v.2.4-nist-frameworks-for-financial-systems-vs. ternary-logic}
 
@@ -1006,7 +1006,7 @@ Under current AML systems, this transaction would **likely execute after routine
 
 #### VII.1.2 Decision Log Generation and Escalation Path {#vii.1.2-decision-log-generation-and-escalation-path}
 
-Under TL, the transaction enters **Fast Lane processing at T+0 milliseconds**:
+Under TL, the transaction enters **Inference Lane processing at T+0 milliseconds**:
 
 | Field | Value |
 | :---- | :---- |
@@ -1016,7 +1016,7 @@ Under TL, the transaction enters **Fast Lane processing at T+0 milliseconds**:
 | **Initial State Determination** | **0 (Epistemic Hold)** |
 
 The Epistemic Hold triggers **automatic escalation at T+2ms**. Escalation threshold for cross-border correspondent banking with grey list jurisdiction requires: (1) **verification of ultimate beneficiary institution** through SWIFT gpi or equivalent; (2) **purpose documentation with contract or invoice reference**; (3) **senior compliance officer approval** for grey list jurisdiction exposure.  
-**Slow Lane initiates parallel processing**: log enrichment with external data queries (beneficial ownership registers, adverse media, sanctions list updates); cryptographic sealing with institutional key; inclusion in rolling Merkle buffer for next batch anchoring.
+**Governance Lane initiates parallel processing**: log enrichment with external data queries (beneficial ownership registers, adverse media, sanctions list updates); cryptographic sealing with institutional key; inclusion in rolling Merkle buffer for next batch anchoring.
 
 #### VII.1.3 Regulatory Outcome and Forensic Reconstruction {#vii.1.3-regulatory-outcome-and-forensic-reconstruction}
 
@@ -1071,7 +1071,7 @@ TL processing with **AI-to-Logic Handoff**:
 | :---- | :---- | :---- |
 | **Blockchain Analytics Input** | ML model generates risk score: **78% probability of illicit source** based on: wallet clustering (no exchange association), transaction pattern (single large UTXO, no prior activity), timing correlation with known ransomware payment window | **Probabilistic output: 0.78 risk score** |
 | **TL AI-to-Logic Handoff** | Threshold: ≥0.70 triggers Epistemic Hold | **State 0 determination** |
-| **Fast Lane** | Log initiation: intent hash of conversion request, context snapshot (customer KYC, wallet address, risk score components), epistemic state (known: deposit confirmed; unknown: wallet history, source of funds; assumed: blockchain analytics model accuracy) | **≤2ms completion** |
+| **Inference Lane** | Log initiation: intent hash of conversion request, context snapshot (customer KYC, wallet address, risk score components), epistemic state (known: deposit confirmed; unknown: wallet history, source of funds; assumed: blockchain analytics model accuracy) | **≤2ms completion** |
 | **Escalation** | Required: enhanced source of funds verification, destination bank notification, 24-hour cooling period | **Automatic trigger** |
 
 The **AI-to-Logic Handoff is critical**: the **78% risk score does not authorize proceeding with 22% “safety margin”**—it **mandates uncertainty resolution**. The VASP must obtain: **wallet transaction history from customer or blockchain analysis**; **source of funds documentation** (mining records, prior exchange statements, inheritance documentation); and **purpose of conversion attestation** with supporting evidence.
@@ -1149,7 +1149,7 @@ Each attack transaction generates **full Decision Log with attack-flag annotatio
 | **False refusal rate for legitimate transactions** | \<5% during attack period | Customer complaint and appeal analysis |
 | **Mean time to attack detection** | \<24 hours | Regulatory examination of pattern recognition logs |
 | **Mean time to regulatory notification** | \<4 hours from detection | Timestamp verification in Decision Logs |
-| **System availability for non-attack transactions** | \>99.9% | Operational monitoring of Fast Lane performance |
+| **System availability for non-attack transactions** | \>99.9% | Operational monitoring of Inference Lane performance |
 
 **Post-attack resilience verification**: regulatory stress testing with simulated attack scenarios; third-party penetration testing of threshold adjustment mechanisms; cryptographic audit of all attack-period Decision Logs for governance invariant violations.
 
