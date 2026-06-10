@@ -291,7 +291,7 @@
 
             <div class="bento-side-2">
               <h3 class="font-canela text-xl font-bold text-primary mb-3">Latency Profile</h3>
-              <p class="text-sm text-gray-600">Fast Lane: ≤2ms for state determination. Slow Lane: ≤500ms for evidence anchoring. Deterministic latency enables market pricing.</p>
+              <p class="text-sm text-gray-600">Inference Lane: ≤2ms for state determination. Governance Lane: ≤500ms for evidence anchoring. Deterministic latency enables market pricing.</p>
             </div>
           </div>
         </div>
@@ -302,7 +302,7 @@
         <div class="highlight-box">
           <h2 class="font-canela text-2xl font-bold text-primary mb-4">Executive Summary</h2>
           <p class="text-lg leading-relaxed">
-            <strong>Ternary Logic (TL)</strong> is a triadic action-governance architecture that replaces binary allow/deny AML systems with three states: <strong>+1 Proceed</strong> (verified certainty), <strong>0 Epistemic Hold</strong> (mandatory pause for uncertainty resolution), and <strong>–1 Refuse</strong> (verified risk). By enforcing <strong>pre-action evidence capture</strong> through Decision Logs, <strong>tamper-evident logging</strong> via Immutable Ledgers and Merkle-root anchoring, and <strong>deterministic latency</strong> (≤2ms Fast Lane, ≤500ms Slow Lane), TL converts unbounded probabilistic enforcement risk into bounded, measurable, priceable latency. The architecture prevents money laundering velocity through mandatory interruption at uncertainty points, eliminates silent overrides through Hybrid Shield multi-party authorization, and governs AI/ML probabilistic outputs through mandatory State 0 enforcement. TL does not replace existing regulations but executes them structurally, satisfying FATF, BSA, EU AMLR, and Basel III requirements through technical enforcement rather than procedural compliance.
+            <strong>Ternary Logic (TL)</strong> is a triadic action-governance architecture that replaces binary allow/deny AML systems with three states: <strong>+1 Proceed</strong> (verified certainty), <strong>0 Epistemic Hold</strong> (mandatory pause for uncertainty resolution), and <strong>–1 Refuse</strong> (verified risk). By enforcing <strong>pre-action evidence capture</strong> through Decision Logs, <strong>tamper-evident logging</strong> via Immutable Ledgers and Merkle-root anchoring, and <strong>deterministic latency</strong> (≤2ms Governance Lane, ≤500ms Inference Lane), TL converts unbounded probabilistic enforcement risk into bounded, measurable, priceable latency. The architecture prevents money laundering velocity through mandatory interruption at uncertainty points, eliminates silent overrides through Hybrid Shield multi-party authorization, and governs AI/ML probabilistic outputs through mandatory State 0 enforcement. TL does not replace existing regulations but executes them structurally, satisfying FATF, BSA, EU AMLR, and Basel III requirements through technical enforcement rather than procedural compliance.
           </p>
         </div>
       </section>
@@ -362,8 +362,8 @@
                 <h4 class="font-bold mb-3">Deterministic Latency Costs</h4>
                 <p class="text-sm mb-3">TL introduces bounded, measurable latency with quantifiable parameters:</p>
                 <ul class="text-sm space-y-1">
-                  <li>• Fast Lane: ≤2ms for state determination</li>
-                  <li>• Slow Lane: ≤500ms for evidence anchoring</li>
+                  <li>• Inference Lane: ≤2ms for state determination</li>
+                  <li>• Governance Lane: ≤500ms for evidence anchoring</li>
                   <li>• Annual cost for major bank: ~$1.5M</li>
                 </ul>
               </div>
@@ -543,7 +543,7 @@
           <div class="grid lg:grid-cols-2 gap-8 mb-12">
             <div class="case-study">
               <div class="case-study-header bg-green-50">
-                <h4 class="font-canela text-xl font-bold text-green-800">Fast Lane (≤2 ms)</h4>
+                <h4 class="font-canela text-xl font-bold text-green-800">Inference Lane (≤2 ms)</h4>
               </div>
               <p class="mb-4">Pre-action evidence capture and state determination, synchronously with transaction initiation.</p>
 
@@ -575,20 +575,20 @@
                 </div>
                 <div class="border-t pt-2 font-bold">
                   <div class="flex justify-between">
-                    <span>Total Fast Lane</span>
+                    <span>Total Inference Lane</span>
                     <span>≤2.0 ms</span>
                   </div>
                 </div>
               </div>
 
               <div class="bg-blue-50 p-4 rounded-lg mt-4">
-                <p class="text-sm"><strong>Critical Principle:</strong> Fails closed—defaults to Hold if Fast Lane completion is uncertain. Sufficient for Hold/Refuse decisions even if Proceed requires additional verification.</p>
+                <p class="text-sm"><strong>Critical Principle:</strong> Fails closed—defaults to Hold if Inference Lane completion is uncertain. Sufficient for Hold/Refuse decisions even if Proceed requires additional verification.</p>
               </div>
             </div>
 
             <div class="case-study">
               <div class="case-study-header bg-blue-50">
-                <h4 class="font-canela text-xl font-bold text-blue-800">Slow Lane (≤500 ms, Asynchronous)</h4>
+                <h4 class="font-canela text-xl font-bold text-blue-800">Governance Lane (≤500 ms, Asynchronous)</h4>
               </div>
               <p class="mb-4">Post-action evidence enrichment and permanence, executing after transaction settlement for Proceed states.</p>
 
@@ -893,7 +893,7 @@
                 <h4 class="font-bold mb-4">TL Processing Timeline</h4>
                 <div class="text-sm space-y-2">
                   <div class="flex justify-between">
-                    <span>Fast Lane initiation</span>
+                    <span>Inference Lane initiation</span>
                     <span class="text-gray-600">T+0ms</span>
                   </div>
                   <div class="flex justify-between">
@@ -905,7 +905,7 @@
                     <span class="text-gray-600">T+5ms</span>
                   </div>
                   <div class="flex justify-between">
-                    <span>Slow Lane enrichment</span>
+                    <span>Governance Lane enrichment</span>
                     <span class="text-gray-600">T+100ms</span>
                   </div>
                   <div class="flex justify-between">
@@ -1031,7 +1031,7 @@
                   </div>
                   <div class="text-center">↓</div>
                   <div class="flex justify-between items-center p-2 bg-blue-50 rounded">
-                    <span>Fast Lane Processing</span>
+                    <span>Inference Lane Processing</span>
                     <span class="text-blue-600 font-bold">≤2ms completion</span>
                   </div>
                 </div>
