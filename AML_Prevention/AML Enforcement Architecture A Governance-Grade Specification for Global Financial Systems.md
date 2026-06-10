@@ -118,7 +118,7 @@ Scaling TL to handle the millions of transactions per second required by global 
 
 To resolve the tension between sub-millisecond settlement speeds and the requirement for robust evidence, TL employs a bifurcated processing model.9
 
-| Feature | Fast Lane | Slow Lane (Asynchronous) |
+| Feature | Inference Lane | Governance Lane (Asynchronous) |
 | :---- | :---- | :---- |
 | Target Latency | ≤ 2ms | ≤ 500ms |
 | Primary Task | State Check (+1, 0, \-1) | Log Enrichment & Sealing |
@@ -126,7 +126,7 @@ To resolve the tension between sub-millisecond settlement speeds and the require
 | Logging | Initiate Log Header | Finalize & Anchor Log |
 | Outcome | Immediate Economic Action | Long-term Proof Generation |
 
-The Fast Lane initiates the Decision Log header (capturing Context ID and Intent Hash), ensuring that no economic action occurs before a record is started. The Slow Lane completes the enrichment and anchoring in parallel, ensuring that the "compliance passport" is finalized without delaying the transaction flow.4
+The Inference Lane initiates the Decision Log header (capturing Context ID and Intent Hash), ensuring that no economic action occurs before a record is started. The Governance Lane completes the enrichment and anchoring in parallel, ensuring that the "compliance passport" is finalized without delaying the transaction flow.4
 
 ### **4.2 Merkle-Batched Anchoring: Achieving O(1) Scalability**
 
