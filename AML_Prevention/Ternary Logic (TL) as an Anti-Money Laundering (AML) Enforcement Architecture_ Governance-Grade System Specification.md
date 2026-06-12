@@ -347,7 +347,7 @@ A typical model might output: **73% probability of structuring, 45% probability 
 #### III.6.2 TL Process: Probabilistic Outputs Treated as Epistemic Uncertainty, Not Authorization
 
 TL’s **critical intervention**: probabilistic outputs are **not treated as decision inputs but as uncertainty indicators**. A **70% risk score does not mean “70% likely to be illicit, therefore proceed with caution”** or “70% likely to be illicit, therefore block.” It means **“substantial uncertainty exists that prevents confident classification.”**  
-![Diagram](AML_4.png)
+![Diagram](AML_5.png)
 This treatment is implemented through **threshold specification**:
 
 | Score Range | TL State | Action |
@@ -376,7 +376,7 @@ The **fundamental vulnerability of current systems** is the treatment of model p
 ### IV.1 Dual-Lane Latency Model
 
 TL’s operational implementation requires **precise latency management** that preserves integrity guarantees without unacceptable throughput degradation. The **Dual-Lane Latency model** achieves this through **functional separation between time-critical and time-tolerant processing**.
-![Diagram](AML_5.png)
+![Diagram](AML_4.png)
 
 #### IV.1.1 Inference Lane (≤2 ms): Pre-Action Evidence Capture and State Determination
 
@@ -834,7 +834,6 @@ The **2025 FATF guidance on asset recovery** signals critical evolution: transfo
 ## VII. Evidence, Liability, and Enforcement Transformation
 
 ### VII.1 Evidentiary Status Hierarchies
-![Diagram](AML_6.png)
 
 The TL architecture creates a **tripartite evidentiary hierarchy** that transforms enforcement posture from probabilistic assessment of compliance effort to **deterministic evaluation of system output**:
 
@@ -843,6 +842,8 @@ The TL architecture creates a **tripartite evidentiary hierarchy** that transfor
 | **Missing Decision Log** | No log generated for executed transaction | **Prima facie negligence**: system failure or operational negligence; rebuttable presumption of control circumvention | Investigation of technical circumvention or supervisory override failure; institutional and individual liability |
 | **Malformed Log** | Log fails cryptographic integrity verification; inconsistent timestamps; missing required fields; evidence of post-generation modification | **System failure implication**: technical root cause analysis; potential insider attack or genuine system stress | Focus on cryptographic key compromise, software defect, hardware failure, or network partition; remediation and potential transaction suspension |
 | **Complete Log** | Passes all cryptographic integrity verifications; contains all required fields; proper chain of custody through Merkle anchoring | **Admissible evidence**: satisfies digital evidence standards for regulatory, civil, and criminal proceedings | Foundation for enforcement action defense or prosecution support; enables precise accountability assignment |
+
+![Diagram](AML_6.png)
 
 ### VII.2 Chain of Custody and Digital Evidence Standards
 
