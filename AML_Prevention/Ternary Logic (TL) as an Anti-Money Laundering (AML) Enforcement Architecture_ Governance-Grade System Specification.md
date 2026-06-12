@@ -55,7 +55,7 @@ Quantitative analysis of SAR effectiveness reveals systematic dysfunction. FinCE
 Contemporary transaction monitoring systems operate through **binary computational logic**: transactions receive risk scores, thresholds are applied, and outcomes are categorized as “clear” or “suspicious”. This architecture **fails to recognize that the majority of money laundering risk resides not in clearly identifiable prohibited activity (the deny state) but in epistemically uncertain activity** where provenance is incomplete, counterparty relationships are obscured, or transactional patterns are anomalous but not definitively illicit.  
 Binary systems **force probabilistic ambiguity into categorical determination**—either permitting uncertain activity to proceed (false negative) or generating overwhelming alert volumes that degrade investigative capacity (false positive). When a machine learning model generates a **73% risk score**, the binary system must convert this continuous probability into a discrete decision. Current implementations typically apply threshold-based rules: scores above X trigger review, scores below X permit execution. But the zone between “clearly legitimate” and “demonstrably illicit”—the domain of genuine epistemic uncertainty—receives **no structural recognition**.  
 The **Starling Bank case of 2024** illustrates the false negative pathway: the bank opened **over 54,000 accounts for high-risk customers despite a regulatory prohibition**, with automated screening matching customers against only a fraction of the sanctions list since 2017\. The binary architecture—account opened or not opened—**lacked intermediate states that could have enforced mandatory verification before account activation**. The resulting **£28.9 million fine** reflects the consequences of binary decision-making without epistemic pause mechanisms.  
-![Diagram](AML_1.png)
+![Diagram](https://github.com/FractonicMind/TernaryLogic/blob/main/AML_Prevention/AML_1.png)
 Conversely, **alert fatigue**—documented across numerous institutions—demonstrates how binary classification of uncertain transactions as “suspicious” generates volumes that overwhelm analytical capacity. Industry estimates indicate that **90-95% of AML alerts are false positives**, with each alert requiring average analyst review time of **20-45 minutes**. The **Monzo Bank case** identified a backlog of unreviewed alerts and inadequate staffing to clear transaction monitoring outputs, with the bank disabling address verification systems allowing implausible addresses to pass unchecked. Analysts, overwhelmed by volume, develop heuristic shortcuts that sophisticated launderers anticipate and exploit.
 
 #### I.1.3 Alert Fatigue and Typology Gaming as Systemic Exploits
@@ -130,7 +130,7 @@ The **probabilistic nature** of these costs—uncertain timing, magnitude, and o
 #### I.2.4 Conversion of Unbounded Probabilistic Risk to Bounded Measurable Latency
 
 TL’s **core economic innovation** is the structural conversion of unbounded, probabilistic downstream risk into bounded, measurable, priceable latency. By enforcing epistemic verification before economic action, TL eliminates the possibility of the multi-year, multi-billion-dollar enforcement scenarios documented above. The **maximum cost of any transaction becomes the hold latency plus the operational cost of resolution**—not the unbounded downstream exposure of completed laundering.  
-![Diagram](AML_8.png)
+![Diagram](https://github.com/FractonicMind/TernaryLogic/blob/main/AML_Prevention/AML_8.png)
 This conversion operates through:
 
 | Mechanism | Current Regime | TL Regime |
@@ -169,7 +169,7 @@ The **evidence-backing requirement is enforced through the “No Log \= No Actio
 ### II.2 Triadic Action States
 
 The three states of TL constitute a **complete, mutually exclusive, and exhaustive partition** of possible decision outcomes, with precise definitional boundaries, trigger conditions, and operational consequences.
-![Diagram](AML_2.png)
+![Diagram](https://github.com/FractonicMind/TernaryLogic/blob/main/AML_Prevention/AML_2.png)
 
 #### II.2.1 \+1 Proceed: Action Permitted with Verified Certainty
 
@@ -223,7 +223,7 @@ Money laundering operations **depend on velocity**—rapid movement of funds thr
 The velocity impact can be quantified. Consider a typical layering sequence: placement in Account A, transfer to Account B (different institution, jurisdiction), conversion to cryptocurrency, transfer to mixing service, conversion to fiat in Account C. With real-time settlement, this sequence completes in hours. With TL holds at each hop requiring verification completion, the sequence extends to **days or weeks**—dramatically increasing exposure to detection, freezing, and investigative intervention.  
 Velocity blocking is **particularly effective against automated laundering infrastructure**. Bot-driven account networks, designed for rapid execution of pre-programmed sequences, encounter hold states that **disrupt timing assumptions and trigger escalation to human handlers** who may abandon operations rather than engage with verification requirements.
 
-![Diagram](AML_3.png)
+![Diagram](https://github.com/FractonicMind/TernaryLogic/blob/main/AML_Prevention/AML_3.png)
 
 ### III.2 Decision Logs (Pre-Action)
 
@@ -347,7 +347,7 @@ A typical model might output: **73% probability of structuring, 45% probability 
 #### III.6.2 TL Process: Probabilistic Outputs Treated as Epistemic Uncertainty, Not Authorization
 
 TL’s **critical intervention**: probabilistic outputs are **not treated as decision inputs but as uncertainty indicators**. A **70% risk score does not mean “70% likely to be illicit, therefore proceed with caution”** or “70% likely to be illicit, therefore block.” It means **“substantial uncertainty exists that prevents confident classification.”**  
-![Diagram](AML_5.png)
+![Diagram](https://github.com/FractonicMind/TernaryLogic/blob/main/AML_Prevention/AML_5.png)
 This treatment is implemented through **threshold specification**:
 
 | Score Range | TL State | Action |
@@ -376,7 +376,7 @@ The **fundamental vulnerability of current systems** is the treatment of model p
 ### IV.1 Dual-Lane Latency Model
 
 TL’s operational implementation requires **precise latency management** that preserves integrity guarantees without unacceptable throughput degradation. The **Dual-Lane Latency model** achieves this through **functional separation between time-critical and time-tolerant processing**.
-![Diagram](AML_4.png)
+![Diagram](https://github.com/FractonicMind/TernaryLogic/blob/main/AML_Prevention/AML_4.png)
 
 #### IV.1.1 Inference Lane (≤2 ms): Pre-Action Evidence Capture and State Determination
 
@@ -581,7 +581,7 @@ The embedded reference architecture ensures that **evidence location is transact
 ### V.1 Introduction: Why Software Governance Requires a Hardware Foundation
 
 The governance architecture described in preceding sections establishes the Epistemic Hold as the critical mechanism that prevents AML failures of the kind documented throughout this specification. The No Log = No Action covenant, the Dual-Lane Latency model, the Merkle-batched anchoring infrastructure, and the Hybrid Shield together constitute a governance stack of considerable sophistication. Each layer strengthens the evidentiary and enforcement architecture. None of them, individually or collectively, provides the one guarantee that no software layer can provide: the physical impossibility of ungoverned execution.
-![Diagram](AML_7.png)
+![Diagram](https://github.com/FractonicMind/TernaryLogic/blob/main/AML_Prevention/AML_7.png)
 
 Software constraints can be modified by operators with sufficient access. API gateway rules can be reconfigured. Database triggers can be disabled. Application-layer validation can be bypassed through direct database manipulation. A sufficiently motivated insider, a compromised administrator account, or a sophisticated external attacker who has achieved privileged access to the institution's infrastructure can, in principle, circumvent any governance constraint that exists only as software. The TD Bank enforcement action documented in Section I illustrates this precisely: employees with system access facilitated laundering by processing transactions outside the monitoring architecture. Software governance requires the cooperation of the system it governs. Physical governance does not.
 
@@ -843,7 +843,7 @@ The TL architecture creates a **tripartite evidentiary hierarchy** that transfor
 | **Malformed Log** | Log fails cryptographic integrity verification; inconsistent timestamps; missing required fields; evidence of post-generation modification | **System failure implication**: technical root cause analysis; potential insider attack or genuine system stress | Focus on cryptographic key compromise, software defect, hardware failure, or network partition; remediation and potential transaction suspension |
 | **Complete Log** | Passes all cryptographic integrity verifications; contains all required fields; proper chain of custody through Merkle anchoring | **Admissible evidence**: satisfies digital evidence standards for regulatory, civil, and criminal proceedings | Foundation for enforcement action defense or prosecution support; enables precise accountability assignment |
 
-![Diagram](AML_6.png)
+![Diagram](https://github.com/FractonicMind/TernaryLogic/blob/main/AML_Prevention/AML_6.png)
 
 ### VII.2 Chain of Custody and Digital Evidence Standards
 
