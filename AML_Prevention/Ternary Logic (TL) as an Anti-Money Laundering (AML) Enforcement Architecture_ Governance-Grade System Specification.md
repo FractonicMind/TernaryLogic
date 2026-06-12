@@ -169,6 +169,7 @@ The **evidence-backing requirement is enforced through the “No Log \= No Actio
 ### II.2 Triadic Action States
 
 The three states of TL constitute a **complete, mutually exclusive, and exhaustive partition** of possible decision outcomes, with precise definitional boundaries, trigger conditions, and operational consequences.
+![Diagram](AML_2.png)
 
 #### II.2.1 \+1 Proceed: Action Permitted with Verified Certainty
 
