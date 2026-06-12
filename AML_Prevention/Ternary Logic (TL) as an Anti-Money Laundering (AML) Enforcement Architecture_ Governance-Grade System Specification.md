@@ -130,7 +130,7 @@ The **probabilistic nature** of these costs—uncertain timing, magnitude, and o
 #### I.2.4 Conversion of Unbounded Probabilistic Risk to Bounded Measurable Latency
 
 TL’s **core economic innovation** is the structural conversion of unbounded, probabilistic downstream risk into bounded, measurable, priceable latency. By enforcing epistemic verification before economic action, TL eliminates the possibility of the multi-year, multi-billion-dollar enforcement scenarios documented above. The **maximum cost of any transaction becomes the hold latency plus the operational cost of resolution**—not the unbounded downstream exposure of completed laundering.  
-![Diagram](AML_7.png)
+![Diagram](AML_8.png)
 This conversion operates through:
 
 | Mechanism | Current Regime | TL Regime |
@@ -222,6 +222,8 @@ The **no-presumption design enables broader Hold deployment** than would be poss
 Money laundering operations **depend on velocity**—rapid movement of funds through multiple accounts, jurisdictions, and asset classes to obscure origin and complicate tracing. The Epistemic Hold **interrupts this velocity structurally**: each Hold creates a **temporal break in the chain**, each break requires resolution before continuation, and the cumulative effect **degrades laundering operational efficiency**.  
 The velocity impact can be quantified. Consider a typical layering sequence: placement in Account A, transfer to Account B (different institution, jurisdiction), conversion to cryptocurrency, transfer to mixing service, conversion to fiat in Account C. With real-time settlement, this sequence completes in hours. With TL holds at each hop requiring verification completion, the sequence extends to **days or weeks**—dramatically increasing exposure to detection, freezing, and investigative intervention.  
 Velocity blocking is **particularly effective against automated laundering infrastructure**. Bot-driven account networks, designed for rapid execution of pre-programmed sequences, encounter hold states that **disrupt timing assumptions and trigger escalation to human handlers** who may abandon operations rather than engage with verification requirements.
+
+![Diagram](AML_3.png)
 
 ### III.2 Decision Logs (Pre-Action)
 
@@ -345,6 +347,7 @@ A typical model might output: **73% probability of structuring, 45% probability 
 #### III.6.2 TL Process: Probabilistic Outputs Treated as Epistemic Uncertainty, Not Authorization
 
 TL’s **critical intervention**: probabilistic outputs are **not treated as decision inputs but as uncertainty indicators**. A **70% risk score does not mean “70% likely to be illicit, therefore proceed with caution”** or “70% likely to be illicit, therefore block.” It means **“substantial uncertainty exists that prevents confident classification.”**  
+![Diagram](AML_4.png)
 This treatment is implemented through **threshold specification**:
 
 | Score Range | TL State | Action |
@@ -373,6 +376,7 @@ The **fundamental vulnerability of current systems** is the treatment of model p
 ### IV.1 Dual-Lane Latency Model
 
 TL’s operational implementation requires **precise latency management** that preserves integrity guarantees without unacceptable throughput degradation. The **Dual-Lane Latency model** achieves this through **functional separation between time-critical and time-tolerant processing**.
+![Diagram](AML_5.png)
 
 #### IV.1.1 Inference Lane (≤2 ms): Pre-Action Evidence Capture and State Determination
 
@@ -577,6 +581,7 @@ The embedded reference architecture ensures that **evidence location is transact
 ### V.1 Introduction: Why Software Governance Requires a Hardware Foundation
 
 The governance architecture described in preceding sections establishes the Epistemic Hold as the critical mechanism that prevents AML failures of the kind documented throughout this specification. The No Log = No Action covenant, the Dual-Lane Latency model, the Merkle-batched anchoring infrastructure, and the Hybrid Shield together constitute a governance stack of considerable sophistication. Each layer strengthens the evidentiary and enforcement architecture. None of them, individually or collectively, provides the one guarantee that no software layer can provide: the physical impossibility of ungoverned execution.
+![Diagram](AML_7.png)
 
 Software constraints can be modified by operators with sufficient access. API gateway rules can be reconfigured. Database triggers can be disabled. Application-layer validation can be bypassed through direct database manipulation. A sufficiently motivated insider, a compromised administrator account, or a sophisticated external attacker who has achieved privileged access to the institution's infrastructure can, in principle, circumvent any governance constraint that exists only as software. The TD Bank enforcement action documented in Section I illustrates this precisely: employees with system access facilitated laundering by processing transactions outside the monitoring architecture. Software governance requires the cooperation of the system it governs. Physical governance does not.
 
@@ -829,6 +834,7 @@ The **2025 FATF guidance on asset recovery** signals critical evolution: transfo
 ## VII. Evidence, Liability, and Enforcement Transformation
 
 ### VII.1 Evidentiary Status Hierarchies
+![Diagram](AML_6.png)
 
 The TL architecture creates a **tripartite evidentiary hierarchy** that transforms enforcement posture from probabilistic assessment of compliance effort to **deterministic evaluation of system output**:
 
