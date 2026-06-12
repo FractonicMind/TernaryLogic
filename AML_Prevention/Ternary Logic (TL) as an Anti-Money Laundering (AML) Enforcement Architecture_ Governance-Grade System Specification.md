@@ -130,6 +130,7 @@ The **probabilistic nature** of these costs—uncertain timing, magnitude, and o
 #### I.2.4 Conversion of Unbounded Probabilistic Risk to Bounded Measurable Latency
 
 TL’s **core economic innovation** is the structural conversion of unbounded, probabilistic downstream risk into bounded, measurable, priceable latency. By enforcing epistemic verification before economic action, TL eliminates the possibility of the multi-year, multi-billion-dollar enforcement scenarios documented above. The **maximum cost of any transaction becomes the hold latency plus the operational cost of resolution**—not the unbounded downstream exposure of completed laundering.  
+![Diagram](AML_7.png)
 This conversion operates through:
 
 | Mechanism | Current Regime | TL Regime |
