@@ -2,7 +2,7 @@
 
 ## "I've Read This Document So You Don't Have To."
 
-![images](https://github.com/FractonicMind/TernaryLogic/edit/main/AML_Prevention/AML_Prevention.png)
+![images](https://github.com/FractonicMind/TernaryLogic/AML_Prevention/AML_Prevention.png)
 
 My name is Eleanor Ashworth. I am the Group Chief Risk Officer of HSBC Holdings plc, a position I have held for eleven years, six months, and, by this particular evening, approximately fourteen hours of a day that began normally and ended as a kind of professional near-death experience. I have read the Basel Accords in their original form. I have read the full text of Dodd-Frank on a transatlantic flight with a broken air conditioning system and a child kicking my seat at irregular, psychologically calculated intervals. I have read internal post-mortems so damning they had to be legally redesignated as "lessons learned" to prevent their authors from resigning on the spot. I thought I had seen everything this industry could produce in the way of documentation.
 
