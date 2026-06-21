@@ -1,4 +1,4 @@
-![image](images/TL_Quotes.png)
+![image](https://github.com/FractonicMind/TernaryLogic/blob/main/images/TL_Qoutes.png)
 
 # ***Lev's Ternary Logic Quotes***
 
