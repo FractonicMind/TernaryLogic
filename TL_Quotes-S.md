@@ -1,3 +1,5 @@
+![image](images/TL_Quotes.png)
+
 # ***Lev's Ternary Logic Quotes***
 
 ***These quotes were not written in a single sitting or according to a pre-planned outline. They were gathered over months of exploration, as the architecture of Ternary Logic took shape: sometimes in technical white papers, sometimes in late-night reflections, sometimes in conversations with my own mortality. I have deliberately preserved the order in which they emerged. This is not a textbook. It is a record of a mind at work, building something it hoped would outlive it.***
