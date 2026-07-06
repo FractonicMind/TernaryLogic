@@ -105,7 +105,7 @@ The Technical Council maintains the system; they do not govern it. They are prog
 **Function:** Resolve ambiguity, adjudicate disputes, safeguard TL's ethical mandate across time.
 
 **Composition:**
-- 11 members: rotating representatives from non-profit institutions (Amnesty International, transparency organizations)
+- 11 members: rotating representatives from non-profit institutions 
 - Legal and ethics experts
 - Community representatives selected via transparent process
 - Explicitly excludes: direct financial beneficiaries, elected officials with conflicts
