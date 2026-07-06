@@ -418,13 +418,13 @@
   <h2>Technical Architecture</h2><hr class="sec-rule">
 
   <h3>Dual Latency Architecture</h3>
-  <p>Every transaction is bifurcated into two parallel lanes. Lane 1 (Fast, under 2ms) calculates the decision but holds output in buffer. Lane 2 (Governance, asynchronous) hashes, signs, appends to ledger, and generates a Permission Token. Output is released only when the Permission Token is received — if Lane 2 fails, the system enters Safe Mode: no output produced.</p>
+  <p>Every transaction is bifurcated into two parallel lanes. Lane 1 (Inference, under 2ms) calculates the decision but holds output in buffer. Lane 2 (Governance, asynchronous) hashes, signs, appends to ledger, and generates a Permission Token. Output is released only when the Permission Token is received — if Lane 2 fails, the system enters Safe Mode: no output produced.</p>
   <div class="cw">
     <div class="cb"><span class="cd cr"></span><span class="cd cy"></span><span class="cd cg"></span>&nbsp;TL Dual-Lane Interlock</div>
     <pre>
 Transaction Request
     ↓
-[LANE 1 — FAST]  <span class="cc">// &lt;2ms</span>
+[LANE 1 — INFERENCE]  <span class="cc">// &lt;2ms</span>
     Calculate state: <span class="cop">+1 | 0 | -1</span>
     PAUSE <span class="cc">// hold output in buffer</span>
     ↓
