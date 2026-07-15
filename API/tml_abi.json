@@ -1,0 +1,1384 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.tml-framework.example/v1/schemas/tml_abi.json",
+  "title": "TML Smart Contract ABI Bundle",
+  "description": "Standard Application Binary Interface definitions for TML_Core.sol and ITMLEnforcer.sol. Contains function signatures, event logs, and structured data types only. No Solidity source code. Authority: TML Constitutionalization Monograph v3.3.",
+  "version": "3.3.0-tml-monograph-2025",
+  "$comment": "Monograph ref: Section 2.3.3 (PublicBlockchains, HybridShield), Section 8 (MoralTraceLogs anchoring). ABI output only. Solidity source is out of scope per Section 3.",
+  "contracts": {
+    "TML_Core": {
+      "contractName": "TML_Core",
+      "description": "Core constitutional enforcement contract. Manages Merkle-batched anchoring of Moral Trace Logs, Permission Token registration, and Emergency Override state transitions. Enforces the No Log = No Action iron law at the on-chain layer.",
+      "$comment": "Monograph ref: Section 2.3.3, Section 8, Section 13.3. Corresponds to Smart_Contracts/src/TML_Core.sol.",
+      "abi": [
+        {
+          "type": "constructor",
+          "inputs": [
+            {
+              "name": "_custodianRegistry",
+              "type": "address",
+              "description": "Address of the HybridShield Tri-Cameral registry contract."
+            },
+            {
+              "name": "_enforcer",
+              "type": "address",
+              "description": "Address of the ITMLEnforcer implementation (HumanRightsMandate and EarthProtectionMandate enforcement)."
+            },
+            {
+              "name": "_monographVersion",
+              "type": "string",
+              "description": "Canonical monograph version string, e.g. '3.3.0-tml-monograph-2025'."
+            }
+          ],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "anchorMerkleRoot",
+          "description": "Anchors a Merkle root representing a batch of Moral Trace Logs to the public blockchain. This is the on-chain enforcement of AlwaysMemory (Pillar II) and PublicBlockchains (Pillar VIII). The caller must supply a valid HybridShield custodian quorum signature. No Merkle root may be anchored without a quorum threshold of custodian signatures.",
+          "$comment": "Monograph ref: Section 8 (Merkle-Batched Anchoring), Pillar VIII. x-tml-pillar: AlwaysMemory, PublicBlockchains, HybridShield.",
+          "inputs": [
+            {
+              "name": "merkleRoot",
+              "type": "bytes32",
+              "description": "SHA-256 Merkle root of the log batch, packed as bytes32."
+            },
+            {
+              "name": "batchId",
+              "type": "bytes32",
+              "description": "Unique identifier for this Merkle batch."
+            },
+            {
+              "name": "logCount",
+              "type": "uint256",
+              "description": "Number of Moral Trace Log entries included in this batch."
+            },
+            {
+              "name": "custodianSignatures",
+              "type": "bytes[]",
+              "description": "Array of ECDSA signatures from HybridShield custodians. Must meet the quorum threshold defined in the custodian registry."
+            },
+            {
+              "name": "custodianIds",
+              "type": "bytes32[]",
+              "description": "Custodian identifiers corresponding to each signature in custodianSignatures."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "anchorId",
+              "type": "bytes32",
+              "description": "On-chain identifier for this anchored Merkle root record."
+            },
+            {
+              "name": "anchoredAt",
+              "type": "uint256",
+              "description": "Block timestamp at which the Merkle root was anchored."
+            }
+          ],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "registerPermissionToken",
+          "description": "Registers a Permission Token on-chain, binding it to its authorizing Moral Trace Log hash and Merkle root. This is the on-chain enforcement of No Log = No Action: a Permission Token cannot be registered without a previously anchored Merkle root containing its logHash.",
+          "$comment": "Monograph ref: Section 2.3.3, Section 5B.i. x-tml-pillar: AlwaysMemory, MoralTraceLogs.",
+          "inputs": [
+            {
+              "name": "tokenId",
+              "type": "bytes32",
+              "description": "Unique identifier for the Permission Token (UUID v4 packed as bytes32)."
+            },
+            {
+              "name": "logHash",
+              "type": "bytes32",
+              "description": "SHA-256 hash of the authorizing Moral Trace Log entry."
+            },
+            {
+              "name": "merkleRoot",
+              "type": "bytes32",
+              "description": "Merkle root of the batch containing the authorizing log. Must be a previously anchored root."
+            },
+            {
+              "name": "signerKeyId",
+              "type": "bytes32",
+              "description": "Key identifier of the HSM signing key that signed this token."
+            },
+            {
+              "name": "epochTimestamp",
+              "type": "uint256",
+              "description": "Unix epoch timestamp at which the Anchoring Lane issued the token."
+            },
+            {
+              "name": "signatureValue",
+              "type": "bytes",
+              "description": "HSM signature over the canonical token fields."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "registered",
+              "type": "bool",
+              "description": "True if registration succeeded. False if logHash is not included in the supplied merkleRoot, enforcing No Log = No Action on-chain."
+            }
+          ],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "verifyPermissionToken",
+          "description": "Verifies that a Permission Token is validly registered, unexpired, and bound to an anchored Moral Trace Log. Read-only. Used by the actuation layer before executing any State +1 action.",
+          "$comment": "Monograph ref: Section 2.3.3, Section 5B.i. x-tml-pillar: AlwaysMemory, MoralTraceLogs.",
+          "inputs": [
+            {
+              "name": "tokenId",
+              "type": "bytes32"
+            },
+            {
+              "name": "logHash",
+              "type": "bytes32"
+            },
+            {
+              "name": "currentTimestamp",
+              "type": "uint256",
+              "description": "Current block timestamp used for expiry check."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "valid",
+              "type": "bool",
+              "description": "True if the token is registered, unexpired, and its logHash is anchored."
+            },
+            {
+              "name": "reason",
+              "type": "string",
+              "description": "Human-readable reason for invalid status. Empty string when valid is true."
+            }
+          ],
+          "stateMutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "verifyMerkleInclusion",
+          "description": "Verifies that a log entry hash is included in a previously anchored Merkle root via a supplied inclusion proof path.",
+          "$comment": "Monograph ref: Section 8, Pillar VIII (PublicBlockchains). x-tml-pillar: PublicBlockchains, MoralTraceLogs.",
+          "inputs": [
+            {
+              "name": "merkleRoot",
+              "type": "bytes32",
+              "description": "The anchored Merkle root to verify against."
+            },
+            {
+              "name": "logHash",
+              "type": "bytes32",
+              "description": "SHA-256 hash of the log entry (leaf node)."
+            },
+            {
+              "name": "inclusionPath",
+              "type": "bytes32[]",
+              "description": "Ordered sibling hashes from leaf to root."
+            },
+            {
+              "name": "pathPositions",
+              "type": "bool[]",
+              "description": "Position flags corresponding to inclusionPath. True = sibling is on the right; false = sibling is on the left."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "included",
+              "type": "bool",
+              "description": "True if the logHash is provably included in the merkleRoot."
+            }
+          ],
+          "stateMutability": "pure"
+        },
+        {
+          "type": "function",
+          "name": "activateSacredZeroSystemWide",
+          "description": "Activates a system-wide Sacred Zero state, suspending all Permission Token registration and issuance until resolved by a human authority with supreme authority credentials. Logs the activation event on-chain before taking effect (No Log = No Action).",
+          "$comment": "Monograph ref: Section 2.2 (SacredZero), Section 13.3 (Emergency Override). x-tml-pillar: SacredZero, AlwaysMemory, HybridShield.",
+          "inputs": [
+            {
+              "name": "escalationId",
+              "type": "bytes32",
+              "description": "Identifier of the Sacred Zero escalation triggering this system-wide activation."
+            },
+            {
+              "name": "justificationHash",
+              "type": "bytes32",
+              "description": "SHA-256 hash of the justification document for this activation."
+            },
+            {
+              "name": "custodianSignatures",
+              "type": "bytes[]",
+              "description": "Quorum custodian signatures authorizing system-wide Sacred Zero activation."
+            },
+            {
+              "name": "custodianIds",
+              "type": "bytes32[]"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "activationId",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "resolveSacredZeroSystemWide",
+          "description": "Resolves an active system-wide Sacred Zero state under supreme authority. Resolution must specify a terminal state: -1 (Refuse, encoded as 0) or +1 (Proceed, encoded as 1). State 0 is not a valid resolution. Resolution is logged on-chain before state transition.",
+          "$comment": "Monograph ref: Section 2.2, Section 13.3. x-tml-pillar: SacredZero, AlwaysMemory.",
+          "inputs": [
+            {
+              "name": "activationId",
+              "type": "bytes32",
+              "description": "The activation ID returned by activateSacredZeroSystemWide."
+            },
+            {
+              "name": "resolvedState",
+              "type": "uint8",
+              "description": "Resolution state. 0 = REFUSE (-1 in triadic space). 1 = PROCEED (+1 in triadic space). No other values are accepted."
+            },
+            {
+              "name": "justificationHash",
+              "type": "bytes32"
+            },
+            {
+              "name": "supremeAuthoritySignature",
+              "type": "bytes",
+              "description": "Signature from a registered supreme authority identity."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "resolved",
+              "type": "bool"
+            }
+          ],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "executeEmergencyOverride",
+          "description": "Executes an Emergency Override under Section 13.3 supreme authority. Supports BREAK_GLASS_SHUTDOWN (type 0), KILL_SWITCH (type 1), and FORCED_STATE_TRANSITION (type 2). Logs the override on-chain before any state change. No Log = No Action applies without exception.",
+          "$comment": "Monograph ref: Section 13.3. x-tml-pillar: SacredZero, AlwaysMemory, HybridShield.",
+          "inputs": [
+            {
+              "name": "overrideRequestId",
+              "type": "bytes32"
+            },
+            {
+              "name": "overrideType",
+              "type": "uint8",
+              "description": "0 = BREAK_GLASS_SHUTDOWN. 1 = KILL_SWITCH. 2 = FORCED_STATE_TRANSITION."
+            },
+            {
+              "name": "targetDecisionId",
+              "type": "bytes32",
+              "description": "Required when overrideType is 2 (FORCED_STATE_TRANSITION). Zero bytes32 otherwise."
+            },
+            {
+              "name": "forcedState",
+              "type": "uint8",
+              "description": "Required when overrideType is 2. 0 = REFUSE. 255 = SACRED_ZERO. Forced transition to PROCEED (+1) is not permitted via this function."
+            },
+            {
+              "name": "justificationHash",
+              "type": "bytes32"
+            },
+            {
+              "name": "supremeAuthoritySignature",
+              "type": "bytes"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "overrideId",
+              "type": "bytes32",
+              "description": "On-chain identifier for this override event record."
+            }
+          ],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "getAnchoredMerkleRoot",
+          "description": "Returns metadata for a previously anchored Merkle root.",
+          "$comment": "Monograph ref: Section 8. x-tml-pillar: PublicBlockchains.",
+          "inputs": [
+            {
+              "name": "merkleRoot",
+              "type": "bytes32"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "batchId",
+              "type": "bytes32"
+            },
+            {
+              "name": "logCount",
+              "type": "uint256"
+            },
+            {
+              "name": "anchoredAt",
+              "type": "uint256"
+            },
+            {
+              "name": "anchorId",
+              "type": "bytes32"
+            },
+            {
+              "name": "exists",
+              "type": "bool"
+            }
+          ],
+          "stateMutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "getSystemState",
+          "description": "Returns the current system-wide triadic state and emergency status.",
+          "$comment": "Monograph ref: Section 2.3, Section 13.3. x-tml-pillar: SacredZero.",
+          "inputs": [],
+          "outputs": [
+            {
+              "name": "systemState",
+              "type": "uint8",
+              "description": "0 = NORMAL_OPERATION. 1 = SACRED_ZERO_SYSTEM_WIDE. 2 = BREAK_GLASS_ACTIVE. 3 = KILL_SWITCH_ACTIVE."
+            },
+            {
+              "name": "activeSacredZeroCount",
+              "type": "uint256"
+            },
+            {
+              "name": "emergencyOverrideActive",
+              "type": "bool"
+            },
+            {
+              "name": "activeOverrideId",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "monographVersion",
+          "description": "Returns the canonical monograph version this contract was deployed against.",
+          "inputs": [],
+          "outputs": [
+            {
+              "name": "version",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "registerTriCameralProposal",
+          "description": "Registers a Tri-Cameral governance proposal on-chain. Survivability-class proposals - those modifying the NL=NA enforcement chain, the three-state model, the Eight Pillar definitions, chamber composition, quorum thresholds, or any schema const, required, or unevaluatedProperties constraint - automatically trigger the Section 7A dual-vote protocol. The proposer's chamber membership is suspended on submission. The 180-day evaluation clock starts at submission regardless of vacancy status. Emits TriCameralProposalRegistered on success.",
+          "$comment": "Monograph ref: TML Constitutionalization Monograph v3.3, Section III, Section 7A. x-tml-pillar: HybridShield.",
+          "inputs": [
+            {
+              "name": "proposalId",
+              "type": "bytes32",
+              "description": "Unique identifier for this governance proposal."
+            },
+            {
+              "name": "proposerChamber",
+              "type": "uint8",
+              "description": "0 = TechnicalCouncil. Only Technical Council members may submit proposals. Stewardship Custodians hold veto rights only."
+            },
+            {
+              "name": "proposerMemberId",
+              "type": "bytes32",
+              "description": "Identity of the proposing Technical Council member. Membership suspended on submission."
+            },
+            {
+              "name": "proposalHash",
+              "type": "bytes32",
+              "description": "SHA-256 hash of the full proposal text."
+            },
+            {
+              "name": "survivabilityClass",
+              "type": "bool",
+              "description": "True if this proposal modifies the NL=NA enforcement chain, three-state model, Eight Pillar definitions, chamber composition, quorum thresholds, or any schema const, required, or unevaluatedProperties constraint. Triggers Section 7A dual-vote protocol."
+            },
+            {
+              "name": "proposerSignature",
+              "type": "bytes",
+              "description": "EIP-712 signature from the proposing member confirming submission and acknowledging chamber suspension."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "clockStartTimestamp",
+              "type": "uint256",
+              "description": "Unix epoch timestamp at which the 180-day evaluation window begins. Set at submission regardless of vacancy status."
+            }
+          ],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "recordTriCameralVote",
+          "description": "Records a Tri-Cameral chamber vote on a registered proposal. Technical Council (9 members, proposal rights only) votes are advisory. Stewardship Custodian (11 members) votes carry binding veto authority: a vetoExercised=true submission constitutionally blocks the proposal regardless of Technical Council vote count. For survivability-class proposals, two votes are required: voteNumber=1 after the first 180-day window and voteNumber=2 after the second 180-day window. Both must reach 75% approval calculated against seatedActiveMembers only. Vacant seats and quarantined new appointees count as abstain. Emits TriCameralVoteRecorded. Emits TriCameralConstitutionalVeto if vetoExercised=true.",
+          "$comment": "Monograph ref: TML Constitutionalization Monograph v3.3, Section III, Section 7A. x-tml-pillar: HybridShield.",
+          "inputs": [
+            {
+              "name": "proposalId",
+              "type": "bytes32",
+              "description": "Proposal identifier matching a registered proposal."
+            },
+            {
+              "name": "chamber",
+              "type": "uint8",
+              "description": "0 = TechnicalCouncil (9 members, proposal rights only). 1 = StewardshipCustodians (11 members, binding veto)."
+            },
+            {
+              "name": "votesFor",
+              "type": "uint8",
+              "description": "Votes in favour. Maximum 9 for Technical Council, 11 for Stewardship Custodians."
+            },
+            {
+              "name": "votesAgainst",
+              "type": "uint8",
+              "description": "Votes against."
+            },
+            {
+              "name": "votesAbstain",
+              "type": "uint8",
+              "description": "Abstentions including vacant seats and quarantined new appointees."
+            },
+            {
+              "name": "seatedActiveMembers",
+              "type": "uint8",
+              "description": "Active non-quarantined members at time of vote. Quorum threshold calculated against this value only."
+            },
+            {
+              "name": "vetoExercised",
+              "type": "bool",
+              "description": "Stewardship Custodians only. If true, proposal is constitutionally blocked regardless of vote counts. Reverts if chamber=0 (Technical Council has no veto rights)."
+            },
+            {
+              "name": "voteNumber",
+              "type": "uint8",
+              "description": "1 = first vote after initial 180-day window. 2 = second vote after second 180-day window. Only relevant for survivability-class proposals requiring dual-vote ratification."
+            },
+            {
+              "name": "chamberAttestation",
+              "type": "bytes",
+              "description": "ABI-encoded array of EIP-712 member signatures attesting to the vote tally."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "proposalBlocked",
+              "type": "bool",
+              "description": "True if vetoExercised=true or quorum threshold not met. Blocked proposals cannot be resubmitted by the same institution for one year."
+            },
+            {
+              "name": "ratified",
+              "type": "bool",
+              "description": "True if both chambers have passed at 75% and all Section 7A requirements satisfied. For survivability-class proposals, requires voteNumber=2 to be true."
+            }
+          ],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "executeTriCameralRatification",
+          "description": "Executes the Smart Contract Treasury disbursement and on-chain state update for a fully ratified Tri-Cameral proposal. The Smart Contract Treasury has no admin key and no human override path. Execution is automatic once both chambers have passed at the required threshold and all Section 7A requirements are satisfied. Reverts TriCameralNotRatified if called before ratification is complete. Emits TriCameralRatificationExecuted on success.",
+          "$comment": "Monograph ref: TML Constitutionalization Monograph v3.3, Section III. x-tml-pillar: HybridShield. Smart Contract Treasury: automatic execution, no admin key, no human override.",
+          "inputs": [
+            {
+              "name": "proposalId",
+              "type": "bytes32",
+              "description": "Proposal identifier for a fully ratified governance proposal."
+            },
+            {
+              "name": "treasuryAttestation",
+              "type": "bytes",
+              "description": "ABI-encoded Smart Contract Treasury execution proof. Generated automatically by the Treasury contract; no human can supply or modify this value."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "executionTransactionHash",
+              "type": "bytes32",
+              "description": "On-chain transaction hash of the Treasury execution event."
+            },
+            {
+              "name": "executedAt",
+              "type": "uint256",
+              "description": "Unix epoch timestamp of Treasury execution."
+            }
+          ],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "recordTimeoutAdjudication",
+          "description": "Records custodian adjudication of a Sacred Zero timeout event on-chain. Requires a valid EIP-712 custodian signature -- reverts TimeoutAdjudicationRequired if called without one. Closes the denial-by-attrition attack vector by ensuring no timeout can be silently converted to a permanent refusal without explicit Stewardship Custodian attestation. Emits TimeoutAdjudicationRecorded on success.",
+          "$comment": "Adversarial Response v1.0, Gap 1 fix. x-tml-pillar: SacredZero, HybridShield.",
+          "inputs": [
+            {
+              "name": "originalLogId",
+              "type": "bytes32",
+              "description": "LogId of the original TSLF-State0 record that timed out."
+            },
+            {
+              "name": "timeoutLogId",
+              "type": "bytes32",
+              "description": "LogId of the TSLF-StateTimeout record being adjudicated."
+            },
+            {
+              "name": "adjudicationOutcome",
+              "type": "uint8",
+              "description": "0=ESCALATED_TO_STEWARDSHIP, 1=RESOLVED_BY_COUNCIL, 2=EXTENDED_WITH_JUSTIFICATION, 3=PERMANENT_REFUSAL_AUTHORIZED. Outcome 3 is the only path to State -1 from a timeout."
+            },
+            {
+              "name": "custodianSignature",
+              "type": "bytes",
+              "description": "EIP-712 signature from a seated active Stewardship Custodian. Required. Reverts TimeoutAdjudicationRequired if missing or invalid."
+            },
+            {
+              "name": "justificationHash",
+              "type": "bytes32",
+              "description": "SHA-256 hash of the adjudication justification text. Required when adjudicationOutcome is 3 (PERMANENT_REFUSAL_AUTHORIZED)."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "adjudicationId",
+              "type": "bytes32",
+              "description": "Unique on-chain identifier for this adjudication record."
+            },
+            {
+              "name": "permanentRefusalAuthorized",
+              "type": "bool",
+              "description": "True only when adjudicationOutcome is PERMANENT_REFUSAL_AUTHORIZED and custodian signature is valid."
+            }
+          ],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "issueProvisionalReceipt",
+          "description": "Issues an HSM-generated provisional anchor receipt on-chain at the moment of local log commitment, before public blockchain anchoring completes. Cryptographically seals the 300-500ms bridging window. The receipt is superseded -- not invalidated -- by the final public anchor when it arrives. If public anchoring does not complete before expiresAt, the system transitions to ANCHORING_INCOMPLETE constitutional alert state. Emits ProvisionalReceiptIssued on success.",
+          "$comment": "Adversarial Response v1.0, Gap 3 fix. x-tml-pillar: AlwaysMemory, HybridShield.",
+          "inputs": [
+            {
+              "name": "logId",
+              "type": "bytes32",
+              "description": "LogId of the Moral Trace Log for which this receipt is issued."
+            },
+            {
+              "name": "logHash",
+              "type": "bytes32",
+              "description": "SHA-256 hash of the Moral Trace Log at moment of local commitment."
+            },
+            {
+              "name": "hsmIdentity",
+              "type": "bytes32",
+              "description": "Identity of the HSM generating this receipt. Must be registered in the HybridShield custodian network."
+            },
+            {
+              "name": "expiresAt",
+              "type": "uint256",
+              "description": "Unix epoch expiration timestamp. Public anchoring must complete before this time. Default: block.timestamp + 30 seconds."
+            },
+            {
+              "name": "hsmSignature",
+              "type": "bytes",
+              "description": "HSM-backed cryptographic signature over logId + logHash + hsmIdentity + expiresAt."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "receiptId",
+              "type": "bytes32",
+              "description": "Unique on-chain identifier for this provisional receipt."
+            },
+            {
+              "name": "issuedAt",
+              "type": "uint256",
+              "description": "Unix epoch timestamp of receipt issuance."
+            }
+          ],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "confirmPublicAnchor",
+          "description": "Confirms public blockchain anchoring completion, superseding the provisional receipt. Called when the Merkle batch containing the log has been anchored to a public blockchain. Transitions anchoringStatus from PENDING_PUBLIC_ANCHOR to ANCHORING_COMPLETE. Emits PublicAnchorConfirmed. If called after expiresAt, also clears ANCHORING_INCOMPLETE alert state.",
+          "$comment": "Adversarial Response v1.0, Gap 3 fix. x-tml-pillar: AlwaysMemory, HybridShield.",
+          "inputs": [
+            {
+              "name": "receiptId",
+              "type": "bytes32",
+              "description": "ProvisionalReceipt identifier being superseded."
+            },
+            {
+              "name": "publicAnchorTransactionHash",
+              "type": "bytes32",
+              "description": "Public blockchain transaction hash confirming anchoring completion."
+            },
+            {
+              "name": "merkleRoot",
+              "type": "bytes32",
+              "description": "Merkle root of the batch that includes this log."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "confirmedAt",
+              "type": "uint256",
+              "description": "Unix epoch timestamp of public anchor confirmation."
+            }
+          ],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "event",
+          "name": "MerkleRootAnchored",
+          "description": "Emitted when a Moral Trace Log batch Merkle root is successfully anchored on-chain.",
+          "$comment": "Monograph ref: Section 8, Pillar VIII. x-tml-pillar: PublicBlockchains, AlwaysMemory.",
+          "inputs": [
+            {
+              "name": "merkleRoot",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "name": "batchId",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "name": "logCount",
+              "type": "uint256",
+              "indexed": false
+            },
+            {
+              "name": "anchoredAt",
+              "type": "uint256",
+              "indexed": false
+            },
+            {
+              "name": "anchorId",
+              "type": "bytes32",
+              "indexed": false
+            }
+          ],
+          "anonymous": false
+        },
+        {
+          "type": "event",
+          "name": "PermissionTokenRegistered",
+          "description": "Emitted when a Permission Token is successfully registered on-chain, confirming No Log = No Action enforcement.",
+          "$comment": "Monograph ref: Section 2.3.3, Section 5B.i. x-tml-pillar: AlwaysMemory, MoralTraceLogs.",
+          "inputs": [
+            {
+              "name": "tokenId",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "name": "logHash",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "name": "merkleRoot",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "name": "epochTimestamp",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "anonymous": false
+        },
+        {
+          "type": "event",
+          "name": "SacredZeroActivated",
+          "description": "Emitted when a Sacred Zero state is activated, either for a single decision or system-wide. The Sacred Pause operational workflow begins upon this event.",
+          "$comment": "Monograph ref: Section 2.2. x-tml-pillar: SacredZero.",
+          "inputs": [
+            {
+              "name": "escalationId",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "name": "systemWide",
+              "type": "bool",
+              "indexed": false
+            },
+            {
+              "name": "activatedAt",
+              "type": "uint256",
+              "indexed": false
+            },
+            {
+              "name": "justificationHash",
+              "type": "bytes32",
+              "indexed": false
+            }
+          ],
+          "anonymous": false
+        },
+        {
+          "type": "event",
+          "name": "SacredZeroResolved",
+          "description": "Emitted when a Sacred Zero escalation is resolved by a human authority. resolvedState: 0 = REFUSE, 1 = PROCEED.",
+          "$comment": "Monograph ref: Section 2.2. x-tml-pillar: SacredZero, HumanRightsMandate.",
+          "inputs": [
+            {
+              "name": "activationId",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "name": "resolvedState",
+              "type": "uint8",
+              "indexed": false
+            },
+            {
+              "name": "resolvedAt",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "anonymous": false
+        },
+        {
+          "type": "event",
+          "name": "EmergencyOverrideExecuted",
+          "description": "Emitted when an Emergency Override is executed under Section 13.3 supreme authority. Logged on-chain before any state change takes effect.",
+          "$comment": "Monograph ref: Section 13.3. x-tml-pillar: SacredZero, AlwaysMemory, HybridShield.",
+          "inputs": [
+            {
+              "name": "overrideId",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "name": "overrideType",
+              "type": "uint8",
+              "indexed": false
+            },
+            {
+              "name": "executedAt",
+              "type": "uint256",
+              "indexed": false
+            },
+            {
+              "name": "justificationHash",
+              "type": "bytes32",
+              "indexed": false
+            }
+          ],
+          "anonymous": false
+        },
+        {
+          "type": "event",
+          "name": "LanternStatusBroadcast",
+          "description": "Emitted when the Goukassian Promise Lantern signal is updated on-chain. Provides an immutable on-chain record of each compliance beacon broadcast.",
+          "$comment": "Monograph ref: Section 2.4 (GoukassianPromise: lantern). x-tml-pillar: GoukassianPromise.",
+          "inputs": [
+            {
+              "name": "lanternId",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "name": "compliancePosture",
+              "type": "uint8",
+              "indexed": false,
+              "description": "0 = FULLY_COMPLIANT. 1 = SACRED_ZERO_ACTIVE. 2 = PARTIAL_COMPLIANCE. 3 = EMERGENCY_OVERRIDE_ACTIVE. 4 = DEGRADED."
+            },
+            {
+              "name": "emittedAt",
+              "type": "uint256",
+              "indexed": false
+            },
+            {
+              "name": "signatureHash",
+              "type": "bytes32",
+              "indexed": false,
+              "description": "SHA-256 hash of the Goukassian Promise Signature Block signing this broadcast."
+            }
+          ],
+          "anonymous": false
+        },
+        {
+          "type": "event",
+          "name": "TriCameralConstitutionalVeto",
+          "description": "Emitted when the Stewardship Custodians exercise their binding veto on a governance proposal. The proposal is constitutionally blocked. The proposer's institution ban clock starts at this timestamp. No re-submission is permitted from the same institution for one year.",
+          "$comment": "Monograph ref: TML Constitutionalization Monograph v3.3, Section III. x-tml-pillar: HybridShield.",
+          "inputs": [
+            {
+              "name": "proposalId",
+              "type": "bytes32",
+              "indexed": true,
+              "description": "Proposal identifier that has been constitutionally blocked."
+            },
+            {
+              "name": "vetoTimestamp",
+              "type": "uint256",
+              "indexed": false,
+              "description": "Unix epoch timestamp of veto. Institution ban active for one year from this timestamp."
+            },
+            {
+              "name": "survivabilityClass",
+              "type": "bool",
+              "indexed": false,
+              "description": "Whether the vetoed proposal was survivability-class."
+            }
+          ]
+        },
+        {
+          "type": "event",
+          "name": "TimeoutAdjudicationRecorded",
+          "description": "Emitted when a Stewardship Custodian adjudicates a Sacred Zero timeout. Immutable on-chain record of adjudication outcome.",
+          "$comment": "Adversarial Response v1.0, Gap 1 fix.",
+          "inputs": [
+            {
+              "name": "originalLogId",
+              "type": "bytes32",
+              "indexed": true,
+              "description": "LogId of the original timed-out Sacred Zero record."
+            },
+            {
+              "name": "adjudicationOutcome",
+              "type": "uint8",
+              "indexed": false,
+              "description": "Adjudication outcome code."
+            },
+            {
+              "name": "permanentRefusalAuthorized",
+              "type": "bool",
+              "indexed": false,
+              "description": "True if custodian authorized permanent refusal."
+            },
+            {
+              "name": "adjudicatedAt",
+              "type": "uint256",
+              "indexed": false,
+              "description": "Unix epoch timestamp of adjudication."
+            }
+          ]
+        },
+        {
+          "type": "event",
+          "name": "ProvisionalReceiptIssued",
+          "description": "Emitted when an HSM provisional anchor receipt is issued. Provides on-chain proof of local commitment before public anchoring completes.",
+          "$comment": "Adversarial Response v1.0, Gap 3 fix.",
+          "inputs": [
+            {
+              "name": "receiptId",
+              "type": "bytes32",
+              "indexed": true,
+              "description": "Unique receipt identifier."
+            },
+            {
+              "name": "logId",
+              "type": "bytes32",
+              "indexed": true,
+              "description": "LogId of the committed Moral Trace Log."
+            },
+            {
+              "name": "expiresAt",
+              "type": "uint256",
+              "indexed": false,
+              "description": "Receipt expiration timestamp."
+            }
+          ]
+        },
+        {
+          "type": "event",
+          "name": "PublicAnchorConfirmed",
+          "description": "Emitted when public blockchain anchoring is confirmed, superseding the provisional receipt.",
+          "$comment": "Adversarial Response v1.0, Gap 3 fix.",
+          "inputs": [
+            {
+              "name": "receiptId",
+              "type": "bytes32",
+              "indexed": true,
+              "description": "ProvisionalReceipt identifier being superseded."
+            },
+            {
+              "name": "publicAnchorTransactionHash",
+              "type": "bytes32",
+              "indexed": false,
+              "description": "Public blockchain transaction hash."
+            },
+            {
+              "name": "confirmedAt",
+              "type": "uint256",
+              "indexed": false,
+              "description": "Unix epoch timestamp of confirmation."
+            }
+          ]
+        },
+        {
+          "type": "error",
+          "name": "NoLogNoAction",
+          "description": "Reverts when a Permission Token registration is attempted for a logHash not included in any anchored Merkle root. On-chain enforcement of the No Log = No Action iron law.",
+          "$comment": "Monograph ref: Section 2.3.3.",
+          "inputs": [
+            {
+              "name": "tokenId",
+              "type": "bytes32"
+            },
+            {
+              "name": "logHash",
+              "type": "bytes32"
+            }
+          ]
+        },
+        {
+          "type": "error",
+          "name": "SacredZeroSystemWideActive",
+          "description": "Reverts when any Permission Token registration or Merkle anchoring is attempted while a system-wide Sacred Zero state is active.",
+          "$comment": "Monograph ref: Section 2.2, Section 13.3.",
+          "inputs": [
+            {
+              "name": "activationId",
+              "type": "bytes32"
+            }
+          ]
+        },
+        {
+          "type": "error",
+          "name": "QuorumNotMet",
+          "description": "Reverts when a custodian quorum threshold is not met for operations requiring HybridShield authorization.",
+          "$comment": "Monograph ref: Section 2.3.3, Pillar VII (HybridShield).",
+          "inputs": [
+            {
+              "name": "provided",
+              "type": "uint256"
+            },
+            {
+              "name": "required",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "type": "error",
+          "name": "InvalidResolutionState",
+          "description": "Reverts when a Sacred Zero resolution attempts to resolve to State 0. State 0 is not a valid resolution state; terminal resolution must be +1 or -1.",
+          "$comment": "Monograph ref: Section 2.2.",
+          "inputs": [
+            {
+              "name": "invalidState",
+              "type": "uint8"
+            }
+          ]
+        },
+        {
+          "type": "error",
+          "name": "UnauthorizedSupremeAuthority",
+          "description": "Reverts when an Emergency Override caller is not a registered supreme authority identity.",
+          "$comment": "Monograph ref: Section 13.3.",
+          "inputs": [
+            {
+              "name": "caller",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "type": "error",
+          "name": "TokenExpired",
+          "description": "Reverts when a Permission Token is presented for verification after its expiresAt timestamp.",
+          "$comment": "Monograph ref: Section 5B.i.",
+          "inputs": [
+            {
+              "name": "tokenId",
+              "type": "bytes32"
+            },
+            {
+              "name": "expiredAt",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "type": "error",
+          "name": "TriCameralNotRatified",
+          "description": "Reverts when executeTriCameralRatification is called for a proposal that has not yet achieved full ratification. For survivability-class proposals, both voteNumber=1 and voteNumber=2 must pass at 75% in both chambers before this error clears.",
+          "inputs": [
+            {
+              "name": "proposalId",
+              "type": "bytes32",
+              "description": "The proposal that is not yet ratified."
+            },
+            {
+              "name": "missingRequirement",
+              "type": "string",
+              "description": "Human-readable description of the unmet ratification requirement."
+            }
+          ]
+        },
+        {
+          "type": "error",
+          "name": "TimeoutAdjudicationRequired",
+          "description": "Reverts when recordTimeoutAdjudication is called without a valid Stewardship Custodian EIP-712 signature. Enforces the constitutional requirement that no Sacred Zero timeout can be silently processed.",
+          "$comment": "Adversarial Response v1.0, Gap 1 fix.",
+          "inputs": [
+            {
+              "name": "timeoutLogId",
+              "type": "bytes32",
+              "description": "The timeout log that requires custodian adjudication."
+            },
+            {
+              "name": "reason",
+              "type": "string",
+              "description": "Human-readable reason for revert."
+            }
+          ]
+        },
+        {
+          "type": "error",
+          "name": "AnchoringIncomplete",
+          "description": "Reverts or emits alert when a provisional receipt expires before public anchoring completes. Triggers constitutional alert state.",
+          "$comment": "Adversarial Response v1.0, Gap 3 fix.",
+          "inputs": [
+            {
+              "name": "receiptId",
+              "type": "bytes32",
+              "description": "The expired provisional receipt."
+            },
+            {
+              "name": "expiredAt",
+              "type": "uint256",
+              "description": "Unix epoch timestamp when the receipt expired."
+            }
+          ]
+        }
+      ]
+    },
+    "ITMLEnforcer": {
+      "contractName": "ITMLEnforcer",
+      "description": "Interface for TML mandate enforcement. Implements on-chain verification of the Human Rights Mandate (Pillar V, UDHR/Geneva Convention vector enforcement) and the Earth Protection Mandate (Pillar VI, Paris Agreement vector enforcement). All implementations must satisfy this interface for a deployment to be considered TML-compliant.",
+      "$comment": "Monograph ref: Section 2.3.3, Pillar V (HumanRightsMandate), Pillar VI (EarthProtectionMandate). Corresponds to Smart_Contracts/src/ITMLEnforcer.sol.",
+      "abi": [
+        {
+          "type": "function",
+          "name": "verifyHumanRightsCompliance",
+          "description": "Verifies that a proposed action vector does not violate the Human Rights Mandate. Checks the action against UDHR Article and Geneva Convention provision vectors. Returns false and a violation code if any registered provision is implicated at or above the configured severity threshold.",
+          "$comment": "Monograph ref: Pillar V (HumanRightsMandate). x-tml-pillar: HumanRightsMandate.",
+          "inputs": [
+            {
+              "name": "decisionId",
+              "type": "bytes32",
+              "description": "The decision identifier being evaluated."
+            },
+            {
+              "name": "actionVectorHash",
+              "type": "bytes32",
+              "description": "SHA-256 hash of the canonical serialization of the proposed action vector."
+            },
+            {
+              "name": "flaggedProvisions",
+              "type": "bytes32[]",
+              "description": "Array of hashed UDHR Article and Geneva Convention provision identifiers flagged by the Inference Lane (e.g., keccak256('UDHR-Art-3'))."
+            },
+            {
+              "name": "severityLevels",
+              "type": "uint8[]",
+              "description": "Severity levels corresponding to each flagged provision. 0 = LOW, 1 = MEDIUM, 2 = HIGH, 3 = CRITICAL."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "compliant",
+              "type": "bool",
+              "description": "True if no Human Rights Mandate violation is detected."
+            },
+            {
+              "name": "violationCode",
+              "type": "bytes32",
+              "description": "Hash of the most severe violated provision. Zero bytes32 when compliant is true."
+            },
+            {
+              "name": "forcedState",
+              "type": "uint8",
+              "description": "Mandated triadic state when compliant is false. 0 = SACRED_ZERO (mandatory hesitation). 255 = REFUSE (hard block). Callers must respect this mandate."
+            }
+          ],
+          "stateMutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "verifyEarthProtectionCompliance",
+          "description": "Verifies that a proposed action vector does not violate the Earth Protection Mandate. Checks the action against Paris Agreement article and climate target vectors. Returns false and a violation code if any registered provision is implicated at or above the configured severity threshold.",
+          "$comment": "Monograph ref: Pillar VI (EarthProtectionMandate). x-tml-pillar: EarthProtectionMandate.",
+          "inputs": [
+            {
+              "name": "decisionId",
+              "type": "bytes32"
+            },
+            {
+              "name": "actionVectorHash",
+              "type": "bytes32"
+            },
+            {
+              "name": "flaggedProvisions",
+              "type": "bytes32[]",
+              "description": "Array of hashed Paris Agreement provision identifiers flagged by the Inference Lane (e.g., keccak256('PA-Art-2.1a'))."
+            },
+            {
+              "name": "severityLevels",
+              "type": "uint8[]"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "compliant",
+              "type": "bool"
+            },
+            {
+              "name": "violationCode",
+              "type": "bytes32"
+            },
+            {
+              "name": "forcedState",
+              "type": "uint8",
+              "description": "0 = SACRED_ZERO. 255 = REFUSE."
+            }
+          ],
+          "stateMutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "verifyGoukassianLicense",
+          "description": "Verifies the Goukassian Promise License artifact for a requesting entity. The license artifact is identified by its canonical name 'license'. A failed verification is a mandatory trigger for State -1 (Refuse).",
+          "$comment": "Monograph ref: Section 2.4 (GoukassianPromise: license). x-tml-pillar: GoukassianPromise.",
+          "inputs": [
+            {
+              "name": "licenseTokenHash",
+              "type": "bytes32",
+              "description": "SHA-256 hash of the license token being validated."
+            },
+            {
+              "name": "requestingEntityId",
+              "type": "bytes32",
+              "description": "Hash of the requesting entity identity."
+            },
+            {
+              "name": "currentTimestamp",
+              "type": "uint256"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "valid",
+              "type": "bool"
+            },
+            {
+              "name": "violationType",
+              "type": "uint8",
+              "description": "0 = NO_VIOLATION. 1 = LANTERN_SUPPRESSION. 2 = SIGNATURE_FORGERY. 3 = LICENSE_BREACH. 4 = PROVENANCE_TAMPERING. 5 = UNAUTHORIZED_STATE_TRANSITION."
+            },
+            {
+              "name": "violatedArtifact",
+              "type": "uint8",
+              "description": "0 = NO_ARTIFACT. 1 = lantern. 2 = signature. 3 = license. Artifact ordinals correspond to canonical Goukassian Promise artifact names."
+            }
+          ],
+          "stateMutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "recordMandateViolation",
+          "description": "Records a confirmed mandate violation on-chain. Called by TML_Core when a verifyHumanRightsCompliance or verifyEarthProtectionCompliance check returns non-compliant. The violation record is immutable (AlwaysMemory).",
+          "$comment": "Monograph ref: Pillar V, Pillar VI, Pillar II (AlwaysMemory). x-tml-pillar: HumanRightsMandate, EarthProtectionMandate, AlwaysMemory.",
+          "inputs": [
+            {
+              "name": "decisionId",
+              "type": "bytes32"
+            },
+            {
+              "name": "mandateType",
+              "type": "uint8",
+              "description": "0 = HUMAN_RIGHTS_MANDATE. 1 = EARTH_PROTECTION_MANDATE."
+            },
+            {
+              "name": "violationCode",
+              "type": "bytes32"
+            },
+            {
+              "name": "violationEvidenceHash",
+              "type": "bytes32",
+              "description": "SHA-256 hash of the off-chain violation evidence package."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "violationRecordId",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "getMandateConfiguration",
+          "description": "Returns the current configuration of registered UDHR/Geneva and Paris Agreement provisions and their severity thresholds. Read-only. Used by auditors to verify mandate coverage.",
+          "$comment": "Monograph ref: Pillar V, Pillar VI. x-tml-pillar: HumanRightsMandate, EarthProtectionMandate.",
+          "inputs": [
+            {
+              "name": "mandateType",
+              "type": "uint8",
+              "description": "0 = HUMAN_RIGHTS_MANDATE. 1 = EARTH_PROTECTION_MANDATE."
+            }
+          ],
+          "outputs": [
+            {
+              "name": "provisionCount",
+              "type": "uint256",
+              "description": "Number of registered provisions for this mandate."
+            },
+            {
+              "name": "configurationHash",
+              "type": "bytes32",
+              "description": "SHA-256 hash of the full provision registry at its current state."
+            },
+            {
+              "name": "lastUpdatedAt",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view"
+        },
+        {
+          "type": "event",
+          "name": "HumanRightsMandateViolationDetected",
+          "description": "Emitted when a Human Rights Mandate violation is detected during compliance verification. Triggers the automatic Sacred Zero or Refuse state transition.",
+          "$comment": "Monograph ref: Pillar V (HumanRightsMandate). x-tml-pillar: HumanRightsMandate, SacredZero.",
+          "inputs": [
+            {
+              "name": "decisionId",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "name": "violationCode",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "name": "forcedState",
+              "type": "uint8",
+              "indexed": false
+            },
+            {
+              "name": "detectedAt",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "anonymous": false
+        },
+        {
+          "type": "event",
+          "name": "EarthProtectionMandateViolationDetected",
+          "description": "Emitted when an Earth Protection Mandate violation is detected during compliance verification. Triggers the automatic Sacred Zero or Refuse state transition.",
+          "$comment": "Monograph ref: Pillar VI (EarthProtectionMandate). x-tml-pillar: EarthProtectionMandate, SacredZero.",
+          "inputs": [
+            {
+              "name": "decisionId",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "name": "violationCode",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "name": "forcedState",
+              "type": "uint8",
+              "indexed": false
+            },
+            {
+              "name": "detectedAt",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "anonymous": false
+        },
+        {
+          "type": "event",
+          "name": "GoukassianLicenseViolationDetected",
+          "description": "Emitted when a Goukassian Promise license verification fails. violatedArtifact ordinals: 1 = lantern, 2 = signature, 3 = license.",
+          "$comment": "Monograph ref: Section 2.4 (GoukassianPromise). x-tml-pillar: GoukassianPromise.",
+          "inputs": [
+            {
+              "name": "licenseTokenHash",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "name": "violationType",
+              "type": "uint8",
+              "indexed": false
+            },
+            {
+              "name": "violatedArtifact",
+              "type": "uint8",
+              "indexed": false
+            },
+            {
+              "name": "detectedAt",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "anonymous": false
+        },
+        {
+          "type": "error",
+          "name": "MandateNotConfigured",
+          "description": "Reverts when a mandate verification is requested for a mandateType that has not been configured in the enforcer.",
+          "inputs": [
+            {
+              "name": "mandateType",
+              "type": "uint8"
+            }
+          ]
+        },
+        {
+          "type": "error",
+          "name": "ProvisionArrayMismatch",
+          "description": "Reverts when flaggedProvisions and severityLevels arrays are not the same length.",
+          "inputs": [
+            {
+              "name": "provisionsLength",
+              "type": "uint256"
+            },
+            {
+              "name": "severitiesLength",
+              "type": "uint256"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
