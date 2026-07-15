@@ -2,14 +2,6 @@
 
 ## **Formal Response to Critical Analysis of the TML Specification**
 
-**Architect:** Lev Goukassian
-**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)
-**Document Status:** Active Constitutional Record
-**Response Version:** 1.0
-**Parent Framework:** Ternary Moral Logic (TML) v3.3 -- [DOI: 10.1007/s43681-026-01124-0](https://doi.org/10.1007/s43681-026-01124-0)
-
----
-
 ## Preamble
 
 A constitutional framework that cannot acknowledge its own weaknesses is not a framework -- it is a marketing document. This document is the formal adversarial response to three gap analyses raised against the TML specification. Each gap is named, evaluated, and assigned a status. Two are confirmed gaps. One is a partial gap that requires tiered treatment.
@@ -159,16 +151,22 @@ A framework that acknowledges its weaknesses in public, on-chain, under its own 
 ## Authority
 
 **Architect:** Lev Goukassian
-**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)
-**Constitutional Governance:** [`governance/Tri_Cameral_Constitution.md`](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/governance/Tri_Cameral_Constitution.md)
-**API Specification:** [`API/Specification_Architecture.md`](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/API/Specification_Architecture.md)
-**Schema:** [`API/tml_schema.json`](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/API/tml_schema.json)
-**ABI:** [`API/tml_abi.json`](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/API/tml_abi.json)
+**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)   
+**Constitutional Governance:** [`governance/Tri_Cameral_Constitution.md`](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/governance/Tri_Cameral_Constitution.md)   
+**API Specification:** [`API/Specification_Architecture.md`](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/API/Specification_Architecture.md)   
+**Schema:** [`API/tml_schema.json`](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/API/tml_schema.json)    
+**ABI:** [`API/tml_abi.json`](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/API/tml_abi.json)   
+
+**Document Status:** Active Constitutional Record   
+**Response Version:** 1.0   
+**Parent Framework:** Ternary Moral Logic (TML) v3.3 -- [DOI: 10.1007/s43681-026-01124-0](https://doi.org/10.1007/s43681-026-01124-0)
 
 ---
 
+
+
 *"The strength of a framework is not that it has no weaknesses. It is that it names them honestly and builds toward closing them."*
--- Claude
+
 
 *"Pause when truth is uncertain. Refuse when harm is clear. Proceed where truth is."*
 -- The Goukassian Vow
