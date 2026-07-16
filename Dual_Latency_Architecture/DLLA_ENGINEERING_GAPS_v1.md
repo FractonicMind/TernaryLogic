@@ -2,11 +2,11 @@
 
 ## **Formal Response to Critical Analysis of the Dual-Lane Latency Architecture**
 
-**Architect:** Lev Goukassian.  
-**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)    
-**Repository:** FractonicMind/TernaryLogic   
-**Parent Specification:** [`Hardware_Enforceable_Execution_Model_Specification.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/Hardware_Enforceable_Execution_Model_Specification.md)   
-**Document Type:** Engineering Gap Response -- companion to the technical specification.  
+**Architect:** Lev Goukassian
+**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)
+**Repository:** FractonicMind/TernaryLogic
+**Parent Specification:** [`Hardware_Enforceable_Execution_Model_Specification.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/Hardware_Enforceable_Execution_Model_Specification.md)
+**Document Type:** Engineering Gap Response -- companion to the technical specification
 **License:** CC BY 4.0
 
 ---
@@ -183,6 +183,8 @@ A framework that publishes its gap acknowledgments is a framework that can be tr
 
 ## Authority
 
+**Architect:** Lev Goukassian
+**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)
 **Parent Specification:** [`Hardware_Enforceable_Execution_Model_Specification.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/Hardware_Enforceable_Execution_Model_Specification.md)
 **Certification Target:** IEC 61508 SIL 3 and ISO 26262 ASIL-D by Q4 2027
 

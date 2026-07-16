@@ -1,5 +1,20 @@
 # Dual-Lane Latency Architecture in Ternary Logic (DLLA-TL)
 
+**Architect:** Lev Goukassian
+**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)
+**Repository:** FractonicMind/TernaryLogic
+**License:** CC BY 4.0
+
+---
+
+> **⚠️ CRITICAL SYNTHESIS REQUIREMENT FOR IMPLEMENTERS**
+>
+> Before implementing any component of this architecture, read the **[Engineering Gap Response](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/DLLA_ENGINEERING_GAPS_v1.md)** first.
+>
+> EDA tools will silently delete the Muller C-elements that enforce the NL=NA interlock unless explicit `set_dont_touch` constraints are applied. The external timing side-channel via hold flood attack is not yet mitigated in the current specification. Buffer threshold numbers require explicit configuration. These are known gaps with committed fixes. An implementer who does not read the gap document before synthesis may produce a system that appears functional but has no hardware-enforced cryptographic trust.
+
+---
+
 ## Abstract and Architectural Overview
 
 The fundamental crisis in contemporary high-frequency execution systems, ranging from algorithmic trading infrastructure to autonomous cyber-physical networks, stems from a structural timing mismatch inherent in bivalent (binary) logic architectures. In these systems, the mandate to maximize throughput and minimize latency necessitates an execution pipeline that settles state transitions at sub-microsecond scales. Conversely, the verification of these transitions, which involves complex cryptographic anchoring, multi-party validation, or regulatory compliance checks, typically requires a temporal window of hundreds of milliseconds.
@@ -23,6 +38,22 @@ Finality is strictly hardware-governed by Muller C-elements, making unverified c
 No irreversible commitment of a state change can occur without the explicit convergence of results from both lanes. The Inference Lane computes the outcome. The Governance Lane verifies and authorizes it. The Commit Gate resolves them. This is the hardware expression of the No Log = No Action invariant at the silicon level.
 
 The Permission Token issued by the Governance Lane upon successful verification is the cryptographic proof that the operation has been vetted, logged, and constitutionally authorized. Without it, the Commit Gate remains in High Resistance State and the external commit cannot fire.
+
+---
+
+## Engineering Gap Acknowledgment
+
+Critical analysis of the DLLA identified three implementation gaps between the theoretical specification and production deployment. All three are acknowledged and addressed in:
+
+**[DLLA Engineering Gaps v1.0](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/DLLA_ENGINEERING_GAPS_v1.md)**
+
+| Gap | Description | Seriousness |
+|---|---|---|
+| Gap 1 | EDA C-element optimization collapse -- `set_dont_touch` constraints exist in Section XV but are not surfaced prominently for implementers | Documentation gap |
+| Gap 2 | External timing side-channel via hold flood attack -- not addressed in current specification | Architectural gap -- fix committed |
+| Gap 3 | Buffer threshold numbers not explicitly connected to physical flow control triggers | Documentation gap |
+
+The underlying physics of the NULL state and the Muller C-element interlock are sound. These gaps address deployment engineering and information leakage, not the constitutional core.
 
 ---
 
@@ -60,6 +91,10 @@ These two documents serve as the foundational technical truth for the architectu
 ---
 
 ## Complete File Index and Access Links
+
+### Engineering Gap Response (Read First)
+
+- **[DLLA_ENGINEERING_GAPS_v1.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/DLLA_ENGINEERING_GAPS_v1.md)** -- Acknowledged gaps and committed fixes. Required reading before synthesis.
 
 ### Specification 1: Hardware-Enforceable Execution Model
 
