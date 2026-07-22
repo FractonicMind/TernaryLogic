@@ -149,6 +149,61 @@ Buffer occupancy thresholds:
 
 ---
 
+
+---
+
+## Gap 4: DITL Latency Scaling and Systemic Timeout Risk
+
+### What the Critics Identified
+
+The specification proves a 258.9ns propagation delay for a 4-bit adder and asserts that DITL works within the 2ms Inference Lane WCET. What it does not prove is how accumulated hesitation delays scale under enterprise load -- specifically whether a cascade of Sacred Zero states could trigger an unrecoverable systemic timeout in Nvidia Triton's strict sub-2ms inference requirement. The software orchestrator may interpret a paused node as a dead node and drop it entirely -- turning a constitutional pause into an infrastructure failure.
+
+### Evaluation: **Gap Confirmed -- Fix Committed**
+
+The specification establishes the per-gate delay and asserts the 2ms ceiling holds, but provides no scaling model connecting individual gate delays to system-level behavior under H100 burst traffic. The pausing-node vs dead-node distinction is constitutionally critical and is not addressed. The specification must prove that the traffic jam clears gracefully, not merely that the toll booth is well-engineered.
+
+### Status: Gap Confirmed -- Fix Committed
+
+### Committed Fix
+
+**Latency budget specification:** A new Section XVI (DITL Latency Budget and Scaling Model) will be added to the specification mapping DITL token-level checkpointing delays explicitly against Nvidia Triton's sub-2ms inference requirement. The section will provide:
+
+- Worst-case accumulated hesitation delay calculation for a Sacred Zero cascade across N parallel inference threads
+- Maximum N (thread count) at which the 2ms ceiling is provably maintained under H100 silicon gating overhead
+- Latency budget table: per-gate delay × cascade depth × thread count → total accumulated delay vs 2ms ceiling
+
+**Pausing-node vs dead-node protocol:** The specification will add an explicit state discrimination protocol. When a node enters Sacred Zero (high-impedance computation state), it must emit a `SACRED_PAUSE_ACTIVE` heartbeat signal to the software orchestrator at intervals shorter than the orchestrator's dead-node timeout threshold. The heartbeat is a lightweight constitutional signal -- not a full Moral Trace Log -- that consumes negligible bandwidth while keeping the node visible as pausing rather than failed.
+
+**Triton integration spec:** The flow path mapping from Sacred Zero activation through the Governance Lane pipeline to Triton's execution scheduler will be specified at the instruction level, proving that no Sacred Zero event triggers Triton's node-failure classification.
+
+---
+
+## Gap 5: Software-to-Firmware Handoff -- Missing Implementation Bridge
+
+### What the Critics Identified
+
+The staged implementation roadmap jumps abruptly from software-level ethical configurations (NeMo Guardrails, Colang flow) to rigid hardware interlock enforcement (TCMoS safety gate, DriveThor functional safety island) without specifying the procedural handoff mechanics. The connective tissue between software reflection cycles and firmware interlocks is not established. This creates a deployment gap: enterprise teams cannot implement Phase 1 without knowing how it hands off to Phase 2.
+
+### Evaluation: **Gap Confirmed -- Fix Committed**
+
+The roadmap describes Phase 1 (software guardrails) and Phase 2 (hardware interlocks) but does not specify the exact moment a Colang flow evaluating an ambiguity score hands its signal to the DriveThor functional safety island semaphore using current binary hardware. This bridge is the critical path for enterprise adoption. Without it the roadmap is aspirational, not deployable.
+
+### Status: Gap Confirmed -- Fix Committed
+
+### Committed Fix
+
+**Colang-to-semaphore handoff specification:** A new implementation bridge section will be added to the roadmap specifying the exact handoff path:
+
+1. Colang flow evaluates ambiguity score against Sacred Zero threshold
+2. Score breach triggers `execute_sacred_pause` command in the Colang runtime
+3. Command traverses the OS stack to the driver layer as a priority interrupt
+4. Driver layer signals the DriveThor functional safety island semaphore via the existing binary hardware interrupt controller
+5. Safety island semaphore activates the physical gate delay -- Sacred Zero state achieved on current binary hardware without requiring custom silicon
+6. SACRED_PAUSE_ACTIVE heartbeat begins (see Gap 4 fix)
+7. When resolution is achieved, semaphore releases and normal execution resumes
+
+**Intermediate bridge validation:** The specification will include a simulation test using current binary H100 hardware to prove this handoff path works end-to-end before the custom TCMoS silicon upgrade is required. This gives enterprise teams a deployable Phase 1.5 -- software guardrails with firmware-level semaphore enforcement -- that is achievable today on existing infrastructure.
+
 ## Summary Table
 
 | Gap | Description | Current Status | Seriousness | Fix |
@@ -156,6 +211,8 @@ Buffer occupancy thresholds:
 | Gap 1 | EDA C-element optimization collapse | Section XV contains fix -- not prominent enough | Documentation gap | Standalone EDA Implementation Guide + README warning |
 | Gap 2 | External timing side-channel via hold flood | Not addressed in specification | Architectural gap | Dummy padding + cryptographic jitter + graduated throttling |
 | Gap 3 | Queueing math disconnected from physical limits | Flow control exists -- threshold not specified | Documentation gap | Explicit 75%/85% thresholds + physical connection statement |
+| Gap 4 | DITL latency scaling and systemic timeout risk | Not addressed in specification | Architectural gap | Latency budget model + pausing-node heartbeat protocol + Triton mapping |
+| Gap 5 | Software-to-firmware handoff bridge missing | Not specified in roadmap | Deployment gap | Colang-to-semaphore handoff spec + Phase 1.5 binary-hardware bridge |
 
 ---
 
