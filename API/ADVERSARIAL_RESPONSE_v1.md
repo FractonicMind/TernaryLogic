@@ -2,10 +2,10 @@
 
 ## **Formal Response to Critical Analysis of the TML Specification**
 
-**Architect:** Lev Goukassian
-**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)
-**Document Status:** Active Constitutional Record
-**Response Version:** 1.0
+**Architect:** Lev Goukassian   
+**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)   
+**Document Status:** Active Constitutional Record   
+**Response Version:** 1.0   
 **Parent Framework:** Ternary Moral Logic (TML) v3.3 -- [DOI: 10.1007/s43681-026-01124-0](https://doi.org/10.1007/s43681-026-01124-0)
 
 ---
@@ -178,11 +178,11 @@ A framework that acknowledges its weaknesses in public, on-chain, under its own 
 ## Authority
 
 **Architect:** Lev Goukassian
-**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)
-**Constitutional Governance:** [governance/Tri_Cameral_Constitution.md](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/governance/Tri_Cameral_Constitution.md)
-**API Specification:** [API/Specification_Architecture.md](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/API/Specification_Architecture.md)
-**Schema:** [API/tml_schema.json](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/API/tml_schema.json)
-**ABI:** [API/tml_abi.json](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/API/tml_abi.json)
+**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)   
+**Constitutional Governance:** [governance/Tri_Cameral_Constitution.md](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/governance/Tri_Cameral_Constitution.md)   
+**API Specification:** [API/Specification_Architecture.md](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/API/Specification_Architecture.md)   
+**Schema:** [API/tml_schema.json](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/API/tml_schema.json)   
+**ABI:** [API/tml_abi.json](https://github.com/FractonicMind/TernaryMoralLogic/blob/main/API/tml_abi.json)   
 
 ---
 
