@@ -158,6 +158,46 @@ This document. See Gaps 1, 2, and 3 above.
 
 ---
 
+
+---
+
+## Gap 4: TCMoS Silicon Area Penalty -- Chiplet Integration Not Justified
+
+### What the Critics Identified
+
+The specification quantifies the 55% power savings of native TCMoS architecture over binary emulation but critically under-addresses the 2-3x silicon area overhead that native ternary state gate density imposes. Asking a foundry to dedicate this much silicon real estate requires a feasibility argument that the current specification does not make. The power savings argument alone is insufficient -- a foundry making real silicon budget decisions needs to see that the area penalty is manageable and that the integration path is specified.
+
+The critics requested:
+- Specific physical isolation strategies for the ternary logic gates
+- A dedicated Triadic Processing Unit (TPU) chiplet approach via NVLink-C2C
+- Proof that offloading to a dedicated chiplet justifies the area penalty by protecting the primary compute core
+
+### Evaluation: **Gap Confirmed -- Fix Committed**
+
+The Triadic Coprocessor Architecture document in TML references the TPU chiplet approach at the conceptual level, but the Constitutional Hardware specification does not include the NVLink-C2C integration steps, the physical isolation strategy, or the silicon budget justification required to convince a foundry. The gap is real. A specification that asks foundries to build something must show them how.
+
+### Status: Gap Confirmed -- Fix Committed
+
+### Committed Fix
+
+**Chiplet architecture specification:** The TECHSPEC will receive a new section specifying the TPU chiplet as the recommended production architecture for the 2-3x area penalty problem:
+
+- The primary compute die (H100, DriveThor) retains its full binary density. No ternary gates on the main die.
+- A dedicated TPU chiplet (estimated 8-12mm² at N2 geometry) handles all ternary moral logic: window comparator, C-element NL=NA interlock, Sacred Zero state management, Permission Token generation.
+- NVLink-C2C die-to-die interconnect provides sub-nanosecond communication latency between the main die and the TPU chiplet, preserving the Governance Lane latency ceiling.
+
+**NVLink-C2C integration steps:** The specification will provide the exact integration sequence:
+
+1. TPU chiplet fabricated at Architecture B (hybrid memristive-CMOS) on available CMOS node
+2. NVLink-C2C physical layer initialized at system boot with TPU chiplet identity attestation via PUF
+3. Main die Inference Lane output held in buffer -- Permission Token request sent to TPU chiplet via NVLink-C2C
+4. TPU chiplet evaluates against constitutional mandate vectors, generates Moral Trace Log, anchors to Merkle batch
+5. Permission Token returned to main die via NVLink-C2C -- Commit Gate opens
+
+**Area penalty justification:** The specification will add a silicon budget table comparing three architectures: (a) full native ternary on main die (2-3x area overhead -- not recommended), (b) binary emulation of ternary logic on main die (55% power penalty -- current baseline), (c) TPU chiplet via NVLink-C2C (8-12mm² dedicated die, zero main die overhead -- recommended). The chiplet approach eliminates the area penalty on the main die entirely while preserving constitutional enforcement.
+
+**Closure criteria:** NVLink-C2C integration specification published with silicon budget table confirming zero main die area overhead. Architecture B chiplet first silicon demonstrating sub-nanosecond TPU communication latency at production NVLink-C2C speeds.
+
 ## Summary Table
 
 | Gap | Description | Current Status | Trigger for Resolution | Closure Criteria |
@@ -165,6 +205,7 @@ This document. See Gaps 1, 2, and 3 above.
 | Gap 1 | TSMC N2 TaOx RRAM PDK does not exist | Architecture B deployable now; N2 pending mandate | Legislative or regulatory mandate | PDK released; first silicon confirmed |
 | Gap 2 | IRS retention 20-year figure is a projection | Arrhenius extrapolation sound; corner validation pending | Gap 1 (N2 PDK availability) | Published corner validation data; IEC 61508 SIL 3 certification |
 | Gap 3 | Cycle endurance at N2 geometry not published | Prior-node data provides baseline; N2 pending | Gap 1 (N2 PDK availability) | Published N2 endurance characterization; recalibration schedule specified |
+| Gap 4 | TCMoS area penalty not justified to foundry; NVLink-C2C chiplet integration not specified | Chiplet approach conceptually referenced; integration steps missing | Architecture B availability | Silicon budget table published; NVLink-C2C integration steps specified; first chiplet silicon confirmed |
 
 ---
 
