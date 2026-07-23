@@ -1,9 +1,9 @@
 # Dual-Lane Latency Architecture in Ternary Logic (DLLA-TL)
 
-**Architect:** Lev Goukassian
-**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)
-**Repository:** FractonicMind/TernaryLogic
-**License:** CC BY 4.0
+**Architect:** Lev Goukassian   
+**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)   
+**Repository:** FractonicMind/TernaryLogic   
+**License:** CC BY 4.0   
 
 ---
 
