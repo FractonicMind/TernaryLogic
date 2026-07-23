@@ -41,7 +41,7 @@ When a TL-compliant system receives a prompt, a proposed action (+1), it immedia
 
 Once the log exists, the action faces its constitutional boundaries under the **Goukassian Principle**, the foundational clause binding every TL instance to the prohibitions **No Spy** and **No Weapon**. Only when these are honored does the system advance to the **Epistemic Hold**, where judgment meets evidence.
 
-The Epistemic Hold is automatically triggered whenever uncertainty, incompleteness, or conflict arises in the data. It also activates if two key mandates fail their verifications. The Hold enforces a structured pause, a formal zero state, with a target latency of under 300 milliseconds in high-performance systems until confidence is restored or the action is refused:
+The Epistemic Hold enforces a structured pause, a formal zero state, with a hardware-enforced Provisional Permission Token (PPT) issued in under 50 milliseconds on owned hardware in high-performance systems, until confidence is restored or the action is refused. Public blockchain anchoring completes asynchronously as an operator-configured integration parameter. See [Dual-Lane Latency Architecture](https://github.com/FractonicMind/TernaryLogic/tree/main/Dual_Latency_Architecture) for the full specification:
 
 * **Economic Rights & Transparency**, which examines ownership, consent, data provenance, and regulatory access.
 * **Sustainable Capital Allocation**, which tests sustainability claims, emissions data, and ESG veracity.
@@ -321,6 +321,30 @@ Their authority is large but bounded.
 Their job is continuity, not control.
 
 ---
+
+## **[Dual-Lane Latency Architecture (DLLA)](https://github.com/FractonicMind/TernaryLogic/tree/main/Dual_Latency_Architecture)**
+
+The Epistemic Hold is not merely a logical construct -- it is enforced at the silicon level by Delay-Insensitive Ternary Logic (DITL) and Muller C-elements. The Dual-Lane Latency Architecture specifies how:
+
+> **Hardware-enforced execution authorization in under 50ms.**
+
+**The Inference Lane (< 2ms):** Proposes actions at full speed. Never authorizes them.
+
+**The Governance Lane (< 50ms PPT):** Hashes, pre-computes the Merkle tree, signs via HSM, and issues the Provisional Permission Token -- entirely on owned hardware. No external dependency on the critical path.
+
+**The Final Permission Token (FPT):** Public blockchain anchoring completes asynchronously, operator-configured. Not a hardware specification. An integration parameter.
+
+The Muller C-element fires at 50ms. The Sacred Zero releases at 50ms. The external blockchain has nothing to do with it.
+
+| Document | Description |
+|---|---|
+| [README.md](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/README.md) | Architecture overview with 50ms specification table |
+| [PPT Specification Addendum](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/DLLA_PPT_SPECIFICATION_ADDENDUM.md) | Formally supersedes Section 2.2 latency claims |
+| [Engineering Gaps v1.0](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/DLLA_ENGINEERING_GAPS_v1.md) | Five gaps and Two-Token Architecture |
+| [Consumer Applications](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/DLLA_CONSUMER_APPLICATIONS.md) | Smartphone, OS exploit defense, personal privacy |
+
+---
+
 
 ## **Systemic Impact and Synthesis**
 
