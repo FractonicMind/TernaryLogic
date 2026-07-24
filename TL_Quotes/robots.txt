@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://fractonicmind.github.io/TernaryLogic/TL_Quotes/sitemap.xml
