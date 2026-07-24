@@ -1,11 +1,11 @@
 # Technical Commentary: The Lev Goukassian Memorial Fund and Ternary Logic Succession Charter
 
-**Framework:** "Ternary Logic" (TL) by Lev Goukassian
-**ORCID:** 0009-0006-5966-1243
-**DOI:** 10.1007/s43681-025-00910-6
-**DOI:** 10.1007/s43681-026-01124-0
-**Document Type:** Technical Commentary
-**Status:** Living document — references two sealed, notarized constitutional instruments
+**Framework:** "Ternary Logic" (TL) by Lev Goukassian   
+**ORCID:** 0009-0006-5966-1243   
+**DOI:** 10.1007/s43681-025-00910-6   
+**DOI:** 10.1007/s43681-026-01124-0   
+**Document Type:** Technical Commentary   
+**Status:** Living document — references two sealed, notarized constitutional instruments   
 
 ---
 
