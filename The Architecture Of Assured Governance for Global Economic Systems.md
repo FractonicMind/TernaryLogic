@@ -628,6 +628,55 @@ The **Slow Lane** is the asynchronous pathway responsible for the sovereign-grad
 2. **Deferred Anchoring:** At fixed intervals (ideally between 300ms and 500ms) 3, the Merkle Root of the accumulated batch is calculated.  
 3. **Cross-Chain Commitment:** This Merkle Root is then broadcast and anchored to the multi-chain public ledgers (Bitcoin, Ethereum, etc.). This commitment process is the necessary latency cost for achieving non-repudiable, tamper-proof, external time-stamping integrity (Pillar 8).
 
+#### **Constitutional Latency Boundary: The Provisional Permission Token (PPT)**
+
+The Dual-Lane architecture contains a constitutional specification boundary that the 300-500ms figure obscures and that must be stated precisely for regulatory, engineering, and legal clarity.
+
+The 300-500ms Slow Lane anchoring figure combines two components with fundamentally different properties:
+
+**Component A -- Hardware-owned processing (the Provisional Permission Token):**
+
+| Operation | Time | Owner |
+|---|---|---|
+| SHA-256 hash of Decision Log | ~1 μs | TL DITL hardware |
+| Merkle pre-computation (256 leaves) | ~16 μs at 1GHz | TL DITL hardware |
+| HSM signing of Merkle root | ~5-10 ms | TL hardware (HSM) |
+| Muller C-element Sacred Zero release | ~1 ns | TL DITL hardware |
+| **Provisional Permission Token (PPT) issued** | **< 50ms** | **TL hardware -- owned specification** |
+
+**Component B -- Operator-configured external anchoring (the Final Permission Token):**
+- Network transmission to anchoring service: variable, infrastructure-dependent
+- Blockchain consensus wait: variable, chain-dependent (sub-second to minutes)
+- Anchor receipt confirmation: variable
+- **Total: 300-500ms on current permissioned chains -- integration parameter, not hardware specification**
+
+These two components have been conflated in prior documentation. This section formally separates them.
+
+**The Provisional Permission Token (PPT)** is the authorizing artifact issued at the completion of Component A. It is issued in under 50ms on hardware TL controls. It satisfies the Muller C-element hysteresis gate. It releases the Sacred Zero. It authorizes provisional execution. The public blockchain has not been consulted. The public blockchain will not be consulted before execution is authorized.
+
+The PPT carries a `provisionalExpiry` field -- if the Final Permission Token does not arrive within the operator-configured window (default: 500ms from PPT issuance), the Muller C-element automatically reverts the provisional commit to Sacred Zero. This revert is hardware-enforced. No software instruction, no administrative override, and no market urgency can prevent it.
+
+**The Final Permission Token (FPT)** supersedes the PPT when Component B completes. The FPT provides sovereign-grade, publicly verifiable, non-repudiable proof that the Decision Log has been anchored to an external public ledger. FPT timing is the operator's infrastructure choice. On a permissioned chain with sub-second block times it is 300-500ms today. On future quantum-anchored infrastructure it may be nanoseconds. This evolution affects the FPT. It does not affect the PPT. The PPT will remain under 50ms as long as the hardware design is unchanged.
+
+**The constitutional significance of this distinction:**
+
+For regulatory compliance, what matters is that the Decision Log existed and was cryptographically sealed *before* execution. The PPT proves this in under 50ms. The FPT provides public, long-term verifiability of that proof. Both serve distinct legal functions:
+
+- **PPT** satisfies the "No Log = No Action" constitutional invariant at the moment of execution
+- **FPT** satisfies the sovereign-grade notarization requirement for long-term evidentiary validity under FRE 902(13), EU AI Act Art. 12, and Basel III audit requirements
+
+Neither can substitute for the other. Both are required. Their timing is independent.
+
+**The Two-Token constitutional model:**
+
+For high-frequency trading and financial execution contexts, the Two-Token model enables the DLLA to present its correct headline capability: *"Hardware-enforced execution authorization in under 50ms."* The 300-500ms figure accurately describes FPT completion on current infrastructure -- but this is the operator's integration parameter, not TL's hardware specification. As anchoring infrastructure evolves, the FPT window will change. The PPT window will not.
+
+The DLLA is not a 300-500ms architecture. It is a 50ms architecture with asynchronous public anchoring running in the background.
+
+**Full specification:** [`Dual_Latency_Architecture/DLLA_PPT_SPECIFICATION_ADDENDUM.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/DLLA_PPT_SPECIFICATION_ADDENDUM.md)
+
+**Engineering gaps and Two-Token Architecture:** [`Dual_Latency_Architecture/DLLA_ENGINEERING_GAPS_v1.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/DLLA_ENGINEERING_GAPS_v1.md)
+
 #### **Latency Neutrality and Compliance Bottlenecks** {#latency-neutrality-and-compliance-bottlenecks}
 
 TL achieves **latency neutrality** by making the **critical execution speed independent of the final audit notarization speed**.
