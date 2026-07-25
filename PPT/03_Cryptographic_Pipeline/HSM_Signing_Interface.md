@@ -315,7 +315,7 @@ Before declaring the HSM signing interface operational:
 | `02_Hardware_Primitives/C_Element_Interlock.v` | Receives HSM signature validity as ppt_valid input |
 | `01_Architecture_Specs/Dual_Lane_Governance.md` | FPT routing table — HSM session continuity during failover |
 | `05_Research/Session-2_Deep_Research.md` | Q6 security analysis — HSM compromise treatment |
-| `DS_50ms.md` | DeepSeek Governor Independence research — measured throughput figures, Thales HA failover behavior |
+| `PPT_Governor_Independence_Research.md` | Governor Independence research — measured throughput figures, Thales HA failover behavior |
 | `06_Publication/PPT_Paper_Draft.md` | Section 7.3 — HSM compromise architectural dependency |
 
 ---
