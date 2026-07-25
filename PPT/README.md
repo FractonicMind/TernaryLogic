@@ -144,8 +144,8 @@ PPT/
 ├── 05_Research/                       ← The evidentiary foundation
 │   ├── Session-2_Deep_Research.md     Deep research Q3–Q11 — full evidence base
 │   ├── Governor_Independence_Note.md  50ms marker as Lane 1 autonomy — architectural note
-│   ├── Governor_Independence_Prompt.md Research prompt sent to Qwen and DeepSeek
-│   └── Qwen_Governor_Independence.md  Qwen's Governor Independence research response (archived)
+│   ├── Governor_Independence_Prompt.md Research prompt for external deep research sessions
+│   └── PPT_Governor_Independence_Domain_Analysis.md  Governor Independence domain analysis and failure mitigation (archived)
 │
 └── 06_Publication/                    ← Submission-ready outputs
     ├── PPT_Paper_Draft.md             Academic paper — TechRxiv/SSRN/Zenodo target
