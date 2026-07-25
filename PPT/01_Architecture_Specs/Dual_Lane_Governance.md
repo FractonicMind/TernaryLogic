@@ -239,7 +239,7 @@ Propagation is hardware-level; revocation completes within one clock cycle of ex
 | `C_Element_Rollback.md` | What happens when Lane 2 fails to deliver FPT in time |
 | `PPT_Token_Schema.md` | The logging payload dispatched to Lane 2 at the fork; routing key fields defined here |
 | `05_Research/Governor_Independence_Note.md` | Extended architectural treatment of the 50ms autonomy principle |
-| `DS_50ms.md` | DeepSeek Governor Independence research — routing key and memory footprint analysis |
+| `PPT_Governor_Independence_Research.md` | Governor Independence research — routing key and memory footprint analysis |
 | `05_Research/Session-2_Deep_Research.md` | Q3 architectural soundness analysis; Q8 domain integration |
 
 ---
