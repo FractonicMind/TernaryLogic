@@ -16,7 +16,7 @@ Do not re-evaluate the base architecture. All prior findings are accepted as the
 
 In TL's base DLLA specification, the two-lane architecture operates as follows:
 
-- Lane 1 (Authorization Lane): PPT is minted and issued. C-element releases State 0. Provisional execution begins.
+- Lane 1 (Inference Lane): PPT is minted and issued. C-element releases State 0. Provisional execution begins.
 - Lane 2 (Governance Lane): Logging payload is dispatched. External anchoring proceeds. FPT is issued and delivered. System transitions to State 2.
 
 The implicit reading of the base specification is a **coupled cycle**: Lane 1 issues a PPT, waits for Lane 2 to complete its anchoring, receives the FPT, confirms State 2, and then resets for the next authorization request. Lane 1's throughput is therefore coupled to Lane 2's anchoring latency — typically 300–500 ms.
@@ -39,7 +39,7 @@ The following terminology is defined within TL's framework and must not be subst
 - **Provisional Execution** = TL's State 1. Authorized under PPT. Subject to reversal.
 - **Final Confirmed Execution** = TL's State 2. Authorized under FPT. Irreversible.
 - **Governance Lane** = TL's Lane 2. Infrastructure-owned. FPT is produced here.
-- **Authorization Lane** = TL's Lane 1. Hardware-owned. PPT is produced here.
+- **Inference Lane** = TL's Lane 1. Hardware-owned. PPT is produced here.
 - **provisionalExpiry** = The hardware watchdog that fires if FPT does not arrive in time, returning the system to State 0.
 - **Governor** = The C-element consensus gate.
 - **Governor Independence** = The property that Lane 1 resets at the 50ms fork regardless of Lane 2 completion status.
