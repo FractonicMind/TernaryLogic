@@ -26,7 +26,7 @@ The DLLA decouples them.
 
 ---
 
-## Lane 1 — The Authorization Lane
+## Lane 1 — The Inference Lane
 
 **Owner:** MT hardware layer  
 **Latency:** Under 50 ms (warm path, operational steady state)  
