@@ -60,7 +60,7 @@ Throughput ceiling: governed by HSM signing rate (~5–10ms/PPT), not anchoring 
 | Coupled cycle | ~300–500ms | ~300–500ms | 1 | ~2–3% |
 | Governor Independence | ~5–10ms | ~300–500ms | **30–100** | ~100% |
 
-The precise concurrent PPT formula [Engineering Estimate — DeepSeek GI-TL-2026-07-25]:
+The precise concurrent PPT formula [Engineering Estimate — GI-TL-2026-07-25]:
 
 ```
 Concurrent PPTs = Lane 2 anchoring time / Lane 1 cycle time
