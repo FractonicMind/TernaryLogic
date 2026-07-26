@@ -21,7 +21,7 @@ This directory is the hardware implementation layer of TL's Dual-Lane Latency Ar
 
 | Constitutional specification | Link |
 |---|---|
-| Architecture overview and Iron Law | [`Dual_Latency_Architecture/README.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/README.md) |
+| Architecture overview and Iron Law | [`Dual_Latency_Architecture/Readme.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/Readme.md) |
 | Primary hardware specification | [`Hardware_Enforceable_Execution_Model_Specification.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/Hardware_Enforceable_Execution_Model_Specification.md) |
 | PPT/FPT two-token constitutional model | [`DLLA_PPT_SPECIFICATION_ADDENDUM.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/DLLA_PPT_SPECIFICATION_ADDENDUM.md) |
 | Engineering gap analysis | [`DLLA_ENGINEERING_GAPS_v1.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/DLLA_ENGINEERING_GAPS_v1.md) |
