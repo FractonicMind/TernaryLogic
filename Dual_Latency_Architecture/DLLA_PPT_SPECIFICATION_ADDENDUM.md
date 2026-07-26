@@ -3,10 +3,10 @@
 ## **Architectural Reframing: Own the Numbers You Can Prove**
 
 **Architect:** Lev Goukassian
-**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)
-**Repository:** FractonicMind/TernaryLogic
-**Parent Specification:** [`Hardware_Enforceable_Execution_Model_Specification.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/Hardware_Enforceable_Execution_Model_Specification.md)
-**Addendum Status:** Constitutional -- supersedes Section 2.2 latency claims in the parent specification
+**ORCID:** [0009-0006-5966-1243](https://orcid.org/0009-0006-5966-1243)   
+**Repository:** FractonicMind/TernaryLogic   
+**Parent Specification:** [`Hardware_Enforceable_Execution_Model_Specification.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/Dual_Latency_Architecture/Hardware_Enforceable_Execution_Model_Specification.md)   
+**Addendum Status:** Constitutional -- supersedes Section 2.2 latency claims in the parent specification   
 **License:** CC BY 4.0
 
 ---
