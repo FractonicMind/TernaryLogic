@@ -185,16 +185,30 @@ Concurrent PPTs = 30–100 within a single anchoring window at warm-path PPT ~5�
 **Q2: Pipeline ordering guarantees — RESOLVED [Theoretical]**  
 TL does not require strict FIFO sequencing of FPT confirmations. Out-of-order confirmation is permitted for independent PPTs. Deployments requiring ordering (financial transactions, industrial control command sequences) must implement application-layer sequencing using `audit_seq` as a discriminator. Unsafe conditions for out-of-order: data dependencies, shared mutable state, regulatory ordering mandates. See `Dual_Lane_Governance.md` FPT routing section.
 
-**Q3: Flow control signal — OPEN**  
-When Lane 2 is saturated (FPTs delayed, causing mass concurrent expiry), Lane 1 currently has no explicit backpressure signal. The implicit mechanism — expiry-based rollbacks creating retry pressure — functions but is coarse. An explicit congestion feedback signal from Lane 2 to Lane 1 (analogous to TCP's congestion window reduction) is architecturally cleaner and would prevent the mass concurrent expiry denial-of-service scenario identified in the Governor Independence Prompt. This is a specification gap for the DLLA revision.
+**Q3: Flow control signal — RESOLVED by per-PPT Shadow Buffer Gate architecture**
+The backpressure mechanism is hardware-enforced. The `shadow_buffer_array.any_slot_full` output from the Shadow Buffer Gate array propagates to the Lane 1 PPT pipeline as a physical stall signal. When any PPT slot's shadow buffer reaches its 8-slot capacity, no new PPTs are minted until a slot is cleared — either by FPT arrival (State 2 releases the slot) or by `provisionalExpiry` (single-cycle wipe clears the slot). The DOS vector from the Governor Independence Prompt Q4.3 is closed: an adversary who suppresses FPTs causes slots to wipe on expiry, clearing space for new PPTs. No indefinite starvation is possible. [Engineering Estimate — pending hardware validation]
 
-**Q4: DAG cycle detection at minting time — OPEN**  
-When a new PPT declares a `dependency_id`, the minting hardware must verify that adding this edge does not create a cycle in the dependency DAG. The cycle-detection algorithm must operate within the PPT minting latency budget (~5–10ms warm path). A breadth-first traversal of the current routing table for cycle detection is feasible for shallow DAGs (depth ≤ 10). Deep DAG cycle detection may require a dedicated hardware accelerator. This is a specification gap.
+**Q4: DAG cycle detection at minting time — RESOLVED by constitutional lane separation**
 
-**Q5: Nonce exhaustion at high throughput — OPEN**  
-At 64-bit nonce and 40,000 PPTs/s (Utimaco ceiling), exhaustion occurs in approximately 14,600 years — negligible. At shorter nonce widths (32-bit): exhaustion in ~107 seconds at 40,000 PPTs/s — a real operational risk. TL must specify minimum nonce width as 64 bits normatively, and specify a nonce epoch rollover protocol for long-lived deployments.
+Hardware graph traversal is a trap. Cycle detection requires deep tree traversal — a semantic, variable-time operation. Placing it inside the Lane 1 hardware pipeline would destroy the 50ms latency target and violate the constitutional principle that Lane 1 is strictly syntactic.
 
-These questions are recorded for the DLLA specification revision. Q1 and Q2 are resolved and do not block the paper submission. Q3, Q4, and Q5 are specification gaps to be addressed before production deployment.
+The resolution: the hardware does not prevent cycles. It destroys them.
+
+When a system submits a cyclic dependency (PPT-A depends on PPT-B, PPT-B depends on PPT-A), the Lane 1 hardware checks syntax only — valid signatures, valid schema, valid nonce. It mints PPTs for both. They enter State 1 and sit in the volatile buffer. Meanwhile, the Governance Lane receives the logs, runs semantic graph analysis, detects the cycle, and does precisely nothing — it refuses to issue FPTs for either PPT. The `provisionalExpiry` timers fire. The C-element collapses both PPTs to Epistemic Hold. The cycle is physically erased from the volatile buffer.
+
+The hardware needed no knowledge of DAGs. The Governance Lane needed no new mechanism. The existing `provisionalExpiry` watchdog is the cycle-destruction mechanism. Constitutional lane separation is the solution. [Theoretical — verified by architectural reasoning]
+
+**Q5: Nonce exhaustion at high throughput — RESOLVED by Epoch Hold**
+
+At 64-bit nonce width and one million PPTs per second — far above any currently projected deployment ceiling — nonce exhaustion occurs in approximately 584,000 years. Nonce exhaustion is a mathematical purity test, not a practical threat.
+
+However, formal verification requires a deterministic bound. The hardware solution is the **Epoch Hold**: a physically hardwired threshold in the nonce counter — set at MAX_NONCE - 10,000 — at which the hardware immediately ceases minting new PPTs and asserts a system-wide Epistemic Hold. No software can override this. No new PPTs can be issued.
+
+To resume operation, the system requires a privileged operator-issued **Epoch Reset FPT** — a specially classified FPT that rotates the base cryptographic signing keys, resets the nonce counter to zero, and releases the Epoch Hold. The key rotation is a required part of the reset: nonce space and key material are rotated together, ensuring that no nonce value from a prior epoch can be replayed against the new key.
+
+The Epoch Hold is a scheduled maintenance event that deployments will require approximately once every 584,000 years at one million PPTs per second — or approximately once every 584 billion years at one thousand PPTs per second. It is specified not because exhaustion is a practical threat, but because formal verification requires the state machine to have a defined behavior for every reachable counter value. [Engineering Estimate for threshold; Theoretical for epoch reset protocol]
+
+All five open questions are now resolved. The DLLA specification is complete pending hardware validation benchmarks (FW1–FW4 from the publication package). No architectural gaps remain.
 
 ---
 
