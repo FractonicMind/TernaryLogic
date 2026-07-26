@@ -251,3 +251,34 @@ A framework that publishes its gap acknowledgments is a framework that can be tr
 
 *"Pause when truth is uncertain. Refuse when harm is clear. Proceed where truth is."*
 -- The Goukassian Vow
+
+---
+
+## Resolution Addendum: PPT Implementation Layer
+
+The gaps identified in this document relating to **external I/O rollback semantics** — the inability of a hardware State 0 reversion to undo actions that have already crossed the system boundary (network transmissions, actuator engagement, financial transfers) — are resolved in the PPT implementation layer.
+
+**The resolution: The Reversibility Boundary and Shadow Buffer Gate.**
+
+The PPT folder introduces two constitutional primitives that close this gap architecturally:
+
+**Reversibility Boundary** — a constitutional definition that divides every action into two classes, fixed at hardware deployment in silicon topology:
+- **Class R (Reversible):** ALU operations, volatile registers, internal computation. Execute freely during provisional execution. The C-element destroys them on `provisionalExpiry`.
+- **Class I (Irreversible):** Network transmissions, financial bus transfers, actuator commands, outbound signals. Physically wired through the Shadow Buffer Gate. The port stays CLOSED during provisional execution.
+
+**Shadow Buffer Gate** — a dedicated hardware component (`PPT/02_Hardware_Primitives/Shadow_Buffer_Gate.v`) whose physical port enable pin is wired exclusively to the **State 2 output rail** of the C-element state machine. The FPT does not directly open the port. State 2 opens the port. Class I actions cannot enter the world until constitutional finality is confirmed.
+
+**The adversarial consequence:** An adversary who suppresses FPT delivery to force mass `provisionalExpiry` gains nothing. The volatile buffer is grounded (Class R destroyed). The shadow buffer is cleared (Class I discarded). The physical port was never opened. No action entered the world during the provisional window. The adversary has caused a localized waste of electricity.
+
+**Implementation resources:**
+
+| Resource | Link |
+|---|---|
+| Reversibility Boundary specification | [`PPT/01_Architecture_Specs/C_Element_Rollback.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/PPT/01_Architecture_Specs/C_Element_Rollback.md) |
+| Shadow Buffer Gate RTL | [`PPT/02_Hardware_Primitives/Shadow_Buffer_Gate.v`](https://github.com/FractonicMind/TernaryLogic/blob/main/PPT/02_Hardware_Primitives/Shadow_Buffer_Gate.v) |
+| PPT Lifecycle with Class R/Class I fork | [`PPT/01_Architecture_Specs/PPT_Lifecycle.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/PPT/01_Architecture_Specs/PPT_Lifecycle.md) |
+| Constitutional architecture (Section 3.6) | [`TL_Constitutional_Architecture_of_Assured_Governance_v.2.0.md`](https://github.com/FractonicMind/TernaryLogic/blob/main/TL_Constitutional_Architecture_of_Assured_Governance_v.2.0.md) |
+| Full PPT implementation directory | [`PPT/`](https://github.com/FractonicMind/TernaryLogic/tree/main/PPT) |
+
+The remaining gaps in this document — EDA compiler C-element preservation constraints (Gap 1) and external timing side-channel via hold flood attack (Gap 2) — remain open engineering tasks unaffected by the PPT implementation layer. Buffer threshold specification (Gap 3) is resolved: the Shadow Buffer Gate implements per-PPT instances with BUFFER_DEPTH = 8 slots and a hardware backpressure signal (`any_slot_full`) that stalls new PPT minting when capacity is reached.
+
