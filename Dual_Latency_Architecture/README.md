@@ -2,7 +2,7 @@
 ### Ternary Logic — Dual-Lane Latency Architecture
 **Author:** Lev Goukassian | FractonicMind  
 **Framework:** Ternary Logic (TL) — published in *AI and Ethics*, Springer Nature  
-**DOI:** 10.1007/s43681-026-01124-0  
+**DOI:** ![10.1007/s43681-026-01124-0](https://link.springer.com/article/10.1007/s43681-026-01124-0)  
 **Repository:** FractonicMind/TernaryLogic
 
 ---
