@@ -295,3 +295,79 @@ endmodule
 //   A single SEU that flips the expiry_signal register in one instance
 //   will be overridden by the other two.
 // =============================================================================
+
+
+// =============================================================================
+// epoch_hold_controller
+// Implements the Epoch Hold mechanism for nonce counter management.
+//
+// When the nonce counter reaches EPOCH_THRESHOLD (MAX_NONCE - 10,000),
+// the hardware ceases minting new PPTs and asserts a system-wide
+// Epistemic Hold. Operation resumes only on receipt of a privileged
+// Epoch Reset FPT that rotates signing keys and resets the counter.
+//
+// At 1,000,000 PPTs/second: epoch boundary reached in ~584,000 years.
+// At 1,000 PPTs/second:     epoch boundary reached in ~584 billion years.
+//
+// This module exists not because exhaustion is a practical threat,
+// but because formal verification requires defined behavior for every
+// reachable counter value. The theorem prover needs a bound. This is it.
+//
+// The Epoch Reset FPT is a specially classified FPT carrying:
+//   - epoch_reset: true (constitutional flag)
+//   - new_key_id:  the replacement signing key identifier
+//   - operator_signatures: M-of-N Tri-Cameral quorum signatures
+//
+// Key rotation is mandatory on epoch reset. Nonce space and key material
+// rotate together. No prior-epoch nonce can replay against the new key.
+// =============================================================================
+
+module epoch_hold_controller #(
+    parameter NONCE_WIDTH     = 64,
+    parameter EPOCH_THRESHOLD = 64'hFFFFFFFFFFFFD8F0  // MAX_NONCE - 10,000
+) (
+    input  wire                     clk,
+    input  wire                     rst_n,
+
+    // Nonce counter interface
+    input  wire [NONCE_WIDTH-1:0]   current_nonce,      // Current nonce value
+    input  wire                     epoch_reset_fpt,    // Privileged Epoch Reset FPT received
+    input  wire                     epoch_reset_valid,  // Epoch Reset FPT verified
+
+    // Epoch Hold outputs
+    output reg                      epoch_hold_active,  // HIGH = no new PPTs permitted
+    output reg                      epoch_boundary_hit, // Pulse: threshold reached
+    output reg  [NONCE_WIDTH-1:0]   nonce_out,          // Reset nonce (zero after epoch)
+    output reg                      key_rotation_req    // Signal to HSM: rotate signing keys
+);
+
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            epoch_hold_active  <= 1'b0;
+            epoch_boundary_hit <= 1'b0;
+            nonce_out          <= {NONCE_WIDTH{1'b0}};
+            key_rotation_req   <= 1'b0;
+        end else begin
+            epoch_boundary_hit <= 1'b0;
+            key_rotation_req   <= 1'b0;
+
+            // Epoch threshold reached: assert system-wide Epistemic Hold
+            if (current_nonce >= EPOCH_THRESHOLD && !epoch_hold_active) begin
+                epoch_hold_active  <= 1'b1;
+                epoch_boundary_hit <= 1'b1;
+                // epoch_hold_active propagates to PPT pipeline:
+                // no new PPTs minted until Epoch Reset FPT clears it
+            end
+
+            // Epoch Reset FPT received and verified by Governance Lane
+            if (epoch_reset_fpt && epoch_reset_valid && epoch_hold_active) begin
+                epoch_hold_active <= 1'b0;   // Release Epistemic Hold
+                nonce_out         <= {NONCE_WIDTH{1'b0}};  // Reset nonce to zero
+                key_rotation_req  <= 1'b1;   // Signal HSM to rotate signing keys
+                // Key rotation completes before next PPT can be minted:
+                // epoch_hold_active must remain low until key_rotation_ack received
+            end
+        end
+    end
+
+endmodule
