@@ -141,19 +141,23 @@ Power-on reset sequence must include buffer-validity-bit zeroing before Lane 1 i
 
 ## Rollback Scope Boundary
 
-To be explicit about what TL's hardware rollback covers and what it does not:
+To be explicit about what TL's hardware rollback covers and what it does not. The Reversibility Boundary — defined in `PPT_Lifecycle.md` Phase 1 and enforced by `Shadow_Buffer_Gate.v` — is the constitutional primitive that governs this table.
 
-| Scope | Covered by hardware rollback | Notes |
-|---|---|---|
-| Authorization state (State 1 → State 0) | **Yes** | C-element collapse |
-| Volatile buffer contents | **Yes** | Buffer invalidation signal |
-| In-flight Lane 1 pipeline state | **Yes** | Pipeline flush on enable deassertion |
-| Writes to persistent storage (database, filesystem) | **No** | Requires transactional storage layer |
-| Transmitted network packets | **No** | Requires application compensating logic |
-| Engaged actuators (physical outputs) | **No** | Requires domain-specific reversal command |
-| Lane 2 in-progress FPT construction | **No** | Lane 2 runs independently; post-expiry FPT must be rejected |
+| Scope | Covered by hardware rollback | Mechanism | Notes |
+|---|---|---|---|
+| Authorization state (State 1 → State 0) | **Yes** | C-element collapse | Core rollback |
+| Volatile buffer contents (Class R) | **Yes** | Buffer invalidation signal | Grounded on `provisionalExpiry` |
+| In-flight Lane 1 pipeline state | **Yes** | Pipeline flush on enable deassertion | |
+| Shadow buffer contents (Class I staged) | **Yes** | Shadow buffer cleared on State 0 return | Class I payloads discarded — never released |
+| Physical port (NIC, actuator, outbound bus) | **Yes — port remains CLOSED** | State 2 rail never asserted; port_enable stays low | Class I actions never entered the world |
+| Writes to persistent storage (external) | **No** | Requires transactional storage layer beneath TL | Must be Class I — routed through shadow buffer |
+| Transmitted network packets | **Closed by Reversibility Boundary** | NIC is Class I — physically wired through Shadow Buffer Gate | Packets cannot be transmitted during State 1 |
+| Engaged actuators | **Closed by Reversibility Boundary** | Actuator bus is Class I — physically wired through Shadow Buffer Gate | Actuators cannot engage during State 1 |
+| Lane 2 in-progress FPT construction | **No** | Lane 2 runs independently | Post-expiry FPT must be rejected |
 
-Applications operating in TL's provisional execution window must be designed with the understanding that hardware rollback covers volatile state only. Persistent and externally visible effects require application-layer compensation.
+**The critical change from prior specification:** Holes 1 and 5 — externally visible actions during the provisional window — are closed by the Reversibility Boundary and Shadow Buffer Gate. Class I actions (network transmissions, actuator engagement, outbound bus signals) are physically staged behind the Shadow Buffer Gate during State 1. The port_enable signal is wired to the State 2 output rail of the C-element — not to any software register, not to the FPT directly. Class I actions cannot reach the world during provisional execution. They reach the world only when State 2 is achieved.
+
+An adversary who suppresses FPT delivery to force mass `provisionalExpiry` gains nothing: the volatile buffer is grounded (Class R destroyed), the shadow buffer is cleared (Class I discarded), and the physical port was never opened. The adversary has caused a localized waste of electricity.
 
 ---
 
