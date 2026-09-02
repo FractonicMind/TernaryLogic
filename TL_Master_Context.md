@@ -171,7 +171,7 @@ This preserves TL as a stable architecture rather than a shifting political inst
 Three sentences define the nature of TL:
 
 **Evidence Must Always Catch Up.**   
-**No Log means No Sction.**   
+**No Log means No Action.**   
 **There is no Switch Off.**   
 
 These statements form the covenant between TL and the world.
