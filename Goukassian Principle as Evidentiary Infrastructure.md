@@ -1,4 +1,4 @@
-# **The Persistence of Authorship in Ethical Governance: A Legal-Technical Evaluation of the Goukassian Promise and Ternary Moral Logic**
+# **The Persistence of Authorship in Ethical Governance: A Legal-Technical Evaluation of the Goukassian Principle and Ternary Logic**
 
 **Document Classification:** Sovereign-Grade Governance Specification / Doctrinal Analysis  
 **Subject:** Provenance Anchoring, Cryptographic Liability, and the Goukassian Principle  
@@ -72,7 +72,7 @@ History demonstrates that foundational accountability frameworks often preserve 
 * **Constitutional Law:** The "Madisonian" model of checks and balances or the "Jeffersonian" ideal of agrarian democracy are terms of art in US Constitutional law. In Germany, the "Eternity Clause" (Article 79(3) of the Basic Law) protects the principles of human dignity and the federal structure, concepts directly attributable to the post-war framers' reaction to the Nazi regime. The authors' intent is the interpretive key to the law.  
 * **Scientific Attribution:** The **Newtonian** laws of motion or **Einsteinian** relativity remain anchored to their discoverers. This attribution serves as a provenance marker for the paradigm within which calculations are made.
 
-In TL, the "Goukassian" attribution functions similarly. It signals that the system is not a generic optimizer but a specific implementation of "Ternary Moral Logic." If the name were removed, the system would become generic, and its specific constraints (No Spy/No Weapon) could be framed as "optional configurations" rather than "constitutional mandates."
+In TL, the "Goukassian" attribution functions similarly. It signals that the system is not a generic optimizer but a specific implementation of "Ternary Logic." If the name were removed, the system would become generic, and its specific constraints (No Spy/No Weapon) could be framed as "optional configurations" rather than "constitutional mandates."
 
 ### **3.2 The "Eternity Clause" of Ternary Logic**
 
@@ -118,7 +118,7 @@ A primary criticism of ethical governance systems is that they introduce unaccep
 | Lane | Function | Latency Budget | Mechanism |
 | :---- | :---- | :---- | :---- |
 | **Lane 1 (Primary)** | Execution | \< 300 ms | Handles the transactional logic. It checks the state. If State is \+1, it executes. If 0 or \-1, it halts. This lane is optimized for speed. |
-| **Lane 2 (Parallel)** | Evidence/Logging | Asynchronous | Captures the "Moral Trace Log." It hashes the decision, the inputs, and the Vow adherence. It batches these hashes and anchors them to the blockchain. |
+| **Lane 2 (Parallel)** | Evidence/Logging | Asynchronous | Captures the "Decision Log." It hashes the decision, the inputs, and the Vow adherence. It batches these hashes and anchors them to the blockchain. |
 
 **Critical Insight:** The "No Log \= No Action" mandate 2 is enforced via an atomic coupling. The *commitment* to log must occur before the action. The system generates a cryptographic commitment (a promise to log) in real-time. If the logging lane fails (e.g., the logging server is down), the primary lane locks. This ensures that speed never outpaces accountability. Execution is not delayed by the *writing* of the log to the blockchain (which is slow), but by the *commitment* to write (which is fast).
 
