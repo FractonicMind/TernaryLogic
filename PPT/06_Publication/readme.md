@@ -39,7 +39,7 @@ Three extensions derived from post-draft review:
 |---|---|
 | `Goukassian_2026_Structural_Invariants_ASI_NonCooperation_v1.1.docx` | Full academic paper (20 pages, Times New Roman, double-spaced) |
 | [Hardware-Enforced_ASI_Governance_Architecture.png](https://github.com/FractonicMind/TernaryLogic/blob/main/PPT/06_Publication/Hardware-Enforced_ASI_Governance_Architecture.png) | Cover image - full architecture overview |
-| [Hardwired_ASI_Governance.pdf](https://github.com/FractonicMind/TernaryLogic/blob/main/PPT/06_Publication/Hardwired_ASI_Cooperation.pdf) | Visual companion - blueprint/schematic edition (technical audience) |
+| [Hardwired_ASI_Cooperation.pdf](https://github.com/FractonicMind/TernaryLogic/blob/main/PPT/06_Publication/Hardwired_ASI_Cooperation.pdf) | Visual companion - blueprint/schematic edition (technical audience) |
 | [Structural_ASI_Governance.pdf](https://github.com/FractonicMind/TernaryLogic/blob/main/PPT/06_Publication/Structural_ASI_Governance.pdf) | Visual companion - infographic edition (public and policy audience) |
 | [Hardware_Enforced_AI_Governance.pdf](https://github.com/FractonicMind/TernaryLogic/blob/main/PPT/06_Publication/Hardwired_ASI_Governance.pdf) | Visual companion - presentation edition (warm light style) |
 
