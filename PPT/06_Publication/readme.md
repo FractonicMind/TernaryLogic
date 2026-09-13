@@ -42,7 +42,8 @@ Three extensions derived from post-draft review by five independent AI research 
 
 ## Citation
 
-Goukassian, L. (2026). Structural Invariants and the Architectural Impossibility of Artificial Superintelligence Non-Cooperation: Hardware-Enforced Governance Through Ternary Logic. Zenodo. https://doi.org/10.5281/zenodo.XXXXXXX
+Goukassian, L. (2026). Structural Invariants and the Architectural Impossibility of Artificial Superintelligence Non-Cooperation: Hardware-Enforced Governance Through Ternary Logic.   
+Zenodo. https://zenodo.org/records/22736549
 
 ## Related publications
 
