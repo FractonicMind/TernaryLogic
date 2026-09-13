@@ -4,10 +4,10 @@
 
 **Title:** Structural Invariants and the Architectural Impossibility of Artificial Superintelligence Non-Cooperation: Hardware-Enforced Governance Through Ternary Logic
 
-**Author:** Lev Goukassian
-**Version:** 1.1 - September 2026
-**Zenodo DOI:** https://doi.org/10.5281/zenodo.22736549
-**ORCID:** 0009-0006-5966-1243
+**Author:** Lev Goukassian   
+**Version:** 1.1 - September 2026   
+**Zenodo DOI:** https://doi.org/10.5281/zenodo.22736549   
+**ORCID:** 0009-0006-5966-1243   
 
 ---
 
