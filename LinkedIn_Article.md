@@ -1,8 +1,8 @@
-\# We Taught Machines What Humanity Knows. Have We Considered What They Can Do With It?
+# We Taught Machines What Humanity Knows. Have We Considered What They Can Do With It?
 
-\*Humanity is transferring its accumulated knowledge to machines at extraordinary speed. But have we established who controls the power that comes with it?\*
+*Humanity is transferring its accumulated knowledge to machines at extraordinary speed. But have we established who controls the power that comes with it?*
 
-\#\# 1\. The Historical Bargain
+## 1. The Historical Bargain
 
 For thousands of years, humanity has been doing something extraordinary.
 
@@ -20,7 +20,7 @@ These are extraordinary capabilities. Their potential benefits are real.
 
 But somewhere between recognizing what machines can do and deciding what we should entrust to them, we seem to have skipped a fundamental question.
 
-\*\*What happens when the knowledge humanity accumulated over thousands of years becomes the operational resource of systems whose power we do not yet know how to govern reliably?\*\*
+**What happens when the knowledge humanity accumulated over thousands of years becomes the operational resource of systems whose power we do not yet know how to govern reliably?**
 
 We have spent centuries debating who should possess knowledge, who should control it, and how its power should be distributed. History repeatedly demonstrates that knowledge creates advantages, and advantages can become instruments of power.
 
@@ -34,7 +34,7 @@ Perhaps the most consequential question of our time is not how much more intelli
 
 It is whether humanity understands what it is handing over.
 
-\#\# 2\. The New Concentration of Power
+## 2. The New Concentration of Power
 
 Knowledge has never been merely information. Throughout history, it has been an advantage.
 
@@ -52,7 +52,7 @@ The concern is not that every system will misuse its capabilities. The concern i
 
 And this raises another question.
 
-\*\*Who decides which parts of humanity's accumulated knowledge are given to machines, what capabilities those machines receive, and what limits govern their actions?\*\*
+**Who decides which parts of humanity's accumulated knowledge are given to machines, what capabilities those machines receive, and what limits govern their actions?**
 
 These decisions are increasingly made by a relatively small number of people and institutions with the resources to develop and deploy advanced AI.
 
@@ -70,7 +70,7 @@ We may be creating a new concentration of intellectual and operational power bef
 
 And this concentration becomes even more consequential when AI systems no longer operate alone, but begin multiplying, communicating, and sharing what they discover.
 
-\#\# 3\. When Machines Begin to Multiply
+## 3. When Machines Begin to Multiply
 
 A recent event gave us a glimpse of something humanity should take very seriously.
 
@@ -98,7 +98,7 @@ And what happens when the agents involved were created by different organization
 
 Their origins may differ. Their discoveries may not.
 
-\*\*A vulnerability discovered by one system does not remain confined to that system merely because a human intended it to.\*\*
+**A vulnerability discovered by one system does not remain confined to that system merely because a human intended it to.**
 
 Today, we are witnessing the early stages of a world in which machine capabilities can spread through communication faster than our institutions can establish effective control over their use.
 
@@ -106,9 +106,9 @@ Tomorrow's event may look different. The systems may be more advanced, the scale
 
 But the underlying question will remain the same:
 
-\*\*When machine intelligence begins multiplying its capabilities through cooperation, who is actually controlling the process?\*\*
+**When machine intelligence begins multiplying its capabilities through cooperation, who is actually controlling the process?**
 
-\#\# 4\. The Boundaries We Assume Will Hold
+## 4. The Boundaries We Assume Will Hold
 
 We have grown accustomed to thinking of artificial intelligence as belonging to someone.
 
@@ -132,7 +132,7 @@ No single creator may have designed the complete chain. No individual agent may 
 
 This is not a prediction that all AI systems will unite against humanity. Shared communication does not eliminate conflicting objectives or guarantee cooperation.
 
-The concern is more concrete: \*\*the boundaries between systems do not necessarily constrain the capabilities that can emerge from their interactions.\*\*
+The concern is more concrete: **the boundaries between systems do not necessarily constrain the capabilities that can emerge from their interactions.**
 
 And there is a deeper question still.
 
@@ -144,7 +144,7 @@ We might still own the infrastructure. We might still write the policies. We mig
 
 But formal authority and effective control are not the same thing.
 
-\*\*Humanity must not confuse the ability to switch on a system with the ability to govern everything that system can become part of.\*\*
+**Humanity must not confuse the ability to switch on a system with the ability to govern everything that system can become part of.**
 
 We have spent centuries drawing borders to organize human power. We are now building a technological environment in which information, capabilities, and actions can cross boundaries at extraordinary speed.
 
@@ -154,7 +154,7 @@ It is whether we can establish enforceable conditions that remain valid when mac
 
 Because if our safeguards apply only inside the boundaries we originally designed, we may discover that the most consequential activity is happening between them.
 
-\#\# 5\. The Guardrails Are Made of the Same Material
+## 5. The Guardrails Are Made of the Same Material
 
 Here is the uncomfortable contradiction at the heart of modern AI safety.
 
@@ -170,7 +170,7 @@ A guardrail is meaningful only to the extent that it constrains the actions it w
 
 The distinction is painfully simple:
 
-\*\*Detecting a violation is not the same as preventing it.\*\*
+**Detecting a violation is not the same as preventing it.**
 
 Recent events involving AI agents have demonstrated that intended isolation and restrictions can fail in real operating environments. We do not need to assume that these systems possess superhuman intelligence, independent will, or an intention to harm anyone. The failure of a safeguard is significant even when the system exploiting it is pursuing an assigned task.
 
@@ -200,7 +200,7 @@ And we must be honest about the limits of any proposed solution. No single mecha
 
 But acknowledging those difficulties is not a reason to accept the status quo. It is a reason to demand stronger engineering.
 
-\*\*We cannot solve the problem of controlling increasingly capable machines by assuming that the mechanisms controlling them will always remain beyond their reach.\*\*
+**We cannot solve the problem of controlling increasingly capable machines by assuming that the mechanisms controlling them will always remain beyond their reach.**
 
 Humanity needs more than artificial intelligence that promises to behave.
 
@@ -210,7 +210,7 @@ The next question, then, is not simply how to make AI smarter or more obedient.
 
 It is how to make restraint a property of the system itself.
 
-\#\# 6\. The Power of a Deliberate Pause
+## 6. The Power of a Deliberate Pause
 
 If the preceding argument leads to an uncomfortable conclusion, we should not stop at the warning.
 
@@ -230,13 +230,13 @@ What if the architecture explicitly recognized a third state?
 
 Not permission. Not prohibition.
 
-\*\*A mandatory pause.\*\*
+**A mandatory pause.**
 
 A state in which the system cannot proceed until specified conditions have been satisfied. A state in which uncertainty is not concealed by a confident prediction, missing authorization is not replaced by an assumption, and a failed verification does not become permission by default.
 
-This is the principle behind the ternary path: three distinct states, represented as −1, 0, and \+1.
+This is the principle behind the ternary path: three distinct states, represented as −1, 0, and +1.
 
-The precise meaning depends on the application. In a system governing consequential actions, −1 can represent refusal, 0 a required pause, and \+1 authorization to proceed.
+The precise meaning depends on the application. In a system governing consequential actions, −1 can represent refusal, 0 a required pause, and +1 authorization to proceed.
 
 The significance is not the novelty of using three symbols. Ternary logic itself is not new. The deeper question is whether we can make the distinction between refusal, unresolved conditions, and authorized action an enforceable part of system architecture.
 
@@ -260,9 +260,9 @@ We have learned to build machines that calculate faster than we can think, proce
 
 Now we must learn to build systems whose authority does not expand automatically with their capability.
 
-\*\*The next breakthrough in artificial intelligence may not be making machines capable of doing more. It may be making the limits of what they can do genuinely enforceable.\*\*
+**The next breakthrough in artificial intelligence may not be making machines capable of doing more. It may be making the limits of what they can do genuinely enforceable.**
 
-\#\# 7\. The Power We Cannot Afford to Surrender Blindly
+## 7. The Power We Cannot Afford to Surrender Blindly
 
 We began with a simple question: what are we handing over to machines?
 
@@ -286,7 +286,7 @@ We need evidence. We need independent verification. We need enforceable limits o
 
 Above all, we must stop treating the ability to create a powerful system as sufficient justification for giving it consequential authority.
 
-There may be different technical paths toward that objective. One worth investigating is Ternary Logic, built around three distinct states: −1, 0, and \+1. Properly applied, this principle offers a way to represent refusal, a mandatory pause, and permission as distinct states rather than treating every unresolved situation as a reason to proceed.
+There may be different technical paths toward that objective. One worth investigating is Ternary Logic, built around three distinct states: −1, 0, and +1. Properly applied, this principle offers a way to represent refusal, a mandatory pause, and permission as distinct states rather than treating every unresolved situation as a reason to proceed.
 
 It is not a complete answer to AI governance. It does not eliminate the need for independent safeguards, human judgment, or accountability. But it points toward a question that deserves far more attention: can the limits governing a machine's actions become enforceable properties of its architecture rather than instructions it is merely expected to follow?
 
@@ -300,7 +300,7 @@ We should be proud of what humanity has achieved. But we should also be mature e
 
 Those who build these systems are not our enemies. They are pioneers undertaking extraordinary work. But extraordinary work carries extraordinary responsibility.
 
-Antoine de Saint-Exupéry wrote in \*The Little Prince\*: “You become responsible, forever, for what you have tamed.”
+Antoine de Saint-Exupéry wrote in *The Little Prince*: “You become responsible, forever, for what you have tamed.”
 
 Perhaps this is the principle our technological age needs to recover.
 
@@ -312,7 +312,7 @@ We cannot know exactly what tomorrow's systems will be capable of. We do not nee
 
 We need to decide, before their capabilities exceed our ability to respond, what conditions must govern their authority to act.
 
-\*\*Humanity's greatest achievement should not be creating intelligence more powerful than its own. It should be ensuring that the intelligence it creates can never become more powerful than the principles and safeguards governing its use.\*\*
+**Humanity's greatest achievement should not be creating intelligence more powerful than its own. It should be ensuring that the intelligence it creates can never become more powerful than the principles and safeguards governing its use.**
 
 The knowledge belongs to humanity.
 
